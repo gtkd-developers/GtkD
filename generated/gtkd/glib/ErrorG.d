@@ -89,14 +89,14 @@ public class ErrorG
 	 */
 	public this(GQuark domain, int code, string message)
 	{
-		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
+		auto __p = g_error_new_literal(domain, code, Str.toStringz(message));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_literal");
 		}
 
-		this(cast(GError*) p);
+		this(cast(GError*) __p);
 	}
 
 	/**
@@ -117,14 +117,14 @@ public class ErrorG
 	 */
 	public this(GQuark domain, int code, string format, void* args)
 	{
-		auto p = g_error_new_valist(domain, code, Str.toStringz(format), args);
+		auto __p = g_error_new_valist(domain, code, Str.toStringz(format), args);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(GError*) p);
+		this(cast(GError*) __p);
 	}
 
 	/**
@@ -134,14 +134,14 @@ public class ErrorG
 	 */
 	public ErrorG copy()
 	{
-		auto p = g_error_copy(gError);
+		auto __p = g_error_copy(gError);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ErrorG(cast(GError*) p, true);
+		return new ErrorG(cast(GError*) __p, true);
 	}
 
 	/**

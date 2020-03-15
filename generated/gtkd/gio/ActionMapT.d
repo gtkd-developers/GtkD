@@ -139,14 +139,14 @@ public template ActionMapT(TStruct)
 	 */
 	public ActionIF lookupAction(string actionName)
 	{
-		auto p = g_action_map_lookup_action(getActionMapStruct(), Str.toStringz(actionName));
+		auto __p = g_action_map_lookup_action(getActionMapStruct(), Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ActionIF)(cast(GAction*) p);
+		return ObjectG.getDObject!(ActionIF)(cast(GAction*) __p);
 	}
 
 	/**

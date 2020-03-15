@@ -79,14 +79,14 @@ public class FilterOutputStream : OutputStream
 	 */
 	public OutputStream getBaseStream()
 	{
-		auto p = g_filter_output_stream_get_base_stream(gFilterOutputStream);
+		auto __p = g_filter_output_stream_get_base_stream(gFilterOutputStream);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
+		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) __p);
 	}
 
 	/**

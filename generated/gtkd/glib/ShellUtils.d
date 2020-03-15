@@ -67,7 +67,7 @@ public struct ShellUtils
 		char** outargvp = null;
 		GError* err = null;
 
-		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err) != 0;
+		auto __p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err) != 0;
 
 		if (err !is null)
 		{
@@ -76,7 +76,7 @@ public struct ShellUtils
 
 		argvp = Str.toStringArray(outargvp, argcp);
 
-		return p;
+		return __p;
 	}
 
 	/**

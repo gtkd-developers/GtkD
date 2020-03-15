@@ -130,19 +130,19 @@ public class SettingsSchemaSource
 	{
 		GError* err = null;
 
-		auto p = g_settings_schema_source_new_from_directory(Str.toStringz(directory), (parent is null) ? null : parent.getSettingsSchemaSourceStruct(), trusted, &err);
+		auto __p = g_settings_schema_source_new_from_directory(Str.toStringz(directory), (parent is null) ? null : parent.getSettingsSchemaSourceStruct(), trusted, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_directory");
 		}
 
-		this(cast(GSettingsSchemaSource*) p);
+		this(cast(GSettingsSchemaSource*) __p);
 	}
 
 	/**
@@ -162,9 +162,9 @@ public class SettingsSchemaSource
 	 * Params:
 	 *     recursive = if we should recurse
 	 *     nonRelocatable = the
-	 *         list of non-relocatable schemas
+	 *         list of non-relocatable schemas, in no defined order
 	 *     relocatable = the list
-	 *         of relocatable schemas
+	 *         of relocatable schemas, in no defined order
 	 *
 	 * Since: 2.40
 	 */
@@ -201,14 +201,14 @@ public class SettingsSchemaSource
 	 */
 	public SettingsSchema lookup(string schemaId, bool recursive)
 	{
-		auto p = g_settings_schema_source_lookup(gSettingsSchemaSource, Str.toStringz(schemaId), recursive);
+		auto __p = g_settings_schema_source_lookup(gSettingsSchemaSource, Str.toStringz(schemaId), recursive);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -221,14 +221,14 @@ public class SettingsSchemaSource
 	 */
 	public SettingsSchemaSource ref_()
 	{
-		auto p = g_settings_schema_source_ref(gSettingsSchemaSource);
+		auto __p = g_settings_schema_source_ref(gSettingsSchemaSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p, true);
+		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) __p, true);
 	}
 
 	/**
@@ -262,13 +262,13 @@ public class SettingsSchemaSource
 	 */
 	public static SettingsSchemaSource getDefault()
 	{
-		auto p = g_settings_schema_source_get_default();
+		auto __p = g_settings_schema_source_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p);
+		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) __p);
 	}
 }

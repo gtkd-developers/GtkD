@@ -138,14 +138,14 @@ public struct ContentType
 	 */
 	public static IconIF getIcon(string type)
 	{
-		auto p = g_content_type_get_icon(Str.toStringz(type));
+		auto __p = g_content_type_get_icon(Str.toStringz(type));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -178,14 +178,14 @@ public struct ContentType
 	 */
 	public static IconIF getSymbolicIcon(string type)
 	{
-		auto p = g_content_type_get_symbolic_icon(Str.toStringz(type));
+		auto __p = g_content_type_get_symbolic_icon(Str.toStringz(type));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -286,14 +286,14 @@ public struct ContentType
 	 */
 	public static ListG contentTypesGetRegistered()
 	{
-		auto p = g_content_types_get_registered();
+		auto __p = g_content_types_get_registered();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

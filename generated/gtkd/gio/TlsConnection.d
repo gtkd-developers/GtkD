@@ -114,14 +114,14 @@ public class TlsConnection : IOStream
 	 */
 	public TlsCertificate getCertificate()
 	{
-		auto p = g_tls_connection_get_certificate(gTlsConnection);
+		auto __p = g_tls_connection_get_certificate(gTlsConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p);
 	}
 
 	/**
@@ -134,14 +134,14 @@ public class TlsConnection : IOStream
 	 */
 	public TlsDatabase getDatabase()
 	{
-		auto p = g_tls_connection_get_database(gTlsConnection);
+		auto __p = g_tls_connection_get_database(gTlsConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p);
+		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) __p);
 	}
 
 	/**
@@ -155,14 +155,14 @@ public class TlsConnection : IOStream
 	 */
 	public TlsInteraction getInteraction()
 	{
-		auto p = g_tls_connection_get_interaction(gTlsConnection);
+		auto __p = g_tls_connection_get_interaction(gTlsConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsInteraction)(cast(GTlsInteraction*) p);
+		return ObjectG.getDObject!(TlsInteraction)(cast(GTlsInteraction*) __p);
 	}
 
 	/**
@@ -194,14 +194,14 @@ public class TlsConnection : IOStream
 	 */
 	public TlsCertificate getPeerCertificate()
 	{
-		auto p = g_tls_connection_get_peer_certificate(gTlsConnection);
+		auto __p = g_tls_connection_get_peer_certificate(gTlsConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p);
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class TlsConnection : IOStream
 	 * required for compatibility. Also, rehandshaking has been removed
 	 * from the TLS protocol in TLS 1.3.
 	 *
-	 * Returns: @conn's rehandshaking mode
+	 * Returns: %G_TLS_REHANDSHAKE_SAFELY
 	 *
 	 * Since: 2.28
 	 */
@@ -268,28 +268,30 @@ public class TlsConnection : IOStream
 	 *
 	 * On the client side, it is never necessary to call this method;
 	 * although the connection needs to perform a handshake after
-	 * connecting (or after sending a "STARTTLS"-type command) and may
-	 * need to rehandshake later if the server requests it,
+	 * connecting (or after sending a "STARTTLS"-type command),
 	 * #GTlsConnection will handle this for you automatically when you try
-	 * to send or receive data on the connection. However, you can call
-	 * g_tls_connection_handshake() manually if you want to know for sure
-	 * whether the initial handshake succeeded or failed (as opposed to
-	 * just immediately trying to write to @conn's output stream, in which
-	 * case if it fails, it may not be possible to tell if it failed
-	 * before or after completing the handshake).
+	 * to send or receive data on the connection. You can call
+	 * g_tls_connection_handshake() manually if you want to know whether
+	 * the initial handshake succeeded or failed (as opposed to just
+	 * immediately trying to use @conn to read or write, in which case,
+	 * if it fails, it may not be possible to tell if it failed before or
+	 * after completing the handshake), but beware that servers may reject
+	 * client authentication after the handshake has completed, so a
+	 * successful handshake does not indicate the connection will be usable.
 	 *
 	 * Likewise, on the server side, although a handshake is necessary at
 	 * the beginning of the communication, you do not need to call this
 	 * function explicitly unless you want clearer error reporting.
 	 *
-	 * If TLS 1.2 or older is in use, you may call
-	 * g_tls_connection_handshake() after the initial handshake to
-	 * rehandshake; however, this usage is deprecated because rehandshaking
-	 * is no longer part of the TLS protocol in TLS 1.3. Accordingly, the
-	 * behavior of calling this function after the initial handshake is now
-	 * undefined, except it is guaranteed to be reasonable and
-	 * nondestructive so as to preserve compatibility with code written for
-	 * older versions of GLib.
+	 * Previously, calling g_tls_connection_handshake() after the initial
+	 * handshake would trigger a rehandshake; however, this usage was
+	 * deprecated in GLib 2.60 because rehandshaking was removed from the
+	 * TLS protocol in TLS 1.3. Since GLib 2.64, calling this function after
+	 * the initial handshake will no longer do anything.
+	 *
+	 * When using a #GTlsConnection created by #GSocketClient, the
+	 * #GSocketClient performs the initial handshake, so calling this
+	 * function manually is not recommended.
 	 *
 	 * #GTlsConnection::accept_certificate may be emitted during the
 	 * handshake.
@@ -307,14 +309,14 @@ public class TlsConnection : IOStream
 	{
 		GError* err = null;
 
-		auto p = g_tls_connection_handshake(gTlsConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_tls_connection_handshake(gTlsConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -352,14 +354,14 @@ public class TlsConnection : IOStream
 	{
 		GError* err = null;
 
-		auto p = g_tls_connection_handshake_finish(gTlsConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_tls_connection_handshake_finish(gTlsConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -454,27 +456,10 @@ public class TlsConnection : IOStream
 	}
 
 	/**
-	 * Sets how @conn behaves with respect to rehandshaking requests, when
-	 * TLS 1.2 or older is in use.
-	 *
-	 * %G_TLS_REHANDSHAKE_NEVER means that it will never agree to
-	 * rehandshake after the initial handshake is complete. (For a client,
-	 * this means it will refuse rehandshake requests from the server, and
-	 * for a server, this means it will close the connection with an error
-	 * if the client attempts to rehandshake.)
-	 *
-	 * %G_TLS_REHANDSHAKE_SAFELY means that the connection will allow a
-	 * rehandshake only if the other end of the connection supports the
-	 * TLS `renegotiation_info` extension. This is the default behavior,
-	 * but means that rehandshaking will not work against older
-	 * implementations that do not support that extension.
-	 *
-	 * %G_TLS_REHANDSHAKE_UNSAFELY means that the connection will allow
-	 * rehandshaking even without the `renegotiation_info` extension. On
-	 * the server side in particular, this is not recommended, since it
-	 * leaves the server open to certain attacks. However, this mode is
-	 * necessary if you need to allow renegotiation with older client
-	 * software.
+	 * Since GLib 2.64, changing the rehandshake mode is no longer supported
+	 * and will have no effect. With TLS 1.3, rehandshaking has been removed from
+	 * the TLS protocol, replaced by separate post-handshake authentication and
+	 * rekey operations.
 	 *
 	 * Deprecated: Changing the rehandshake mode is no longer
 	 * required for compatibility. Also, rehandshaking has been removed

@@ -401,11 +401,11 @@ public struct CharacterSet
 	{
 		char* outcharset = null;
 
-		auto p = g_get_charset(&outcharset) != 0;
+		auto __p = g_get_charset(&outcharset) != 0;
 
 		charset = Str.toString(outcharset);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -459,11 +459,11 @@ public struct CharacterSet
 	{
 		char** outfilenameCharsets = null;
 
-		auto p = g_get_filename_charsets(&outfilenameCharsets) != 0;
+		auto __p = g_get_filename_charsets(&outfilenameCharsets) != 0;
 
 		filenameCharsets = Str.toStringArray(outfilenameCharsets);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -582,5 +582,43 @@ public struct CharacterSet
 	public static string[] getLanguageNamesWithCategory(string categoryName)
 	{
 		return Str.toStringArray(g_get_language_names_with_category(Str.toStringz(categoryName)));
+	}
+
+	/**
+	 * Obtains the character set used by the console attached to the process,
+	 * which is suitable for printing output to the terminal.
+	 *
+	 * Usually this matches the result returned by g_get_charset(), but in
+	 * environments where the locale's character set does not match the encoding
+	 * of the console this function tries to guess a more suitable value instead.
+	 *
+	 * On Windows the character set returned by this function is the
+	 * output code page used by the console associated with the calling process.
+	 * If the codepage can't be determined (for example because there is no
+	 * console attached) UTF-8 is assumed.
+	 *
+	 * The return value is %TRUE if the locale's encoding is UTF-8, in that
+	 * case you can perhaps avoid calling g_convert().
+	 *
+	 * The string returned in @charset is not allocated, and should not be
+	 * freed.
+	 *
+	 * Params:
+	 *     charset = return location for character set
+	 *         name, or %NULL.
+	 *
+	 * Returns: %TRUE if the returned charset is UTF-8
+	 *
+	 * Since: 2.62
+	 */
+	public static bool getConsoleCharset(out string charset)
+	{
+		char* outcharset = null;
+
+		auto __p = g_get_console_charset(&outcharset) != 0;
+
+		charset = Str.toString(outcharset);
+
+		return __p;
 	}
 }

@@ -88,14 +88,14 @@ public class AppLaunchContext : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_app_launch_context_new();
+		auto __p = g_app_launch_context_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GAppLaunchContext*) p, true);
+		this(cast(GAppLaunchContext*) __p, true);
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class AppLaunchContext : ObjectG
 	 * `DESKTOP_STARTUP_ID` for the launched operation, if supported.
 	 *
 	 * Startup notification IDs are defined in the
-	 * [FreeDesktop.Org Startup Notifications standard](http://standards.freedesktop.org/startup-notification-spec/startup-notification-latest.txt").
+	 * [FreeDesktop.Org Startup Notifications standard](http://standards.freedesktop.org/startup-notification-spec/startup-notification-latest.txt).
 	 *
 	 * Params:
 	 *     info = a #GAppInfo

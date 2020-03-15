@@ -249,22 +249,30 @@ public class DateTime
 	 */
 	public this(TimeZone tz, int year, int month, int day, int hour, int minute, double seconds)
 	{
-		auto p = g_date_time_new((tz is null) ? null : tz.getTimeZoneStruct(), year, month, day, hour, minute, seconds);
+		auto __p = g_date_time_new((tz is null) ? null : tz.getTimeZoneStruct(), year, month, day, hour, minute, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDateTime*) p);
+		this(cast(GDateTime*) __p);
 	}
 
 	/**
 	 * Creates a #GDateTime corresponding to the given
 	 * [ISO 8601 formatted string](https://en.wikipedia.org/wiki/ISO_8601)
-	 * @text. ISO 8601 strings of the form <date><sep><time><tz> are supported.
+	 * @text. ISO 8601 strings of the form <date><sep><time><tz> are supported, with
+	 * some extensions from [RFC 3339](https://tools.ietf.org/html/rfc3339) as
+	 * mentioned below.
 	 *
-	 * <sep> is the separator and can be either 'T', 't' or ' '.
+	 * Note that as #GDateTime "is oblivious to leap seconds", leap seconds information
+	 * in an ISO-8601 string will be ignored, so a `23:59:60` time would be parsed as
+	 * `23:59:59`.
+	 *
+	 * <sep> is the separator and can be either 'T', 't' or ' '. The latter two
+	 * separators are an extension from
+	 * [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6).
 	 *
 	 * <date> is in the form:
 	 *
@@ -309,14 +317,14 @@ public class DateTime
 	 */
 	public this(string text, TimeZone defaultTz)
 	{
-		auto p = g_date_time_new_from_iso8601(Str.toStringz(text), (defaultTz is null) ? null : defaultTz.getTimeZoneStruct());
+		auto __p = g_date_time_new_from_iso8601(Str.toStringz(text), (defaultTz is null) ? null : defaultTz.getTimeZoneStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_iso8601");
 		}
 
-		this(cast(GDateTime*) p);
+		this(cast(GDateTime*) __p);
 	}
 
 	/**
@@ -342,14 +350,14 @@ public class DateTime
 	 */
 	public this(TimeZone tz)
 	{
-		auto p = g_date_time_new_now((tz is null) ? null : tz.getTimeZoneStruct());
+		auto __p = g_date_time_new_now((tz is null) ? null : tz.getTimeZoneStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_now");
 		}
 
-		this(cast(GDateTime*) p);
+		this(cast(GDateTime*) __p);
 	}
 
 	/**
@@ -365,14 +373,14 @@ public class DateTime
 	 */
 	public DateTime add(GTimeSpan timespan)
 	{
-		auto p = g_date_time_add(gDateTime, timespan);
+		auto __p = g_date_time_add(gDateTime, timespan);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -389,14 +397,14 @@ public class DateTime
 	 */
 	public DateTime addDays(int days)
 	{
-		auto p = g_date_time_add_days(gDateTime, days);
+		auto __p = g_date_time_add_days(gDateTime, days);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -418,14 +426,14 @@ public class DateTime
 	 */
 	public DateTime addFull(int years, int months, int days, int hours, int minutes, double seconds)
 	{
-		auto p = g_date_time_add_full(gDateTime, years, months, days, hours, minutes, seconds);
+		auto __p = g_date_time_add_full(gDateTime, years, months, days, hours, minutes, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -442,14 +450,14 @@ public class DateTime
 	 */
 	public DateTime addHours(int hours)
 	{
-		auto p = g_date_time_add_hours(gDateTime, hours);
+		auto __p = g_date_time_add_hours(gDateTime, hours);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -466,14 +474,14 @@ public class DateTime
 	 */
 	public DateTime addMinutes(int minutes)
 	{
-		auto p = g_date_time_add_minutes(gDateTime, minutes);
+		auto __p = g_date_time_add_minutes(gDateTime, minutes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -495,14 +503,14 @@ public class DateTime
 	 */
 	public DateTime addMonths(int months)
 	{
-		auto p = g_date_time_add_months(gDateTime, months);
+		auto __p = g_date_time_add_months(gDateTime, months);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -519,14 +527,14 @@ public class DateTime
 	 */
 	public DateTime addSeconds(double seconds)
 	{
-		auto p = g_date_time_add_seconds(gDateTime, seconds);
+		auto __p = g_date_time_add_seconds(gDateTime, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -543,14 +551,14 @@ public class DateTime
 	 */
 	public DateTime addWeeks(int weeks)
 	{
-		auto p = g_date_time_add_weeks(gDateTime, weeks);
+		auto __p = g_date_time_add_weeks(gDateTime, weeks);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -570,14 +578,14 @@ public class DateTime
 	 */
 	public DateTime addYears(int years)
 	{
-		auto p = g_date_time_add_years(gDateTime, years);
+		auto __p = g_date_time_add_years(gDateTime, years);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -714,6 +722,25 @@ public class DateTime
 	}
 
 	/**
+	 * Format @datetime in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601),
+	 * including the date, time and time zone, and return that as a UTF-8 encoded
+	 * string.
+	 *
+	 * Returns: a newly allocated string formatted in ISO 8601 format
+	 *     or %NULL in the case that there was an error. The string
+	 *     should be freed with g_free().
+	 *
+	 * Since: 2.62
+	 */
+	public string formatIso8601()
+	{
+		auto retStr = g_date_time_format_iso8601(gDateTime);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
 	 * Retrieves the day of the month represented by @datetime in the gregorian
 	 * calendar.
 	 *
@@ -835,14 +862,14 @@ public class DateTime
 	 */
 	public TimeZone getTimezone()
 	{
-		auto p = g_date_time_get_timezone(gDateTime);
+		auto __p = g_date_time_get_timezone(gDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new TimeZone(cast(GTimeZone*) p);
+		return new TimeZone(cast(GTimeZone*) __p);
 	}
 
 	/**
@@ -1002,14 +1029,14 @@ public class DateTime
 	 */
 	public DateTime ref_()
 	{
-		auto p = g_date_time_ref(gDateTime);
+		auto __p = g_date_time_ref(gDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -1025,14 +1052,14 @@ public class DateTime
 	 */
 	public DateTime toLocal()
 	{
-		auto p = g_date_time_to_local(gDateTime);
+		auto __p = g_date_time_to_local(gDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -1049,6 +1076,9 @@ public class DateTime
 	 * out of range.
 	 *
 	 * On systems where 'long' is 64bit, this function never fails.
+	 *
+	 * Deprecated: #GTimeVal is not year-2038-safe. Use
+	 * g_date_time_to_unix() instead.
 	 *
 	 * Params:
 	 *     tv = a #GTimeVal to modify
@@ -1082,14 +1112,14 @@ public class DateTime
 	 */
 	public DateTime toTimezone(TimeZone tz)
 	{
-		auto p = g_date_time_to_timezone(gDateTime, (tz is null) ? null : tz.getTimeZoneStruct());
+		auto __p = g_date_time_to_timezone(gDateTime, (tz is null) ? null : tz.getTimeZoneStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -1121,14 +1151,14 @@ public class DateTime
 	 */
 	public DateTime toUtc()
 	{
-		auto p = g_date_time_to_utc(gDateTime);
+		auto __p = g_date_time_to_utc(gDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**

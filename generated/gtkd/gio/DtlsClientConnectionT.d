@@ -70,14 +70,14 @@ public template DtlsClientConnectionT(TStruct)
 	 */
 	public ListG getAcceptedCas()
 	{
-		auto p = g_dtls_client_connection_get_accepted_cas(getDtlsClientConnectionStruct());
+		auto __p = g_dtls_client_connection_get_accepted_cas(getDtlsClientConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -91,14 +91,14 @@ public template DtlsClientConnectionT(TStruct)
 	 */
 	public SocketConnectableIF getServerIdentity()
 	{
-		auto p = g_dtls_client_connection_get_server_identity(getDtlsClientConnectionStruct());
+		auto __p = g_dtls_client_connection_get_server_identity(getDtlsClientConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnectableIF)(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(SocketConnectableIF)(cast(GSocketConnectable*) __p);
 	}
 
 	/**

@@ -122,14 +122,14 @@ public class WeakRef
 	 */
 	public ObjectG get()
 	{
-		auto p = g_weak_ref_get(gWeakRef);
+		auto __p = g_weak_ref_get(gWeakRef);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**

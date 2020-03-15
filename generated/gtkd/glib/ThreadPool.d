@@ -205,14 +205,14 @@ public final class ThreadPool
 	{
 		GError* err = null;
 
-		auto p = g_thread_pool_push(gThreadPool, data, &err) != 0;
+		auto __p = g_thread_pool_push(gThreadPool, data, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -249,14 +249,14 @@ public final class ThreadPool
 	{
 		GError* err = null;
 
-		auto p = g_thread_pool_set_max_threads(gThreadPool, maxThreads, &err) != 0;
+		auto __p = g_thread_pool_set_max_threads(gThreadPool, maxThreads, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -381,19 +381,19 @@ public final class ThreadPool
 	{
 		GError* err = null;
 
-		auto p = g_thread_pool_new(func, userData, maxThreads, exclusive, &err);
+		auto __p = g_thread_pool_new(func, userData, maxThreads, exclusive, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GThreadPool*) p);
+		this(cast(GThreadPool*) __p);
 	}
 
 	/**

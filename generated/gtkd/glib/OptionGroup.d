@@ -102,14 +102,14 @@ public class OptionGroup
 	 */
 	public this(string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
 	{
-		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
+		auto __p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GOptionGroup*) p);
+		this(cast(GOptionGroup*) __p);
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class OptionGroup
 	 *
 	 * Since: 2.6
 	 */
-	public void addEntries(GOptionEntry* entries)
+	public void addEntries(GOptionEntry[] entries)
 	{
-		g_option_group_add_entries(gOptionGroup, entries);
+		g_option_group_add_entries(gOptionGroup, entries.ptr);
 	}
 
 	/**
@@ -149,14 +149,14 @@ public class OptionGroup
 	 */
 	public OptionGroup ref_()
 	{
-		auto p = g_option_group_ref(gOptionGroup);
+		auto __p = g_option_group_ref(gOptionGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new OptionGroup(cast(GOptionGroup*) p, true);
+		return new OptionGroup(cast(GOptionGroup*) __p, true);
 	}
 
 	/**

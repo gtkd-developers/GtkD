@@ -187,14 +187,14 @@ public class VariantDict
 	 */
 	public this(Variant fromAsv)
 	{
-		auto p = g_variant_dict_new((fromAsv is null) ? null : fromAsv.getVariantStruct());
+		auto __p = g_variant_dict_new((fromAsv is null) ? null : fromAsv.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GVariantDict*) p);
+		this(cast(GVariantDict*) __p);
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class VariantDict
 	 * Checks if @key exists in @dict.
 	 *
 	 * Params:
-	 *     key = the key to lookup in the dictionary
+	 *     key = the key to look up in the dictionary
 	 *
 	 * Returns: %TRUE if @key is in @dict
 	 *
@@ -250,14 +250,14 @@ public class VariantDict
 	 */
 	public Variant end()
 	{
-		auto p = g_variant_dict_end(gVariantDict);
+		auto __p = g_variant_dict_end(gVariantDict);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -318,7 +318,7 @@ public class VariantDict
 	 * value will have this type.
 	 *
 	 * Params:
-	 *     key = the key to lookup in the dictionary
+	 *     key = the key to look up in the dictionary
 	 *     expectedType = a #GVariantType, or %NULL
 	 *
 	 * Returns: the value of the dictionary key, or %NULL
@@ -327,14 +327,14 @@ public class VariantDict
 	 */
 	public Variant lookupValue(string key, VariantType expectedType)
 	{
-		auto p = g_variant_dict_lookup_value(gVariantDict, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		auto __p = g_variant_dict_lookup_value(gVariantDict, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -350,14 +350,14 @@ public class VariantDict
 	 */
 	public VariantDict ref_()
 	{
-		auto p = g_variant_dict_ref(gVariantDict);
+		auto __p = g_variant_dict_ref(gVariantDict);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantDict(cast(GVariantDict*) p, true);
+		return new VariantDict(cast(GVariantDict*) __p, true);
 	}
 
 	/**

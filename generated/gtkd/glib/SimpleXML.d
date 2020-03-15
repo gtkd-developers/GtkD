@@ -98,14 +98,14 @@ public class SimpleXML
 	 */
 	public this(GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
 	{
-		auto p = g_markup_parse_context_new(parser, flags, userData, userDataDnotify);
+		auto __p = g_markup_parse_context_new(parser, flags, userData, userDataDnotify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMarkupParseContext*) p);
+		this(cast(GMarkupParseContext*) __p);
 	}
 
 	/**
@@ -123,14 +123,14 @@ public class SimpleXML
 	{
 		GError* err = null;
 
-		auto p = g_markup_parse_context_end_parse(gMarkupParseContext, &err) != 0;
+		auto __p = g_markup_parse_context_end_parse(gMarkupParseContext, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -180,14 +180,14 @@ public class SimpleXML
 	 */
 	public ListSG getElementStack()
 	{
-		auto p = g_markup_parse_context_get_element_stack(gMarkupParseContext);
+		auto __p = g_markup_parse_context_get_element_stack(gMarkupParseContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -200,9 +200,9 @@ public class SimpleXML
 	 *     lineNumber = return location for a line number, or %NULL
 	 *     charNumber = return location for a char-on-line number, or %NULL
 	 */
-	public void getPosition(int* lineNumber, int* charNumber)
+	public void getPosition(out int lineNumber, out int charNumber)
 	{
-		g_markup_parse_context_get_position(gMarkupParseContext, lineNumber, charNumber);
+		g_markup_parse_context_get_position(gMarkupParseContext, &lineNumber, &charNumber);
 	}
 
 	/**
@@ -247,14 +247,14 @@ public class SimpleXML
 	{
 		GError* err = null;
 
-		auto p = g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, &err) != 0;
+		auto __p = g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -418,14 +418,14 @@ public class SimpleXML
 	 */
 	public SimpleXML ref_()
 	{
-		auto p = g_markup_parse_context_ref(gMarkupParseContext);
+		auto __p = g_markup_parse_context_ref(gMarkupParseContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SimpleXML(cast(GMarkupParseContext*) p, true);
+		return new SimpleXML(cast(GMarkupParseContext*) __p, true);
 	}
 
 	/**

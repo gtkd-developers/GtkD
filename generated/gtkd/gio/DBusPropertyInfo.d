@@ -175,14 +175,14 @@ public final class DBusPropertyInfo
 	 */
 	public DBusPropertyInfo ref_()
 	{
-		auto p = g_dbus_property_info_ref(gDBusPropertyInfo);
+		auto __p = g_dbus_property_info_ref(gDBusPropertyInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p, true);
+		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) __p, true);
 	}
 
 	/**

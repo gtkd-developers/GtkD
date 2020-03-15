@@ -85,14 +85,14 @@ public class UnixMountMonitor : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_unix_mount_monitor_new();
+		auto __p = g_unix_mount_monitor_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GUnixMountMonitor*) p, true);
+		this(cast(GUnixMountMonitor*) __p, true);
 	}
 
 	/**
@@ -112,14 +112,14 @@ public class UnixMountMonitor : ObjectG
 	 */
 	public static UnixMountMonitor get()
 	{
-		auto p = g_unix_mount_monitor_get();
+		auto __p = g_unix_mount_monitor_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountMonitor)(cast(GUnixMountMonitor*) p, true);
+		return ObjectG.getDObject!(UnixMountMonitor)(cast(GUnixMountMonitor*) __p, true);
 	}
 
 	/**

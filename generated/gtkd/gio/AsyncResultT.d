@@ -137,14 +137,14 @@ public template AsyncResultT(TStruct)
 	 */
 	public ObjectG getSourceObject()
 	{
-		auto p = g_async_result_get_source_object(getAsyncResultStruct());
+		auto __p = g_async_result_get_source_object(getAsyncResultStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -197,13 +197,13 @@ public template AsyncResultT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_async_result_legacy_propagate_error(getAsyncResultStruct(), &err) != 0;
+		auto __p = g_async_result_legacy_propagate_error(getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

@@ -57,7 +57,9 @@ public struct Uuid
 	}
 
 	/**
-	 * Generates a random UUID (RFC 4122 version 4) as a string.
+	 * Generates a random UUID (RFC 4122 version 4) as a string. It has the same
+	 * randomness guarantees as #GRand, so must not be used for cryptographic
+	 * purposes such as key generation, nonces, salts or one-time pads.
 	 *
 	 * Returns: A string that should be freed with g_free().
 	 *

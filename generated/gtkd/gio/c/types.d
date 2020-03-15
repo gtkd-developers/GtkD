@@ -1349,6 +1349,15 @@ alias GFileQueryInfoFlags FileQueryInfoFlags;
 
 /**
  * Indicates the file's on-disk type.
+ *
+ * On Windows systems a file will never have %G_FILE_TYPE_SYMBOLIC_LINK type;
+ * use #GFileInfo and %G_FILE_ATTRIBUTE_STANDARD_IS_SYMLINK to determine
+ * whether a file is a symlink or not. This is due to the fact that NTFS does
+ * not have a single filesystem object type for symbolic links - it has
+ * files that symlink to files, and directories that symlink to directories.
+ * #GFileType enumeration cannot precisely represent this important distinction,
+ * which is why all Windows symlinks will continue to be reported as
+ * %G_FILE_TYPE_REGULAR or %G_FILE_TYPE_DIRECTORY.
  */
 public enum GFileType
 {
@@ -1687,6 +1696,41 @@ public enum GIOStreamSpliceFlags
 alias GIOStreamSpliceFlags IOStreamSpliceFlags;
 
 /**
+ * Memory availability warning levels.
+ *
+ * Note that because new values might be added, it is recommended that applications check
+ * #GMemoryMonitorWarningLevel as ranges, for example:
+ * |[<!-- language="C" -->
+ * if (warning_level > G_MEMORY_MONITOR_WARNING_LEVEL_LOW)
+ * drop_caches ();
+ * ]|
+ *
+ * Since: 2.64
+ */
+public enum GMemoryMonitorWarningLevel
+{
+	/**
+	 * Memory on the device is low, processes
+	 * should free up unneeded resources (for example, in-memory caches) so they can
+	 * be used elsewhere.
+	 */
+	LOW = 50,
+	/**
+	 * Same as @G_MEMORY_MONITOR_WARNING_LEVEL_LOW
+	 * but the device has even less free memory, so processes should try harder to free
+	 * up unneeded resources. If your process does not need to stay running, it is a
+	 * good time for it to quit.
+	 */
+	MEDIUM = 100,
+	/**
+	 * The system will soon start terminating
+	 * processes to reclaim memory, including background processes.
+	 */
+	CRITICAL = 255,
+}
+alias GMemoryMonitorWarningLevel MemoryMonitorWarningLevel;
+
+/**
  * Flags used when mounting a mount.
  */
 public enum GMountMountFlags
@@ -1934,47 +1978,53 @@ alias GResolverNameLookupFlags ResolverNameLookupFlags;
  * the variant tuples returned.
  *
  * %G_RESOLVER_RECORD_SRV records are returned as variants with the signature
- * '(qqqs)', containing a guint16 with the priority, a guint16 with the
- * weight, a guint16 with the port, and a string of the hostname.
+ * `(qqqs)`, containing a `guint16` with the priority, a `guint16` with the
+ * weight, a `guint16` with the port, and a string of the hostname.
  *
  * %G_RESOLVER_RECORD_MX records are returned as variants with the signature
- * '(qs)', representing a guint16 with the preference, and a string containing
+ * `(qs)`, representing a `guint16` with the preference, and a string containing
  * the mail exchanger hostname.
  *
  * %G_RESOLVER_RECORD_TXT records are returned as variants with the signature
- * '(as)', representing an array of the strings in the text record.
+ * `(as)`, representing an array of the strings in the text record. Note: Most TXT
+ * records only contain a single string, but
+ * [RFC 1035](https://tools.ietf.org/html/rfc1035#section-3.3.14) does allow a
+ * record to contain multiple strings. The RFC which defines the interpretation
+ * of a specific TXT record will likely require concatenation of multiple
+ * strings if they are present, as with
+ * [RFC 7208](https://tools.ietf.org/html/rfc7208#section-3.3).
  *
  * %G_RESOLVER_RECORD_SOA records are returned as variants with the signature
- * '(ssuuuuu)', representing a string containing the primary name server, a
- * string containing the administrator, the serial as a guint32, the refresh
- * interval as guint32, the retry interval as a guint32, the expire timeout
- * as a guint32, and the ttl as a guint32.
+ * `(ssuuuuu)`, representing a string containing the primary name server, a
+ * string containing the administrator, the serial as a `guint32`, the refresh
+ * interval as a `guint32`, the retry interval as a `guint32`, the expire timeout
+ * as a `guint32`, and the TTL as a `guint32`.
  *
  * %G_RESOLVER_RECORD_NS records are returned as variants with the signature
- * '(s)', representing a string of the hostname of the name server.
+ * `(s)`, representing a string of the hostname of the name server.
  *
  * Since: 2.34
  */
 public enum GResolverRecordType
 {
 	/**
-	 * lookup DNS SRV records for a domain
+	 * look up DNS SRV records for a domain
 	 */
 	SRV = 1,
 	/**
-	 * lookup DNS MX records for a domain
+	 * look up DNS MX records for a domain
 	 */
 	MX = 2,
 	/**
-	 * lookup DNS TXT records for a name
+	 * look up DNS TXT records for a name
 	 */
 	TXT = 3,
 	/**
-	 * lookup DNS SOA records for a zone
+	 * look up DNS SOA records for a zone
 	 */
 	SOA = 4,
 	/**
-	 * lookup DNS NS records for a domain
+	 * look up DNS NS records for a domain
 	 */
 	NS = 5,
 }
@@ -3899,7 +3949,7 @@ struct GDBusObjectManagerIface
 	 *
 	 * Params:
 	 *     manager = A #GDBusObjectManager.
-	 *     objectPath = Object path to lookup.
+	 *     objectPath = Object path to look up.
 	 * Returns: A #GDBusObject or %NULL. Free with
 	 *     g_object_unref().
 	 */
@@ -3908,8 +3958,8 @@ struct GDBusObjectManagerIface
 	 *
 	 * Params:
 	 *     manager = A #GDBusObjectManager.
-	 *     objectPath = Object path to lookup.
-	 *     interfaceName = D-Bus interface name to lookup.
+	 *     objectPath = Object path to look up.
+	 *     interfaceName = D-Bus interface name to look up.
 	 * Returns: A #GDBusInterface instance or %NULL. Free
 	 *     with g_object_unref().
 	 */
@@ -4869,7 +4919,7 @@ struct GFileIface
 	 * Params:
 	 *     prefix = input #GFile
 	 *     file = input #GFile
-	 * Returns: %TRUE if the @files's parent, grandparent, etc is @prefix,
+	 * Returns: %TRUE if the @file's parent, grandparent, etc is @prefix,
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GFile* prefix, GFile* file) prefixMatches;
@@ -6128,7 +6178,7 @@ struct GInputStreamClass
 	 * Params:
 	 *     stream = a #GInputStream.
 	 *     result = a #GAsyncResult.
-	 * Returns: the size of the bytes skipped, or %-1 on error.
+	 * Returns: the size of the bytes skipped, or `-1` on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6286,6 +6336,23 @@ struct GMemoryInputStreamClass
 }
 
 struct GMemoryInputStreamPrivate;
+
+struct GMemoryMonitor;
+
+/**
+ * The virtual function table for #GMemoryMonitor.
+ *
+ * Since: 2.64
+ */
+struct GMemoryMonitorInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/** */
+	extern(C) void function(GMemoryMonitor* monitor, GMemoryMonitorWarningLevel level) lowMemoryWarning;
+}
 
 struct GMemoryOutputStream
 {
@@ -6671,10 +6738,18 @@ struct GMountOperationClass
 
 struct GMountOperationPrivate;
 
-/**
- * An socket address of some unknown native type.
- */
-struct GNativeSocketAddress;
+struct GNativeSocketAddress
+{
+	GSocketAddress parentInstance;
+	GNativeSocketAddressPrivate* priv;
+}
+
+struct GNativeSocketAddressClass
+{
+	GSocketAddressClass parentClass;
+}
+
+struct GNativeSocketAddressPrivate;
 
 struct GNativeVolumeMonitor
 {
@@ -7092,6 +7167,12 @@ struct GPollableOutputStream;
  * implementation may return %TRUE when the stream is not actually
  * writable.
  *
+ * The default implementation of @writev_nonblocking calls
+ * g_pollable_output_stream_write_nonblocking() for each vector, and converts
+ * its return value and error (if set) to a #GPollableReturn. You should
+ * override this where possible to avoid having to allocate a #GError to return
+ * %G_IO_ERROR_WOULD_BLOCK.
+ *
  * Since: 2.28
  */
 struct GPollableOutputStreamInterface
@@ -7401,8 +7482,8 @@ struct GResolverClass
 	 *
 	 * Params:
 	 *     resolver = a #GResolver
-	 *     rrname = the DNS name to lookup the record for
-	 *     recordType = the type of DNS record to lookup
+	 *     rrname = the DNS name to look up the record for
+	 *     recordType = the type of DNS record to look up
 	 *     cancellable = a #GCancellable, or %NULL
 	 * Returns: a non-empty #GList of
 	 *     #GVariant, or %NULL on error. You must free each of the records and the list
@@ -8946,7 +9027,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* n
 public alias extern(C) void function(GDBusConnection* connection, const(char)* name, void* userData) GBusNameAcquiredCallback;
 
 /**
- * Invoked when the name being watched is known to have to have a owner.
+ * Invoked when the name being watched is known to have to have an owner.
  *
  * Params:
  *     connection = The #GDBusConnection the name is being watched on.
@@ -8972,7 +9053,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* n
 public alias extern(C) void function(GDBusConnection* connection, const(char)* name, void* userData) GBusNameLostCallback;
 
 /**
- * Invoked when the name being watched is known not to have to have a owner.
+ * Invoked when the name being watched is known not to have to have an owner.
  *
  * This is also invoked when the #GDBusConnection on which the watch was
  * established has been closed.  In that case, @connection will be
@@ -9185,7 +9266,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* s
  *     objectPath = The object path that was registered with g_dbus_connection_register_subtree().
  *     interfaceName = The D-Bus interface name that the method call or property access is for.
  *     node = A node that is a child of @object_path (relative to @object_path) or %NULL for the root of the subtree.
- *     outUserData = Return location for user data to pass to functions in the returned #GDBusInterfaceVTable (never %NULL).
+ *     outUserData = Return location for user data to pass to functions in the returned #GDBusInterfaceVTable.
  *     userData = The @user_data #gpointer passed to g_dbus_connection_register_subtree().
  *
  * Returns: A #GDBusInterfaceVTable or %NULL if you don't want to handle the methods.
@@ -9301,7 +9382,7 @@ public alias extern(C) void function(GDesktopAppInfo* appinfo, GPid pid, void* u
  * final async result would be reported).
  *
  * @current_size is in the same units as requested by the operation (see
- * %G_FILE_DISK_USAGE_APPARENT_SIZE).
+ * %G_FILE_MEASURE_APPARENT_SIZE).
  *
  * The frequency of the updates is implementation defined, but is
  * ideally about once every 200ms.
@@ -9505,7 +9586,7 @@ public alias extern(C) void function(GTask* task, void* sourceObject, void* task
  *
  * Params:
  *     vfs = a #GVfs
- *     identifier = the identifier to lookup a #GFile for. This can either
+ *     identifier = the identifier to look up a #GFile for. This can either
  *         be an URI or a parse name as returned by g_file_get_parse_name()
  *     userData = user data passed to the function
  *
@@ -9518,6 +9599,9 @@ public alias extern(C) GFile* function(GVfs* vfs, const(char)* identifier, void*
 /**
  * Extension point for default handler to URI association. See
  * [Extending GIO][extending-gio].
+ *
+ * Deprecated: The #GDesktopAppInfoLookup interface is deprecated and
+ * unused by GIO.
  */
 enum DESKTOP_APP_INFO_LOOKUP_EXTENSION_POINT_NAME = "gio-desktop-app-info-lookup";
 alias G_DESKTOP_APP_INFO_LOOKUP_EXTENSION_POINT_NAME = DESKTOP_APP_INFO_LOOKUP_EXTENSION_POINT_NAME;
@@ -9944,6 +10028,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN = FILE_ATTRIBUTE_STANDARD_IS_HIDDEN;
  * A key in the "standard" namespace for checking if the file is a symlink.
  * Typically the actual type is something else, if we followed the symlink
  * to get the type.
+ * On Windows NTFS mountpoints are considered to be symlinks as well.
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_STANDARD_IS_SYMLINK = "standard::is-symlink";
@@ -10212,8 +10297,10 @@ alias G_FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT = FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT;
 
 /**
  * A key in the "unix" namespace for getting the mode of the file
- * (e.g. whether the file is a regular file, symlink, etc). See lstat()
- * documentation. This attribute is only available for UNIX file systems.
+ * (e.g. whether the file is a regular file, symlink, etc). See the
+ * documentation for `lstat()`: this attribute is equivalent to the `st_mode`
+ * member of `struct stat`, and includes both the file type and permissions.
+ * This attribute is only available for UNIX file systems.
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_MODE = "unix::mode";
@@ -10244,6 +10331,13 @@ alias G_FILE_ATTRIBUTE_UNIX_RDEV = FILE_ATTRIBUTE_UNIX_RDEV;
  */
 enum FILE_ATTRIBUTE_UNIX_UID = "unix::uid";
 alias G_FILE_ATTRIBUTE_UNIX_UID = FILE_ATTRIBUTE_UNIX_UID;
+
+/**
+ * Extension point for memory usage monitoring functionality.
+ * See [Extending GIO][extending-gio].
+ */
+enum MEMORY_MONITOR_EXTENSION_POINT_NAME = "gio-memory-monitor";
+alias G_MEMORY_MONITOR_EXTENSION_POINT_NAME = MEMORY_MONITOR_EXTENSION_POINT_NAME;
 
 /**
  * The menu item attribute which holds the action name of the item.  Action

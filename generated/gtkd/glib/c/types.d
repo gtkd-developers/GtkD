@@ -115,6 +115,11 @@ public alias ubyte GDateDay;
 public alias ushort GDateYear;
 
 /**
+ * Opaque type. See g_main_context_pusher_new() for details.
+ */
+public alias void GMainContextPusher;
+
+/**
  * Opaque type. See g_mutex_locker_new() for details.
  */
 public alias void GMutexLocker;
@@ -135,6 +140,16 @@ public alias int GPid;
  * particular string. A GQuark value of zero is associated to %NULL.
  */
 public alias uint GQuark;
+
+/**
+ * Opaque type. See g_rw_lock_reader_locker_new() for details.
+ */
+public alias void GRWLockReaderLocker;
+
+/**
+ * Opaque type. See g_rw_lock_writer_locker_new() for details.
+ */
+public alias void GRWLockWriterLocker;
 
 /**
  * Opaque type. See g_rec_mutex_locker_new() for details.
@@ -159,12 +174,12 @@ public alias char GRefString;
 public alias char** GStrv;
 
 /**
- * Simply a replacement for time_t. It has been deprecated
- * since it is not equivalent to time_t on 64-bit platforms
- * with a 64-bit time_t. Unrelated to #GTimer.
+ * Simply a replacement for `time_t`. It has been deprecated
+ * since it is not equivalent to `time_t` on 64-bit platforms
+ * with a 64-bit `time_t`. Unrelated to #GTimer.
  *
  * Note that #GTime is defined to always be a 32-bit integer,
- * unlike time_t which may be 64-bit on some systems. Therefore,
+ * unlike `time_t` which may be 64-bit on some systems. Therefore,
  * #GTime will overflow in the year 2038, and you cannot use the
  * address of a #GTime variable as argument to the UNIX time()
  * function.
@@ -177,6 +192,9 @@ public alias char** GStrv;
  * time (&ttime);
  * gtime = (GTime)ttime;
  * ]|
+ *
+ * Deprecated: This is not [Y2038-safe](https://en.wikipedia.org/wiki/Year_2038_problem).
+ * Use #GDateTime or #time_t instead.
  */
 public alias int GTime;
 
@@ -1287,7 +1305,7 @@ public enum GOptionArg
 	 */
 	NONE = 0,
 	/**
-	 * The option takes a string argument.
+	 * The option takes a UTF-8 string argument.
 	 */
 	STRING = 1,
 	/**
@@ -1300,7 +1318,8 @@ public enum GOptionArg
 	 */
 	CALLBACK = 3,
 	/**
-	 * The option takes a filename as argument.
+	 * The option takes a filename as argument, which will
+	 * be in the GLib filename encoding rather than UTF-8.
 	 */
 	FILENAME = 4,
 	/**
@@ -3276,6 +3295,22 @@ public enum GUnicodeScript
 	 * Sogdian. Since: 2.58
 	 */
 	SOGDIAN = 148,
+	/**
+	 * Elym. Since: 2.62
+	 */
+	ELYMAIC = 149,
+	/**
+	 * Nand. Since: 2.62
+	 */
+	NANDINAGARI = 150,
+	/**
+	 * Rohg. Since: 2.62
+	 */
+	NYIAKENG_PUACHUE_HMONG = 151,
+	/**
+	 * Wcho. Since: 2.62
+	 */
+	WANCHO = 152,
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -3622,6 +3657,10 @@ public enum GVariantParseError
 	 * no value given
 	 */
 	VALUE_EXPECTED = 17,
+	/**
+	 * variant was too deeply nested; #GVariant is only guaranteed to handle nesting up to 64 levels (Since: 2.64)
+	 */
+	RECURSION = 18,
 }
 alias GVariantParseError VariantParseError;
 
@@ -5188,6 +5227,17 @@ public alias extern(C) void function(GScanner* scanner, char* message, int error
 public alias extern(C) int function(GSequenceIter* a, GSequenceIter* b, void* data) GSequenceIterCompareFunc;
 
 /**
+ * Dispose function for @source. See g_source_set_dispose_function() for
+ * details.
+ *
+ * Params:
+ *     source = #GSource that is currently being disposed
+ *
+ * Since: 2.64
+ */
+public alias extern(C) void function(GSource* source) GSourceDisposeFunc;
+
+/**
  * This is just a placeholder for #GClosureMarshal,
  * which cannot be used here for dependency reasons.
  */
@@ -6016,7 +6066,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 60;
+enum MINOR_VERSION = 64;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";

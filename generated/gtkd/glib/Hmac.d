@@ -111,18 +111,18 @@ public class Hmac
 	 */
 	public Hmac copy()
 	{
-		auto p = g_hmac_copy(gHmac);
+		auto __p = g_hmac_copy(gHmac);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hmac(cast(GHmac*) p);
+		return new Hmac(cast(GHmac*) __p);
 	}
 
 	/**
-	 * Gets the HMAC as an hexadecimal string.
+	 * Gets the HMAC as a hexadecimal string.
 	 *
 	 * Once this function has been called the #GHmac can no longer be
 	 * updated with g_hmac_update().
@@ -152,14 +152,14 @@ public class Hmac
 	 */
 	public Hmac ref_()
 	{
-		auto p = g_hmac_ref(gHmac);
+		auto __p = g_hmac_ref(gHmac);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hmac(cast(GHmac*) p);
+		return new Hmac(cast(GHmac*) __p);
 	}
 
 	/**
@@ -224,14 +224,14 @@ public class Hmac
 	 */
 	public this(GChecksumType digestType, char[] key)
 	{
-		auto p = g_hmac_new(digestType, key.ptr, cast(size_t)key.length);
+		auto __p = g_hmac_new(digestType, key.ptr, cast(size_t)key.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GHmac*) p);
+		this(cast(GHmac*) __p);
 	}
 
 	/**

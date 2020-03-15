@@ -114,13 +114,13 @@ public class DBusMenuModel : MenuModel
 	 */
 	public static DBusMenuModel get(DBusConnection connection, string busName, string objectPath)
 	{
-		auto p = g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		auto __p = g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMenuModel)(cast(GDBusMenuModel*) p, true);
+		return ObjectG.getDObject!(DBusMenuModel)(cast(GDBusMenuModel*) __p, true);
 	}
 }

@@ -111,14 +111,14 @@ public template SeekableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_seekable_seek(getSeekableStruct(), offset, type, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_seekable_seek(getSeekableStruct(), offset, type, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -156,13 +156,13 @@ public template SeekableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_seekable_truncate(getSeekableStruct(), offset, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_seekable_truncate(getSeekableStruct(), offset, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

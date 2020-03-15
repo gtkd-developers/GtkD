@@ -88,14 +88,14 @@ public class MainLoop
 	 */
 	public this(MainContext context, bool isRunning)
 	{
-		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
+		auto __p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMainLoop*) p);
+		this(cast(GMainLoop*) __p);
 	}
 
 	/**
@@ -105,14 +105,14 @@ public class MainLoop
 	 */
 	public MainContext getContext()
 	{
-		auto p = g_main_loop_get_context(gMainLoop);
+		auto __p = g_main_loop_get_context(gMainLoop);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -145,14 +145,14 @@ public class MainLoop
 	 */
 	public MainLoop ref_()
 	{
-		auto p = g_main_loop_ref(gMainLoop);
+		auto __p = g_main_loop_ref(gMainLoop);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainLoop(cast(GMainLoop*) p, true);
+		return new MainLoop(cast(GMainLoop*) __p, true);
 	}
 
 	/**
@@ -184,14 +184,14 @@ public class MainLoop
 	 */
 	public static Source mainCurrentSource()
 	{
-		auto p = g_main_current_source();
+		auto __p = g_main_current_source();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**

@@ -94,14 +94,14 @@ public class Menu : MenuModel
 	 */
 	public this()
 	{
-		auto p = g_menu_new();
+		auto __p = g_menu_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMenu*) p, true);
+		this(cast(GMenu*) __p, true);
 	}
 
 	/**

@@ -82,19 +82,19 @@ public template ProxyT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_proxy_connect(getProxyStruct(), (connection is null) ? null : connection.getIOStreamStruct(), (proxyAddress is null) ? null : proxyAddress.getProxyAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_proxy_connect(getProxyStruct(), (connection is null) ? null : connection.getIOStreamStruct(), (proxyAddress is null) ? null : proxyAddress.getProxyAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p, true);
 	}
 
 	/**
@@ -130,19 +130,19 @@ public template ProxyT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_proxy_connect_finish(getProxyStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_proxy_connect_finish(getProxyStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p, true);
 	}
 
 	/**

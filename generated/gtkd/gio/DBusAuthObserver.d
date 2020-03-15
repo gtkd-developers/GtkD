@@ -43,11 +43,37 @@ private import std.algorithm;
  * signals you are interested in. Note that new signals may be added
  * in the future
  * 
- * ## Controlling Authentication # {#auth-observer}
+ * ## Controlling Authentication Mechanisms
  * 
- * For example, if you only want to allow D-Bus connections from
- * processes owned by the same uid as the server, you would use a
- * signal handler like the following:
+ * By default, a #GDBusServer or server-side #GDBusConnection will allow
+ * any authentication mechanism to be used. If you only
+ * want to allow D-Bus connections with the `EXTERNAL` mechanism,
+ * which makes use of credentials passing and is the recommended
+ * mechanism for modern Unix platforms such as Linux and the BSD family,
+ * you would use a signal handler like this:
+ * 
+ * |[<!-- language="C" -->
+ * static gboolean
+ * on_allow_mechanism (GDBusAuthObserver *observer,
+ * const gchar       *mechanism,
+ * gpointer           user_data)
+ * {
+ * if (g_strcmp0 (mechanism, "EXTERNAL") == 0)
+ * {
+ * return TRUE;
+ * }
+ * 
+ * return FALSE;
+ * }
+ * ]|
+ * 
+ * ## Controlling Authorization # {#auth-observer}
+ * 
+ * By default, a #GDBusServer or server-side #GDBusConnection will accept
+ * connections from any successfully authenticated user (but not from
+ * anonymous connections using the `ANONYMOUS` mechanism). If you only
+ * want to allow D-Bus connections from processes owned by the same uid
+ * as the server, you would use a signal handler like the following:
  * 
  * |[<!-- language="C" -->
  * static gboolean
@@ -120,14 +146,14 @@ public class DBusAuthObserver : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_dbus_auth_observer_new();
+		auto __p = g_dbus_auth_observer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDBusAuthObserver*) p, true);
+		this(cast(GDBusAuthObserver*) __p, true);
 	}
 
 	/**

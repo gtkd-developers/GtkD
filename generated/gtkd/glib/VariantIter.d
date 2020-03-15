@@ -90,14 +90,14 @@ public class VariantIter
 	 */
 	public VariantIter copy()
 	{
-		auto p = g_variant_iter_copy(gVariantIter);
+		auto __p = g_variant_iter_copy(gVariantIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantIter(cast(GVariantIter*) p, true);
+		return new VariantIter(cast(GVariantIter*) __p, true);
 	}
 
 	/**
@@ -184,13 +184,13 @@ public class VariantIter
 	 */
 	public Variant nextValue()
 	{
-		auto p = g_variant_iter_next_value(gVariantIter);
+		auto __p = g_variant_iter_next_value(gVariantIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 }

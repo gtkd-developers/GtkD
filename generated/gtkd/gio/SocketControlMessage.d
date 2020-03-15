@@ -109,14 +109,14 @@ public class SocketControlMessage : ObjectG
 	 */
 	public static SocketControlMessage deserialize(int level, int type, ubyte[] data)
 	{
-		auto p = g_socket_control_message_deserialize(level, type, cast(size_t)data.length, data.ptr);
+		auto __p = g_socket_control_message_deserialize(level, type, cast(size_t)data.length, data.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) p, true);
+		return ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) __p, true);
 	}
 
 	/**

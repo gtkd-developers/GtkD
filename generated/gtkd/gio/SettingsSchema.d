@@ -194,14 +194,14 @@ public class SettingsSchema
 	 */
 	public SettingsSchemaKey getKey(string name)
 	{
-		auto p = g_settings_schema_get_key(gSettingsSchema, Str.toStringz(name));
+		auto __p = g_settings_schema_get_key(gSettingsSchema, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p, true);
+		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) __p, true);
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class SettingsSchema
 	 * database: those located at the path returned by this function.
 	 *
 	 * Relocatable schemas can be referenced by other schemas and can
-	 * threfore describe multiple sets of keys at different locations.  For
+	 * therefore describe multiple sets of keys at different locations.  For
 	 * relocatable schemas, this function will return %NULL.
 	 *
 	 * Returns: the path of the schema, or %NULL
@@ -245,7 +245,8 @@ public class SettingsSchema
 	 * You should free the return value with g_strfreev() when you are done
 	 * with it.
 	 *
-	 * Returns: a list of the children on @settings
+	 * Returns: a list of the children on
+	 *     @settings, in no defined order
 	 *
 	 * Since: 2.44
 	 */
@@ -265,7 +266,7 @@ public class SettingsSchema
 	 * function is intended for introspection reasons.
 	 *
 	 * Returns: a list of the keys on
-	 *     @schema
+	 *     @schema, in no defined order
 	 *
 	 * Since: 2.46
 	 */
@@ -287,14 +288,14 @@ public class SettingsSchema
 	 */
 	public SettingsSchema ref_()
 	{
-		auto p = g_settings_schema_ref(gSettingsSchema);
+		auto __p = g_settings_schema_ref(gSettingsSchema);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) __p, true);
 	}
 
 	/**

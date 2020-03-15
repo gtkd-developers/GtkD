@@ -181,14 +181,14 @@ public final class Date
 	 */
 	public this()
 	{
-		auto p = g_date_new();
+		auto __p = g_date_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDate*) p);
+		this(cast(GDate*) __p);
 	}
 
 	/**
@@ -207,14 +207,14 @@ public final class Date
 	 */
 	public this(GDateDay day, GDateMonth month, GDateYear year)
 	{
-		auto p = g_date_new_dmy(day, month, year);
+		auto __p = g_date_new_dmy(day, month, year);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_dmy");
 		}
 
-		this(cast(GDate*) p);
+		this(cast(GDate*) __p);
 	}
 
 	/**
@@ -231,14 +231,14 @@ public final class Date
 	 */
 	public this(uint julianDay)
 	{
-		auto p = g_date_new_julian(julianDay);
+		auto __p = g_date_new_julian(julianDay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_julian");
 		}
 
-		this(cast(GDate*) p);
+		this(cast(GDate*) __p);
 	}
 
 	/**
@@ -339,14 +339,14 @@ public final class Date
 	 */
 	public Date copy()
 	{
-		auto p = g_date_copy(gDate);
+		auto __p = g_date_copy(gDate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Date(cast(GDate*) p, true);
+		return new Date(cast(GDate*) __p, true);
 	}
 
 	/**
@@ -612,7 +612,7 @@ public final class Date
 	 *
 	 * Since: 2.10
 	 */
-	public void setTimeT(uint timet)
+	public void set_time_t(uint timet)
 	{
 		g_date_set_time_t(gDate, timet);
 	}
@@ -623,6 +623,9 @@ public final class Date
 	 * additional precision.
 	 *
 	 * The time to date conversion is done using the user's current timezone.
+	 *
+	 * Deprecated: #GTimeVal is not year-2038-safe. Use g_date_set_time_t()
+	 * instead.
 	 *
 	 * Params:
 	 *     timeval = #GTimeVal value to set

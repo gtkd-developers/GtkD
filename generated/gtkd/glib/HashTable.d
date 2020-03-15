@@ -71,6 +71,10 @@ public class HashTable
 	 * is equivalent to calling g_hash_table_replace() with @key as both the
 	 * key and the value.
 	 *
+	 * In particular, this means that if @key already exists in the hash table, then
+	 * the old copy of @key in the hash table is freed and @key replaces it in the
+	 * table.
+	 *
 	 * When a hash table only ever contains keys that have themselves as the
 	 * corresponding value it is able to be stored more efficiently.  See
 	 * the discussion in the section description.
@@ -158,6 +162,9 @@ public class HashTable
 	 * items). To remove all items matching a predicate, use
 	 * g_hash_table_foreach_remove().
 	 *
+	 * The order in which g_hash_table_foreach() iterates over the keys/values in
+	 * the hash table is not defined.
+	 *
 	 * See g_hash_table_find() for performance caveats for linear
 	 * order searches in contrast to g_hash_table_lookup().
 	 *
@@ -228,14 +235,14 @@ public class HashTable
 	 */
 	public ListG getKeys()
 	{
-		auto p = g_hash_table_get_keys(gHashTable);
+		auto __p = g_hash_table_get_keys(gHashTable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -266,9 +273,9 @@ public class HashTable
 	{
 		uint length;
 
-		auto p = g_hash_table_get_keys_as_array(gHashTable, &length);
+		auto __p = g_hash_table_get_keys_as_array(gHashTable, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -288,14 +295,14 @@ public class HashTable
 	 */
 	public ListG getValues()
 	{
-		auto p = g_hash_table_get_values(gHashTable);
+		auto __p = g_hash_table_get_values(gHashTable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -390,14 +397,14 @@ public class HashTable
 	 */
 	public this(GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
-		auto p = g_hash_table_new(hashFunc, keyEqualFunc);
+		auto __p = g_hash_table_new(hashFunc, keyEqualFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GHashTable*) p);
+		this(cast(GHashTable*) __p);
 	}
 
 	/**
@@ -429,14 +436,14 @@ public class HashTable
 	 */
 	public this(GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
-		auto p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
+		auto __p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GHashTable*) p);
+		this(cast(GHashTable*) __p);
 	}
 
 	alias doref = ref_;
@@ -450,14 +457,14 @@ public class HashTable
 	 */
 	public HashTable ref_()
 	{
-		auto p = g_hash_table_ref(gHashTable);
+		auto __p = g_hash_table_ref(gHashTable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new HashTable(cast(GHashTable*) p);
+		return new HashTable(cast(GHashTable*) __p);
 	}
 
 	/**

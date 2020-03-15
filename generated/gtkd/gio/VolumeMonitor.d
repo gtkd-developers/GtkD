@@ -150,14 +150,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public static VolumeIF adoptOrphanMount(MountIF mount)
 	{
-		auto p = g_volume_monitor_adopt_orphan_mount((mount is null) ? null : mount.getMountStruct());
+		auto __p = g_volume_monitor_adopt_orphan_mount((mount is null) ? null : mount.getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) __p, true);
 	}
 
 	/**
@@ -170,14 +170,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getConnectedDrives()
 	{
-		auto p = g_volume_monitor_get_connected_drives(gVolumeMonitor);
+		auto __p = g_volume_monitor_get_connected_drives(gVolumeMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -191,14 +191,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public MountIF getMountForUuid(string uuid)
 	{
-		auto p = g_volume_monitor_get_mount_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
+		auto __p = g_volume_monitor_get_mount_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) __p, true);
 	}
 
 	/**
@@ -211,14 +211,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getMounts()
 	{
-		auto p = g_volume_monitor_get_mounts(gVolumeMonitor);
+		auto __p = g_volume_monitor_get_mounts(gVolumeMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -232,14 +232,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public VolumeIF getVolumeForUuid(string uuid)
 	{
-		auto p = g_volume_monitor_get_volume_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
+		auto __p = g_volume_monitor_get_volume_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) __p, true);
 	}
 
 	/**
@@ -252,14 +252,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getVolumes()
 	{
-		auto p = g_volume_monitor_get_volumes(gVolumeMonitor);
+		auto __p = g_volume_monitor_get_volumes(gVolumeMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

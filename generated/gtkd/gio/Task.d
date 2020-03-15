@@ -33,9 +33,11 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.MainContext;
+private import glib.MemorySlice;
 private import glib.Source;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gobject.Value;
 public  import gtkc.giotypes;
 
 
@@ -607,14 +609,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public this(ObjectG sourceObject, Cancellable cancellable, GAsyncReadyCallback callback, void* callbackData)
 	{
-		auto p = g_task_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, callbackData);
+		auto __p = g_task_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, callbackData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTask*) p, true);
+		this(cast(GTask*) __p, true);
 	}
 
 	/**
@@ -693,14 +695,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public Cancellable getCancellable()
 	{
-		auto p = g_task_get_cancellable(gTask);
+		auto __p = g_task_get_cancellable(gTask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) p);
+		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) __p);
 	}
 
 	/**
@@ -743,14 +745,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public MainContext getContext()
 	{
-		auto p = g_task_get_context(gTask);
+		auto __p = g_task_get_context(gTask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -798,14 +800,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public ObjectG getSourceObject()
 	{
-		auto p = g_task_get_source_object(gTask);
+		auto __p = g_task_get_source_object(gTask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -863,14 +865,14 @@ public class Task : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_task_propagate_boolean(gTask, &err) != 0;
+		auto __p = g_task_propagate_boolean(gTask, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -892,14 +894,14 @@ public class Task : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_task_propagate_int(gTask, &err);
+		auto __p = g_task_propagate_int(gTask, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -922,14 +924,52 @@ public class Task : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_task_propagate_pointer(gTask, &err);
+		auto __p = g_task_propagate_pointer(gTask, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
+	}
+
+	/**
+	 * Gets the result of @task as a #GValue, and transfers ownership of
+	 * that value to the caller. As with g_task_return_value(), this is
+	 * a generic low-level method; g_task_propagate_pointer() and the like
+	 * will usually be more useful for C code.
+	 *
+	 * If the task resulted in an error, or was cancelled, then this will
+	 * instead set @error and return %FALSE.
+	 *
+	 * Since this method transfers ownership of the return value (or
+	 * error) to the caller, you may only call it once.
+	 *
+	 * Params:
+	 *     value = return location for the #GValue
+	 *
+	 * Returns: %TRUE if @task succeeded, %FALSE on error.
+	 *
+	 * Since: 2.64
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool propagateValue(out Value value)
+	{
+		GValue* outvalue = sliceNew!GValue();
+		GError* err = null;
+
+		auto __p = g_task_propagate_value(gTask, outvalue, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		value = ObjectG.getDObject!(Value)(outvalue, true);
+
+		return __p;
 	}
 
 	/**
@@ -1030,6 +1070,27 @@ public class Task : ObjectG, AsyncResultIF
 	public void returnPointer(void* result, GDestroyNotify resultDestroy)
 	{
 		g_task_return_pointer(gTask, result, resultDestroy);
+	}
+
+	/**
+	 * Sets @task's result to @result (by copying it) and completes the task.
+	 *
+	 * If @result is %NULL then a #GValue of type #G_TYPE_POINTER
+	 * with a value of %NULL will be used for the result.
+	 *
+	 * This is a very generic low-level method intended primarily for use
+	 * by language bindings; for C code, g_task_return_pointer() and the
+	 * like will normally be much easier to use.
+	 *
+	 * Params:
+	 *     result = the #GValue result of
+	 *         a task function
+	 *
+	 * Since: 2.64
+	 */
+	public void returnValue(Value result)
+	{
+		g_task_return_value(gTask, (result is null) ? null : result.getValueStruct());
 	}
 
 	/**

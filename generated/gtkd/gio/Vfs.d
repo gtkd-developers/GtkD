@@ -77,14 +77,14 @@ public class Vfs : ObjectG
 	 */
 	public static Vfs getDefault()
 	{
-		auto p = g_vfs_get_default();
+		auto __p = g_vfs_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Vfs)(cast(GVfs*) p);
+		return ObjectG.getDObject!(Vfs)(cast(GVfs*) __p);
 	}
 
 	/**
@@ -94,14 +94,14 @@ public class Vfs : ObjectG
 	 */
 	public static Vfs getLocal()
 	{
-		auto p = g_vfs_get_local();
+		auto __p = g_vfs_get_local();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Vfs)(cast(GVfs*) p);
+		return ObjectG.getDObject!(Vfs)(cast(GVfs*) __p);
 	}
 
 	/**
@@ -115,14 +115,14 @@ public class Vfs : ObjectG
 	 */
 	public FileIF getFileForPath(string path)
 	{
-		auto p = g_vfs_get_file_for_path(gVfs, Str.toStringz(path));
+		auto __p = g_vfs_get_file_for_path(gVfs, Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -140,14 +140,14 @@ public class Vfs : ObjectG
 	 */
 	public FileIF getFileForUri(string uri)
 	{
-		auto p = g_vfs_get_file_for_uri(gVfs, Str.toStringz(uri));
+		auto __p = g_vfs_get_file_for_uri(gVfs, Str.toStringz(uri));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -186,14 +186,14 @@ public class Vfs : ObjectG
 	 */
 	public FileIF parseName(string parseName)
 	{
-		auto p = g_vfs_parse_name(gVfs, Str.toStringz(parseName));
+		auto __p = g_vfs_parse_name(gVfs, Str.toStringz(parseName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**

@@ -105,6 +105,18 @@ public class Timer
 	}
 
 	/**
+	 * Exposes whether the timer is currently active.
+	 *
+	 * Returns: %TRUE if the timer is running, %FALSE otherwise
+	 *
+	 * Since: 2.62
+	 */
+	public bool isActive()
+	{
+		return g_timer_is_active(gTimer) != 0;
+	}
+
+	/**
 	 * This function is useless; it's fine to call g_timer_start() on an
 	 * already-started timer to reset the start time, so g_timer_reset()
 	 * serves no purpose.
@@ -144,13 +156,13 @@ public class Timer
 	 */
 	public this()
 	{
-		auto p = g_timer_new();
+		auto __p = g_timer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTimer*) p);
+		this(cast(GTimer*) __p);
 	}
 }

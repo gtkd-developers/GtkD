@@ -119,14 +119,14 @@ public class FileEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_file_enumerator_close(gFileEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_enumerator_close(gFileEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -171,14 +171,14 @@ public class FileEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_file_enumerator_close_finish(gFileEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_enumerator_close_finish(gFileEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -203,14 +203,14 @@ public class FileEnumerator : ObjectG
 	 */
 	public FileIF getChild(FileInfo info)
 	{
-		auto p = g_file_enumerator_get_child(gFileEnumerator, (info is null) ? null : info.getFileInfoStruct());
+		auto __p = g_file_enumerator_get_child(gFileEnumerator, (info is null) ? null : info.getFileInfoStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -222,14 +222,14 @@ public class FileEnumerator : ObjectG
 	 */
 	public FileIF getContainer()
 	{
-		auto p = g_file_enumerator_get_container(gFileEnumerator);
+		auto __p = g_file_enumerator_get_container(gFileEnumerator);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p);
 	}
 
 	/**
@@ -307,7 +307,7 @@ public class FileEnumerator : ObjectG
 		GFile* outoutChild = null;
 		GError* err = null;
 
-		auto p = g_file_enumerator_iterate(gFileEnumerator, &outoutInfo, &outoutChild, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_enumerator_iterate(gFileEnumerator, &outoutInfo, &outoutChild, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
@@ -317,7 +317,7 @@ public class FileEnumerator : ObjectG
 		outInfo = ObjectG.getDObject!(FileInfo)(outoutInfo);
 		outChild = ObjectG.getDObject!(FileIF)(outoutChild);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -346,19 +346,19 @@ public class FileEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_file_enumerator_next_file(gFileEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_enumerator_next_file(gFileEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -410,19 +410,19 @@ public class FileEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_file_enumerator_next_files_finish(gFileEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_file_enumerator_next_files_finish(gFileEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

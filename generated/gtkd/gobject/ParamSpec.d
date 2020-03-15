@@ -39,11 +39,14 @@ private import gtkd.Loader;
  * 
  * ## Parameter names # {#canonical-parameter-names}
  * 
- * Parameter names need to start with a letter (a-z or A-Z).
- * Subsequent characters can be letters, numbers or a '-'.
- * All other characters are replaced by a '-' during construction.
- * The result of this replacement is called the canonical name of
- * the parameter.
+ * A property name consists of segments consisting of ASCII letters and
+ * digits, separated by either the `-` or `_` character. The first
+ * character of a property name must be a letter. These are the same rules as
+ * for signal naming (see g_signal_new()).
+ * 
+ * When creating and looking up a #GParamSpec, either separator can be
+ * used, but they cannot be mixed. Using `-` is considerably more
+ * efficient, and is the ‘canonical form’. Using `_` is discouraged.
  */
 public class ParamSpec
 {
@@ -84,15 +87,9 @@ public class ParamSpec
 	/**
 	 * Creates a new #GParamSpec instance.
 	 *
-	 * A property name consists of segments consisting of ASCII letters and
-	 * digits, separated by either the '-' or '_' character. The first
-	 * character of a property name must be a letter. Names which violate these
-	 * rules lead to undefined behaviour.
-	 *
-	 * When creating and looking up a #GParamSpec, either separator can be
-	 * used, but they cannot be mixed. Using '-' is considerably more
-	 * efficient and in fact required when using property names as detail
-	 * strings for signals.
+	 * See [canonical parameter names][canonical-parameter-names] for details of
+	 * the rules for @name. Names which violate these rules lead to undefined
+	 * behaviour.
 	 *
 	 * Beyond the name, #GParamSpecs have two more descriptive
 	 * strings associated with them, the @nick, which should be suitable
@@ -111,14 +108,14 @@ public class ParamSpec
 	 */
 	public static ParamSpec internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
-		auto p = g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
+		auto __p = g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -142,14 +139,14 @@ public class ParamSpec
 	 */
 	public Value getDefaultValue()
 	{
-		auto p = g_param_spec_get_default_value(gParamSpec);
+		auto __p = g_param_spec_get_default_value(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -216,14 +213,14 @@ public class ParamSpec
 	 */
 	public ParamSpec getRedirectTarget()
 	{
-		auto p = g_param_spec_get_redirect_target(gParamSpec);
+		auto __p = g_param_spec_get_redirect_target(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	alias doref = ref_;
@@ -234,14 +231,14 @@ public class ParamSpec
 	 */
 	public ParamSpec ref_()
 	{
-		auto p = g_param_spec_ref(gParamSpec);
+		auto __p = g_param_spec_ref(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -253,14 +250,14 @@ public class ParamSpec
 	 */
 	public ParamSpec refSink()
 	{
-		auto p = g_param_spec_ref_sink(gParamSpec);
+		auto __p = g_param_spec_ref_sink(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -396,7 +393,8 @@ public class ParamSpec
 	 *
 	 * Params:
 	 *     pspec = a valid #GParamSpec
-	 *     value = a #GValue of correct type for @pspec
+	 *     value = a #GValue of correct type for @pspec; since 2.64, you
+	 *         can also pass an empty #GValue, initialized with %G_VALUE_INIT
 	 */
 	public static void paramValueSetDefault(ParamSpec pspec, Value value)
 	{

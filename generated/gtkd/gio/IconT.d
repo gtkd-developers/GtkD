@@ -103,14 +103,14 @@ public template IconT(TStruct)
 	 */
 	public Variant serialize()
 	{
-		auto p = g_icon_serialize(getIconStruct());
+		auto __p = g_icon_serialize(getIconStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**

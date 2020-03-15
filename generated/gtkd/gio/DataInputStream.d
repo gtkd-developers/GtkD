@@ -89,14 +89,14 @@ public class DataInputStream : BufferedInputStream
 	 */
 	public this(InputStream baseStream)
 	{
-		auto p = g_data_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct());
+		auto __p = g_data_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDataInputStream*) p, true);
+		this(cast(GDataInputStream*) __p, true);
 	}
 
 	/**
@@ -137,14 +137,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_int16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_int16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -169,14 +169,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_int32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_int32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -201,14 +201,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_int64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_int64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -393,14 +393,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_uint16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_uint16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -425,14 +425,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_uint32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_uint32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -457,14 +457,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_uint64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_uint64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

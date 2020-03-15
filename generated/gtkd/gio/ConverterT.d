@@ -156,14 +156,14 @@ public template ConverterT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_converter_convert(getConverterStruct(), inbuf.ptr, cast(size_t)inbuf.length, outbuf.ptr, cast(size_t)outbuf.length, flags, &bytesRead, &bytesWritten, &err);
+		auto __p = g_converter_convert(getConverterStruct(), inbuf.ptr, cast(size_t)inbuf.length, outbuf.ptr, cast(size_t)outbuf.length, flags, &bytesRead, &bytesWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -107,14 +107,14 @@ public class Pattern
 	 */
 	public this(string pattern)
 	{
-		auto p = g_pattern_spec_new(Str.toStringz(pattern));
+		auto __p = g_pattern_spec_new(Str.toStringz(pattern));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GPatternSpec*) p);
+		this(cast(GPatternSpec*) __p);
 	}
 
 	/**

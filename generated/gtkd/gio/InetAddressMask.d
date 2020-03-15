@@ -102,19 +102,19 @@ public class InetAddressMask : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_inet_address_mask_new((addr is null) ? null : addr.getInetAddressStruct(), length, &err);
+		auto __p = g_inet_address_mask_new((addr is null) ? null : addr.getInetAddressStruct(), length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GInetAddressMask*) p, true);
+		this(cast(GInetAddressMask*) __p, true);
 	}
 
 	/**
@@ -138,19 +138,19 @@ public class InetAddressMask : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_inet_address_mask_new_from_string(Str.toStringz(maskString), &err);
+		auto __p = g_inet_address_mask_new_from_string(Str.toStringz(maskString), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
 
-		this(cast(GInetAddressMask*) p, true);
+		this(cast(GInetAddressMask*) __p, true);
 	}
 
 	/**
@@ -177,14 +177,14 @@ public class InetAddressMask : ObjectG, InitableIF
 	 */
 	public InetAddress getAddress()
 	{
-		auto p = g_inet_address_mask_get_address(gInetAddressMask);
+		auto __p = g_inet_address_mask_get_address(gInetAddressMask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InetAddress)(cast(GInetAddress*) p);
+		return ObjectG.getDObject!(InetAddress)(cast(GInetAddress*) __p);
 	}
 
 	/**

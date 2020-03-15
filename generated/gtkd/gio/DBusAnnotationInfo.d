@@ -187,14 +187,14 @@ public final class DBusAnnotationInfo
 	 */
 	public DBusAnnotationInfo ref_()
 	{
-		auto p = g_dbus_annotation_info_ref(gDBusAnnotationInfo);
+		auto __p = g_dbus_annotation_info_ref(gDBusAnnotationInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) p, true);
+		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) __p, true);
 	}
 
 	/**

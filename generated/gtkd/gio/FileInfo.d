@@ -107,14 +107,14 @@ public class FileInfo : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_file_info_new();
+		auto __p = g_file_info_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GFileInfo*) p, true);
+		this(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -144,25 +144,26 @@ public class FileInfo : ObjectG
 	 */
 	public FileInfo dup()
 	{
-		auto p = g_file_info_dup(gFileInfo);
+		auto __p = g_file_info_dup(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
 	 * Gets the value of a attribute, formated as a string.
 	 * This escapes things as needed to make the string valid
-	 * utf8.
+	 * UTF-8.
 	 *
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: a UTF-8 string associated with the given @attribute.
+	 * Returns: a UTF-8 string associated with the given @attribute, or
+	 *     %NULL if the attribute wasn’t set.
 	 *     When you're done with the string it must be freed with g_free().
 	 */
 	public string getAttributeAsString(string attribute)
@@ -237,7 +238,7 @@ public class FileInfo : ObjectG
 
 	/**
 	 * Gets a signed 64-bit integer contained within the attribute. If the
-	 * attribute does not contain an signed 64-bit integer, or is invalid,
+	 * attribute does not contain a signed 64-bit integer, or is invalid,
 	 * 0 will be returned.
 	 *
 	 * Params:
@@ -262,14 +263,14 @@ public class FileInfo : ObjectG
 	 */
 	public ObjectG getAttributeObject(string attribute)
 	{
-		auto p = g_file_info_get_attribute_object(gFileInfo, Str.toStringz(attribute));
+		auto __p = g_file_info_get_attribute_object(gFileInfo, Str.toStringz(attribute));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -383,14 +384,14 @@ public class FileInfo : ObjectG
 	 */
 	public DateTime getDeletionDate()
 	{
-		auto p = g_file_info_get_deletion_date(gFileInfo);
+		auto __p = g_file_info_get_deletion_date(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -442,14 +443,14 @@ public class FileInfo : ObjectG
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_file_info_get_icon(gFileInfo);
+		auto __p = g_file_info_get_icon(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -483,8 +484,35 @@ public class FileInfo : ObjectG
 	}
 
 	/**
+	 * Gets the modification time of the current @info and returns it as a
+	 * #GDateTime.
+	 *
+	 * This requires the %G_FILE_ATTRIBUTE_TIME_MODIFIED attribute. If
+	 * %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC is provided, the resulting #GDateTime
+	 * will have microsecond precision.
+	 *
+	 * Returns: modification time, or %NULL if unknown
+	 *
+	 * Since: 2.62
+	 */
+	public DateTime getModificationDateTime()
+	{
+		auto __p = g_file_info_get_modification_date_time(gFileInfo);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p, true);
+	}
+
+	/**
 	 * Gets the modification time of the current @info and sets it
 	 * in @result.
+	 *
+	 * Deprecated: Use g_file_info_get_modification_date_time() instead, as
+	 * #GTimeVal is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     result = a #GTimeVal.
@@ -538,14 +566,14 @@ public class FileInfo : ObjectG
 	 */
 	public IconIF getSymbolicIcon()
 	{
-		auto p = g_file_info_get_symbolic_icon(gFileInfo);
+		auto __p = g_file_info_get_symbolic_icon(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -564,7 +592,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: %TRUE if @Ginfo has an attribute named @attribute,
+	 * Returns: %TRUE if @info has an attribute named @attribute,
 	 *     %FALSE otherwise.
 	 */
 	public bool hasAttribute(string attribute)
@@ -579,7 +607,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     nameSpace = a file attribute namespace.
 	 *
-	 * Returns: %TRUE if @Ginfo has an attribute in @name_space,
+	 * Returns: %TRUE if @info has an attribute in @name_space,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.22
@@ -870,8 +898,27 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Sets the %G_FILE_ATTRIBUTE_TIME_MODIFIED attribute in the file
-	 * info to the given time value.
+	 * Sets the %G_FILE_ATTRIBUTE_TIME_MODIFIED and
+	 * %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC attributes in the file info to the
+	 * given date/time value.
+	 *
+	 * Params:
+	 *     mtime = a #GDateTime.
+	 *
+	 * Since: 2.62
+	 */
+	public void setModificationDateTime(DateTime mtime)
+	{
+		g_file_info_set_modification_date_time(gFileInfo, (mtime is null) ? null : mtime.getDateTimeStruct());
+	}
+
+	/**
+	 * Sets the %G_FILE_ATTRIBUTE_TIME_MODIFIED and
+	 * %G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC attributes in the file info to the
+	 * given time value.
+	 *
+	 * Deprecated: Use g_file_info_set_modification_date_time() instead, as
+	 * #GTimeVal is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     mtime = a #GTimeVal.

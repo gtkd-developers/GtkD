@@ -63,12 +63,12 @@ public size_t iconv(GIConv converter, ref string inbuf, ref string outbuf)
 	char* outoutbuf = Str.toStringz(outbuf);
 	size_t outbytesLeft;
 
-	auto p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
+	auto __p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
 
 	inbuf = Str.toString(outinbuf, inbytesLeft);
 	outbuf = Str.toString(outoutbuf, outbytesLeft);
 
-	return p;
+	return __p;
 }
 
 /**

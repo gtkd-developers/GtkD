@@ -104,14 +104,14 @@ public class SequenceIter
 	 */
 	public Sequence getSequence()
 	{
-		auto p = g_sequence_iter_get_sequence(gSequenceIter);
+		auto __p = g_sequence_iter_get_sequence(gSequenceIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Sequence(cast(GSequence*) p);
+		return new Sequence(cast(GSequence*) __p);
 	}
 
 	/**
@@ -154,14 +154,14 @@ public class SequenceIter
 	 */
 	public SequenceIter move(int delta)
 	{
-		auto p = g_sequence_iter_move(gSequenceIter, delta);
+		auto __p = g_sequence_iter_move(gSequenceIter, delta);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -174,14 +174,14 @@ public class SequenceIter
 	 */
 	public SequenceIter next()
 	{
-		auto p = g_sequence_iter_next(gSequenceIter);
+		auto __p = g_sequence_iter_next(gSequenceIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -195,13 +195,13 @@ public class SequenceIter
 	 */
 	public SequenceIter prev()
 	{
-		auto p = g_sequence_iter_prev(gSequenceIter);
+		auto __p = g_sequence_iter_prev(gSequenceIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 }

@@ -41,6 +41,8 @@ shared static this()
 	// glib.ArrayG
 
 	Linker.link(g_array_append_vals, "g_array_append_vals", LIBRARY_GLIB);
+	Linker.link(g_array_binary_search, "g_array_binary_search", LIBRARY_GLIB);
+	Linker.link(g_array_copy, "g_array_copy", LIBRARY_GLIB);
 	Linker.link(g_array_free, "g_array_free", LIBRARY_GLIB);
 	Linker.link(g_array_get_element_size, "g_array_get_element_size", LIBRARY_GLIB);
 	Linker.link(g_array_insert_vals, "g_array_insert_vals", LIBRARY_GLIB);
@@ -55,6 +57,7 @@ shared static this()
 	Linker.link(g_array_sized_new, "g_array_sized_new", LIBRARY_GLIB);
 	Linker.link(g_array_sort, "g_array_sort", LIBRARY_GLIB);
 	Linker.link(g_array_sort_with_data, "g_array_sort_with_data", LIBRARY_GLIB);
+	Linker.link(g_array_steal, "g_array_steal", LIBRARY_GLIB);
 	Linker.link(g_array_unref, "g_array_unref", LIBRARY_GLIB);
 
 	// glib.AsyncQueue
@@ -147,6 +150,7 @@ shared static this()
 	Linker.link(g_byte_array_sized_new, "g_byte_array_sized_new", LIBRARY_GLIB);
 	Linker.link(g_byte_array_sort, "g_byte_array_sort", LIBRARY_GLIB);
 	Linker.link(g_byte_array_sort_with_data, "g_byte_array_sort_with_data", LIBRARY_GLIB);
+	Linker.link(g_byte_array_steal, "g_byte_array_steal", LIBRARY_GLIB);
 	Linker.link(g_byte_array_unref, "g_byte_array_unref", LIBRARY_GLIB);
 
 	// glib.Bytes
@@ -265,6 +269,7 @@ shared static this()
 	Linker.link(g_date_time_add_years, "g_date_time_add_years", LIBRARY_GLIB);
 	Linker.link(g_date_time_difference, "g_date_time_difference", LIBRARY_GLIB);
 	Linker.link(g_date_time_format, "g_date_time_format", LIBRARY_GLIB);
+	Linker.link(g_date_time_format_iso8601, "g_date_time_format_iso8601", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_day_of_month, "g_date_time_get_day_of_month", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_day_of_week, "g_date_time_get_day_of_week", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_day_of_year, "g_date_time_get_day_of_year", LIBRARY_GLIB);
@@ -521,6 +526,7 @@ shared static this()
 	Linker.link(g_list_index, "g_list_index", LIBRARY_GLIB);
 	Linker.link(g_list_insert, "g_list_insert", LIBRARY_GLIB);
 	Linker.link(g_list_insert_before, "g_list_insert_before", LIBRARY_GLIB);
+	Linker.link(g_list_insert_before_link, "g_list_insert_before_link", LIBRARY_GLIB);
 	Linker.link(g_list_insert_sorted, "g_list_insert_sorted", LIBRARY_GLIB);
 	Linker.link(g_list_insert_sorted_with_data, "g_list_insert_sorted_with_data", LIBRARY_GLIB);
 	Linker.link(g_list_last, "g_list_last", LIBRARY_GLIB);
@@ -536,6 +542,7 @@ shared static this()
 	Linker.link(g_list_reverse, "g_list_reverse", LIBRARY_GLIB);
 	Linker.link(g_list_sort, "g_list_sort", LIBRARY_GLIB);
 	Linker.link(g_list_sort_with_data, "g_list_sort_with_data", LIBRARY_GLIB);
+	Linker.link(g_clear_list, "g_clear_list", LIBRARY_GLIB);
 
 	// glib.MainContext
 
@@ -728,6 +735,9 @@ shared static this()
 	// glib.PtrArray
 
 	Linker.link(g_ptr_array_add, "g_ptr_array_add", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_copy, "g_ptr_array_copy", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_extend, "g_ptr_array_extend", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_extend_and_steal, "g_ptr_array_extend_and_steal", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_find, "g_ptr_array_find", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_find_with_equal_func, "g_ptr_array_find_with_equal_func", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_foreach, "g_ptr_array_foreach", LIBRARY_GLIB);
@@ -747,6 +757,7 @@ shared static this()
 	Linker.link(g_ptr_array_sized_new, "g_ptr_array_sized_new", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_sort, "g_ptr_array_sort", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_sort_with_data, "g_ptr_array_sort_with_data", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_steal, "g_ptr_array_steal", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_steal_index, "g_ptr_array_steal_index", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_steal_index_fast, "g_ptr_array_steal_index_fast", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_unref, "g_ptr_array_unref", LIBRARY_GLIB);
@@ -766,7 +777,9 @@ shared static this()
 	Linker.link(g_queue_index, "g_queue_index", LIBRARY_GLIB);
 	Linker.link(g_queue_init, "g_queue_init", LIBRARY_GLIB);
 	Linker.link(g_queue_insert_after, "g_queue_insert_after", LIBRARY_GLIB);
+	Linker.link(g_queue_insert_after_link, "g_queue_insert_after_link", LIBRARY_GLIB);
 	Linker.link(g_queue_insert_before, "g_queue_insert_before", LIBRARY_GLIB);
+	Linker.link(g_queue_insert_before_link, "g_queue_insert_before_link", LIBRARY_GLIB);
 	Linker.link(g_queue_insert_sorted, "g_queue_insert_sorted", LIBRARY_GLIB);
 	Linker.link(g_queue_is_empty, "g_queue_is_empty", LIBRARY_GLIB);
 	Linker.link(g_queue_link_index, "g_queue_link_index", LIBRARY_GLIB);
@@ -893,6 +906,7 @@ shared static this()
 	Linker.link(g_slist_reverse, "g_slist_reverse", LIBRARY_GLIB);
 	Linker.link(g_slist_sort, "g_slist_sort", LIBRARY_GLIB);
 	Linker.link(g_slist_sort_with_data, "g_slist_sort_with_data", LIBRARY_GLIB);
+	Linker.link(g_clear_slist, "g_clear_slist", LIBRARY_GLIB);
 
 	// glib.ScannerG
 
@@ -988,6 +1002,7 @@ shared static this()
 	Linker.link(g_source_set_callback, "g_source_set_callback", LIBRARY_GLIB);
 	Linker.link(g_source_set_callback_indirect, "g_source_set_callback_indirect", LIBRARY_GLIB);
 	Linker.link(g_source_set_can_recurse, "g_source_set_can_recurse", LIBRARY_GLIB);
+	Linker.link(g_source_set_dispose_function, "g_source_set_dispose_function", LIBRARY_GLIB);
 	Linker.link(g_source_set_funcs, "g_source_set_funcs", LIBRARY_GLIB);
 	Linker.link(g_source_set_name, "g_source_set_name", LIBRARY_GLIB);
 	Linker.link(g_source_set_priority, "g_source_set_priority", LIBRARY_GLIB);
@@ -1127,6 +1142,7 @@ shared static this()
 	Linker.link(g_timer_continue, "g_timer_continue", LIBRARY_GLIB);
 	Linker.link(g_timer_destroy, "g_timer_destroy", LIBRARY_GLIB);
 	Linker.link(g_timer_elapsed, "g_timer_elapsed", LIBRARY_GLIB);
+	Linker.link(g_timer_is_active, "g_timer_is_active", LIBRARY_GLIB);
 	Linker.link(g_timer_reset, "g_timer_reset", LIBRARY_GLIB);
 	Linker.link(g_timer_start, "g_timer_start", LIBRARY_GLIB);
 	Linker.link(g_timer_stop, "g_timer_stop", LIBRARY_GLIB);
@@ -1506,6 +1522,7 @@ shared static this()
 	Linker.link(g_spaced_primes_closest, "g_spaced_primes_closest", LIBRARY_GLIB);
 	Linker.link(g_unsetenv, "g_unsetenv", LIBRARY_GLIB);
 	Linker.link(g_canonicalize_filename, "g_canonicalize_filename", LIBRARY_GLIB);
+	Linker.link(g_get_os_info, "g_get_os_info", LIBRARY_GLIB);
 
 	// glib.Atomic
 
@@ -1543,6 +1560,7 @@ shared static this()
 	Linker.link(g_locale_from_utf8, "g_locale_from_utf8", LIBRARY_GLIB);
 	Linker.link(g_locale_to_utf8, "g_locale_to_utf8", LIBRARY_GLIB);
 	Linker.link(g_get_language_names_with_category, "g_get_language_names_with_category", LIBRARY_GLIB);
+	Linker.link(g_get_console_charset, "g_get_console_charset", LIBRARY_GLIB);
 
 	// glib.Child
 
@@ -1783,6 +1801,8 @@ __gshared extern(C)
 	// glib.ArrayG
 
 	GArray* function(GArray* array, void* data, uint len) c_g_array_append_vals;
+	int function(GArray* array, void* target, GCompareFunc compareFunc, uint* outMatchIndex) c_g_array_binary_search;
+	GArray* function(GArray* array) c_g_array_copy;
 	char* function(GArray* array, int freeSegment) c_g_array_free;
 	uint function(GArray* array) c_g_array_get_element_size;
 	GArray* function(GArray* array, uint index, void* data, uint len) c_g_array_insert_vals;
@@ -1797,6 +1817,7 @@ __gshared extern(C)
 	GArray* function(int zeroTerminated, int clear, uint elementSize, uint reservedSize) c_g_array_sized_new;
 	void function(GArray* array, GCompareFunc compareFunc) c_g_array_sort;
 	void function(GArray* array, GCompareDataFunc compareFunc, void* userData) c_g_array_sort_with_data;
+	void* function(GArray* array, size_t* len) c_g_array_steal;
 	void function(GArray* array) c_g_array_unref;
 
 	// glib.AsyncQueue
@@ -1889,6 +1910,7 @@ __gshared extern(C)
 	GByteArray* function(uint reservedSize) c_g_byte_array_sized_new;
 	void function(GByteArray* array, GCompareFunc compareFunc) c_g_byte_array_sort;
 	void function(GByteArray* array, GCompareDataFunc compareFunc, void* userData) c_g_byte_array_sort_with_data;
+	ubyte* function(GByteArray* array, size_t* len) c_g_byte_array_steal;
 	void function(GByteArray* array) c_g_byte_array_unref;
 
 	// glib.Bytes
@@ -2007,6 +2029,7 @@ __gshared extern(C)
 	GDateTime* function(GDateTime* datetime, int years) c_g_date_time_add_years;
 	GTimeSpan function(GDateTime* end, GDateTime* begin) c_g_date_time_difference;
 	char* function(GDateTime* datetime, const(char)* format) c_g_date_time_format;
+	char* function(GDateTime* datetime) c_g_date_time_format_iso8601;
 	int function(GDateTime* datetime) c_g_date_time_get_day_of_month;
 	int function(GDateTime* datetime) c_g_date_time_get_day_of_week;
 	int function(GDateTime* datetime) c_g_date_time_get_day_of_year;
@@ -2263,6 +2286,7 @@ __gshared extern(C)
 	int function(GList* list, void* data) c_g_list_index;
 	GList* function(GList* list, void* data, int position) c_g_list_insert;
 	GList* function(GList* list, GList* sibling, void* data) c_g_list_insert_before;
+	GList* function(GList* list, GList* sibling, GList* link) c_g_list_insert_before_link;
 	GList* function(GList* list, void* data, GCompareFunc func) c_g_list_insert_sorted;
 	GList* function(GList* list, void* data, GCompareDataFunc func, void* userData) c_g_list_insert_sorted_with_data;
 	GList* function(GList* list) c_g_list_last;
@@ -2278,6 +2302,7 @@ __gshared extern(C)
 	GList* function(GList* list) c_g_list_reverse;
 	GList* function(GList* list, GCompareFunc compareFunc) c_g_list_sort;
 	GList* function(GList* list, GCompareDataFunc compareFunc, void* userData) c_g_list_sort_with_data;
+	void function(GList** listPtr, GDestroyNotify destroy) c_g_clear_list;
 
 	// glib.MainContext
 
@@ -2470,6 +2495,9 @@ __gshared extern(C)
 	// glib.PtrArray
 
 	void function(GPtrArray* array, void* data) c_g_ptr_array_add;
+	GPtrArray* function(GPtrArray* array, GCopyFunc func, void* userData) c_g_ptr_array_copy;
+	void function(GPtrArray* arrayToExtend, GPtrArray* array, GCopyFunc func, void* userData) c_g_ptr_array_extend;
+	void function(GPtrArray* arrayToExtend, GPtrArray* array) c_g_ptr_array_extend_and_steal;
 	int function(GPtrArray* haystack, void* needle, uint* index) c_g_ptr_array_find;
 	int function(GPtrArray* haystack, void* needle, GEqualFunc equalFunc, uint* index) c_g_ptr_array_find_with_equal_func;
 	void function(GPtrArray* array, GFunc func, void* userData) c_g_ptr_array_foreach;
@@ -2489,6 +2517,7 @@ __gshared extern(C)
 	GPtrArray* function(uint reservedSize) c_g_ptr_array_sized_new;
 	void function(GPtrArray* array, GCompareFunc compareFunc) c_g_ptr_array_sort;
 	void function(GPtrArray* array, GCompareDataFunc compareFunc, void* userData) c_g_ptr_array_sort_with_data;
+	void** function(GPtrArray* array, size_t* len) c_g_ptr_array_steal;
 	void* function(GPtrArray* array, uint index) c_g_ptr_array_steal_index;
 	void* function(GPtrArray* array, uint index) c_g_ptr_array_steal_index_fast;
 	void function(GPtrArray* array) c_g_ptr_array_unref;
@@ -2508,7 +2537,9 @@ __gshared extern(C)
 	int function(GQueue* queue, void* data) c_g_queue_index;
 	void function(GQueue* queue) c_g_queue_init;
 	void function(GQueue* queue, GList* sibling, void* data) c_g_queue_insert_after;
+	void function(GQueue* queue, GList* sibling, GList* link) c_g_queue_insert_after_link;
 	void function(GQueue* queue, GList* sibling, void* data) c_g_queue_insert_before;
+	void function(GQueue* queue, GList* sibling, GList* link) c_g_queue_insert_before_link;
 	void function(GQueue* queue, void* data, GCompareDataFunc func, void* userData) c_g_queue_insert_sorted;
 	int function(GQueue* queue) c_g_queue_is_empty;
 	int function(GQueue* queue, GList* link) c_g_queue_link_index;
@@ -2635,6 +2666,7 @@ __gshared extern(C)
 	GSList* function(GSList* list) c_g_slist_reverse;
 	GSList* function(GSList* list, GCompareFunc compareFunc) c_g_slist_sort;
 	GSList* function(GSList* list, GCompareDataFunc compareFunc, void* userData) c_g_slist_sort_with_data;
+	void function(GSList** slistPtr, GDestroyNotify destroy) c_g_clear_slist;
 
 	// glib.ScannerG
 
@@ -2730,6 +2762,7 @@ __gshared extern(C)
 	void function(GSource* source, GSourceFunc func, void* data, GDestroyNotify notify) c_g_source_set_callback;
 	void function(GSource* source, void* callbackData, GSourceCallbackFuncs* callbackFuncs) c_g_source_set_callback_indirect;
 	void function(GSource* source, int canRecurse) c_g_source_set_can_recurse;
+	void function(GSource* source, GSourceDisposeFunc dispose) c_g_source_set_dispose_function;
 	void function(GSource* source, GSourceFuncs* funcs) c_g_source_set_funcs;
 	void function(GSource* source, const(char)* name) c_g_source_set_name;
 	void function(GSource* source, int priority) c_g_source_set_priority;
@@ -2869,6 +2902,7 @@ __gshared extern(C)
 	void function(GTimer* timer) c_g_timer_continue;
 	void function(GTimer* timer) c_g_timer_destroy;
 	double function(GTimer* timer, gulong* microseconds) c_g_timer_elapsed;
+	int function(GTimer* timer) c_g_timer_is_active;
 	void function(GTimer* timer) c_g_timer_reset;
 	void function(GTimer* timer) c_g_timer_start;
 	void function(GTimer* timer) c_g_timer_stop;
@@ -3248,6 +3282,7 @@ __gshared extern(C)
 	uint function(uint num) c_g_spaced_primes_closest;
 	void function(char* variable) c_g_unsetenv;
 	char* function(char* filename, char* relativeTo) c_g_canonicalize_filename;
+	char* function(const(char)* keyName) c_g_get_os_info;
 
 	// glib.Atomic
 
@@ -3285,6 +3320,7 @@ __gshared extern(C)
 	char* function(const(char)* utf8string, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_locale_from_utf8;
 	char* function(char* opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_locale_to_utf8;
 	char** function(const(char)* categoryName) c_g_get_language_names_with_category;
+	int function(char** charset) c_g_get_console_charset;
 
 	// glib.Child
 
@@ -3517,6 +3553,8 @@ __gshared extern(C)
 // glib.ArrayG
 
 alias c_g_array_append_vals g_array_append_vals;
+alias c_g_array_binary_search g_array_binary_search;
+alias c_g_array_copy g_array_copy;
 alias c_g_array_free g_array_free;
 alias c_g_array_get_element_size g_array_get_element_size;
 alias c_g_array_insert_vals g_array_insert_vals;
@@ -3531,6 +3569,7 @@ alias c_g_array_set_size g_array_set_size;
 alias c_g_array_sized_new g_array_sized_new;
 alias c_g_array_sort g_array_sort;
 alias c_g_array_sort_with_data g_array_sort_with_data;
+alias c_g_array_steal g_array_steal;
 alias c_g_array_unref g_array_unref;
 
 // glib.AsyncQueue
@@ -3623,6 +3662,7 @@ alias c_g_byte_array_set_size g_byte_array_set_size;
 alias c_g_byte_array_sized_new g_byte_array_sized_new;
 alias c_g_byte_array_sort g_byte_array_sort;
 alias c_g_byte_array_sort_with_data g_byte_array_sort_with_data;
+alias c_g_byte_array_steal g_byte_array_steal;
 alias c_g_byte_array_unref g_byte_array_unref;
 
 // glib.Bytes
@@ -3741,6 +3781,7 @@ alias c_g_date_time_add_weeks g_date_time_add_weeks;
 alias c_g_date_time_add_years g_date_time_add_years;
 alias c_g_date_time_difference g_date_time_difference;
 alias c_g_date_time_format g_date_time_format;
+alias c_g_date_time_format_iso8601 g_date_time_format_iso8601;
 alias c_g_date_time_get_day_of_month g_date_time_get_day_of_month;
 alias c_g_date_time_get_day_of_week g_date_time_get_day_of_week;
 alias c_g_date_time_get_day_of_year g_date_time_get_day_of_year;
@@ -3997,6 +4038,7 @@ alias c_g_list_free_full g_list_free_full;
 alias c_g_list_index g_list_index;
 alias c_g_list_insert g_list_insert;
 alias c_g_list_insert_before g_list_insert_before;
+alias c_g_list_insert_before_link g_list_insert_before_link;
 alias c_g_list_insert_sorted g_list_insert_sorted;
 alias c_g_list_insert_sorted_with_data g_list_insert_sorted_with_data;
 alias c_g_list_last g_list_last;
@@ -4012,6 +4054,7 @@ alias c_g_list_remove_link g_list_remove_link;
 alias c_g_list_reverse g_list_reverse;
 alias c_g_list_sort g_list_sort;
 alias c_g_list_sort_with_data g_list_sort_with_data;
+alias c_g_clear_list g_clear_list;
 
 // glib.MainContext
 
@@ -4204,6 +4247,9 @@ alias c_g_private_set g_private_set;
 // glib.PtrArray
 
 alias c_g_ptr_array_add g_ptr_array_add;
+alias c_g_ptr_array_copy g_ptr_array_copy;
+alias c_g_ptr_array_extend g_ptr_array_extend;
+alias c_g_ptr_array_extend_and_steal g_ptr_array_extend_and_steal;
 alias c_g_ptr_array_find g_ptr_array_find;
 alias c_g_ptr_array_find_with_equal_func g_ptr_array_find_with_equal_func;
 alias c_g_ptr_array_foreach g_ptr_array_foreach;
@@ -4223,6 +4269,7 @@ alias c_g_ptr_array_set_size g_ptr_array_set_size;
 alias c_g_ptr_array_sized_new g_ptr_array_sized_new;
 alias c_g_ptr_array_sort g_ptr_array_sort;
 alias c_g_ptr_array_sort_with_data g_ptr_array_sort_with_data;
+alias c_g_ptr_array_steal g_ptr_array_steal;
 alias c_g_ptr_array_steal_index g_ptr_array_steal_index;
 alias c_g_ptr_array_steal_index_fast g_ptr_array_steal_index_fast;
 alias c_g_ptr_array_unref g_ptr_array_unref;
@@ -4242,7 +4289,9 @@ alias c_g_queue_get_length g_queue_get_length;
 alias c_g_queue_index g_queue_index;
 alias c_g_queue_init g_queue_init;
 alias c_g_queue_insert_after g_queue_insert_after;
+alias c_g_queue_insert_after_link g_queue_insert_after_link;
 alias c_g_queue_insert_before g_queue_insert_before;
+alias c_g_queue_insert_before_link g_queue_insert_before_link;
 alias c_g_queue_insert_sorted g_queue_insert_sorted;
 alias c_g_queue_is_empty g_queue_is_empty;
 alias c_g_queue_link_index g_queue_link_index;
@@ -4369,6 +4418,7 @@ alias c_g_slist_remove_link g_slist_remove_link;
 alias c_g_slist_reverse g_slist_reverse;
 alias c_g_slist_sort g_slist_sort;
 alias c_g_slist_sort_with_data g_slist_sort_with_data;
+alias c_g_clear_slist g_clear_slist;
 
 // glib.ScannerG
 
@@ -4464,6 +4514,7 @@ alias c_g_source_remove_unix_fd g_source_remove_unix_fd;
 alias c_g_source_set_callback g_source_set_callback;
 alias c_g_source_set_callback_indirect g_source_set_callback_indirect;
 alias c_g_source_set_can_recurse g_source_set_can_recurse;
+alias c_g_source_set_dispose_function g_source_set_dispose_function;
 alias c_g_source_set_funcs g_source_set_funcs;
 alias c_g_source_set_name g_source_set_name;
 alias c_g_source_set_priority g_source_set_priority;
@@ -4603,6 +4654,7 @@ alias c_g_time_zone_unref g_time_zone_unref;
 alias c_g_timer_continue g_timer_continue;
 alias c_g_timer_destroy g_timer_destroy;
 alias c_g_timer_elapsed g_timer_elapsed;
+alias c_g_timer_is_active g_timer_is_active;
 alias c_g_timer_reset g_timer_reset;
 alias c_g_timer_start g_timer_start;
 alias c_g_timer_stop g_timer_stop;
@@ -4982,6 +5034,7 @@ alias c_g_setenv g_setenv;
 alias c_g_spaced_primes_closest g_spaced_primes_closest;
 alias c_g_unsetenv g_unsetenv;
 alias c_g_canonicalize_filename g_canonicalize_filename;
+alias c_g_get_os_info g_get_os_info;
 
 // glib.Atomic
 
@@ -5019,6 +5072,7 @@ alias c_g_get_filename_charsets g_get_filename_charsets;
 alias c_g_locale_from_utf8 g_locale_from_utf8;
 alias c_g_locale_to_utf8 g_locale_to_utf8;
 alias c_g_get_language_names_with_category g_get_language_names_with_category;
+alias c_g_get_console_charset g_get_console_charset;
 
 // glib.Child
 

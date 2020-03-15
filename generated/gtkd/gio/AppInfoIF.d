@@ -47,7 +47,7 @@ public  import gtkc.giotypes;
  * As of GLib 2.20, URIs will always be converted to POSIX paths
  * (using g_file_get_path()) when using g_app_info_launch() even if
  * the application requested an URI and not a POSIX path. For example
- * for an desktop-file based application with Exec key `totem
+ * for a desktop-file based application with Exec key `totem
  * %U` and a single URI, `sftp://foo/file.avi`, then
  * `/home/user/.gvfs/sftp on foo/file.avi` will be passed. This will
  * only work if a set of suitable GIO extensions (such as gvfs 2.26
@@ -126,19 +126,19 @@ public interface AppInfoIF{
 	{
 		GError* err = null;
 
-		auto p = g_app_info_create_from_commandline(Str.toStringz(commandline), Str.toStringz(applicationName), flags, &err);
+		auto __p = g_app_info_create_from_commandline(Str.toStringz(commandline), Str.toStringz(applicationName), flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -155,14 +155,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getAll()
 	{
-		auto p = g_app_info_get_all();
+		auto __p = g_app_info_get_all();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -179,14 +179,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getAllForType(string contentType)
 	{
-		auto p = g_app_info_get_all_for_type(Str.toStringz(contentType));
+		auto __p = g_app_info_get_all_for_type(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -202,14 +202,14 @@ public interface AppInfoIF{
 	 */
 	public static AppInfoIF getDefaultForType(string contentType, bool mustSupportUris)
 	{
-		auto p = g_app_info_get_default_for_type(Str.toStringz(contentType), mustSupportUris);
+		auto __p = g_app_info_get_default_for_type(Str.toStringz(contentType), mustSupportUris);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -225,14 +225,14 @@ public interface AppInfoIF{
 	 */
 	public static AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{
-		auto p = g_app_info_get_default_for_uri_scheme(Str.toStringz(uriScheme));
+		auto __p = g_app_info_get_default_for_uri_scheme(Str.toStringz(uriScheme));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -250,14 +250,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getFallbackForType(string contentType)
 	{
-		auto p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
+		auto __p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -278,14 +278,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getRecommendedForType(string contentType)
 	{
-		auto p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
+		auto __p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -296,7 +296,7 @@ public interface AppInfoIF{
 	 *
 	 * The D-Bus–activated applications don't have to be started if your application
 	 * terminates too soon after this function. To prevent this, use
-	 * g_app_info_launch_default_for_uri() instead.
+	 * g_app_info_launch_default_for_uri_async() instead.
 	 *
 	 * Params:
 	 *     uri = the uri to show
@@ -310,14 +310,14 @@ public interface AppInfoIF{
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
+		auto __p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -362,14 +362,14 @@ public interface AppInfoIF{
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_default_for_uri_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_app_info_launch_default_for_uri_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

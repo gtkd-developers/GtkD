@@ -107,13 +107,13 @@ public class IOExtension
 	 */
 	public TypeClass refClass()
 	{
-		auto p = g_io_extension_ref_class(gIOExtension);
+		auto __p = g_io_extension_ref_class(gIOExtension);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p, true);
+		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) __p, true);
 	}
 }

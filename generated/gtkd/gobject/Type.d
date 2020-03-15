@@ -89,7 +89,7 @@ public struct Type
 	 * G_TYPE_CLASS_GET_PRIVATE() macro.
 	 *
 	 * Params:
-	 *     classType = GType of an classed type
+	 *     classType = GType of a classed type
 	 *     privateSize = size of private structure
 	 *
 	 * Since: 2.24
@@ -129,7 +129,7 @@ public struct Type
 	}
 
 	/**
-	 * Adds the dynamic @interface_type to @instantiable_type. The information
+	 * Adds @interface_type to the dynamic @instantiable_type. The information
 	 * contained in the #GTypePlugin structure pointed to by @plugin
 	 * is used to manage the relationship.
 	 *
@@ -144,7 +144,7 @@ public struct Type
 	}
 
 	/**
-	 * Adds the static @interface_type to @instantiable_type.
+	 * Adds @interface_type to the static @instantiable_type.
 	 * The information contained in the #GInterfaceInfo structure
 	 * pointed to by @info is used to manage the relationship.
 	 *
@@ -162,14 +162,14 @@ public struct Type
 	/** */
 	public static TypeClass checkClassCast(TypeClass gClass, GType isAType)
 	{
-		auto p = g_type_check_class_cast((gClass is null) ? null : gClass.getTypeClassStruct(), isAType);
+		auto __p = g_type_check_class_cast((gClass is null) ? null : gClass.getTypeClassStruct(), isAType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
+		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) __p);
 	}
 
 	/** */
@@ -195,14 +195,14 @@ public struct Type
 	/** */
 	public static TypeInstance checkInstanceCast(TypeInstance instance_, GType ifaceType)
 	{
-		auto p = g_type_check_instance_cast((instance_ is null) ? null : instance_.getTypeInstanceStruct(), ifaceType);
+		auto __p = g_type_check_instance_cast((instance_ is null) ? null : instance_.getTypeInstanceStruct(), ifaceType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) p);
+		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) __p);
 	}
 
 	/** */
@@ -249,9 +249,9 @@ public struct Type
 	{
 		uint nChildren;
 
-		auto p = g_type_children(type, &nChildren);
+		auto __p = g_type_children(type, &nChildren);
 
-		return p[0 .. nChildren];
+		return __p[0 .. nChildren];
 	}
 
 	/**
@@ -280,14 +280,14 @@ public struct Type
 	 */
 	public static TypeInstance createInstance(GType type)
 	{
-		auto p = g_type_create_instance(type);
+		auto __p = g_type_create_instance(type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) p);
+		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) __p);
 	}
 
 	/**
@@ -305,14 +305,14 @@ public struct Type
 	 */
 	public static TypeInterface defaultInterfacePeek(GType gType)
 	{
-		auto p = g_type_default_interface_peek(gType);
+		auto __p = g_type_default_interface_peek(gType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) p);
+		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) __p);
 	}
 
 	/**
@@ -338,14 +338,14 @@ public struct Type
 	 */
 	public static TypeInterface defaultInterfaceRef(GType gType)
 	{
-		auto p = g_type_default_interface_ref(gType);
+		auto __p = g_type_default_interface_ref(gType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) p);
+		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) __p);
 	}
 
 	/**
@@ -357,7 +357,7 @@ public struct Type
 	 *
 	 * Params:
 	 *     gIface = the default vtable
-	 *         structure for a interface, as returned by g_type_default_interface_ref()
+	 *         structure for an interface, as returned by g_type_default_interface_ref()
 	 *
 	 * Since: 2.4
 	 */
@@ -420,13 +420,13 @@ public struct Type
 	}
 
 	/**
-	 * Lookup the type ID from a given type name, returning 0 if no type
+	 * Look up the type ID from a given type name, returning 0 if no type
 	 * has been registered under this name (this is the preferred method
 	 * to find out by name whether a specific type has been registered
 	 * yet).
 	 *
 	 * Params:
-	 *     name = type name to lookup
+	 *     name = type name to look up
 	 *
 	 * Returns: corresponding type ID or 0
 	 */
@@ -474,14 +474,14 @@ public struct Type
 	 */
 	public static TypePluginIF getPlugin(GType type)
 	{
-		auto p = g_type_get_plugin(type);
+		auto __p = g_type_get_plugin(type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypePluginIF)(cast(GTypePlugin*) p);
+		return ObjectG.getDObject!(TypePluginIF)(cast(GTypePlugin*) __p);
 	}
 
 	/**
@@ -564,9 +564,9 @@ public struct Type
 	{
 		uint nInterfaces;
 
-		auto p = g_type_interfaces(type, &nInterfaces);
+		auto __p = g_type_interfaces(type, &nInterfaces);
 
-		return p[0 .. nInterfaces];
+		return __p[0 .. nInterfaces];
 	}
 
 	/**

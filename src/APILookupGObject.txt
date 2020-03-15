@@ -1117,6 +1117,8 @@ move: signal_stop_emission Signals stop_emission
 move: signal_stop_emission_by_name Signals stop_emission_by_name
 move: signal_type_cclosure_new Signals type_cclosure_new
 
+version 2.62: move: clear_signal_handler Signals
+
 move: source_set_closure Closure
 move: source_set_dummy_callback Closure
 

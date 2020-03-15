@@ -97,9 +97,9 @@ public class ParamSpecPool
 	{
 		uint nPspecsP;
 
-		auto p = g_param_spec_pool_list(gParamSpecPool, ownerType, &nPspecsP);
+		auto __p = g_param_spec_pool_list(gParamSpecPool, ownerType, &nPspecsP);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -107,7 +107,7 @@ public class ParamSpecPool
 		ParamSpec[] arr = new ParamSpec[nPspecsP];
 		for(int i = 0; i < nPspecsP; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;
@@ -126,14 +126,14 @@ public class ParamSpecPool
 	 */
 	public ListG listOwned(GType ownerType)
 	{
-		auto p = g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
+		auto __p = g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -150,14 +150,14 @@ public class ParamSpecPool
 	 */
 	public ParamSpec lookup(string paramName, GType ownerType, bool walkAncestors)
 	{
-		auto p = g_param_spec_pool_lookup(gParamSpecPool, Str.toStringz(paramName), ownerType, walkAncestors);
+		auto __p = g_param_spec_pool_lookup(gParamSpecPool, Str.toStringz(paramName), ownerType, walkAncestors);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -188,13 +188,13 @@ public class ParamSpecPool
 	 */
 	public this(bool typePrefixing)
 	{
-		auto p = g_param_spec_pool_new(typePrefixing);
+		auto __p = g_param_spec_pool_new(typePrefixing);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GParamSpecPool*) p);
+		this(cast(GParamSpecPool*) __p);
 	}
 }

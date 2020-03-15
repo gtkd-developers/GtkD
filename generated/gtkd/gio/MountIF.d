@@ -298,7 +298,7 @@ public interface MountIF{
 	 * [shared-mime-info](http://www.freedesktop.org/wiki/Specifications/shared-mime-info-spec)
 	 * specification for more on x-content types.
 	 *
-	 * This is an synchronous operation and as such may block doing IO;
+	 * This is a synchronous operation and as such may block doing IO;
 	 * see g_mount_guess_content_type() for the asynchronous version.
 	 *
 	 * Params:

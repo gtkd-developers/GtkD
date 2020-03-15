@@ -186,9 +186,12 @@ public interface ListModelIF{
 	public void itemsChanged(uint position, uint removed, uint added);
 
 	/**
-	 * This signal is emitted whenever items were added or removed to
-	 * @list. At @position, @removed items were removed and @added items
-	 * were added in their place.
+	 * This signal is emitted whenever items were added to or removed
+	 * from @list. At @position, @removed items were removed and @added
+	 * items were added in their place.
+	 *
+	 * Note: If @removed != @added, the positions of all later items
+	 * in the model change.
 	 *
 	 * Params:
 	 *     position = the position at which @list changed

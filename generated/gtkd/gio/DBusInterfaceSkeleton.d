@@ -110,14 +110,14 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_interface_skeleton_export(gDBusInterfaceSkeleton, (connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(objectPath), &err) != 0;
+		auto __p = g_dbus_interface_skeleton_export(gDBusInterfaceSkeleton, (connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(objectPath), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -147,14 +147,14 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 */
 	public DBusConnection getConnection()
 	{
-		auto p = g_dbus_interface_skeleton_get_connection(gDBusInterfaceSkeleton);
+		auto __p = g_dbus_interface_skeleton_get_connection(gDBusInterfaceSkeleton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p);
 	}
 
 	/**
@@ -169,14 +169,14 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 */
 	public ListG getConnections()
 	{
-		auto p = g_dbus_interface_skeleton_get_connections(gDBusInterfaceSkeleton);
+		auto __p = g_dbus_interface_skeleton_get_connections(gDBusInterfaceSkeleton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -202,14 +202,14 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 */
 	public DBusInterfaceInfo getInfo()
 	{
-		auto p = g_dbus_interface_skeleton_get_info(gDBusInterfaceSkeleton);
+		auto __p = g_dbus_interface_skeleton_get_info(gDBusInterfaceSkeleton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) __p);
 	}
 
 	/**
@@ -236,14 +236,14 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 */
 	public Variant getProperties()
 	{
-		auto p = g_dbus_interface_skeleton_get_properties(gDBusInterfaceSkeleton);
+		auto __p = g_dbus_interface_skeleton_get_properties(gDBusInterfaceSkeleton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**

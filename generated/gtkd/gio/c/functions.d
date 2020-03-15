@@ -1015,6 +1015,7 @@ shared static this()
 	Linker.link(g_file_info_get_is_backup, "g_file_info_get_is_backup", LIBRARY_GIO);
 	Linker.link(g_file_info_get_is_hidden, "g_file_info_get_is_hidden", LIBRARY_GIO);
 	Linker.link(g_file_info_get_is_symlink, "g_file_info_get_is_symlink", LIBRARY_GIO);
+	Linker.link(g_file_info_get_modification_date_time, "g_file_info_get_modification_date_time", LIBRARY_GIO);
 	Linker.link(g_file_info_get_modification_time, "g_file_info_get_modification_time", LIBRARY_GIO);
 	Linker.link(g_file_info_get_name, "g_file_info_get_name", LIBRARY_GIO);
 	Linker.link(g_file_info_get_size, "g_file_info_get_size", LIBRARY_GIO);
@@ -1044,6 +1045,7 @@ shared static this()
 	Linker.link(g_file_info_set_icon, "g_file_info_set_icon", LIBRARY_GIO);
 	Linker.link(g_file_info_set_is_hidden, "g_file_info_set_is_hidden", LIBRARY_GIO);
 	Linker.link(g_file_info_set_is_symlink, "g_file_info_set_is_symlink", LIBRARY_GIO);
+	Linker.link(g_file_info_set_modification_date_time, "g_file_info_set_modification_date_time", LIBRARY_GIO);
 	Linker.link(g_file_info_set_modification_time, "g_file_info_set_modification_time", LIBRARY_GIO);
 	Linker.link(g_file_info_set_name, "g_file_info_set_name", LIBRARY_GIO);
 	Linker.link(g_file_info_set_size, "g_file_info_set_size", LIBRARY_GIO);
@@ -1251,6 +1253,8 @@ shared static this()
 	Linker.link(g_list_store_get_type, "g_list_store_get_type", LIBRARY_GIO);
 	Linker.link(g_list_store_new, "g_list_store_new", LIBRARY_GIO);
 	Linker.link(g_list_store_append, "g_list_store_append", LIBRARY_GIO);
+	Linker.link(g_list_store_find, "g_list_store_find", LIBRARY_GIO);
+	Linker.link(g_list_store_find_with_equal_func, "g_list_store_find_with_equal_func", LIBRARY_GIO);
 	Linker.link(g_list_store_insert, "g_list_store_insert", LIBRARY_GIO);
 	Linker.link(g_list_store_insert_sorted, "g_list_store_insert_sorted", LIBRARY_GIO);
 	Linker.link(g_list_store_remove, "g_list_store_remove", LIBRARY_GIO);
@@ -1273,6 +1277,11 @@ shared static this()
 	Linker.link(g_memory_input_stream_new_from_data, "g_memory_input_stream_new_from_data", LIBRARY_GIO);
 	Linker.link(g_memory_input_stream_add_bytes, "g_memory_input_stream_add_bytes", LIBRARY_GIO);
 	Linker.link(g_memory_input_stream_add_data, "g_memory_input_stream_add_data", LIBRARY_GIO);
+
+	// gio.MemoryMonitor
+
+	Linker.link(g_memory_monitor_get_type, "g_memory_monitor_get_type", LIBRARY_GIO);
+	Linker.link(g_memory_monitor_dup_default, "g_memory_monitor_dup_default", LIBRARY_GIO);
 
 	// gio.MemoryOutputStream
 
@@ -1408,6 +1417,11 @@ shared static this()
 	Linker.link(g_mount_operation_set_password_save, "g_mount_operation_set_password_save", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_pim, "g_mount_operation_set_pim", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_username, "g_mount_operation_set_username", LIBRARY_GIO);
+
+	// gio.NativeSocketAddress
+
+	Linker.link(g_native_socket_address_get_type, "g_native_socket_address_get_type", LIBRARY_GIO);
+	Linker.link(g_native_socket_address_new, "g_native_socket_address_new", LIBRARY_GIO);
 
 	// gio.NativeVolumeMonitor
 
@@ -2050,12 +2064,14 @@ shared static this()
 	Linker.link(g_task_propagate_boolean, "g_task_propagate_boolean", LIBRARY_GIO);
 	Linker.link(g_task_propagate_int, "g_task_propagate_int", LIBRARY_GIO);
 	Linker.link(g_task_propagate_pointer, "g_task_propagate_pointer", LIBRARY_GIO);
+	Linker.link(g_task_propagate_value, "g_task_propagate_value", LIBRARY_GIO);
 	Linker.link(g_task_return_boolean, "g_task_return_boolean", LIBRARY_GIO);
 	Linker.link(g_task_return_error, "g_task_return_error", LIBRARY_GIO);
 	Linker.link(g_task_return_error_if_cancelled, "g_task_return_error_if_cancelled", LIBRARY_GIO);
 	Linker.link(g_task_return_int, "g_task_return_int", LIBRARY_GIO);
 	Linker.link(g_task_return_new_error, "g_task_return_new_error", LIBRARY_GIO);
 	Linker.link(g_task_return_pointer, "g_task_return_pointer", LIBRARY_GIO);
+	Linker.link(g_task_return_value, "g_task_return_value", LIBRARY_GIO);
 	Linker.link(g_task_run_in_thread, "g_task_run_in_thread", LIBRARY_GIO);
 	Linker.link(g_task_run_in_thread_sync, "g_task_run_in_thread_sync", LIBRARY_GIO);
 	Linker.link(g_task_set_check_cancellable, "g_task_set_check_cancellable", LIBRARY_GIO);
@@ -3456,6 +3472,7 @@ __gshared extern(C)
 	int function(GFileInfo* info) c_g_file_info_get_is_backup;
 	int function(GFileInfo* info) c_g_file_info_get_is_hidden;
 	int function(GFileInfo* info) c_g_file_info_get_is_symlink;
+	GDateTime* function(GFileInfo* info) c_g_file_info_get_modification_date_time;
 	void function(GFileInfo* info, GTimeVal* result) c_g_file_info_get_modification_time;
 	char* function(GFileInfo* info) c_g_file_info_get_name;
 	long function(GFileInfo* info) c_g_file_info_get_size;
@@ -3485,6 +3502,7 @@ __gshared extern(C)
 	void function(GFileInfo* info, GIcon* icon) c_g_file_info_set_icon;
 	void function(GFileInfo* info, int isHidden) c_g_file_info_set_is_hidden;
 	void function(GFileInfo* info, int isSymlink) c_g_file_info_set_is_symlink;
+	void function(GFileInfo* info, GDateTime* mtime) c_g_file_info_set_modification_date_time;
 	void function(GFileInfo* info, GTimeVal* mtime) c_g_file_info_set_modification_time;
 	void function(GFileInfo* info, char* name) c_g_file_info_set_name;
 	void function(GFileInfo* info, long size) c_g_file_info_set_size;
@@ -3692,6 +3710,8 @@ __gshared extern(C)
 	GType function() c_g_list_store_get_type;
 	GListStore* function(GType itemType) c_g_list_store_new;
 	void function(GListStore* store, void* item) c_g_list_store_append;
+	int function(GListStore* store, void* item, uint* position) c_g_list_store_find;
+	int function(GListStore* store, void* item, GEqualFunc equalFunc, uint* position) c_g_list_store_find_with_equal_func;
 	void function(GListStore* store, uint position, void* item) c_g_list_store_insert;
 	uint function(GListStore* store, void* item, GCompareDataFunc compareFunc, void* userData) c_g_list_store_insert_sorted;
 	void function(GListStore* store, uint position) c_g_list_store_remove;
@@ -3714,6 +3734,11 @@ __gshared extern(C)
 	GInputStream* function(void* data, ptrdiff_t len, GDestroyNotify destroy) c_g_memory_input_stream_new_from_data;
 	void function(GMemoryInputStream* stream, GBytes* bytes) c_g_memory_input_stream_add_bytes;
 	void function(GMemoryInputStream* stream, void* data, ptrdiff_t len, GDestroyNotify destroy) c_g_memory_input_stream_add_data;
+
+	// gio.MemoryMonitor
+
+	GType function() c_g_memory_monitor_get_type;
+	GMemoryMonitor* function() c_g_memory_monitor_dup_default;
 
 	// gio.MemoryOutputStream
 
@@ -3849,6 +3874,11 @@ __gshared extern(C)
 	void function(GMountOperation* op, GPasswordSave save) c_g_mount_operation_set_password_save;
 	void function(GMountOperation* op, uint pim) c_g_mount_operation_set_pim;
 	void function(GMountOperation* op, const(char)* username) c_g_mount_operation_set_username;
+
+	// gio.NativeSocketAddress
+
+	GType function() c_g_native_socket_address_get_type;
+	GSocketAddress* function(void* native, size_t len) c_g_native_socket_address_new;
 
 	// gio.NativeVolumeMonitor
 
@@ -4491,12 +4521,14 @@ __gshared extern(C)
 	int function(GTask* task, GError** err) c_g_task_propagate_boolean;
 	ptrdiff_t function(GTask* task, GError** err) c_g_task_propagate_int;
 	void* function(GTask* task, GError** err) c_g_task_propagate_pointer;
+	int function(GTask* task, GValue* value, GError** err) c_g_task_propagate_value;
 	void function(GTask* task, int result) c_g_task_return_boolean;
 	void function(GTask* task, GError* error) c_g_task_return_error;
 	int function(GTask* task) c_g_task_return_error_if_cancelled;
 	void function(GTask* task, ptrdiff_t result) c_g_task_return_int;
 	void function(GTask* task, GQuark domain, int code, const(char)* format, ... ) c_g_task_return_new_error;
 	void function(GTask* task, void* result, GDestroyNotify resultDestroy) c_g_task_return_pointer;
+	void function(GTask* task, GValue* result) c_g_task_return_value;
 	void function(GTask* task, GTaskThreadFunc taskFunc) c_g_task_run_in_thread;
 	void function(GTask* task, GTaskThreadFunc taskFunc) c_g_task_run_in_thread_sync;
 	void function(GTask* task, int checkCancellable) c_g_task_set_check_cancellable;
@@ -5895,6 +5927,7 @@ alias c_g_file_info_get_icon g_file_info_get_icon;
 alias c_g_file_info_get_is_backup g_file_info_get_is_backup;
 alias c_g_file_info_get_is_hidden g_file_info_get_is_hidden;
 alias c_g_file_info_get_is_symlink g_file_info_get_is_symlink;
+alias c_g_file_info_get_modification_date_time g_file_info_get_modification_date_time;
 alias c_g_file_info_get_modification_time g_file_info_get_modification_time;
 alias c_g_file_info_get_name g_file_info_get_name;
 alias c_g_file_info_get_size g_file_info_get_size;
@@ -5924,6 +5957,7 @@ alias c_g_file_info_set_file_type g_file_info_set_file_type;
 alias c_g_file_info_set_icon g_file_info_set_icon;
 alias c_g_file_info_set_is_hidden g_file_info_set_is_hidden;
 alias c_g_file_info_set_is_symlink g_file_info_set_is_symlink;
+alias c_g_file_info_set_modification_date_time g_file_info_set_modification_date_time;
 alias c_g_file_info_set_modification_time g_file_info_set_modification_time;
 alias c_g_file_info_set_name g_file_info_set_name;
 alias c_g_file_info_set_size g_file_info_set_size;
@@ -6131,6 +6165,8 @@ alias c_g_list_model_items_changed g_list_model_items_changed;
 alias c_g_list_store_get_type g_list_store_get_type;
 alias c_g_list_store_new g_list_store_new;
 alias c_g_list_store_append g_list_store_append;
+alias c_g_list_store_find g_list_store_find;
+alias c_g_list_store_find_with_equal_func g_list_store_find_with_equal_func;
 alias c_g_list_store_insert g_list_store_insert;
 alias c_g_list_store_insert_sorted g_list_store_insert_sorted;
 alias c_g_list_store_remove g_list_store_remove;
@@ -6153,6 +6189,11 @@ alias c_g_memory_input_stream_new_from_bytes g_memory_input_stream_new_from_byte
 alias c_g_memory_input_stream_new_from_data g_memory_input_stream_new_from_data;
 alias c_g_memory_input_stream_add_bytes g_memory_input_stream_add_bytes;
 alias c_g_memory_input_stream_add_data g_memory_input_stream_add_data;
+
+// gio.MemoryMonitor
+
+alias c_g_memory_monitor_get_type g_memory_monitor_get_type;
+alias c_g_memory_monitor_dup_default g_memory_monitor_dup_default;
 
 // gio.MemoryOutputStream
 
@@ -6288,6 +6329,11 @@ alias c_g_mount_operation_set_password g_mount_operation_set_password;
 alias c_g_mount_operation_set_password_save g_mount_operation_set_password_save;
 alias c_g_mount_operation_set_pim g_mount_operation_set_pim;
 alias c_g_mount_operation_set_username g_mount_operation_set_username;
+
+// gio.NativeSocketAddress
+
+alias c_g_native_socket_address_get_type g_native_socket_address_get_type;
+alias c_g_native_socket_address_new g_native_socket_address_new;
 
 // gio.NativeVolumeMonitor
 
@@ -6930,12 +6976,14 @@ alias c_g_task_had_error g_task_had_error;
 alias c_g_task_propagate_boolean g_task_propagate_boolean;
 alias c_g_task_propagate_int g_task_propagate_int;
 alias c_g_task_propagate_pointer g_task_propagate_pointer;
+alias c_g_task_propagate_value g_task_propagate_value;
 alias c_g_task_return_boolean g_task_return_boolean;
 alias c_g_task_return_error g_task_return_error;
 alias c_g_task_return_error_if_cancelled g_task_return_error_if_cancelled;
 alias c_g_task_return_int g_task_return_int;
 alias c_g_task_return_new_error g_task_return_new_error;
 alias c_g_task_return_pointer g_task_return_pointer;
+alias c_g_task_return_value g_task_return_value;
 alias c_g_task_run_in_thread g_task_run_in_thread;
 alias c_g_task_run_in_thread_sync g_task_run_in_thread_sync;
 alias c_g_task_set_check_cancellable g_task_set_check_cancellable;

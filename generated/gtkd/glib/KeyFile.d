@@ -89,14 +89,14 @@ public class KeyFile
 	 */
 	public this()
 	{
-		auto p = g_key_file_new();
+		auto __p = g_key_file_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GKeyFile*) p);
+		this(cast(GKeyFile*) __p);
 	}
 
 	/**
@@ -136,14 +136,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_get_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 
-		auto p = g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto __p = g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 
 		if (err !is null)
 		{
@@ -182,7 +182,7 @@ public class KeyFile
 		bool[] r = new bool[length];
 		for(size_t i = 0; i < length; i++)
 		{
-			r[i] = p[i] != 0;
+			r[i] = __p[i] != 0;
 		}
 		return r;
 	}
@@ -246,14 +246,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -282,14 +282,14 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 
-		auto p = g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto __p = g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -333,14 +333,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_int64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_int64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -368,14 +368,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -405,14 +405,14 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 
-		auto p = g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto __p = g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -669,14 +669,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_uint64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_uint64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -756,14 +756,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_has_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_has_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -784,14 +784,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_load_from_bytes(gKeyFile, (bytes is null) ? null : bytes.getBytesStruct(), flags, &err) != 0;
+		auto __p = g_key_file_load_from_bytes(gKeyFile, (bytes is null) ? null : bytes.getBytesStruct(), flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -813,14 +813,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_load_from_data(gKeyFile, Str.toStringz(data), length, flags, &err) != 0;
+		auto __p = g_key_file_load_from_data(gKeyFile, Str.toStringz(data), length, flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -847,7 +847,7 @@ public class KeyFile
 		char* outfullPath = null;
 		GError* err = null;
 
-		auto p = g_key_file_load_from_data_dirs(gKeyFile, Str.toStringz(file), &outfullPath, flags, &err) != 0;
+		auto __p = g_key_file_load_from_data_dirs(gKeyFile, Str.toStringz(file), &outfullPath, flags, &err) != 0;
 
 		if (err !is null)
 		{
@@ -856,7 +856,7 @@ public class KeyFile
 
 		fullPath = Str.toString(outfullPath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -888,7 +888,7 @@ public class KeyFile
 		char* outfullPath = null;
 		GError* err = null;
 
-		auto p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outfullPath, flags, &err) != 0;
+		auto __p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outfullPath, flags, &err) != 0;
 
 		if (err !is null)
 		{
@@ -897,7 +897,7 @@ public class KeyFile
 
 		fullPath = Str.toString(outfullPath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -924,14 +924,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_load_from_file(gKeyFile, Str.toStringz(file), flags, &err) != 0;
+		auto __p = g_key_file_load_from_file(gKeyFile, Str.toStringz(file), flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	alias doref = ref_;
@@ -944,14 +944,14 @@ public class KeyFile
 	 */
 	public KeyFile ref_()
 	{
-		auto p = g_key_file_ref(gKeyFile);
+		auto __p = g_key_file_ref(gKeyFile);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new KeyFile(cast(GKeyFile*) p, true);
+		return new KeyFile(cast(GKeyFile*) __p, true);
 	}
 
 	/**
@@ -974,14 +974,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1001,14 +1001,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), &err) != 0;
+		auto __p = g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1028,14 +1028,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1058,14 +1058,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_save_to_file(gKeyFile, Str.toStringz(filename), &err) != 0;
+		auto __p = g_key_file_save_to_file(gKeyFile, Str.toStringz(filename), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1132,14 +1132,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), &err) != 0;
+		auto __p = g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1149,7 +1149,7 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *     key = a key
-	 *     value = an double value
+	 *     value = a double value
 	 *
 	 * Since: 2.12
 	 */

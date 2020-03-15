@@ -271,7 +271,7 @@ public enum GSignalMatchType
 	 */
 	ID = 1,
 	/**
-	 * The signal detail be equal.
+	 * The signal detail must be equal.
 	 */
 	DETAIL = 2,
 	/**
@@ -287,7 +287,7 @@ public enum GSignalMatchType
 	 */
 	DATA = 16,
 	/**
-	 * Only unblocked signals may matched.
+	 * Only unblocked signals may be matched.
 	 */
 	UNBLOCKED = 32,
 }

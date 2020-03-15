@@ -129,14 +129,14 @@ public template MountT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_mount_eject_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_mount_eject_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -176,14 +176,14 @@ public template MountT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_mount_eject_with_operation_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_mount_eject_with_operation_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -197,14 +197,14 @@ public template MountT(TStruct)
 	 */
 	public FileIF getDefaultLocation()
 	{
-		auto p = g_mount_get_default_location(getMountStruct());
+		auto __p = g_mount_get_default_location(getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -220,14 +220,14 @@ public template MountT(TStruct)
 	 */
 	public DriveIF getDrive()
 	{
-		auto p = g_mount_get_drive(getMountStruct());
+		auto __p = g_mount_get_drive(getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) p, true);
+		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) __p, true);
 	}
 
 	/**
@@ -239,14 +239,14 @@ public template MountT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_mount_get_icon(getMountStruct());
+		auto __p = g_mount_get_icon(getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -273,14 +273,14 @@ public template MountT(TStruct)
 	 */
 	public FileIF getRoot()
 	{
-		auto p = g_mount_get_root(getMountStruct());
+		auto __p = g_mount_get_root(getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -306,14 +306,14 @@ public template MountT(TStruct)
 	 */
 	public IconIF getSymbolicIcon()
 	{
-		auto p = g_mount_get_symbolic_icon(getMountStruct());
+		auto __p = g_mount_get_symbolic_icon(getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -345,14 +345,14 @@ public template MountT(TStruct)
 	 */
 	public VolumeIF getVolume()
 	{
-		auto p = g_mount_get_volume(getMountStruct());
+		auto __p = g_mount_get_volume(getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) __p, true);
 	}
 
 	/**
@@ -422,7 +422,7 @@ public template MountT(TStruct)
 	 * [shared-mime-info](http://www.freedesktop.org/wiki/Specifications/shared-mime-info-spec)
 	 * specification for more on x-content types.
 	 *
-	 * This is an synchronous operation and as such may block doing IO;
+	 * This is a synchronous operation and as such may block doing IO;
 	 * see g_mount_guess_content_type() for the asynchronous version.
 	 *
 	 * Params:
@@ -525,14 +525,14 @@ public template MountT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_mount_remount_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_mount_remount_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -583,14 +583,14 @@ public template MountT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_mount_unmount_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_mount_unmount_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -630,14 +630,14 @@ public template MountT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_mount_unmount_with_operation_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_mount_unmount_with_operation_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

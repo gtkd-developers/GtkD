@@ -22,13 +22,9 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module gio.FileIcon;
+module gio.NativeSocketAddress;
 
-private import gio.FileIF;
-private import gio.IconIF;
-private import gio.IconT;
-private import gio.LoadableIconIF;
-private import gio.LoadableIconT;
+private import gio.SocketAddress;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
@@ -37,87 +33,65 @@ public  import gtkc.giotypes;
 
 
 /**
- * #GFileIcon specifies an icon by pointing to an image file
- * to be used as icon.
+ * A socket address of some unknown native type.
  */
-public class FileIcon : ObjectG, IconIF, LoadableIconIF
+public class NativeSocketAddress : SocketAddress
 {
 	/** the main Gtk struct */
-	protected GFileIcon* gFileIcon;
+	protected GNativeSocketAddress* gNativeSocketAddress;
 
 	/** Get the main Gtk struct */
-	public GFileIcon* getFileIconStruct(bool transferOwnership = false)
+	public GNativeSocketAddress* getNativeSocketAddressStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;
-		return gFileIcon;
+		return gNativeSocketAddress;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)gFileIcon;
+		return cast(void*)gNativeSocketAddress;
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GFileIcon* gFileIcon, bool ownedRef = false)
+	public this (GNativeSocketAddress* gNativeSocketAddress, bool ownedRef = false)
 	{
-		this.gFileIcon = gFileIcon;
-		super(cast(GObject*)gFileIcon, ownedRef);
+		this.gNativeSocketAddress = gNativeSocketAddress;
+		super(cast(GSocketAddress*)gNativeSocketAddress, ownedRef);
 	}
-
-	// add the Icon capabilities
-	mixin IconT!(GFileIcon);
-
-	// add the LoadableIcon capabilities
-	mixin LoadableIconT!(GFileIcon);
 
 
 	/** */
 	public static GType getType()
 	{
-		return g_file_icon_get_type();
+		return g_native_socket_address_get_type();
 	}
 
 	/**
-	 * Creates a new icon for a file.
+	 * Creates a new #GNativeSocketAddress for @native and @len.
 	 *
 	 * Params:
-	 *     file = a #GFile.
+	 *     native = a native address object
+	 *     len = the length of @native, in bytes
 	 *
-	 * Returns: a #GIcon for the given
-	 *     @file, or %NULL on error.
+	 * Returns: a new #GNativeSocketAddress
+	 *
+	 * Since: 2.46
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(FileIF file)
+	public this(void* native, size_t len)
 	{
-		auto __p = g_file_icon_new((file is null) ? null : file.getFileStruct());
+		auto __p = g_native_socket_address_new(native, len);
 
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GFileIcon*) __p, true);
-	}
-
-	/**
-	 * Gets the #GFile associated with the given @icon.
-	 *
-	 * Returns: a #GFile, or %NULL.
-	 */
-	public FileIF getFile()
-	{
-		auto __p = g_file_icon_get_file(gFileIcon);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p);
+		this(cast(GNativeSocketAddress*) __p, true);
 	}
 }

@@ -175,19 +175,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_append_to(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_append_to(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) p, true);
+		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) __p, true);
 	}
 
 	/**
@@ -231,19 +231,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_append_to_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_append_to_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) p, true);
+		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) __p, true);
 	}
 
 	/**
@@ -305,14 +305,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_copy(getFileStruct(), (destination is null) ? null : destination.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressCallbackData, &err) != 0;
+		auto __p = g_file_copy(getFileStruct(), (destination is null) ? null : destination.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressCallbackData, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -369,14 +369,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_copy_attributes(getFileStruct(), (destination is null) ? null : destination.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_copy_attributes(getFileStruct(), (destination is null) ? null : destination.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -393,14 +393,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_copy_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_copy_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -439,19 +439,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_create(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_create(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) p, true);
+		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) __p, true);
 	}
 
 	/**
@@ -495,19 +495,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_create_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_create_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) p, true);
+		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) __p, true);
 	}
 
 	/**
@@ -552,19 +552,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_create_readwrite(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_create_readwrite(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) p, true);
+		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) __p, true);
 	}
 
 	/**
@@ -612,19 +612,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_create_readwrite_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_create_readwrite_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) p, true);
+		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) __p, true);
 	}
 
 	alias delet = delete_;
@@ -648,14 +648,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_delete(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_delete(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -694,14 +694,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_delete_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_delete_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -721,14 +721,14 @@ public template FileT(TStruct)
 	 */
 	public FileIF dup()
 	{
-		auto p = g_file_dup(getFileStruct());
+		auto __p = g_file_dup(getFileStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -775,14 +775,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_eject_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_eject_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -830,14 +830,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_eject_mountable_with_operation_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_eject_mountable_with_operation_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -880,19 +880,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_enumerate_children(getFileStruct(), Str.toStringz(attributes), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_enumerate_children(getFileStruct(), Str.toStringz(attributes), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileEnumerator)(cast(GFileEnumerator*) p, true);
+		return ObjectG.getDObject!(FileEnumerator)(cast(GFileEnumerator*) __p, true);
 	}
 
 	/**
@@ -939,19 +939,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_enumerate_children_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_enumerate_children_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileEnumerator)(cast(GFileEnumerator*) p, true);
+		return ObjectG.getDObject!(FileEnumerator)(cast(GFileEnumerator*) __p, true);
 	}
 
 	/**
@@ -976,9 +976,9 @@ public template FileT(TStruct)
 	/**
 	 * Gets a #GMount for the #GFile.
 	 *
-	 * If the #GFileIface for @file does not have a mount (e.g.
-	 * possibly a remote share), @error will be set to %G_IO_ERROR_NOT_FOUND
-	 * and %NULL will be returned.
+	 * #GMount is returned only for user interesting locations, see
+	 * #GVolumeMonitor. If the #GFileIface for @file does not have a #mount,
+	 * @error will be set to %G_IO_ERROR_NOT_FOUND and %NULL #will be returned.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -998,19 +998,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_find_enclosing_mount(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_find_enclosing_mount(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) __p, true);
 	}
 
 	/**
@@ -1052,19 +1052,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_find_enclosing_mount_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_find_enclosing_mount_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) __p, true);
 	}
 
 	/**
@@ -1111,14 +1111,14 @@ public template FileT(TStruct)
 	 */
 	public FileIF getChild(string name)
 	{
-		auto p = g_file_get_child(getFileStruct(), Str.toStringz(name));
+		auto __p = g_file_get_child(getFileStruct(), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -1144,19 +1144,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_get_child_for_display_name(getFileStruct(), Str.toStringz(displayName), &err);
+		auto __p = g_file_get_child_for_display_name(getFileStruct(), Str.toStringz(displayName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -1172,14 +1172,14 @@ public template FileT(TStruct)
 	 */
 	public FileIF getParent()
 	{
-		auto p = g_file_get_parent(getFileStruct());
+		auto __p = g_file_get_parent(getFileStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -1327,7 +1327,7 @@ public template FileT(TStruct)
 	 * Params:
 	 *     prefix = input #GFile
 	 *
-	 * Returns: %TRUE if the @files's parent, grandparent, etc is @prefix,
+	 * Returns: %TRUE if the @file's parent, grandparent, etc is @prefix,
 	 *     %FALSE otherwise.
 	 */
 	public bool hasPrefix(FileIF prefix)
@@ -1416,7 +1416,7 @@ public template FileT(TStruct)
 		char* outetagOut = null;
 		GError* err = null;
 
-		auto p = g_file_load_bytes(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outetagOut, &err);
+		auto __p = g_file_load_bytes(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outetagOut, &err);
 
 		if (err !is null)
 		{
@@ -1425,12 +1425,12 @@ public template FileT(TStruct)
 
 		etagOut = Str.toString(outetagOut);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -1485,7 +1485,7 @@ public template FileT(TStruct)
 		char* outetagOut = null;
 		GError* err = null;
 
-		auto p = g_file_load_bytes_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &outetagOut, &err);
+		auto __p = g_file_load_bytes_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &outetagOut, &err);
 
 		if (err !is null)
 		{
@@ -1494,18 +1494,18 @@ public template FileT(TStruct)
 
 		etagOut = Str.toString(outetagOut);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
 	 * Loads the content of the file into memory. The data is always
 	 * zero-terminated, but this is not included in the resultant @length.
-	 * The returned @content should be freed with g_free() when no longer
+	 * The returned @contents should be freed with g_free() when no longer
 	 * needed.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
@@ -1530,7 +1530,7 @@ public template FileT(TStruct)
 		char* outetagOut = null;
 		GError* err = null;
 
-		auto p = g_file_load_contents(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outcontents, &length, &outetagOut, &err) != 0;
+		auto __p = g_file_load_contents(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outcontents, &length, &outetagOut, &err) != 0;
 
 		if (err !is null)
 		{
@@ -1540,7 +1540,7 @@ public template FileT(TStruct)
 		contents = Str.toString(outcontents, length);
 		etagOut = Str.toString(outetagOut);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1571,7 +1571,7 @@ public template FileT(TStruct)
 	/**
 	 * Finishes an asynchronous load of the @file's contents.
 	 * The contents are placed in @contents, and @length is set to the
-	 * size of the @contents string. The @content should be freed with
+	 * size of the @contents string. The @contents should be freed with
 	 * g_free() when no longer needed. If @etag_out is present, it will be
 	 * set to the new entity tag for the @file.
 	 *
@@ -1593,7 +1593,7 @@ public template FileT(TStruct)
 		char* outetagOut = null;
 		GError* err = null;
 
-		auto p = g_file_load_contents_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outcontents, &length, &outetagOut, &err) != 0;
+		auto __p = g_file_load_contents_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outcontents, &length, &outetagOut, &err) != 0;
 
 		if (err !is null)
 		{
@@ -1603,7 +1603,7 @@ public template FileT(TStruct)
 		contents = Str.toString(outcontents, length);
 		etagOut = Str.toString(outetagOut);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1637,7 +1637,7 @@ public template FileT(TStruct)
 	 * Finishes an asynchronous partial load operation that was started
 	 * with g_file_load_partial_contents_async(). The data is always
 	 * zero-terminated, but this is not included in the resultant @length.
-	 * The returned @content should be freed with g_free() when no longer
+	 * The returned @contents should be freed with g_free() when no longer
 	 * needed.
 	 *
 	 * Params:
@@ -1658,7 +1658,7 @@ public template FileT(TStruct)
 		char* outetagOut = null;
 		GError* err = null;
 
-		auto p = g_file_load_partial_contents_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outcontents, &length, &outetagOut, &err) != 0;
+		auto __p = g_file_load_partial_contents_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outcontents, &length, &outetagOut, &err) != 0;
 
 		if (err !is null)
 		{
@@ -1668,7 +1668,7 @@ public template FileT(TStruct)
 		contents = Str.toString(outcontents, length);
 		etagOut = Str.toString(outetagOut);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1699,14 +1699,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_make_directory(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_make_directory(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1744,14 +1744,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_make_directory_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_make_directory_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1784,14 +1784,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_make_directory_with_parents(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_make_directory_with_parents(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1816,14 +1816,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_make_symbolic_link(getFileStruct(), Str.toStringz(symlinkValue), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_make_symbolic_link(getFileStruct(), Str.toStringz(symlinkValue), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1835,7 +1835,7 @@ public template FileT(TStruct)
 	 *
 	 * By default, errors are only reported against the toplevel file
 	 * itself.  Errors found while recursing are silently ignored, unless
-	 * %G_FILE_DISK_USAGE_REPORT_ALL_ERRORS is given in @flags.
+	 * %G_FILE_MEASURE_REPORT_ANY_ERROR is given in @flags.
 	 *
 	 * The returned size, @disk_usage, is in bytes and should be formatted
 	 * with g_format_size() in order to get something reasonable for showing
@@ -1866,14 +1866,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_measure_disk_usage(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressData, &diskUsage, &numDirs, &numFiles, &err) != 0;
+		auto __p = g_file_measure_disk_usage(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressData, &diskUsage, &numDirs, &numFiles, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1920,14 +1920,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_measure_disk_usage_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &diskUsage, &numDirs, &numFiles, &err) != 0;
+		auto __p = g_file_measure_disk_usage_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &diskUsage, &numDirs, &numFiles, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1955,19 +1955,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_monitor(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_monitor(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileMonitor)(cast(GFileMonitor*) p, true);
+		return ObjectG.getDObject!(FileMonitor)(cast(GFileMonitor*) __p, true);
 	}
 
 	/**
@@ -1999,19 +1999,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_monitor_directory(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_monitor_directory(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileMonitor)(cast(GFileMonitor*) p, true);
+		return ObjectG.getDObject!(FileMonitor)(cast(GFileMonitor*) __p, true);
 	}
 
 	/**
@@ -2045,19 +2045,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_monitor_file(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_monitor_file(getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileMonitor)(cast(GFileMonitor*) p, true);
+		return ObjectG.getDObject!(FileMonitor)(cast(GFileMonitor*) __p, true);
 	}
 
 	/**
@@ -2103,14 +2103,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_mount_enclosing_volume_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_mount_enclosing_volume_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -2159,19 +2159,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_mount_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_file_mount_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -2183,10 +2183,6 @@ public template FileT(TStruct)
 	 *
 	 * If the flag #G_FILE_COPY_OVERWRITE is specified an already
 	 * existing @destination file is overwritten.
-	 *
-	 * If the flag #G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks
-	 * will be copied as symlinks, otherwise the target of the
-	 * @source symlink will be copied.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -2231,14 +2227,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_move(getFileStruct(), (destination is null) ? null : destination.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressCallbackData, &err) != 0;
+		auto __p = g_file_move(getFileStruct(), (destination is null) ? null : destination.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressCallbackData, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -2273,19 +2269,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_open_readwrite(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_open_readwrite(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) p, true);
+		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) __p, true);
 	}
 
 	/**
@@ -2331,19 +2327,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_open_readwrite_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_open_readwrite_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) p, true);
+		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) __p, true);
 	}
 
 	/**
@@ -2409,14 +2405,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_poll_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_poll_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -2440,25 +2436,26 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_default_handler(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_query_default_handler(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
 	 * Async version of g_file_query_default_handler().
 	 *
 	 * Params:
+	 *     ioPriority = the [I/O priority][io-priority] of the request
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *     callback = a #GAsyncReadyCallback to call when the request is done
 	 *     userData = data to pass to @callback
@@ -2488,19 +2485,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_default_handler_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_file_query_default_handler_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -2602,19 +2599,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_filesystem_info(getFileStruct(), Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_query_filesystem_info(getFileStruct(), Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -2661,19 +2658,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_filesystem_info_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_query_filesystem_info_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -2723,19 +2720,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_info(getFileStruct(), Str.toStringz(attributes), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_query_info(getFileStruct(), Str.toStringz(attributes), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -2781,19 +2778,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_info_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_query_info_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -2822,19 +2819,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_settable_attributes(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_query_settable_attributes(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) __p, true);
 	}
 
 	/**
@@ -2860,19 +2857,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_query_writable_namespaces(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_query_writable_namespaces(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) __p, true);
 	}
 
 	/**
@@ -2900,19 +2897,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_read(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_read(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInputStream)(cast(GFileInputStream*) p, true);
+		return ObjectG.getDObject!(FileInputStream)(cast(GFileInputStream*) __p, true);
 	}
 
 	/**
@@ -2954,19 +2951,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_read_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_read_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInputStream)(cast(GFileInputStream*) p, true);
+		return ObjectG.getDObject!(FileInputStream)(cast(GFileInputStream*) __p, true);
 	}
 
 	/**
@@ -3029,19 +3026,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_replace(getFileStruct(), Str.toStringz(etag), makeBackup, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_replace(getFileStruct(), Str.toStringz(etag), makeBackup, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) p, true);
+		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) __p, true);
 	}
 
 	/**
@@ -3111,7 +3108,7 @@ public template FileT(TStruct)
 		char* outnewEtag = null;
 		GError* err = null;
 
-		auto p = g_file_replace_contents(getFileStruct(), Str.toStringz(contents), cast(size_t)contents.length, Str.toStringz(etag), makeBackup, flags, &outnewEtag, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_replace_contents(getFileStruct(), Str.toStringz(contents), cast(size_t)contents.length, Str.toStringz(etag), makeBackup, flags, &outnewEtag, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
@@ -3120,7 +3117,7 @@ public template FileT(TStruct)
 
 		newEtag = Str.toString(outnewEtag);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3139,7 +3136,7 @@ public template FileT(TStruct)
 	 * If @make_backup is %TRUE, this function will attempt to
 	 * make a backup of @file.
 	 *
-	 * Note that no copy of @content will be made, so it must stay valid
+	 * Note that no copy of @contents will be made, so it must stay valid
 	 * until @callback is called. See g_file_replace_contents_bytes_async()
 	 * for a #GBytes version that will automatically hold a reference to the
 	 * contents (without copying) for the duration of the call.
@@ -3204,7 +3201,7 @@ public template FileT(TStruct)
 		char* outnewEtag = null;
 		GError* err = null;
 
-		auto p = g_file_replace_contents_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outnewEtag, &err) != 0;
+		auto __p = g_file_replace_contents_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outnewEtag, &err) != 0;
 
 		if (err !is null)
 		{
@@ -3213,7 +3210,7 @@ public template FileT(TStruct)
 
 		newEtag = Str.toString(outnewEtag);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3232,19 +3229,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_replace_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_replace_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) p, true);
+		return ObjectG.getDObject!(FileOutputStream)(cast(GFileOutputStream*) __p, true);
 	}
 
 	/**
@@ -3278,19 +3275,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_replace_readwrite(getFileStruct(), Str.toStringz(etag), makeBackup, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_replace_readwrite(getFileStruct(), Str.toStringz(etag), makeBackup, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) p, true);
+		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) __p, true);
 	}
 
 	/**
@@ -3342,19 +3339,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_replace_readwrite_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_replace_readwrite_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) p, true);
+		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) __p, true);
 	}
 
 	/**
@@ -3371,18 +3368,18 @@ public template FileT(TStruct)
 	 */
 	public FileIF resolveRelativePath(string relativePath)
 	{
-		auto p = g_file_resolve_relative_path(getFileStruct(), Str.toStringz(relativePath));
+		auto __p = g_file_resolve_relative_path(getFileStruct(), Str.toStringz(relativePath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
-	 * Sets an attribute in the file with attribute name @attribute to @value.
+	 * Sets an attribute in the file with attribute name @attribute to @value_p.
 	 *
 	 * Some attributes can be unset by setting @type to
 	 * %G_FILE_ATTRIBUTE_TYPE_INVALID and @value_p to %NULL.
@@ -3408,14 +3405,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attribute(getFileStruct(), Str.toStringz(attribute), type, valueP, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attribute(getFileStruct(), Str.toStringz(attribute), type, valueP, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3443,14 +3440,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attribute_byte_string(getFileStruct(), Str.toStringz(attribute), Str.toStringz(value), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attribute_byte_string(getFileStruct(), Str.toStringz(attribute), Str.toStringz(value), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3477,14 +3474,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attribute_int32(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attribute_int32(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3510,14 +3507,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attribute_int64(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attribute_int64(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3543,14 +3540,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attribute_string(getFileStruct(), Str.toStringz(attribute), Str.toStringz(value), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attribute_string(getFileStruct(), Str.toStringz(attribute), Str.toStringz(value), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3577,14 +3574,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attribute_uint32(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attribute_uint32(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3611,14 +3608,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attribute_uint64(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attribute_uint64(getFileStruct(), Str.toStringz(attribute), value, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3661,7 +3658,7 @@ public template FileT(TStruct)
 		GFileInfo* outinfo = null;
 		GError* err = null;
 
-		auto p = g_file_set_attributes_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &outinfo, &err) != 0;
+		auto __p = g_file_set_attributes_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &outinfo, &err) != 0;
 
 		if (err !is null)
 		{
@@ -3670,7 +3667,7 @@ public template FileT(TStruct)
 
 		info = ObjectG.getDObject!(FileInfo)(outinfo);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3701,14 +3698,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_attributes_from_info(getFileStruct(), (info is null) ? null : info.getFileInfoStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_set_attributes_from_info(getFileStruct(), (info is null) ? null : info.getFileInfoStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3743,19 +3740,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_display_name(getFileStruct(), Str.toStringz(displayName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_set_display_name(getFileStruct(), Str.toStringz(displayName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -3798,19 +3795,19 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_set_display_name_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_file_set_display_name_finish(getFileStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -3860,14 +3857,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_start_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_start_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3899,7 +3896,7 @@ public template FileT(TStruct)
 	}
 
 	/**
-	 * Finishes an stop operation, see g_file_stop_mountable() for details.
+	 * Finishes a stop operation, see g_file_stop_mountable() for details.
 	 *
 	 * Finish an asynchronous stop operation that was started
 	 * with g_file_stop_mountable().
@@ -3918,14 +3915,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_stop_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_stop_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -3965,14 +3962,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_trash(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_file_trash(getFileStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -4010,14 +4007,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_trash_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_trash_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -4067,14 +4064,14 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_unmount_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_unmount_mountable_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -4126,13 +4123,13 @@ public template FileT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_file_unmount_mountable_with_operation_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_file_unmount_mountable_with_operation_finish(getFileStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

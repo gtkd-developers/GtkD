@@ -37,11 +37,13 @@ private import gtkd.Loader;
  * Similar to the struct timeval returned by the gettimeofday()
  * UNIX system call.
  * 
- * GLib is attempting to unify around the use of 64bit integers to
+ * GLib is attempting to unify around the use of 64-bit integers to
  * represent microsecond-precision time. As such, this type will be
  * removed from a future version of GLib. A consequence of using `glong` for
  * `tv_sec` is that on 32-bit systems `GTimeVal` is subject to the year 2038
  * problem.
+ * 
+ * Deprecated: Use #GDateTime or #guint64 instead.
  */
 public final class TimeVal
 {
@@ -111,6 +113,9 @@ public final class TimeVal
 	 * Adds the given number of microseconds to @time_. @microseconds can
 	 * also be negative to decrease the value of @time_.
 	 *
+	 * Deprecated: #GTimeVal is not year-2038-safe. Use `guint64` for
+	 * representing microseconds since the epoch, or use #GDateTime.
+	 *
 	 * Params:
 	 *     microseconds = number of microseconds to add to @time
 	 */
@@ -144,10 +149,19 @@ public final class TimeVal
 	 * If @time_ represents a date which is too large to fit into a `struct tm`,
 	 * %NULL will be returned. This is platform dependent. Note also that since
 	 * `GTimeVal` stores the number of seconds as a `glong`, on 32-bit systems it
-	 * is subject to the year 2038 problem.
+	 * is subject to the year 2038 problem. Accordingly, since GLib 2.62, this
+	 * function has been deprecated. Equivalent functionality is available using:
+	 * |[
+	 * GDateTime *dt = g_date_time_new_from_unix_utc (time_val);
+	 * iso8601_string = g_date_time_format_iso8601 (dt);
+	 * g_date_time_unref (dt);
+	 * ]|
 	 *
 	 * The return value of g_time_val_to_iso8601() has been nullable since GLib
 	 * 2.54; before then, GLib would crash under the same conditions.
+	 *
+	 * Deprecated: #GTimeVal is not year-2038-safe. Use
+	 * g_date_time_format_iso8601(dt) instead.
 	 *
 	 * Returns: a newly allocated string containing an ISO 8601 date,
 	 *     or %NULL if @time_ was too large
@@ -173,6 +187,17 @@ public final class TimeVal
 	 *
 	 * Any leading or trailing space in @iso_date is ignored.
 	 *
+	 * This function was deprecated, along with #GTimeVal itself, in GLib 2.62.
+	 * Equivalent functionality is available using code like:
+	 * |[
+	 * GDateTime *dt = g_date_time_new_from_iso8601 (iso8601_string, NULL);
+	 * gint64 time_val = g_date_time_to_unix (dt);
+	 * g_date_time_unref (dt);
+	 * ]|
+	 *
+	 * Deprecated: #GTimeVal is not year-2038-safe. Use
+	 * g_date_time_new_from_iso8601() instead.
+	 *
 	 * Params:
 	 *     isoDate = an ISO 8601 encoded date string
 	 *     time = a #GTimeVal
@@ -185,17 +210,20 @@ public final class TimeVal
 	{
 		GTimeVal* outtime = sliceNew!GTimeVal();
 
-		auto p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
+		auto __p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
 
 		time = new TimeVal(outtime, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Equivalent to the UNIX gettimeofday() function, but portable.
 	 *
 	 * You may find g_get_real_time() to be more convenient.
+	 *
+	 * Deprecated: #GTimeVal is not year-2038-safe. Use g_get_real_time()
+	 * instead.
 	 *
 	 * Params:
 	 *     result = #GTimeVal structure in which to store current time.

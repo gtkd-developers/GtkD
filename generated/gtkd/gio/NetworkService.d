@@ -101,14 +101,14 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	 */
 	public this(string service, string protocol, string domain)
 	{
-		auto p = g_network_service_new(Str.toStringz(service), Str.toStringz(protocol), Str.toStringz(domain));
+		auto __p = g_network_service_new(Str.toStringz(service), Str.toStringz(protocol), Str.toStringz(domain));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GNetworkService*) p, true);
+		this(cast(GNetworkService*) __p, true);
 	}
 
 	/**

@@ -158,14 +158,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_get_added(gBookmarkFile, Str.toStringz(uri), &err);
+		auto __p = g_bookmark_file_get_added(gBookmarkFile, Str.toStringz(uri), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class BookmarkFile
 		char* outexec = null;
 		GError* err = null;
 
-		auto p = g_bookmark_file_get_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &outexec, &count, &stamp, &err) != 0;
+		auto __p = g_bookmark_file_get_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &outexec, &count, &stamp, &err) != 0;
 
 		if (err !is null)
 		{
@@ -210,7 +210,7 @@ public class BookmarkFile
 
 		exec = Str.toString(outexec);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class BookmarkFile
 		char* outmimeType = null;
 		GError* err = null;
 
-		auto p = g_bookmark_file_get_icon(gBookmarkFile, Str.toStringz(uri), &outhref, &outmimeType, &err) != 0;
+		auto __p = g_bookmark_file_get_icon(gBookmarkFile, Str.toStringz(uri), &outhref, &outmimeType, &err) != 0;
 
 		if (err !is null)
 		{
@@ -346,7 +346,7 @@ public class BookmarkFile
 		href = Str.toString(outhref);
 		mimeType = Str.toString(outmimeType);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -370,14 +370,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_get_is_private(gBookmarkFile, Str.toStringz(uri), &err) != 0;
+		auto __p = g_bookmark_file_get_is_private(gBookmarkFile, Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -432,14 +432,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_get_modified(gBookmarkFile, Str.toStringz(uri), &err);
+		auto __p = g_bookmark_file_get_modified(gBookmarkFile, Str.toStringz(uri), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -526,14 +526,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_get_visited(gBookmarkFile, Str.toStringz(uri), &err);
+		auto __p = g_bookmark_file_get_visited(gBookmarkFile, Str.toStringz(uri), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -557,14 +557,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_has_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &err) != 0;
+		auto __p = g_bookmark_file_has_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -588,14 +588,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_has_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), &err) != 0;
+		auto __p = g_bookmark_file_has_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -632,14 +632,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_load_from_data(gBookmarkFile, Str.toStringz(data), cast(size_t)data.length, &err) != 0;
+		auto __p = g_bookmark_file_load_from_data(gBookmarkFile, Str.toStringz(data), cast(size_t)data.length, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -665,7 +665,7 @@ public class BookmarkFile
 		char* outfullPath = null;
 		GError* err = null;
 
-		auto p = g_bookmark_file_load_from_data_dirs(gBookmarkFile, Str.toStringz(file), &outfullPath, &err) != 0;
+		auto __p = g_bookmark_file_load_from_data_dirs(gBookmarkFile, Str.toStringz(file), &outfullPath, &err) != 0;
 
 		if (err !is null)
 		{
@@ -674,7 +674,7 @@ public class BookmarkFile
 
 		fullPath = Str.toString(outfullPath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -696,14 +696,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_load_from_file(gBookmarkFile, Str.toStringz(filename), &err) != 0;
+		auto __p = g_bookmark_file_load_from_file(gBookmarkFile, Str.toStringz(filename), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -728,14 +728,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_move_item(gBookmarkFile, Str.toStringz(oldUri), Str.toStringz(newUri), &err) != 0;
+		auto __p = g_bookmark_file_move_item(gBookmarkFile, Str.toStringz(oldUri), Str.toStringz(newUri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -762,14 +762,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_remove_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &err) != 0;
+		auto __p = g_bookmark_file_remove_application(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -795,14 +795,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_remove_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), &err) != 0;
+		auto __p = g_bookmark_file_remove_group(gBookmarkFile, Str.toStringz(uri), Str.toStringz(group), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -821,14 +821,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_remove_item(gBookmarkFile, Str.toStringz(uri), &err) != 0;
+		auto __p = g_bookmark_file_remove_item(gBookmarkFile, Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -895,14 +895,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_set_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), Str.toStringz(exec), count, stamp, &err) != 0;
+		auto __p = g_bookmark_file_set_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), Str.toStringz(exec), count, stamp, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1096,14 +1096,14 @@ public class BookmarkFile
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_to_file(gBookmarkFile, Str.toStringz(filename), &err) != 0;
+		auto __p = g_bookmark_file_to_file(gBookmarkFile, Str.toStringz(filename), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/** */
@@ -1127,13 +1127,13 @@ public class BookmarkFile
 	 */
 	public this()
 	{
-		auto p = g_bookmark_file_new();
+		auto __p = g_bookmark_file_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GBookmarkFile*) p);
+		this(cast(GBookmarkFile*) __p);
 	}
 }

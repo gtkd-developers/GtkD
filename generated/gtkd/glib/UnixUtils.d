@@ -113,14 +113,14 @@ public struct UnixUtils
 	 */
 	public static Source fdSourceNew(int fd, GIOCondition condition)
 	{
-		auto p = g_unix_fd_source_new(fd, condition);
+		auto __p = g_unix_fd_source_new(fd, condition);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -147,14 +147,14 @@ public struct UnixUtils
 	{
 		GError* err = null;
 
-		auto p = g_unix_open_pipe(fds, flags, &err) != 0;
+		auto __p = g_unix_open_pipe(fds, flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -176,14 +176,14 @@ public struct UnixUtils
 	{
 		GError* err = null;
 
-		auto p = g_unix_set_fd_nonblocking(fd, nonblock, &err) != 0;
+		auto __p = g_unix_set_fd_nonblocking(fd, nonblock, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -261,13 +261,13 @@ public struct UnixUtils
 	 */
 	public static Source signalSourceNew(int signum)
 	{
-		auto p = g_unix_signal_source_new(signum);
+		auto __p = g_unix_signal_source_new(signum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 }

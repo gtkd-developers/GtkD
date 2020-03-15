@@ -223,13 +223,13 @@ public class Idle
 	 */
 	public static Source sourceNew()
 	{
-		auto p = g_idle_source_new();
+		auto __p = g_idle_source_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 }

@@ -131,14 +131,14 @@ public class InetAddress : ObjectG
 	 */
 	public this(ubyte[] bytes, GSocketFamily family)
 	{
-		auto p = g_inet_address_new_from_bytes(bytes.ptr, family);
+		auto __p = g_inet_address_new_from_bytes(bytes.ptr, family);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_bytes");
 		}
 
-		this(cast(GInetAddress*) p, true);
+		this(cast(GInetAddress*) __p, true);
 	}
 
 	/**
@@ -157,14 +157,14 @@ public class InetAddress : ObjectG
 	 */
 	public this(string string_)
 	{
-		auto p = g_inet_address_new_from_string(Str.toStringz(string_));
+		auto __p = g_inet_address_new_from_string(Str.toStringz(string_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
 
-		this(cast(GInetAddress*) p, true);
+		this(cast(GInetAddress*) __p, true);
 	}
 
 	/**

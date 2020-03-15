@@ -88,14 +88,14 @@ public class DBusMessage : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_dbus_message_new();
+		auto __p = g_dbus_message_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDBusMessage*) p, true);
+		this(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -122,19 +122,19 @@ public class DBusMessage : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_dbus_message_new_from_blob(blob.ptr, cast(size_t)blob.length, capabilities, &err);
+		auto __p = g_dbus_message_new_from_blob(blob.ptr, cast(size_t)blob.length, capabilities, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_blob");
 		}
 
-		this(cast(GDBusMessage*) p, true);
+		this(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -154,14 +154,14 @@ public class DBusMessage : ObjectG
 	 */
 	public this(string name, string path, string interface_, string method)
 	{
-		auto p = g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(interface_), Str.toStringz(method));
+		auto __p = g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(interface_), Str.toStringz(method));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_method_call");
 		}
 
-		this(cast(GDBusMessage*) p, true);
+		this(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -180,14 +180,14 @@ public class DBusMessage : ObjectG
 	 */
 	public this(string path, string interface_, string signal)
 	{
-		auto p = g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(interface_), Str.toStringz(signal));
+		auto __p = g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(interface_), Str.toStringz(signal));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_signal");
 		}
 
-		this(cast(GDBusMessage*) p, true);
+		this(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -209,14 +209,14 @@ public class DBusMessage : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_dbus_message_bytes_needed(blob.ptr, cast(size_t)blob.length, &err);
+		auto __p = g_dbus_message_bytes_needed(blob.ptr, cast(size_t)blob.length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -238,19 +238,19 @@ public class DBusMessage : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_dbus_message_copy(gDBusMessage, &err);
+		auto __p = g_dbus_message_copy(gDBusMessage, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p, true);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -276,14 +276,14 @@ public class DBusMessage : ObjectG
 	 */
 	public Variant getBody()
 	{
-		auto p = g_dbus_message_get_body(gDBusMessage);
+		auto __p = g_dbus_message_get_body(gDBusMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -348,14 +348,14 @@ public class DBusMessage : ObjectG
 	 */
 	public Variant getHeader(GDBusMessageHeaderField headerField)
 	{
-		auto p = g_dbus_message_get_header(gDBusMessage, headerField);
+		auto __p = g_dbus_message_get_header(gDBusMessage, headerField);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -369,9 +369,9 @@ public class DBusMessage : ObjectG
 	 */
 	public char[] getHeaderFields()
 	{
-		auto p = g_dbus_message_get_header_fields(gDBusMessage);
+		auto __p = g_dbus_message_get_header_fields(gDBusMessage);
 
-		return p[0 .. getArrayLength(p)];
+		return __p[0 .. getArrayLength(__p)];
 	}
 
 	/**
@@ -508,14 +508,14 @@ public class DBusMessage : ObjectG
 	 */
 	public UnixFDList getUnixFdList()
 	{
-		auto p = g_dbus_message_get_unix_fd_list(gDBusMessage);
+		auto __p = g_dbus_message_get_unix_fd_list(gDBusMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixFDList)(cast(GUnixFDList*) p);
+		return ObjectG.getDObject!(UnixFDList)(cast(GUnixFDList*) __p);
 	}
 
 	/**
@@ -541,14 +541,14 @@ public class DBusMessage : ObjectG
 	 */
 	public DBusMessage newMethodErrorLiteral(string errorName, string errorMessage)
 	{
-		auto p = g_dbus_message_new_method_error_literal(gDBusMessage, Str.toStringz(errorName), Str.toStringz(errorMessage));
+		auto __p = g_dbus_message_new_method_error_literal(gDBusMessage, Str.toStringz(errorName), Str.toStringz(errorMessage));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p, true);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -565,14 +565,14 @@ public class DBusMessage : ObjectG
 	 */
 	public DBusMessage newMethodErrorValist(string errorName, string errorMessageFormat, void* varArgs)
 	{
-		auto p = g_dbus_message_new_method_error_valist(gDBusMessage, Str.toStringz(errorName), Str.toStringz(errorMessageFormat), varArgs);
+		auto __p = g_dbus_message_new_method_error_valist(gDBusMessage, Str.toStringz(errorName), Str.toStringz(errorMessageFormat), varArgs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p, true);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -584,14 +584,14 @@ public class DBusMessage : ObjectG
 	 */
 	public DBusMessage newMethodReply()
 	{
-		auto p = g_dbus_message_new_method_reply(gDBusMessage);
+		auto __p = g_dbus_message_new_method_reply(gDBusMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p, true);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -882,14 +882,14 @@ public class DBusMessage : ObjectG
 		size_t outSize;
 		GError* err = null;
 
-		auto p = g_dbus_message_to_blob(gDBusMessage, &outSize, capabilities, &err);
+		auto __p = g_dbus_message_to_blob(gDBusMessage, &outSize, capabilities, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p[0 .. outSize];
+		return __p[0 .. outSize];
 	}
 
 	/**
@@ -911,13 +911,13 @@ public class DBusMessage : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_dbus_message_to_gerror(gDBusMessage, &err) != 0;
+		auto __p = g_dbus_message_to_gerror(gDBusMessage, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

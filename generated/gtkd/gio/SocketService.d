@@ -117,14 +117,14 @@ public class SocketService : SocketListener
 	 */
 	public this()
 	{
-		auto p = g_socket_service_new();
+		auto __p = g_socket_service_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSocketService*) p, true);
+		this(cast(GSocketService*) __p, true);
 	}
 
 	/**

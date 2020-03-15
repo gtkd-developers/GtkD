@@ -82,8 +82,8 @@ public struct DBusUtilities
 	 *     busType = a #GBusType
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Returns: a valid D-Bus address string for @bus_type or %NULL if
-	 *     @error is set
+	 * Returns: a valid D-Bus address string for @bus_type or
+	 *     %NULL if @error is set
 	 *
 	 * Since: 2.26
 	 *
@@ -148,7 +148,7 @@ public struct DBusUtilities
 		char* outoutGuid = null;
 		GError* err = null;
 
-		auto p = g_dbus_address_get_stream_finish((res is null) ? null : res.getAsyncResultStruct(), &outoutGuid, &err);
+		auto __p = g_dbus_address_get_stream_finish((res is null) ? null : res.getAsyncResultStruct(), &outoutGuid, &err);
 
 		if (err !is null)
 		{
@@ -157,12 +157,12 @@ public struct DBusUtilities
 
 		outGuid = Str.toString(outoutGuid);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p, true);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public struct DBusUtilities
 		char* outoutGuid = null;
 		GError* err = null;
 
-		auto p = g_dbus_address_get_stream_sync(Str.toStringz(address), &outoutGuid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_address_get_stream_sync(Str.toStringz(address), &outoutGuid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -199,12 +199,12 @@ public struct DBusUtilities
 
 		outGuid = Str.toString(outoutGuid);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p, true);
 	}
 
 	/**
@@ -268,14 +268,14 @@ public struct DBusUtilities
 	 */
 	public static Variant gvalueToGvariant(Value gvalue, VariantType type)
 	{
-		auto p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
+		auto __p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -409,14 +409,14 @@ public struct DBusUtilities
 	{
 		GError* err = null;
 
-		auto p = g_dbus_is_supported_address(Str.toStringz(string_), &err) != 0;
+		auto __p = g_dbus_is_supported_address(Str.toStringz(string_), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -135,14 +135,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_close(gOutputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_output_stream_close(gOutputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -182,14 +182,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_close_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_output_stream_close_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -214,14 +214,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_flush(gOutputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_output_stream_flush(gOutputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -258,14 +258,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_flush_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_output_stream_flush_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -316,14 +316,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_set_pending(gOutputStream, &err) != 0;
+		auto __p = g_output_stream_set_pending(gOutputStream, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -346,14 +346,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_splice(gOutputStream, (source is null) ? null : source.getInputStreamStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_output_stream_splice(gOutputStream, (source is null) ? null : source.getInputStreamStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -395,14 +395,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_splice_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_output_stream_splice_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -435,11 +435,11 @@ public class OutputStream : ObjectG
 	{
 		GError* outerror = null;
 
-		auto p = g_output_stream_vprintf(gOutputStream, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &outerror, Str.toStringz(format), args) != 0;
+		auto __p = g_output_stream_vprintf(gOutputStream, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &outerror, Str.toStringz(format), args) != 0;
 
 		error = new ErrorG(outerror);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -476,14 +476,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_write(gOutputStream, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_output_stream_write(gOutputStream, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -521,14 +521,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_write_all(gOutputStream, buffer.ptr, cast(size_t)buffer.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_output_stream_write_all(gOutputStream, buffer.ptr, cast(size_t)buffer.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -588,14 +588,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_write_all_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
+		auto __p = g_output_stream_write_all_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -672,14 +672,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_write_bytes(gOutputStream, (bytes is null) ? null : bytes.getBytesStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_output_stream_write_bytes(gOutputStream, (bytes is null) ? null : bytes.getBytesStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -723,14 +723,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_write_bytes_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_output_stream_write_bytes_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -747,14 +747,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_write_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_output_stream_write_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -798,14 +798,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_writev(gOutputStream, vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_output_stream_writev(gOutputStream, vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -848,14 +848,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_writev_all(gOutputStream, vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_output_stream_writev_all(gOutputStream, vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -916,14 +916,14 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_writev_all_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
+		auto __p = g_output_stream_writev_all_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -989,13 +989,13 @@ public class OutputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_output_stream_writev_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
+		auto __p = g_output_stream_writev_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

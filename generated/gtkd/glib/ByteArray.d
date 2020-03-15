@@ -76,14 +76,14 @@ public class ByteArray
 	 */
 	public ByteArray append(ubyte* data, uint len)
 	{
-		auto p = g_byte_array_append(gByteArray, data, len);
+		auto __p = g_byte_array_append(gByteArray, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -120,14 +120,14 @@ public class ByteArray
 	 */
 	public Bytes freeToBytes()
 	{
-		auto p = g_byte_array_free_to_bytes(gByteArray);
+		auto __p = g_byte_array_free_to_bytes(gByteArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -139,14 +139,14 @@ public class ByteArray
 	 */
 	public this()
 	{
-		auto p = g_byte_array_new();
+		auto __p = g_byte_array_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GByteArray*) p);
+		this(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -164,14 +164,14 @@ public class ByteArray
 	 */
 	public this(ubyte[] data)
 	{
-		auto p = g_byte_array_new_take(data.ptr, cast(size_t)data.length);
+		auto __p = g_byte_array_new_take(data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_take");
 		}
 
-		this(cast(GByteArray*) p);
+		this(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -186,14 +186,14 @@ public class ByteArray
 	 */
 	public ByteArray prepend(ubyte* data, uint len)
 	{
-		auto p = g_byte_array_prepend(gByteArray, data, len);
+		auto __p = g_byte_array_prepend(gByteArray, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	alias doref = ref_;
@@ -207,14 +207,14 @@ public class ByteArray
 	 */
 	public ByteArray ref_()
 	{
-		auto p = g_byte_array_ref(gByteArray);
+		auto __p = g_byte_array_ref(gByteArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -228,14 +228,14 @@ public class ByteArray
 	 */
 	public ByteArray removeIndex(uint index)
 	{
-		auto p = g_byte_array_remove_index(gByteArray, index);
+		auto __p = g_byte_array_remove_index(gByteArray, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -251,14 +251,14 @@ public class ByteArray
 	 */
 	public ByteArray removeIndexFast(uint index)
 	{
-		auto p = g_byte_array_remove_index_fast(gByteArray, index);
+		auto __p = g_byte_array_remove_index_fast(gByteArray, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -275,14 +275,14 @@ public class ByteArray
 	 */
 	public ByteArray removeRange(uint index, uint length)
 	{
-		auto p = g_byte_array_remove_range(gByteArray, index, length);
+		auto __p = g_byte_array_remove_range(gByteArray, index, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -295,14 +295,14 @@ public class ByteArray
 	 */
 	public ByteArray setSize(uint length)
 	{
-		auto p = g_byte_array_set_size(gByteArray, length);
+		auto __p = g_byte_array_set_size(gByteArray, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -318,14 +318,14 @@ public class ByteArray
 	 */
 	public static ByteArray sizedNew(uint reservedSize)
 	{
-		auto p = g_byte_array_sized_new(reservedSize);
+		auto __p = g_byte_array_sized_new(reservedSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) __p);
 	}
 
 	/**
@@ -359,6 +359,25 @@ public class ByteArray
 	public void sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		g_byte_array_sort_with_data(gByteArray, compareFunc, userData);
+	}
+
+	/**
+	 * Frees the data in the array and resets the size to zero, while
+	 * the underlying array is preserved for use elsewhere and returned
+	 * to the caller.
+	 *
+	 * Params:
+	 *     len = pointer to retrieve the number of
+	 *         elements of the original array
+	 *
+	 * Returns: the element data, which should be
+	 *     freed using g_free().
+	 *
+	 * Since: 2.64
+	 */
+	public ubyte* steal(out size_t len)
+	{
+		return g_byte_array_steal(gByteArray, &len);
 	}
 
 	/**

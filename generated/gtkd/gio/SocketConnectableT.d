@@ -111,19 +111,19 @@ public template SocketConnectableT(TStruct)
 	 */
 	public SocketAddressEnumerator enumerate()
 	{
-		auto p = g_socket_connectable_enumerate(getSocketConnectableStruct());
+		auto __p = g_socket_connectable_enumerate(getSocketConnectableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p, true);
+		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) __p, true);
 	}
 
 	/**
 	 * Creates a #GSocketAddressEnumerator for @connectable that will
-	 * return #GProxyAddresses for addresses that you must connect
+	 * return a #GProxyAddress for each of its addresses that you must connect
 	 * to via a proxy.
 	 *
 	 * If @connectable does not implement
@@ -136,14 +136,14 @@ public template SocketConnectableT(TStruct)
 	 */
 	public SocketAddressEnumerator proxyEnumerate()
 	{
-		auto p = g_socket_connectable_proxy_enumerate(getSocketConnectableStruct());
+		auto __p = g_socket_connectable_proxy_enumerate(getSocketConnectableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p, true);
+		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) __p, true);
 	}
 
 	/**

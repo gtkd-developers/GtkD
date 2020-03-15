@@ -84,14 +84,14 @@ public template TlsBackendT(TStruct)
 	 */
 	public TlsDatabase getDefaultDatabase()
 	{
-		auto p = g_tls_backend_get_default_database(getTlsBackendStruct());
+		auto __p = g_tls_backend_get_default_database(getTlsBackendStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p, true);
+		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) __p, true);
 	}
 
 	/**

@@ -39,7 +39,7 @@ public  import gtkc.giotypes;
  * This #GSocketControlMessage contains a #GUnixFDList.
  * It may be sent using g_socket_send_message() and received using
  * g_socket_receive_message() over UNIX sockets (ie: sockets in the
- * %G_SOCKET_ADDRESS_UNIX family). The file descriptors are copied
+ * %G_SOCKET_FAMILY_UNIX family). The file descriptors are copied
  * between processes by the kernel.
  * 
  * For an easier way to send and receive file descriptors over
@@ -97,14 +97,14 @@ public class UnixFDMessage : SocketControlMessage
 	 */
 	public this()
 	{
-		auto p = g_unix_fd_message_new();
+		auto __p = g_unix_fd_message_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GUnixFDMessage*) p, true);
+		this(cast(GUnixFDMessage*) __p, true);
 	}
 
 	/**
@@ -121,14 +121,14 @@ public class UnixFDMessage : SocketControlMessage
 	 */
 	public this(UnixFDList fdList)
 	{
-		auto p = g_unix_fd_message_new_with_fd_list((fdList is null) ? null : fdList.getUnixFDListStruct());
+		auto __p = g_unix_fd_message_new_with_fd_list((fdList is null) ? null : fdList.getUnixFDListStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_fd_list");
 		}
 
-		this(cast(GUnixFDMessage*) p, true);
+		this(cast(GUnixFDMessage*) __p, true);
 	}
 
 	/**
@@ -154,14 +154,14 @@ public class UnixFDMessage : SocketControlMessage
 	{
 		GError* err = null;
 
-		auto p = g_unix_fd_message_append_fd(gUnixFDMessage, fd, &err) != 0;
+		auto __p = g_unix_fd_message_append_fd(gUnixFDMessage, fd, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -175,14 +175,14 @@ public class UnixFDMessage : SocketControlMessage
 	 */
 	public UnixFDList getFdList()
 	{
-		auto p = g_unix_fd_message_get_fd_list(gUnixFDMessage);
+		auto __p = g_unix_fd_message_get_fd_list(gUnixFDMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixFDList)(cast(GUnixFDList*) p);
+		return ObjectG.getDObject!(UnixFDList)(cast(GUnixFDList*) __p);
 	}
 
 	/**
@@ -213,8 +213,8 @@ public class UnixFDMessage : SocketControlMessage
 	{
 		int length;
 
-		auto p = g_unix_fd_message_steal_fds(gUnixFDMessage, &length);
+		auto __p = g_unix_fd_message_steal_fds(gUnixFDMessage, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 }

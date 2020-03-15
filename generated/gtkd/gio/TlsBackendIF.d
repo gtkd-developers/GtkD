@@ -60,14 +60,14 @@ public interface TlsBackendIF{
 	 */
 	public static TlsBackendIF getDefault()
 	{
-		auto p = g_tls_backend_get_default();
+		auto __p = g_tls_backend_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsBackendIF)(cast(GTlsBackend*) p);
+		return ObjectG.getDObject!(TlsBackendIF)(cast(GTlsBackend*) __p);
 	}
 
 	/**

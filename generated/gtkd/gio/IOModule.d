@@ -91,14 +91,14 @@ public class IOModule : TypeModule
 	 */
 	public this(string filename)
 	{
-		auto p = g_io_module_new(Str.toStringz(filename));
+		auto __p = g_io_module_new(Str.toStringz(filename));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GIOModule*) p, true);
+		this(cast(GIOModule*) __p, true);
 	}
 
 	/**
@@ -121,14 +121,14 @@ public class IOModule : TypeModule
 	 */
 	public static ListG loadAllInDirectory(string dirname)
 	{
-		auto p = g_io_modules_load_all_in_directory(Str.toStringz(dirname));
+		auto __p = g_io_modules_load_all_in_directory(Str.toStringz(dirname));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -154,14 +154,14 @@ public class IOModule : TypeModule
 	 */
 	public static ListG loadAllInDirectoryWithScope(string dirname, IOModuleScope scope_)
 	{
-		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scope_ is null) ? null : scope_.getIOModuleScopeStruct());
+		auto __p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scope_ is null) ? null : scope_.getIOModuleScopeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

@@ -60,14 +60,14 @@ public template DBusInterfaceT(TStruct)
 	 */
 	public DBusObjectIF dupObject()
 	{
-		auto p = g_dbus_interface_dup_object(getDBusInterfaceStruct());
+		auto __p = g_dbus_interface_dup_object(getDBusInterfaceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) p, true);
+		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) __p, true);
 	}
 
 	/**
@@ -80,14 +80,14 @@ public template DBusInterfaceT(TStruct)
 	 */
 	public DBusInterfaceInfo getInfo()
 	{
-		auto p = g_dbus_interface_get_info(getDBusInterfaceStruct());
+		auto __p = g_dbus_interface_get_info(getDBusInterfaceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) __p);
 	}
 
 	/**
@@ -104,14 +104,14 @@ public template DBusInterfaceT(TStruct)
 	 */
 	public DBusObjectIF getObject()
 	{
-		auto p = g_dbus_interface_get_object(getDBusInterfaceStruct());
+		auto __p = g_dbus_interface_get_object(getDBusInterfaceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) p);
+		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) __p);
 	}
 
 	/**

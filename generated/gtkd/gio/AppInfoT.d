@@ -47,7 +47,7 @@ public  import gtkc.giotypes;
  * As of GLib 2.20, URIs will always be converted to POSIX paths
  * (using g_file_get_path()) when using g_app_info_launch() even if
  * the application requested an URI and not a POSIX path. For example
- * for an desktop-file based application with Exec key `totem
+ * for a desktop-file based application with Exec key `totem
  * %U` and a single URI, `sftp://foo/file.avi`, then
  * `/home/user/.gvfs/sftp on foo/file.avi` will be passed. This will
  * only work if a set of suitable GIO extensions (such as gvfs 2.26
@@ -116,14 +116,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_add_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_add_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -174,14 +174,14 @@ public template AppInfoT(TStruct)
 	 */
 	public AppInfoIF dup()
 	{
-		auto p = g_app_info_dup(getAppInfoStruct());
+		auto __p = g_app_info_dup(getAppInfoStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -259,14 +259,14 @@ public template AppInfoT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_app_info_get_icon(getAppInfoStruct());
+		auto __p = g_app_info_get_icon(getAppInfoStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -353,14 +353,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch(getAppInfoStruct(), (files is null) ? null : files.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
+		auto __p = g_app_info_launch(getAppInfoStruct(), (files is null) ? null : files.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -387,14 +387,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_uris(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
+		auto __p = g_app_info_launch_uris(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -435,14 +435,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_uris_finish(getAppInfoStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_app_info_launch_uris_finish(getAppInfoStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -459,14 +459,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_remove_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_remove_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -484,14 +484,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_set_as_default_for_extension(getAppInfoStruct(), Str.toStringz(extension), &err) != 0;
+		auto __p = g_app_info_set_as_default_for_extension(getAppInfoStruct(), Str.toStringz(extension), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -508,14 +508,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_set_as_default_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_set_as_default_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -535,14 +535,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_set_as_last_used_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_set_as_last_used_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -97,9 +97,9 @@ Library | Version
 --- | ---
 Gtk+ | 3.24
 Gdk | 3.24
-Glib | 2.60
-GObject | 2.60
-Gio | 2.60
+Glib | 2.64
+GObject | 2.64
+Gio | 2.64
 Pango | 1.43
 Atk | 2.32
 Gdk-pixbuf | 2.38

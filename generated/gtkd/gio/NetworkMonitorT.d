@@ -92,14 +92,14 @@ public template NetworkMonitorT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_network_monitor_can_reach(getNetworkMonitorStruct(), (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_network_monitor_can_reach(getNetworkMonitorStruct(), (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -140,14 +140,14 @@ public template NetworkMonitorT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_network_monitor_can_reach_finish(getNetworkMonitorStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_network_monitor_can_reach_finish(getNetworkMonitorStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

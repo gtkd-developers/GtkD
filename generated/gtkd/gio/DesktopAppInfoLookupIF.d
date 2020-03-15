@@ -35,6 +35,9 @@ public  import gtkc.giotypes;
 /**
  * #GDesktopAppInfoLookup is an opaque data structure and can only be accessed
  * using the following functions.
+ * 
+ * Deprecated: The #GDesktopAppInfoLookup interface is deprecated and
+ * unused by GIO.
  */
 public interface DesktopAppInfoLookupIF{
 	/** Get the main Gtk struct */
@@ -52,15 +55,16 @@ public interface DesktopAppInfoLookupIF{
 
 	/**
 	 * Gets the default application for launching applications
-	 * using this URI scheme for a particular GDesktopAppInfoLookup
+	 * using this URI scheme for a particular #GDesktopAppInfoLookup
 	 * implementation.
 	 *
-	 * The GDesktopAppInfoLookup interface and this function is used
+	 * The #GDesktopAppInfoLookup interface and this function is used
 	 * to implement g_app_info_get_default_for_uri_scheme() backends
 	 * in a GIO module. There is no reason for applications to use it
 	 * directly. Applications should use g_app_info_get_default_for_uri_scheme().
 	 *
-	 * Deprecated: The #GDesktopAppInfoLookup interface is deprecated and unused by gio.
+	 * Deprecated: The #GDesktopAppInfoLookup interface is deprecated and
+	 * unused by GIO.
 	 *
 	 * Params:
 	 *     uriScheme = a string containing a URI scheme.

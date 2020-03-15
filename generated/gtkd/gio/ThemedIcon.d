@@ -93,14 +93,14 @@ public class ThemedIcon : ObjectG, IconIF
 	 */
 	public this(string[] iconnames)
 	{
-		auto p = g_themed_icon_new_from_names(Str.toStringzArray(iconnames), cast(int)iconnames.length);
+		auto __p = g_themed_icon_new_from_names(Str.toStringzArray(iconnames), cast(int)iconnames.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_names");
 		}
 
-		this(cast(GThemedIcon*) p, true);
+		this(cast(GThemedIcon*) __p, true);
 	}
 
 	/**
@@ -129,14 +129,14 @@ public class ThemedIcon : ObjectG, IconIF
 	 */
 	public this(string iconname)
 	{
-		auto p = g_themed_icon_new_with_default_fallbacks(Str.toStringz(iconname));
+		auto __p = g_themed_icon_new_with_default_fallbacks(Str.toStringz(iconname));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_default_fallbacks");
 		}
 
-		this(cast(GThemedIcon*) p, true);
+		this(cast(GThemedIcon*) __p, true);
 	}
 
 	/**

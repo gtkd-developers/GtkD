@@ -115,21 +115,21 @@ public class Credentials : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_credentials_new();
+		auto __p = g_credentials_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GCredentials*) p, true);
+		this(cast(GCredentials*) __p, true);
 	}
 
 	/**
 	 * Gets a pointer to native credentials of type @native_type from
 	 * @credentials.
 	 *
-	 * It is a programming error (which will cause an warning to be
+	 * It is a programming error (which will cause a warning to be
 	 * logged) to use this method if there is no #GCredentials support for
 	 * the OS or if @native_type isn't supported by the OS.
 	 *
@@ -166,14 +166,14 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_get_unix_pid(gCredentials, &err);
+		auto __p = g_credentials_get_unix_pid(gCredentials, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -194,14 +194,14 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_get_unix_user(gCredentials, &err);
+		auto __p = g_credentials_get_unix_user(gCredentials, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -224,21 +224,21 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_is_same_user(gCredentials, (otherCredentials is null) ? null : otherCredentials.getCredentialsStruct(), &err) != 0;
+		auto __p = g_credentials_is_same_user(gCredentials, (otherCredentials is null) ? null : otherCredentials.getCredentialsStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Copies the native credentials of type @native_type from @native
 	 * into @credentials.
 	 *
-	 * It is a programming error (which will cause an warning to be
+	 * It is a programming error (which will cause a warning to be
 	 * logged) to use this method if there is no #GCredentials support for
 	 * the OS or if @native_type isn't supported by the OS.
 	 *
@@ -275,14 +275,14 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_set_unix_user(gCredentials, uid, &err) != 0;
+		auto __p = g_credentials_set_unix_user(gCredentials, uid, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

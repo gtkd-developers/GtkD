@@ -92,14 +92,14 @@ public class StaticResource
 	 */
 	public Resource getResource()
 	{
-		auto p = g_static_resource_get_resource(gStaticResource);
+		auto __p = g_static_resource_get_resource(gStaticResource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Resource)(cast(GResource*) p);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) __p);
 	}
 
 	/**

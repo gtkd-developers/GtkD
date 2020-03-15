@@ -268,14 +268,14 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public this(ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, void* sourceTag)
 	{
-		auto p = g_simple_async_result_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, sourceTag);
+		auto __p = g_simple_async_result_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, sourceTag);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSimpleAsyncResult*) p, true);
+		this(cast(GSimpleAsyncResult*) __p, true);
 	}
 
 	/**
@@ -295,14 +295,14 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public this(ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
-		auto p = g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
+		auto __p = g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_error");
 		}
 
-		this(cast(GSimpleAsyncResult*) p, true);
+		this(cast(GSimpleAsyncResult*) __p, true);
 	}
 
 	/**
@@ -434,14 +434,14 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_simple_async_result_propagate_error(gSimpleAsyncResult, &err) != 0;
+		auto __p = g_simple_async_result_propagate_error(gSimpleAsyncResult, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

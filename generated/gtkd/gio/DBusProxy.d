@@ -201,19 +201,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_new_for_bus_sync(busType, flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_new_for_bus_sync(busType, flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_bus_sync");
 		}
 
-		this(cast(GDBusProxy*) p, true);
+		this(cast(GDBusProxy*) __p, true);
 	}
 
 	/**
@@ -261,19 +261,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_new_sync((connection is null) ? null : connection.getDBusConnectionStruct(), flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_new_sync((connection is null) ? null : connection.getDBusConnectionStruct(), flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
 
-		this(cast(GDBusProxy*) p, true);
+		this(cast(GDBusProxy*) __p, true);
 	}
 
 	/**
@@ -318,7 +318,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *
 	 * Since: 2.26
 	 */
-	public static void newProxy(DBusConnection connection, GDBusProxyFlags flags, DBusInterfaceInfo info, string name, string objectPath, string interfaceName, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public static void new_(DBusConnection connection, GDBusProxyFlags flags, DBusInterfaceInfo info, string name, string objectPath, string interfaceName, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		g_dbus_proxy_new((connection is null) ? null : connection.getDBusConnectionStruct(), flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
@@ -425,19 +425,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_finish(gDBusProxy, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_dbus_proxy_call_finish(gDBusProxy, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -496,19 +496,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_call_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -554,7 +554,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_with_unix_fd_list_finish(gDBusProxy, &outoutFdList, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_dbus_proxy_call_with_unix_fd_list_finish(gDBusProxy, &outoutFdList, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
@@ -563,12 +563,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -599,7 +599,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_with_unix_fd_list_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_call_with_unix_fd_list_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -608,12 +608,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -635,14 +635,14 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 */
 	public Variant getCachedProperty(string propertyName)
 	{
-		auto p = g_dbus_proxy_get_cached_property(gDBusProxy, Str.toStringz(propertyName));
+		auto __p = g_dbus_proxy_get_cached_property(gDBusProxy, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -672,14 +672,14 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 */
 	public DBusConnection getConnection()
 	{
-		auto p = g_dbus_proxy_get_connection(gDBusProxy);
+		auto __p = g_dbus_proxy_get_connection(gDBusProxy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p);
 	}
 
 	/**
@@ -722,14 +722,14 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 */
 	public DBusInterfaceInfo getInterfaceInfo()
 	{
-		auto p = g_dbus_proxy_get_interface_info(gDBusProxy);
+		auto __p = g_dbus_proxy_get_interface_info(gDBusProxy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) __p);
 	}
 
 	/**

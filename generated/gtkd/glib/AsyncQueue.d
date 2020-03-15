@@ -269,14 +269,14 @@ public class AsyncQueue
 	 */
 	public AsyncQueue ref_()
 	{
-		auto p = g_async_queue_ref(gAsyncQueue);
+		auto __p = g_async_queue_ref(gAsyncQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new AsyncQueue(cast(GAsyncQueue*) p);
+		return new AsyncQueue(cast(GAsyncQueue*) __p);
 	}
 
 	/**
@@ -386,7 +386,7 @@ public class AsyncQueue
 	 *
 	 * If no data is received before @end_time, %NULL is returned.
 	 *
-	 * To easily calculate @end_time, a combination of g_get_current_time()
+	 * To easily calculate @end_time, a combination of g_get_real_time()
 	 * and g_time_val_add() can be used.
 	 *
 	 * Deprecated: use g_async_queue_timeout_pop().
@@ -408,7 +408,7 @@ public class AsyncQueue
 	 *
 	 * If no data is received before @end_time, %NULL is returned.
 	 *
-	 * To easily calculate @end_time, a combination of g_get_current_time()
+	 * To easily calculate @end_time, a combination of g_get_real_time()
 	 * and g_time_val_add() can be used.
 	 *
 	 * This function must be called while holding the @queue's lock.
@@ -537,14 +537,14 @@ public class AsyncQueue
 	 */
 	public this()
 	{
-		auto p = g_async_queue_new();
+		auto __p = g_async_queue_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GAsyncQueue*) p);
+		this(cast(GAsyncQueue*) __p);
 	}
 
 	/**
@@ -563,13 +563,13 @@ public class AsyncQueue
 	 */
 	public this(GDestroyNotify itemFreeFunc)
 	{
-		auto p = g_async_queue_new_full(itemFreeFunc);
+		auto __p = g_async_queue_new_full(itemFreeFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GAsyncQueue*) p);
+		this(cast(GAsyncQueue*) __p);
 	}
 }

@@ -107,14 +107,14 @@ public struct FileUtils
 	{
 		GError* err = null;
 
-		auto p = g_close(fd, &err) != 0;
+		auto __p = g_close(fd, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public struct FileUtils
 		size_t length;
 		GError* err = null;
 
-		auto p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err) != 0;
+		auto __p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err) != 0;
 
 		if (err !is null)
 		{
@@ -179,7 +179,7 @@ public struct FileUtils
 
 		contents = Str.toString(outcontents, length);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -218,7 +218,7 @@ public struct FileUtils
 		char* outnameUsed = null;
 		GError* err = null;
 
-		auto p = g_file_open_tmp(Str.toStringz(tmpl), &outnameUsed, &err);
+		auto __p = g_file_open_tmp(Str.toStringz(tmpl), &outnameUsed, &err);
 
 		if (err !is null)
 		{
@@ -227,7 +227,7 @@ public struct FileUtils
 
 		nameUsed = Str.toString(outnameUsed);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -313,14 +313,14 @@ public struct FileUtils
 	{
 		GError* err = null;
 
-		auto p = g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), cast(ptrdiff_t)contents.length, &err) != 0;
+		auto __p = g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), cast(ptrdiff_t)contents.length, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

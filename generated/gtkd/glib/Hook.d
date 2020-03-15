@@ -210,14 +210,14 @@ public final class Hook
 	 */
 	public static Hook alloc(HookList hookList)
 	{
-		auto p = g_hook_alloc((hookList is null) ? null : hookList.getHookListStruct());
+		auto __p = g_hook_alloc((hookList is null) ? null : hookList.getHookListStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -263,14 +263,14 @@ public final class Hook
 	 */
 	public static Hook find(HookList hookList, bool needValids, GHookFindFunc func, void* data)
 	{
-		auto p = g_hook_find((hookList is null) ? null : hookList.getHookListStruct(), needValids, func, data);
+		auto __p = g_hook_find((hookList is null) ? null : hookList.getHookListStruct(), needValids, func, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -287,14 +287,14 @@ public final class Hook
 	 */
 	public static Hook findData(HookList hookList, bool needValids, void* data)
 	{
-		auto p = g_hook_find_data((hookList is null) ? null : hookList.getHookListStruct(), needValids, data);
+		auto __p = g_hook_find_data((hookList is null) ? null : hookList.getHookListStruct(), needValids, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -311,14 +311,14 @@ public final class Hook
 	 */
 	public static Hook findFunc(HookList hookList, bool needValids, void* func)
 	{
-		auto p = g_hook_find_func((hookList is null) ? null : hookList.getHookListStruct(), needValids, func);
+		auto __p = g_hook_find_func((hookList is null) ? null : hookList.getHookListStruct(), needValids, func);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -336,14 +336,14 @@ public final class Hook
 	 */
 	public static Hook findFuncData(HookList hookList, bool needValids, void* func, void* data)
 	{
-		auto p = g_hook_find_func_data((hookList is null) ? null : hookList.getHookListStruct(), needValids, func, data);
+		auto __p = g_hook_find_func_data((hookList is null) ? null : hookList.getHookListStruct(), needValids, func, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -362,14 +362,14 @@ public final class Hook
 	 */
 	public static Hook firstValid(HookList hookList, bool mayBeInCall)
 	{
-		auto p = g_hook_first_valid((hookList is null) ? null : hookList.getHookListStruct(), mayBeInCall);
+		auto __p = g_hook_first_valid((hookList is null) ? null : hookList.getHookListStruct(), mayBeInCall);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -396,14 +396,14 @@ public final class Hook
 	 */
 	public static Hook get(HookList hookList, gulong hookId)
 	{
-		auto p = g_hook_get((hookList is null) ? null : hookList.getHookListStruct(), hookId);
+		auto __p = g_hook_get((hookList is null) ? null : hookList.getHookListStruct(), hookId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -449,14 +449,14 @@ public final class Hook
 	 */
 	public static Hook nextValid(HookList hookList, Hook hook, bool mayBeInCall)
 	{
-		auto p = g_hook_next_valid((hookList is null) ? null : hookList.getHookListStruct(), (hook is null) ? null : hook.getHookStruct(), mayBeInCall);
+		auto __p = g_hook_next_valid((hookList is null) ? null : hookList.getHookListStruct(), (hook is null) ? null : hook.getHookStruct(), mayBeInCall);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**
@@ -483,14 +483,14 @@ public final class Hook
 	 */
 	public static Hook ref_(HookList hookList, Hook hook)
 	{
-		auto p = g_hook_ref((hookList is null) ? null : hookList.getHookListStruct(), (hook is null) ? null : hook.getHookStruct());
+		auto __p = g_hook_ref((hookList is null) ? null : hookList.getHookListStruct(), (hook is null) ? null : hook.getHookStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Hook(cast(GHook*) p);
+		return new Hook(cast(GHook*) __p);
 	}
 
 	/**

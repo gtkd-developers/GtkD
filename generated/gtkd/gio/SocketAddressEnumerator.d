@@ -39,7 +39,7 @@ public  import gtkc.giotypes;
  * #GSocketAddressEnumerator is an enumerator type for #GSocketAddress
  * instances. It is returned by enumeration functions such as
  * g_socket_connectable_enumerate(), which returns a #GSocketAddressEnumerator
- * to list all the #GSocketAddresses which could be used to connect to that
+ * to list each #GSocketAddress which could be used to connect to that
  * #GSocketConnectable.
  * 
  * Enumeration is typically a blocking operation, so the asynchronous methods
@@ -114,19 +114,19 @@ public class SocketAddressEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_address_enumerator_next(gSocketAddressEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_address_enumerator_next(gSocketAddressEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 
 	/**
@@ -166,18 +166,18 @@ public class SocketAddressEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_address_enumerator_next_finish(gSocketAddressEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_socket_address_enumerator_next_finish(gSocketAddressEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 }

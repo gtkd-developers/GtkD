@@ -132,14 +132,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public this(string desktopId)
 	{
-		auto p = g_desktop_app_info_new(Str.toStringz(desktopId));
+		auto __p = g_desktop_app_info_new(Str.toStringz(desktopId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDesktopAppInfo*) p, true);
+		this(cast(GDesktopAppInfo*) __p, true);
 	}
 
 	/**
@@ -156,14 +156,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public this(KeyFile keyFile)
 	{
-		auto p = g_desktop_app_info_new_from_keyfile((keyFile is null) ? null : keyFile.getKeyFileStruct());
+		auto __p = g_desktop_app_info_new_from_keyfile((keyFile is null) ? null : keyFile.getKeyFileStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_keyfile");
 		}
 
-		this(cast(GDesktopAppInfo*) p, true);
+		this(cast(GDesktopAppInfo*) __p, true);
 	}
 
 	/**
@@ -182,14 +182,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public static ListG getImplementations(string interface_)
 	{
-		auto p = g_desktop_app_info_get_implementations(Str.toStringz(interface_));
+		auto __p = g_desktop_app_info_get_implementations(Str.toStringz(interface_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -447,7 +447,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Returns: a %NULL-terminated string array or %NULL if the specified
 	 *     key cannot be found. The array should be freed with g_strfreev().
 	 *
-	 * Since: 2.60.0
+	 * Since: 2.60
 	 */
 	public string[] getStringList(string key)
 	{
@@ -539,14 +539,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	{
 		GError* err = null;
 
-		auto p = g_desktop_app_info_launch_uris_as_manager(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, &err) != 0;
+		auto __p = g_desktop_app_info_launch_uris_as_manager(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -580,14 +580,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	{
 		GError* err = null;
 
-		auto p = g_desktop_app_info_launch_uris_as_manager_with_fds(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, stdinFd, stdoutFd, stderrFd, &err) != 0;
+		auto __p = g_desktop_app_info_launch_uris_as_manager_with_fds(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, stdinFd, stdoutFd, stderrFd, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

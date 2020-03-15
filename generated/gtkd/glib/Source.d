@@ -95,14 +95,14 @@ public class Source
 	 */
 	public this(GSourceFuncs* sourceFuncs, uint structSize)
 	{
-		auto p = g_source_new(sourceFuncs, structSize);
+		auto __p = g_source_new(sourceFuncs, structSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSource*) p);
+		this(cast(GSource*) __p);
 	}
 
 	/**
@@ -189,6 +189,9 @@ public class Source
 	 * Adds a #GSource to a @context so that it will be executed within
 	 * that context. Remove it by calling g_source_destroy().
 	 *
+	 * This function is safe to call from any thread, regardless of which thread
+	 * the @context is running in.
+	 *
 	 * Params:
 	 *     context = a #GMainContext (if %NULL, the default context will be used)
 	 *
@@ -205,6 +208,12 @@ public class Source
 	 * destroyed.  The source cannot be subsequently added to another
 	 * context. It is safe to call this on sources which have already been
 	 * removed from their context.
+	 *
+	 * This does not unref the #GSource: if you still hold a reference, use
+	 * g_source_unref() to drop it.
+	 *
+	 * This function is safe to call from any thread, regardless of which thread
+	 * the #GMainContext is running in.
 	 */
 	public void destroy()
 	{
@@ -238,14 +247,14 @@ public class Source
 	 */
 	public MainContext getContext()
 	{
-		auto p = g_source_get_context(gSource);
+		auto __p = g_source_get_context(gSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -468,14 +477,14 @@ public class Source
 	 */
 	public Source ref_()
 	{
-		auto p = g_source_ref(gSource);
+		auto __p = g_source_ref(gSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -595,6 +604,34 @@ public class Source
 	public void setCanRecurse(bool canRecurse)
 	{
 		g_source_set_can_recurse(gSource, canRecurse);
+	}
+
+	/**
+	 * Set @dispose as dispose function on @source. @dispose will be called once
+	 * the reference count of @source reaches 0 but before any of the state of the
+	 * source is freed, especially before the finalize function is called.
+	 *
+	 * This means that at this point @source is still a valid #GSource and it is
+	 * allow for the reference count to increase again until @dispose returns.
+	 *
+	 * The dispose function can be used to clear any "weak" references to the
+	 * @source in other data structures in a thread-safe way where it is possible
+	 * for another thread to increase the reference count of @source again while
+	 * it is being freed.
+	 *
+	 * The finalize function can not be used for this purpose as at that point
+	 * @source is already partially freed and not valid anymore.
+	 *
+	 * This should only ever be called from #GSource implementations.
+	 *
+	 * Params:
+	 *     dispose = #GSourceDisposeFunc to set on the source
+	 *
+	 * Since: 2.64
+	 */
+	public void setDisposeFunction(GSourceDisposeFunc dispose)
+	{
+		g_source_set_dispose_function(gSource, dispose);
 	}
 
 	/**

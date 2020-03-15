@@ -105,14 +105,14 @@ public class AppInfoMonitor : ObjectG
 	 */
 	public static AppInfoMonitor get()
 	{
-		auto p = g_app_info_monitor_get();
+		auto __p = g_app_info_monitor_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoMonitor)(cast(GAppInfoMonitor*) p, true);
+		return ObjectG.getDObject!(AppInfoMonitor)(cast(GAppInfoMonitor*) __p, true);
 	}
 
 	/**

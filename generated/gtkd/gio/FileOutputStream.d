@@ -139,19 +139,19 @@ public class FileOutputStream : OutputStream, SeekableIF
 	{
 		GError* err = null;
 
-		auto p = g_file_output_stream_query_info(gFileOutputStream, Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_file_output_stream_query_info(gFileOutputStream, Str.toStringz(attributes), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -189,18 +189,18 @@ public class FileOutputStream : OutputStream, SeekableIF
 	{
 		GError* err = null;
 
-		auto p = g_file_output_stream_query_info_finish(gFileOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_file_output_stream_query_info_finish(gFileOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 }

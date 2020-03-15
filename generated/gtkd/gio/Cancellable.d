@@ -92,14 +92,14 @@ public class Cancellable : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_cancellable_new();
+		auto __p = g_cancellable_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GCancellable*) p, true);
+		this(cast(GCancellable*) __p, true);
 	}
 
 	/**
@@ -110,14 +110,14 @@ public class Cancellable : ObjectG
 	 */
 	public static Cancellable getCurrent()
 	{
-		auto p = g_cancellable_get_current();
+		auto __p = g_cancellable_get_current();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) p);
+		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) __p);
 	}
 
 	/**
@@ -343,14 +343,14 @@ public class Cancellable : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_cancellable_set_error_if_cancelled(gCancellable, &err) != 0;
+		auto __p = g_cancellable_set_error_if_cancelled(gCancellable, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -370,14 +370,14 @@ public class Cancellable : ObjectG
 	 */
 	public Source sourceNew()
 	{
-		auto p = g_cancellable_source_new(gCancellable);
+		auto __p = g_cancellable_source_new(gCancellable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**

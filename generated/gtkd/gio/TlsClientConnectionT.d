@@ -54,12 +54,34 @@ public template TlsClientConnectionT(TStruct)
 
 
 	/**
-	 * Copies session state from one connection to another. This is
-	 * not normally needed, but may be used when the same session
-	 * needs to be used between different endpoints as is required
-	 * by some protocols such as FTP over TLS. @source should have
-	 * already completed a handshake, and @conn should not have
-	 * completed a handshake.
+	 * Possibly copies session state from one connection to another, for use
+	 * in TLS session resumption. This is not normally needed, but may be
+	 * used when the same session needs to be used between different
+	 * endpoints, as is required by some protocols, such as FTP over TLS.
+	 * @source should have already completed a handshake and, since TLS 1.3,
+	 * it should have been used to read data at least once. @conn should not
+	 * have completed a handshake.
+	 *
+	 * It is not possible to know whether a call to this function will
+	 * actually do anything. Because session resumption is normally used
+	 * only for performance benefit, the TLS backend might not implement
+	 * this function. Even if implemented, it may not actually succeed in
+	 * allowing @conn to resume @source's TLS session, because the server
+	 * may not have sent a session resumption token to @source, or it may
+	 * refuse to accept the token from @conn. There is no way to know
+	 * whether a call to this function is actually successful.
+	 *
+	 * Using this function is not required to benefit from session
+	 * resumption. If the TLS backend supports session resumption, the
+	 * session will be resumed automatically if it is possible to do so
+	 * without weakening the privacy guarantees normally provided by TLS,
+	 * without need to call this function. For example, with TLS 1.3,
+	 * a session ticket will be automatically copied from any
+	 * #GTlsClientConnection that has previously received session tickets
+	 * from the server, provided a ticket is available that has not
+	 * previously been used for session resumption, since session ticket
+	 * reuse would be a privacy weakness. Using this function causes the
+	 * ticket to be copied without regard for privacy considerations.
 	 *
 	 * Params:
 	 *     source = a #GTlsClientConnection
@@ -88,14 +110,14 @@ public template TlsClientConnectionT(TStruct)
 	 */
 	public ListG getAcceptedCas()
 	{
-		auto p = g_tls_client_connection_get_accepted_cas(getTlsClientConnectionStruct());
+		auto __p = g_tls_client_connection_get_accepted_cas(getTlsClientConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -109,25 +131,23 @@ public template TlsClientConnectionT(TStruct)
 	 */
 	public SocketConnectableIF getServerIdentity()
 	{
-		auto p = g_tls_client_connection_get_server_identity(getTlsClientConnectionStruct());
+		auto __p = g_tls_client_connection_get_server_identity(getTlsClientConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnectableIF)(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(SocketConnectableIF)(cast(GSocketConnectable*) __p);
 	}
 
 	/**
-	 * Gets whether @conn will force the lowest-supported TLS protocol
-	 * version rather than attempt to negotiate the highest mutually-
-	 * supported version of TLS; see g_tls_client_connection_set_use_ssl3().
+	 * SSL 3.0 is no longer supported. See
+	 * g_tls_client_connection_set_use_ssl3() for details.
 	 *
-	 * Deprecated: SSL 3.0 is insecure, and this function does not
-	 * actually indicate whether it is enabled.
+	 * Deprecated: SSL 3.0 is insecure.
 	 *
-	 * Returns: whether @conn will use the lowest-supported TLS protocol version
+	 * Returns: %FALSE
 	 *
 	 * Since: 2.28
 	 */
@@ -165,25 +185,21 @@ public template TlsClientConnectionT(TStruct)
 	}
 
 	/**
-	 * Since 2.42.1, if @use_ssl3 is %TRUE, this forces @conn to use the
-	 * lowest-supported TLS protocol version rather than trying to properly
-	 * negotiate the highest mutually-supported protocol version with the
-	 * peer. Be aware that SSL 3.0 is generally disabled by the
-	 * #GTlsBackend, so the lowest-supported protocol version is probably
-	 * not SSL 3.0.
+	 * Since GLib 2.42.1, SSL 3.0 is no longer supported.
 	 *
-	 * Since 2.58, this may additionally cause an RFC 7507 fallback SCSV to
-	 * be sent to the server, causing modern TLS servers to immediately
-	 * terminate the connection. You should generally only use this function
-	 * if you need to connect to broken servers that exhibit TLS protocol
-	 * version intolerance, and when an initial attempt to connect to a
-	 * server normally has already failed.
+	 * From GLib 2.42.1 through GLib 2.62, this function could be used to
+	 * force use of TLS 1.0, the lowest-supported TLS protocol version at
+	 * the time. In the past, this was needed to connect to broken TLS
+	 * servers that exhibited protocol version intolerance. Such servers
+	 * are no longer common, and using TLS 1.0 is no longer considered
+	 * acceptable.
 	 *
-	 * Deprecated: SSL 3.0 is insecure, and this function does not
-	 * generally enable or disable it, despite its name.
+	 * Since GLib 2.64, this function does nothing.
+	 *
+	 * Deprecated: SSL 3.0 is insecure.
 	 *
 	 * Params:
-	 *     useSsl3 = whether to use the lowest-supported protocol version
+	 *     useSsl3 = a #gboolean, ignored
 	 *
 	 * Since: 2.28
 	 */

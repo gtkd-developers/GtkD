@@ -105,14 +105,14 @@ public class ThreadedSocketService : SocketService
 	 */
 	public this(int maxThreads)
 	{
-		auto p = g_threaded_socket_service_new(maxThreads);
+		auto __p = g_threaded_socket_service_new(maxThreads);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GThreadedSocketService*) p, true);
+		this(cast(GThreadedSocketService*) __p, true);
 	}
 
 	/**

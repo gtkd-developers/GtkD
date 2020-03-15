@@ -370,11 +370,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_ascii_strtod(Str.toStringz(nptr), &outendptr);
+		auto __p = g_ascii_strtod(Str.toStringz(nptr), &outendptr);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -410,11 +410,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_ascii_strtoll(Str.toStringz(nptr), &outendptr, base);
+		auto __p = g_ascii_strtoll(Str.toStringz(nptr), &outendptr, base);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -455,11 +455,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_ascii_strtoull(Str.toStringz(nptr), &outendptr, base);
+		auto __p = g_ascii_strtoull(Str.toStringz(nptr), &outendptr, base);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -749,6 +749,13 @@ public struct Str
 	 * g_ascii_strup (g_strcanon (str, "abc", '?'))
 	 * ]|
 	 *
+	 * In order to modify a copy, you may use `g_strdup()`:
+	 * |[<!-- language="C" -->
+	 * reformatted = g_strcanon (g_strdup (const_str), "abc", '?');
+	 * ...
+	 * g_free (reformatted);
+	 * ]|
+	 *
 	 * Params:
 	 *     string_ = a nul-terminated array of bytes
 	 *     validChars = bytes permitted in @string
@@ -879,6 +886,13 @@ public struct Str
 	 * g_ascii_strup (g_strdelimit (str, "abc", '?'))
 	 * ]|
 	 *
+	 * In order to modify a copy, you may use `g_strdup()`:
+	 * |[<!-- language="C" -->
+	 * reformatted = g_strdelimit (g_strdup (const_str), "abc", '?');
+	 * ...
+	 * g_free (reformatted);
+	 * ]|
+	 *
 	 * Params:
 	 *     string_ = the string to convert
 	 *     delimiters = a string containing the current delimiters,
@@ -938,6 +952,10 @@ public struct Str
 	 * calculates the maximum space required and allocates memory to hold
 	 * the result. The returned string should be freed with g_free() when
 	 * no longer needed.
+	 *
+	 * The returned string is guaranteed to be non-NULL, unless @format
+	 * contains `%lc` or `%ls` conversions, which can fail if no multibyte
+	 * representation is available for the given character.
 	 *
 	 * See also g_vasprintf(), which offers the same functionality, but
 	 * additionally returns the length of the allocated string.
@@ -1293,7 +1311,7 @@ public struct Str
 	 *
 	 * As a special case, the result of splitting the empty string "" is an empty
 	 * vector, not a vector containing a single string. The reason for this
-	 * special case is that being able to represent a empty vector is typically
+	 * special case is that being able to represent an empty vector is typically
 	 * more useful than consistent handling of empty elements. If you do need
 	 * to represent empty elements, you'll need to check for the empty string
 	 * before calling g_strsplit().
@@ -1329,7 +1347,7 @@ public struct Str
 	 *
 	 * As a special case, the result of splitting the empty string "" is an empty
 	 * vector, not a vector containing a single string. The reason for this
-	 * special case is that being able to represent a empty vector is typically
+	 * special case is that being able to represent an empty vector is typically
 	 * more useful than consistent handling of empty elements. If you do need
 	 * to represent empty elements, you'll need to check for the empty string
 	 * before calling g_strsplit_set().
@@ -1401,11 +1419,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_strtod(Str.toStringz(nptr), &outendptr);
+		auto __p = g_strtod(Str.toStringz(nptr), &outendptr);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1472,6 +1490,10 @@ public struct Str
 	 * This function is similar to g_vsprintf(), except that it allocates a
 	 * string to hold the output, instead of putting the output in a buffer
 	 * you allocate in advance.
+	 *
+	 * The returned value in @string is guaranteed to be non-NULL, unless
+	 * @format contains `%lc` or `%ls` conversions, which can fail if no
+	 * multibyte representation is available for the given character.
 	 *
 	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
@@ -1627,14 +1649,14 @@ public struct Str
 	{
 		GError* err = null;
 
-		auto p = g_ascii_string_to_signed(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
+		auto __p = g_ascii_string_to_signed(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1678,14 +1700,14 @@ public struct Str
 	{
 		GError* err = null;
 
-		auto p = g_ascii_string_to_unsigned(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
+		auto __p = g_ascii_string_to_unsigned(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

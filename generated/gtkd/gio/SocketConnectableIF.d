@@ -116,7 +116,7 @@ public interface SocketConnectableIF{
 
 	/**
 	 * Creates a #GSocketAddressEnumerator for @connectable that will
-	 * return #GProxyAddresses for addresses that you must connect
+	 * return a #GProxyAddress for each of its addresses that you must connect
 	 * to via a proxy.
 	 *
 	 * If @connectable does not implement

@@ -128,13 +128,13 @@ public template InitableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_initable_init(getInitableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_initable_init(getInitableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

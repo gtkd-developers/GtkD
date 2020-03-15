@@ -239,14 +239,14 @@ public template ActionGroupT(TStruct)
 	 */
 	public VariantType getActionParameterType(string actionName)
 	{
-		auto p = g_action_group_get_action_parameter_type(getActionGroupStruct(), Str.toStringz(actionName));
+		auto __p = g_action_group_get_action_parameter_type(getActionGroupStruct(), Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -268,14 +268,14 @@ public template ActionGroupT(TStruct)
 	 */
 	public Variant getActionState(string actionName)
 	{
-		auto p = g_action_group_get_action_state(getActionGroupStruct(), Str.toStringz(actionName));
+		auto __p = g_action_group_get_action_state(getActionGroupStruct(), Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -307,14 +307,14 @@ public template ActionGroupT(TStruct)
 	 */
 	public Variant getActionStateHint(string actionName)
 	{
-		auto p = g_action_group_get_action_state_hint(getActionGroupStruct(), Str.toStringz(actionName));
+		auto __p = g_action_group_get_action_state_hint(getActionGroupStruct(), Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -344,14 +344,14 @@ public template ActionGroupT(TStruct)
 	 */
 	public VariantType getActionStateType(string actionName)
 	{
-		auto p = g_action_group_get_action_state_type(getActionGroupStruct(), Str.toStringz(actionName));
+		auto __p = g_action_group_get_action_state_type(getActionGroupStruct(), Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -437,7 +437,7 @@ public template ActionGroupT(TStruct)
 		GVariant* outstateHint = null;
 		GVariant* outstate = null;
 
-		auto p = g_action_group_query_action(getActionGroupStruct(), Str.toStringz(actionName), &outenabled, &outparameterType, &outstateType, &outstateHint, &outstate) != 0;
+		auto __p = g_action_group_query_action(getActionGroupStruct(), Str.toStringz(actionName), &outenabled, &outparameterType, &outstateType, &outstateHint, &outstate) != 0;
 
 		enabled = (outenabled == 1);
 		parameterType = new VariantType(outparameterType);
@@ -445,7 +445,7 @@ public template ActionGroupT(TStruct)
 		stateHint = new Variant(outstateHint);
 		state = new Variant(outstate);
 
-		return p;
+		return __p;
 	}
 
 	/**

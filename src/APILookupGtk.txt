@@ -3584,7 +3584,7 @@ code: end
 
 struct: TreeModel
 move: filter_new TreeModelFilter new
-move: sort_new_with_model TreeModelSort new_with_model
+#move: sort_new_with_model TreeModelSort new_with_model
 import: gobject.Value
 noCode: get_value
 noCode: get_iter

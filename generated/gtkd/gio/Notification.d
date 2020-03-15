@@ -113,14 +113,14 @@ public class Notification : ObjectG
 	 */
 	public this(string title)
 	{
-		auto p = g_notification_new(Str.toStringz(title));
+		auto __p = g_notification_new(Str.toStringz(title));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GNotification*) p, true);
+		this(cast(GNotification*) __p, true);
 	}
 
 	/**

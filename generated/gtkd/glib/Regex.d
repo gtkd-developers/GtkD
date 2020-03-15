@@ -161,19 +161,19 @@ public class Regex
 	{
 		GError* err = null;
 
-		auto p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err);
+		auto __p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GRegex*) p);
+		this(cast(GRegex*) __p);
 	}
 
 	/**
@@ -341,11 +341,11 @@ public class Regex
 	{
 		GMatchInfo* outmatchInfo = null;
 
-		auto p = g_regex_match(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
+		auto __p = g_regex_match(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -378,11 +378,11 @@ public class Regex
 	{
 		GMatchInfo* outmatchInfo = null;
 
-		auto p = g_regex_match_all(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
+		auto __p = g_regex_match_all(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -443,7 +443,7 @@ public class Regex
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 
-		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
+		auto __p = g_regex_match_all_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
 
 		if (err !is null)
 		{
@@ -452,7 +452,7 @@ public class Regex
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -526,7 +526,7 @@ public class Regex
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 
-		auto p = g_regex_match_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
+		auto __p = g_regex_match_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
 
 		if (err !is null)
 		{
@@ -535,7 +535,7 @@ public class Regex
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	alias doref = ref_;
@@ -548,14 +548,14 @@ public class Regex
 	 */
 	public Regex ref_()
 	{
-		auto p = g_regex_ref(gRegex);
+		auto __p = g_regex_ref(gRegex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Regex(cast(GRegex*) p, true);
+		return new Regex(cast(GRegex*) __p, true);
 	}
 
 	/**
@@ -734,7 +734,7 @@ public class Regex
 	 *
 	 * As a special case, the result of splitting the empty string "" is an
 	 * empty vector, not a vector containing a single string. The reason for
-	 * this special case is that being able to represent a empty vector is
+	 * this special case is that being able to represent an empty vector is
 	 * typically more useful than consistent handling of empty elements. If
 	 * you do need to represent empty elements, you'll need to check for the
 	 * empty string before calling this function.
@@ -770,7 +770,7 @@ public class Regex
 	 *
 	 * As a special case, the result of splitting the empty string "" is an
 	 * empty vector, not a vector containing a single string. The reason for
-	 * this special case is that being able to represent a empty vector is
+	 * this special case is that being able to represent an empty vector is
 	 * typically more useful than consistent handling of empty elements. If
 	 * you do need to represent empty elements, you'll need to check for the
 	 * empty string before calling this function.
@@ -851,7 +851,7 @@ public class Regex
 		int outhasReferences;
 		GError* err = null;
 
-		auto p = g_regex_check_replacement(Str.toStringz(replacement), &outhasReferences, &err) != 0;
+		auto __p = g_regex_check_replacement(Str.toStringz(replacement), &outhasReferences, &err) != 0;
 
 		if (err !is null)
 		{
@@ -860,7 +860,7 @@ public class Regex
 
 		hasReferences = (outhasReferences == 1);
 
-		return p;
+		return __p;
 	}
 
 	/** */
@@ -962,7 +962,7 @@ public class Regex
 	 * As a special case, the result of splitting the empty string ""
 	 * is an empty vector, not a vector containing a single string.
 	 * The reason for this special case is that being able to represent
-	 * a empty vector is typically more useful than consistent handling
+	 * an empty vector is typically more useful than consistent handling
 	 * of empty elements. If you do need to represent empty elements,
 	 * you'll need to check for the empty string before calling this
 	 * function.

@@ -139,14 +139,14 @@ public class Closure
 	 */
 	public this(uint sizeofClosure, ObjectG object)
 	{
-		auto p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
+		auto __p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_object");
 		}
 
-		this(cast(GClosure*) p);
+		this(cast(GClosure*) __p);
 	}
 
 	/**
@@ -198,14 +198,14 @@ public class Closure
 	 */
 	public this(uint sizeofClosure, void* data)
 	{
-		auto p = g_closure_new_simple(sizeofClosure, data);
+		auto __p = g_closure_new_simple(sizeofClosure, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_simple");
 		}
 
-		this(cast(GClosure*) p);
+		this(cast(GClosure*) __p);
 	}
 
 	/**
@@ -311,14 +311,14 @@ public class Closure
 	 */
 	public Closure ref_()
 	{
-		auto p = g_closure_ref(gClosure);
+		auto __p = g_closure_ref(gClosure);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) __p);
 	}
 
 	/**

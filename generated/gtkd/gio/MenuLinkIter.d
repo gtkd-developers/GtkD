@@ -116,12 +116,12 @@ public class MenuLinkIter : ObjectG
 		char* outoutLink = null;
 		GMenuModel* outvalue = null;
 
-		auto p = g_menu_link_iter_get_next(gMenuLinkIter, &outoutLink, &outvalue) != 0;
+		auto __p = g_menu_link_iter_get_next(gMenuLinkIter, &outoutLink, &outvalue) != 0;
 
 		outLink = Str.toString(outoutLink);
 		value = ObjectG.getDObject!(MenuModel)(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -135,14 +135,14 @@ public class MenuLinkIter : ObjectG
 	 */
 	public MenuModel getValue()
 	{
-		auto p = g_menu_link_iter_get_value(gMenuLinkIter);
+		auto __p = g_menu_link_iter_get_value(gMenuLinkIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p, true);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p, true);
 	}
 
 	/**

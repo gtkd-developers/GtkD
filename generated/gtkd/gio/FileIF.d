@@ -158,14 +158,14 @@ public interface FileIF{
 	 */
 	public static FileIF parseName(string parseName)
 	{
-		auto p = g_file_parse_name(Str.toStringz(parseName));
+		auto __p = g_file_parse_name(Str.toStringz(parseName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -745,9 +745,9 @@ public interface FileIF{
 	/**
 	 * Gets a #GMount for the #GFile.
 	 *
-	 * If the #GFileIface for @file does not have a mount (e.g.
-	 * possibly a remote share), @error will be set to %G_IO_ERROR_NOT_FOUND
-	 * and %NULL will be returned.
+	 * #GMount is returned only for user interesting locations, see
+	 * #GVolumeMonitor. If the #GFileIface for @file does not have a #mount,
+	 * @error will be set to %G_IO_ERROR_NOT_FOUND and %NULL #will be returned.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -983,7 +983,7 @@ public interface FileIF{
 	 * Params:
 	 *     prefix = input #GFile
 	 *
-	 * Returns: %TRUE if the @files's parent, grandparent, etc is @prefix,
+	 * Returns: %TRUE if the @file's parent, grandparent, etc is @prefix,
 	 *     %FALSE otherwise.
 	 */
 	public bool hasPrefix(FileIF prefix);
@@ -1106,7 +1106,7 @@ public interface FileIF{
 	/**
 	 * Loads the content of the file into memory. The data is always
 	 * zero-terminated, but this is not included in the resultant @length.
-	 * The returned @content should be freed with g_free() when no longer
+	 * The returned @contents should be freed with g_free() when no longer
 	 * needed.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
@@ -1151,7 +1151,7 @@ public interface FileIF{
 	/**
 	 * Finishes an asynchronous load of the @file's contents.
 	 * The contents are placed in @contents, and @length is set to the
-	 * size of the @contents string. The @content should be freed with
+	 * size of the @contents string. The @contents should be freed with
 	 * g_free() when no longer needed. If @etag_out is present, it will be
 	 * set to the new entity tag for the @file.
 	 *
@@ -1196,7 +1196,7 @@ public interface FileIF{
 	 * Finishes an asynchronous partial load operation that was started
 	 * with g_file_load_partial_contents_async(). The data is always
 	 * zero-terminated, but this is not included in the resultant @length.
-	 * The returned @content should be freed with g_free() when no longer
+	 * The returned @contents should be freed with g_free() when no longer
 	 * needed.
 	 *
 	 * Params:
@@ -1325,7 +1325,7 @@ public interface FileIF{
 	 *
 	 * By default, errors are only reported against the toplevel file
 	 * itself.  Errors found while recursing are silently ignored, unless
-	 * %G_FILE_DISK_USAGE_REPORT_ALL_ERRORS is given in @flags.
+	 * %G_FILE_MEASURE_REPORT_ANY_ERROR is given in @flags.
 	 *
 	 * The returned size, @disk_usage, is in bytes and should be formatted
 	 * with g_format_size() in order to get something reasonable for showing
@@ -1561,10 +1561,6 @@ public interface FileIF{
 	 * If the flag #G_FILE_COPY_OVERWRITE is specified an already
 	 * existing @destination file is overwritten.
 	 *
-	 * If the flag #G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks
-	 * will be copied as symlinks, otherwise the target of the
-	 * @source symlink will be copied.
-	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
@@ -1752,6 +1748,7 @@ public interface FileIF{
 	 * Async version of g_file_query_default_handler().
 	 *
 	 * Params:
+	 *     ioPriority = the [I/O priority][io-priority] of the request
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *     callback = a #GAsyncReadyCallback to call when the request is done
 	 *     userData = data to pass to @callback
@@ -2226,7 +2223,7 @@ public interface FileIF{
 	 * If @make_backup is %TRUE, this function will attempt to
 	 * make a backup of @file.
 	 *
-	 * Note that no copy of @content will be made, so it must stay valid
+	 * Note that no copy of @contents will be made, so it must stay valid
 	 * until @callback is called. See g_file_replace_contents_bytes_async()
 	 * for a #GBytes version that will automatically hold a reference to the
 	 * contents (without copying) for the duration of the call.
@@ -2384,7 +2381,7 @@ public interface FileIF{
 	public FileIF resolveRelativePath(string relativePath);
 
 	/**
-	 * Sets an attribute in the file with attribute name @attribute to @value.
+	 * Sets an attribute in the file with attribute name @attribute to @value_p.
 	 *
 	 * Some attributes can be unset by setting @type to
 	 * %G_FILE_ATTRIBUTE_TYPE_INVALID and @value_p to %NULL.
@@ -2732,7 +2729,7 @@ public interface FileIF{
 	public void stopMountable(GMountUnmountFlags flags, MountOperation mountOperation, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
 
 	/**
-	 * Finishes an stop operation, see g_file_stop_mountable() for details.
+	 * Finishes a stop operation, see g_file_stop_mountable() for details.
 	 *
 	 * Finish an asynchronous stop operation that was started
 	 * with g_file_stop_mountable().

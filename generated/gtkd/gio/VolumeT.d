@@ -151,14 +151,14 @@ public template VolumeT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_volume_eject_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_volume_eject_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -198,14 +198,14 @@ public template VolumeT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_volume_eject_with_operation_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_volume_eject_with_operation_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -258,14 +258,14 @@ public template VolumeT(TStruct)
 	 */
 	public FileIF getActivationRoot()
 	{
-		auto p = g_volume_get_activation_root(getVolumeStruct());
+		auto __p = g_volume_get_activation_root(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -277,14 +277,14 @@ public template VolumeT(TStruct)
 	 */
 	public DriveIF getDrive()
 	{
-		auto p = g_volume_get_drive(getVolumeStruct());
+		auto __p = g_volume_get_drive(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) p, true);
+		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) __p, true);
 	}
 
 	/**
@@ -296,14 +296,14 @@ public template VolumeT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_volume_get_icon(getVolumeStruct());
+		auto __p = g_volume_get_icon(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -335,14 +335,14 @@ public template VolumeT(TStruct)
 	 */
 	public MountIF getMount()
 	{
-		auto p = g_volume_get_mount(getVolumeStruct());
+		auto __p = g_volume_get_mount(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) __p, true);
 	}
 
 	/**
@@ -382,14 +382,14 @@ public template VolumeT(TStruct)
 	 */
 	public IconIF getSymbolicIcon()
 	{
-		auto p = g_volume_get_symbolic_icon(getVolumeStruct());
+		auto __p = g_volume_get_symbolic_icon(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -448,14 +448,14 @@ public template VolumeT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_volume_mount_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_volume_mount_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -85,14 +85,14 @@ public class TlsPassword : ObjectG
 	 */
 	public this(GTlsPasswordFlags flags, string description)
 	{
-		auto p = g_tls_password_new(flags, Str.toStringz(description));
+		auto __p = g_tls_password_new(flags, Str.toStringz(description));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTlsPassword*) p, true);
+		this(cast(GTlsPassword*) __p, true);
 	}
 
 	/**
@@ -134,9 +134,9 @@ public class TlsPassword : ObjectG
 	{
 		size_t length;
 
-		auto p = g_tls_password_get_value(gTlsPassword, &length);
+		auto __p = g_tls_password_get_value(gTlsPassword, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**

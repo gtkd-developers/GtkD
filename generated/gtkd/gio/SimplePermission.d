@@ -89,13 +89,13 @@ public class SimplePermission : Permission
 	 */
 	public this(bool allowed)
 	{
-		auto p = g_simple_permission_new(allowed);
+		auto __p = g_simple_permission_new(allowed);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSimplePermission*) p, true);
+		this(cast(GSimplePermission*) __p, true);
 	}
 }

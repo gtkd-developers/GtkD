@@ -124,14 +124,14 @@ public class TlsInteraction : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_interaction_ask_password(gTlsInteraction, (password is null) ? null : password.getTlsPasswordStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_interaction_ask_password(gTlsInteraction, (password is null) ? null : password.getTlsPasswordStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -188,14 +188,14 @@ public class TlsInteraction : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_interaction_ask_password_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_interaction_ask_password_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -233,14 +233,14 @@ public class TlsInteraction : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_interaction_invoke_ask_password(gTlsInteraction, (password is null) ? null : password.getTlsPasswordStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_interaction_invoke_ask_password(gTlsInteraction, (password is null) ? null : password.getTlsPasswordStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -280,14 +280,14 @@ public class TlsInteraction : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_interaction_invoke_request_certificate(gTlsInteraction, (connection is null) ? null : connection.getTlsConnectionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_interaction_invoke_request_certificate(gTlsInteraction, (connection is null) ? null : connection.getTlsConnectionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -323,14 +323,14 @@ public class TlsInteraction : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_interaction_request_certificate(gTlsInteraction, (connection is null) ? null : connection.getTlsConnectionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_interaction_request_certificate(gTlsInteraction, (connection is null) ? null : connection.getTlsConnectionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -358,7 +358,7 @@ public class TlsInteraction : ObjectG
 	}
 
 	/**
-	 * Complete an request certificate user interaction request. This should be once
+	 * Complete a request certificate user interaction request. This should be once
 	 * the g_tls_interaction_request_certificate_async() completion callback is called.
 	 *
 	 * If %G_TLS_INTERACTION_HANDLED is returned, then the #GTlsConnection
@@ -382,13 +382,13 @@ public class TlsInteraction : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_interaction_request_certificate_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_interaction_request_certificate_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

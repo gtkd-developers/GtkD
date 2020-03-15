@@ -38,7 +38,7 @@ public  import gtkc.giotypes;
  * descriptors that it contains, closing them when finalized.
  * 
  * It may be wrapped in a #GUnixFDMessage and sent over a #GSocket in
- * the %G_SOCKET_ADDRESS_UNIX family by using g_socket_send_message()
+ * the %G_SOCKET_FAMILY_UNIX family by using g_socket_send_message()
  * and received using g_socket_receive_message().
  * 
  * Note that `<gio/gunixfdlist.h>` belongs to the UNIX-specific GIO
@@ -91,14 +91,14 @@ public class UnixFDList : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_unix_fd_list_new();
+		auto __p = g_unix_fd_list_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GUnixFDList*) p, true);
+		this(cast(GUnixFDList*) __p, true);
 	}
 
 	/**
@@ -122,14 +122,14 @@ public class UnixFDList : ObjectG
 	 */
 	public this(int[] fds)
 	{
-		auto p = g_unix_fd_list_new_from_array(fds.ptr, cast(int)fds.length);
+		auto __p = g_unix_fd_list_new_from_array(fds.ptr, cast(int)fds.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_array");
 		}
 
-		this(cast(GUnixFDList*) p, true);
+		this(cast(GUnixFDList*) __p, true);
 	}
 
 	/**
@@ -160,14 +160,14 @@ public class UnixFDList : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_unix_fd_list_append(gUnixFDList, fd, &err);
+		auto __p = g_unix_fd_list_append(gUnixFDList, fd, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -197,14 +197,14 @@ public class UnixFDList : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_unix_fd_list_get(gUnixFDList, index, &err);
+		auto __p = g_unix_fd_list_get(gUnixFDList, index, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -244,9 +244,9 @@ public class UnixFDList : ObjectG
 	{
 		int length;
 
-		auto p = g_unix_fd_list_peek_fds(gUnixFDList, &length);
+		auto __p = g_unix_fd_list_peek_fds(gUnixFDList, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -278,8 +278,8 @@ public class UnixFDList : ObjectG
 	{
 		int length;
 
-		auto p = g_unix_fd_list_steal_fds(gUnixFDList, &length);
+		auto __p = g_unix_fd_list_steal_fds(gUnixFDList, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 }

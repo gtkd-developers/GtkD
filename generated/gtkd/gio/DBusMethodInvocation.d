@@ -93,14 +93,14 @@ public class DBusMethodInvocation : ObjectG
 	 */
 	public DBusConnection getConnection()
 	{
-		auto p = g_dbus_method_invocation_get_connection(gDBusMethodInvocation);
+		auto __p = g_dbus_method_invocation_get_connection(gDBusMethodInvocation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p);
 	}
 
 	/**
@@ -136,14 +136,14 @@ public class DBusMethodInvocation : ObjectG
 	 */
 	public DBusMessage getMessage()
 	{
-		auto p = g_dbus_method_invocation_get_message(gDBusMethodInvocation);
+		auto __p = g_dbus_method_invocation_get_message(gDBusMethodInvocation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) __p);
 	}
 
 	/**
@@ -160,14 +160,14 @@ public class DBusMethodInvocation : ObjectG
 	 */
 	public DBusMethodInfo getMethodInfo()
 	{
-		auto p = g_dbus_method_invocation_get_method_info(gDBusMethodInvocation);
+		auto __p = g_dbus_method_invocation_get_method_info(gDBusMethodInvocation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p);
+		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) __p);
 	}
 
 	/**
@@ -204,14 +204,14 @@ public class DBusMethodInvocation : ObjectG
 	 */
 	public Variant getParameters()
 	{
-		auto p = g_dbus_method_invocation_get_parameters(gDBusMethodInvocation);
+		auto __p = g_dbus_method_invocation_get_parameters(gDBusMethodInvocation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -233,14 +233,14 @@ public class DBusMethodInvocation : ObjectG
 	 */
 	public DBusPropertyInfo getPropertyInfo()
 	{
-		auto p = g_dbus_method_invocation_get_property_info(gDBusMethodInvocation);
+		auto __p = g_dbus_method_invocation_get_property_info(gDBusMethodInvocation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p);
+		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) __p);
 	}
 
 	/**

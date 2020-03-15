@@ -97,6 +97,87 @@ public class PtrArray
 	}
 
 	/**
+	 * Makes a full (deep) copy of a #GPtrArray.
+	 *
+	 * @func, as a #GCopyFunc, takes two arguments, the data to be copied
+	 * and a @user_data pointer. On common processor architectures, it's safe to
+	 * pass %NULL as @user_data if the copy function takes only one argument. You
+	 * may get compiler warnings from this though if compiling with GCC’s
+	 * `-Wcast-function-type` warning.
+	 *
+	 * If @func is %NULL, then only the pointers (and not what they are
+	 * pointing to) are copied to the new #GPtrArray.
+	 *
+	 * The copy of @array will have the same #GDestroyNotify for its elements as
+	 * @array.
+	 *
+	 * Params:
+	 *     func = a copy function used to copy every element in the array
+	 *     userData = user data passed to the copy function @func, or %NULL
+	 *
+	 * Returns: a deep copy of the initial #GPtrArray.
+	 *
+	 * Since: 2.62
+	 */
+	public PtrArray copy(GCopyFunc func, void* userData)
+	{
+		auto __p = g_ptr_array_copy(gPtrArray, func, userData);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new PtrArray(cast(GPtrArray*) __p, true);
+	}
+
+	/**
+	 * Adds all pointers of @array to the end of the array @array_to_extend.
+	 * The array will grow in size automatically if needed. @array_to_extend is
+	 * modified in-place.
+	 *
+	 * @func, as a #GCopyFunc, takes two arguments, the data to be copied
+	 * and a @user_data pointer. On common processor architectures, it's safe to
+	 * pass %NULL as @user_data if the copy function takes only one argument. You
+	 * may get compiler warnings from this though if compiling with GCC’s
+	 * `-Wcast-function-type` warning.
+	 *
+	 * If @func is %NULL, then only the pointers (and not what they are
+	 * pointing to) are copied to the new #GPtrArray.
+	 *
+	 * Params:
+	 *     array = a #GPtrArray to add to the end of @array_to_extend.
+	 *     func = a copy function used to copy every element in the array
+	 *     userData = user data passed to the copy function @func, or %NULL
+	 *
+	 * Since: 2.62
+	 */
+	public void extend(PtrArray array, GCopyFunc func, void* userData)
+	{
+		g_ptr_array_extend(gPtrArray, (array is null) ? null : array.getPtrArrayStruct(), func, userData);
+	}
+
+	/**
+	 * Adds all the pointers in @array to the end of @array_to_extend, transferring
+	 * ownership of each element from @array to @array_to_extend and modifying
+	 * @array_to_extend in-place. @array is then freed.
+	 *
+	 * As with g_ptr_array_free(), @array will be destroyed if its reference count
+	 * is 1. If its reference count is higher, it will be decremented and the
+	 * length of @array set to zero.
+	 *
+	 * Params:
+	 *     array = a #GPtrArray to add to the end of
+	 *         @array_to_extend.
+	 *
+	 * Since: 2.62
+	 */
+	public void extendAndSteal(PtrArray array)
+	{
+		g_ptr_array_extend_and_steal(gPtrArray, (array is null) ? null : array.getPtrArrayStruct());
+	}
+
+	/**
 	 * Checks whether @needle exists in @haystack. If the element is found, %TRUE is
 	 * returned and the element’s index is returned in @index_ (if non-%NULL).
 	 * Otherwise, %FALSE is returned and @index_ is undefined. If @needle exists
@@ -214,14 +295,14 @@ public class PtrArray
 	 */
 	public this()
 	{
-		auto p = g_ptr_array_new();
+		auto __p = g_ptr_array_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GPtrArray*) p);
+		this(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -246,14 +327,14 @@ public class PtrArray
 	 */
 	public this(uint reservedSize, GDestroyNotify elementFreeFunc)
 	{
-		auto p = g_ptr_array_new_full(reservedSize, elementFreeFunc);
+		auto __p = g_ptr_array_new_full(reservedSize, elementFreeFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GPtrArray*) p);
+		this(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -274,14 +355,14 @@ public class PtrArray
 	 */
 	public this(GDestroyNotify elementFreeFunc)
 	{
-		auto p = g_ptr_array_new_with_free_func(elementFreeFunc);
+		auto __p = g_ptr_array_new_with_free_func(elementFreeFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_free_func");
 		}
 
-		this(cast(GPtrArray*) p);
+		this(cast(GPtrArray*) __p);
 	}
 
 	alias doref = ref_;
@@ -295,14 +376,14 @@ public class PtrArray
 	 */
 	public PtrArray ref_()
 	{
-		auto p = g_ptr_array_ref(gPtrArray);
+		auto __p = g_ptr_array_ref(gPtrArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -397,14 +478,14 @@ public class PtrArray
 	 */
 	public PtrArray removeRange(uint index, uint length)
 	{
-		auto p = g_ptr_array_remove_range(gPtrArray, index, length);
+		auto __p = g_ptr_array_remove_range(gPtrArray, index, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -450,14 +531,14 @@ public class PtrArray
 	 */
 	public static PtrArray sizedNew(uint reservedSize)
 	{
-		auto p = g_ptr_array_sized_new(reservedSize);
+		auto __p = g_ptr_array_sized_new(reservedSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -468,7 +549,32 @@ public class PtrArray
 	 *
 	 * Note that the comparison function for g_ptr_array_sort() doesn't
 	 * take the pointers from the array as arguments, it takes pointers to
-	 * the pointers in the array.
+	 * the pointers in the array. Here is a full example of usage:
+	 *
+	 * |[<!-- language="C" -->
+	 * typedef struct
+	 * {
+	 * gchar *name;
+	 * gint size;
+	 * } FileListEntry;
+	 *
+	 * static gint
+	 * sort_filelist (gconstpointer a, gconstpointer b)
+	 * {
+	 * const FileListEntry *entry1 = *((FileListEntry **) a);
+	 * const FileListEntry *entry2 = *((FileListEntry **) b);
+	 *
+	 * return g_ascii_strcasecmp (entry1->name, entry2->name);
+	 * }
+	 *
+	 * …
+	 * g_autoptr (GPtrArray) file_list = NULL;
+	 *
+	 * // initialize file_list array and load with many FileListEntry entries
+	 * ...
+	 * // now sort it with
+	 * g_ptr_array_sort (file_list, sort_filelist);
+	 * ]|
 	 *
 	 * This is guaranteed to be a stable sort since version 2.32.
 	 *
@@ -486,7 +592,52 @@ public class PtrArray
 	 *
 	 * Note that the comparison function for g_ptr_array_sort_with_data()
 	 * doesn't take the pointers from the array as arguments, it takes
-	 * pointers to the pointers in the array.
+	 * pointers to the pointers in the array. Here is a full example of use:
+	 *
+	 * |[<!-- language="C" -->
+	 * typedef enum { SORT_NAME, SORT_SIZE } SortMode;
+	 *
+	 * typedef struct
+	 * {
+	 * gchar *name;
+	 * gint size;
+	 * } FileListEntry;
+	 *
+	 * static gint
+	 * sort_filelist (gconstpointer a, gconstpointer b, gpointer user_data)
+	 * {
+	 * gint order;
+	 * const SortMode sort_mode = GPOINTER_TO_INT (user_data);
+	 * const FileListEntry *entry1 = *((FileListEntry **) a);
+	 * const FileListEntry *entry2 = *((FileListEntry **) b);
+	 *
+	 * switch (sort_mode)
+	 * {
+	 * case SORT_NAME:
+	 * order = g_ascii_strcasecmp (entry1->name, entry2->name);
+	 * break;
+	 * case SORT_SIZE:
+	 * order = entry1->size - entry2->size;
+	 * break;
+	 * default:
+	 * order = 0;
+	 * break;
+	 * }
+	 * return order;
+	 * }
+	 *
+	 * ...
+	 * g_autoptr (GPtrArray) file_list = NULL;
+	 * SortMode sort_mode;
+	 *
+	 * // initialize file_list array and load with many FileListEntry entries
+	 * ...
+	 * // now sort it with
+	 * sort_mode = SORT_NAME;
+	 * g_ptr_array_sort_with_data (file_list,
+	 * sort_filelist,
+	 * GINT_TO_POINTER (sort_mode));
+	 * ]|
 	 *
 	 * This is guaranteed to be a stable sort since version 2.32.
 	 *
@@ -497,6 +648,62 @@ public class PtrArray
 	public void sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		g_ptr_array_sort_with_data(gPtrArray, compareFunc, userData);
+	}
+
+	/**
+	 * Frees the data in the array and resets the size to zero, while
+	 * the underlying array is preserved for use elsewhere and returned
+	 * to the caller.
+	 *
+	 * Even if set, the #GDestroyNotify function will never be called
+	 * on the current contents of the array and the caller is
+	 * responsible for freeing the array elements.
+	 *
+	 * An example of use:
+	 * |[<!-- language="C" -->
+	 * g_autoptr(GPtrArray) chunk_buffer = g_ptr_array_new_with_free_func (g_bytes_unref);
+	 *
+	 * // Some part of your application appends a number of chunks to the pointer array.
+	 * g_ptr_array_add (chunk_buffer, g_bytes_new_static ("hello", 5));
+	 * g_ptr_array_add (chunk_buffer, g_bytes_new_static ("world", 5));
+	 *
+	 * …
+	 *
+	 * // Periodically, the chunks need to be sent as an array-and-length to some
+	 * // other part of the program.
+	 * GBytes **chunks;
+	 * gsize n_chunks;
+	 *
+	 * chunks = g_ptr_array_steal (chunk_buffer, &n_chunks);
+	 * for (gsize i = 0; i < n_chunks; i++)
+	 * {
+	 * // Do something with each chunk here, and then free them, since
+	 * // g_ptr_array_steal() transfers ownership of all the elements and the
+	 * // array to the caller.
+	 * …
+	 *
+	 * g_bytes_unref (chunks[i]);
+	 * }
+	 *
+	 * g_free (chunks);
+	 *
+	 * // After calling g_ptr_array_steal(), the pointer array can be reused for the
+	 * // next set of chunks.
+	 * g_assert (chunk_buffer->len == 0);
+	 * ]|
+	 *
+	 * Params:
+	 *     len = pointer to retrieve the number of
+	 *         elements of the original array
+	 *
+	 * Returns: the element data, which should be
+	 *     freed using g_free().
+	 *
+	 * Since: 2.64
+	 */
+	public void** steal(out size_t len)
+	{
+		return g_ptr_array_steal(gPtrArray, &len);
 	}
 
 	/**

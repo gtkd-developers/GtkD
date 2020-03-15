@@ -95,6 +95,9 @@ public class UnixMountEntry
 	 * is set, it will be filled with a unix timestamp for checking
 	 * if the mounts have changed since with g_unix_mounts_changed_since().
 	 *
+	 * If more mounts have the same mount path, the last matching mount
+	 * is returned.
+	 *
 	 * Params:
 	 *     mountPath = path for a possible unix mount.
 	 *     timeRead = guint64 to contain a timestamp.
@@ -103,14 +106,14 @@ public class UnixMountEntry
 	 */
 	public static UnixMountEntry at(string mountPath, out ulong timeRead)
 	{
-		auto p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
+		auto __p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) __p, true);
 	}
 
 	/**
@@ -182,14 +185,14 @@ public class UnixMountEntry
 	 */
 	public IconIF guessIcon()
 	{
-		auto p = g_unix_mount_guess_icon(gUnixMountEntry);
+		auto __p = g_unix_mount_guess_icon(gUnixMountEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -226,14 +229,14 @@ public class UnixMountEntry
 	 */
 	public IconIF guessSymbolicIcon()
 	{
-		auto p = g_unix_mount_guess_symbolic_icon(gUnixMountEntry);
+		auto __p = g_unix_mount_guess_symbolic_icon(gUnixMountEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -287,14 +290,14 @@ public class UnixMountEntry
 	 */
 	public static ListG mountPointsGet(out ulong timeRead)
 	{
-		auto p = g_unix_mount_points_get(&timeRead);
+		auto __p = g_unix_mount_points_get(&timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -323,14 +326,14 @@ public class UnixMountEntry
 	 */
 	public static ListG mountsGet(out ulong timeRead)
 	{
-		auto p = g_unix_mounts_get(&timeRead);
+		auto __p = g_unix_mounts_get(&timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -342,20 +345,23 @@ public class UnixMountEntry
 	 */
 	public UnixMountEntry copy()
 	{
-		auto p = g_unix_mount_copy(gUnixMountEntry);
+		auto __p = g_unix_mount_copy(gUnixMountEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) __p, true);
 	}
 
 	/**
 	 * Gets a #GUnixMountEntry for a given file path. If @time_read
 	 * is set, it will be filled with a unix timestamp for checking
 	 * if the mounts have changed since with g_unix_mounts_changed_since().
+	 *
+	 * If more mounts have the same mount path, the last matching mount
+	 * is returned.
 	 *
 	 * Params:
 	 *     filePath = file path on some unix mount.
@@ -367,14 +373,14 @@ public class UnixMountEntry
 	 */
 	public static UnixMountEntry mountFor(string filePath, out ulong timeRead)
 	{
-		auto p = g_unix_mount_for(Str.toStringz(filePath), &timeRead);
+		auto __p = g_unix_mount_for(Str.toStringz(filePath), &timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) __p, true);
 	}
 
 	/**

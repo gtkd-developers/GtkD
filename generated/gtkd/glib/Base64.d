@@ -81,11 +81,11 @@ public struct Base64
 	{
 		size_t outLen = cast(size_t)text.length;
 
-		auto p = g_base64_decode_inplace(text.ptr, &outLen);
+		auto __p = g_base64_decode_inplace(text.ptr, &outLen);
 
 		text = text[0..outLen];
 
-		return p[0 .. outLen];
+		return __p[0 .. outLen];
 	}
 
 	/**
@@ -106,9 +106,9 @@ public struct Base64
 	{
 		size_t outLen;
 
-		auto p = g_base64_decode(Str.toStringz(text), &outLen);
+		auto __p = g_base64_decode(Str.toStringz(text), &outLen);
 
-		return cast(char[])p[0 .. outLen];
+		return cast(char[])__p[0 .. outLen];
 	}
 
 	/**
@@ -168,10 +168,10 @@ public struct Base64
 	 * be written to it. Due to the way base64 encodes you will need
 	 * at least: (@len / 3 + 1) * 4 + 4 bytes (+ 4 may be needed in case of
 	 * non-zero state). If you enable line-breaking you will need at least:
-	 * ((@len / 3 + 1) * 4 + 4) / 72 + 1 bytes of extra space.
+	 * ((@len / 3 + 1) * 4 + 4) / 76 + 1 bytes of extra space.
 	 *
 	 * @break_lines is typically used when putting base64-encoded data in emails.
-	 * It breaks the lines at 72 columns instead of putting all of the text on
+	 * It breaks the lines at 76 columns instead of putting all of the text on
 	 * the same line. This avoids problems with long lines in the email system.
 	 * Note however that it breaks the lines with `LF` characters, not
 	 * `CR LF` sequences, so the result cannot be passed directly to SMTP

@@ -64,8 +64,8 @@ public interface DBusObjectManagerIF{
 	 * any.
 	 *
 	 * Params:
-	 *     objectPath = Object path to lookup.
-	 *     interfaceName = D-Bus interface name to lookup.
+	 *     objectPath = Object path to look up.
+	 *     interfaceName = D-Bus interface name to look up.
 	 *
 	 * Returns: A #GDBusInterface instance or %NULL. Free
 	 *     with g_object_unref().
@@ -78,7 +78,7 @@ public interface DBusObjectManagerIF{
 	 * Gets the #GDBusObjectProxy at @object_path, if any.
 	 *
 	 * Params:
-	 *     objectPath = Object path to lookup.
+	 *     objectPath = Object path to look up.
 	 *
 	 * Returns: A #GDBusObject or %NULL. Free with
 	 *     g_object_unref().

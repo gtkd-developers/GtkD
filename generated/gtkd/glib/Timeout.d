@@ -230,6 +230,8 @@ public class Timeout
 	 * context. You can do these steps manually if you need greater control or to
 	 * use a custom main context.
 	 *
+	 * It is safe to call this function from any thread.
+	 *
 	 * The interval given is in terms of monotonic time, not wall clock
 	 * time.  See g_get_monotonic_time().
 	 *
@@ -299,6 +301,8 @@ public class Timeout
 	 * using g_source_attach(). You can do these steps manually if you need
 	 * greater control. Also see g_timeout_add_seconds_full().
 	 *
+	 * It is safe to call this function from any thread.
+	 *
 	 * Note that the first call of the timer may not be precise for timeouts
 	 * of one second. If you need finer precision and have such a timeout,
 	 * you may want to use g_timeout_add() instead.
@@ -357,6 +361,8 @@ public class Timeout
 	 * g_timeout_source_new_seconds() and attaches it to the main loop context
 	 * using g_source_attach(). You can do these steps manually if you need
 	 * greater control.
+	 *
+	 * It is safe to call this function from any thread.
 	 *
 	 * The interval given is in terms of monotonic time, not wall clock
 	 * time.  See g_get_monotonic_time().

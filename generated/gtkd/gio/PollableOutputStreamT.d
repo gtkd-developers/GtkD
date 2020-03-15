@@ -89,14 +89,14 @@ public template PollableOutputStreamT(TStruct)
 	 */
 	public Source createSource(Cancellable cancellable)
 	{
-		auto p = g_pollable_output_stream_create_source(getPollableOutputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
+		auto __p = g_pollable_output_stream_create_source(getPollableOutputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -152,14 +152,14 @@ public template PollableOutputStreamT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_pollable_output_stream_write_nonblocking(getPollableOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_pollable_output_stream_write_nonblocking(getPollableOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -199,13 +199,13 @@ public template PollableOutputStreamT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_pollable_output_stream_writev_nonblocking(getPollableOutputStreamStruct(), vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_pollable_output_stream_writev_nonblocking(getPollableOutputStreamStruct(), vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

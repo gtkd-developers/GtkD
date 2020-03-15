@@ -101,14 +101,14 @@ public class VariantBuilder
 	 */
 	public this(VariantType type)
 	{
-		auto p = g_variant_builder_new((type is null) ? null : type.getVariantTypeStruct());
+		auto __p = g_variant_builder_new((type is null) ? null : type.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GVariantBuilder*) p);
+		this(cast(GVariantBuilder*) __p);
 	}
 
 	/**
@@ -196,14 +196,14 @@ public class VariantBuilder
 	 */
 	public Variant end()
 	{
-		auto p = g_variant_builder_end(gVariantBuilder);
+		auto __p = g_variant_builder_end(gVariantBuilder);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -308,14 +308,14 @@ public class VariantBuilder
 	 */
 	public VariantBuilder ref_()
 	{
-		auto p = g_variant_builder_ref(gVariantBuilder);
+		auto __p = g_variant_builder_ref(gVariantBuilder);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantBuilder(cast(GVariantBuilder*) p, true);
+		return new VariantBuilder(cast(GVariantBuilder*) __p, true);
 	}
 
 	/**

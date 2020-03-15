@@ -219,13 +219,13 @@ move: shape Context
 move: shape_full Context
 move: unichar_direction Context
 
-move: config_key_get PgMiscellaneous
-move: config_key_get_system PgMiscellaneous
-move: get_lib_subdirectory PgMiscellaneous
-move: get_sysconf_subdirectory PgMiscellaneous
+#move: config_key_get PgMiscellaneous
+#move: config_key_get_system PgMiscellaneous
+#move: get_lib_subdirectory PgMiscellaneous
+#move: get_sysconf_subdirectory PgMiscellaneous
 move: is_zero_width PgMiscellaneous
 move: log2vis_get_embedding_levels PgMiscellaneous
-move: lookup_aliases PgMiscellaneous
+#move: lookup_aliases PgMiscellaneous
 move: parse_enum PgMiscellaneous
 move: parse_stretch PgMiscellaneous
 move: parse_style PgMiscellaneous

@@ -151,13 +151,13 @@ public class PropertyAction : ObjectG, ActionIF
 	 */
 	public this(string name, ObjectG object, string propertyName)
 	{
-		auto p = g_property_action_new(Str.toStringz(name), (object is null) ? null : object.getObjectGStruct(), Str.toStringz(propertyName));
+		auto __p = g_property_action_new(Str.toStringz(name), (object is null) ? null : object.getObjectGStruct(), Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GPropertyAction*) p, true);
+		this(cast(GPropertyAction*) __p, true);
 	}
 }

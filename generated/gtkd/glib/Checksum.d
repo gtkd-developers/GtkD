@@ -128,14 +128,14 @@ public class Checksum
 	 */
 	public this(GChecksumType checksumType)
 	{
-		auto p = g_checksum_new(checksumType);
+		auto __p = g_checksum_new(checksumType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GChecksum*) p);
+		this(cast(GChecksum*) __p);
 	}
 
 	/**
@@ -150,14 +150,14 @@ public class Checksum
 	 */
 	public Checksum copy()
 	{
-		auto p = g_checksum_copy(gChecksum);
+		auto __p = g_checksum_copy(gChecksum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Checksum(cast(GChecksum*) p, true);
+		return new Checksum(cast(GChecksum*) __p, true);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class Checksum
 	}
 
 	/**
-	 * Gets the digest as an hexadecimal string.
+	 * Gets the digest as a hexadecimal string.
 	 *
 	 * Once this function has been called the #GChecksum can no longer be
 	 * updated with g_checksum_update().

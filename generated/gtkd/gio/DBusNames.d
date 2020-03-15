@@ -97,7 +97,7 @@ public struct DBusNames
 	 *     userData = user data to pass to handlers
 	 *     userDataFreeFunc = function for freeing @user_data or %NULL
 	 *
-	 * Returns: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that can be used with
 	 *     g_bus_unown_name() to stop owning the name.
 	 *
 	 * Since: 2.26
@@ -120,7 +120,7 @@ public struct DBusNames
 	 *     userData = user data to pass to handlers
 	 *     userDataFreeFunc = function for freeing @user_data or %NULL
 	 *
-	 * Returns: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that can be used with
 	 *     g_bus_unown_name() to stop owning the name
 	 *
 	 * Since: 2.26
@@ -143,7 +143,7 @@ public struct DBusNames
 	 *     nameLostClosure = #GClosure to invoke when @name is lost
 	 *         or %NULL
 	 *
-	 * Returns: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that can be used with
 	 *     g_bus_unown_name() to stop owning the name.
 	 *
 	 * Since: 2.26
@@ -168,7 +168,7 @@ public struct DBusNames
 	 *     nameLostClosure = #GClosure to invoke when @name is lost or
 	 *         %NULL
 	 *
-	 * Returns: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that can be used with
 	 *     g_bus_unown_name() to stop owning the name.
 	 *
 	 * Since: 2.26
@@ -180,6 +180,13 @@ public struct DBusNames
 
 	/**
 	 * Stops owning a name.
+	 *
+	 * Note that there may still be D-Bus traffic to process (relating to owning
+	 * and unowning the name) in the current thread-default #GMainContext after
+	 * this function has returned. You should continue to iterate the #GMainContext
+	 * until the #GDestroyNotify function passed to g_bus_own_name() is called, in
+	 * order to avoid memory leaks through callbacks queued on the #GMainContext
+	 * after it’s stopped being iterated.
 	 *
 	 * Params:
 	 *     ownerId = an identifier obtained from g_bus_own_name()
@@ -194,6 +201,13 @@ public struct DBusNames
 	/**
 	 * Stops watching a name.
 	 *
+	 * Note that there may still be D-Bus traffic to process (relating to watching
+	 * and unwatching the name) in the current thread-default #GMainContext after
+	 * this function has returned. You should continue to iterate the #GMainContext
+	 * until the #GDestroyNotify function passed to g_bus_watch_name() is called, in
+	 * order to avoid memory leaks through callbacks queued on the #GMainContext
+	 * after it’s stopped being iterated.
+	 *
 	 * Params:
 	 *     watcherId = An identifier obtained from g_bus_watch_name()
 	 *
@@ -207,7 +221,7 @@ public struct DBusNames
 	/**
 	 * Starts watching @name on the bus specified by @bus_type and calls
 	 * @name_appeared_handler and @name_vanished_handler when the name is
-	 * known to have a owner respectively known to lose its
+	 * known to have an owner respectively known to lose its
 	 * owner. Callbacks will be invoked in the
 	 * [thread-default main context][g-main-context-push-thread-default]
 	 * of the thread you are calling this function from.
@@ -244,7 +258,7 @@ public struct DBusNames
 	 *     userData = User data to pass to handlers.
 	 *     userDataFreeFunc = Function for freeing @user_data or %NULL.
 	 *
-	 * Returns: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that can be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26
@@ -267,7 +281,7 @@ public struct DBusNames
 	 *     userData = User data to pass to handlers.
 	 *     userDataFreeFunc = Function for freeing @user_data or %NULL.
 	 *
-	 * Returns: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that can be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26
@@ -290,7 +304,7 @@ public struct DBusNames
 	 *     nameVanishedClosure = #GClosure to invoke when @name is known
 	 *         to not exist or %NULL.
 	 *
-	 * Returns: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that can be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26
@@ -313,7 +327,7 @@ public struct DBusNames
 	 *     nameVanishedClosure = #GClosure to invoke when @name is known
 	 *         to not exist or %NULL.
 	 *
-	 * Returns: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that can be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26

@@ -66,14 +66,14 @@ public template DBusObjectT(TStruct)
 	 */
 	public DBusInterfaceIF getInterface(string interfaceName)
 	{
-		auto p = g_dbus_object_get_interface(getDBusObjectStruct(), Str.toStringz(interfaceName));
+		auto __p = g_dbus_object_get_interface(getDBusObjectStruct(), Str.toStringz(interfaceName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceIF)(cast(GDBusInterface*) p, true);
+		return ObjectG.getDObject!(DBusInterfaceIF)(cast(GDBusInterface*) __p, true);
 	}
 
 	/**
@@ -87,14 +87,14 @@ public template DBusObjectT(TStruct)
 	 */
 	public ListG getInterfaces()
 	{
-		auto p = g_dbus_object_get_interfaces(getDBusObjectStruct());
+		auto __p = g_dbus_object_get_interfaces(getDBusObjectStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

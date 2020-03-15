@@ -243,14 +243,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public FileIF createFileForArg(string arg)
 	{
-		auto p = g_application_command_line_create_file_for_arg(gApplicationCommandLine, Str.toStringz(arg));
+		auto __p = g_application_command_line_create_file_for_arg(gApplicationCommandLine, Str.toStringz(arg));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -367,14 +367,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public VariantDict getOptionsDict()
 	{
-		auto p = g_application_command_line_get_options_dict(gApplicationCommandLine);
+		auto __p = g_application_command_line_get_options_dict(gApplicationCommandLine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantDict(cast(GVariantDict*) p);
+		return new VariantDict(cast(GVariantDict*) __p);
 	}
 
 	/**
@@ -393,14 +393,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public Variant getPlatformData()
 	{
-		auto p = g_application_command_line_get_platform_data(gApplicationCommandLine);
+		auto __p = g_application_command_line_get_platform_data(gApplicationCommandLine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -421,14 +421,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public InputStream getStdin()
 	{
-		auto p = g_application_command_line_get_stdin(gApplicationCommandLine);
+		auto __p = g_application_command_line_get_stdin(gApplicationCommandLine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 
 	/**

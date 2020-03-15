@@ -70,14 +70,14 @@ public interface ProxyResolverIF{
 	 */
 	public static ProxyResolverIF getDefault()
 	{
-		auto p = g_proxy_resolver_get_default();
+		auto __p = g_proxy_resolver_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) p);
+		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) __p);
 	}
 
 	/**

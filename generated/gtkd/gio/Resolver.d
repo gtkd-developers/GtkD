@@ -127,14 +127,14 @@ public class Resolver : ObjectG
 	 */
 	public static Resolver getDefault()
 	{
-		auto p = g_resolver_get_default();
+		auto __p = g_resolver_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Resolver)(cast(GResolver*) p, true);
+		return ObjectG.getDObject!(Resolver)(cast(GResolver*) __p, true);
 	}
 
 	/**
@@ -267,19 +267,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_by_name(gResolver, Str.toStringz(hostname), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_resolver_lookup_by_name(gResolver, Str.toStringz(hostname), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -324,19 +324,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_by_name_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_resolver_lookup_by_name_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -362,19 +362,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_by_name_with_flags(gResolver, Str.toStringz(hostname), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_resolver_lookup_by_name_with_flags(gResolver, Str.toStringz(hostname), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -420,19 +420,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_by_name_with_flags_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_resolver_lookup_by_name_with_flags_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -448,8 +448,8 @@ public class Resolver : ObjectG
 	 * %G_IO_ERROR_CANCELLED.
 	 *
 	 * Params:
-	 *     rrname = the DNS name to lookup the record for
-	 *     recordType = the type of DNS record to lookup
+	 *     rrname = the DNS name to look up the record for
+	 *     recordType = the type of DNS record to look up
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
 	 * Returns: a non-empty #GList of
@@ -465,19 +465,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_records(gResolver, Str.toStringz(rrname), recordType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_resolver_lookup_records(gResolver, Str.toStringz(rrname), recordType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -487,8 +487,8 @@ public class Resolver : ObjectG
 	 * g_resolver_lookup_records() for more details.
 	 *
 	 * Params:
-	 *     rrname = the DNS name to lookup the record for
-	 *     recordType = the type of DNS record to lookup
+	 *     rrname = the DNS name to look up the record for
+	 *     recordType = the type of DNS record to look up
 	 *     cancellable = a #GCancellable, or %NULL
 	 *     callback = callback to call after resolution completes
 	 *     userData = data for @callback
@@ -526,19 +526,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_records_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_resolver_lookup_records_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -583,19 +583,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_service(gResolver, Str.toStringz(service), Str.toStringz(protocol), Str.toStringz(domain), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_resolver_lookup_service(gResolver, Str.toStringz(service), Str.toStringz(protocol), Str.toStringz(domain), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -643,19 +643,19 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_resolver_lookup_service_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_resolver_lookup_service_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

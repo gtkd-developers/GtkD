@@ -83,14 +83,14 @@ public class MainContext
 	 */
 	public this()
 	{
-		auto p = g_main_context_new();
+		auto __p = g_main_context_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMainContext*) p);
+		this(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -172,20 +172,20 @@ public class MainContext
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
-		auto p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
+		auto __p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**
 	 * Finds a #GSource given a pair of context and ID.
 	 *
-	 * It is a programmer error to attempt to lookup a non-existent source.
+	 * It is a programmer error to attempt to look up a non-existent source.
 	 *
 	 * More specifically: source IDs can be reissued after a source has been
 	 * destroyed and therefore it is never valid to use this function with a
@@ -203,14 +203,14 @@ public class MainContext
 	 */
 	public Source findSourceById(uint sourceId)
 	{
-		auto p = g_main_context_find_source_by_id(gMainContext, sourceId);
+		auto __p = g_main_context_find_source_by_id(gMainContext, sourceId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**
@@ -225,14 +225,14 @@ public class MainContext
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
-		auto p = g_main_context_find_source_by_user_data(gMainContext, userData);
+		auto __p = g_main_context_find_source_by_user_data(gMainContext, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**
@@ -377,9 +377,9 @@ public class MainContext
 	 * Returns: %TRUE if some source is ready to be dispatched
 	 *     prior to polling.
 	 */
-	public bool prepare(int* priority)
+	public bool prepare(out int priority)
 	{
-		return g_main_context_prepare(gMainContext, priority) != 0;
+		return g_main_context_prepare(gMainContext, &priority) != 0;
 	}
 
 	/**
@@ -458,14 +458,14 @@ public class MainContext
 	 */
 	public MainContext ref_()
 	{
-		auto p = g_main_context_ref(gMainContext);
+		auto __p = g_main_context_ref(gMainContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p, true);
+		return new MainContext(cast(GMainContext*) __p, true);
 	}
 
 	/**
@@ -583,14 +583,14 @@ public class MainContext
 	 */
 	public static MainContext default_()
 	{
-		auto p = g_main_context_default();
+		auto __p = g_main_context_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -613,14 +613,14 @@ public class MainContext
 	 */
 	public static MainContext getThreadDefault()
 	{
-		auto p = g_main_context_get_thread_default();
+		auto __p = g_main_context_get_thread_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -638,13 +638,13 @@ public class MainContext
 	 */
 	public static MainContext refThreadDefault()
 	{
-		auto p = g_main_context_ref_thread_default();
+		auto __p = g_main_context_ref_thread_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p, true);
+		return new MainContext(cast(GMainContext*) __p, true);
 	}
 }

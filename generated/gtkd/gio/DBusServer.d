@@ -53,6 +53,11 @@ private import std.algorithm;
  * 
  * An example of peer-to-peer communication with G-DBus can be found
  * in [gdbus-example-peer.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-peer.c).
+ * 
+ * Note that a minimal #GDBusServer will accept connections from any
+ * peer. In many use-cases it will be necessary to add a #GDBusAuthObserver
+ * that only accepts connections that have successfully authenticated
+ * as the same user that is running the #GDBusServer.
  *
  * Since: 2.26
  */
@@ -101,6 +106,10 @@ public class DBusServer : ObjectG, InitableIF
 	 * Once constructed, you can use g_dbus_server_get_client_address() to
 	 * get a D-Bus address string that clients can use to connect.
 	 *
+	 * To have control over the available authentication mechanisms and
+	 * the users that are authorized to connect, it is strongly recommended
+	 * to provide a non-%NULL #GDBusAuthObserver.
+	 *
 	 * Connect to the #GDBusServer::new-connection signal to handle
 	 * incoming connections.
 	 *
@@ -109,8 +118,8 @@ public class DBusServer : ObjectG, InitableIF
 	 *
 	 * #GDBusServer is used in this [example][gdbus-peer-to-peer].
 	 *
-	 * This is a synchronous failable constructor. See
-	 * g_dbus_server_new() for the asynchronous version.
+	 * This is a synchronous failable constructor. There is currently no
+	 * asynchronous version.
 	 *
 	 * Params:
 	 *     address = A D-Bus address.
@@ -131,19 +140,19 @@ public class DBusServer : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_server_new_sync(Str.toStringz(address), flags, Str.toStringz(guid), (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_server_new_sync(Str.toStringz(address), flags, Str.toStringz(guid), (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
 
-		this(cast(GDBusServer*) p, true);
+		this(cast(GDBusServer*) __p, true);
 	}
 
 	/**

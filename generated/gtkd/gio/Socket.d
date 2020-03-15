@@ -173,19 +173,19 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_new(family, type, protocol, &err);
+		auto __p = g_socket_new(family, type, protocol, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSocket*) p, true);
+		this(cast(GSocket*) __p, true);
 	}
 
 	/**
@@ -218,19 +218,19 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_new_from_fd(fd, &err);
+		auto __p = g_socket_new_from_fd(fd, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_fd");
 		}
 
-		this(cast(GSocket*) p, true);
+		this(cast(GSocket*) __p, true);
 	}
 
 	/**
@@ -259,19 +259,19 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_accept(gSocket, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_accept(gSocket, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Socket)(cast(GSocket*) p, true);
+		return ObjectG.getDObject!(Socket)(cast(GSocket*) __p, true);
 	}
 
 	/**
@@ -313,14 +313,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_bind(gSocket, (address is null) ? null : address.getSocketAddressStruct(), allowReuse, &err) != 0;
+		auto __p = g_socket_bind(gSocket, (address is null) ? null : address.getSocketAddressStruct(), allowReuse, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -338,14 +338,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_check_connect_result(gSocket, &err) != 0;
+		auto __p = g_socket_check_connect_result(gSocket, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -389,14 +389,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_close(gSocket, &err) != 0;
+		auto __p = g_socket_close(gSocket, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -463,14 +463,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_condition_timed_wait(gSocket, condition, timeoutUs, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_socket_condition_timed_wait(gSocket, condition, timeoutUs, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -499,14 +499,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_condition_wait(gSocket, condition, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_socket_condition_wait(gSocket, condition, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -541,14 +541,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_connect(gSocket, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_socket_connect(gSocket, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -561,14 +561,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 */
 	public SocketConnection connectionFactoryCreateConnection()
 	{
-		auto p = g_socket_connection_factory_create_connection(gSocket);
+		auto __p = g_socket_connection_factory_create_connection(gSocket);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -603,14 +603,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 */
 	public Source createSource(GIOCondition condition, Cancellable cancellable)
 	{
-		auto p = g_socket_create_source(gSocket, condition, (cancellable is null) ? null : cancellable.getCancellableStruct());
+		auto __p = g_socket_create_source(gSocket, condition, (cancellable is null) ? null : cancellable.getCancellableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -673,6 +673,13 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * the %G_IO_ERROR_NOT_SUPPORTED error. On Linux this is implemented
 	 * by reading the %SO_PEERCRED option on the underlying socket.
 	 *
+	 * This method can be expected to be available on the following platforms:
+	 *
+	 * - Linux since GLib 2.26
+	 * - OpenBSD since GLib 2.30
+	 * - Solaris, Illumos and OpenSolaris since GLib 2.40
+	 * - NetBSD since GLib 2.42
+	 *
 	 * Other ways to obtain credentials from a foreign peer includes the
 	 * #GUnixCredentialsMessage type and
 	 * g_unix_connection_send_credentials() /
@@ -689,19 +696,19 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_get_credentials(gSocket, &err);
+		auto __p = g_socket_get_credentials(gSocket, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p, true);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) __p, true);
 	}
 
 	/**
@@ -774,19 +781,19 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_get_local_address(gSocket, &err);
+		auto __p = g_socket_get_local_address(gSocket, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 
 	/**
@@ -848,14 +855,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_get_option(gSocket, level, optname, &value, &err) != 0;
+		auto __p = g_socket_get_option(gSocket, level, optname, &value, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -886,19 +893,19 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_get_remote_address(gSocket, &err);
+		auto __p = g_socket_get_remote_address(gSocket, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 
 	/**
@@ -1000,14 +1007,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_join_multicast_group(gSocket, (group is null) ? null : group.getInetAddressStruct(), sourceSpecific, Str.toStringz(iface), &err) != 0;
+		auto __p = g_socket_join_multicast_group(gSocket, (group is null) ? null : group.getInetAddressStruct(), sourceSpecific, Str.toStringz(iface), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1043,14 +1050,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_join_multicast_group_ssm(gSocket, (group is null) ? null : group.getInetAddressStruct(), (sourceSpecific is null) ? null : sourceSpecific.getInetAddressStruct(), Str.toStringz(iface), &err) != 0;
+		auto __p = g_socket_join_multicast_group_ssm(gSocket, (group is null) ? null : group.getInetAddressStruct(), (sourceSpecific is null) ? null : sourceSpecific.getInetAddressStruct(), Str.toStringz(iface), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1079,14 +1086,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_leave_multicast_group(gSocket, (group is null) ? null : group.getInetAddressStruct(), sourceSpecific, Str.toStringz(iface), &err) != 0;
+		auto __p = g_socket_leave_multicast_group(gSocket, (group is null) ? null : group.getInetAddressStruct(), sourceSpecific, Str.toStringz(iface), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1113,14 +1120,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_leave_multicast_group_ssm(gSocket, (group is null) ? null : group.getInetAddressStruct(), (sourceSpecific is null) ? null : sourceSpecific.getInetAddressStruct(), Str.toStringz(iface), &err) != 0;
+		auto __p = g_socket_leave_multicast_group_ssm(gSocket, (group is null) ? null : group.getInetAddressStruct(), (sourceSpecific is null) ? null : sourceSpecific.getInetAddressStruct(), Str.toStringz(iface), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1143,14 +1150,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_listen(gSocket, &err) != 0;
+		auto __p = g_socket_listen(gSocket, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1194,14 +1201,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_receive(gSocket, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_receive(gSocket, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1232,7 +1239,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 		GSocketAddress* outaddress = null;
 		GError* err = null;
 
-		auto p = g_socket_receive_from(gSocket, &outaddress, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_receive_from(gSocket, &outaddress, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -1241,7 +1248,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 
 		address = ObjectG.getDObject!(SocketAddress)(outaddress);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1311,7 +1318,9 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     vectors = an array of #GInputVector structs
 	 *     messages = a pointer
 	 *         which may be filled with an array of #GSocketControlMessages, or %NULL
-	 *     flags = a pointer to an int containing #GSocketMsgFlags flags
+	 *     flags = a pointer to an int containing #GSocketMsgFlags flags,
+	 *         which may additionally contain
+	 *         [other platform specific flags](http://man7.org/linux/man-pages/man2/recv.2.html)
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes read, or 0 if the connection was closed by
@@ -1328,7 +1337,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 		int numMessages;
 		GError* err = null;
 
-		auto p = g_socket_receive_message(gSocket, &outaddress, vectors.ptr, cast(int)vectors.length, &outmessages, &numMessages, &flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_receive_message(gSocket, &outaddress, vectors.ptr, cast(int)vectors.length, &outmessages, &numMessages, &flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -1343,7 +1352,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 			messages[i] = ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) outmessages[i]);
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1398,7 +1407,9 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Params:
 	 *     messages = an array of #GInputMessage structs
-	 *     flags = an int containing #GSocketMsgFlags flags for the overall operation
+	 *     flags = an int containing #GSocketMsgFlags flags for the overall operation,
+	 *         which may additionally contain
+	 *         [other platform specific flags](http://man7.org/linux/man-pages/man2/recv.2.html)
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: number of messages received, or -1 on error. Note that the number
@@ -1415,14 +1426,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_receive_messages(gSocket, messages.ptr, cast(uint)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_receive_messages(gSocket, messages.ptr, cast(uint)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1447,14 +1458,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_receive_with_blocking(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_receive_with_blocking(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1489,14 +1500,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_send(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_send(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1543,7 +1554,8 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     vectors = an array of #GOutputVector structs
 	 *     messages = a pointer to an
 	 *         array of #GSocketControlMessages, or %NULL.
-	 *     flags = an int containing #GSocketMsgFlags flags
+	 *     flags = an int containing #GSocketMsgFlags flags, which may additionally
+	 *         contain [other platform specific flags](http://man7.org/linux/man-pages/man2/recv.2.html)
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes written (which may be less than @size), or -1
@@ -1563,14 +1575,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 
 		GError* err = null;
 
-		auto p = g_socket_send_message(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int)vectors.length, messagesArray.ptr, cast(int)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_send_message(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int)vectors.length, messagesArray.ptr, cast(int)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1587,7 +1599,8 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     vectors = an array of #GOutputVector structs
 	 *     messages = a pointer to an
 	 *         array of #GSocketControlMessages, or %NULL.
-	 *     flags = an int containing #GSocketMsgFlags flags
+	 *     flags = an int containing #GSocketMsgFlags flags, which may additionally
+	 *         contain [other platform specific flags](http://man7.org/linux/man-pages/man2/recv.2.html)
 	 *     timeoutUs = the maximum time (in microseconds) to wait, or -1
 	 *     bytesWritten = location to store the number of bytes that were written to the socket
 	 *     cancellable = a %GCancellable or %NULL
@@ -1610,14 +1623,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 
 		GError* err = null;
 
-		auto p = g_socket_send_message_with_timeout(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int)vectors.length, messagesArray.ptr, cast(int)messages.length, flags, timeoutUs, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_send_message_with_timeout(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int)vectors.length, messagesArray.ptr, cast(int)messages.length, flags, timeoutUs, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1658,7 +1671,8 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Params:
 	 *     messages = an array of #GOutputMessage structs
-	 *     flags = an int containing #GSocketMsgFlags flags
+	 *     flags = an int containing #GSocketMsgFlags flags, which may additionally
+	 *         contain [other platform specific flags](http://man7.org/linux/man-pages/man2/recv.2.html)
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: number of messages sent, or -1 on error. Note that the number of
@@ -1674,14 +1688,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_send_messages(gSocket, messages.ptr, cast(uint)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_send_messages(gSocket, messages.ptr, cast(uint)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1708,14 +1722,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_send_to(gSocket, (address is null) ? null : address.getSocketAddressStruct(), Str.toStringz(buffer), cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_send_to(gSocket, (address is null) ? null : address.getSocketAddressStruct(), Str.toStringz(buffer), cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1740,14 +1754,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_send_with_blocking(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_send_with_blocking(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1891,14 +1905,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_set_option(gSocket, level, optname, value, &err) != 0;
+		auto __p = g_socket_set_option(gSocket, level, optname, value, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1977,14 +1991,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_shutdown(gSocket, shutdownRead, shutdownWrite, &err) != 0;
+		auto __p = g_socket_shutdown(gSocket, shutdownRead, shutdownWrite, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

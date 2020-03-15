@@ -90,14 +90,14 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	 */
 	public this(GZlibCompressorFormat format, int level)
 	{
-		auto p = g_zlib_compressor_new(format, level);
+		auto __p = g_zlib_compressor_new(format, level);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GZlibCompressor*) p, true);
+		this(cast(GZlibCompressor*) __p, true);
 	}
 
 	/**
@@ -109,14 +109,14 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	 */
 	public FileInfo getFileInfo()
 	{
-		auto p = g_zlib_compressor_get_file_info(gZlibCompressor);
+		auto __p = g_zlib_compressor_get_file_info(gZlibCompressor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p);
 	}
 
 	/**

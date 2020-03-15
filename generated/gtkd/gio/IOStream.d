@@ -137,14 +137,14 @@ public class IOStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_io_stream_splice_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_io_stream_splice_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -205,14 +205,14 @@ public class IOStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_io_stream_close(gIOStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_io_stream_close(gIOStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -256,14 +256,14 @@ public class IOStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_io_stream_close_finish(gIOStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_io_stream_close_finish(gIOStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -277,14 +277,14 @@ public class IOStream : ObjectG
 	 */
 	public InputStream getInputStream()
 	{
-		auto p = g_io_stream_get_input_stream(gIOStream);
+		auto __p = g_io_stream_get_input_stream(gIOStream);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p);
 	}
 
 	/**
@@ -298,14 +298,14 @@ public class IOStream : ObjectG
 	 */
 	public OutputStream getOutputStream()
 	{
-		auto p = g_io_stream_get_output_stream(gIOStream);
+		auto __p = g_io_stream_get_output_stream(gIOStream);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
+		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) __p);
 	}
 
 	/**
@@ -347,14 +347,14 @@ public class IOStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_io_stream_set_pending(gIOStream, &err) != 0;
+		auto __p = g_io_stream_set_pending(gIOStream, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

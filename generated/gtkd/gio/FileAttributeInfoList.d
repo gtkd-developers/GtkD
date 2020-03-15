@@ -105,14 +105,14 @@ public final class FileAttributeInfoList
 	 */
 	public this()
 	{
-		auto p = g_file_attribute_info_list_new();
+		auto __p = g_file_attribute_info_list_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GFileAttributeInfoList*) p);
+		this(cast(GFileAttributeInfoList*) __p);
 	}
 
 	/**
@@ -136,21 +136,21 @@ public final class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList dup()
 	{
-		auto p = g_file_attribute_info_list_dup(gFileAttributeInfoList);
+		auto __p = g_file_attribute_info_list_dup(gFileAttributeInfoList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) __p, true);
 	}
 
 	/**
 	 * Gets the file attribute with the name @name from @list.
 	 *
 	 * Params:
-	 *     name = the name of the attribute to lookup.
+	 *     name = the name of the attribute to look up.
 	 *
 	 * Returns: a #GFileAttributeInfo for the @name, or %NULL if an
 	 *     attribute isn't found.
@@ -168,14 +168,14 @@ public final class FileAttributeInfoList
 	 */
 	public FileAttributeInfoList ref_()
 	{
-		auto p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
+		auto __p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) __p, true);
 	}
 
 	/**

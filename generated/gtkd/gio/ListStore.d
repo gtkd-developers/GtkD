@@ -93,14 +93,14 @@ public class ListStore : ObjectG, ListModelIF
 	 */
 	public this(GType itemType)
 	{
-		auto p = g_list_store_new(itemType);
+		auto __p = g_list_store_new(itemType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GListStore*) p, true);
+		this(cast(GListStore*) __p, true);
 	}
 
 	/**
@@ -119,6 +119,49 @@ public class ListStore : ObjectG, ListModelIF
 	public void append(ObjectG item)
 	{
 		g_list_store_append(gListStore, (item is null) ? null : item.getObjectGStruct());
+	}
+
+	/**
+	 * Looks up the given @item in the list store by looping over the items until
+	 * the first occurrence of @item. If @item was not found, then @position will
+	 * not be set, and this method will return %FALSE.
+	 *
+	 * If you need to compare the two items with a custom comparison function, use
+	 * g_list_store_find_with_equal_func() with a custom #GEqualFunc instead.
+	 *
+	 * Params:
+	 *     item = an item
+	 *     position = the first position of @item, if it was found.
+	 *
+	 * Returns: Whether @store contains @item. If it was found, @position will be
+	 *     set to the position where @item occurred for the first time.
+	 *
+	 * Since: 2.64
+	 */
+	public bool find(ObjectG item, out uint position)
+	{
+		return g_list_store_find(gListStore, (item is null) ? null : item.getObjectGStruct(), &position) != 0;
+	}
+
+	/**
+	 * Looks up the given @item in the list store by looping over the items and
+	 * comparing them with @compare_func until the first occurrence of @item which
+	 * matches. If @item was not found, then @position will not be set, and this
+	 * method will return %FALSE.
+	 *
+	 * Params:
+	 *     item = an item
+	 *     equalFunc = A custom equality check function
+	 *     position = the first position of @item, if it was found.
+	 *
+	 * Returns: Whether @store contains @item. If it was found, @position will be
+	 *     set to the position where @item occurred for the first time.
+	 *
+	 * Since: 2.64
+	 */
+	public bool findWithEqualFunc(ObjectG item, GEqualFunc equalFunc, out uint position)
+	{
+		return g_list_store_find_with_equal_func(gListStore, (item is null) ? null : item.getObjectGStruct(), equalFunc, &position) != 0;
 	}
 
 	/**

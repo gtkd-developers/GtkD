@@ -101,14 +101,14 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	 */
 	public this(OutputStream baseStream)
 	{
-		auto p = g_buffered_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct());
+		auto __p = g_buffered_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GBufferedOutputStream*) p, true);
+		this(cast(GBufferedOutputStream*) __p, true);
 	}
 
 	/**
@@ -124,14 +124,14 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	 */
 	public this(OutputStream baseStream, size_t size)
 	{
-		auto p = g_buffered_output_stream_new_sized((baseStream is null) ? null : baseStream.getOutputStreamStruct(), size);
+		auto __p = g_buffered_output_stream_new_sized((baseStream is null) ? null : baseStream.getOutputStreamStruct(), size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sized");
 		}
 
-		this(cast(GBufferedOutputStream*) p, true);
+		this(cast(GBufferedOutputStream*) __p, true);
 	}
 
 	/**

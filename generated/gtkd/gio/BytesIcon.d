@@ -98,14 +98,14 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	 */
 	public this(Bytes bytes)
 	{
-		auto p = g_bytes_icon_new((bytes is null) ? null : bytes.getBytesStruct());
+		auto __p = g_bytes_icon_new((bytes is null) ? null : bytes.getBytesStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GBytesIcon*) p, true);
+		this(cast(GBytesIcon*) __p, true);
 	}
 
 	/**
@@ -117,13 +117,13 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	 */
 	public Bytes getBytes()
 	{
-		auto p = g_bytes_icon_get_bytes(gBytesIcon);
+		auto __p = g_bytes_icon_get_bytes(gBytesIcon);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) __p);
 	}
 }

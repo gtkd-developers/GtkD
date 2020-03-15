@@ -91,7 +91,8 @@ public class TimeZone
 	 * the local time.
 	 *
 	 * In UNIX, the `TZ` environment variable typically corresponds
-	 * to the name of a file in the zoneinfo database, or string in
+	 * to the name of a file in the zoneinfo database, an absolute path to a file
+	 * somewhere else, or a string in
 	 * "std offset [dst [offset],start[/time],end[/time]]" (POSIX) format.
 	 * There  are  no spaces in the specification. The name of standard
 	 * and daylight savings time zone must be three or more alphabetic
@@ -150,14 +151,14 @@ public class TimeZone
 	 */
 	public this(string identifier)
 	{
-		auto p = g_time_zone_new(Str.toStringz(identifier));
+		auto __p = g_time_zone_new(Str.toStringz(identifier));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTimeZone*) p);
+		this(cast(GTimeZone*) __p);
 	}
 
 	/**
@@ -178,14 +179,14 @@ public class TimeZone
 	 */
 	public this(int seconds)
 	{
-		auto p = g_time_zone_new_offset(seconds);
+		auto __p = g_time_zone_new_offset(seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_offset");
 		}
 
-		this(cast(GTimeZone*) p);
+		this(cast(GTimeZone*) __p);
 	}
 
 	/**
@@ -220,7 +221,7 @@ public class TimeZone
 	}
 
 	/**
-	 * Finds an the interval within @tz that corresponds to the given @time_.
+	 * Finds an interval within @tz that corresponds to the given @time_.
 	 * The meaning of @time_ depends on @type.
 	 *
 	 * If @type is %G_TIME_TYPE_UNIVERSAL then this function will always
@@ -338,14 +339,14 @@ public class TimeZone
 	 */
 	public TimeZone ref_()
 	{
-		auto p = g_time_zone_ref(gTimeZone);
+		auto __p = g_time_zone_ref(gTimeZone);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new TimeZone(cast(GTimeZone*) p, true);
+		return new TimeZone(cast(GTimeZone*) __p, true);
 	}
 
 	/**

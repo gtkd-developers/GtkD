@@ -89,7 +89,7 @@ public interface ActionIF{
 	 * @action_name must not be %NULL.
 	 *
 	 * Params:
-	 *     actionName = an potential action name
+	 *     actionName = a potential action name
 	 *
 	 * Returns: %TRUE if @action_name is valid
 	 *
@@ -143,7 +143,7 @@ public interface ActionIF{
 		GVariant* outtargetValue = null;
 		GError* err = null;
 
-		auto p = g_action_parse_detailed_name(Str.toStringz(detailedName), &outactionName, &outtargetValue, &err) != 0;
+		auto __p = g_action_parse_detailed_name(Str.toStringz(detailedName), &outactionName, &outtargetValue, &err) != 0;
 
 		if (err !is null)
 		{
@@ -153,7 +153,7 @@ public interface ActionIF{
 		actionName = Str.toString(outactionName);
 		targetValue = new Variant(outtargetValue);
 
-		return p;
+		return __p;
 	}
 
 	/**

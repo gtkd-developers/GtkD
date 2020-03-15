@@ -93,6 +93,14 @@ public class UnixConnection : SocketConnection
 	 * single byte from the stream, as this is required for credentials
 	 * passing to work on some implementations.
 	 *
+	 * This method can be expected to be available on the following platforms:
+	 *
+	 * - Linux since GLib 2.26
+	 * - FreeBSD since GLib 2.26
+	 * - GNU/kFreeBSD since GLib 2.36
+	 * - Solaris, Illumos and OpenSolaris since GLib 2.40
+	 * - GNU/Hurd since GLib 2.40
+	 *
 	 * Other ways to exchange credentials with a foreign peer includes the
 	 * #GUnixCredentialsMessage type and g_socket_get_credentials() function.
 	 *
@@ -110,19 +118,19 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_receive_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_unix_connection_receive_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p, true);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) __p, true);
 	}
 
 	/**
@@ -164,19 +172,19 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_receive_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_unix_connection_receive_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p, true);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) __p, true);
 	}
 
 	/**
@@ -201,14 +209,14 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_receive_fd(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_unix_connection_receive_fd(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -220,6 +228,14 @@ public class UnixConnection : SocketConnection
 	 * As well as sending the credentials this also writes a single NUL
 	 * byte to the stream, as this is required for credentials passing to
 	 * work on some implementations.
+	 *
+	 * This method can be expected to be available on the following platforms:
+	 *
+	 * - Linux since GLib 2.26
+	 * - FreeBSD since GLib 2.26
+	 * - GNU/kFreeBSD since GLib 2.36
+	 * - Solaris, Illumos and OpenSolaris since GLib 2.40
+	 * - GNU/Hurd since GLib 2.40
 	 *
 	 * Other ways to exchange credentials with a foreign peer includes the
 	 * #GUnixCredentialsMessage type and g_socket_get_credentials() function.
@@ -237,14 +253,14 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_send_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_unix_connection_send_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -285,14 +301,14 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_send_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_unix_connection_send_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -318,13 +334,13 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_send_fd(gUnixConnection, fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_unix_connection_send_fd(gUnixConnection, fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

@@ -374,14 +374,14 @@ public class Spawn
 	{
 		GError* err = null;
 
-		auto p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err) != 0;
+		auto __p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -436,14 +436,14 @@ public class Spawn
 	{
 		GError* err = null;
 
-		auto p = g_spawn_check_exit_status(exitStatus, &err) != 0;
+		auto __p = g_spawn_check_exit_status(exitStatus, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -482,14 +482,14 @@ public class Spawn
 	{
 		GError* err = null;
 
-		auto p = g_spawn_command_line_async(Str.toStringz(commandLine), &err) != 0;
+		auto __p = g_spawn_command_line_async(Str.toStringz(commandLine), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -532,7 +532,7 @@ public class Spawn
 		char* outstandardError = null;
 		GError* err = null;
 
-		auto p = g_spawn_command_line_sync(Str.toStringz(commandLine), &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
+		auto __p = g_spawn_command_line_sync(Str.toStringz(commandLine), &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
 
 		if (err !is null)
 		{
@@ -542,7 +542,7 @@ public class Spawn
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
 
-		return p;
+		return __p;
 	}
 
 	/** */
@@ -600,7 +600,7 @@ public class Spawn
 		char* outstandardError = null;
 		GError* err = null;
 
-		auto p = g_spawn_sync(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
+		auto __p = g_spawn_sync(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
 
 		if (err !is null)
 		{
@@ -610,7 +610,7 @@ public class Spawn
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -655,13 +655,13 @@ public class Spawn
 	{
 		GError* err = null;
 
-		auto p = g_spawn_async_with_fds(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, stdinFd, stdoutFd, stderrFd, &err) != 0;
+		auto __p = g_spawn_async_with_fds(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, stdinFd, stdoutFd, stderrFd, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

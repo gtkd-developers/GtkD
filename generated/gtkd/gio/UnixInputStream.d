@@ -104,14 +104,14 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 	 */
 	public this(int fd, bool closeFd)
 	{
-		auto p = g_unix_input_stream_new(fd, closeFd);
+		auto __p = g_unix_input_stream_new(fd, closeFd);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GUnixInputStream*) p, true);
+		this(cast(GUnixInputStream*) __p, true);
 	}
 
 	/**

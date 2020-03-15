@@ -41,7 +41,7 @@ public  import gtkc.giotypes;
 
 
 /**
- * #GTlsDatabase is used to lookup certificates and other information
+ * #GTlsDatabase is used to look up certificates and other information
  * from a certificate or key store. It is an abstract base class which
  * TLS library specific subtypes override.
  * 
@@ -115,7 +115,7 @@ public class TlsDatabase : ObjectG
 	}
 
 	/**
-	 * Lookup a certificate by its handle.
+	 * Look up a certificate by its handle.
 	 *
 	 * The handle should have been created by calling
 	 * g_tls_database_create_certificate_handle() on a #GTlsDatabase object of
@@ -145,23 +145,23 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_for_handle(gTlsDatabase, Str.toStringz(handle), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_for_handle(gTlsDatabase, Str.toStringz(handle), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
-	 * Asynchronously lookup a certificate by its handle in the database. See
+	 * Asynchronously look up a certificate by its handle in the database. See
 	 * g_tls_database_lookup_certificate_for_handle() for more information.
 	 *
 	 * Params:
@@ -181,7 +181,7 @@ public class TlsDatabase : ObjectG
 
 	/**
 	 * Finish an asynchronous lookup of a certificate by its handle. See
-	 * g_tls_database_lookup_certificate_by_handle() for more information.
+	 * g_tls_database_lookup_certificate_for_handle() for more information.
 	 *
 	 * If the handle is no longer valid, or does not point to a certificate in
 	 * this database, then %NULL will be returned.
@@ -200,23 +200,23 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_for_handle_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_for_handle_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
-	 * Lookup the issuer of @certificate in the database.
+	 * Look up the issuer of @certificate in the database.
 	 *
 	 * The #GTlsCertificate:issuer property
 	 * of @certificate is not modified, and the two certificates are not hooked
@@ -242,23 +242,23 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_issuer(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_issuer(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
-	 * Asynchronously lookup the issuer of @certificate in the database. See
+	 * Asynchronously look up the issuer of @certificate in the database. See
 	 * g_tls_database_lookup_certificate_issuer() for more information.
 	 *
 	 * Params:
@@ -294,23 +294,23 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_issuer_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_issuer_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
-	 * Lookup certificates issued by this issuer in the database.
+	 * Look up certificates issued by this issuer in the database.
 	 *
 	 * This function can block, use g_tls_database_lookup_certificates_issued_by_async() to perform
 	 * the lookup operation asynchronously.
@@ -332,23 +332,23 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificates_issued_by(gTlsDatabase, (issuerRawDn is null) ? null : issuerRawDn.getByteArrayStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_lookup_certificates_issued_by(gTlsDatabase, (issuerRawDn is null) ? null : issuerRawDn.getByteArrayStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
-	 * Asynchronously lookup certificates issued by this issuer in the database. See
+	 * Asynchronously look up certificates issued by this issuer in the database. See
 	 * g_tls_database_lookup_certificates_issued_by() for more information.
 	 *
 	 * The database may choose to hold a reference to the issuer byte array for the duration
@@ -388,19 +388,19 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificates_issued_by_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_lookup_certificates_issued_by_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -457,14 +457,14 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_verify_chain(gTlsDatabase, (chain is null) ? null : chain.getTlsCertificateStruct(), Str.toStringz(purpose), (identity is null) ? null : identity.getSocketConnectableStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_verify_chain(gTlsDatabase, (chain is null) ? null : chain.getTlsCertificateStruct(), Str.toStringz(purpose), (identity is null) ? null : identity.getSocketConnectableStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -516,13 +516,13 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_verify_chain_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_verify_chain_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

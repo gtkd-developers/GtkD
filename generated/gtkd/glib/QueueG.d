@@ -108,14 +108,14 @@ public class QueueG
 	 */
 	public QueueG copy()
 	{
-		auto p = g_queue_copy(gQueue);
+		auto __p = g_queue_copy(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new QueueG(cast(GQueue*) p);
+		return new QueueG(cast(GQueue*) __p);
 	}
 
 	/**
@@ -145,14 +145,14 @@ public class QueueG
 	 */
 	public ListG find(void* data)
 	{
-		auto p = g_queue_find(gQueue, data);
+		auto __p = g_queue_find(gQueue, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -173,14 +173,14 @@ public class QueueG
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
-		auto p = g_queue_find_custom(gQueue, data, func);
+		auto __p = g_queue_find_custom(gQueue, data, func);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	alias foreac = foreach_;
@@ -293,6 +293,23 @@ public class QueueG
 	}
 
 	/**
+	 * Inserts @link_ into @queue after @sibling.
+	 *
+	 * @sibling must be part of @queue.
+	 *
+	 * Params:
+	 *     sibling = a #GList link that must be part of @queue, or %NULL to
+	 *         push at the head of the queue.
+	 *     link = a #GList link to insert which must not be part of any other list.
+	 *
+	 * Since: 2.62
+	 */
+	public void insertAfterLink(ListG sibling, ListG link)
+	{
+		g_queue_insert_after_link(gQueue, (sibling is null) ? null : sibling.getListGStruct(), (link is null) ? null : link.getListGStruct());
+	}
+
+	/**
 	 * Inserts @data into @queue before @sibling.
 	 *
 	 * @sibling must be part of @queue. Since GLib 2.44 a %NULL sibling pushes the
@@ -308,6 +325,23 @@ public class QueueG
 	public void insertBefore(ListG sibling, void* data)
 	{
 		g_queue_insert_before(gQueue, (sibling is null) ? null : sibling.getListGStruct(), data);
+	}
+
+	/**
+	 * Inserts @link_ into @queue before @sibling.
+	 *
+	 * @sibling must be part of @queue.
+	 *
+	 * Params:
+	 *     sibling = a #GList link that must be part of @queue, or %NULL to
+	 *         push at the tail of the queue.
+	 *     link = a #GList link to insert which must not be part of any other list.
+	 *
+	 * Since: 2.62
+	 */
+	public void insertBeforeLink(ListG sibling, ListG link)
+	{
+		g_queue_insert_before_link(gQueue, (sibling is null) ? null : sibling.getListGStruct(), (link is null) ? null : link.getListGStruct());
 	}
 
 	/**
@@ -375,14 +409,14 @@ public class QueueG
 	 */
 	public ListG peekHeadLink()
 	{
-		auto p = g_queue_peek_head_link(gQueue);
+		auto __p = g_queue_peek_head_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -414,14 +448,14 @@ public class QueueG
 	 */
 	public ListG peekNthLink(uint n)
 	{
-		auto p = g_queue_peek_nth_link(gQueue, n);
+		auto __p = g_queue_peek_nth_link(gQueue, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -444,14 +478,14 @@ public class QueueG
 	 */
 	public ListG peekTailLink()
 	{
-		auto p = g_queue_peek_tail_link(gQueue);
+		auto __p = g_queue_peek_tail_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -473,14 +507,14 @@ public class QueueG
 	 */
 	public ListG popHeadLink()
 	{
-		auto p = g_queue_pop_head_link(gQueue);
+		auto __p = g_queue_pop_head_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -510,14 +544,14 @@ public class QueueG
 	 */
 	public ListG popNthLink(uint n)
 	{
-		auto p = g_queue_pop_nth_link(gQueue, n);
+		auto __p = g_queue_pop_nth_link(gQueue, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -539,14 +573,14 @@ public class QueueG
 	 */
 	public ListG popTailLink()
 	{
-		auto p = g_queue_pop_tail_link(gQueue);
+		auto __p = g_queue_pop_tail_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -707,13 +741,13 @@ public class QueueG
 	 */
 	public this()
 	{
-		auto p = g_queue_new();
+		auto __p = g_queue_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GQueue*) p);
+		this(cast(GQueue*) __p);
 	}
 }

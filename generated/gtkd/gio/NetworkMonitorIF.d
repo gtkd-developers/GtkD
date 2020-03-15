@@ -71,14 +71,14 @@ public interface NetworkMonitorIF{
 	 */
 	public static NetworkMonitorIF getDefault()
 	{
-		auto p = g_network_monitor_get_default();
+		auto __p = g_network_monitor_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(NetworkMonitorIF)(cast(GNetworkMonitor*) p);
+		return ObjectG.getDObject!(NetworkMonitorIF)(cast(GNetworkMonitor*) __p);
 	}
 
 	/**

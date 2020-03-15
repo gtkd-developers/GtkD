@@ -160,13 +160,13 @@ public struct Child
 	 */
 	public static Source childWatchSourceNew(GPid pid)
 	{
-		auto p = g_child_watch_source_new(pid);
+		auto __p = g_child_watch_source_new(pid);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 }

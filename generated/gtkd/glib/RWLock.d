@@ -177,8 +177,10 @@ public class RWLock
 
 	/**
 	 * Obtain a read lock on @rw_lock. If another thread currently holds
-	 * the write lock on @rw_lock or blocks waiting for it, the current
-	 * thread will block. Read locks can be taken recursively.
+	 * the write lock on @rw_lock, the current thread will block. If another thread
+	 * does not hold the write lock, but is waiting for it, it is implementation
+	 * defined whether the reader or writer will block. Read locks can be taken
+	 * recursively.
 	 *
 	 * It is implementation-defined how many threads are allowed to
 	 * hold read locks on the same lock simultaneously. If the limit is hit,

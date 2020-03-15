@@ -556,6 +556,12 @@ array: write_chars buf count
 
 struct: List
 class: ListG
+
+version 2.64: start
+	move: clear_list List
+	out: clear_list list_ptr
+version: end
+
 import: gobject.ObjectG
 import: glib.Str
 code: start
@@ -743,6 +749,12 @@ class: ScannerG
 
 struct: SList
 class: ListSG
+
+version 2.64: start
+	move: clear_slist SList
+	out: clear_slist slist_ptr
+version: end
+
 import: gobject.ObjectG
 import: glib.Str
 code: start
@@ -1706,9 +1718,8 @@ move: get_filename_charsets CharacterSet
 move: locale_from_utf8 CharacterSet
 move: locale_to_utf8 CharacterSet
 
-version 2.58: start
-	move:get_language_names_with_category CharacterSet
-version: end
+version 2.58: move: get_language_names_with_category CharacterSet
+version 2.62: move: get_console_charset CharacterSet
 
 move: child_watch_add Child
 move: child_watch_add_full Child
@@ -2128,8 +2139,7 @@ move: setenv Util
 move: spaced_primes_closest Util
 move: unsetenv Util
 
-version 2.58: start
-	move: canonicalize_filename Util
-version: end
+version 2.58: move: canonicalize_filename Util
+version 2.64: move: get_os_info Util
 
 move: check_version Version

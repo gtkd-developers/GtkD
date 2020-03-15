@@ -202,14 +202,14 @@ public final class DBusMethodInfo
 	 */
 	public DBusMethodInfo ref_()
 	{
-		auto p = g_dbus_method_info_ref(gDBusMethodInfo);
+		auto __p = g_dbus_method_info_ref(gDBusMethodInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p, true);
+		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) __p, true);
 	}
 
 	/**

@@ -425,6 +425,7 @@ shared static this()
 	Linker.link(g_signal_stop_emission, "g_signal_stop_emission", LIBRARY_GOBJECT);
 	Linker.link(g_signal_stop_emission_by_name, "g_signal_stop_emission_by_name", LIBRARY_GOBJECT);
 	Linker.link(g_signal_type_cclosure_new, "g_signal_type_cclosure_new", LIBRARY_GOBJECT);
+	Linker.link(g_clear_signal_handler, "g_clear_signal_handler", LIBRARY_GOBJECT);
 
 	// gobject.Type
 
@@ -895,6 +896,7 @@ __gshared extern(C)
 	void function(void* instance_, uint signalId, GQuark detail) c_g_signal_stop_emission;
 	void function(void* instance_, const(char)* detailedSignal) c_g_signal_stop_emission_by_name;
 	GClosure* function(GType itype, uint structOffset) c_g_signal_type_cclosure_new;
+	void function(gulong* handlerIdPtr, void* instance_) c_g_clear_signal_handler;
 
 	// gobject.Type
 
@@ -1363,6 +1365,7 @@ alias c_g_signal_set_va_marshaller g_signal_set_va_marshaller;
 alias c_g_signal_stop_emission g_signal_stop_emission;
 alias c_g_signal_stop_emission_by_name g_signal_stop_emission_by_name;
 alias c_g_signal_type_cclosure_new g_signal_type_cclosure_new;
+alias c_g_clear_signal_handler g_clear_signal_handler;
 
 // gobject.Type
 

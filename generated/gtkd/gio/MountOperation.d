@@ -102,14 +102,14 @@ public class MountOperation : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_mount_operation_new();
+		auto __p = g_mount_operation_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMountOperation*) p, true);
+		this(cast(GMountOperation*) __p, true);
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class MountOperation : ObjectG
 	 * Gets a choice from the mount operation.
 	 *
 	 * Returns: an integer containing an index of the user's choice from
-	 *     the choice's list, or %0.
+	 *     the choice's list, or `0`.
 	 */
 	public int getChoice()
 	{

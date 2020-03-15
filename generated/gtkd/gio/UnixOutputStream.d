@@ -104,14 +104,14 @@ public class UnixOutputStream : OutputStream, FileDescriptorBasedIF, PollableOut
 	 */
 	public this(int fd, bool closeFd)
 	{
-		auto p = g_unix_output_stream_new(fd, closeFd);
+		auto __p = g_unix_output_stream_new(fd, closeFd);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GUnixOutputStream*) p, true);
+		this(cast(GUnixOutputStream*) __p, true);
 	}
 
 	/**

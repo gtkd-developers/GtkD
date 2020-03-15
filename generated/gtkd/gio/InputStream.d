@@ -127,14 +127,14 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_close(gInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_input_stream_close(gInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -174,14 +174,14 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_close_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_input_stream_close_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -228,26 +228,28 @@ public class InputStream : ObjectG
 	 * On error -1 is returned and @error is set accordingly.
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least count bytes long).
+	 *     buffer = a buffer to read data into (which should be at least count bytes long).
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
 	 * Returns: Number of bytes read, or -1 on error, or 0 on end of file.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public ptrdiff_t read(ubyte[] buffer, Cancellable cancellable)
+	public ptrdiff_t read(out ubyte[] buffer, Cancellable cancellable)
 	{
+		ubyte* outbuffer = null;
 		GError* err = null;
 
-		auto p = g_input_stream_read(gInputStream, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_input_stream_read(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		buffer = outbuffer[0 .. cast(size_t)buffer.length];
+
+		return __p;
 	}
 
 	/**
@@ -272,8 +274,7 @@ public class InputStream : ObjectG
 	 * write your own loop around g_input_stream_read().
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least count bytes long).
+	 *     buffer = a buffer to read data into (which should be at least count bytes long).
 	 *     bytesRead = location to store the number of bytes that was read from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
@@ -281,18 +282,21 @@ public class InputStream : ObjectG
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool readAll(ubyte[] buffer, out size_t bytesRead, Cancellable cancellable)
+	public bool readAll(out ubyte[] buffer, out size_t bytesRead, Cancellable cancellable)
 	{
+		ubyte* outbuffer = null;
 		GError* err = null;
 
-		auto p = g_input_stream_read_all(gInputStream, buffer.ptr, cast(size_t)buffer.length, &bytesRead, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_input_stream_read_all(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, &bytesRead, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		buffer = outbuffer[0 .. cast(size_t)buffer.length];
+
+		return __p;
 	}
 
 	/**
@@ -308,8 +312,7 @@ public class InputStream : ObjectG
 	 * priority. Default priority is %G_PRIORITY_DEFAULT.
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least count bytes long)
+	 *     buffer = a buffer to read data into (which should be at least count bytes long)
 	 *     ioPriority = the [I/O priority][io-priority] of the request
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *     callback = callback to call when the request is satisfied
@@ -317,9 +320,13 @@ public class InputStream : ObjectG
 	 *
 	 * Since: 2.44
 	 */
-	public void readAllAsync(ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void readAllAsync(out ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		g_input_stream_read_all_async(gInputStream, buffer.ptr, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		ubyte* outbuffer = null;
+
+		g_input_stream_read_all_async(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+
+		buffer = outbuffer[0 .. cast(size_t)buffer.length];
 	}
 
 	/**
@@ -347,14 +354,14 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_read_all_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesRead, &err) != 0;
+		auto __p = g_input_stream_read_all_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesRead, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -383,17 +390,20 @@ public class InputStream : ObjectG
 	 * override one you must override all.
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least count bytes long).
+	 *     buffer = a buffer to read data into (which should be at least count bytes long).
 	 *     ioPriority = the [I/O priority][io-priority]
 	 *         of the request.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *     callback = callback to call when the request is satisfied
 	 *     userData = the data to pass to callback function
 	 */
-	public void readAsync(ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public void readAsync(out ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		g_input_stream_read_async(gInputStream, buffer.ptr, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		ubyte* outbuffer = null;
+
+		g_input_stream_read_async(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+
+		buffer = outbuffer[0 .. cast(size_t)buffer.length];
 	}
 
 	/**
@@ -436,19 +446,19 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_read_bytes(gInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_input_stream_read_bytes(gInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -503,19 +513,19 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_read_bytes_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_input_stream_read_bytes_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -532,14 +542,14 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_read_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_input_stream_read_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -555,14 +565,14 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_set_pending(gInputStream, &err) != 0;
+		auto __p = g_input_stream_set_pending(gInputStream, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -593,14 +603,14 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_skip(gInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_input_stream_skip(gInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -646,7 +656,7 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Returns: the size of the bytes skipped, or %-1 on error.
+	 * Returns: the size of the bytes skipped, or `-1` on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -654,13 +664,13 @@ public class InputStream : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_input_stream_skip_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_input_stream_skip_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

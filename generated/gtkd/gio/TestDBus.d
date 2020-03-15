@@ -155,14 +155,14 @@ public class TestDBus : ObjectG
 	 */
 	public this(GTestDBusFlags flags)
 	{
-		auto p = g_test_dbus_new(flags);
+		auto __p = g_test_dbus_new(flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTestDBus*) p, true);
+		this(cast(GTestDBus*) __p, true);
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class TestDBus : ObjectG
 	 * Stop the session bus started by g_test_dbus_up().
 	 *
 	 * This will wait for the singleton returned by g_bus_get() or g_bus_get_sync()
-	 * is destroyed. This is done to ensure that the next unit test won't get a
+	 * to be destroyed. This is done to ensure that the next unit test won't get a
 	 * leaked singleton from this test.
 	 */
 	public void down()

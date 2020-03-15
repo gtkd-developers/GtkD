@@ -102,14 +102,14 @@ public class SimpleAction : ObjectG, ActionIF
 	 */
 	public this(string name, VariantType parameterType)
 	{
-		auto p = g_simple_action_new(Str.toStringz(name), (parameterType is null) ? null : parameterType.getVariantTypeStruct());
+		auto __p = g_simple_action_new(Str.toStringz(name), (parameterType is null) ? null : parameterType.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSimpleAction*) p, true);
+		this(cast(GSimpleAction*) __p, true);
 	}
 
 	/**
@@ -134,14 +134,14 @@ public class SimpleAction : ObjectG, ActionIF
 	 */
 	public this(string name, VariantType parameterType, Variant state)
 	{
-		auto p = g_simple_action_new_stateful(Str.toStringz(name), (parameterType is null) ? null : parameterType.getVariantTypeStruct(), (state is null) ? null : state.getVariantStruct());
+		auto __p = g_simple_action_new_stateful(Str.toStringz(name), (parameterType is null) ? null : parameterType.getVariantTypeStruct(), (state is null) ? null : state.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_stateful");
 		}
 
-		this(cast(GSimpleAction*) p, true);
+		this(cast(GSimpleAction*) __p, true);
 	}
 
 	/**

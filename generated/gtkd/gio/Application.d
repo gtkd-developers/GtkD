@@ -129,7 +129,7 @@ private import std.algorithm;
  * initialization for all of these in a single place.
  * 
  * Regardless of which of these entry points is used to start the
- * application, GApplication passes some "platform data from the
+ * application, GApplication passes some ‘platform data’ from the
  * launching instance to the primary instance, in the form of a
  * #GVariant dictionary mapping strings to variants. To use platform
  * data, override the @before_emit or @after_emit virtual functions
@@ -265,14 +265,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public this(string applicationId, GApplicationFlags flags)
 	{
-		auto p = g_application_new(Str.toStringz(applicationId), flags);
+		auto __p = g_application_new(Str.toStringz(applicationId), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GApplication*) p, true);
+		this(cast(GApplication*) __p, true);
 	}
 
 	/**
@@ -290,14 +290,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public static Application getDefault()
 	{
-		auto p = g_application_get_default();
+		auto __p = g_application_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Application)(cast(GApplication*) p);
+		return ObjectG.getDObject!(Application)(cast(GApplication*) __p);
 	}
 
 	/**
@@ -450,14 +450,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * It is important to use the proper GVariant format when retrieving
 	 * the options with g_variant_dict_lookup():
-	 * - for %G_OPTION_ARG_NONE, use b
-	 * - for %G_OPTION_ARG_STRING, use &s
-	 * - for %G_OPTION_ARG_INT, use i
-	 * - for %G_OPTION_ARG_INT64, use x
-	 * - for %G_OPTION_ARG_DOUBLE, use d
-	 * - for %G_OPTION_ARG_FILENAME, use ^ay
-	 * - for %G_OPTION_ARG_STRING_ARRAY, use &as
-	 * - for %G_OPTION_ARG_FILENAME_ARRAY, use ^aay
+	 * - for %G_OPTION_ARG_NONE, use `b`
+	 * - for %G_OPTION_ARG_STRING, use `&s`
+	 * - for %G_OPTION_ARG_INT, use `i`
+	 * - for %G_OPTION_ARG_INT64, use `x`
+	 * - for %G_OPTION_ARG_DOUBLE, use `d`
+	 * - for %G_OPTION_ARG_FILENAME, use `^&ay`
+	 * - for %G_OPTION_ARG_STRING_ARRAY, use `^a&s`
+	 * - for %G_OPTION_ARG_FILENAME_ARRAY, use `^a&ay`
 	 *
 	 * Params:
 	 *     entries = a
@@ -559,14 +559,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public DBusConnection getDbusConnection()
 	{
-		auto p = g_application_get_dbus_connection(gApplication);
+		auto __p = g_application_get_dbus_connection(gApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p);
 	}
 
 	/**
@@ -819,14 +819,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	{
 		GError* err = null;
 
-		auto p = g_application_register(gApplication, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_application_register(gApplication, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

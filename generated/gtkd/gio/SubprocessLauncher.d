@@ -98,14 +98,14 @@ public class SubprocessLauncher : ObjectG
 	 */
 	public this(GSubprocessFlags flags)
 	{
-		auto p = g_subprocess_launcher_new(flags);
+		auto __p = g_subprocess_launcher_new(flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSubprocessLauncher*) p, true);
+		this(cast(GSubprocessLauncher*) __p, true);
 	}
 
 	/**
@@ -332,19 +332,19 @@ public class SubprocessLauncher : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_subprocess_launcher_spawnv(gSubprocessLauncher, Str.toStringzArray(argv), &err);
+		auto __p = g_subprocess_launcher_spawnv(gSubprocessLauncher, Str.toStringzArray(argv), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Subprocess)(cast(GSubprocess*) p, true);
+		return ObjectG.getDObject!(Subprocess)(cast(GSubprocess*) __p, true);
 	}
 
 	/**

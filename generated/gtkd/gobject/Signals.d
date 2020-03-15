@@ -567,9 +567,9 @@ public struct Signals
 	{
 		uint nIds;
 
-		auto p = g_signal_list_ids(itype, &nIds);
+		auto __p = g_signal_list_ids(itype, &nIds);
 
-		return p[0 .. nIds];
+		return __p[0 .. nIds];
 	}
 
 	/**
@@ -578,6 +578,10 @@ public struct Signals
 	 * somewhat faster than using the name each time.
 	 *
 	 * Also tries the ancestors of the given type.
+	 *
+	 * The type class passed as @itype must already have been instantiated (for
+	 * example, using g_type_class_ref()) for this function to work, as signals are
+	 * always installed during class initialization.
 	 *
 	 * See g_signal_new() for details on allowed signal names.
 	 *
@@ -831,13 +835,34 @@ public struct Signals
 	 */
 	public static Closure typeCclosureNew(GType itype, uint structOffset)
 	{
-		auto p = g_signal_type_cclosure_new(itype, structOffset);
+		auto __p = g_signal_type_cclosure_new(itype, structOffset);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) __p);
+	}
+
+	/**
+	 * Disconnects a handler from @instance so it will not be called during
+	 * any future or currently ongoing emissions of the signal it has been
+	 * connected to. The @handler_id_ptr is then set to zero, which is never a valid handler ID value (see g_signal_connect()).
+	 *
+	 * If the handler ID is 0 then this function does nothing.
+	 *
+	 * A macro is also included that allows this function to be used without
+	 * pointer casts.
+	 *
+	 * Params:
+	 *     handlerIdPtr = A pointer to a handler ID (of type #gulong) of the handler to be disconnected.
+	 *     instance_ = The instance to remove the signal handler from.
+	 *
+	 * Since: 2.62
+	 */
+	public static void clearSignalHandler(gulong* handlerIdPtr, ObjectG instance_)
+	{
+		g_clear_signal_handler(handlerIdPtr, (instance_ is null) ? null : instance_.getObjectGStruct());
 	}
 }

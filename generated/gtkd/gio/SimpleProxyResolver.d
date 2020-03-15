@@ -104,14 +104,14 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	 */
 	public this(string defaultProxy, string[] ignoreHosts)
 	{
-		auto p = g_simple_proxy_resolver_new(Str.toStringz(defaultProxy), Str.toStringzArray(ignoreHosts));
+		auto __p = g_simple_proxy_resolver_new(Str.toStringz(defaultProxy), Str.toStringzArray(ignoreHosts));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSimpleProxyResolver*) p, true);
+		this(cast(GSimpleProxyResolver*) __p, true);
 	}
 
 	/**

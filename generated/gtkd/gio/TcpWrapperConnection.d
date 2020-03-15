@@ -94,14 +94,14 @@ public class TcpWrapperConnection : TcpConnection
 	 */
 	public this(IOStream baseIoStream, Socket socket)
 	{
-		auto p = g_tcp_wrapper_connection_new((baseIoStream is null) ? null : baseIoStream.getIOStreamStruct(), (socket is null) ? null : socket.getSocketStruct());
+		auto __p = g_tcp_wrapper_connection_new((baseIoStream is null) ? null : baseIoStream.getIOStreamStruct(), (socket is null) ? null : socket.getSocketStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTcpWrapperConnection*) p, true);
+		this(cast(GTcpWrapperConnection*) __p, true);
 	}
 
 	/**
@@ -111,13 +111,13 @@ public class TcpWrapperConnection : TcpConnection
 	 */
 	public IOStream getBaseIoStream()
 	{
-		auto p = g_tcp_wrapper_connection_get_base_io_stream(gTcpWrapperConnection);
+		auto __p = g_tcp_wrapper_connection_get_base_io_stream(gTcpWrapperConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p);
 	}
 }

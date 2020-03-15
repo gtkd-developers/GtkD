@@ -75,14 +75,77 @@ public class ArrayG
 	 */
 	public ArrayG appendVals(void* data, uint len)
 	{
-		auto p = g_array_append_vals(gArray, data, len);
+		auto __p = g_array_append_vals(gArray, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
+	}
+
+	/**
+	 * Checks whether @target exists in @array by performing a binary
+	 * search based on the given comparison function @compare_func which
+	 * get pointers to items as arguments. If the element is found, %TRUE
+	 * is returned and the element’s index is returned in @out_match_index
+	 * (if non-%NULL). Otherwise, %FALSE is returned and @out_match_index
+	 * is undefined. If @target exists multiple times in @array, the index
+	 * of the first instance is returned. This search is using a binary
+	 * search, so the @array must absolutely be sorted to return a correct
+	 * result (if not, the function may produce false-negative).
+	 *
+	 * This example defines a comparison function and search an element in a #GArray:
+	 * |[<!-- language="C" -->
+	 * static gint*
+	 * cmpint (gconstpointer a, gconstpointer b)
+	 * {
+	 * const gint *_a = a;
+	 * const gint *_b = b;
+	 *
+	 * return *_a - *_b;
+	 * }
+	 * ...
+	 * gint i = 424242;
+	 * guint matched_index;
+	 * gboolean result = g_array_binary_search (garray, &i, cmpint, &matched_index);
+	 * ...
+	 * ]|
+	 *
+	 * Params:
+	 *     target = a pointer to the item to look up.
+	 *     compareFunc = A #GCompareFunc used to locate @target.
+	 *     outMatchIndex = return location
+	 *         for the index of the element, if found.
+	 *
+	 * Returns: %TRUE if @target is one of the elements of @array, %FALSE otherwise.
+	 *
+	 * Since: 2.62
+	 */
+	public bool binarySearch(void* target, GCompareFunc compareFunc, out uint outMatchIndex)
+	{
+		return g_array_binary_search(gArray, target, compareFunc, &outMatchIndex) != 0;
+	}
+
+	/**
+	 * Create a shallow copy of a #GArray. If the array elements consist of
+	 * pointers to data, the pointers are copied but the actual data is not.
+	 *
+	 * Returns: A copy of @array.
+	 *
+	 * Since: 2.62
+	 */
+	public ArrayG copy()
+	{
+		auto __p = g_array_copy(gArray);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -147,14 +210,14 @@ public class ArrayG
 	 */
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
-		auto p = g_array_insert_vals(gArray, index, data, len);
+		auto __p = g_array_insert_vals(gArray, index, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -173,14 +236,14 @@ public class ArrayG
 	 */
 	public this(bool zeroTerminated, bool clear, uint elementSize)
 	{
-		auto p = g_array_new(zeroTerminated, clear, elementSize);
+		auto __p = g_array_new(zeroTerminated, clear, elementSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GArray*) p);
+		this(cast(GArray*) __p);
 	}
 
 	/**
@@ -201,14 +264,14 @@ public class ArrayG
 	 */
 	public ArrayG prependVals(void* data, uint len)
 	{
-		auto p = g_array_prepend_vals(gArray, data, len);
+		auto __p = g_array_prepend_vals(gArray, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	alias doref = ref_;
@@ -222,14 +285,14 @@ public class ArrayG
 	 */
 	public ArrayG ref_()
 	{
-		auto p = g_array_ref(gArray);
+		auto __p = g_array_ref(gArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -243,14 +306,14 @@ public class ArrayG
 	 */
 	public ArrayG removeIndex(uint index)
 	{
-		auto p = g_array_remove_index(gArray, index);
+		auto __p = g_array_remove_index(gArray, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -266,14 +329,14 @@ public class ArrayG
 	 */
 	public ArrayG removeIndexFast(uint index)
 	{
-		auto p = g_array_remove_index_fast(gArray, index);
+		auto __p = g_array_remove_index_fast(gArray, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -290,14 +353,14 @@ public class ArrayG
 	 */
 	public ArrayG removeRange(uint index, uint length)
 	{
-		auto p = g_array_remove_range(gArray, index, length);
+		auto __p = g_array_remove_range(gArray, index, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -333,14 +396,14 @@ public class ArrayG
 	 */
 	public ArrayG setSize(uint length)
 	{
-		auto p = g_array_set_size(gArray, length);
+		auto __p = g_array_set_size(gArray, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -361,14 +424,14 @@ public class ArrayG
 	 */
 	public static ArrayG sizedNew(bool zeroTerminated, bool clear, uint elementSize, uint reservedSize)
 	{
-		auto p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
+		auto __p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -404,6 +467,40 @@ public class ArrayG
 	public void sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		g_array_sort_with_data(gArray, compareFunc, userData);
+	}
+
+	/**
+	 * Frees the data in the array and resets the size to zero, while
+	 * the underlying array is preserved for use elsewhere and returned
+	 * to the caller.
+	 *
+	 * If the array was created with the @zero_terminate property
+	 * set to %TRUE, the returned data is zero terminated too.
+	 *
+	 * If array elements contain dynamically-allocated memory,
+	 * the array elements should also be freed by the caller.
+	 *
+	 * A short example of use:
+	 * |[<!-- language="C" -->
+	 * ...
+	 * gpointer data;
+	 * gsize data_len;
+	 * data = g_array_steal (some_array, &data_len);
+	 * ...
+	 * ]|
+	 *
+	 * Params:
+	 *     len = pointer to retrieve the number of
+	 *         elements of the original array
+	 *
+	 * Returns: the element data, which should be
+	 *     freed using g_free().
+	 *
+	 * Since: 2.64
+	 */
+	public void* steal(out size_t len)
+	{
+		return g_array_steal(gArray, &len);
 	}
 
 	/**

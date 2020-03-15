@@ -142,14 +142,14 @@ public struct DBusError
 	 */
 	public static ErrorG newForDbusError(string dbusErrorName, string dbusErrorMessage)
 	{
-		auto p = g_dbus_error_new_for_dbus_error(Str.toStringz(dbusErrorName), Str.toStringz(dbusErrorMessage));
+		auto __p = g_dbus_error_new_for_dbus_error(Str.toStringz(dbusErrorName), Str.toStringz(dbusErrorMessage));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ErrorG(cast(GError*) p, true);
+		return new ErrorG(cast(GError*) __p, true);
 	}
 
 	/** */
@@ -166,7 +166,7 @@ public struct DBusError
 	 * an error domain.
 	 *
 	 * Params:
-	 *     errorDomain = A #GQuark for a error domain.
+	 *     errorDomain = A #GQuark for an error domain.
 	 *     errorCode = An error code.
 	 *     dbusErrorName = A D-Bus error name.
 	 *
@@ -219,7 +219,7 @@ public struct DBusError
 	 * Destroys an association previously set up with g_dbus_error_register_error().
 	 *
 	 * Params:
-	 *     errorDomain = A #GQuark for a error domain.
+	 *     errorDomain = A #GQuark for an error domain.
 	 *     errorCode = An error code.
 	 *     dbusErrorName = A D-Bus error name.
 	 *

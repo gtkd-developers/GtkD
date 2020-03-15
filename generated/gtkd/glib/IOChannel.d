@@ -98,19 +98,19 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err);
+		auto __p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_file");
 		}
 
-		this(cast(GIOChannel*) p);
+		this(cast(GIOChannel*) __p);
 	}
 
 	/**
@@ -146,14 +146,14 @@ public class IOChannel
 	 */
 	public this(int fd)
 	{
-		auto p = g_io_channel_unix_new(fd);
+		auto __p = g_io_channel_unix_new(fd);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by unix_new");
 		}
 
-		this(cast(GIOChannel*) p);
+		this(cast(GIOChannel*) __p);
 	}
 
 	/**
@@ -181,14 +181,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_flush(gIOChannel, &err);
+		auto __p = g_io_channel_flush(gIOChannel, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -331,14 +331,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_read_chars(gIOChannel, buf.ptr, cast(size_t)buf.length, &bytesRead, &err);
+		auto __p = g_io_channel_read_chars(gIOChannel, buf.ptr, cast(size_t)buf.length, &bytesRead, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -364,7 +364,7 @@ public class IOChannel
 		size_t length;
 		GError* err = null;
 
-		auto p = g_io_channel_read_line(gIOChannel, &outstrReturn, &length, &terminatorPos, &err);
+		auto __p = g_io_channel_read_line(gIOChannel, &outstrReturn, &length, &terminatorPos, &err);
 
 		if (err !is null)
 		{
@@ -373,7 +373,7 @@ public class IOChannel
 
 		strReturn = Str.toString(outstrReturn, length);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -393,14 +393,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), &terminatorPos, &err);
+		auto __p = g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), &terminatorPos, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -424,7 +424,7 @@ public class IOChannel
 		size_t length;
 		GError* err = null;
 
-		auto p = g_io_channel_read_to_end(gIOChannel, &outstrReturn, &length, &err);
+		auto __p = g_io_channel_read_to_end(gIOChannel, &outstrReturn, &length, &err);
 
 		if (err !is null)
 		{
@@ -433,7 +433,7 @@ public class IOChannel
 
 		strReturn = Str.toString(outstrReturn, length);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -451,14 +451,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_read_unichar(gIOChannel, &thechar, &err);
+		auto __p = g_io_channel_read_unichar(gIOChannel, &thechar, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	alias doref = ref_;
@@ -469,14 +469,14 @@ public class IOChannel
 	 */
 	public IOChannel ref_()
 	{
-		auto p = g_io_channel_ref(gIOChannel);
+		auto __p = g_io_channel_ref(gIOChannel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new IOChannel(cast(GIOChannel*) p, true);
+		return new IOChannel(cast(GIOChannel*) __p, true);
 	}
 
 	/**
@@ -517,14 +517,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_seek_position(gIOChannel, offset, type, &err);
+		auto __p = g_io_channel_seek_position(gIOChannel, offset, type, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -631,14 +631,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_set_encoding(gIOChannel, Str.toStringz(encoding), &err);
+		auto __p = g_io_channel_set_encoding(gIOChannel, Str.toStringz(encoding), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -655,14 +655,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_set_flags(gIOChannel, flags, &err);
+		auto __p = g_io_channel_set_flags(gIOChannel, flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -699,14 +699,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_shutdown(gIOChannel, flush, &err);
+		auto __p = g_io_channel_shutdown(gIOChannel, flush, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -771,14 +771,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), cast(ptrdiff_t)buf.length, &bytesWritten, &err);
+		auto __p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), cast(ptrdiff_t)buf.length, &bytesWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -796,14 +796,14 @@ public class IOChannel
 	{
 		GError* err = null;
 
-		auto p = g_io_channel_write_unichar(gIOChannel, thechar, &err);
+		auto __p = g_io_channel_write_unichar(gIOChannel, thechar, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -871,6 +871,9 @@ public class IOChannel
 	 * given @channel. For example, if condition is #G_IO_IN, the source will
 	 * be dispatched when there's data available for reading.
 	 *
+	 * The callback function invoked by the #GSource should be added with
+	 * g_source_set_callback(), but it has type #GIOFunc (not #GSourceFunc).
+	 *
 	 * g_io_add_watch() is a simpler interface to this same functionality, for
 	 * the case where you want to add the source to the default main loop context
 	 * at the default priority.
@@ -887,13 +890,13 @@ public class IOChannel
 	 */
 	public static Source ioCreateWatch(IOChannel channel, GIOCondition condition)
 	{
-		auto p = g_io_create_watch((channel is null) ? null : channel.getIOChannelStruct(), condition);
+		auto __p = g_io_create_watch((channel is null) ? null : channel.getIOChannelStruct(), condition);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 }

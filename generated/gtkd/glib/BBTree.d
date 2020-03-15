@@ -170,9 +170,9 @@ public class BBTree
 	 *
 	 * Returns: %TRUE if the key was found in the #GTree
 	 */
-	public bool lookupExtended(void* lookupKey, void** origKey, void** value)
+	public bool lookupExtended(void* lookupKey, out void* origKey, out void* value)
 	{
-		return g_tree_lookup_extended(gTree, lookupKey, origKey, value) != 0;
+		return g_tree_lookup_extended(gTree, lookupKey, &origKey, &value) != 0;
 	}
 
 	/**
@@ -197,14 +197,14 @@ public class BBTree
 	 */
 	public BBTree ref_()
 	{
-		auto p = g_tree_ref(gTree);
+		auto __p = g_tree_ref(gTree);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new BBTree(cast(GTree*) p);
+		return new BBTree(cast(GTree*) __p);
 	}
 
 	/**
@@ -337,14 +337,14 @@ public class BBTree
 	 */
 	public this(GCompareFunc keyCompareFunc)
 	{
-		auto p = g_tree_new(keyCompareFunc);
+		auto __p = g_tree_new(keyCompareFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTree*) p);
+		this(cast(GTree*) __p);
 	}
 
 	/**
@@ -368,14 +368,14 @@ public class BBTree
 	 */
 	public this(GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
-		auto p = g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc);
+		auto __p = g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GTree*) p);
+		this(cast(GTree*) __p);
 	}
 
 	/**
@@ -392,13 +392,13 @@ public class BBTree
 	 */
 	public this(GCompareDataFunc keyCompareFunc, void* keyCompareData)
 	{
-		auto p = g_tree_new_with_data(keyCompareFunc, keyCompareData);
+		auto __p = g_tree_new_with_data(keyCompareFunc, keyCompareData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_data");
 		}
 
-		this(cast(GTree*) p);
+		this(cast(GTree*) __p);
 	}
 }

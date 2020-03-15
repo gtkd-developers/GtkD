@@ -265,14 +265,14 @@ public class VariantType
 	 */
 	public this(string typeString)
 	{
-		auto p = g_variant_type_new(Str.toStringz(typeString));
+		auto __p = g_variant_type_new(Str.toStringz(typeString));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GVariantType*) p);
+		this(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -292,14 +292,14 @@ public class VariantType
 	 */
 	public this(VariantType element)
 	{
-		auto p = g_variant_type_new_array((element is null) ? null : element.getVariantTypeStruct());
+		auto __p = g_variant_type_new_array((element is null) ? null : element.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_array");
 		}
 
-		this(cast(GVariantType*) p);
+		this(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -320,14 +320,14 @@ public class VariantType
 	 */
 	public this(VariantType key, VariantType value)
 	{
-		auto p = g_variant_type_new_dict_entry((key is null) ? null : key.getVariantTypeStruct(), (value is null) ? null : value.getVariantTypeStruct());
+		auto __p = g_variant_type_new_dict_entry((key is null) ? null : key.getVariantTypeStruct(), (value is null) ? null : value.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_dict_entry");
 		}
 
-		this(cast(GVariantType*) p);
+		this(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -355,14 +355,14 @@ public class VariantType
 			itemsArray[i] = items[i].getVariantTypeStruct();
 		}
 
-		auto p = g_variant_type_new_tuple(itemsArray.ptr, cast(int)items.length);
+		auto __p = g_variant_type_new_tuple(itemsArray.ptr, cast(int)items.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_tuple");
 		}
 
-		this(cast(GVariantType*) p);
+		this(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -375,14 +375,14 @@ public class VariantType
 	 */
 	public VariantType copy()
 	{
-		auto p = g_variant_type_copy(gVariantType);
+		auto __p = g_variant_type_copy(gVariantType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p, true);
+		return new VariantType(cast(GVariantType*) __p, true);
 	}
 
 	/**
@@ -413,14 +413,14 @@ public class VariantType
 	 */
 	public VariantType element()
 	{
-		auto p = g_variant_type_element(gVariantType);
+		auto __p = g_variant_type_element(gVariantType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -469,14 +469,14 @@ public class VariantType
 	 */
 	public VariantType first()
 	{
-		auto p = g_variant_type_first(gVariantType);
+		auto __p = g_variant_type_first(gVariantType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -697,14 +697,14 @@ public class VariantType
 	 */
 	public VariantType key()
 	{
-		auto p = g_variant_type_key(gVariantType);
+		auto __p = g_variant_type_key(gVariantType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -746,14 +746,14 @@ public class VariantType
 	 */
 	public VariantType next()
 	{
-		auto p = g_variant_type_next(gVariantType);
+		auto __p = g_variant_type_next(gVariantType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -783,27 +783,27 @@ public class VariantType
 	 */
 	public VariantType value()
 	{
-		auto p = g_variant_type_value(gVariantType);
+		auto __p = g_variant_type_value(gVariantType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/** */
 	public static VariantType checked(string arg0)
 	{
-		auto p = g_variant_type_checked_(Str.toStringz(arg0));
+		auto __p = g_variant_type_checked_(Str.toStringz(arg0));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/** */
@@ -857,10 +857,10 @@ public class VariantType
 	{
 		char* outendptr = null;
 
-		auto p = g_variant_type_string_scan(Str.toStringz(string_), Str.toStringz(limit), &outendptr) != 0;
+		auto __p = g_variant_type_string_scan(Str.toStringz(string_), Str.toStringz(limit), &outendptr) != 0;
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 }

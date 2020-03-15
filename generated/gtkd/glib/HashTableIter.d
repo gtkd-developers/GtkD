@@ -35,6 +35,9 @@ public  import gtkc.glibtypes;
  * to iterate over the elements of a #GHashTable. GHashTableIter
  * structures are typically allocated on the stack and then initialized
  * with g_hash_table_iter_init().
+ * 
+ * The iteration order of a #GHashTableIter over the keys/values in a hash
+ * table is not defined.
  */
 public class HashTableIter
 {
@@ -75,20 +78,24 @@ public class HashTableIter
 	 */
 	public HashTable getHashTable()
 	{
-		auto p = g_hash_table_iter_get_hash_table(gHashTableIter);
+		auto __p = g_hash_table_iter_get_hash_table(gHashTableIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new HashTable(cast(GHashTable*) p);
+		return new HashTable(cast(GHashTable*) __p);
 	}
 
 	/**
 	 * Initializes a key/value pair iterator and associates it with
 	 * @hash_table. Modifying the hash table after calling this function
 	 * invalidates the returned iterator.
+	 *
+	 * The iteration order of a #GHashTableIter over the keys/values in a hash
+	 * table is not defined.
+	 *
 	 * |[<!-- language="C" -->
 	 * GHashTableIter iter;
 	 * gpointer key, value;

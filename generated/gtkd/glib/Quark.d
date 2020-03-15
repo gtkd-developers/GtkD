@@ -40,6 +40,10 @@ public struct Quark
 	 * using strcmp(). g_intern_static_string() does not copy the string,
 	 * therefore @string must not be freed or modified.
 	 *
+	 * This function must not be used before library constructors have finished
+	 * running. In particular, this means it cannot be used to initialize global
+	 * variables in C++.
+	 *
 	 * Params:
 	 *     string_ = a static string
 	 *
@@ -56,6 +60,10 @@ public struct Quark
 	 * Returns a canonical representation for @string. Interned strings
 	 * can be compared for equality by comparing the pointers, instead of
 	 * using strcmp().
+	 *
+	 * This function must not be used before library constructors have finished
+	 * running. In particular, this means it cannot be used to initialize global
+	 * variables in C++.
 	 *
 	 * Params:
 	 *     string_ = a string
@@ -83,6 +91,10 @@ public struct Quark
 	 * expect to ever unload the module again (e.g. do not use this
 	 * function in GTK+ theme engines).
 	 *
+	 * This function must not be used before library constructors have finished
+	 * running. In particular, this means it cannot be used to initialize global
+	 * variables in C++.
+	 *
 	 * Params:
 	 *     string_ = a string
 	 *
@@ -97,6 +109,10 @@ public struct Quark
 	 * Gets the #GQuark identifying the given string. If the string does
 	 * not currently have an associated #GQuark, a new #GQuark is created,
 	 * using a copy of the string.
+	 *
+	 * This function must not be used before library constructors have finished
+	 * running. In particular, this means it cannot be used to initialize global
+	 * variables in C++.
 	 *
 	 * Params:
 	 *     string_ = a string
@@ -127,6 +143,9 @@ public struct Quark
 	 *
 	 * If you want the GQuark to be created if it doesn't already exist,
 	 * use g_quark_from_string() or g_quark_from_static_string().
+	 *
+	 * This function must not be used before library constructors have finished
+	 * running.
 	 *
 	 * Params:
 	 *     string_ = a string

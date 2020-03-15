@@ -126,13 +126,13 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	 */
 	public static DBusActionGroup get(DBusConnection connection, string busName, string objectPath)
 	{
-		auto p = g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		auto __p = g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusActionGroup)(cast(GDBusActionGroup*) p, true);
+		return ObjectG.getDObject!(DBusActionGroup)(cast(GDBusActionGroup*) __p, true);
 	}
 }

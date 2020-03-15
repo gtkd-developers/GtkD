@@ -143,14 +143,14 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend getDefault()
 	{
-		auto p = g_settings_backend_get_default();
+		auto __p = g_settings_backend_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 
 	/**
@@ -367,14 +367,14 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend keyfileSettingsBackendNew(string filename, string rootPath, string rootGroup)
 	{
-		auto p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
+		auto __p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 
 	/**
@@ -390,14 +390,14 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend memorySettingsBackendNew()
 	{
-		auto p = g_memory_settings_backend_new();
+		auto __p = g_memory_settings_backend_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 
 	/**
@@ -412,13 +412,13 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend nullSettingsBackendNew()
 	{
-		auto p = g_null_settings_backend_new();
+		auto __p = g_null_settings_backend_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 }

@@ -123,13 +123,13 @@ public class IOModuleScope
 	 */
 	public this(GIOModuleScopeFlags flags)
 	{
-		auto p = g_io_module_scope_new(flags);
+		auto __p = g_io_module_scope_new(flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GIOModuleScope*) p);
+		this(cast(GIOModuleScope*) __p);
 	}
 }

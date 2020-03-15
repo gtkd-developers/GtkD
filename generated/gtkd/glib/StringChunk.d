@@ -194,13 +194,13 @@ public class StringChunk
 	 */
 	public this(size_t size)
 	{
-		auto p = g_string_chunk_new(size);
+		auto __p = g_string_chunk_new(size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GStringChunk*) p);
+		this(cast(GStringChunk*) __p);
 	}
 }

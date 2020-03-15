@@ -275,8 +275,8 @@ public struct Util
 	 * Params:
 	 *     program = a program name in the GLib file name encoding
 	 *
-	 * Returns: a newly-allocated string with the absolute path,
-	 *     or %NULL
+	 * Returns: a newly-allocated
+	 *     string with the absolute path, or %NULL
 	 */
 	public static string findProgramInPath(string program)
 	{
@@ -304,8 +304,8 @@ public struct Util
 	 * Params:
 	 *     size = a size in bytes
 	 *
-	 * Returns: a newly-allocated formatted string containing a human readable
-	 *     file size
+	 * Returns: a newly-allocated formatted string containing
+	 *     a human readable file size
 	 *
 	 * Since: 2.30
 	 */
@@ -334,8 +334,8 @@ public struct Util
 	 * Params:
 	 *     size = a size in bytes
 	 *
-	 * Returns: a newly-allocated formatted string containing a human
-	 *     readable file size
+	 * Returns: a newly-allocated formatted string
+	 *     containing a human readable file size
 	 *
 	 * Since: 2.16
 	 */
@@ -357,8 +357,8 @@ public struct Util
 	 *     size = a size in bytes
 	 *     flags = #GFormatSizeFlags to modify the output
 	 *
-	 * Returns: a newly-allocated formatted string containing a human
-	 *     readable file size
+	 * Returns: a newly-allocated formatted string
+	 *     containing a human readable file size
 	 *
 	 * Since: 2.30
 	 */
@@ -379,7 +379,8 @@ public struct Util
 	 * g_get_prgname() (which may be %NULL if g_set_prgname() has also not
 	 * been called).
 	 *
-	 * Returns: human-readable application name. may return %NULL
+	 * Returns: human-readable application
+	 *     name. May return %NULL
 	 *
 	 * Since: 2.2
 	 */
@@ -498,7 +499,8 @@ public struct Util
 	 * #GtkApplication::startup handler. The program name is found by
 	 * taking the last component of @argv[0].
 	 *
-	 * Returns: the name of the program. The returned string belongs
+	 * Returns: the name of the program,
+	 *     or %NULL if it has not been set yet. The returned string belongs
 	 *     to GLib and must not be modified or freed.
 	 */
 	public static string getPrgname()
@@ -630,8 +632,8 @@ public struct Util
 	 * `C:\Documents and Settings\username\Local Settings\Temporary Internet Files`.
 	 * See the [documentation for `CSIDL_INTERNET_CACHE`](https://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx#csidl_internet_cache).
 	 *
-	 * Returns: a string owned by GLib that must not be modified
-	 *     or freed.
+	 * Returns: a string owned by GLib that
+	 *     must not be modified or freed.
 	 *
 	 * Since: 2.6
 	 */
@@ -656,8 +658,8 @@ public struct Util
 	 * Note that in this case on Windows it will be  the same
 	 * as what g_get_user_data_dir() returns.
 	 *
-	 * Returns: a string owned by GLib that must not be modified
-	 *     or freed.
+	 * Returns: a string owned by GLib that
+	 *     must not be modified or freed.
 	 *
 	 * Since: 2.6
 	 */
@@ -682,8 +684,8 @@ public struct Util
 	 * Note that in this case on Windows it will be the same
 	 * as what g_get_user_config_dir() returns.
 	 *
-	 * Returns: a string owned by GLib that must not be modified
-	 *     or freed.
+	 * Returns: a string owned by GLib that must
+	 *     not be modified or freed.
 	 *
 	 * Since: 2.6
 	 */
@@ -1123,6 +1125,32 @@ public struct Util
 	public static string canonicalizeFilename(string filename, string relativeTo)
 	{
 		auto retStr = g_canonicalize_filename(Str.toStringz(filename), Str.toStringz(relativeTo));
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
+	 * Get information about the operating system.
+	 *
+	 * On Linux this comes from the `/etc/os-release` file. On other systems, it may
+	 * come from a variety of sources. You can either use the standard key names
+	 * like %G_OS_INFO_KEY_NAME or pass any UTF-8 string key name. For example,
+	 * `/etc/os-release` provides a number of other less commonly used values that may
+	 * be useful. No key is guaranteed to be provided, so the caller should always
+	 * check if the result is %NULL.
+	 *
+	 * Params:
+	 *     keyName = a key for the OS info being requested, for example %G_OS_INFO_KEY_NAME.
+	 *
+	 * Returns: The associated value for the requested key or %NULL if
+	 *     this information is not provided.
+	 *
+	 * Since: 2.64
+	 */
+	public static string getOsInfo(string keyName)
+	{
+		auto retStr = g_get_os_info(Str.toStringz(keyName));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);

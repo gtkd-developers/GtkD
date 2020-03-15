@@ -214,14 +214,14 @@ public class MenuModel : ObjectG
 	 */
 	public Variant getItemAttributeValue(int itemIndex, string attribute, VariantType expectedType)
 	{
-		auto p = g_menu_model_get_item_attribute_value(gMenuModel, itemIndex, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		auto __p = g_menu_model_get_item_attribute_value(gMenuModel, itemIndex, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -241,14 +241,14 @@ public class MenuModel : ObjectG
 	 */
 	public MenuModel getItemLink(int itemIndex, string link)
 	{
-		auto p = g_menu_model_get_item_link(gMenuModel, itemIndex, Str.toStringz(link));
+		auto __p = g_menu_model_get_item_link(gMenuModel, itemIndex, Str.toStringz(link));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p, true);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p, true);
 	}
 
 	/**
@@ -323,14 +323,14 @@ public class MenuModel : ObjectG
 	 */
 	public MenuAttributeIter iterateItemAttributes(int itemIndex)
 	{
-		auto p = g_menu_model_iterate_item_attributes(gMenuModel, itemIndex);
+		auto __p = g_menu_model_iterate_item_attributes(gMenuModel, itemIndex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuAttributeIter)(cast(GMenuAttributeIter*) p, true);
+		return ObjectG.getDObject!(MenuAttributeIter)(cast(GMenuAttributeIter*) __p, true);
 	}
 
 	/**
@@ -348,14 +348,14 @@ public class MenuModel : ObjectG
 	 */
 	public MenuLinkIter iterateItemLinks(int itemIndex)
 	{
-		auto p = g_menu_model_iterate_item_links(gMenuModel, itemIndex);
+		auto __p = g_menu_model_iterate_item_links(gMenuModel, itemIndex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuLinkIter)(cast(GMenuLinkIter*) p, true);
+		return ObjectG.getDObject!(MenuLinkIter)(cast(GMenuLinkIter*) __p, true);
 	}
 
 	/**

@@ -404,14 +404,14 @@ public class ObjectG
 	 */
 	public this(GType objectType, string firstPropertyName, void* varArgs)
 	{
-		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
+		auto __p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(GObject*) p, true);
+		this(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -442,14 +442,14 @@ public class ObjectG
 			valuesArray[i] = *(values[i].getValueStruct());
 		}
 
-		auto p = g_object_new_with_properties(objectType, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
+		auto __p = g_object_new_with_properties(objectType, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_properties");
 		}
 
-		this(cast(GObject*) p, true);
+		this(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -472,14 +472,14 @@ public class ObjectG
 	 */
 	public this(GType objectType, GParameter[] parameters)
 	{
-		auto p = g_object_newv(objectType, cast(uint)parameters.length, parameters.ptr);
+		auto __p = g_object_newv(objectType, cast(uint)parameters.length, parameters.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
 
-		this(cast(GObject*) p, true);
+		this(cast(GObject*) __p, true);
 	}
 
 	/** */
@@ -508,14 +508,14 @@ public class ObjectG
 	 */
 	public static ParamSpec interfaceFindProperty(TypeInterface gIface, string propertyName)
 	{
-		auto p = g_object_interface_find_property((gIface is null) ? null : gIface.getTypeInterfaceStruct(), Str.toStringz(propertyName));
+		auto __p = g_object_interface_find_property((gIface is null) ? null : gIface.getTypeInterfaceStruct(), Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -571,9 +571,9 @@ public class ObjectG
 	{
 		uint nPropertiesP;
 
-		auto p = g_object_interface_list_properties((gIface is null) ? null : gIface.getTypeInterfaceStruct(), &nPropertiesP);
+		auto __p = g_object_interface_list_properties((gIface is null) ? null : gIface.getTypeInterfaceStruct(), &nPropertiesP);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -581,7 +581,7 @@ public class ObjectG
 		ParamSpec[] arr = new ParamSpec[nPropertiesP];
 		for(int i = 0; i < nPropertiesP; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;
@@ -688,14 +688,14 @@ public class ObjectG
 	 */
 	public Binding bindProperty(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags)
 	{
-		auto p = g_object_bind_property(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags);
+		auto __p = g_object_bind_property(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) __p);
 	}
 
 	/**
@@ -747,14 +747,14 @@ public class ObjectG
 	 */
 	public Binding bindPropertyFull(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, void* userData, GDestroyNotify notify)
 	{
-		auto p = g_object_bind_property_full(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, transformTo, transformFrom, userData, notify);
+		auto __p = g_object_bind_property_full(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, transformTo, transformFrom, userData, notify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) __p);
 	}
 
 	/**
@@ -784,14 +784,14 @@ public class ObjectG
 	 */
 	public Binding bindPropertyWithClosures(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, Closure transformTo, Closure transformFrom)
 	{
-		auto p = g_object_bind_property_with_closures(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
+		auto __p = g_object_bind_property_with_closures(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) __p);
 	}
 
 	/**
@@ -1081,14 +1081,14 @@ public class ObjectG
 	 */
 	public ObjectG ref_()
 	{
-		auto p = g_object_ref(gObject);
+		auto __p = g_object_ref(gObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -1110,14 +1110,14 @@ public class ObjectG
 	 */
 	public ObjectG refSink()
 	{
-		auto p = g_object_ref_sink(gObject);
+		auto __p = g_object_ref_sink(gObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**

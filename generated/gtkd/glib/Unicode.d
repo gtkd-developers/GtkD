@@ -61,14 +61,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_ucs4_to_utf16(str, len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_ucs4_to_utf16(str, len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -167,9 +167,9 @@ public struct Unicode
 	 *
 	 * Since: 2.30
 	 */
-	public static bool unicharCompose(dchar a, dchar b, dchar* ch)
+	public static bool unicharCompose(dchar a, dchar b, out dchar ch)
 	{
-		return g_unichar_compose(a, b, ch) != 0;
+		return g_unichar_compose(a, b, &ch) != 0;
 	}
 
 	/**
@@ -206,9 +206,9 @@ public struct Unicode
 	 *
 	 * Since: 2.30
 	 */
-	public static bool unicharDecompose(dchar ch, dchar* a, dchar* b)
+	public static bool unicharDecompose(dchar ch, out dchar a, out dchar b)
 	{
-		return g_unichar_decompose(ch, a, b) != 0;
+		return g_unichar_decompose(ch, &a, &b) != 0;
 	}
 
 	/**
@@ -257,9 +257,9 @@ public struct Unicode
 	 *
 	 * Since: 2.30
 	 */
-	public static size_t unicharFullyDecompose(dchar ch, bool compat, dchar* result, size_t resultLen)
+	public static size_t unicharFullyDecompose(dchar ch, bool compat, out dchar result, size_t resultLen)
 	{
-		return g_unichar_fully_decompose(ch, compat, result, resultLen);
+		return g_unichar_fully_decompose(ch, compat, &result, resultLen);
 	}
 
 	/**
@@ -644,7 +644,7 @@ public struct Unicode
 	 *     c = a Unicode character
 	 *
 	 * Returns: the result of converting @c to uppercase.
-	 *     If @c is not an lowercase or titlecase character,
+	 *     If @c is not a lowercase or titlecase character,
 	 *     or has no upper case equivalent @c is returned unchanged.
 	 */
 	public static dchar unicharToupper(dchar c)
@@ -804,14 +804,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_utf16_to_ucs4(str, len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_utf16_to_ucs4(str, len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -988,10 +988,7 @@ public struct Unicode
 	 */
 	public static string utf8FindNextChar(string p, string end)
 	{
-		auto retStr = g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end)));
 	}
 
 	/**
@@ -1011,10 +1008,7 @@ public struct Unicode
 	 */
 	public static string utf8FindPrevChar(string str, string p)
 	{
-		auto retStr = g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p)));
 	}
 
 	/**
@@ -1092,9 +1086,9 @@ public struct Unicode
 	 *     len = length of @str, in bytes, or -1 if @str is nul-terminated.
 	 *     mode = the type of normalization to perform.
 	 *
-	 * Returns: a newly allocated string, that is the
-	 *     normalized form of @str, or %NULL if @str is not
-	 *     valid UTF-8.
+	 * Returns: a newly allocated string, that
+	 *     is the normalized form of @str, or %NULL if @str
+	 *     is not valid UTF-8.
 	 */
 	public static string utf8Normalize(string str, ptrdiff_t len, GNormalizeMode mode)
 	{
@@ -1127,14 +1121,11 @@ public struct Unicode
 	 */
 	public static string utf8OffsetToPointer(string str, glong offset)
 	{
-		auto retStr = g_utf8_offset_to_pointer(Str.toStringz(str), offset);
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset));
 	}
 
 	/**
-	 * Converts from a pointer to position within a string to a integer
+	 * Converts from a pointer to position within a string to an integer
 	 * character offset.
 	 *
 	 * Since 2.10, this function allows @pos to be before @str, and returns
@@ -1166,10 +1157,7 @@ public struct Unicode
 	 */
 	public static string utf8PrevChar(string p)
 	{
-		auto retStr = g_utf8_prev_char(Str.toStringz(p));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(g_utf8_prev_char(Str.toStringz(p)));
 	}
 
 	/**
@@ -1188,10 +1176,7 @@ public struct Unicode
 	 */
 	public static string utf8Strchr(string p, ptrdiff_t len, dchar c)
 	{
-		auto retStr = g_utf8_strchr(Str.toStringz(p), len, c);
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(g_utf8_strchr(Str.toStringz(p), len, c));
 	}
 
 	/**
@@ -1253,10 +1238,7 @@ public struct Unicode
 	 */
 	public static string utf8Strncpy(string dest, string src, size_t n)
 	{
-		auto retStr = g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n);
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n));
 	}
 
 	/**
@@ -1275,10 +1257,7 @@ public struct Unicode
 	 */
 	public static string utf8Strrchr(string p, ptrdiff_t len, dchar c)
 	{
-		auto retStr = g_utf8_strrchr(Str.toStringz(p), len, c);
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(g_utf8_strrchr(Str.toStringz(p), len, c));
 	}
 
 	/**
@@ -1386,14 +1365,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_utf8_to_ucs4(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_utf8_to_ucs4(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1444,14 +1423,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_utf8_to_utf16(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_utf8_to_utf16(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1481,11 +1460,11 @@ public struct Unicode
 	{
 		char* outend = null;
 
-		auto p = g_utf8_validate(Str.toStringz(str), cast(ptrdiff_t)str.length, &outend) != 0;
+		auto __p = g_utf8_validate(Str.toStringz(str), cast(ptrdiff_t)str.length, &outend) != 0;
 
 		end = Str.toString(outend);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1534,10 +1513,10 @@ public struct Unicode
 	{
 		char* outend = null;
 
-		auto p = g_utf8_validate_len(Str.toStringz(str), cast(size_t)str.length, &outend) != 0;
+		auto __p = g_utf8_validate_len(Str.toStringz(str), cast(size_t)str.length, &outend) != 0;
 
 		end = Str.toString(outend);
 
-		return p;
+		return __p;
 	}
 }

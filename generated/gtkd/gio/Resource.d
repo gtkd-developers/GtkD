@@ -68,7 +68,7 @@ private import gtkd.Loader;
  * 
  * `to-pixdata` which will use the gdk-pixbuf-pixdata command to convert
  * images to the GdkPixdata format, which allows you to create pixbufs directly using the data inside
- * the resource file, rather than an (uncompressed) copy if it. For this, the gdk-pixbuf-pixdata
+ * the resource file, rather than an (uncompressed) copy of it. For this, the gdk-pixbuf-pixdata
  * program must be in the PATH, or the `GDK_PIXBUF_PIXDATA` environment variable must be
  * set to the full path to the gdk-pixbuf-pixdata executable; otherwise the resource compiler will
  * abort.
@@ -236,19 +236,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_new_from_data((data is null) ? null : data.getBytesStruct(), &err);
+		auto __p = g_resource_new_from_data((data is null) ? null : data.getBytesStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
 
-		this(cast(GResource*) p);
+		this(cast(GResource*) __p);
 	}
 
 	/**
@@ -338,14 +338,14 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_get_info(gResource, Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
+		auto __p = g_resource_get_info(gResource, Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -379,19 +379,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_lookup_data(gResource, Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resource_lookup_data(gResource, Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -415,19 +415,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_open_stream(gResource, Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resource_open_stream(gResource, Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -441,14 +441,14 @@ public class Resource
 	 */
 	public Resource ref_()
 	{
-		auto p = g_resource_ref(gResource);
+		auto __p = g_resource_ref(gResource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) __p, true);
 	}
 
 	/**
@@ -489,19 +489,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_load(Str.toStringz(filename), &err);
+		auto __p = g_resource_load(Str.toStringz(filename), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) __p, true);
 	}
 
 	/**
@@ -561,14 +561,14 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resources_get_info(Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
+		auto __p = g_resources_get_info(Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -602,19 +602,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resources_lookup_data(Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resources_lookup_data(Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -639,18 +639,18 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resources_open_stream(Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resources_open_stream(Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 }

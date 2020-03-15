@@ -160,14 +160,14 @@ public template ListModelT(TStruct)
 	 */
 	public ObjectG getObject(uint position)
 	{
-		auto p = g_list_model_get_object(getListModelStruct(), position);
+		auto __p = g_list_model_get_object(getListModelStruct(), position);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -205,9 +205,12 @@ public template ListModelT(TStruct)
 	}
 
 	/**
-	 * This signal is emitted whenever items were added or removed to
-	 * @list. At @position, @removed items were removed and @added items
-	 * were added in their place.
+	 * This signal is emitted whenever items were added to or removed
+	 * from @list. At @position, @removed items were removed and @added
+	 * items were added in their place.
+	 *
+	 * Note: If @removed != @added, the positions of all later items
+	 * in the model change.
 	 *
 	 * Params:
 	 *     position = the position at which @list changed

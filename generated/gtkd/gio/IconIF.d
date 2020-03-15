@@ -92,14 +92,14 @@ public interface IconIF{
 	 */
 	public static IconIF deserialize(Variant value)
 	{
-		auto p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
+		auto __p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**

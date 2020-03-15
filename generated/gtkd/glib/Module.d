@@ -162,7 +162,7 @@ public class Module
 	 * archive) it tries to open the corresponding module. If that fails
 	 * and it doesn't have the proper module suffix for the platform
 	 * (#G_MODULE_SUFFIX), this suffix will be appended and the corresponding
-	 * module will be opended. If that fails and @file_name doesn't have the
+	 * module will be opened. If that fails and @file_name doesn't have the
 	 * ".la"-suffix, this suffix is appended and g_module_open() tries to open
 	 * the corresponding module. If eventually that fails as well, %NULL is
 	 * returned.
@@ -177,14 +177,14 @@ public class Module
 	 */
 	public static Module open(string fileName, GModuleFlags flags)
 	{
-		auto p = g_module_open(Str.toStringz(fileName), flags);
+		auto __p = g_module_open(Str.toStringz(fileName), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Module(cast(GModule*) p);
+		return new Module(cast(GModule*) __p);
 	}
 
 	/**

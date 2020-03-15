@@ -161,14 +161,14 @@ public final class DBusArgInfo
 	 */
 	public DBusArgInfo ref_()
 	{
-		auto p = g_dbus_arg_info_ref(gDBusArgInfo);
+		auto __p = g_dbus_arg_info_ref(gDBusArgInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusArgInfo)(cast(GDBusArgInfo*) p, true);
+		return ObjectG.getDObject!(DBusArgInfo)(cast(GDBusArgInfo*) __p, true);
 	}
 
 	/**

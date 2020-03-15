@@ -112,14 +112,14 @@ public class Bytes
 	 */
 	public this(ubyte[] data)
 	{
-		auto p = g_bytes_new(data.ptr, cast(size_t)data.length);
+		auto __p = g_bytes_new(data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GBytes*) p);
+		this(cast(GBytes*) __p);
 	}
 
 	/**
@@ -146,14 +146,14 @@ public class Bytes
 	 */
 	public this(ubyte[] data, GDestroyNotify freeFunc, void* userData)
 	{
-		auto p = g_bytes_new_with_free_func(data.ptr, cast(size_t)data.length, freeFunc, userData);
+		auto __p = g_bytes_new_with_free_func(data.ptr, cast(size_t)data.length, freeFunc, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_free_func");
 		}
 
-		this(cast(GBytes*) p);
+		this(cast(GBytes*) __p);
 	}
 
 	/**
@@ -217,9 +217,9 @@ public class Bytes
 	{
 		size_t size;
 
-		auto p = g_bytes_get_data(gBytes, &size);
+		auto __p = g_bytes_get_data(gBytes, &size);
 
-		return cast(ubyte[])p[0 .. size];
+		return cast(ubyte[])__p[0 .. size];
 	}
 
 	/**
@@ -274,14 +274,14 @@ public class Bytes
 	 */
 	public Bytes newFromBytes(size_t offset, size_t length)
 	{
-		auto p = g_bytes_new_from_bytes(gBytes, offset, length);
+		auto __p = g_bytes_new_from_bytes(gBytes, offset, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -294,14 +294,14 @@ public class Bytes
 	 */
 	public Bytes ref_()
 	{
-		auto p = g_bytes_ref(gBytes);
+		auto __p = g_bytes_ref(gBytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -330,14 +330,14 @@ public class Bytes
 	 */
 	public ByteArray unrefToArray()
 	{
-		auto p = g_bytes_unref_to_array(gBytes);
+		auto __p = g_bytes_unref_to_array(gBytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p, true);
+		return new ByteArray(cast(GByteArray*) __p, true);
 	}
 
 	/**
@@ -358,8 +358,8 @@ public class Bytes
 	{
 		size_t size;
 
-		auto p = g_bytes_unref_to_data(gBytes, &size);
+		auto __p = g_bytes_unref_to_data(gBytes, &size);
 
-		return cast(ubyte[])p[0 .. size];
+		return cast(ubyte[])__p[0 .. size];
 	}
 }

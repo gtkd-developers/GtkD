@@ -83,14 +83,14 @@ public class FilenameCompleter : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_filename_completer_new();
+		auto __p = g_filename_completer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GFilenameCompleter*) p, true);
+		this(cast(GFilenameCompleter*) __p, true);
 	}
 
 	/**

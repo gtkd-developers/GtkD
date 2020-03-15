@@ -199,14 +199,14 @@ public final class Node
 	 */
 	public Node copy()
 	{
-		auto p = g_node_copy(gNode);
+		auto __p = g_node_copy(gNode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -223,14 +223,14 @@ public final class Node
 	 */
 	public Node copyDeep(GCopyFunc copyFunc, void* data)
 	{
-		auto p = g_node_copy_deep(gNode, copyFunc, data);
+		auto __p = g_node_copy_deep(gNode, copyFunc, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -269,14 +269,14 @@ public final class Node
 	 */
 	public Node find(GTraverseType order, GTraverseFlags flags, void* data)
 	{
-		auto p = g_node_find(gNode, order, flags, data);
+		auto __p = g_node_find(gNode, order, flags, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -291,14 +291,14 @@ public final class Node
 	 */
 	public Node findChild(GTraverseFlags flags, void* data)
 	{
-		auto p = g_node_find_child(gNode, flags, data);
+		auto __p = g_node_find_child(gNode, flags, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -309,14 +309,14 @@ public final class Node
 	 */
 	public Node firstSibling()
 	{
-		auto p = g_node_first_sibling(gNode);
+		auto __p = g_node_first_sibling(gNode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -326,14 +326,14 @@ public final class Node
 	 */
 	public Node getRoot()
 	{
-		auto p = g_node_get_root(gNode);
+		auto __p = g_node_get_root(gNode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -348,14 +348,14 @@ public final class Node
 	 */
 	public Node insert(int position, Node node)
 	{
-		auto p = g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct());
+		auto __p = g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -370,14 +370,14 @@ public final class Node
 	 */
 	public Node insertAfter(Node sibling, Node node)
 	{
-		auto p = g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
+		auto __p = g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -392,14 +392,14 @@ public final class Node
 	 */
 	public Node insertBefore(Node sibling, Node node)
 	{
-		auto p = g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
+		auto __p = g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -424,14 +424,14 @@ public final class Node
 	 */
 	public Node lastChild()
 	{
-		auto p = g_node_last_child(gNode);
+		auto __p = g_node_last_child(gNode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -442,14 +442,14 @@ public final class Node
 	 */
 	public Node lastSibling()
 	{
-		auto p = g_node_last_sibling(gNode);
+		auto __p = g_node_last_sibling(gNode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -502,14 +502,14 @@ public final class Node
 	 */
 	public Node nthChild(uint n)
 	{
-		auto p = g_node_nth_child(gNode, n);
+		auto __p = g_node_nth_child(gNode, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -522,14 +522,14 @@ public final class Node
 	 */
 	public Node prepend(Node node)
 	{
-		auto p = g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct());
+		auto __p = g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Node(cast(GNode*) p);
+		return new Node(cast(GNode*) __p);
 	}
 
 	/**
@@ -585,13 +585,13 @@ public final class Node
 	 */
 	public this(void* data)
 	{
-		auto p = g_node_new(data);
+		auto __p = g_node_new(data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GNode*) p);
+		this(cast(GNode*) __p);
 	}
 }

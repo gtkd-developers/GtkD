@@ -94,14 +94,14 @@ public class UnixCredentialsMessage : SocketControlMessage
 	 */
 	public this()
 	{
-		auto p = g_unix_credentials_message_new();
+		auto __p = g_unix_credentials_message_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GUnixCredentialsMessage*) p, true);
+		this(cast(GUnixCredentialsMessage*) __p, true);
 	}
 
 	/**
@@ -118,14 +118,14 @@ public class UnixCredentialsMessage : SocketControlMessage
 	 */
 	public this(Credentials credentials)
 	{
-		auto p = g_unix_credentials_message_new_with_credentials((credentials is null) ? null : credentials.getCredentialsStruct());
+		auto __p = g_unix_credentials_message_new_with_credentials((credentials is null) ? null : credentials.getCredentialsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_credentials");
 		}
 
-		this(cast(GUnixCredentialsMessage*) p, true);
+		this(cast(GUnixCredentialsMessage*) __p, true);
 	}
 
 	/**
@@ -149,13 +149,13 @@ public class UnixCredentialsMessage : SocketControlMessage
 	 */
 	public Credentials getCredentials()
 	{
-		auto p = g_unix_credentials_message_get_credentials(gUnixCredentialsMessage);
+		auto __p = g_unix_credentials_message_get_credentials(gUnixCredentialsMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) __p);
 	}
 }
