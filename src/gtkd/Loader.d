@@ -42,41 +42,9 @@ public struct Linker
 	 *     symbol    = The name of the symbol to link
 	 *     libraries = One or more libraries to search for the symbol
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
-	public static void link(T)(ref T funct, string symbol, LIBRARY[] libraries ...)
-	{
-		funct = cast(T)getSymbol(symbol, libraries);
-	}
-
-	/*
-	 * Links the provided symbol
-	 * Params:
-	 *     funct     = The function we are linking
-	 *     symbol    = The name of the symbol to link
-	 *     libraries = One or more libraries to search for the symbol
-	 */
 	public static void link(T)(ref T funct, string symbol, const string[] libraries ...)
 	{
 		funct = cast(T)getSymbol(symbol, libraries);
-	}
-
-	/*
-	 * Gets a simbol from one of the provided libraries
-	 * Params:
-	 *     symbol    = The name of the symbol to link
-	 *     libraries = One or more libraries to search for the symbol
-	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
-	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
-	{
-		string[] libStr = new string[libraries.length];
-
-		foreach (i, library; libraries )
-		{
-			libStr[i] = importLibs[library];
-		}
-
-		return getSymbol(symbol, libStr);
 	}
 
 	/*
@@ -141,15 +109,6 @@ public struct Linker
 	/*
 	 * Unload a library
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
-	public static void unloadLibrary(LIBRARY library)
-	{
-		unloadLibrary( importLibs[library] );
-	}
-
-	/*
-	 * Unload a library
-	 */
 	public static void unloadLibrary(string library)
 	{
 		pUnloadLibrary(loadedLibraries[library]);
@@ -199,16 +158,6 @@ public struct Linker
 	 * Checks if a library is loaded.
 	 * Returns: true is the library was loaded sucsessfully.
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
-	public static bool isLoaded(LIBRARY library)
-	{
-		return isLoaded(importLibs[library]);
-	}
-
-	/**
-	 * Checks if a library is loaded.
-	 * Returns: true is the library was loaded sucsessfully.
-	 */
 	public static bool isLoaded(string library)
 	{
 		if ( library in loadedLibraries )
@@ -221,17 +170,6 @@ public struct Linker
 	public static bool isLoaded(const string[] libraries)
 	{
 		return isLoaded(libraries[0]);
-	}
-
-	/**
-	 * Gets all the failed loads for a specific library.
-	 * returns: An array of the names hat failed to load for a specific library
-	 *          or null if none was found
-	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
-	public static string[] getLoadFailures(LIBRARY library)
-	{
-		return getLoadFailures(importLibs[library]);
 	}
 
 	/**
@@ -278,6 +216,68 @@ public struct Linker
 	{
 		foreach ( library; loadedLibraries.keys )
 			unloadLibrary(library);
+	}
+
+		/*
+	 * Links the provided symbol
+	 * Params:
+	 *     funct     = The function we are linking
+	 *     symbol    = The name of the symbol to link
+	 *     libraries = One or more libraries to search for the symbol
+	 */
+	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	public static void link(T)(ref T funct, string symbol, LIBRARY[] libraries ...)
+	{
+		funct = cast(T)getSymbol(symbol, libraries);
+	}
+
+	/*
+	 * Gets a simbol from one of the provided libraries
+	 * Params:
+	 *     symbol    = The name of the symbol to link
+	 *     libraries = One or more libraries to search for the symbol
+	 */
+	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
+	{
+		string[] libStr = new string[libraries.length];
+
+		foreach (i, library; libraries )
+		{
+			libStr[i] = importLibs[library];
+		}
+
+		return getSymbol(symbol, libStr);
+	}
+
+	/*
+	 * Unload a library
+	 */
+	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	public static void unloadLibrary(LIBRARY library)
+	{
+		unloadLibrary( importLibs[library] );
+	}
+
+	/**
+	 * Checks if a library is loaded.
+	 * Returns: true is the library was loaded sucsessfully.
+	 */
+	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	public static bool isLoaded(LIBRARY library)
+	{
+		return isLoaded(importLibs[library]);
+	}
+
+	/**
+	 * Gets all the failed loads for a specific library.
+	 * returns: An array of the names hat failed to load for a specific library
+	 *          or null if none was found
+	 */
+	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	public static string[] getLoadFailures(LIBRARY library)
+	{
+		return getLoadFailures(importLibs[library]);
 	}
 }
 
