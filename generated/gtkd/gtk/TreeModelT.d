@@ -273,6 +273,9 @@ public template TreeModelT(TStruct)
 	 */
 	public int getIter(TreeIter iter, TreePath path)
 	{
+		if ( iter is null )
+			iter = new TreeIter();
+
 		iter.setModel(this);
 		return gtk_tree_model_get_iter(
 			getTreeModelStruct(),
