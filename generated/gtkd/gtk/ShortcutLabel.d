@@ -27,18 +27,16 @@ module gtk.ShortcutLabel;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtk.Box;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * #GtkShortcutLabel is a widget that represents a single keyboard shortcut or gesture
  * in the user interface.
  */
-public class ShortcutLabel : Box
+public class ShortcutLabel : Widget
 {
 	/** the main Gtk struct */
 	protected GtkShortcutLabel* gtkShortcutLabel;
@@ -63,7 +61,7 @@ public class ShortcutLabel : Box
 	public this (GtkShortcutLabel* gtkShortcutLabel, bool ownedRef = false)
 	{
 		this.gtkShortcutLabel = gtkShortcutLabel;
-		super(cast(GtkBox*)gtkShortcutLabel, ownedRef);
+		super(cast(GtkWidget*)gtkShortcutLabel, ownedRef);
 	}
 
 
@@ -81,28 +79,24 @@ public class ShortcutLabel : Box
 	 *
 	 * Returns: a newly-allocated #GtkShortcutLabel
 	 *
-	 * Since: 3.22
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string accelerator)
 	{
-		auto p = gtk_shortcut_label_new(Str.toStringz(accelerator));
+		auto __p = gtk_shortcut_label_new(Str.toStringz(accelerator));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkShortcutLabel*) p, true);
+		this(cast(GtkShortcutLabel*) __p, true);
 	}
 
 	/**
 	 * Retrieves the current accelerator of @self.
 	 *
 	 * Returns: the current accelerator.
-	 *
-	 * Since: 3.22
 	 */
 	public string getAccelerator()
 	{
@@ -114,8 +108,6 @@ public class ShortcutLabel : Box
 	 *
 	 * Returns: the current text displayed when no
 	 *     accelerator is set.
-	 *
-	 * Since: 3.22
 	 */
 	public string getDisabledText()
 	{
@@ -127,8 +119,6 @@ public class ShortcutLabel : Box
 	 *
 	 * Params:
 	 *     accelerator = the new accelerator
-	 *
-	 * Since: 3.22
 	 */
 	public void setAccelerator(string accelerator)
 	{
@@ -140,8 +130,6 @@ public class ShortcutLabel : Box
 	 *
 	 * Params:
 	 *     disabledText = the text to be displayed when no accelerator is set
-	 *
-	 * Since: 3.22
 	 */
 	public void setDisabledText(string disabledText)
 	{

@@ -33,7 +33,6 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**

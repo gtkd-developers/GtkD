@@ -28,13 +28,11 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Button;
 private import gtk.FontChooserIF;
 private import gtk.FontChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -45,9 +43,9 @@ private import std.algorithm;
  * 
  * # CSS nodes
  * 
- * GtkFontButton has a single CSS node with name button and style class .font.
+ * GtkFontButton has a single CSS node with name fontbutton.
  */
-public class FontButton : Button, FontChooserIF
+public class FontButton : Widget, FontChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkFontButton* gtkFontButton;
@@ -72,7 +70,7 @@ public class FontButton : Button, FontChooserIF
 	public this (GtkFontButton* gtkFontButton, bool ownedRef = false)
 	{
 		this.gtkFontButton = gtkFontButton;
-		super(cast(GtkButton*)gtkFontButton, ownedRef);
+		super(cast(GtkWidget*)gtkFontButton, ownedRef);
 	}
 
 	// add the FontChooser capabilities
@@ -90,20 +88,18 @@ public class FontButton : Button, FontChooserIF
 	 *
 	 * Returns: a new font picker widget.
 	 *
-	 * Since: 2.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_font_button_new();
+		auto __p = gtk_font_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFontButton*) p);
+		this(cast(GtkFontButton*) __p);
 	}
 
 	/**
@@ -114,71 +110,34 @@ public class FontButton : Button, FontChooserIF
 	 *
 	 * Returns: a new font picker widget.
 	 *
-	 * Since: 2.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string fontname)
 	{
-		auto p = gtk_font_button_new_with_font(Str.toStringz(fontname));
+		auto __p = gtk_font_button_new_with_font(Str.toStringz(fontname));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_font");
 		}
 
-		this(cast(GtkFontButton*) p);
+		this(cast(GtkFontButton*) __p);
 	}
 
 	/**
-	 * Retrieves the name of the currently selected font. This name includes
-	 * style and size information as well. If you want to render something
-	 * with the font, use this string with pango_font_description_from_string() .
-	 * If you’re interested in peeking certain values (family name,
-	 * style, size, weight) just query these properties from the
-	 * #PangoFontDescription object.
+	 * Gets whether the dialog is modal.
 	 *
-	 * Deprecated: Use gtk_font_chooser_get_font() instead
-	 *
-	 * Returns: an internal copy of the font name which must not be freed.
-	 *
-	 * Since: 2.4
+	 * Returns: %TRUE if the dialog is modal
 	 */
-	public string getFontName()
+	public bool getModal()
 	{
-		return Str.toString(gtk_font_button_get_font_name(gtkFontButton));
-	}
-
-	/**
-	 * Returns whether the font size will be shown in the label.
-	 *
-	 * Returns: whether the font size will be shown in the label.
-	 *
-	 * Since: 2.4
-	 */
-	public bool getShowSize()
-	{
-		return gtk_font_button_get_show_size(gtkFontButton) != 0;
-	}
-
-	/**
-	 * Returns whether the name of the font style will be shown in the label.
-	 *
-	 * Returns: whether the font style will be shown in the label.
-	 *
-	 * Since: 2.4
-	 */
-	public bool getShowStyle()
-	{
-		return gtk_font_button_get_show_style(gtkFontButton) != 0;
+		return gtk_font_button_get_modal(gtkFontButton) != 0;
 	}
 
 	/**
 	 * Retrieves the title of the font chooser dialog.
 	 *
 	 * Returns: an internal copy of the title string which must not be freed.
-	 *
-	 * Since: 2.4
 	 */
 	public string getTitle()
 	{
@@ -189,8 +148,6 @@ public class FontButton : Button, FontChooserIF
 	 * Returns whether the selected font is used in the label.
 	 *
 	 * Returns: whether the selected font is used in the label.
-	 *
-	 * Since: 2.4
 	 */
 	public bool getUseFont()
 	{
@@ -201,8 +158,6 @@ public class FontButton : Button, FontChooserIF
 	 * Returns whether the selected size is used in the label.
 	 *
 	 * Returns: whether the selected size is used in the label.
-	 *
-	 * Since: 2.4
 	 */
 	public bool getUseSize()
 	{
@@ -210,46 +165,14 @@ public class FontButton : Button, FontChooserIF
 	}
 
 	/**
-	 * Sets or updates the currently-displayed font in font picker dialog.
-	 *
-	 * Deprecated: Use gtk_font_chooser_set_font() instead
+	 * Sets whether the dialog should be modal.
 	 *
 	 * Params:
-	 *     fontname = Name of font to display in font chooser dialog
-	 *
-	 * Returns: %TRUE
-	 *
-	 * Since: 2.4
+	 *     modal = %TRUE to make the dialog modal
 	 */
-	public bool setFontName(string fontname)
+	public void setModal(bool modal)
 	{
-		return gtk_font_button_set_font_name(gtkFontButton, Str.toStringz(fontname)) != 0;
-	}
-
-	/**
-	 * If @show_size is %TRUE, the font size will be displayed along with the name of the selected font.
-	 *
-	 * Params:
-	 *     showSize = %TRUE if font size should be displayed in dialog.
-	 *
-	 * Since: 2.4
-	 */
-	public void setShowSize(bool showSize)
-	{
-		gtk_font_button_set_show_size(gtkFontButton, showSize);
-	}
-
-	/**
-	 * If @show_style is %TRUE, the font style will be displayed along with name of the selected font.
-	 *
-	 * Params:
-	 *     showStyle = %TRUE if font style should be displayed in label.
-	 *
-	 * Since: 2.4
-	 */
-	public void setShowStyle(bool showStyle)
-	{
-		gtk_font_button_set_show_style(gtkFontButton, showStyle);
+		gtk_font_button_set_modal(gtkFontButton, modal);
 	}
 
 	/**
@@ -257,8 +180,6 @@ public class FontButton : Button, FontChooserIF
 	 *
 	 * Params:
 	 *     title = a string containing the font chooser dialog title
-	 *
-	 * Since: 2.4
 	 */
 	public void setTitle(string title)
 	{
@@ -270,8 +191,6 @@ public class FontButton : Button, FontChooserIF
 	 *
 	 * Params:
 	 *     useFont = If %TRUE, font name will be written using font chosen.
-	 *
-	 * Since: 2.4
 	 */
 	public void setUseFont(bool useFont)
 	{
@@ -283,8 +202,6 @@ public class FontButton : Button, FontChooserIF
 	 *
 	 * Params:
 	 *     useSize = If %TRUE, font name will be written using the selected size.
-	 *
-	 * Since: 2.4
 	 */
 	public void setUseSize(bool useSize)
 	{
@@ -299,8 +216,6 @@ public class FontButton : Button, FontChooserIF
 	 * Note that this signal is only emitted when the user
 	 * changes the font. If you need to react to programmatic font changes
 	 * as well, use the notify::font signal.
-	 *
-	 * Since: 2.4
 	 */
 	gulong addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

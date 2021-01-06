@@ -1971,9 +1971,17 @@ enum TYPE_RESERVED_USER_FIRST = 49;
 alias G_TYPE_RESERVED_USER_FIRST = TYPE_RESERVED_USER_FIRST;
 
 /**
+ * For string values, indicates that the string contained is canonical and will
+ * exist for the duration of the process. See g_value_set_interned_string().
+ */
+enum VALUE_INTERNED_STRING = 268435456;
+alias G_VALUE_INTERNED_STRING = VALUE_INTERNED_STRING;
+
+/**
  * If passed to G_VALUE_COLLECT(), allocated data won't be copied
  * but used verbatim. This does not affect ref-counted types like
- * objects.
+ * objects. This does not affect usage of g_value_copy(), the data will
+ * be copied if it is not ref-counted.
  */
 enum VALUE_NOCOPY_CONTENTS = 134217728;
 alias G_VALUE_NOCOPY_CONTENTS = VALUE_NOCOPY_CONTENTS;

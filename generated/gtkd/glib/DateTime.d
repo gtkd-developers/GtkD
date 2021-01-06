@@ -30,7 +30,6 @@ private import glib.TimeVal;
 private import glib.TimeZone;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 private import gtkd.Loader;
 
 
@@ -332,9 +331,8 @@ public class DateTime
 	 * time zone @tz.  The time is as accurate as the system allows, to a
 	 * maximum accuracy of 1 microsecond.
 	 *
-	 * This function will always succeed unless the system clock is set to
-	 * truly insane values (or unless GLib is still being used after the
-	 * year 9999).
+	 * This function will always succeed unless GLib is still being used after the
+	 * year 9999.
 	 *
 	 * You should release the return value by calling g_date_time_unref()
 	 * when you are done with it.
@@ -366,8 +364,8 @@ public class DateTime
 	 * Params:
 	 *     timespan = a #GTimeSpan
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -390,8 +388,8 @@ public class DateTime
 	 * Params:
 	 *     days = the number of days
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -419,8 +417,8 @@ public class DateTime
 	 *     minutes = the number of minutes to add
 	 *     seconds = the number of seconds to add
 	 *
-	 * Returns: the newly created #GDateTime that should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -443,8 +441,8 @@ public class DateTime
 	 * Params:
 	 *     hours = the number of hours to add
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -467,8 +465,8 @@ public class DateTime
 	 * Params:
 	 *     minutes = the number of minutes to add
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -496,8 +494,8 @@ public class DateTime
 	 * Params:
 	 *     months = the number of months
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -520,8 +518,8 @@ public class DateTime
 	 * Params:
 	 *     seconds = the number of seconds to add
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -544,8 +542,8 @@ public class DateTime
 	 * Params:
 	 *     weeks = the number of weeks
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -571,8 +569,8 @@ public class DateTime
 	 * Params:
 	 *     years = the number of years
 	 *
-	 * Returns: the newly created #GDateTime which should be freed with
-	 *     g_date_time_unref().
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -613,7 +611,7 @@ public class DateTime
 	 * strftime() format language as specified by C99.  The \%D, \%U and \%W
 	 * conversions are not supported, nor is the 'E' modifier.  The GNU
 	 * extensions \%k, \%l, \%s and \%P are supported, however, as are the
-	 * '0', '_' and '-' modifiers.
+	 * '0', '_' and '-' modifiers. The Python extension \%f is also supported.
 	 *
 	 * In contrast to strftime(), this function always produces a UTF-8
 	 * string, regardless of the current locale.  Note that the rendering of
@@ -645,12 +643,17 @@ public class DateTime
 	 * single digits are preceded by a blank
 	 * - \%m: the month as a decimal number (range 01 to 12)
 	 * - \%M: the minute as a decimal number (range 00 to 59)
+	 * - \%f: the microsecond as a decimal number (range 000000 to 999999)
 	 * - \%p: either "AM" or "PM" according to the given time value, or the
 	 * corresponding  strings for the current locale.  Noon is treated as
-	 * "PM" and midnight as "AM".
+	 * "PM" and midnight as "AM". Use of this format specifier is discouraged, as
+	 * many locales have no concept of AM/PM formatting. Use \%c or \%X instead.
 	 * - \%P: like \%p but lowercase: "am" or "pm" or a corresponding string for
-	 * the current locale
-	 * - \%r: the time in a.m. or p.m. notation
+	 * the current locale. Use of this format specifier is discouraged, as
+	 * many locales have no concept of AM/PM formatting. Use \%c or \%X instead.
+	 * - \%r: the time in a.m. or p.m. notation. Use of this format specifier is
+	 * discouraged, as many locales have no concept of AM/PM formatting. Use \%c
+	 * or \%X instead.
 	 * - \%R: the time in 24-hour notation (\%H:\%M)
 	 * - \%s: the number of seconds since the Epoch, that is, since 1970-01-01
 	 * 00:00:00 UTC
@@ -706,10 +709,10 @@ public class DateTime
 	 *     format = a valid UTF-8 string, containing the format for the
 	 *         #GDateTime
 	 *
-	 * Returns: a newly allocated string formatted to the requested format
-	 *     or %NULL in the case that there was an error (such as a format specifier
-	 *     not being supported in the current locale). The string
-	 *     should be freed with g_free().
+	 * Returns: a newly allocated string formatted to
+	 *     the requested format or %NULL in the case that there was an error (such
+	 *     as a format specifier not being supported in the current locale). The
+	 *     string should be freed with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -726,8 +729,10 @@ public class DateTime
 	 * including the date, time and time zone, and return that as a UTF-8 encoded
 	 * string.
 	 *
-	 * Returns: a newly allocated string formatted in ISO 8601 format
-	 *     or %NULL in the case that there was an error. The string
+	 * Since GLib 2.66, this will output to sub-second precision if needed.
+	 *
+	 * Returns: a newly allocated string formatted in
+	 *     ISO 8601 format or %NULL in the case that there was an error. The string
 	 *     should be freed with g_free().
 	 *
 	 * Since: 2.62
@@ -1046,7 +1051,8 @@ public class DateTime
 	 * This call is equivalent to calling g_date_time_to_timezone() with the
 	 * time zone returned by g_time_zone_new_local().
 	 *
-	 * Returns: the newly created #GDateTime
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -1100,13 +1106,11 @@ public class DateTime
 	 * example, converting 0001-01-01 00:00:00 UTC to a time zone west of
 	 * Greenwich will fail (due to the year 0 being out of range).
 	 *
-	 * You should release the return value by calling g_date_time_unref()
-	 * when you are done with it.
-	 *
 	 * Params:
 	 *     tz = the new #GTimeZone
 	 *
-	 * Returns: a new #GDateTime, or %NULL
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -1145,7 +1149,8 @@ public class DateTime
 	 * This call is equivalent to calling g_date_time_to_timezone() with the
 	 * time zone returned by g_time_zone_new_utc().
 	 *
-	 * Returns: the newly created #GDateTime
+	 * Returns: the newly created #GDateTime which
+	 *     should be freed with g_date_time_unref(), or %NULL
 	 *
 	 * Since: 2.26
 	 */

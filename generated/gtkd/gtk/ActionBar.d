@@ -26,11 +26,9 @@ module gtk.ActionBar;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -47,7 +45,7 @@ public  import gtkc.gtktypes;
  * 
  * GtkActionBar has a single CSS node with name actionbar.
  */
-public class ActionBar : Bin
+public class ActionBar : Widget
 {
 	/** the main Gtk struct */
 	protected GtkActionBar* gtkActionBar;
@@ -72,7 +70,7 @@ public class ActionBar : Bin
 	public this (GtkActionBar* gtkActionBar, bool ownedRef = false)
 	{
 		this.gtkActionBar = gtkActionBar;
-		super(cast(GtkBin*)gtkActionBar, ownedRef);
+		super(cast(GtkWidget*)gtkActionBar, ownedRef);
 	}
 
 
@@ -87,39 +85,45 @@ public class ActionBar : Bin
 	 *
 	 * Returns: a new #GtkActionBar
 	 *
-	 * Since: 3.12
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_action_bar_new();
+		auto __p = gtk_action_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkActionBar*) p);
+		this(cast(GtkActionBar*) __p);
 	}
 
 	/**
 	 * Retrieves the center bar widget of the bar.
 	 *
 	 * Returns: the center #GtkWidget or %NULL.
-	 *
-	 * Since: 3.12
 	 */
 	public Widget getCenterWidget()
 	{
-		auto p = gtk_action_bar_get_center_widget(gtkActionBar);
+		auto __p = gtk_action_bar_get_center_widget(gtkActionBar);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Gets the value of the #GtkActionBar:revealed property.
+	 *
+	 * Returns: the current value of the #GtkActionBar:revealed property.
+	 */
+	public bool getRevealed()
+	{
+		return gtk_action_bar_get_revealed(gtkActionBar) != 0;
 	}
 
 	/**
@@ -128,8 +132,6 @@ public class ActionBar : Bin
 	 *
 	 * Params:
 	 *     child = the #GtkWidget to be added to @action_bar
-	 *
-	 * Since: 3.12
 	 */
 	public void packEnd(Widget child)
 	{
@@ -142,8 +144,6 @@ public class ActionBar : Bin
 	 *
 	 * Params:
 	 *     child = the #GtkWidget to be added to @action_bar
-	 *
-	 * Since: 3.12
 	 */
 	public void packStart(Widget child)
 	{
@@ -151,15 +151,40 @@ public class ActionBar : Bin
 	}
 
 	/**
+	 * Removes a child from @action_bar.
+	 *
+	 * Params:
+	 *     child = the #GtkWidget to be removed
+	 */
+	public void remove(Widget child)
+	{
+		gtk_action_bar_remove(gtkActionBar, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
 	 * Sets the center widget for the #GtkActionBar.
 	 *
 	 * Params:
 	 *     centerWidget = a widget to use for the center
-	 *
-	 * Since: 3.12
 	 */
 	public void setCenterWidget(Widget centerWidget)
 	{
 		gtk_action_bar_set_center_widget(gtkActionBar, (centerWidget is null) ? null : centerWidget.getWidgetStruct());
+	}
+
+	/**
+	 * Sets the #GtkActionBar:revealed property to @revealed. Changing this will
+	 * make @action_bar reveal (%TRUE) or conceal (%FALSE) itself via a sliding
+	 * transition.
+	 *
+	 * Note: this does not show or hide @action_bar in the #GtkWidget:visible sense,
+	 * so revealing has no effect if #GtkWidget:visible is %FALSE.
+	 *
+	 * Params:
+	 *     revealed = The new value of the property
+	 */
+	public void setRevealed(bool revealed)
+	{
+		gtk_action_bar_set_revealed(gtkActionBar, revealed);
 	}
 }

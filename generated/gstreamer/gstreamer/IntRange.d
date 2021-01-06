@@ -26,10 +26,11 @@ module gstreamer.IntRange;
 
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes a #gint range
+ */
 public class IntRange
 {
 	/** the main Gtk struct */

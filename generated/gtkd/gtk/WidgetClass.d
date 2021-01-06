@@ -26,11 +26,11 @@ module gtk.WidgetClass;
 
 private import glib.Bytes;
 private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.ParamSpec;
+private import glib.VariantType;
+private import gtk.BuilderScopeIF;
+private import gtk.Shortcut;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -65,8 +65,29 @@ public class WidgetClass
 
 
 	/**
+	 * Installs a shortcut in @widget_class. Every instance created for
+	 * @widget_class or its subclasses will inherit this shortcut and
+	 * trigger it.
+	 *
+	 * Shortcuts added this way will be triggered in the @GTK_PHASE_BUBBLE
+	 * phase, which means they may also trigger if child widgets have focus.
+	 *
+	 * This function must only be used in class initialization functions
+	 * otherwise it is not guaranteed that the shortcut will be installed.
+	 *
+	 * Params:
+	 *     shortcut = the #GtkShortcut to add
+	 */
+	public void addShortcut(Shortcut shortcut)
+	{
+		gtk_widget_class_add_shortcut(gtkWidgetClass, (shortcut is null) ? null : shortcut.getShortcutStruct());
+	}
+
+	/**
 	 * Declares a @callback_symbol to handle @callback_name from the template XML
-	 * defined for @widget_type. See gtk_builder_add_callback_symbol().
+	 * defined for @widget_type. This function is not supported after
+	 * gtk_widget_class_set_template_scope() has been used on @widget_class.
+	 * See gtk_builder_cscope_add_callback_symbol().
 	 *
 	 * Note that this must be called from a composite widget classes class
 	 * initializer after calling gtk_widget_class_set_template().
@@ -74,8 +95,6 @@ public class WidgetClass
 	 * Params:
 	 *     callbackName = The name of the callback as expected in the template XML
 	 *     callbackSymbol = The callback symbol
-	 *
-	 * Since: 3.10
 	 */
 	public void bindTemplateCallbackFull(string callbackName, GCallback callbackSymbol)
 	{
@@ -112,8 +131,6 @@ public class WidgetClass
 	 *         when this class is used in GtkBuilder XML
 	 *     structOffset = The structure offset into the composite widget’s instance public or private structure
 	 *         where the automated child pointer should be set, or 0 to not assign the pointer.
-	 *
-	 * Since: 3.10
 	 */
 	public void bindTemplateChildFull(string name, bool internalChild, ptrdiff_t structOffset)
 	{
@@ -121,26 +138,30 @@ public class WidgetClass
 	}
 
 	/**
-	 * Finds a style property of a widget class by name.
+	 * Retrieves the accessible role used by the given #GtkWidget class.
 	 *
-	 * Params:
-	 *     propertyName = the name of the style property to find
+	 * Different accessible roles have different states, and are rendered
+	 * differently by assistive technologies.
 	 *
-	 * Returns: the #GParamSpec of the style property or
-	 *     %NULL if @class has no style property with that name.
+	 * See also: gtk_accessible_get_accessible_role()
 	 *
-	 * Since: 2.2
+	 * Returns: the accessible role for the widget class
 	 */
-	public ParamSpec findStyleProperty(string propertyName)
+	public GtkAccessibleRole getAccessibleRole()
 	{
-		auto p = gtk_widget_class_find_style_property(gtkWidgetClass, Str.toStringz(propertyName));
+		return gtk_widget_class_get_accessible_role(gtkWidgetClass);
+	}
 
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+	/**
+	 * Retrieves the signal id for the activation signal set using
+	 * gtk_widget_class_set_activate_signal().
+	 *
+	 * Returns: a signal id, or 0 if the widget class does not
+	 *     specify an activation signal
+	 */
+	public uint getActivateSignal()
+	{
+		return gtk_widget_class_get_activate_signal(gtkWidgetClass);
 	}
 
 	/**
@@ -148,8 +169,6 @@ public class WidgetClass
 	 * gtk_widget_class_set_css_name() for details.
 	 *
 	 * Returns: the CSS name of the given class
-	 *
-	 * Since: 3.20
 	 */
 	public string getCssName()
 	{
@@ -157,135 +176,168 @@ public class WidgetClass
 	}
 
 	/**
-	 * Installs a style property on a widget class. The parser for the
-	 * style property is determined by the value type of @pspec.
+	 * Retrieves the type of the #GtkLayoutManager used by the #GtkWidget class.
 	 *
-	 * Params:
-	 *     pspec = the #GParamSpec for the property
+	 * See also: gtk_widget_class_set_layout_manager_type()
+	 *
+	 * Returns: a #GtkLayoutManager subclass, or %G_TYPE_INVALID
 	 */
-	public void installStyleProperty(ParamSpec pspec)
+	public GType getLayoutManagerType()
 	{
-		gtk_widget_class_install_style_property(gtkWidgetClass, (pspec is null) ? null : pspec.getParamSpecStruct());
+		return gtk_widget_class_get_layout_manager_type(gtkWidgetClass);
 	}
 
 	/**
-	 * Installs a style property on a widget class.
+	 * This should be called at class initialization time to specify
+	 * actions to be added for all instances of this class.
+	 *
+	 * Actions installed by this function are stateless. The only state
+	 * they have is whether they are enabled or not.
 	 *
 	 * Params:
-	 *     pspec = the #GParamSpec for the style property
-	 *     parser = the parser for the style property
+	 *     actionName = a prefixed action name, such as "clipboard.paste"
+	 *     parameterType = the parameter type, or %NULL
+	 *     activate = callback to use when the action is activated
 	 */
-	public void installStylePropertyParser(ParamSpec pspec, GtkRcPropertyParser parser)
+	public void installAction(string actionName, string parameterType, GtkWidgetActionActivateFunc activate)
 	{
-		gtk_widget_class_install_style_property_parser(gtkWidgetClass, (pspec is null) ? null : pspec.getParamSpecStruct(), parser);
+		gtk_widget_class_install_action(gtkWidgetClass, Str.toStringz(actionName), Str.toStringz(parameterType), activate);
 	}
 
 	/**
-	 * Returns all style properties of a widget class.
+	 * Installs an action called @action_name on @widget_class and binds its
+	 * state to the value of the @property_name property.
 	 *
-	 * Returns: a
-	 *     newly allocated array of #GParamSpec*. The array must be
-	 *     freed with g_free().
+	 * This function will perform a few santity checks on the property selected
+	 * via @property_name. Namely, the property must exist, must be readable,
+	 * writable and must not be construct-only. There are also restrictions
+	 * on the type of the given property, it must be boolean, int, unsigned int,
+	 * double or string. If any of these conditions are not met, a critical
+	 * warning will be printed and no action will be added.
 	 *
-	 * Since: 2.2
+	 * The state type of the action matches the property type.
+	 *
+	 * If the property is boolean, the action will have no parameter and
+	 * toggle the property value. Otherwise, the action will have a parameter
+	 * of the same type as the property.
+	 *
+	 * Params:
+	 *     actionName = name of the action
+	 *     propertyName = name of the property in instances of @widget_class
+	 *         or any parent class.
 	 */
-	public ParamSpec[] listStyleProperties()
+	public void installPropertyAction(string actionName, string propertyName)
 	{
-		uint nProperties;
-
-		auto p = gtk_widget_class_list_style_properties(gtkWidgetClass, &nProperties);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		ParamSpec[] arr = new ParamSpec[nProperties];
-		for(int i = 0; i < nProperties; i++)
-		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
-		}
-
-		return arr;
+		gtk_widget_class_install_property_action(gtkWidgetClass, Str.toStringz(actionName), Str.toStringz(propertyName));
 	}
 
 	/**
-	 * Sets the default #AtkRole to be set on accessibles created for
-	 * widgets of @widget_class. Accessibles may decide to not honor this
-	 * setting if their role reporting is more refined. Calls to
-	 * gtk_widget_class_set_accessible_type() will reset this value.
+	 * Queries the actions that have been installed for
+	 * a widget class using gtk_widget_class_install_action()
+	 * during class initialization.
 	 *
-	 * In cases where you want more fine-grained control over the role of
-	 * accessibles created for @widget_class, you should provide your own
-	 * accessible type and use gtk_widget_class_set_accessible_type()
-	 * instead.
-	 *
-	 * If @role is #ATK_ROLE_INVALID, the default role will not be changed
-	 * and the accessible’s default role will be used instead.
-	 *
-	 * This function should only be called from class init functions of widgets.
+	 * Note that this function will also return actions defined
+	 * by parent classes. You can identify those by looking
+	 * at @owner.
 	 *
 	 * Params:
-	 *     role = The role to use for accessibles created for @widget_class
+	 *     index = position of the action to query
+	 *     owner = return location for the type where the action was defined
+	 *     actionName = return location for the action name
+	 *     parameterType = return location for the parameter type
+	 *     propertyName = return location for the property name
 	 *
-	 * Since: 3.2
+	 * Returns: %TRUE if the action was found,
+	 *     %FALSE if @index_ is out of range
 	 */
-	public void setAccessibleRole(AtkRole role)
+	public bool queryAction(uint index, out GType owner, out string actionName, out VariantType parameterType, out string propertyName)
 	{
-		gtk_widget_class_set_accessible_role(gtkWidgetClass, role);
+		char* outactionName = null;
+		GVariantType* outparameterType = null;
+		char* outpropertyName = null;
+
+		auto __p = gtk_widget_class_query_action(gtkWidgetClass, index, &owner, &outactionName, &outparameterType, &outpropertyName) != 0;
+
+		actionName = Str.toString(outactionName);
+		parameterType = new VariantType(outparameterType);
+		propertyName = Str.toString(outpropertyName);
+
+		return __p;
 	}
 
 	/**
-	 * Sets the type to be used for creating accessibles for widgets of
-	 * @widget_class. The given @type must be a subtype of the type used for
-	 * accessibles of the parent class.
+	 * Sets the accessible role used by the given #GtkWidget class.
 	 *
-	 * This function should only be called from class init functions of widgets.
+	 * Different accessible roles have different states, and are rendered
+	 * differently by assistive technologies.
 	 *
 	 * Params:
-	 *     type = The object type that implements the accessible for @widget_class
-	 *
-	 * Since: 3.2
+	 *     accessibleRole = the #GtkAccessibleRole used by the @widget_class
 	 */
-	public void setAccessibleType(GType type)
+	public void setAccessibleRole(GtkAccessibleRole accessibleRole)
 	{
-		gtk_widget_class_set_accessible_type(gtkWidgetClass, type);
+		gtk_widget_class_set_accessible_role(gtkWidgetClass, accessibleRole);
 	}
 
 	/**
-	 * For use in language bindings, this will override the default #GtkBuilderConnectFunc to be
-	 * used when parsing GtkBuilder XML from this class’s template data.
+	 * Sets the #GtkWidgetClass.activate_signal field with the
+	 * given @signal_id; the signal will be emitted when calling
+	 * gtk_widget_activate().
 	 *
-	 * Note that this must be called from a composite widget classes class
-	 * initializer after calling gtk_widget_class_set_template().
+	 * The @signal_id must have been registered with g_signal_new()
+	 * or g_signal_newv() before calling this function.
 	 *
 	 * Params:
-	 *     connectFunc = The #GtkBuilderConnectFunc to use when connecting signals in the class template
-	 *     connectData = The data to pass to @connect_func
-	 *     connectDataDestroy = The #GDestroyNotify to free @connect_data, this will only be used at
-	 *         class finalization time, when no classes of type @widget_type are in use anymore.
-	 *
-	 * Since: 3.10
+	 *     signalId = the id for the activate signal
 	 */
-	public void setConnectFunc(GtkBuilderConnectFunc connectFunc, void* connectData, GDestroyNotify connectDataDestroy)
+	public void setActivateSignal(uint signalId)
 	{
-		gtk_widget_class_set_connect_func(gtkWidgetClass, connectFunc, connectData, connectDataDestroy);
+		gtk_widget_class_set_activate_signal(gtkWidgetClass, signalId);
+	}
+
+	/**
+	 * Sets the #GtkWidgetClass.activate_signal field with the signal id for
+	 * the given @signal_name; the signal will be emitted when calling
+	 * gtk_widget_activate().
+	 *
+	 * The @signal_name of @widget_type must have been registered with
+	 * g_signal_new() or g_signal_newv() before calling this function.
+	 *
+	 * Params:
+	 *     signalName = the name of the activate signal of @widget_type
+	 */
+	public void setActivateSignalFromName(string signalName)
+	{
+		gtk_widget_class_set_activate_signal_from_name(gtkWidgetClass, Str.toStringz(signalName));
 	}
 
 	/**
 	 * Sets the name to be used for CSS matching of widgets.
 	 *
 	 * If this function is not called for a given class, the name
-	 * of the parent class is used.
+	 * set on the parent class is used. By default, GtkWidget uses
+	 * the name "widget".
 	 *
 	 * Params:
 	 *     name = name to use
-	 *
-	 * Since: 3.20
 	 */
 	public void setCssName(string name)
 	{
 		gtk_widget_class_set_css_name(gtkWidgetClass, Str.toStringz(name));
+	}
+
+	/**
+	 * Sets the type to be used for creating layout managers for widgets of
+	 * @widget_class. The given @type must be a subtype of #GtkLayoutManager.
+	 *
+	 * This function should only be called from class init functions of widgets.
+	 *
+	 * Params:
+	 *     type = The object type that implements the #GtkLayoutManager for @widget_class
+	 */
+	public void setLayoutManagerType(GType type)
+	{
+		gtk_widget_class_set_layout_manager_type(gtkWidgetClass, type);
 	}
 
 	/**
@@ -299,8 +351,6 @@ public class WidgetClass
 	 *
 	 * Params:
 	 *     templateBytes = A #GBytes holding the #GtkBuilder XML
-	 *
-	 * Since: 3.10
 	 */
 	public void setTemplate(Bytes templateBytes)
 	{
@@ -315,11 +365,24 @@ public class WidgetClass
 	 *
 	 * Params:
 	 *     resourceName = The name of the resource to load the template from
-	 *
-	 * Since: 3.10
 	 */
 	public void setTemplateFromResource(string resourceName)
 	{
 		gtk_widget_class_set_template_from_resource(gtkWidgetClass, Str.toStringz(resourceName));
+	}
+
+	/**
+	 * For use in language bindings, this will override the default #GtkBuilderScope to be
+	 * used when parsing GtkBuilder XML from this class’s template data.
+	 *
+	 * Note that this must be called from a composite widget classes class
+	 * initializer after calling gtk_widget_class_set_template().
+	 *
+	 * Params:
+	 *     scope_ = The #GtkBuilderScope to use when loading the class template
+	 */
+	public void setTemplateScope(BuilderScopeIF scope_)
+	{
+		gtk_widget_class_set_template_scope(gtkWidgetClass, (scope_ is null) ? null : scope_.getBuilderScopeStruct());
 	}
 }

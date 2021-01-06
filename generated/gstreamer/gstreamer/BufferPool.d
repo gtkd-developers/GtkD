@@ -36,7 +36,6 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -122,14 +121,14 @@ public class BufferPool : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_buffer_pool_new();
+		auto __p = gst_buffer_pool_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBufferPool*) p, true);
+		this(cast(GstBufferPool*) __p, true);
 	}
 
 	/**
@@ -162,12 +161,12 @@ public class BufferPool : ObjectGst
 		GstAllocator* outallocator = allocator.getAllocatorStruct();
 		GstAllocationParams* outparams = sliceNew!GstAllocationParams();
 
-		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
+		auto __p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
 
 		allocator = ObjectG.getDObject!(Allocator)(outallocator);
 		params = ObjectG.getDObject!(AllocationParams)(outparams, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -201,11 +200,11 @@ public class BufferPool : ObjectGst
 	{
 		GstCaps* outcaps = null;
 
-		auto p = gst_buffer_pool_config_get_params((config is null) ? null : config.getStructureStruct(), &outcaps, &size, &minBuffers, &maxBuffers) != 0;
+		auto __p = gst_buffer_pool_config_get_params((config is null) ? null : config.getStructureStruct(), &outcaps, &size, &minBuffers, &maxBuffers) != 0;
 
 		caps = ObjectG.getDObject!(Caps)(outcaps);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -319,11 +318,11 @@ public class BufferPool : ObjectGst
 	{
 		GstBuffer* outbuffer = null;
 
-		auto p = gst_buffer_pool_acquire_buffer(gstBufferPool, &outbuffer, params);
+		auto __p = gst_buffer_pool_acquire_buffer(gstBufferPool, &outbuffer, params);
 
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -336,14 +335,14 @@ public class BufferPool : ObjectGst
 	 */
 	public Structure getConfig()
 	{
-		auto p = gst_buffer_pool_get_config(gstBufferPool);
+		auto __p = gst_buffer_pool_get_config(gstBufferPool);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
@@ -395,7 +394,7 @@ public class BufferPool : ObjectGst
 	 */
 	public void releaseBuffer(Buffer buffer)
 	{
-		gst_buffer_pool_release_buffer(gstBufferPool, (buffer is null) ? null : buffer.getBufferStruct());
+		gst_buffer_pool_release_buffer(gstBufferPool, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**

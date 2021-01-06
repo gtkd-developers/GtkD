@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
 
 
@@ -39,8 +38,8 @@ private import gtkd.Loader;
  * 
  * ## Parameter names # {#canonical-parameter-names}
  * 
- * A property name consists of segments consisting of ASCII letters and
- * digits, separated by either the `-` or `_` character. The first
+ * A property name consists of one or more segments consisting of ASCII letters
+ * and digits, separated by either the `-` or `_` character. The first
  * character of a property name must be a letter. These are the same rules as
  * for signal naming (see g_signal_new()).
  * 
@@ -116,6 +115,26 @@ public class ParamSpec
 		}
 
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+	}
+
+	/**
+	 * Validate a property name for a #GParamSpec. This can be useful for
+	 * dynamically-generated properties which need to be validated at run-time
+	 * before actually trying to create them.
+	 *
+	 * See [canonical parameter names][canonical-parameter-names] for details of
+	 * the rules for valid names.
+	 *
+	 * Params:
+	 *     name = the canonical name of the property
+	 *
+	 * Returns: %TRUE if @name is a valid property name, %FALSE otherwise.
+	 *
+	 * Since: 2.66
+	 */
+	public static bool isValidName(string name)
+	{
+		return g_param_spec_is_valid_name(Str.toStringz(name)) != 0;
 	}
 
 	/**
@@ -361,7 +380,7 @@ public class ParamSpec
 	 *
 	 * Params:
 	 *     pspec = a valid #GParamSpec
-	 *     srcValue = souce #GValue
+	 *     srcValue = source #GValue
 	 *     destValue = destination #GValue of correct type for @pspec
 	 *     strictValidation = %TRUE requires @dest_value to conform to @pspec
 	 *         without modifications

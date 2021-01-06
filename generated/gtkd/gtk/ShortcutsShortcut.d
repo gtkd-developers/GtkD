@@ -24,17 +24,16 @@
 
 module gtk.ShortcutsShortcut;
 
-private import gtk.Box;
+private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * A GtkShortcutsShortcut represents a single keyboard shortcut or gesture
  * with a short text. This widget is only meant to be used with #GtkShortcutsWindow.
  */
-public class ShortcutsShortcut : Box
+public class ShortcutsShortcut : Widget
 {
 	/** the main Gtk struct */
 	protected GtkShortcutsShortcut* gtkShortcutsShortcut;
@@ -59,7 +58,7 @@ public class ShortcutsShortcut : Box
 	public this (GtkShortcutsShortcut* gtkShortcutsShortcut, bool ownedRef = false)
 	{
 		this.gtkShortcutsShortcut = gtkShortcutsShortcut;
-		super(cast(GtkBox*)gtkShortcutsShortcut, ownedRef);
+		super(cast(GtkWidget*)gtkShortcutsShortcut, ownedRef);
 	}
 
 

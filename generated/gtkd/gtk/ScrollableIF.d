@@ -30,7 +30,6 @@ private import gtk.Adjustment;
 private import gtk.Border;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -79,16 +78,14 @@ public interface ScrollableIF{
 	/**
 	 * Returns the size of a non-scrolling border around the
 	 * outside of the scrollable. An example for this would
-	 * be treeview headers. GTK+ can use this information to
-	 * display overlayed graphics, like the overshoot indication,
+	 * be treeview headers. GTK can use this information to
+	 * display overlaid graphics, like the overshoot indication,
 	 * at the right position.
 	 *
 	 * Params:
 	 *     border = return location for the results
 	 *
 	 * Returns: %TRUE if @border has been set
-	 *
-	 * Since: 3.16
 	 */
 	public bool getBorder(out Border border);
 
@@ -96,8 +93,6 @@ public interface ScrollableIF{
 	 * Retrieves the #GtkAdjustment used for horizontal scrolling.
 	 *
 	 * Returns: horizontal #GtkAdjustment.
-	 *
-	 * Since: 3.0
 	 */
 	public Adjustment getHadjustment();
 
@@ -105,8 +100,6 @@ public interface ScrollableIF{
 	 * Gets the horizontal #GtkScrollablePolicy.
 	 *
 	 * Returns: The horizontal #GtkScrollablePolicy.
-	 *
-	 * Since: 3.0
 	 */
 	public GtkScrollablePolicy getHscrollPolicy();
 
@@ -114,8 +107,6 @@ public interface ScrollableIF{
 	 * Retrieves the #GtkAdjustment used for vertical scrolling.
 	 *
 	 * Returns: vertical #GtkAdjustment.
-	 *
-	 * Since: 3.0
 	 */
 	public Adjustment getVadjustment();
 
@@ -123,8 +114,6 @@ public interface ScrollableIF{
 	 * Gets the vertical #GtkScrollablePolicy.
 	 *
 	 * Returns: The vertical #GtkScrollablePolicy.
-	 *
-	 * Since: 3.0
 	 */
 	public GtkScrollablePolicy getVscrollPolicy();
 
@@ -133,8 +122,6 @@ public interface ScrollableIF{
 	 *
 	 * Params:
 	 *     hadjustment = a #GtkAdjustment
-	 *
-	 * Since: 3.0
 	 */
 	public void setHadjustment(Adjustment hadjustment);
 
@@ -145,8 +132,6 @@ public interface ScrollableIF{
 	 *
 	 * Params:
 	 *     policy = the horizontal #GtkScrollablePolicy
-	 *
-	 * Since: 3.0
 	 */
 	public void setHscrollPolicy(GtkScrollablePolicy policy);
 
@@ -155,8 +140,6 @@ public interface ScrollableIF{
 	 *
 	 * Params:
 	 *     vadjustment = a #GtkAdjustment
-	 *
-	 * Since: 3.0
 	 */
 	public void setVadjustment(Adjustment vadjustment);
 
@@ -167,8 +150,6 @@ public interface ScrollableIF{
 	 *
 	 * Params:
 	 *     policy = the vertical #GtkScrollablePolicy
-	 *
-	 * Since: 3.0
 	 */
 	public void setVscrollPolicy(GtkScrollablePolicy policy);
 }

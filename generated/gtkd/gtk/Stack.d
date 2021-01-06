@@ -27,11 +27,11 @@ module gtk.Stack;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtk.Container;
+private import gtk.SelectionModelIF;
+private import gtk.StackPage;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -46,13 +46,39 @@ public  import gtkc.gtktypes;
  * These animations respect the #GtkSettings:gtk-enable-animations
  * setting.
  * 
- * The GtkStack widget was added in GTK+ 3.10.
+ * GtkStack maintains a #GtkStackPage object for each added
+ * child, which holds additional per-child properties. You
+ * obtain the #GtkStackPage for a child with gtk_stack_get_page().
+ * 
+ * # GtkStack as GtkBuildable
+ * 
+ * To set child-specific properties in a .ui file, create GtkStackPage
+ * objects explicitly, and set the child widget as a property on it:
+ * |[
+ * <object class="GtkStack" id="stack">
+ * <child>
+ * <object class="GtkStackPage">
+ * <property name="name">page1</property>
+ * <property name="title">In the beginning…</property>
+ * <property name="child">
+ * <object class="GtkLabel">
+ * <property name="label">It was dark</property>
+ * </object>
+ * </property>
+ * </object>
+ * </child>
+ * ]|
  * 
  * # CSS nodes
  * 
  * GtkStack has a single CSS node named stack.
+ * 
+ * # Accessibility
+ * 
+ * GtkStack uses the #GTK_ACCESSIBLE_ROLE_TAB_PANEL for the stack
+ * pages, which are the accessible parent objects of the child widgets.
  */
-public class Stack : Container
+public class Stack : Widget
 {
 	/** the main Gtk struct */
 	protected GtkStack* gtkStack;
@@ -77,7 +103,7 @@ public class Stack : Container
 	public this (GtkStack* gtkStack, bool ownedRef = false)
 	{
 		this.gtkStack = gtkStack;
-		super(cast(GtkContainer*)gtkStack, ownedRef);
+		super(cast(GtkWidget*)gtkStack, ownedRef);
 	}
 
 
@@ -92,20 +118,38 @@ public class Stack : Container
 	 *
 	 * Returns: a new #GtkStack
 	 *
-	 * Since: 3.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_stack_new();
+		auto __p = gtk_stack_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStack*) p);
+		this(cast(GtkStack*) __p);
+	}
+
+	/**
+	 * Adds a child to @stack.
+	 *
+	 * Params:
+	 *     child = the widget to add
+	 *
+	 * Returns: the #GtkStackPage for @child
+	 */
+	public StackPage addChild(Widget child)
+	{
+		auto __p = gtk_stack_add_child(gtkStack, (child is null) ? null : child.getWidgetStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(StackPage)(cast(GtkStackPage*) __p);
 	}
 
 	/**
@@ -114,13 +158,20 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     child = the widget to add
-	 *     name = the name for @child
+	 *     name = the name for @child or %NULL
 	 *
-	 * Since: 3.10
+	 * Returns: the #GtkStackPage for @child
 	 */
-	public void addNamed(Widget child, string name)
+	public StackPage addNamed(Widget child, string name)
 	{
-		gtk_stack_add_named(gtkStack, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(name));
+		auto __p = gtk_stack_add_named(gtkStack, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(name));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(StackPage)(cast(GtkStackPage*) __p);
 	}
 
 	/**
@@ -134,11 +185,18 @@ public class Stack : Container
 	 *     name = the name for @child
 	 *     title = a human-readable title for @child
 	 *
-	 * Since: 3.10
+	 * Returns: the #GtkStackPage for @child
 	 */
-	public void addTitled(Widget child, string name, string title)
+	public StackPage addTitled(Widget child, string name, string title)
 	{
-		gtk_stack_add_titled(gtkStack, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(name), Str.toStringz(title));
+		auto __p = gtk_stack_add_titled(gtkStack, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(name), Str.toStringz(title));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(StackPage)(cast(GtkStackPage*) __p);
 	}
 
 	/**
@@ -150,19 +208,17 @@ public class Stack : Container
 	 *     name = the name of the child to find
 	 *
 	 * Returns: the requested child of the #GtkStack
-	 *
-	 * Since: 3.12
 	 */
 	public Widget getChildByName(string name)
 	{
-		auto p = gtk_stack_get_child_by_name(gtkStack, Str.toStringz(name));
+		auto __p = gtk_stack_get_child_by_name(gtkStack, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -170,8 +226,6 @@ public class Stack : Container
 	 * See gtk_stack_set_hhomogeneous().
 	 *
 	 * Returns: whether @stack is horizontally homogeneous.
-	 *
-	 * Since: 3.16
 	 */
 	public bool getHhomogeneous()
 	{
@@ -179,25 +233,10 @@ public class Stack : Container
 	}
 
 	/**
-	 * Gets whether @stack is homogeneous.
-	 * See gtk_stack_set_homogeneous().
-	 *
-	 * Returns: whether @stack is homogeneous.
-	 *
-	 * Since: 3.10
-	 */
-	public bool getHomogeneous()
-	{
-		return gtk_stack_get_homogeneous(gtkStack) != 0;
-	}
-
-	/**
-	 * Returns wether the #GtkStack is set up to interpolate between
+	 * Returns whether the #GtkStack is set up to interpolate between
 	 * the sizes of children on page switch.
 	 *
 	 * Returns: %TRUE if child sizes are interpolated
-	 *
-	 * Since: 3.18
 	 */
 	public bool getInterpolateSize()
 	{
@@ -205,12 +244,50 @@ public class Stack : Container
 	}
 
 	/**
+	 * Returns the #GtkStackPage object for @child.
+	 *
+	 * Params:
+	 *     child = a child of @stack
+	 *
+	 * Returns: the #GtkStackPage for @child
+	 */
+	public StackPage getPage(Widget child)
+	{
+		auto __p = gtk_stack_get_page(gtkStack, (child is null) ? null : child.getWidgetStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(StackPage)(cast(GtkStackPage*) __p);
+	}
+
+	/**
+	 * Returns a #GListModel that contains the pages of the stack,
+	 * and can be used to keep an up-to-date view. The model also
+	 * implements #GtkSelectionModel and can be used to track and
+	 * modify the visible page.
+	 *
+	 * Returns: a #GtkSelectionModel for the stack's children
+	 */
+	public SelectionModelIF getPages()
+	{
+		auto __p = gtk_stack_get_pages(gtkStack);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(SelectionModelIF)(cast(GtkSelectionModel*) __p, true);
+	}
+
+	/**
 	 * Returns the amount of time (in milliseconds) that
 	 * transitions between pages in @stack will take.
 	 *
 	 * Returns: the transition duration
-	 *
-	 * Since: 3.10
 	 */
 	public uint getTransitionDuration()
 	{
@@ -222,8 +299,6 @@ public class Stack : Container
 	 * another.
 	 *
 	 * Returns: %TRUE if the transition is currently running, %FALSE otherwise.
-	 *
-	 * Since: 3.12
 	 */
 	public bool getTransitionRunning()
 	{
@@ -235,8 +310,6 @@ public class Stack : Container
 	 * for transitions between pages in @stack.
 	 *
 	 * Returns: the current transition type of @stack
-	 *
-	 * Since: 3.10
 	 */
 	public GtkStackTransitionType getTransitionType()
 	{
@@ -248,8 +321,6 @@ public class Stack : Container
 	 * See gtk_stack_set_vhomogeneous().
 	 *
 	 * Returns: whether @stack is vertically homogeneous.
-	 *
-	 * Since: 3.16
 	 */
 	public bool getVhomogeneous()
 	{
@@ -261,19 +332,17 @@ public class Stack : Container
 	 * there are no visible children.
 	 *
 	 * Returns: the visible child of the #GtkStack
-	 *
-	 * Since: 3.10
 	 */
 	public Widget getVisibleChild()
 	{
-		auto p = gtk_stack_get_visible_child(gtkStack);
+		auto __p = gtk_stack_get_visible_child(gtkStack);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -281,12 +350,21 @@ public class Stack : Container
 	 * %NULL if there is no visible child.
 	 *
 	 * Returns: the name of the visible child of the #GtkStack
-	 *
-	 * Since: 3.10
 	 */
 	public string getVisibleChildName()
 	{
 		return Str.toString(gtk_stack_get_visible_child_name(gtkStack));
+	}
+
+	/**
+	 * Removes a child widget from @stack.
+	 *
+	 * Params:
+	 *     child = the child to remove
+	 */
+	public void remove(Widget child)
+	{
+		gtk_stack_remove(gtkStack, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -297,32 +375,10 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     hhomogeneous = %TRUE to make @stack horizontally homogeneous
-	 *
-	 * Since: 3.16
 	 */
 	public void setHhomogeneous(bool hhomogeneous)
 	{
 		gtk_stack_set_hhomogeneous(gtkStack, hhomogeneous);
-	}
-
-	/**
-	 * Sets the #GtkStack to be homogeneous or not. If it
-	 * is homogeneous, the #GtkStack will request the same
-	 * size for all its children. If it isn't, the stack
-	 * may change size when a different child becomes visible.
-	 *
-	 * Since 3.16, homogeneity can be controlled separately
-	 * for horizontal and vertical size, with the
-	 * #GtkStack:hhomogeneous and #GtkStack:vhomogeneous.
-	 *
-	 * Params:
-	 *     homogeneous = %TRUE to make @stack homogeneous
-	 *
-	 * Since: 3.10
-	 */
-	public void setHomogeneous(bool homogeneous)
-	{
-		gtk_stack_set_homogeneous(gtkStack, homogeneous);
 	}
 
 	/**
@@ -334,8 +390,6 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     interpolateSize = the new value
-	 *
-	 * Since: 3.18
 	 */
 	public void setInterpolateSize(bool interpolateSize)
 	{
@@ -348,8 +402,6 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     duration = the new duration, in milliseconds
-	 *
-	 * Since: 3.10
 	 */
 	public void setTransitionDuration(uint duration)
 	{
@@ -367,8 +419,6 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     transition = the new transition type
-	 *
-	 * Since: 3.10
 	 */
 	public void setTransitionType(GtkStackTransitionType transition)
 	{
@@ -383,8 +433,6 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     vhomogeneous = %TRUE to make @stack vertically homogeneous
-	 *
-	 * Since: 3.16
 	 */
 	public void setVhomogeneous(bool vhomogeneous)
 	{
@@ -405,8 +453,6 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     child = a child of @stack
-	 *
-	 * Since: 3.10
 	 */
 	public void setVisibleChild(Widget child)
 	{
@@ -423,8 +469,6 @@ public class Stack : Container
 	 * Params:
 	 *     name = the name of the child to make visible
 	 *     transition = the transition type to use
-	 *
-	 * Since: 3.10
 	 */
 	public void setVisibleChildFull(string name, GtkStackTransitionType transition)
 	{
@@ -445,8 +489,6 @@ public class Stack : Container
 	 *
 	 * Params:
 	 *     name = the name of the child to make visible
-	 *
-	 * Since: 3.10
 	 */
 	public void setVisibleChildName(string name)
 	{

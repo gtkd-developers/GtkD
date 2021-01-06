@@ -24,9 +24,7 @@
 
 module pango.PgFontMetrics;
 
-private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -79,28 +77,6 @@ public class PgFontMetrics
 	public static GType getType()
 	{
 		return pango_font_metrics_get_type();
-	}
-
-	/**
-	 * Creates a new #PangoFontMetrics structure. This is only for
-	 * internal use by Pango backends and there is no public way
-	 * to set the fields of the structure.
-	 *
-	 * Returns: a newly-created #PangoFontMetrics structure
-	 *     with a reference count of 1.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this()
-	{
-		auto p = pango_font_metrics_new();
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(PangoFontMetrics*) p);
 	}
 
 	/**
@@ -157,6 +133,22 @@ public class PgFontMetrics
 	public int getDescent()
 	{
 		return pango_font_metrics_get_descent(pangoFontMetrics);
+	}
+
+	/**
+	 * Gets the line height from a font metrics structure. The
+	 * line height is the distance between successive baselines
+	 * in wrapped text.
+	 *
+	 * If the line height is not available, 0 is returned.
+	 *
+	 * Returns: the height, in Pango units
+	 *
+	 * Since: 1.44
+	 */
+	public int getHeight()
+	{
+		return pango_font_metrics_get_height(pangoFontMetrics);
 	}
 
 	/**
@@ -221,14 +213,14 @@ public class PgFontMetrics
 	 */
 	public PgFontMetrics ref_()
 	{
-		auto p = pango_font_metrics_ref(pangoFontMetrics);
+		auto __p = pango_font_metrics_ref(pangoFontMetrics);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) __p, true);
 	}
 
 	/**

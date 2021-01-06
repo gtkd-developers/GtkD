@@ -29,12 +29,9 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
-private import gtk.ActivatableIF;
-private import gtk.ActivatableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -50,13 +47,19 @@ private import std.algorithm;
  * 
  * |[<!-- language="plain" -->
  * switch
+ * ├── label
+ * ├── label
  * ╰── slider
  * ]|
  * 
- * GtkSwitch has two css nodes, the main node with the name switch and a subnode
- * named slider. Neither of them is using any style classes.
+ * GtkSwitch has four css nodes, the main node with the name switch and subnodes
+ * for the slider and the on and off labels. Neither of them is using any style classes.
+ * 
+ * # Accessibility
+ * 
+ * GtkSwitch uses the #GTK_ACCESSIBLE_ROLE_SWITCH role.
  */
-public class Switch : Widget, ActionableIF, ActivatableIF
+public class Switch : Widget, ActionableIF
 {
 	/** the main Gtk struct */
 	protected GtkSwitch* gtkSwitch;
@@ -87,9 +90,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	// add the Actionable capabilities
 	mixin ActionableT!(GtkSwitch);
 
-	// add the Activatable capabilities
-	mixin ActivatableT!(GtkSwitch);
-
 
 	/** */
 	public static GType getType()
@@ -102,28 +102,24 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 *
 	 * Returns: the newly created #GtkSwitch instance
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_switch_new();
+		auto __p = gtk_switch_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSwitch*) p);
+		this(cast(GtkSwitch*) __p);
 	}
 
 	/**
 	 * Gets whether the #GtkSwitch is in its “on” or “off” state.
 	 *
 	 * Returns: %TRUE if the #GtkSwitch is active, and %FALSE otherwise
-	 *
-	 * Since: 3.0
 	 */
 	public bool getActive()
 	{
@@ -134,8 +130,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 * Gets the underlying state of the #GtkSwitch.
 	 *
 	 * Returns: the underlying state
-	 *
-	 * Since: 3.14
 	 */
 	public bool getState()
 	{
@@ -143,12 +137,10 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	}
 
 	/**
-	 * Changes the state of @sw to the desired one.
+	 * Changes the state of @self to the desired one.
 	 *
 	 * Params:
-	 *     isActive = %TRUE if @sw should be active, and %FALSE otherwise
-	 *
-	 * Since: 3.0
+	 *     isActive = %TRUE if @self should be active, and %FALSE otherwise
 	 */
 	public void setActive(bool isActive)
 	{
@@ -166,8 +158,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 *
 	 * Params:
 	 *     state = the new state
-	 *
-	 * Since: 3.14
 	 */
 	public void setState(bool state)
 	{
@@ -204,8 +194,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 *     state = the new state of the switch
 	 *
 	 * Returns: %TRUE to stop the signal emission
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnStateSet(bool delegate(bool, Switch) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

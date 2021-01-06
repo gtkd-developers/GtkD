@@ -52,6 +52,7 @@ shared static this()
 	// gst.mpegts.AtscMGT
 
 	Linker.link(gst_mpegts_atsc_mgt_get_type, "gst_mpegts_atsc_mgt_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_atsc_mgt_new, "gst_mpegts_atsc_mgt_new", LIBRARY_GSTMPEGTS);
 
 	// gst.mpegts.AtscMGTTable
 
@@ -61,15 +62,32 @@ shared static this()
 
 	Linker.link(gst_mpegts_atsc_mult_string_get_type, "gst_mpegts_atsc_mult_string_get_type", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.AtscRRT
+
+	Linker.link(gst_mpegts_atsc_rrt_get_type, "gst_mpegts_atsc_rrt_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_atsc_rrt_new, "gst_mpegts_atsc_rrt_new", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.AtscRRTDimension
+
+	Linker.link(gst_mpegts_atsc_rrt_dimension_get_type, "gst_mpegts_atsc_rrt_dimension_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_atsc_rrt_dimension_new, "gst_mpegts_atsc_rrt_dimension_new", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.AtscRRTDimensionValue
+
+	Linker.link(gst_mpegts_atsc_rrt_dimension_value_get_type, "gst_mpegts_atsc_rrt_dimension_value_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_atsc_rrt_dimension_value_new, "gst_mpegts_atsc_rrt_dimension_value_new", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.AtscSTT
 
 	Linker.link(gst_mpegts_atsc_stt_get_type, "gst_mpegts_atsc_stt_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_atsc_stt_new, "gst_mpegts_atsc_stt_new", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_atsc_stt_get_datetime_utc, "gst_mpegts_atsc_stt_get_datetime_utc", LIBRARY_GSTMPEGTS);
 
 	// gst.mpegts.AtscStringSegment
 
 	Linker.link(gst_mpegts_atsc_string_segment_get_type, "gst_mpegts_atsc_string_segment_get_type", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_atsc_string_segment_get_string, "gst_mpegts_atsc_string_segment_get_string", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_atsc_string_segment_set_string, "gst_mpegts_atsc_string_segment_set_string", LIBRARY_GSTMPEGTS);
 
 	// gst.mpegts.AtscVCT
 
@@ -255,6 +273,16 @@ shared static this()
 	Linker.link(gst_mpegts_pat_program_new, "gst_mpegts_pat_program_new", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_pat_new, "gst_mpegts_pat_new", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.SCTESIT
+
+	Linker.link(gst_mpegts_scte_sit_get_type, "gst_mpegts_scte_sit_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_scte_sit_new, "gst_mpegts_scte_sit_new", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.SCTESpliceEvent
+
+	Linker.link(gst_mpegts_scte_splice_event_get_type, "gst_mpegts_scte_splice_event_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_scte_splice_event_new, "gst_mpegts_scte_splice_event_new", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.SDT
 
 	Linker.link(gst_mpegts_sdt_get_type, "gst_mpegts_sdt_get_type", LIBRARY_GSTMPEGTS);
@@ -277,6 +305,7 @@ shared static this()
 	Linker.link(gst_mpegts_section_get_atsc_eit, "gst_mpegts_section_get_atsc_eit", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_atsc_ett, "gst_mpegts_section_get_atsc_ett", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_atsc_mgt, "gst_mpegts_section_get_atsc_mgt", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_section_get_atsc_rrt, "gst_mpegts_section_get_atsc_rrt", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_atsc_stt, "gst_mpegts_section_get_atsc_stt", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_atsc_tvct, "gst_mpegts_section_get_atsc_tvct", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_bat, "gst_mpegts_section_get_bat", LIBRARY_GSTMPEGTS);
@@ -286,15 +315,20 @@ shared static this()
 	Linker.link(gst_mpegts_section_get_nit, "gst_mpegts_section_get_nit", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_pat, "gst_mpegts_section_get_pat", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_pmt, "gst_mpegts_section_get_pmt", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_section_get_scte_sit, "gst_mpegts_section_get_scte_sit", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_sdt, "gst_mpegts_section_get_sdt", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_tdt, "gst_mpegts_section_get_tdt", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_tot, "gst_mpegts_section_get_tot", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_get_tsdt, "gst_mpegts_section_get_tsdt", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_packetize, "gst_mpegts_section_packetize", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_send_event, "gst_mpegts_section_send_event", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_section_from_atsc_mgt, "gst_mpegts_section_from_atsc_mgt", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_section_from_atsc_rrt, "gst_mpegts_section_from_atsc_rrt", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_section_from_atsc_stt, "gst_mpegts_section_from_atsc_stt", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_from_nit, "gst_mpegts_section_from_nit", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_from_pat, "gst_mpegts_section_from_pat", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_from_pmt, "gst_mpegts_section_from_pmt", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_section_from_scte_sit, "gst_mpegts_section_from_scte_sit", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_section_from_sdt, "gst_mpegts_section_from_sdt", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_event_parse_mpegts_section, "gst_event_parse_mpegts_section", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_message_new_mpegts_section, "gst_message_new_mpegts_section", LIBRARY_GSTMPEGTS);
@@ -344,6 +378,7 @@ __gshared extern(C)
 	// gst.mpegts.AtscMGT
 
 	GType function() c_gst_mpegts_atsc_mgt_get_type;
+	GstMpegtsAtscMGT* function() c_gst_mpegts_atsc_mgt_new;
 
 	// gst.mpegts.AtscMGTTable
 
@@ -353,15 +388,32 @@ __gshared extern(C)
 
 	GType function() c_gst_mpegts_atsc_mult_string_get_type;
 
+	// gst.mpegts.AtscRRT
+
+	GType function() c_gst_mpegts_atsc_rrt_get_type;
+	GstMpegtsAtscRRT* function() c_gst_mpegts_atsc_rrt_new;
+
+	// gst.mpegts.AtscRRTDimension
+
+	GType function() c_gst_mpegts_atsc_rrt_dimension_get_type;
+	GstMpegtsAtscRRTDimension* function() c_gst_mpegts_atsc_rrt_dimension_new;
+
+	// gst.mpegts.AtscRRTDimensionValue
+
+	GType function() c_gst_mpegts_atsc_rrt_dimension_value_get_type;
+	GstMpegtsAtscRRTDimensionValue* function() c_gst_mpegts_atsc_rrt_dimension_value_new;
+
 	// gst.mpegts.AtscSTT
 
 	GType function() c_gst_mpegts_atsc_stt_get_type;
+	GstMpegtsAtscSTT* function() c_gst_mpegts_atsc_stt_new;
 	GstDateTime* function(GstMpegtsAtscSTT* stt) c_gst_mpegts_atsc_stt_get_datetime_utc;
 
 	// gst.mpegts.AtscStringSegment
 
 	GType function() c_gst_mpegts_atsc_string_segment_get_type;
 	const(char)* function(GstMpegtsAtscStringSegment* seg) c_gst_mpegts_atsc_string_segment_get_string;
+	int function(GstMpegtsAtscStringSegment* seg, char* string_, ubyte compressionType, ubyte mode) c_gst_mpegts_atsc_string_segment_set_string;
 
 	// gst.mpegts.AtscVCT
 
@@ -547,6 +599,16 @@ __gshared extern(C)
 	GstMpegtsPatProgram* function() c_gst_mpegts_pat_program_new;
 	GPtrArray* function() c_gst_mpegts_pat_new;
 
+	// gst.mpegts.SCTESIT
+
+	GType function() c_gst_mpegts_scte_sit_get_type;
+	GstMpegtsSCTESIT* function() c_gst_mpegts_scte_sit_new;
+
+	// gst.mpegts.SCTESpliceEvent
+
+	GType function() c_gst_mpegts_scte_splice_event_get_type;
+	GstMpegtsSCTESpliceEvent* function() c_gst_mpegts_scte_splice_event_new;
+
 	// gst.mpegts.SDT
 
 	GType function() c_gst_mpegts_sdt_get_type;
@@ -569,6 +631,7 @@ __gshared extern(C)
 	GstMpegtsAtscEIT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_atsc_eit;
 	GstMpegtsAtscETT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_atsc_ett;
 	GstMpegtsAtscMGT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_atsc_mgt;
+	GstMpegtsAtscRRT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_atsc_rrt;
 	GstMpegtsAtscSTT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_atsc_stt;
 	GstMpegtsAtscVCT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_atsc_tvct;
 	GstMpegtsBAT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_bat;
@@ -578,15 +641,20 @@ __gshared extern(C)
 	GstMpegtsNIT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_nit;
 	GPtrArray* function(GstMpegtsSection* section) c_gst_mpegts_section_get_pat;
 	GstMpegtsPMT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_pmt;
+	GstMpegtsSCTESIT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_scte_sit;
 	GstMpegtsSDT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_sdt;
 	GstDateTime* function(GstMpegtsSection* section) c_gst_mpegts_section_get_tdt;
 	GstMpegtsTOT* function(GstMpegtsSection* section) c_gst_mpegts_section_get_tot;
 	GPtrArray* function(GstMpegtsSection* section) c_gst_mpegts_section_get_tsdt;
 	ubyte* function(GstMpegtsSection* section, size_t* outputSize) c_gst_mpegts_section_packetize;
 	int function(GstMpegtsSection* section, GstElement* element) c_gst_mpegts_section_send_event;
+	GstMpegtsSection* function(GstMpegtsAtscMGT* mgt) c_gst_mpegts_section_from_atsc_mgt;
+	GstMpegtsSection* function(GstMpegtsAtscRRT* rrt) c_gst_mpegts_section_from_atsc_rrt;
+	GstMpegtsSection* function(GstMpegtsAtscSTT* stt) c_gst_mpegts_section_from_atsc_stt;
 	GstMpegtsSection* function(GstMpegtsNIT* nit) c_gst_mpegts_section_from_nit;
 	GstMpegtsSection* function(GPtrArray* programs, ushort tsId) c_gst_mpegts_section_from_pat;
 	GstMpegtsSection* function(GstMpegtsPMT* pmt, ushort pid) c_gst_mpegts_section_from_pmt;
+	GstMpegtsSection* function(GstMpegtsSCTESIT* sit, ushort pid) c_gst_mpegts_section_from_scte_sit;
 	GstMpegtsSection* function(GstMpegtsSDT* sdt) c_gst_mpegts_section_from_sdt;
 	GstMpegtsSection* function(GstEvent* event) c_gst_event_parse_mpegts_section;
 	GstMessage* function(GstObject* parent, GstMpegtsSection* section) c_gst_message_new_mpegts_section;
@@ -634,6 +702,7 @@ alias c_gst_mpegts_atsc_ett_get_type gst_mpegts_atsc_ett_get_type;
 // gst.mpegts.AtscMGT
 
 alias c_gst_mpegts_atsc_mgt_get_type gst_mpegts_atsc_mgt_get_type;
+alias c_gst_mpegts_atsc_mgt_new gst_mpegts_atsc_mgt_new;
 
 // gst.mpegts.AtscMGTTable
 
@@ -643,15 +712,32 @@ alias c_gst_mpegts_atsc_mgt_table_get_type gst_mpegts_atsc_mgt_table_get_type;
 
 alias c_gst_mpegts_atsc_mult_string_get_type gst_mpegts_atsc_mult_string_get_type;
 
+// gst.mpegts.AtscRRT
+
+alias c_gst_mpegts_atsc_rrt_get_type gst_mpegts_atsc_rrt_get_type;
+alias c_gst_mpegts_atsc_rrt_new gst_mpegts_atsc_rrt_new;
+
+// gst.mpegts.AtscRRTDimension
+
+alias c_gst_mpegts_atsc_rrt_dimension_get_type gst_mpegts_atsc_rrt_dimension_get_type;
+alias c_gst_mpegts_atsc_rrt_dimension_new gst_mpegts_atsc_rrt_dimension_new;
+
+// gst.mpegts.AtscRRTDimensionValue
+
+alias c_gst_mpegts_atsc_rrt_dimension_value_get_type gst_mpegts_atsc_rrt_dimension_value_get_type;
+alias c_gst_mpegts_atsc_rrt_dimension_value_new gst_mpegts_atsc_rrt_dimension_value_new;
+
 // gst.mpegts.AtscSTT
 
 alias c_gst_mpegts_atsc_stt_get_type gst_mpegts_atsc_stt_get_type;
+alias c_gst_mpegts_atsc_stt_new gst_mpegts_atsc_stt_new;
 alias c_gst_mpegts_atsc_stt_get_datetime_utc gst_mpegts_atsc_stt_get_datetime_utc;
 
 // gst.mpegts.AtscStringSegment
 
 alias c_gst_mpegts_atsc_string_segment_get_type gst_mpegts_atsc_string_segment_get_type;
 alias c_gst_mpegts_atsc_string_segment_get_string gst_mpegts_atsc_string_segment_get_string;
+alias c_gst_mpegts_atsc_string_segment_set_string gst_mpegts_atsc_string_segment_set_string;
 
 // gst.mpegts.AtscVCT
 
@@ -837,6 +923,16 @@ alias c_gst_mpegts_pat_program_get_type gst_mpegts_pat_program_get_type;
 alias c_gst_mpegts_pat_program_new gst_mpegts_pat_program_new;
 alias c_gst_mpegts_pat_new gst_mpegts_pat_new;
 
+// gst.mpegts.SCTESIT
+
+alias c_gst_mpegts_scte_sit_get_type gst_mpegts_scte_sit_get_type;
+alias c_gst_mpegts_scte_sit_new gst_mpegts_scte_sit_new;
+
+// gst.mpegts.SCTESpliceEvent
+
+alias c_gst_mpegts_scte_splice_event_get_type gst_mpegts_scte_splice_event_get_type;
+alias c_gst_mpegts_scte_splice_event_new gst_mpegts_scte_splice_event_new;
+
 // gst.mpegts.SDT
 
 alias c_gst_mpegts_sdt_get_type gst_mpegts_sdt_get_type;
@@ -859,6 +955,7 @@ alias c_gst_mpegts_section_get_atsc_cvct gst_mpegts_section_get_atsc_cvct;
 alias c_gst_mpegts_section_get_atsc_eit gst_mpegts_section_get_atsc_eit;
 alias c_gst_mpegts_section_get_atsc_ett gst_mpegts_section_get_atsc_ett;
 alias c_gst_mpegts_section_get_atsc_mgt gst_mpegts_section_get_atsc_mgt;
+alias c_gst_mpegts_section_get_atsc_rrt gst_mpegts_section_get_atsc_rrt;
 alias c_gst_mpegts_section_get_atsc_stt gst_mpegts_section_get_atsc_stt;
 alias c_gst_mpegts_section_get_atsc_tvct gst_mpegts_section_get_atsc_tvct;
 alias c_gst_mpegts_section_get_bat gst_mpegts_section_get_bat;
@@ -868,15 +965,20 @@ alias c_gst_mpegts_section_get_eit gst_mpegts_section_get_eit;
 alias c_gst_mpegts_section_get_nit gst_mpegts_section_get_nit;
 alias c_gst_mpegts_section_get_pat gst_mpegts_section_get_pat;
 alias c_gst_mpegts_section_get_pmt gst_mpegts_section_get_pmt;
+alias c_gst_mpegts_section_get_scte_sit gst_mpegts_section_get_scte_sit;
 alias c_gst_mpegts_section_get_sdt gst_mpegts_section_get_sdt;
 alias c_gst_mpegts_section_get_tdt gst_mpegts_section_get_tdt;
 alias c_gst_mpegts_section_get_tot gst_mpegts_section_get_tot;
 alias c_gst_mpegts_section_get_tsdt gst_mpegts_section_get_tsdt;
 alias c_gst_mpegts_section_packetize gst_mpegts_section_packetize;
 alias c_gst_mpegts_section_send_event gst_mpegts_section_send_event;
+alias c_gst_mpegts_section_from_atsc_mgt gst_mpegts_section_from_atsc_mgt;
+alias c_gst_mpegts_section_from_atsc_rrt gst_mpegts_section_from_atsc_rrt;
+alias c_gst_mpegts_section_from_atsc_stt gst_mpegts_section_from_atsc_stt;
 alias c_gst_mpegts_section_from_nit gst_mpegts_section_from_nit;
 alias c_gst_mpegts_section_from_pat gst_mpegts_section_from_pat;
 alias c_gst_mpegts_section_from_pmt gst_mpegts_section_from_pmt;
+alias c_gst_mpegts_section_from_scte_sit gst_mpegts_section_from_scte_sit;
 alias c_gst_mpegts_section_from_sdt gst_mpegts_section_from_sdt;
 alias c_gst_event_parse_mpegts_section gst_event_parse_mpegts_section;
 alias c_gst_message_new_mpegts_section gst_message_new_mpegts_section;

@@ -24,29 +24,25 @@
 
 module gtk.SearchEntry;
 
-private import gdk.Event;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Entry;
+private import gtk.EditableIF;
+private import gtk.EditableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
- * #GtkSearchEntry is a subclass of #GtkEntry that has been
- * tailored for use as a search entry.
+ * #GtkSearchEntry is an entry widget that has been tailored for use
+ * as a search entry. The main aPI for interacting with a GtkSearchEntry
+ * as entry is the #GtkEditable interface.
  * 
  * It will show an inactive symbolic “find” icon when the search
  * entry is empty, and a symbolic “clear” icon when there is text.
  * Clicking on the “clear” icon will empty the search entry.
- * 
- * Note that the search/clear icon is shown using a secondary
- * icon, and thus does not work if you are using the secondary
- * icon position for some other purpose.
  * 
  * To make filtering appear more reactive, it is a good idea to
  * not react to every change in the entry text immediately, but
@@ -60,11 +56,24 @@ private import std.algorithm;
  * 
  * Often, GtkSearchEntry will be fed events by means of being
  * placed inside a #GtkSearchBar. If that is not the case,
- * you can use gtk_search_entry_handle_event() to pass events.
- *
- * Since: 3.6
+ * you can use gtk_search_entry_set_key_capture_widget() to let it
+ * capture key input from another widget.
+ * 
+ * # CSS Nodes
+ * 
+ * |[<!-- language="plain" -->
+ * entry.search
+ * ╰── text
+ * ]|
+ * 
+ * GtkSearchEntry has a single CSS node with name entry that carries
+ * a .sarch style class, and the text node is a child of that.
+ * 
+ * # Accessibility
+ * 
+ * GtkSearchEntry uses the #GTK_ACCESSIBLE_ROLE_SEARCH_BOX role.
  */
-public class SearchEntry : Entry
+public class SearchEntry : Widget, EditableIF
 {
 	/** the main Gtk struct */
 	protected GtkSearchEntry* gtkSearchEntry;
@@ -89,8 +98,11 @@ public class SearchEntry : Entry
 	public this (GtkSearchEntry* gtkSearchEntry, bool ownedRef = false)
 	{
 		this.gtkSearchEntry = gtkSearchEntry;
-		super(cast(GtkEntry*)gtkSearchEntry, ownedRef);
+		super(cast(GtkWidget*)gtkSearchEntry, ownedRef);
 	}
+
+	// add the Editable capabilities
+	mixin EditableT!(GtkSearchEntry);
 
 
 	/** */
@@ -105,51 +117,67 @@ public class SearchEntry : Entry
 	 *
 	 * Returns: a new #GtkSearchEntry
 	 *
-	 * Since: 3.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_search_entry_new();
+		auto __p = gtk_search_entry_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSearchEntry*) p);
+		this(cast(GtkSearchEntry*) __p);
 	}
 
 	/**
-	 * This function should be called when the top-level window
-	 * which contains the search entry received a key event. If
-	 * the entry is part of a #GtkSearchBar, it is preferable
-	 * to call gtk_search_bar_handle_event() instead, which will
-	 * reveal the entry in addition to passing the event to this
-	 * function.
+	 * Gets the widget that @entry is capturing key events from.
 	 *
-	 * If the key event is handled by the search entry and starts
-	 * or continues a search, %GDK_EVENT_STOP will be returned.
-	 * The caller should ensure that the entry is shown in this
-	 * case, and not propagate the event further.
+	 * Returns: The key capture widget.
+	 */
+	public Widget getKeyCaptureWidget()
+	{
+		auto __p = gtk_search_entry_get_key_capture_widget(gtkSearchEntry);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Sets @widget as the widget that @entry will capture key events from.
+	 *
+	 * Key events are consumed by the search entry to start or
+	 * continue a search.
+	 *
+	 * If the entry is part of a #GtkSearchBar, it is preferable
+	 * to call gtk_search_bar_set_key_capture_widget() instead, which
+	 * will reveal the entry in addition to triggering the search entry.
 	 *
 	 * Params:
-	 *     event = a key event
-	 *
-	 * Returns: %GDK_EVENT_STOP if the key press event resulted
-	 *     in a search beginning or continuing, %GDK_EVENT_PROPAGATE
-	 *     otherwise.
-	 *
-	 * Since: 3.16
+	 *     widget = a #GtkWidget
 	 */
-	public bool handleEvent(Event event)
+	public void setKeyCaptureWidget(Widget widget)
 	{
-		return gtk_search_entry_handle_event(gtkSearchEntry, (event is null) ? null : event.getEventStruct()) != 0;
+		gtk_search_entry_set_key_capture_widget(gtkSearchEntry, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
 	/**
-	 * The ::next-match signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::activate signal is forwarded from the
+	 * #GtkText::activated signal, which is a keybinding
+	 * signal for all forms of the Enter key.
+	 */
+	gulong addOnActivate(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * The ::next-match signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates a move to the next match
 	 * for the current search string.
 	 *
@@ -157,8 +185,6 @@ public class SearchEntry : Entry
 	 * matches.
 	 *
 	 * The default bindings for this signal is Ctrl-g.
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnNextMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -166,7 +192,7 @@ public class SearchEntry : Entry
 	}
 
 	/**
-	 * The ::previous-match signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::previous-match signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates a move to the previous match
 	 * for the current search string.
 	 *
@@ -174,8 +200,6 @@ public class SearchEntry : Entry
 	 * matches.
 	 *
 	 * The default bindings for this signal is Ctrl-Shift-g.
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnPreviousMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -185,8 +209,6 @@ public class SearchEntry : Entry
 	/**
 	 * The #GtkSearchEntry::search-changed signal is emitted with a short
 	 * delay of 150 milliseconds after the last change to the entry text.
-	 *
-	 * Since: 3.10
 	 */
 	gulong addOnSearchChanged(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -194,15 +216,22 @@ public class SearchEntry : Entry
 	}
 
 	/**
-	 * The ::stop-search signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::search-started signal gets emitted when the user initiated
+	 * a search on the entry.
+	 */
+	gulong addOnSearchStarted(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "search-started", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * The ::stop-search signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user stops a search via keyboard input.
 	 *
 	 * Applications should connect to it, to implement hiding the search
 	 * entry in this case.
 	 *
 	 * The default bindings for this signal is Escape.
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnStopSearch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

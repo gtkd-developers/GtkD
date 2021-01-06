@@ -26,10 +26,11 @@ module gstreamer.Bitmask;
 
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes a 64-bit bitmask
+ */
 public class Bitmask
 {
 	/** the main Gtk struct */

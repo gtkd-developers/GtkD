@@ -30,17 +30,16 @@ private import glib.Variant;
 private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
+private import gtk.Filter;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * A GtkFileFilter can be used to restrict the files being shown in a
  * #GtkFileChooser. Files can be filtered based on their name (with
- * gtk_file_filter_add_pattern()), on their mime type (with
- * gtk_file_filter_add_mime_type()), or by a custom filter function
- * (with gtk_file_filter_add_custom()).
+ * gtk_file_filter_add_pattern()) or on their mime type (with
+ * gtk_file_filter_add_mime_type()).
  * 
  * Filtering by mime types handles aliasing and subclassing of mime
  * types; e.g. a filter for text/plain also matches a file with mime
@@ -48,22 +47,24 @@ public  import gtkc.gtktypes;
  * text/plain. Note that #GtkFileFilter allows wildcards for the
  * subtype of a mime type, so you can e.g. filter for image/\*.
  * 
- * Normally, filters are used by adding them to a #GtkFileChooser,
- * see gtk_file_chooser_add_filter(), but it is also possible
- * to manually use a filter on a file with gtk_file_filter_filter().
+ * Normally, file filters are used by adding them to a #GtkFileChooser
+ * (see gtk_file_chooser_add_filter()), but it is also possible to
+ * manually use a file filter on any #GtkFilterListModel containing
+ * #GFileInfo objects.
  * 
  * # GtkFileFilter as GtkBuildable
  * 
  * The GtkFileFilter implementation of the GtkBuildable interface
- * supports adding rules using the <mime-types>, <patterns> and
- * <applications> elements and listing the rules within. Specifying
- * a <mime-type> or <pattern> has the same effect as as calling
+ * supports adding rules using the <mime-types> and <patterns>
+ * elements and listing the rules within. Specifying a <mime-type>
+ * or <pattern> has the same effect as as calling
  * gtk_file_filter_add_mime_type() or gtk_file_filter_add_pattern().
  * 
  * An example of a UI definition fragment specifying GtkFileFilter
  * rules:
  * |[
  * <object class="GtkFileFilter">
+ * <property name="name" translatable="yes">Text and Images</property>
  * <mime-types>
  * <mime-type>text/plain</mime-type>
  * <mime-type>image/ *</mime-type>
@@ -75,7 +76,7 @@ public  import gtkc.gtktypes;
  * </object>
  * ]|
  */
-public class FileFilter : ObjectG, BuildableIF
+public class FileFilter : Filter, BuildableIF
 {
 	/** the main Gtk struct */
 	protected GtkFileFilter* gtkFileFilter;
@@ -100,7 +101,7 @@ public class FileFilter : ObjectG, BuildableIF
 	public this (GtkFileFilter* gtkFileFilter, bool ownedRef = false)
 	{
 		this.gtkFileFilter = gtkFileFilter;
-		super(cast(GObject*)gtkFileFilter, ownedRef);
+		super(cast(GtkFilter*)gtkFileFilter, ownedRef);
 	}
 
 	// add the Buildable capabilities
@@ -115,11 +116,13 @@ public class FileFilter : ObjectG, BuildableIF
 
 	/**
 	 * Creates a new #GtkFileFilter with no rules added to it.
+	 *
 	 * Such a filter doesn’t accept any files, so is not
 	 * particularly useful until you add rules with
 	 * gtk_file_filter_add_mime_type(), gtk_file_filter_add_pattern(),
-	 * or gtk_file_filter_add_custom(). To create a filter
-	 * that accepts any file, use:
+	 * or gtk_file_filter_add_pixbuf_formats().
+	 *
+	 * To create a filter that accepts any file, use:
 	 * |[<!-- language="C" -->
 	 * GtkFileFilter *filter = gtk_file_filter_new ();
 	 * gtk_file_filter_add_pattern (filter, "*");
@@ -127,20 +130,18 @@ public class FileFilter : ObjectG, BuildableIF
 	 *
 	 * Returns: a new #GtkFileFilter
 	 *
-	 * Since: 2.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_file_filter_new();
+		auto __p = gtk_file_filter_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFileFilter*) p);
+		this(cast(GtkFileFilter*) __p, true);
 	}
 
 	/**
@@ -152,42 +153,18 @@ public class FileFilter : ObjectG, BuildableIF
 	 *
 	 * Returns: a new #GtkFileFilter object
 	 *
-	 * Since: 3.22
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Variant variant)
 	{
-		auto p = gtk_file_filter_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		auto __p = gtk_file_filter_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 
-		this(cast(GtkFileFilter*) p, true);
-	}
-
-	/**
-	 * Adds rule to a filter that allows files based on a custom callback
-	 * function. The bitfield @needed which is passed in provides information
-	 * about what sorts of information that the filter function needs;
-	 * this allows GTK+ to avoid retrieving expensive information when
-	 * it isn’t needed by the filter.
-	 *
-	 * Params:
-	 *     needed = bitfield of flags indicating the information that the custom
-	 *         filter function needs.
-	 *     func = callback function; if the function returns %TRUE, then
-	 *         the file will be displayed.
-	 *     data = data to pass to @func
-	 *     notify = function to call to free @data when it is no longer needed.
-	 *
-	 * Since: 2.4
-	 */
-	public void addCustom(GtkFileFilterFlags needed, GtkFileFilterFunc func, void* data, GDestroyNotify notify)
-	{
-		gtk_file_filter_add_custom(gtkFileFilter, needed, func, data, notify);
+		this(cast(GtkFileFilter*) __p, true);
 	}
 
 	/**
@@ -195,8 +172,6 @@ public class FileFilter : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     mimeType = name of a MIME type
-	 *
-	 * Since: 2.4
 	 */
 	public void addMimeType(string mimeType)
 	{
@@ -208,8 +183,6 @@ public class FileFilter : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     pattern = a shell style glob
-	 *
-	 * Since: 2.4
 	 */
 	public void addPattern(string pattern)
 	{
@@ -220,7 +193,8 @@ public class FileFilter : ObjectG, BuildableIF
 	 * Adds a rule allowing image files in the formats supported
 	 * by GdkPixbuf.
 	 *
-	 * Since: 2.6
+	 * This is equivalent to calling gtk_file_filter_add_mime_type()
+	 * for all the supported mime types.
 	 */
 	public void addPixbufFormats()
 	{
@@ -228,35 +202,26 @@ public class FileFilter : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Tests whether a file should be displayed according to @filter.
-	 * The #GtkFileFilterInfo @filter_info should include
-	 * the fields returned from gtk_file_filter_get_needed().
+	 * Gets the attributes that need to be filled in for the #GFileInfo
+	 * passed to this filter.
 	 *
-	 * This function will not typically be used by applications; it
-	 * is intended principally for use in the implementation of
-	 * #GtkFileChooser.
+	 * This function will not typically be used by applications;
+	 * it is intended principally for use in the implementation
+	 * of #GtkFileChooser.
 	 *
-	 * Params:
-	 *     filterInfo = a #GtkFileFilterInfo containing information
-	 *         about a file.
-	 *
-	 * Returns: %TRUE if the file should be displayed
-	 *
-	 * Since: 2.4
+	 * Returns: the attributes
 	 */
-	public bool filter(GtkFileFilterInfo* filterInfo)
+	public string[] getAttributes()
 	{
-		return gtk_file_filter_filter(gtkFileFilter, filterInfo) != 0;
+		return Str.toStringArray(gtk_file_filter_get_attributes(gtkFileFilter));
 	}
 
 	/**
 	 * Gets the human-readable name for the filter. See gtk_file_filter_set_name().
 	 *
 	 * Returns: The human-readable name of the filter,
-	 *     or %NULL. This value is owned by GTK+ and must not
+	 *     or %NULL. This value is owned by GTK and must not
 	 *     be modified or freed.
-	 *
-	 * Since: 2.4
 	 */
 	public string getName()
 	{
@@ -264,33 +229,13 @@ public class FileFilter : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Gets the fields that need to be filled in for the #GtkFileFilterInfo
-	 * passed to gtk_file_filter_filter()
-	 *
-	 * This function will not typically be used by applications; it
-	 * is intended principally for use in the implementation of
-	 * #GtkFileChooser.
-	 *
-	 * Returns: bitfield of flags indicating needed fields when
-	 *     calling gtk_file_filter_filter()
-	 *
-	 * Since: 2.4
-	 */
-	public GtkFileFilterFlags getNeeded()
-	{
-		return gtk_file_filter_get_needed(gtkFileFilter);
-	}
-
-	/**
-	 * Sets the human-readable name of the filter; this is the string
-	 * that will be displayed in the file selector user interface if
-	 * there is a selectable list of filters.
+	 * Sets a human-readable name of the filter; this is the string
+	 * that will be displayed in the file chooser if there is a selectable
+	 * list of filters.
 	 *
 	 * Params:
 	 *     name = the human-readable-name for the filter, or %NULL
 	 *         to remove any existing name.
-	 *
-	 * Since: 2.4
 	 */
 	public void setName(string name)
 	{
@@ -301,18 +246,16 @@ public class FileFilter : ObjectG, BuildableIF
 	 * Serialize a file filter to an a{sv} variant.
 	 *
 	 * Returns: a new, floating, #GVariant
-	 *
-	 * Since: 3.22
 	 */
 	public Variant toGvariant()
 	{
-		auto p = gtk_file_filter_to_gvariant(gtkFileFilter);
+		auto __p = gtk_file_filter_to_gvariant(gtkFileFilter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 }

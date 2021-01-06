@@ -27,7 +27,6 @@ module gtk.GestureSingle;
 private import gtk.Gesture;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -84,8 +83,6 @@ public class GestureSingle : Gesture
 	 * reacts to any button press.
 	 *
 	 * Returns: The button number, or 0 for any button
-	 *
-	 * Since: 3.14
 	 */
 	public uint getButton()
 	{
@@ -97,8 +94,6 @@ public class GestureSingle : Gesture
 	 * is none.
 	 *
 	 * Returns: The current button number
-	 *
-	 * Since: 3.14
 	 */
 	public uint getCurrentButton()
 	{
@@ -110,8 +105,6 @@ public class GestureSingle : Gesture
 	 * This is only meaningful if gtk_gesture_is_active() returns %TRUE.
 	 *
 	 * Returns: the current sequence
-	 *
-	 * Since: 3.14
 	 */
 	public GdkEventSequence* getCurrentSequence()
 	{
@@ -123,8 +116,6 @@ public class GestureSingle : Gesture
 	 * gtk_gesture_single_set_exclusive().
 	 *
 	 * Returns: Whether the gesture is exclusive
-	 *
-	 * Since: 3.14
 	 */
 	public bool getExclusive()
 	{
@@ -135,8 +126,6 @@ public class GestureSingle : Gesture
 	 * Returns %TRUE if the gesture is only triggered by touch events.
 	 *
 	 * Returns: %TRUE if the gesture only handles touch events
-	 *
-	 * Since: 3.14
 	 */
 	public bool getTouchOnly()
 	{
@@ -150,8 +139,6 @@ public class GestureSingle : Gesture
 	 *
 	 * Params:
 	 *     button = button number to listen to, or 0 for any button
-	 *
-	 * Since: 3.14
 	 */
 	public void setButton(uint button)
 	{
@@ -166,8 +153,6 @@ public class GestureSingle : Gesture
 	 *
 	 * Params:
 	 *     exclusive = %TRUE to make @gesture exclusive
-	 *
-	 * Since: 3.14
 	 */
 	public void setExclusive(bool exclusive)
 	{
@@ -181,8 +166,6 @@ public class GestureSingle : Gesture
 	 *
 	 * Params:
 	 *     touchOnly = whether @gesture handles only touch events
-	 *
-	 * Since: 3.14
 	 */
 	public void setTouchOnly(bool touchOnly)
 	{

@@ -198,6 +198,7 @@ shared static this()
 	Linker.link(atk_plug_get_type, "atk_plug_get_type", LIBRARY_ATK);
 	Linker.link(atk_plug_new, "atk_plug_new", LIBRARY_ATK);
 	Linker.link(atk_plug_get_id, "atk_plug_get_id", LIBRARY_ATK);
+	Linker.link(atk_plug_set_child, "atk_plug_set_child", LIBRARY_ATK);
 
 	// atk.Range
 
@@ -581,6 +582,7 @@ __gshared extern(C)
 	GType function() c_atk_plug_get_type;
 	AtkObject* function() c_atk_plug_new;
 	char* function(AtkPlug* plug) c_atk_plug_get_id;
+	void function(AtkPlug* plug, AtkObject* child) c_atk_plug_set_child;
 
 	// atk.Range
 
@@ -644,7 +646,7 @@ __gshared extern(C)
 
 	GType function() c_atk_socket_get_type;
 	AtkObject* function() c_atk_socket_new;
-	void function(AtkSocket* obj, char* plugId) c_atk_socket_embed;
+	void function(AtkSocket* obj, const(char)* plugId) c_atk_socket_embed;
 	int function(AtkSocket* obj) c_atk_socket_is_occupied;
 
 	// atk.StateSet
@@ -962,6 +964,7 @@ alias c_atk_object_factory_invalidate atk_object_factory_invalidate;
 alias c_atk_plug_get_type atk_plug_get_type;
 alias c_atk_plug_new atk_plug_new;
 alias c_atk_plug_get_id atk_plug_get_id;
+alias c_atk_plug_set_child atk_plug_set_child;
 
 // atk.Range
 

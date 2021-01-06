@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtk.PageSetup;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgContext;
 private import pango.PgFontMap;
 private import pango.PgLayout;
@@ -101,8 +100,6 @@ private import pango.PgLayout;
  * g_object_unref (layout);
  * }
  * ]|
- * 
- * Printing support was added in GTK+ 2.10.
  */
 public class PrintContext : ObjectG
 {
@@ -144,19 +141,17 @@ public class PrintContext : ObjectG
 	 * #GtkPrintContext.
 	 *
 	 * Returns: a new Pango context for @context
-	 *
-	 * Since: 2.10
 	 */
 	public PgContext createPangoContext()
 	{
-		auto p = gtk_print_context_create_pango_context(gtkPrintContext);
+		auto __p = gtk_print_context_create_pango_context(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) __p, true);
 	}
 
 	/**
@@ -164,19 +159,17 @@ public class PrintContext : ObjectG
 	 * with the #GtkPrintContext.
 	 *
 	 * Returns: a new Pango layout for @context
-	 *
-	 * Since: 2.10
 	 */
 	public PgLayout createPangoLayout()
 	{
-		auto p = gtk_print_context_create_pango_layout(gtkPrintContext);
+		auto __p = gtk_print_context_create_pango_layout(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p, true);
 	}
 
 	/**
@@ -184,19 +177,17 @@ public class PrintContext : ObjectG
 	 * #GtkPrintContext.
 	 *
 	 * Returns: the cairo context of @context
-	 *
-	 * Since: 2.10
 	 */
 	public Context getCairoContext()
 	{
-		auto p = gtk_print_context_get_cairo_context(gtkPrintContext);
+		auto __p = gtk_print_context_get_cairo_context(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Context(cast(cairo_t*) p);
+		return new Context(cast(cairo_t*) __p);
 	}
 
 	/**
@@ -204,8 +195,6 @@ public class PrintContext : ObjectG
 	 * in dots per inch.
 	 *
 	 * Returns: the horizontal resolution of @context
-	 *
-	 * Since: 2.10
 	 */
 	public double getDpiX()
 	{
@@ -217,8 +206,6 @@ public class PrintContext : ObjectG
 	 * in dots per inch.
 	 *
 	 * Returns: the vertical resolution of @context
-	 *
-	 * Since: 2.10
 	 */
 	public double getDpiY()
 	{
@@ -235,8 +222,6 @@ public class PrintContext : ObjectG
 	 *     right = right hardware printer margin
 	 *
 	 * Returns: %TRUE if the hard margins were retrieved
-	 *
-	 * Since: 2.20
 	 */
 	public bool getHardMargins(out double top, out double bottom, out double left, out double right)
 	{
@@ -247,8 +232,6 @@ public class PrintContext : ObjectG
 	 * Obtains the height of the #GtkPrintContext, in pixels.
 	 *
 	 * Returns: the height of @context
-	 *
-	 * Since: 2.10
 	 */
 	public double getHeight()
 	{
@@ -260,19 +243,17 @@ public class PrintContext : ObjectG
 	 * dimensions of the #GtkPrintContext.
 	 *
 	 * Returns: the page setup of @context
-	 *
-	 * Since: 2.10
 	 */
 	public PageSetup getPageSetup()
 	{
-		auto p = gtk_print_context_get_page_setup(gtkPrintContext);
+		auto __p = gtk_print_context_get_page_setup(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) __p);
 	}
 
 	/**
@@ -280,27 +261,23 @@ public class PrintContext : ObjectG
 	 * with the #GtkPrintContext.
 	 *
 	 * Returns: the font map of @context
-	 *
-	 * Since: 2.10
 	 */
 	public PgFontMap getPangoFontmap()
 	{
-		auto p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
+		auto __p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) __p);
 	}
 
 	/**
 	 * Obtains the width of the #GtkPrintContext, in pixels.
 	 *
 	 * Returns: the width of @context
-	 *
-	 * Since: 2.10
 	 */
 	public double getWidth()
 	{
@@ -312,15 +289,13 @@ public class PrintContext : ObjectG
 	 *
 	 * This function is intended to be used when implementing
 	 * an internal print preview, it is not needed for printing,
-	 * since GTK+ itself creates a suitable cairo context in that
+	 * since GTK itself creates a suitable cairo context in that
 	 * case.
 	 *
 	 * Params:
 	 *     cr = the cairo context
 	 *     dpiX = the horizontal resolution to use with @cr
 	 *     dpiY = the vertical resolution to use with @cr
-	 *
-	 * Since: 2.10
 	 */
 	public void setCairoContext(Context cr, double dpiX, double dpiY)
 	{

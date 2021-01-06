@@ -27,22 +27,17 @@ module gtk.HeaderBar;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtk.Container;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * GtkHeaderBar is similar to a horizontal #GtkBox. It allows children to
- * be placed at the start or the end. In addition, it allows a title and
- * subtitle to be displayed. The title will be centered with respect to
- * the width of the box, even if the children at either side take up
- * different amounts of space. The height of the titlebar will be
- * set to provide sufficient space for the subtitle, even if none is
- * currently set. If a subtitle is not needed, the space reservation
- * can be turned off with gtk_header_bar_set_has_subtitle().
+ * be placed at the start or the end. In addition, it allows the window
+ * title to be displayed. The title will be centered with respect to the
+ * width of the box, even if the children at either side take up different
+ * amounts of space.
  * 
  * GtkHeaderBar can add typical window frame controls, such as minimize,
  * maximize and close buttons, or the window icon.
@@ -50,8 +45,60 @@ public  import gtkc.gtktypes;
  * For these reasons, GtkHeaderBar is the natural choice for use as the custom
  * titlebar widget of a #GtkWindow (see gtk_window_set_titlebar()), as it gives
  * features typical of titlebars while allowing the addition of child widgets.
+ * 
+ * The GtkHeaderBar implementation of the #GtkBuildable interface supports
+ * adding children at the start or end sides by specifying “start” or “end” as
+ * the “type” attribute of a <child> element, or setting the title widget by
+ * specifying “title” value.
+ * 
+ * By default the GtkHeaderBar uses a #GtkLabel displaying the title of the
+ * window it is contained in as the title widget, equivalent to the following
+ * UI definition:
+ * 
+ * |[
+ * <object class="GtkHeaderBar">
+ * <property name="title-widget">
+ * <object class="GtkLabel">
+ * <property name="label" translatable="yes">Label</property>
+ * <property name="single-line-mode">True</property>
+ * <property name="ellipsize">end</property>
+ * <property name="width-chars">5</property>
+ * <style>
+ * <class name="title"/>
+ * </style>
+ * </object>
+ * </property>
+ * </object>
+ * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * headerbar
+ * ╰── windowhandle
+ * ╰── box
+ * ├── box.start
+ * │   ├── windowcontrols.start
+ * │   ╰── [other children]
+ * ├── [Title Widget]
+ * ╰── box.end
+ * ├── [other children]
+ * ╰── windowcontrols.end
+ * ]|
+ * 
+ * A #GtkHeaderBar's CSS node is called `headerbar`. It contains a `windowhandle`
+ * subnode, which contains a `box` subnode, which contains two `box` subnodes at
+ * the start and end of the header bar, as well as a center node that represents
+ * the title.
+ * 
+ * Each of the boxes contains a `windowcontrols` subnode, see #GtkWindowControls
+ * for details, as well as other children.
+ * 
+ * # Accessibility
+ * 
+ * GtkHeaderBar uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
-public class HeaderBar : Container
+public class HeaderBar : Widget
 {
 	/** the main Gtk struct */
 	protected GtkHeaderBar* gtkHeaderBar;
@@ -76,7 +123,7 @@ public class HeaderBar : Container
 	public this (GtkHeaderBar* gtkHeaderBar, bool ownedRef = false)
 	{
 		this.gtkHeaderBar = gtkHeaderBar;
-		super(cast(GtkContainer*)gtkHeaderBar, ownedRef);
+		super(cast(GtkWidget*)gtkHeaderBar, ownedRef);
 	}
 
 
@@ -91,41 +138,18 @@ public class HeaderBar : Container
 	 *
 	 * Returns: a new #GtkHeaderBar
 	 *
-	 * Since: 3.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_header_bar_new();
+		auto __p = gtk_header_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHeaderBar*) p);
-	}
-
-	/**
-	 * Retrieves the custom title widget of the header. See
-	 * gtk_header_bar_set_custom_title().
-	 *
-	 * Returns: the custom title widget
-	 *     of the header, or %NULL if none has been set explicitly.
-	 *
-	 * Since: 3.10
-	 */
-	public Widget getCustomTitle()
-	{
-		auto p = gtk_header_bar_get_custom_title(gtkHeaderBar);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		this(cast(GtkHeaderBar*) __p);
 	}
 
 	/**
@@ -133,8 +157,6 @@ public class HeaderBar : Container
 	 * gtk_header_bar_set_decoration_layout().
 	 *
 	 * Returns: the decoration layout
-	 *
-	 * Since: 3.12
 	 */
 	public string getDecorationLayout()
 	{
@@ -142,58 +164,33 @@ public class HeaderBar : Container
 	}
 
 	/**
-	 * Retrieves whether the header bar reserves space for
-	 * a subtitle, regardless if one is currently set or not.
-	 *
-	 * Returns: %TRUE if the header bar reserves space
-	 *     for a subtitle
-	 *
-	 * Since: 3.12
-	 */
-	public bool getHasSubtitle()
-	{
-		return gtk_header_bar_get_has_subtitle(gtkHeaderBar) != 0;
-	}
-
-	/**
 	 * Returns whether this header bar shows the standard window
-	 * decorations.
+	 * title buttons.
 	 *
-	 * Returns: %TRUE if the decorations are shown
-	 *
-	 * Since: 3.10
+	 * Returns: %TRUE if title buttons are shown
 	 */
-	public bool getShowCloseButton()
+	public bool getShowTitleButtons()
 	{
-		return gtk_header_bar_get_show_close_button(gtkHeaderBar) != 0;
+		return gtk_header_bar_get_show_title_buttons(gtkHeaderBar) != 0;
 	}
 
 	/**
-	 * Retrieves the subtitle of the header. See gtk_header_bar_set_subtitle().
+	 * Retrieves the title widget of the header. See
+	 * gtk_header_bar_set_title_widget().
 	 *
-	 * Returns: the subtitle of the header, or %NULL if none has
-	 *     been set explicitly. The returned string is owned by the widget
-	 *     and must not be modified or freed.
-	 *
-	 * Since: 3.10
+	 * Returns: the title widget
+	 *     of the header, or %NULL if none has been set explicitly.
 	 */
-	public string getSubtitle()
+	public Widget getTitleWidget()
 	{
-		return Str.toString(gtk_header_bar_get_subtitle(gtkHeaderBar));
-	}
+		auto __p = gtk_header_bar_get_title_widget(gtkHeaderBar);
 
-	/**
-	 * Retrieves the title of the header. See gtk_header_bar_set_title().
-	 *
-	 * Returns: the title of the header, or %NULL if none has
-	 *     been set explicitly. The returned string is owned by the widget
-	 *     and must not be modified or freed.
-	 *
-	 * Since: 3.10
-	 */
-	public string getTitle()
-	{
-		return Str.toString(gtk_header_bar_get_title(gtkHeaderBar));
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -202,8 +199,6 @@ public class HeaderBar : Container
 	 *
 	 * Params:
 	 *     child = the #GtkWidget to be added to @bar
-	 *
-	 * Since: 3.10
 	 */
 	public void packEnd(Widget child)
 	{
@@ -216,8 +211,6 @@ public class HeaderBar : Container
 	 *
 	 * Params:
 	 *     child = the #GtkWidget to be added to @bar
-	 *
-	 * Since: 3.10
 	 */
 	public void packStart(Widget child)
 	{
@@ -225,25 +218,16 @@ public class HeaderBar : Container
 	}
 
 	/**
-	 * Sets a custom title for the #GtkHeaderBar.
-	 *
-	 * The title should help a user identify the current view. This
-	 * supersedes any title set by gtk_header_bar_set_title() or
-	 * gtk_header_bar_set_subtitle(). To achieve the same style as
-	 * the builtin title and subtitle, use the “title” and “subtitle”
-	 * style classes.
-	 *
-	 * You should set the custom title to %NULL, for the header title
-	 * label to be visible again.
+	 * Removes a child from @bar, after it has been added
+	 * with gtk_header_bar_pack_start(), gtk_header_bar_pack_end()
+	 * or gtk_header_bar_set_title_widget().
 	 *
 	 * Params:
-	 *     titleWidget = a custom widget to use for a title
-	 *
-	 * Since: 3.10
+	 *     child = the child to remove
 	 */
-	public void setCustomTitle(Widget titleWidget)
+	public void remove(Widget child)
 	{
-		gtk_header_bar_set_custom_title(gtkHeaderBar, (titleWidget is null) ? null : titleWidget.getWidgetStruct());
+		gtk_header_bar_remove(gtkHeaderBar, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -259,17 +243,14 @@ public class HeaderBar : Container
 	 * The format of the string is button names, separated by commas.
 	 * A colon separates the buttons that should appear on the left
 	 * from those on the right. Recognized button names are minimize,
-	 * maximize, close, icon (the window icon) and menu (a menu button
-	 * for the fallback app menu).
+	 * maximize, close and icon (the window icon).
 	 *
-	 * For example, “menu:minimize,maximize,close” specifies a menu
+	 * For example, “icon:minimize,maximize,close” specifies a icon
 	 * on the left, and minimize, maximize and close buttons on the right.
 	 *
 	 * Params:
 	 *     layout = a decoration layout, or %NULL to
 	 *         unset the layout
-	 *
-	 * Since: 3.12
 	 */
 	public void setDecorationLayout(string layout)
 	{
@@ -277,63 +258,34 @@ public class HeaderBar : Container
 	}
 
 	/**
-	 * Sets whether the header bar should reserve space
-	 * for a subtitle, even if none is currently set.
+	 * Sets whether this header bar shows the standard window
+	 * title buttons including close, maximize, and minimize.
 	 *
 	 * Params:
-	 *     setting = %TRUE to reserve space for a subtitle
-	 *
-	 * Since: 3.12
+	 *     setting = %TRUE to show standard title buttons
 	 */
-	public void setHasSubtitle(bool setting)
+	public void setShowTitleButtons(bool setting)
 	{
-		gtk_header_bar_set_has_subtitle(gtkHeaderBar, setting);
+		gtk_header_bar_set_show_title_buttons(gtkHeaderBar, setting);
 	}
 
 	/**
-	 * Sets whether this header bar shows the standard window decorations,
-	 * including close, maximize, and minimize.
+	 * Sets the title for the #GtkHeaderBar.
+	 *
+	 * When set to %NULL, the headerbar will display the title of the window it is
+	 * contained in.
+	 *
+	 * The title should help a user identify the current view. To achieve the same
+	 * style as the builtin title, use the “title” style class.
+	 *
+	 * You should set the title widget to %NULL, for the window title label to be
+	 * visible again.
 	 *
 	 * Params:
-	 *     setting = %TRUE to show standard window decorations
-	 *
-	 * Since: 3.10
+	 *     titleWidget = a widget to use for a title
 	 */
-	public void setShowCloseButton(bool setting)
+	public void setTitleWidget(Widget titleWidget)
 	{
-		gtk_header_bar_set_show_close_button(gtkHeaderBar, setting);
-	}
-
-	/**
-	 * Sets the subtitle of the #GtkHeaderBar. The title should give a user
-	 * an additional detail to help him identify the current view.
-	 *
-	 * Note that GtkHeaderBar by default reserves room for the subtitle,
-	 * even if none is currently set. If this is not desired, set the
-	 * #GtkHeaderBar:has-subtitle property to %FALSE.
-	 *
-	 * Params:
-	 *     subtitle = a subtitle, or %NULL
-	 *
-	 * Since: 3.10
-	 */
-	public void setSubtitle(string subtitle)
-	{
-		gtk_header_bar_set_subtitle(gtkHeaderBar, Str.toStringz(subtitle));
-	}
-
-	/**
-	 * Sets the title of the #GtkHeaderBar. The title should help a user
-	 * identify the current view. A good title should not include the
-	 * application name.
-	 *
-	 * Params:
-	 *     title = a title, or %NULL
-	 *
-	 * Since: 3.10
-	 */
-	public void setTitle(string title)
-	{
-		gtk_header_bar_set_title(gtkHeaderBar, Str.toStringz(title));
+		gtk_header_bar_set_title_widget(gtkHeaderBar, (titleWidget is null) ? null : titleWidget.getWidgetStruct());
 	}
 }

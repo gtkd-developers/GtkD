@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -46,8 +45,6 @@ private import std.algorithm;
  * text to be stored in an alternate location, such as non-pageable memory,
  * useful in the case of important passwords. Or a derived class could
  * integrate with an application’s concept of undo/redo.
- *
- * Since: 2.18
  */
 public class EntryBuffer : ObjectG
 {
@@ -95,20 +92,18 @@ public class EntryBuffer : ObjectG
 	 *
 	 * Returns: A new GtkEntryBuffer object.
 	 *
-	 * Since: 2.18
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string initialChars, int nInitialChars)
 	{
-		auto p = gtk_entry_buffer_new(Str.toStringz(initialChars), nInitialChars);
+		auto __p = gtk_entry_buffer_new(Str.toStringz(initialChars), nInitialChars);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEntryBuffer*) p, true);
+		this(cast(GtkEntryBuffer*) __p, true);
 	}
 
 	/**
@@ -126,8 +121,6 @@ public class EntryBuffer : ObjectG
 	 *     nChars = number of characters to delete
 	 *
 	 * Returns: The number of characters deleted.
-	 *
-	 * Since: 2.18
 	 */
 	public uint deleteText(uint position, int nChars)
 	{
@@ -140,8 +133,6 @@ public class EntryBuffer : ObjectG
 	 * Params:
 	 *     position = position at which text was deleted
 	 *     nChars = number of characters deleted
-	 *
-	 * Since: 2.18
 	 */
 	public void emitDeletedText(uint position, uint nChars)
 	{
@@ -155,8 +146,6 @@ public class EntryBuffer : ObjectG
 	 *     position = position at which text was inserted
 	 *     chars = text that was inserted
 	 *     nChars = number of characters inserted
-	 *
-	 * Since: 2.18
 	 */
 	public void emitInsertedText(uint position, string chars, uint nChars)
 	{
@@ -168,8 +157,6 @@ public class EntryBuffer : ObjectG
 	 * See gtk_entry_buffer_get_length().
 	 *
 	 * Returns: The byte length of the buffer.
-	 *
-	 * Since: 2.18
 	 */
 	public size_t getBytes()
 	{
@@ -180,8 +167,6 @@ public class EntryBuffer : ObjectG
 	 * Retrieves the length in characters of the buffer.
 	 *
 	 * Returns: The number of characters in the buffer.
-	 *
-	 * Since: 2.18
 	 */
 	public uint getLength()
 	{
@@ -194,8 +179,6 @@ public class EntryBuffer : ObjectG
 	 *
 	 * Returns: the maximum allowed number of characters
 	 *     in #GtkEntryBuffer, or 0 if there is no maximum.
-	 *
-	 * Since: 2.18
 	 */
 	public int getMaxLength()
 	{
@@ -212,8 +195,6 @@ public class EntryBuffer : ObjectG
 	 *     string. This string points to internally allocated
 	 *     storage in the buffer and must not be freed, modified or
 	 *     stored.
-	 *
-	 * Since: 2.18
 	 */
 	public string getText()
 	{
@@ -237,8 +218,6 @@ public class EntryBuffer : ObjectG
 	 *     nChars = the length of the text in characters, or -1
 	 *
 	 * Returns: The number of characters actually inserted.
-	 *
-	 * Since: 2.18
 	 */
 	public uint insertText(uint position, string chars, int nChars)
 	{
@@ -254,8 +233,6 @@ public class EntryBuffer : ObjectG
 	 *     maxLength = the maximum length of the entry buffer, or 0 for no maximum.
 	 *         (other than the maximum length of entries.) The value passed in will
 	 *         be clamped to the range 0-65536.
-	 *
-	 * Since: 2.18
 	 */
 	public void setMaxLength(int maxLength)
 	{
@@ -273,8 +250,6 @@ public class EntryBuffer : ObjectG
 	 * Params:
 	 *     chars = the new text
 	 *     nChars = the number of characters in @text, or -1
-	 *
-	 * Since: 2.18
 	 */
 	public void setText(string chars, int nChars)
 	{
@@ -282,13 +257,13 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * This signal is emitted after text is deleted from the buffer.
+	 * The text is altered in the default handler for this signal. If you want
+	 * access to the text after the text has been modified, use
+	 * %G_CONNECT_AFTER.
 	 *
 	 * Params:
 	 *     position = the position the text was deleted at.
 	 *     nChars = The number of characters that were deleted.
-	 *
-	 * Since: 2.18
 	 */
 	gulong addOnDeletedText(void delegate(uint, uint, EntryBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -302,8 +277,6 @@ public class EntryBuffer : ObjectG
 	 *     position = the position the text was inserted at.
 	 *     chars = The text that was inserted.
 	 *     nChars = The number of characters that were inserted.
-	 *
-	 * Since: 2.18
 	 */
 	gulong addOnInsertedText(void delegate(uint, string, uint, EntryBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

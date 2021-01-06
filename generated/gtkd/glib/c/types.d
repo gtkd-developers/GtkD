@@ -676,6 +676,45 @@ public enum GFileError
 alias GFileError FileError;
 
 /**
+ * Flags to pass to g_file_set_contents_full() to affect its safety and
+ * performance.
+ *
+ * Since: 2.66
+ */
+public enum GFileSetContentsFlags
+{
+	/**
+	 * No guarantees about file consistency or durability.
+	 * The most dangerous setting, which is slightly faster than other settings.
+	 */
+	NONE = 0,
+	/**
+	 * Guarantee file consistency: after a crash,
+	 * either the old version of the file or the new version of the file will be
+	 * available, but not a mixture. On Unix systems this equates to an `fsync()`
+	 * on the file and use of an atomic `rename()` of the new version of the file
+	 * over the old.
+	 */
+	CONSISTENT = 1,
+	/**
+	 * Guarantee file durability: after a crash, the
+	 * new version of the file will be available. On Unix systems this equates to
+	 * an `fsync()` on the file (if %G_FILE_SET_CONTENTS_CONSISTENT is unset), or
+	 * the effects of %G_FILE_SET_CONTENTS_CONSISTENT plus an `fsync()` on the
+	 * directory containing the file after calling `rename()`.
+	 */
+	DURABLE = 2,
+	/**
+	 * Only apply consistency and durability
+	 * guarantees if the file already exists. This may speed up file operations
+	 * if the file doesn’t currently exist, but may result in a corrupted version
+	 * of the new file if the system crashes while writing it.
+	 */
+	ONLY_EXISTING = 4,
+}
+alias GFileSetContentsFlags FileSetContentsFlags;
+
+/**
  * A test to perform on a file using g_file_test().
  */
 public enum GFileTest
@@ -917,7 +956,7 @@ public enum GIOFlags
 alias GIOFlags IOFlags;
 
 /**
- * Stati returned by most of the #GIOFuncs functions.
+ * Statuses returned by most of the #GIOFuncs functions.
  */
 public enum GIOStatus
 {
@@ -2141,7 +2180,7 @@ public enum GSpawnFlags
 	 */
 	FILE_AND_ARGV_ZERO = 64,
 	/**
-	 * if `argv[0]` is not an abolute path,
+	 * if `argv[0]` is not an absolute path,
 	 * it will be looked for in the `PATH` from the passed child environment.
 	 * Since: 2.34
 	 */
@@ -2456,7 +2495,7 @@ public enum GTraverseFlags
 alias GTraverseFlags TraverseFlags;
 
 /**
- * Specifies the type of traveral performed by g_tree_traverse(),
+ * Specifies the type of traversal performed by g_tree_traverse(),
  * g_node_traverse() and g_node_find(). The different orders are
  * illustrated here:
  * - In order: A, B, C, D, E, F, G, H, I
@@ -3311,6 +3350,22 @@ public enum GUnicodeScript
 	 * Wcho. Since: 2.62
 	 */
 	WANCHO = 152,
+	/**
+	 * Chorasmian. Since: 2.66
+	 */
+	CHORASMIAN = 153,
+	/**
+	 * Dives Akuru. Since: 2.66
+	 */
+	DIVES_AKURU = 154,
+	/**
+	 * Khitan small script. Since: 2.66
+	 */
+	KHITAN_SMALL_SCRIPT = 155,
+	/**
+	 * Yezidi. Since: 2.66
+	 */
+	YEZIDI = 156,
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -3443,6 +3498,189 @@ public enum GUnicodeType
 	SPACE_SEPARATOR = 29,
 }
 alias GUnicodeType UnicodeType;
+
+/**
+ * Error codes returned by #GUri methods.
+ *
+ * Since: 2.66
+ */
+public enum GUriError
+{
+	/**
+	 * Generic error if no more specific error is available.
+	 * See the error message for details.
+	 */
+	FAILED = 0,
+	/**
+	 * The scheme of a URI could not be parsed.
+	 */
+	BAD_SCHEME = 1,
+	/**
+	 * The user/userinfo of a URI could not be parsed.
+	 */
+	BAD_USER = 2,
+	/**
+	 * The password of a URI could not be parsed.
+	 */
+	BAD_PASSWORD = 3,
+	/**
+	 * The authentication parameters of a URI could not be parsed.
+	 */
+	BAD_AUTH_PARAMS = 4,
+	/**
+	 * The host of a URI could not be parsed.
+	 */
+	BAD_HOST = 5,
+	/**
+	 * The port of a URI could not be parsed.
+	 */
+	BAD_PORT = 6,
+	/**
+	 * The path of a URI could not be parsed.
+	 */
+	BAD_PATH = 7,
+	/**
+	 * The query of a URI could not be parsed.
+	 */
+	BAD_QUERY = 8,
+	/**
+	 * The fragment of a URI could not be parsed.
+	 */
+	BAD_FRAGMENT = 9,
+}
+alias GUriError UriError;
+
+/**
+ * Flags that describe a URI.
+ *
+ * When parsing a URI, if you need to choose different flags based on
+ * the type of URI, you can use g_uri_peek_scheme() on the URI string
+ * to check the scheme first, and use that to decide what flags to
+ * parse it with.
+ *
+ * Since: 2.66
+ */
+public enum GUriFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Parse the URI more relaxedly than the
+	 * [RFC 3986](https://tools.ietf.org/html/rfc3986) grammar specifies,
+	 * fixing up or ignoring common mistakes in URIs coming from external
+	 * sources. This is also needed for some obscure URI schemes where `;`
+	 * separates the host from the path. Don’t use this flag unless you need to.
+	 */
+	PARSE_RELAXED = 1,
+	/**
+	 * The userinfo field may contain a password,
+	 * which will be separated from the username by `:`.
+	 */
+	HAS_PASSWORD = 2,
+	/**
+	 * The userinfo may contain additional
+	 * authentication-related parameters, which will be separated from
+	 * the username and/or password by `;`.
+	 */
+	HAS_AUTH_PARAMS = 4,
+	/**
+	 * When parsing a URI, this indicates that `%`-encoded
+	 * characters in the userinfo, path, query, and fragment fields
+	 * should not be decoded. (And likewise the host field if
+	 * %G_URI_FLAGS_NON_DNS is also set.) When building a URI, it indicates
+	 * that you have already `%`-encoded the components, and so #GUri
+	 * should not do any encoding itself.
+	 */
+	ENCODED = 8,
+	/**
+	 * The host component should not be assumed to be a
+	 * DNS hostname or IP address (for example, for `smb` URIs with NetBIOS
+	 * hostnames).
+	 */
+	NON_DNS = 16,
+	/**
+	 * Same as %G_URI_FLAGS_ENCODED, for the query
+	 * field only.
+	 */
+	ENCODED_QUERY = 32,
+	/**
+	 * Same as %G_URI_FLAGS_ENCODED, for the path only.
+	 */
+	ENCODED_PATH = 64,
+	/**
+	 * Same as %G_URI_FLAGS_ENCODED, for the
+	 * fragment only.
+	 */
+	ENCODED_FRAGMENT = 128,
+}
+alias GUriFlags UriFlags;
+
+/**
+ * Flags describing what parts of the URI to hide in
+ * g_uri_to_string_partial(). Note that %G_URI_HIDE_PASSWORD and
+ * %G_URI_HIDE_AUTH_PARAMS will only work if the #GUri was parsed with
+ * the corresponding flags.
+ *
+ * Since: 2.66
+ */
+public enum GUriHideFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Hide the userinfo.
+	 */
+	USERINFO = 1,
+	/**
+	 * Hide the password.
+	 */
+	PASSWORD = 2,
+	/**
+	 * Hide the auth_params.
+	 */
+	AUTH_PARAMS = 4,
+	/**
+	 * Hide the query.
+	 */
+	QUERY = 8,
+	/**
+	 * Hide the fragment.
+	 */
+	FRAGMENT = 16,
+}
+alias GUriHideFlags UriHideFlags;
+
+/**
+ * Flags modifying the way parameters are handled by g_uri_parse_params() and
+ * #GUriParamsIter.
+ *
+ * Since: 2.66
+ */
+public enum GUriParamsFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Parameter names are case insensitive.
+	 */
+	CASE_INSENSITIVE = 1,
+	/**
+	 * Replace `+` with space character. Only useful for
+	 * URLs on the web, using the `https` or `http` schemas.
+	 */
+	WWW_FORM = 2,
+	/**
+	 * See %G_URI_FLAGS_PARSE_RELAXED.
+	 */
+	PARSE_RELAXED = 4,
+}
+alias GUriParamsFlags UriParamsFlags;
 
 /**
  * These are logical ids for special directories which are defined
@@ -4690,6 +4928,16 @@ struct GTrashStack
 
 struct GTree;
 
+struct GUri;
+
+struct GUriParamsIter
+{
+	int dummy0;
+	void* dummy1;
+	void* dummy2;
+	ubyte[256] dummy3;
+}
+
 struct GVariant;
 
 struct GVariantBuilder
@@ -4927,7 +5175,7 @@ public alias extern(C) int function(void* key, void* value, void* userData) GHRF
  * a more secure hash function when using a GHashTable with keys
  * that originate in untrusted data (such as HTTP requests).
  * Using g_str_hash() in that situation might make your application
- * vulerable to
+ * vulnerable to
  * [Algorithmic Complexity Attacks](https://lwn.net/Articles/474912/).
  *
  * The key to choosing a good hash is unpredictability.  Even
@@ -6032,7 +6280,7 @@ alias G_MAXUINT8 = MAXUINT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MICRO_VERSION = 0;
+enum MICRO_VERSION = 2;
 alias GLIB_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -6066,7 +6314,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 64;
+enum MINOR_VERSION = 66;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";
@@ -6271,13 +6519,15 @@ enum UNICHAR_MAX_DECOMPOSITION_LENGTH = 18;
 alias G_UNICHAR_MAX_DECOMPOSITION_LENGTH = UNICHAR_MAX_DECOMPOSITION_LENGTH;
 
 /**
- * Generic delimiters characters as defined in RFC 3986. Includes ":/?#[]@".
+ * Generic delimiters characters as defined in
+ * [RFC 3986](https://tools.ietf.org/html/rfc3986). Includes `:/?#[]@`.
  */
 enum URI_RESERVED_CHARS_GENERIC_DELIMITERS = ":/?#[]@";
 alias G_URI_RESERVED_CHARS_GENERIC_DELIMITERS = URI_RESERVED_CHARS_GENERIC_DELIMITERS;
 
 /**
- * Subcomponent delimiter characters as defined in RFC 3986. Includes "!$&'()*+,;=".
+ * Subcomponent delimiter characters as defined in
+ * [RFC 3986](https://tools.ietf.org/html/rfc3986). Includes `!$&'()*+,;=`.
  */
 enum URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS = "!$&'()*+,;=";
 alias G_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS = URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS;

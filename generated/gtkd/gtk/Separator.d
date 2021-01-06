@@ -31,7 +31,6 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -44,6 +43,10 @@ public  import gtkc.gtktypes;
  * 
  * GtkSeparator has a single CSS node with name separator. The node
  * gets one of the .horizontal or .vertical style classes.
+ * 
+ * # Accessibility
+ * 
+ * GtkSeparator uses the #GTK_ACCESSIBLE_ROLE_SEPARATOR role.
  */
 public class Separator : Widget, OrientableIF
 {
@@ -91,19 +94,17 @@ public class Separator : Widget, OrientableIF
 	 *
 	 * Returns: a new #GtkSeparator.
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(GtkOrientation orientation)
 	{
-		auto p = gtk_separator_new(orientation);
+		auto __p = gtk_separator_new(orientation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSeparator*) p);
+		this(cast(GtkSeparator*) __p);
 	}
 }

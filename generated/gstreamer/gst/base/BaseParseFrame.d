@@ -102,31 +102,33 @@ public class BaseParseFrame
 	 */
 	public this(Buffer buffer, GstBaseParseFrameFlags flags, int overhead)
 	{
-		auto p = gst_base_parse_frame_new((buffer is null) ? null : buffer.getBufferStruct(), flags, overhead);
+		auto __p = gst_base_parse_frame_new((buffer is null) ? null : buffer.getBufferStruct(), flags, overhead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBaseParseFrame*) p);
+		this(cast(GstBaseParseFrame*) __p);
 	}
 
 	/**
 	 * Copies a #GstBaseParseFrame.
 	 *
 	 * Returns: A copy of @frame
+	 *
+	 * Since: 1.12.1
 	 */
 	public BaseParseFrame copy()
 	{
-		auto p = gst_base_parse_frame_copy(gstBaseParseFrame);
+		auto __p = gst_base_parse_frame_copy(gstBaseParseFrame);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BaseParseFrame)(cast(GstBaseParseFrame*) p, true);
+		return ObjectG.getDObject!(BaseParseFrame)(cast(GstBaseParseFrame*) __p, true);
 	}
 
 	/**

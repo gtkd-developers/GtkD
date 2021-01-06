@@ -29,7 +29,7 @@ private import gobject.ObjectG;
 private import gstreamer.Buffer;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -71,6 +71,12 @@ public class BufferList
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_buffer_list_unref(gstBufferList);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -91,14 +97,14 @@ public class BufferList
 	 */
 	public this()
 	{
-		auto p = gst_buffer_list_new();
+		auto __p = gst_buffer_list_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBufferList*) p);
+		this(cast(GstBufferList*) __p);
 	}
 
 	/**
@@ -118,14 +124,14 @@ public class BufferList
 	 */
 	public this(uint size)
 	{
-		auto p = gst_buffer_list_new_sized(size);
+		auto __p = gst_buffer_list_new_sized(size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sized");
 		}
 
-		this(cast(GstBufferList*) p);
+		this(cast(GstBufferList*) __p);
 	}
 
 	/**
@@ -142,6 +148,25 @@ public class BufferList
 	}
 
 	/**
+	 * Create a shallow copy of the given buffer list. This will make a newly
+	 * allocated copy of the source list with copies of buffer pointers. The
+	 * refcount of buffers pointed to will be increased by one.
+	 *
+	 * Returns: a new copy of @list.
+	 */
+	public BufferList copy()
+	{
+		auto __p = gst_buffer_list_copy(gstBufferList);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
+	}
+
+	/**
 	 * Create a copy of the given buffer list. This will make a newly allocated
 	 * copy of the buffer that the source buffer list contains.
 	 *
@@ -151,14 +176,14 @@ public class BufferList
 	 */
 	public BufferList copyDeep()
 	{
-		auto p = gst_buffer_list_copy_deep(gstBufferList);
+		auto __p = gst_buffer_list_copy_deep(gstBufferList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p, true);
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
 	}
 
 	alias foreac = foreach_;
@@ -196,14 +221,14 @@ public class BufferList
 	 */
 	public Buffer get(uint idx)
 	{
-		auto p = gst_buffer_list_get(gstBufferList, idx);
+		auto __p = gst_buffer_list_get(gstBufferList, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -223,14 +248,14 @@ public class BufferList
 	 */
 	public Buffer getWritable(uint idx)
 	{
-		auto p = gst_buffer_list_get_writable(gstBufferList, idx);
+		auto __p = gst_buffer_list_get_writable(gstBufferList, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -245,7 +270,7 @@ public class BufferList
 	 */
 	public void insert(int idx, Buffer buffer)
 	{
-		gst_buffer_list_insert(gstBufferList, idx, (buffer is null) ? null : buffer.getBufferStruct());
+		gst_buffer_list_insert(gstBufferList, idx, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
@@ -256,6 +281,29 @@ public class BufferList
 	public uint length()
 	{
 		return gst_buffer_list_length(gstBufferList);
+	}
+
+	alias doref = ref_;
+	/**
+	 * Increases the refcount of the given buffer list by one.
+	 *
+	 * Note that the refcount affects the writability of @list and its data, see
+	 * gst_buffer_list_make_writable(). It is important to note that keeping
+	 * additional references to GstBufferList instances can potentially increase
+	 * the number of memcpy operations in a pipeline.
+	 *
+	 * Returns: @list
+	 */
+	public BufferList ref_()
+	{
+		auto __p = gst_buffer_list_ref(gstBufferList);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
 	}
 
 	/**
@@ -269,5 +317,14 @@ public class BufferList
 	public void remove(uint idx, uint length)
 	{
 		gst_buffer_list_remove(gstBufferList, idx, length);
+	}
+
+	/**
+	 * Decreases the refcount of the buffer list. If the refcount reaches 0, the
+	 * buffer list will be freed.
+	 */
+	public void unref()
+	{
+		gst_buffer_list_unref(gstBufferList);
 	}
 }

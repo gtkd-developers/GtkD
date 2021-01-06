@@ -31,7 +31,6 @@ private import gtk.Button;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -109,39 +108,35 @@ public class LockButton : Button
 	 *
 	 * Returns: a new #GtkLockButton
 	 *
-	 * Since: 3.2
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Permission permission)
 	{
-		auto p = gtk_lock_button_new((permission is null) ? null : permission.getPermissionStruct());
+		auto __p = gtk_lock_button_new((permission is null) ? null : permission.getPermissionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLockButton*) p);
+		this(cast(GtkLockButton*) __p);
 	}
 
 	/**
 	 * Obtains the #GPermission object that controls @button.
 	 *
 	 * Returns: the #GPermission of @button
-	 *
-	 * Since: 3.2
 	 */
 	public Permission getPermission()
 	{
-		auto p = gtk_lock_button_get_permission(gtkLockButton);
+		auto __p = gtk_lock_button_get_permission(gtkLockButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Permission)(cast(GPermission*) p);
+		return ObjectG.getDObject!(Permission)(cast(GPermission*) __p);
 	}
 
 	/**
@@ -149,8 +144,6 @@ public class LockButton : Button
 	 *
 	 * Params:
 	 *     permission = a #GPermission object, or %NULL
-	 *
-	 * Since: 3.2
 	 */
 	public void setPermission(Permission permission)
 	{

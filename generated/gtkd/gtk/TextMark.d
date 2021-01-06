@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gtk.TextBuffer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -116,20 +115,18 @@ public class TextMark : ObjectG
 	 *
 	 * Returns: new #GtkTextMark
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string name, bool leftGravity)
 	{
-		auto p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
+		auto __p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextMark*) p, true);
+		this(cast(GtkTextMark*) __p, true);
 	}
 
 	/**
@@ -140,14 +137,14 @@ public class TextMark : ObjectG
 	 */
 	public TextBuffer getBuffer()
 	{
-		auto p = gtk_text_mark_get_buffer(gtkTextMark);
+		auto __p = gtk_text_mark_get_buffer(gtkTextMark);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) __p);
 	}
 
 	/**
@@ -193,16 +190,7 @@ public class TextMark : ObjectG
 		return gtk_text_mark_get_visible(gtkTextMark) != 0;
 	}
 
-	/**
-	 * Sets the visibility of @mark; the insertion point is normally
-	 * visible, i.e. you can see it as a vertical bar. Also, the text
-	 * widget uses a visible mark to indicate where a drop will occur when
-	 * dragging-and-dropping text. Most other marks are not visible.
-	 * Marks are not visible by default.
-	 *
-	 * Params:
-	 *     setting = visibility of mark
-	 */
+	/** */
 	public void setVisible(bool setting)
 	{
 		gtk_text_mark_set_visible(gtkTextMark, setting);

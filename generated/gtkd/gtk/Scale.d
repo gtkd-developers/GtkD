@@ -27,15 +27,12 @@ module gtk.Scale;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gobject.Signals;
 private import gtk.Adjustment;
 private import gtk.Range;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgLayout;
-private import std.algorithm;
 
 
 /**
@@ -64,23 +61,23 @@ private import std.algorithm;
  * 
  * |[<!-- language="plain" -->
  * scale[.fine-tune][.marks-before][.marks-after]
+ * ├── [value][.top][.right][.bottom][.left]
  * ├── marks.top
  * │   ├── mark
  * │   ┊    ├── [label]
  * │   ┊    ╰── indicator
  * ┊   ┊
  * │   ╰── mark
- * ├── [value]
- * ├── contents
- * │   ╰── trough
- * │       ├── slider
- * │       ├── [highlight]
- * │       ╰── [fill]
- * ╰── marks.bottom
- * ├── mark
- * ┊    ├── indicator
- * ┊    ╰── [label]
- * ╰── mark
+ * ├── marks.bottom
+ * │   ├── mark
+ * │   ┊    ├── indicator
+ * │   ┊    ╰── [label]
+ * ┊   ┊
+ * │   ╰── mark
+ * ╰── trough
+ * ├── [fill]
+ * ├── [highlight]
+ * ╰── slider
  * ]|
  * 
  * GtkScale has a main CSS node with name scale and a subnode for its contents,
@@ -97,7 +94,7 @@ private import std.algorithm;
  * there is a subnode with name fill below the trough node that is used for
  * rendering the filled in part of the trough.
  * 
- * If marks are present, there is a marks subnode before or after the contents
+ * If marks are present, there is a marks subnode before or after the trough
  * node, below which each mark gets a node with name mark. The marks nodes get
  * either the .top or .bottom style class.
  * 
@@ -110,7 +107,12 @@ private import std.algorithm;
  * added depending on what marks are present.
  * 
  * If the scale is displaying the value (see #GtkScale:draw-value), there is
- * subnode with name value.
+ * subnode with name value. This node will get the .top or .bottom style classes
+ * similar to the marks node.
+ * 
+ * # Accessibility
+ * 
+ * GtkScale uses the #GTK_ACCESSIBLE_ROLE_SLIDER role.
  */
 public class Scale : Range
 {
@@ -157,20 +159,18 @@ public class Scale : Range
 	 *
 	 * Returns: a new #GtkScale
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(GtkOrientation orientation, Adjustment adjustment)
 	{
-		auto p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScale*) p);
+		this(cast(GtkScale*) __p);
 	}
 
 	/**
@@ -192,27 +192,25 @@ public class Scale : Range
 	 *
 	 * Returns: a new #GtkScale
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(GtkOrientation orientation, double min, double max, double step)
 	{
-		auto p = gtk_scale_new_with_range(orientation, min, max, step);
+		auto __p = gtk_scale_new_with_range(orientation, min, max, step);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
 
-		this(cast(GtkScale*) p);
+		this(cast(GtkScale*) __p);
 	}
 
 	/**
 	 * Adds a mark at @value.
 	 *
 	 * A mark is indicated visually by drawing a tick mark next to the scale,
-	 * and GTK+ makes it easy for the user to position the scale exactly at the
+	 * and GTK makes it easy for the user to position the scale exactly at the
 	 * marks value.
 	 *
 	 * If @markup is not %NULL, text is shown next to the tick mark.
@@ -227,8 +225,6 @@ public class Scale : Range
 	 *         For a vertical scale, #GTK_POS_LEFT and %GTK_POS_TOP are drawn to
 	 *         the left of the scale, anything else to the right.
 	 *     markup = Text to be shown at the mark, using [Pango markup][PangoMarkupFormat], or %NULL
-	 *
-	 * Since: 2.16
 	 */
 	public void addMark(double value, GtkPositionType position, string markup)
 	{
@@ -237,8 +233,6 @@ public class Scale : Range
 
 	/**
 	 * Removes any marks that have been added with gtk_scale_add_mark().
-	 *
-	 * Since: 2.16
 	 */
 	public void clearMarks()
 	{
@@ -270,8 +264,6 @@ public class Scale : Range
 	 * Returns whether the scale has an origin.
 	 *
 	 * Returns: %TRUE if the scale has an origin.
-	 *
-	 * Since: 3.4
 	 */
 	public bool getHasOrigin()
 	{
@@ -285,19 +277,17 @@ public class Scale : Range
 	 *
 	 * Returns: the #PangoLayout for this scale,
 	 *     or %NULL if the #GtkScale:draw-value property is %FALSE.
-	 *
-	 * Since: 2.4
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = gtk_scale_get_layout(gtkScale);
+		auto __p = gtk_scale_get_layout(gtkScale);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**
@@ -312,8 +302,6 @@ public class Scale : Range
 	 * Params:
 	 *     x = location to store X offset of layout, or %NULL
 	 *     y = location to store Y offset of layout, or %NULL
-	 *
-	 * Since: 2.4
 	 */
 	public void getLayoutOffsets(out int x, out int y)
 	{
@@ -339,7 +327,7 @@ public class Scale : Range
 	 *
 	 * Note that rounding to a small number of digits can interfere with
 	 * the smooth autoscrolling that is built into #GtkScale. As an alternative,
-	 * you can use the #GtkScale::format-value signal to format the displayed
+	 * you can use gtk_scale_set_format_value_func() to format the displayed
 	 * value yourself.
 	 *
 	 * Params:
@@ -364,14 +352,30 @@ public class Scale : Range
 	}
 
 	/**
+	 * @func allows you to change how the scale value is displayed. The given
+	 * function will return an allocated string representing @value.
+	 * That string will then be used to display the scale's value.
+	 *
+	 * If #NULL is passed as @func, the value will be displayed on
+	 * its own, rounded according to the value of the #GtkScale:digits property.
+	 *
+	 * Params:
+	 *     func = function that formats the value
+	 *     userData = user data to pass to @func
+	 *     destroyNotify = destroy function for @user_data
+	 */
+	public void setFormatValueFunc(GtkScaleFormatValueFunc func, void* userData, GDestroyNotify destroyNotify)
+	{
+		gtk_scale_set_format_value_func(gtkScale, func, userData, destroyNotify);
+	}
+
+	/**
 	 * If #GtkScale:has-origin is set to %TRUE (the default), the scale will
 	 * highlight the part of the trough between the origin (bottom or left side)
 	 * and the current value.
 	 *
 	 * Params:
 	 *     hasOrigin = %TRUE if the scale has an origin
-	 *
-	 * Since: 3.4
 	 */
 	public void setHasOrigin(bool hasOrigin)
 	{
@@ -387,35 +391,5 @@ public class Scale : Range
 	public void setValuePos(GtkPositionType pos)
 	{
 		gtk_scale_set_value_pos(gtkScale, pos);
-	}
-
-	/**
-	 * Signal which allows you to change how the scale value is displayed.
-	 * Connect a signal handler which returns an allocated string representing
-	 * @value. That string will then be used to display the scale's value.
-	 *
-	 * If no user-provided handlers are installed, the value will be displayed on
-	 * its own, rounded according to the value of the #GtkScale:digits property.
-	 *
-	 * Here's an example signal handler which displays a value 1.0 as
-	 * with "-->1.0<--".
-	 * |[<!-- language="C" -->
-	 * static gchar*
-	 * format_value_callback (GtkScale *scale,
-	 * gdouble   value)
-	 * {
-	 * return g_strdup_printf ("-->\%0.*g<--",
-	 * gtk_scale_get_digits (scale), value);
-	 * }
-	 * ]|
-	 *
-	 * Params:
-	 *     value = the value to format
-	 *
-	 * Returns: allocated string representing @value
-	 */
-	gulong addOnFormatValue(string delegate(double, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "format-value", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

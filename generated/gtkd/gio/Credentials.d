@@ -31,7 +31,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -48,22 +47,26 @@ public  import gtkc.giotypes;
  * #GUnixCredentialsMessage, g_unix_connection_send_credentials() and
  * g_unix_connection_receive_credentials() for details.
  * 
- * On Linux, the native credential type is a struct ucred - see the
+ * On Linux, the native credential type is a `struct ucred` - see the
  * unix(7) man page for details. This corresponds to
  * %G_CREDENTIALS_TYPE_LINUX_UCRED.
  * 
+ * On Apple operating systems (including iOS, tvOS, and macOS),
+ * the native credential type is a `struct xucred`.
+ * This corresponds to %G_CREDENTIALS_TYPE_APPLE_XUCRED.
+ * 
  * On FreeBSD, Debian GNU/kFreeBSD, and GNU/Hurd, the native
- * credential type is a struct cmsgcred. This corresponds
+ * credential type is a `struct cmsgcred`. This corresponds
  * to %G_CREDENTIALS_TYPE_FREEBSD_CMSGCRED.
  * 
- * On NetBSD, the native credential type is a struct unpcbid.
+ * On NetBSD, the native credential type is a `struct unpcbid`.
  * This corresponds to %G_CREDENTIALS_TYPE_NETBSD_UNPCBID.
  * 
- * On OpenBSD, the native credential type is a struct sockpeercred.
+ * On OpenBSD, the native credential type is a `struct sockpeercred`.
  * This corresponds to %G_CREDENTIALS_TYPE_OPENBSD_SOCKPEERCRED.
  * 
  * On Solaris (including OpenSolaris and its derivatives), the native
- * credential type is a ucred_t. This corresponds to
+ * credential type is a `ucred_t`. This corresponds to
  * %G_CREDENTIALS_TYPE_SOLARIS_UCRED.
  *
  * Since: 2.26
@@ -154,7 +157,8 @@ public class Credentials : ObjectG
 	 *
 	 * This operation can fail if #GCredentials is not supported on the
 	 * OS or if the native credentials type does not contain information
-	 * about the UNIX process ID.
+	 * about the UNIX process ID (for example this is the case for
+	 * %G_CREDENTIALS_TYPE_APPLE_XUCRED).
 	 *
 	 * Returns: The UNIX process ID, or -1 if @error is set.
 	 *

@@ -32,7 +32,6 @@ private import gstreamer.Element;
 private import gstreamer.PluginFeature;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -133,14 +132,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public static ElementFactory find(string name)
 	{
-		auto p = gst_element_factory_find(Str.toStringz(name));
+		auto __p = gst_element_factory_find(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) p, true);
+		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) __p, true);
 	}
 
 	/**
@@ -164,14 +163,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public static ListG listFilter(ListG list, Caps caps, GstPadDirection direction, bool subsetonly)
 	{
-		auto p = gst_element_factory_list_filter((list is null) ? null : list.getListGStruct(), (caps is null) ? null : caps.getCapsStruct(), direction, subsetonly);
+		auto __p = gst_element_factory_list_filter((list is null) ? null : list.getListGStruct(), (caps is null) ? null : caps.getCapsStruct(), direction, subsetonly);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -189,14 +188,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public static ListG listGetElements(GstElementFactoryListType type, GstRank minrank)
 	{
-		auto p = gst_element_factory_list_get_elements(type, minrank);
+		auto __p = gst_element_factory_list_get_elements(type, minrank);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -215,14 +214,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public static Element make(string factoryname, string name)
 	{
-		auto p = gst_element_factory_make(Str.toStringz(factoryname), Str.toStringz(name));
+		auto __p = gst_element_factory_make(Str.toStringz(factoryname), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -291,14 +290,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public Element create(string name)
 	{
-		auto p = gst_element_factory_create(gstElementFactory, Str.toStringz(name));
+		auto __p = gst_element_factory_create(gstElementFactory, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -360,14 +359,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public ListG getStaticPadTemplates()
 	{
-		auto p = gst_element_factory_get_static_pad_templates(gstElementFactory);
+		auto __p = gst_element_factory_get_static_pad_templates(gstElementFactory);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

@@ -30,10 +30,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.EventController;
-private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -73,7 +71,7 @@ public  import gtkc.gtktypes;
  * g_signal_connect (action, "activate", on_invert_selection_activated, NULL);
  * g_action_map_add_action (G_ACTION_MAP (action_group), action);
  * …
- * pad_controller = gtk_pad_controller_new (window, action_group, NULL);
+ * pad_controller = gtk_pad_controller_new (action_group, NULL);
  * ]|
  * 
  * The actions belonging to rings/strips will be activated with a parameter
@@ -119,34 +117,34 @@ public class PadController : EventController
 	 * Creates a new #GtkPadController that will associate events from @pad to
 	 * actions. A %NULL pad may be provided so the controller manages all pad devices
 	 * generically, it is discouraged to mix #GtkPadController objects with %NULL
-	 * and non-%NULL @pad argument on the same @window, as execution order is not
-	 * guaranteed.
+	 * and non-%NULL @pad argument on the same toplevel window, as execution order
+	 * is not guaranteed.
 	 *
 	 * The #GtkPadController is created with no mapped actions. In order to map pad
 	 * events to actions, use gtk_pad_controller_set_action_entries() or
 	 * gtk_pad_controller_set_action().
 	 *
+	 * Be aware that pad events will only be delivered to #GtkWindows, so adding a pad
+	 * controller to any other type of widget will not have an effect.
+	 *
 	 * Params:
-	 *     window = a #GtkWindow
 	 *     group = #GActionGroup to trigger actions from
 	 *     pad = A %GDK_SOURCE_TABLET_PAD device, or %NULL to handle all pads
 	 *
 	 * Returns: A newly created #GtkPadController
 	 *
-	 * Since: 3.22
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Window window, ActionGroupIF group, Device pad)
+	public this(ActionGroupIF group, Device pad)
 	{
-		auto p = gtk_pad_controller_new((window is null) ? null : window.getWindowStruct(), (group is null) ? null : group.getActionGroupStruct(), (pad is null) ? null : pad.getDeviceStruct());
+		auto __p = gtk_pad_controller_new((group is null) ? null : group.getActionGroupStruct(), (pad is null) ? null : pad.getDeviceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPadController*) p, true);
+		this(cast(GtkPadController*) __p, true);
 	}
 
 	/**
@@ -166,8 +164,6 @@ public class PadController : EventController
 	 *     label = Human readable description of this action, this string should
 	 *         be deemed user-visible.
 	 *     actionName = action name that will be activated in the #GActionGroup
-	 *
-	 * Since: 3.22
 	 */
 	public void setAction(GtkPadActionType type, int index, int mode, string label, string actionName)
 	{
@@ -180,8 +176,6 @@ public class PadController : EventController
 	 *
 	 * Params:
 	 *     entries = the action entries to set on @controller
-	 *
-	 * Since: 3.22
 	 */
 	public void setActionEntries(GtkPadActionEntry[] entries)
 	{

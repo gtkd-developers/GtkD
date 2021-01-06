@@ -30,10 +30,10 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gobject.Value;
 public  import gtk.TreeIter;
+public  import gtk.TreeModelIF;
 public  import gtk.TreePath;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 public  import std.algorithm;
 
 
@@ -166,7 +166,7 @@ public  import std.algorithm;
  * GtkTreeModel *list_store;
  * GtkTreeIter iter;
  * gboolean valid;
- * gint row_count = 0;
+ * int row_count = 0;
  * 
  * // make a new list_store
  * list_store = gtk_list_store_new (N_COLUMNS,
@@ -183,8 +183,8 @@ public  import std.algorithm;
  * &iter);
  * while (valid)
  * {
- * gchar *str_data;
- * gint   int_data;
+ * char *str_data;
+ * int    int_data;
  * 
  * // Make sure you terminate calls to gtk_tree_model_get() with a “-1” value
  * gtk_tree_model_get (list_store, &iter,
@@ -243,67 +243,27 @@ public template TreeModelT(TStruct)
 		return cast(GtkTreeModel*)getStruct();
 	}
 
-	/**
-	 * Get the value of a column as a char array.
-	 * this is the same calling getValue and get the string from the value object
-	 */
-	string getValueString(TreeIter iter, int column)
-	{
-		Value value = getValue(iter, column);
-		return value.getString();
-	}
 
 	/**
-	 * Get the value of a column as a char array.
-	 * this is the same calling getValue and get the int from the value object
-	 */
-	int getValueInt(TreeIter iter, int column)
-	{
-		Value value = getValue(iter, column);
-		return value.getInt();
-	}
-
-	/**
-	 * Sets iter to a valid iterator pointing to path.
+	 * Creates a new #GtkTreeModel, with @child_model as the child_model
+	 * and @root as the virtual root.
+	 *
 	 * Params:
-	 *  iter = The uninitialized GtkTreeIter.
-	 *  path = The GtkTreePath.
-	 * Returns:
-	 *  TRUE, if iter was set.
+	 *     root = A #GtkTreePath or %NULL.
+	 *
+	 * Returns: A new #GtkTreeModel.
 	 */
-	public int getIter(TreeIter iter, TreePath path)
+	public TreeModelIF filterNew(TreePath root)
 	{
-		if ( iter is null )
-			iter = new TreeIter();
+		auto __p = gtk_tree_model_filter_new(getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
 
-		iter.setModel(this);
-		return gtk_tree_model_get_iter(
-			getTreeModelStruct(),
-			(iter is null) ? null : iter.getTreeIterStruct(),
-		(path is null) ? null : path.getTreePathStruct());
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p, true);
 	}
-
-	/**
-	 * Initializes and sets value to that at column.
-	 * When done with value, g_value_unset() needs to be called
-	 * to free any allocated memory.
-	 * Params:
-	 * iter = The GtkTreeIter.
-	 * column = The column to lookup the value at.
-	 * value = (inout) (transfer none) An empty GValue to set.
-	 */
-	public Value getValue(TreeIter iter, int column, Value value = null)
-	{
-		if ( value is null )
-			value = new Value();
-
-		gtk_tree_model_get_value(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
-
-		return value;
-	}
-
-	/**
-	 */
 
 	alias foreac = foreach_;
 	/**
@@ -349,6 +309,27 @@ public template TreeModelT(TStruct)
 	}
 
 	/**
+	 * Sets @iter to a valid iterator pointing to @path.  If @path does
+	 * not exist, @iter is set to an invalid iterator and %FALSE is returned.
+	 *
+	 * Params:
+	 *     iter = the uninitialized #GtkTreeIter-struct
+	 *     path = the #GtkTreePath-struct
+	 *
+	 * Returns: %TRUE, if @iter was set
+	 */
+	public bool getIter(out TreeIter iter, TreePath path)
+	{
+		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
+
+		auto __p = gtk_tree_model_get_iter(getTreeModelStruct(), outiter, (path is null) ? null : path.getTreePathStruct()) != 0;
+
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
+
+		return __p;
+	}
+
+	/**
 	 * Initializes @iter with the first iterator in the tree
 	 * (the one at the path "0") and returns %TRUE. Returns
 	 * %FALSE if the tree is empty.
@@ -362,11 +343,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_get_iter_first(getTreeModelStruct(), outiter) != 0;
+		auto __p = gtk_tree_model_get_iter_first(getTreeModelStruct(), outiter) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -383,11 +364,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_get_iter_from_string(getTreeModelStruct(), outiter, Str.toStringz(pathString)) != 0;
+		auto __p = gtk_tree_model_get_iter_from_string(getTreeModelStruct(), outiter, Str.toStringz(pathString)) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -412,14 +393,14 @@ public template TreeModelT(TStruct)
 	 */
 	public TreePath getPath(TreeIter iter)
 	{
-		auto p = gtk_tree_model_get_path(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
+		auto __p = gtk_tree_model_get_path(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -434,8 +415,6 @@ public template TreeModelT(TStruct)
 	 *
 	 * Returns: a newly-allocated string.
 	 *     Must be freed with g_free().
-	 *
-	 * Since: 2.2
 	 */
 	public string getStringFromIter(TreeIter iter)
 	{
@@ -459,6 +438,26 @@ public template TreeModelT(TStruct)
 	}
 
 	/**
+	 * Initializes and sets @value to that at @column.
+	 *
+	 * When done with @value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 *
+	 * Params:
+	 *     iter = the #GtkTreeIter-struct
+	 *     column = the column to lookup the value at
+	 *     value = an empty #GValue to set
+	 */
+	public void getValue(TreeIter iter, int column, out Value value)
+	{
+		GValue* outvalue = sliceNew!GValue();
+
+		gtk_tree_model_get_value(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, outvalue);
+
+		value = ObjectG.getDObject!(Value)(outvalue, true);
+	}
+
+	/**
 	 * Sets @iter to point to the first child of @parent.
 	 *
 	 * If @parent has no children, %FALSE is returned and @iter is
@@ -478,11 +477,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_iter_children(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct()) != 0;
+		auto __p = gtk_tree_model_iter_children(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct()) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -550,11 +549,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_iter_nth_child(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct(), n) != 0;
+		auto __p = gtk_tree_model_iter_nth_child(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct(), n) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -578,11 +577,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_iter_parent(getTreeModelStruct(), outiter, (child is null) ? null : child.getTreeIterStruct()) != 0;
+		auto __p = gtk_tree_model_iter_parent(getTreeModelStruct(), outiter, (child is null) ? null : child.getTreeIterStruct()) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -595,8 +594,6 @@ public template TreeModelT(TStruct)
 	 *     iter = the #GtkTreeIter-struct
 	 *
 	 * Returns: %TRUE if @iter has been changed to the previous node
-	 *
-	 * Since: 3.0
 	 */
 	public bool iterPrevious(TreeIter iter)
 	{
@@ -723,8 +720,6 @@ public template TreeModelT(TStruct)
 	 *         mapping the current position of each child to its old
 	 *         position before the re-ordering,
 	 *         i.e. @new_order`[newpos] = oldpos`
-	 *
-	 * Since: 3.10
 	 */
 	public void rowsReorderedWithLength(TreePath path, TreeIter iter, int[] newOrder)
 	{

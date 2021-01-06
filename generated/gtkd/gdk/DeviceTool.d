@@ -27,10 +27,11 @@ module gdk.DeviceTool;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 
 
-/** */
+/**
+ * A physical tool associated to a #GdkDevice.
+ */
 public class DeviceTool : ObjectG
 {
 	/** the main Gtk struct */
@@ -67,6 +68,16 @@ public class DeviceTool : ObjectG
 	}
 
 	/**
+	 * Gets the axes of the tool.
+	 *
+	 * Returns: the axes of @tool
+	 */
+	public GdkAxisFlags getAxes()
+	{
+		return gdk_device_tool_get_axes(gdkDeviceTool);
+	}
+
+	/**
 	 * Gets the hardware ID of this tool, or 0 if it's not known. When
 	 * non-zero, the identificator is unique for the given tool model,
 	 * meaning that two identical tools will share the same @hardware_id,
@@ -78,8 +89,6 @@ public class DeviceTool : ObjectG
 	 * but having different hardware identificators.
 	 *
 	 * Returns: The hardware identificator of this tool.
-	 *
-	 * Since: 3.22
 	 */
 	public ulong getHardwareId()
 	{
@@ -91,8 +100,6 @@ public class DeviceTool : ObjectG
 	 * physical tool (eg. a tablet pen) across program executions.
 	 *
 	 * Returns: The serial ID for this tool
-	 *
-	 * Since: 3.22
 	 */
 	public ulong getSerial()
 	{
@@ -104,8 +111,6 @@ public class DeviceTool : ObjectG
 	 *
 	 * Returns: The physical type for this tool. This can be used to figure out what
 	 *     sort of pen is being used, such as an airbrush or a pencil.
-	 *
-	 * Since: 3.22
 	 */
 	public GdkDeviceToolType getToolType()
 	{

@@ -27,7 +27,6 @@ module gobject.WeakRef;
 private import gobject.ObjectG;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 
 
 /**

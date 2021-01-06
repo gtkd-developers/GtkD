@@ -29,6 +29,7 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gobject.Value;
 private import peas.PluginInfo;
 private import peas.c.functions;
 public  import peas.c.types;
@@ -118,14 +119,14 @@ public class Engine : ObjectG
 	 */
 	public static Engine getDefault()
 	{
-		auto p = peas_engine_get_default();
+		auto __p = peas_engine_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Engine)(cast(PeasEngine*) p);
+		return ObjectG.getDObject!(Engine)(cast(PeasEngine*) __p);
 	}
 
 	/**
@@ -178,6 +179,38 @@ public class Engine : ObjectG
 	public PeasExtension* createExtensionValist(PluginInfo info, GType extensionType, string firstProperty, void* varArgs)
 	{
 		return peas_engine_create_extension_valist(peasEngine, (info is null) ? null : info.getPluginInfoStruct(), extensionType, Str.toStringz(firstProperty), varArgs);
+	}
+
+	/**
+	 * If the plugin identified by @info implements the @extension_type,
+	 * then this function will return a new instance of this implementation,
+	 * wrapped in a new #PeasExtension instance. Otherwise, it will return %NULL.
+	 *
+	 * Since libpeas 1.22, @extension_type can be an Abstract #GType
+	 * and not just an Interface #GType.
+	 *
+	 * See peas_engine_create_extension() for more information.
+	 *
+	 * Params:
+	 *     info = A loaded #PeasPluginInfo.
+	 *     extensionType = The implemented extension #GType.
+	 *     propNames = an array of property names.
+	 *     propValues = an array of property values.
+	 *
+	 * Returns: a new instance of #PeasExtension wrapping
+	 *     the @extension_type instance, or %NULL.
+	 *
+	 * Since: 1.24
+	 */
+	public PeasExtension* createExtensionWithProperties(PluginInfo info, GType extensionType, string[] propNames, Value[] propValues)
+	{
+		GValue[] propValuesArray = new GValue[propValues.length];
+		for ( int i = 0; i < propValues.length; i++ )
+		{
+			propValuesArray[i] = *(propValues[i].getValueStruct());
+		}
+
+		return peas_engine_create_extension_with_properties(peasEngine, (info is null) ? null : info.getPluginInfoStruct(), extensionType, cast(uint)propValues.length, Str.toStringzArray(propNames), propValuesArray.ptr);
 	}
 
 	/**
@@ -268,14 +301,14 @@ public class Engine : ObjectG
 	 */
 	public PluginInfo getPluginInfo(string pluginName)
 	{
-		auto p = peas_engine_get_plugin_info(peasEngine, Str.toStringz(pluginName));
+		auto __p = peas_engine_get_plugin_info(peasEngine, Str.toStringz(pluginName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
+		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) __p);
 	}
 
 	/**
@@ -287,14 +320,14 @@ public class Engine : ObjectG
 	 */
 	public ListG getPluginList()
 	{
-		auto p = peas_engine_get_plugin_list(peasEngine);
+		auto __p = peas_engine_get_plugin_list(peasEngine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

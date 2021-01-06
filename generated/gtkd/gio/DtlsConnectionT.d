@@ -31,12 +31,13 @@ public  import gio.TlsDatabase;
 public  import gio.TlsInteraction;
 public  import gio.c.functions;
 public  import gio.c.types;
+public  import glib.ByteArray;
 public  import glib.ErrorG;
 public  import glib.GException;
+public  import glib.MemorySlice;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -202,6 +203,49 @@ public template DtlsConnectionT(TStruct)
 	}
 
 	/**
+	 * Query the TLS backend for TLS channel binding data of @type for @conn.
+	 *
+	 * This call retrieves TLS channel binding data as specified in RFC
+	 * [5056](https://tools.ietf.org/html/rfc5056), RFC
+	 * [5929](https://tools.ietf.org/html/rfc5929), and related RFCs.  The
+	 * binding data is returned in @data.  The @data is resized by the callee
+	 * using #GByteArray buffer management and will be freed when the @data
+	 * is destroyed by g_byte_array_unref(). If @data is %NULL, it will only
+	 * check whether TLS backend is able to fetch the data (e.g. whether @type
+	 * is supported by the TLS backend). It does not guarantee that the data
+	 * will be available though.  That could happen if TLS connection does not
+	 * support @type or the binding data is not available yet due to additional
+	 * negotiation or input required.
+	 *
+	 * Params:
+	 *     type = #GTlsChannelBindingType type of data to fetch
+	 *     data = #GByteArray is
+	 *         filled with the binding data, or %NULL
+	 *
+	 * Returns: %TRUE on success, %FALSE otherwise
+	 *
+	 * Since: 2.66
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool getChannelBindingData(GTlsChannelBindingType type, out ByteArray data)
+	{
+		GByteArray* outdata = sliceNew!GByteArray();
+		GError* err = null;
+
+		auto __p = g_dtls_connection_get_channel_binding_data(getDtlsConnectionStruct(), type, outdata, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		data = new ByteArray(outdata, true);
+
+		return __p;
+	}
+
+	/**
 	 * Gets the certificate database that @conn uses to verify
 	 * peer certificates. See g_dtls_connection_set_database().
 	 *
@@ -261,8 +305,8 @@ public template DtlsConnectionT(TStruct)
 	}
 
 	/**
-	 * Gets @conn's peer's certificate after the handshake has completed.
-	 * (It is not set during the emission of
+	 * Gets @conn's peer's certificate after the handshake has completed
+	 * or failed. (It is not set during the emission of
 	 * #GDtlsConnection::accept-certificate.)
 	 *
 	 * Returns: @conn's peer's certificate, or %NULL
@@ -283,8 +327,8 @@ public template DtlsConnectionT(TStruct)
 
 	/**
 	 * Gets the errors associated with validating @conn's peer's
-	 * certificate, after the handshake has completed. (It is not set
-	 * during the emission of #GDtlsConnection::accept-certificate.)
+	 * certificate, after the handshake has completed or failed. (It is
+	 * not set during the emission of #GDtlsConnection::accept-certificate.)
 	 *
 	 * Returns: @conn's peer's certificate errors
 	 *

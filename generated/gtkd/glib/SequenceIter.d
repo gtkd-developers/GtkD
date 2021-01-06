@@ -27,7 +27,6 @@ module glib.SequenceIter;
 private import glib.Sequence;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**

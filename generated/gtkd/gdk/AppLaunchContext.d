@@ -25,15 +25,12 @@
 module gdk.AppLaunchContext;
 
 private import gdk.Display;
-private import gdk.Screen;
 private import gdk.c.functions;
 public  import gdk.c.types;
-private import gio.AppLaunchContext : GioAppLaunchContext = AppLaunchContext;
+private import gio.AppLaunchContext : DGioAppLaunchContext = AppLaunchContext;
 private import gio.IconIF;
-private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -49,8 +46,8 @@ public  import gtkc.gdktypes;
  * 
  * context = gdk_display_get_app_launch_context (display);
  * 
- * gdk_app_launch_context_set_screen (screen);
- * gdk_app_launch_context_set_timestamp (event->time);
+ * gdk_app_launch_context_set_display (display);
+ * gdk_app_launch_context_set_timestamp (gdk_event_get_time (event));
  * 
  * if (!g_app_info_launch_default_for_uri ("http://www.gtk.org", context, &error))
  * g_warning ("Launching failed: %s\n", error->message);
@@ -58,7 +55,7 @@ public  import gtkc.gdktypes;
  * g_object_unref (context);
  * ]|
  */
-public class AppLaunchContext : GioAppLaunchContext
+public class AppLaunchContext : DGioAppLaunchContext
 {
 	/** the main Gtk struct */
 	protected GdkAppLaunchContext* gdkAppLaunchContext;
@@ -94,26 +91,20 @@ public class AppLaunchContext : GioAppLaunchContext
 	}
 
 	/**
-	 * Creates a new #GdkAppLaunchContext.
+	 * Gets the #GdkDisplay that @context is for.
 	 *
-	 * Deprecated: Use gdk_display_get_app_launch_context() instead
-	 *
-	 * Returns: a new #GdkAppLaunchContext
-	 *
-	 * Since: 2.14
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * Returns: the display of @context
 	 */
-	public this()
+	public Display getDisplay()
 	{
-		auto p = gdk_app_launch_context_new();
+		auto __p = gdk_app_launch_context_get_display(gdkAppLaunchContext);
 
-		if(p is null)
+		if(__p is null)
 		{
-			throw new ConstructionException("null returned by new");
+			return null;
 		}
 
-		this(cast(GdkAppLaunchContext*) p, true);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -128,28 +119,10 @@ public class AppLaunchContext : GioAppLaunchContext
 	 *
 	 * Params:
 	 *     desktop = the number of a workspace, or -1
-	 *
-	 * Since: 2.14
 	 */
 	public void setDesktop(int desktop)
 	{
 		gdk_app_launch_context_set_desktop(gdkAppLaunchContext, desktop);
-	}
-
-	/**
-	 * Sets the display on which applications will be launched when
-	 * using this context. See also gdk_app_launch_context_set_screen().
-	 *
-	 * Deprecated: Use gdk_display_get_app_launch_context() instead
-	 *
-	 * Params:
-	 *     display = a #GdkDisplay
-	 *
-	 * Since: 2.14
-	 */
-	public void setDisplay(Display display)
-	{
-		gdk_app_launch_context_set_display(gdkAppLaunchContext, (display is null) ? null : display.getDisplayStruct());
 	}
 
 	/**
@@ -163,8 +136,6 @@ public class AppLaunchContext : GioAppLaunchContext
 	 *
 	 * Params:
 	 *     icon = a #GIcon, or %NULL
-	 *
-	 * Since: 2.14
 	 */
 	public void setIcon(IconIF icon)
 	{
@@ -183,30 +154,10 @@ public class AppLaunchContext : GioAppLaunchContext
 	 *
 	 * Params:
 	 *     iconName = an icon name, or %NULL
-	 *
-	 * Since: 2.14
 	 */
 	public void setIconName(string iconName)
 	{
 		gdk_app_launch_context_set_icon_name(gdkAppLaunchContext, Str.toStringz(iconName));
-	}
-
-	/**
-	 * Sets the screen on which applications will be launched when
-	 * using this context. See also gdk_app_launch_context_set_display().
-	 *
-	 * If both @screen and @display are set, the @screen takes priority.
-	 * If neither @screen or @display are set, the default screen and
-	 * display are used.
-	 *
-	 * Params:
-	 *     screen = a #GdkScreen
-	 *
-	 * Since: 2.14
-	 */
-	public void setScreen(Screen screen)
-	{
-		gdk_app_launch_context_set_screen(gdkAppLaunchContext, (screen is null) ? null : screen.getScreenStruct());
 	}
 
 	/**
@@ -220,8 +171,6 @@ public class AppLaunchContext : GioAppLaunchContext
 	 *
 	 * Params:
 	 *     timestamp = a timestamp
-	 *
-	 * Since: 2.14
 	 */
 	public void setTimestamp(uint timestamp)
 	{

@@ -33,7 +33,6 @@ private import gtk.BuildableT;
 private import gtk.TextTag;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -106,14 +105,14 @@ public class TextTagTable : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_text_tag_table_new();
+		auto __p = gtk_text_tag_table_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextTagTable*) p, true);
+		this(cast(GtkTextTagTable*) __p, true);
 	}
 
 	/**
@@ -169,14 +168,14 @@ public class TextTagTable : ObjectG, BuildableIF
 	 */
 	public TextTag lookup(string name)
 	{
-		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
+		auto __p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) p);
+		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) __p);
 	}
 
 	/**
@@ -193,19 +192,38 @@ public class TextTagTable : ObjectG, BuildableIF
 		gtk_text_tag_table_remove(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
 	}
 
-	/** */
+	/**
+	 * Emitted every time a new tag is added in the #GtkTextTagTable.
+	 *
+	 * Params:
+	 *     tag = the added tag.
+	 */
 	gulong addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "tag-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/** */
+	/**
+	 * Emitted every time a tag in the #GtkTextTagTable changes.
+	 *
+	 * Params:
+	 *     tag = the changed tag.
+	 *     sizeChanged = whether the change affects the #GtkTextView layout.
+	 */
 	gulong addOnTagChanged(void delegate(TextTag, bool, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "tag-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/** */
+	/**
+	 * Emitted every time a tag is removed from the #GtkTextTagTable.
+	 *
+	 * The @tag is still valid by the time the signal is emitted, but
+	 * it is not associated with a tag table any more.
+	 *
+	 * Params:
+	 *     tag = the removed tag.
+	 */
 	gulong addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "tag-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);

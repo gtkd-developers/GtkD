@@ -29,7 +29,6 @@ public  import gio.DBusObjectIF;
 public  import gio.c.functions;
 public  import gio.c.types;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**

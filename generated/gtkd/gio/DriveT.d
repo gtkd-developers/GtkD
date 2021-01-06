@@ -36,7 +36,6 @@ public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -53,7 +52,7 @@ public  import std.algorithm;
  * 
  * If the #GDrive reports that media isn't automatically detected, one
  * can poll for media; typically one should not do this periodically
- * as a poll for media operation is potententially expensive and may
+ * as a poll for media operation is potentially expensive and may
  * spin up the drive creating noise.
  * 
  * #GDrive supports starting and stopping drives with authentication
@@ -386,9 +385,9 @@ public template DriveT(TStruct)
 	}
 
 	/**
-	 * Checks if @drive is capabable of automatically detecting media changes.
+	 * Checks if @drive is capable of automatically detecting media changes.
 	 *
-	 * Returns: %TRUE if the @drive is capabable of automatically detecting
+	 * Returns: %TRUE if the @drive is capable of automatically detecting
 	 *     media changes, %FALSE otherwise.
 	 */
 	public bool isMediaCheckAutomatic()

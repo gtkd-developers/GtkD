@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -94,27 +93,14 @@ public class Adjustment : ObjectG
 	 */
 	public this(double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
-		auto p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
+		auto __p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAdjustment*) p);
-	}
-
-	/**
-	 * Emits a #GtkAdjustment::changed signal from the #GtkAdjustment.
-	 * This is typically called by the owner of the #GtkAdjustment after it has
-	 * changed any of the #GtkAdjustment properties other than the value.
-	 *
-	 * Deprecated: GTK+ emits #GtkAdjustment::changed itself whenever any
-	 * of the properties (other than value) change
-	 */
-	public void changed()
-	{
-		gtk_adjustment_changed(gtkAdjustment);
+		this(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -150,8 +136,6 @@ public class Adjustment : ObjectG
 	 *     stepIncrement = the new step increment
 	 *     pageIncrement = the new page increment
 	 *     pageSize = the new page size
-	 *
-	 * Since: 2.14
 	 */
 	public void configure(double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
@@ -162,8 +146,6 @@ public class Adjustment : ObjectG
 	 * Retrieves the minimum value of the adjustment.
 	 *
 	 * Returns: The current minimum value of the adjustment
-	 *
-	 * Since: 2.14
 	 */
 	public double getLower()
 	{
@@ -174,8 +156,6 @@ public class Adjustment : ObjectG
 	 * Gets the smaller of step increment and page increment.
 	 *
 	 * Returns: the minimum increment of @adjustment
-	 *
-	 * Since: 3.2
 	 */
 	public double getMinimumIncrement()
 	{
@@ -186,8 +166,6 @@ public class Adjustment : ObjectG
 	 * Retrieves the page increment of the adjustment.
 	 *
 	 * Returns: The current page increment of the adjustment
-	 *
-	 * Since: 2.14
 	 */
 	public double getPageIncrement()
 	{
@@ -198,8 +176,6 @@ public class Adjustment : ObjectG
 	 * Retrieves the page size of the adjustment.
 	 *
 	 * Returns: The current page size of the adjustment
-	 *
-	 * Since: 2.14
 	 */
 	public double getPageSize()
 	{
@@ -210,8 +186,6 @@ public class Adjustment : ObjectG
 	 * Retrieves the step increment of the adjustment.
 	 *
 	 * Returns: The current step increment of the adjustment.
-	 *
-	 * Since: 2.14
 	 */
 	public double getStepIncrement()
 	{
@@ -222,8 +196,6 @@ public class Adjustment : ObjectG
 	 * Retrieves the maximum value of the adjustment.
 	 *
 	 * Returns: The current maximum value of the adjustment
-	 *
-	 * Since: 2.14
 	 */
 	public double getUpper()
 	{
@@ -258,8 +230,6 @@ public class Adjustment : ObjectG
 	 *
 	 * Params:
 	 *     lower = the new minimum value
-	 *
-	 * Since: 2.14
 	 */
 	public void setLower(double lower)
 	{
@@ -275,8 +245,6 @@ public class Adjustment : ObjectG
 	 *
 	 * Params:
 	 *     pageIncrement = the new page increment
-	 *
-	 * Since: 2.14
 	 */
 	public void setPageIncrement(double pageIncrement)
 	{
@@ -292,8 +260,6 @@ public class Adjustment : ObjectG
 	 *
 	 * Params:
 	 *     pageSize = the new page size
-	 *
-	 * Since: 2.14
 	 */
 	public void setPageSize(double pageSize)
 	{
@@ -309,8 +275,6 @@ public class Adjustment : ObjectG
 	 *
 	 * Params:
 	 *     stepIncrement = the new step increment
-	 *
-	 * Since: 2.14
 	 */
 	public void setStepIncrement(double stepIncrement)
 	{
@@ -329,8 +293,6 @@ public class Adjustment : ObjectG
 	 *
 	 * Params:
 	 *     upper = the new maximum value
-	 *
-	 * Since: 2.14
 	 */
 	public void setUpper(double upper)
 	{
@@ -351,19 +313,6 @@ public class Adjustment : ObjectG
 	public void setValue(double value)
 	{
 		gtk_adjustment_set_value(gtkAdjustment, value);
-	}
-
-	/**
-	 * Emits a #GtkAdjustment::value-changed signal from the #GtkAdjustment.
-	 * This is typically called by the owner of the #GtkAdjustment after it has
-	 * changed the #GtkAdjustment:value property.
-	 *
-	 * Deprecated: GTK+ emits #GtkAdjustment::value-changed itself whenever
-	 * the value changes
-	 */
-	public void valueChanged()
-	{
-		gtk_adjustment_value_changed(gtkAdjustment);
 	}
 
 	/**

@@ -31,7 +31,6 @@ private import gobject.ObjectG;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -85,14 +84,14 @@ public class TaskPool : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_task_pool_new();
+		auto __p = gst_task_pool_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstTaskPool*) p, true);
+		this(cast(GstTaskPool*) __p, true);
 	}
 
 	/**
@@ -154,13 +153,13 @@ public class TaskPool : ObjectGst
 	{
 		GError* err = null;
 
-		auto p = gst_task_pool_push(gstTaskPool, func, userData, &err);
+		auto __p = gst_task_pool_push(gstTaskPool, func, userData, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

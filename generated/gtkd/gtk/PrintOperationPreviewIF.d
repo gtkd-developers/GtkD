@@ -29,7 +29,6 @@ private import gtk.PageSetup;
 private import gtk.PrintContext;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -52,8 +51,6 @@ public interface PrintOperationPreviewIF{
 	 * Ends a preview.
 	 *
 	 * This function must be called to finish a custom print preview.
-	 *
-	 * Since: 2.10
 	 */
 	public void endPreview();
 
@@ -65,8 +62,6 @@ public interface PrintOperationPreviewIF{
 	 *     pageNr = a page number
 	 *
 	 * Returns: %TRUE if the page has been selected for printing
-	 *
-	 * Since: 2.10
 	 */
 	public bool isSelected(int pageNr);
 
@@ -83,8 +78,6 @@ public interface PrintOperationPreviewIF{
 	 *
 	 * Params:
 	 *     pageNr = the page to render
-	 *
-	 * Since: 2.10
 	 */
 	public void renderPage(int pageNr);
 

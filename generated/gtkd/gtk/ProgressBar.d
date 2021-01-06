@@ -32,7 +32,6 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -75,6 +74,10 @@ public  import gtkc.gtktypes;
  * .right, .top or .bottom added when the progress 'touches' the corresponding
  * end of the GtkProgressBar. The .osd class on the progressbar node is for use
  * in overlays like the one Epiphany has for page loading progress.
+ * 
+ * # Accessibility
+ * 
+ * GtkProgressBar uses the #GTK_ACCESSIBLE_ROLE_PROGRESS_BAR role.
  */
 public class ProgressBar : Widget, OrientableIF
 {
@@ -123,14 +126,14 @@ public class ProgressBar : Widget, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_progress_bar_new();
+		auto __p = gtk_progress_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkProgressBar*) p);
+		this(cast(GtkProgressBar*) __p);
 	}
 
 	/**
@@ -138,8 +141,6 @@ public class ProgressBar : Widget, OrientableIF
 	 * See gtk_progress_bar_set_ellipsize().
 	 *
 	 * Returns: #PangoEllipsizeMode
-	 *
-	 * Since: 2.6
 	 */
 	public PangoEllipsizeMode getEllipsize()
 	{
@@ -181,8 +182,6 @@ public class ProgressBar : Widget, OrientableIF
 	 * See gtk_progress_bar_set_show_text().
 	 *
 	 * Returns: %TRUE if text is shown in the progress bar
-	 *
-	 * Since: 3.0
 	 */
 	public bool getShowText()
 	{
@@ -221,8 +220,6 @@ public class ProgressBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     mode = a #PangoEllipsizeMode
-	 *
-	 * Since: 2.6
 	 */
 	public void setEllipsize(PangoEllipsizeMode mode)
 	{
@@ -278,8 +275,6 @@ public class ProgressBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     showText = whether to show text
-	 *
-	 * Since: 3.0
 	 */
 	public void setShowText(bool showText)
 	{

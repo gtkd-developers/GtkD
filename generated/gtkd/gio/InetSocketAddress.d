@@ -31,7 +31,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -108,8 +107,8 @@ public class InetSocketAddress : SocketAddress
 	 *     address = the string form of an IP address
 	 *     port = a port number
 	 *
-	 * Returns: a new #GInetSocketAddress, or %NULL if @address cannot be
-	 *     parsed.
+	 * Returns: a new #GInetSocketAddress,
+	 *     or %NULL if @address cannot be parsed.
 	 *
 	 * Since: 2.40
 	 *

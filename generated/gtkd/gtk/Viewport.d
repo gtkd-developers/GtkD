@@ -24,17 +24,14 @@
 
 module gtk.Viewport;
 
-private import gdk.Window;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Adjustment;
-private import gtk.Bin;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -43,22 +40,18 @@ public  import gtkc.gtktypes;
  * capabilities. Use GtkViewport to scroll child widgets such as
  * #GtkGrid, #GtkBox, and so on.
  * 
- * If a widget has native scrolling abilities, such as #GtkTextView,
- * #GtkTreeView or #GtkIconView, it can be added to a #GtkScrolledWindow
- * with gtk_container_add(). If a widget does not, you must first add the
- * widget to a #GtkViewport, then add the viewport to the scrolled window.
- * gtk_container_add() does this automatically if a child that does not
- * implement #GtkScrollable is added to a #GtkScrolledWindow, so you can
- * ignore the presence of the viewport.
- * 
  * The GtkViewport will start scrolling content only if allocated less
  * than the child widget’s minimum size in a given orientation.
  * 
  * # CSS nodes
  * 
- * GtkViewport has a single CSS node with name viewport.
+ * GtkViewport has a single CSS node with name `viewport`.
+ * 
+ * # Accessibility
+ * 
+ * GtkViewport uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
-public class Viewport : Bin, ScrollableIF
+public class Viewport : Widget, ScrollableIF
 {
 	/** the main Gtk struct */
 	protected GtkViewport* gtkViewport;
@@ -83,7 +76,7 @@ public class Viewport : Bin, ScrollableIF
 	public this (GtkViewport* gtkViewport, bool ownedRef = false)
 	{
 		this.gtkViewport = gtkViewport;
-		super(cast(GtkBin*)gtkViewport, ownedRef);
+		super(cast(GtkWidget*)gtkViewport, ownedRef);
 	}
 
 	// add the Scrollable capabilities
@@ -110,137 +103,64 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	public this(Adjustment hadjustment, Adjustment vadjustment)
 	{
-		auto p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		auto __p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkViewport*) p);
+		this(cast(GtkViewport*) __p);
 	}
 
 	/**
-	 * Gets the bin window of the #GtkViewport.
+	 * Gets the child widget of @viewport.
 	 *
-	 * Returns: a #GdkWindow
-	 *
-	 * Since: 2.20
+	 * Returns: the child widget of @viewport
 	 */
-	public Window getBinWindow()
+	public Widget getChild()
 	{
-		auto p = gtk_viewport_get_bin_window(gtkViewport);
+		auto __p = gtk_viewport_get_child(gtkViewport);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
-	 * Returns the horizontal adjustment of the viewport.
+	 * Gets whether the viewport is scrolling to keep the focused
+	 * child in view. See gtk_viewport_set_scroll_to_focus().
 	 *
-	 * Deprecated: Use gtk_scrollable_get_hadjustment()
-	 *
-	 * Returns: the horizontal adjustment of @viewport.
+	 * Returns: %TRUE if the viewport keeps the focus child scrolled to view
 	 */
-	public Adjustment getHadjustment()
+	public bool getScrollToFocus()
 	{
-		auto p = gtk_viewport_get_hadjustment(gtkViewport);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return gtk_viewport_get_scroll_to_focus(gtkViewport) != 0;
 	}
 
 	/**
-	 * Gets the shadow type of the #GtkViewport. See
-	 * gtk_viewport_set_shadow_type().
-	 *
-	 * Returns: the shadow type
-	 */
-	public GtkShadowType getShadowType()
-	{
-		return gtk_viewport_get_shadow_type(gtkViewport);
-	}
-
-	/**
-	 * Returns the vertical adjustment of the viewport.
-	 *
-	 * Deprecated: Use gtk_scrollable_get_vadjustment()
-	 *
-	 * Returns: the vertical adjustment of @viewport.
-	 */
-	public Adjustment getVadjustment()
-	{
-		auto p = gtk_viewport_get_vadjustment(gtkViewport);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
-	}
-
-	/**
-	 * Gets the view window of the #GtkViewport.
-	 *
-	 * Returns: a #GdkWindow
-	 *
-	 * Since: 2.22
-	 */
-	public Window getViewWindow()
-	{
-		auto p = gtk_viewport_get_view_window(gtkViewport);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
-	}
-
-	/**
-	 * Sets the horizontal adjustment of the viewport.
-	 *
-	 * Deprecated: Use gtk_scrollable_set_hadjustment()
+	 * Sets the child widget of @viewport.
 	 *
 	 * Params:
-	 *     adjustment = a #GtkAdjustment.
+	 *     child = the child widget
 	 */
-	public void setHadjustment(Adjustment adjustment)
+	public void setChild(Widget child)
 	{
-		gtk_viewport_set_hadjustment(gtkViewport, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		gtk_viewport_set_child(gtkViewport, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
-	 * Sets the shadow type of the viewport.
+	 * Sets whether the viewport should automatically scroll
+	 * to keep the focused child in view.
 	 *
 	 * Params:
-	 *     type = the new shadow type.
+	 *     scrollToFocus = whether to keep the focus widget scrolled to view
 	 */
-	public void setShadowType(GtkShadowType type)
+	public void setScrollToFocus(bool scrollToFocus)
 	{
-		gtk_viewport_set_shadow_type(gtkViewport, type);
-	}
-
-	/**
-	 * Sets the vertical adjustment of the viewport.
-	 *
-	 * Deprecated: Use gtk_scrollable_set_vadjustment()
-	 *
-	 * Params:
-	 *     adjustment = a #GtkAdjustment.
-	 */
-	public void setVadjustment(Adjustment adjustment)
-	{
-		gtk_viewport_set_vadjustment(gtkViewport, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		gtk_viewport_set_scroll_to_focus(gtkViewport, scrollToFocus);
 	}
 }

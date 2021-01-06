@@ -38,7 +38,6 @@ private import gtk.TreeModelIF;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -64,12 +63,6 @@ private import std.algorithm;
  * the signal handler to suppress the default behaviour.
  * 
  * To add completion functionality to an entry, use gtk_entry_set_completion().
- * 
- * In addition to regular completion matches, which will be inserted into the
- * entry when they are selected, #GtkEntryCompletion also allows to display
- * “actions” in the popup window. Their appearance is similar to menuitems,
- * to differentiate them clearly from completion strings. When an action is
- * selected, the #GtkEntryCompletion::action-activated signal is emitted.
  * 
  * GtkEntryCompletion uses a #GtkTreeModelFilter model to represent the
  * subset of the entire model that is currently matching. While the
@@ -130,20 +123,18 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: A newly created #GtkEntryCompletion object
 	 *
-	 * Since: 2.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_entry_completion_new();
+		auto __p = gtk_entry_completion_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEntryCompletion*) p, true);
+		this(cast(GtkEntryCompletion*) __p, true);
 	}
 
 	/**
@@ -156,28 +147,24 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: A newly created #GtkEntryCompletion object
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(CellArea area)
 	{
-		auto p = gtk_entry_completion_new_with_area((area is null) ? null : area.getCellAreaStruct());
+		auto __p = gtk_entry_completion_new_with_area((area is null) ? null : area.getCellAreaStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
 
-		this(cast(GtkEntryCompletion*) p, true);
+		this(cast(GtkEntryCompletion*) __p, true);
 	}
 
 	/**
 	 * Requests a completion operation, or in other words a refiltering of the
 	 * current list with completions, using the current key. The completion list
 	 * view will be updated accordingly.
-	 *
-	 * Since: 2.4
 	 */
 	public void complete()
 	{
@@ -195,8 +182,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: The common prefix all rows starting with
 	 *     @key or %NULL if no row matches @key.
-	 *
-	 * Since: 3.4
 	 */
 	public string computePrefix(string key)
 	{
@@ -207,28 +192,10 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	}
 
 	/**
-	 * Deletes the action at @index_ from @completion’s action list.
-	 *
-	 * Note that @index_ is a relative position and the position of an
-	 * action may have changed since it was inserted.
-	 *
-	 * Params:
-	 *     index = the index of the item to delete
-	 *
-	 * Since: 2.4
-	 */
-	public void deleteAction(int index)
-	{
-		gtk_entry_completion_delete_action(gtkEntryCompletion, index);
-	}
-
-	/**
 	 * Get the original text entered by the user that triggered
 	 * the completion or %NULL if there’s no completion ongoing.
 	 *
 	 * Returns: the prefix for the current completion
-	 *
-	 * Since: 2.12
 	 */
 	public string getCompletionPrefix()
 	{
@@ -239,19 +206,17 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Gets the entry @completion has been attached to.
 	 *
 	 * Returns: The entry @completion has been attached to
-	 *
-	 * Since: 2.4
 	 */
 	public Widget getEntry()
 	{
-		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
+		auto __p = gtk_entry_completion_get_entry(gtkEntryCompletion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -259,8 +224,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * be automatically inserted in the entry.
 	 *
 	 * Returns: %TRUE if inline completion is turned on
-	 *
-	 * Since: 2.6
 	 */
 	public bool getInlineCompletion()
 	{
@@ -271,8 +234,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns %TRUE if inline-selection mode is turned on.
 	 *
 	 * Returns: %TRUE if inline-selection mode is on
-	 *
-	 * Since: 2.12
 	 */
 	public bool getInlineSelection()
 	{
@@ -283,8 +244,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the minimum key length as set for @completion.
 	 *
 	 * Returns: The currently used minimum key length
-	 *
-	 * Since: 2.4
 	 */
 	public int getMinimumKeyLength()
 	{
@@ -297,27 +256,23 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: A #GtkTreeModel, or %NULL if none
 	 *     is currently being used
-	 *
-	 * Since: 2.4
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
+		auto __p = gtk_entry_completion_get_model(gtkEntryCompletion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
 	 * Returns whether the completions should be presented in a popup window.
 	 *
 	 * Returns: %TRUE if popup completion is turned on
-	 *
-	 * Since: 2.6
 	 */
 	public bool getPopupCompletion()
 	{
@@ -330,8 +285,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: %TRUE if the popup window will be resized to the width of
 	 *     the entry
-	 *
-	 * Since: 2.8
 	 */
 	public bool getPopupSetWidth()
 	{
@@ -344,8 +297,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: %TRUE if the popup window will appear regardless of the
 	 *     number of matches
-	 *
-	 * Since: 2.8
 	 */
 	public bool getPopupSingleMatch()
 	{
@@ -356,8 +307,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the column in the model of @completion to get strings from.
 	 *
 	 * Returns: the column containing the strings
-	 *
-	 * Since: 2.6
 	 */
 	public int getTextColumn()
 	{
@@ -365,43 +314,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	}
 
 	/**
-	 * Inserts an action in @completion’s action item list at position @index_
-	 * with markup @markup.
-	 *
-	 * Params:
-	 *     index = the index of the item to insert
-	 *     markup = markup of the item to insert
-	 *
-	 * Since: 2.4
-	 */
-	public void insertActionMarkup(int index, string markup)
-	{
-		gtk_entry_completion_insert_action_markup(gtkEntryCompletion, index, Str.toStringz(markup));
-	}
-
-	/**
-	 * Inserts an action in @completion’s action item list at position @index_
-	 * with text @text. If you want the action item to have markup, use
-	 * gtk_entry_completion_insert_action_markup().
-	 *
-	 * Note that @index_ is a relative position in the list of actions and
-	 * the position of an action can change when deleting a different action.
-	 *
-	 * Params:
-	 *     index = the index of the item to insert
-	 *     text = text of the item to insert
-	 *
-	 * Since: 2.4
-	 */
-	public void insertActionText(int index, string text)
-	{
-		gtk_entry_completion_insert_action_text(gtkEntryCompletion, index, Str.toStringz(text));
-	}
-
-	/**
 	 * Requests a prefix insertion.
-	 *
-	 * Since: 2.6
 	 */
 	public void insertPrefix()
 	{
@@ -414,8 +327,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     inlineCompletion = %TRUE to do inline completion
-	 *
-	 * Since: 2.6
 	 */
 	public void setInlineCompletion(bool inlineCompletion)
 	{
@@ -428,8 +339,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     inlineSelection = %TRUE to do inline selection
-	 *
-	 * Since: 2.12
 	 */
 	public void setInlineSelection(bool inlineSelection)
 	{
@@ -445,8 +354,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *     func = the #GtkEntryCompletionMatchFunc to use
 	 *     funcData = user data for @func
 	 *     funcNotify = destroy notify for @func_data.
-	 *
-	 * Since: 2.4
 	 */
 	public void setMatchFunc(GtkEntryCompletionMatchFunc func, void* funcData, GDestroyNotify funcNotify)
 	{
@@ -461,8 +368,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     length = the minimum length of the key in order to start completing
-	 *
-	 * Since: 2.4
 	 */
 	public void setMinimumKeyLength(int length)
 	{
@@ -476,8 +381,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     model = the #GtkTreeModel
-	 *
-	 * Since: 2.4
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -489,8 +392,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     popupCompletion = %TRUE to do popup completion
-	 *
-	 * Since: 2.6
 	 */
 	public void setPopupCompletion(bool popupCompletion)
 	{
@@ -503,8 +404,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     popupSetWidth = %TRUE to make the width of the popup the same as the entry
-	 *
-	 * Since: 2.8
 	 */
 	public void setPopupSetWidth(bool popupSetWidth)
 	{
@@ -519,8 +418,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     popupSingleMatch = %TRUE if the popup should appear even for a single
 	 *         match
-	 *
-	 * Since: 2.8
 	 */
 	public void setPopupSingleMatch(bool popupSingleMatch)
 	{
@@ -540,25 +437,10 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     column = the column in the model of @completion to get strings from
-	 *
-	 * Since: 2.4
 	 */
 	public void setTextColumn(int column)
 	{
 		gtk_entry_completion_set_text_column(gtkEntryCompletion, column);
-	}
-
-	/**
-	 * Gets emitted when an action is activated.
-	 *
-	 * Params:
-	 *     index = the index of the activated action
-	 *
-	 * Since: 2.4
-	 */
-	gulong addOnActionActivated(void delegate(int, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "action-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**
@@ -575,8 +457,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *     iter = a #GtkTreeIter positioned at the selected match
 	 *
 	 * Returns: %TRUE if the signal has been handled
-	 *
-	 * Since: 2.12
 	 */
 	gulong addOnCursorOnMatch(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -597,8 +477,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *     prefix = the common prefix of all possible completions
 	 *
 	 * Returns: %TRUE if the signal has been handled
-	 *
-	 * Since: 2.6
 	 */
 	gulong addOnInsertPrefix(bool delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -619,8 +497,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *     iter = a #GtkTreeIter positioned at the selected match
 	 *
 	 * Returns: %TRUE if the signal has been handled
-	 *
-	 * Since: 2.4
 	 */
 	gulong addOnMatchSelected(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -632,8 +508,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * number of rows in completion_complete method.
 	 * (In other words when GtkEntryCompletion is out of
 	 * suggestions)
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnNoMatches(void delegate(EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

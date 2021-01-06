@@ -31,7 +31,6 @@ private import gstreamer.Bin;
 private import gstreamer.DebugCategory;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /** */
@@ -76,9 +75,10 @@ public struct Debug
 	 * To aid debugging applications one can use this method to write out the whole
 	 * network of gstreamer elements that form the pipeline into an dot file.
 	 * This file can be processed with graphviz to get an image.
-	 * <informalexample><programlisting>
+	 *
+	 * ``` shell
 	 * dot -Tpng -oimage.png graph_lowlevel.dot
-	 * </programlisting></informalexample>
+	 * ```
 	 *
 	 * Params:
 	 *     bin = the top-level pipeline that should be analyzed
@@ -150,14 +150,14 @@ public struct Debug
 	 */
 	public static ListSG getAllCategories()
 	{
-		auto p = gst_debug_get_all_categories();
+		auto __p = gst_debug_get_all_categories();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

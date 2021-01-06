@@ -232,6 +232,7 @@ public enum GstMpegtsDVBExtendedDescriptorType
 	VIDEO_DEPTH_RANGE = 16,
 	T2MI = 17,
 	URI_LINKAGE = 19,
+	AC4 = 21,
 }
 alias GstMpegtsDVBExtendedDescriptorType DVBExtendedDescriptorType;
 
@@ -502,6 +503,27 @@ public enum GstMpegtsRunningStatus
 }
 alias GstMpegtsRunningStatus RunningStatus;
 
+public enum GstMpegtsSCTESpliceCommandType
+{
+	NULL = 0,
+	SCHEDULE = 4,
+	INSERT = 5,
+	TIME = 6,
+	BANDWIDTH = 7,
+	PRIVATE = 255,
+}
+alias GstMpegtsSCTESpliceCommandType SCTESpliceCommandType;
+
+public enum GstMpegtsSCTESpliceDescriptor
+{
+	AVAIL = 0,
+	DTMF = 1,
+	SEGMENTATION = 2,
+	TIME = 3,
+	AUDIO = 4,
+}
+alias GstMpegtsSCTESpliceDescriptor SCTESpliceDescriptor;
+
 public enum GstMpegtsSatellitePolarizationType
 {
 	LINEAR_HORIZONTAL = 0,
@@ -534,6 +556,10 @@ public enum GstMpegtsScteStreamType
 	 * SCTE-19 Isochronous data
 	 */
 	ISOCH_DATA = 131,
+	/**
+	 * SCTE-35 Splice Information Table
+	 */
+	SIT = 134,
 	/**
 	 * SCTE-07 Data Service or
 	 * Network Resource Table
@@ -780,6 +806,11 @@ public enum GstMpegtsSectionType
 	 * ATSC System Time Table (A65)
 	 */
 	ATSC_STT = 16,
+	ATSC_RRT = 17,
+	/**
+	 * SCTE Splice Information Table (SCTE-35)
+	 */
+	SCTE_SIT = 18,
 }
 alias GstMpegtsSectionType SectionType;
 
@@ -1081,9 +1112,6 @@ struct GstMpegtsAtscETT
 	GPtrArray* messages;
 }
 
-/**
- * Master Guide Table (A65)
- */
 struct GstMpegtsAtscMGT
 {
 	/**
@@ -1135,6 +1163,50 @@ struct GstMpegtsAtscMultString
 	 */
 	char[4] iso639Langcode;
 	GPtrArray* segments;
+}
+
+struct GstMpegtsAtscRRT
+{
+	/**
+	 * The protocol version
+	 */
+	ubyte protocolVersion;
+	/**
+	 * the names
+	 */
+	GPtrArray* names;
+	/**
+	 * the number of dimensions defined for this rating table
+	 */
+	ubyte dimensionsDefined;
+	/**
+	 * A set of dimensions
+	 */
+	GPtrArray* dimensions;
+	/**
+	 * descriptors
+	 */
+	GPtrArray* descriptors;
+}
+
+struct GstMpegtsAtscRRTDimension
+{
+	GPtrArray* names;
+	bool graduatedScale;
+	ubyte valuesDefined;
+	GPtrArray* values;
+}
+
+struct GstMpegtsAtscRRTDimensionValue
+{
+	/**
+	 * the abbreviated ratings
+	 */
+	GPtrArray* abbrevRatings;
+	/**
+	 * the ratings
+	 */
+	GPtrArray* ratings;
 }
 
 struct GstMpegtsAtscSTT
@@ -1358,12 +1430,12 @@ struct GstMpegtsDVBLinkageDescriptor
 	 */
 	ushort serviceId;
 	/**
-	 * the type which %linkage_data has
+	 * the type which @linkage_data has
 	 */
 	GstMpegtsDVBLinkageType linkageType;
 	void* linkageData;
 	/**
-	 * the length for %private_data_bytes
+	 * the length for @private_data_bytes
 	 */
 	ubyte privateDataLength;
 	/**
@@ -1675,6 +1747,39 @@ struct GstMpegtsPatProgram
 	ushort networkOrProgramMapPID;
 }
 
+struct GstMpegtsSCTESIT
+{
+	bool encryptedPacket;
+	ubyte encryptionAlgorithm;
+	ulong ptsAdjustment;
+	ubyte cwIndex;
+	ushort tier;
+	ushort spliceCommandLength;
+	GstMpegtsSCTESpliceCommandType spliceCommandType;
+	bool spliceTimeSpecified;
+	ulong spliceTime;
+	GPtrArray* splices;
+	GPtrArray* descriptors;
+}
+
+struct GstMpegtsSCTESpliceEvent
+{
+	bool insertEvent;
+	uint spliceEventId;
+	bool spliceEventCancelIndicator;
+	bool outOfNetworkIndicator;
+	bool programSpliceFlag;
+	bool durationFlag;
+	bool spliceImmediateFlag;
+	bool programSpliceTimeSpecified;
+	ulong programSpliceTime;
+	bool breakDurationAutoReturn;
+	ulong breakDuration;
+	ushort uniqueProgramId;
+	ubyte availNum;
+	ubyte availsExpected;
+}
+
 struct GstMpegtsSDT
 {
 	/**
@@ -1893,7 +1998,7 @@ struct GstMpegtsTerrestrialDeliverySystemDescriptor
 	 */
 	bool mpeFec;
 	/**
-	 * the constallation
+	 * the constellation
 	 */
 	GstMpegtsModulationType constellation;
 	/**

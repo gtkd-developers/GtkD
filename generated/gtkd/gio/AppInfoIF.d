@@ -37,7 +37,6 @@ private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -221,7 +220,8 @@ public interface AppInfoIF{
 	 * Params:
 	 *     uriScheme = a string containing a URI scheme.
 	 *
-	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or
+	 *     %NULL on error.
 	 */
 	public static AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{

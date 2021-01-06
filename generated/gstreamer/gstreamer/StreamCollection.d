@@ -33,7 +33,6 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Stream;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -106,14 +105,14 @@ public class StreamCollection : ObjectGst
 	 */
 	public this(string upstreamId)
 	{
-		auto p = gst_stream_collection_new(Str.toStringz(upstreamId));
+		auto __p = gst_stream_collection_new(Str.toStringz(upstreamId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstStreamCollection*) p, true);
+		this(cast(GstStreamCollection*) __p, true);
 	}
 
 	/**
@@ -157,14 +156,14 @@ public class StreamCollection : ObjectGst
 	 */
 	public Stream getStream(uint index)
 	{
-		auto p = gst_stream_collection_get_stream(gstStreamCollection, index);
+		auto __p = gst_stream_collection_get_stream(gstStreamCollection, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Stream)(cast(GstStream*) p);
+		return ObjectG.getDObject!(Stream)(cast(GstStream*) __p);
 	}
 
 	/**

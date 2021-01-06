@@ -116,7 +116,7 @@ private import gstreamer.TagList;
  * 
  * * During the parsing process #GstBaseParseClass will handle both srcpad
  * and sinkpad events. They will be passed to subclass if
- * #GstBaseParseClass.event() or #GstBaseParseClass.src_event()
+ * #GstBaseParseClass.sink_event() or #GstBaseParseClass.src_event()
  * implementations have been provided.
  * 
  * ## Shutdown phase

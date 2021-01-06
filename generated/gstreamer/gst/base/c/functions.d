@@ -75,12 +75,17 @@ shared static this()
 
 	Linker.link(gst_aggregator_get_type, "gst_aggregator_get_type", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_finish_buffer, "gst_aggregator_finish_buffer", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_finish_buffer_list, "gst_aggregator_finish_buffer_list", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_get_allocator, "gst_aggregator_get_allocator", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_get_buffer_pool, "gst_aggregator_get_buffer_pool", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_get_latency, "gst_aggregator_get_latency", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_negotiate, "gst_aggregator_negotiate", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_peek_next_sample, "gst_aggregator_peek_next_sample", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_selected_samples, "gst_aggregator_selected_samples", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_set_latency, "gst_aggregator_set_latency", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_set_src_caps, "gst_aggregator_set_src_caps", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_simple_get_next_time, "gst_aggregator_simple_get_next_time", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_update_segment, "gst_aggregator_update_segment", LIBRARY_GSTBASE);
 
 	// gst.base.AggregatorPad
 
@@ -132,6 +137,7 @@ shared static this()
 	Linker.link(gst_base_sink_get_max_lateness, "gst_base_sink_get_max_lateness", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_processing_deadline, "gst_base_sink_get_processing_deadline", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_render_delay, "gst_base_sink_get_render_delay", LIBRARY_GSTBASE);
+	Linker.link(gst_base_sink_get_stats, "gst_base_sink_get_stats", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_sync, "gst_base_sink_get_sync", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_throttle_time, "gst_base_sink_get_throttle_time", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_ts_offset, "gst_base_sink_get_ts_offset", LIBRARY_GSTBASE);
@@ -164,7 +170,9 @@ shared static this()
 	Linker.link(gst_base_src_get_do_timestamp, "gst_base_src_get_do_timestamp", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_is_async, "gst_base_src_is_async", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_is_live, "gst_base_src_is_live", LIBRARY_GSTBASE);
+	Linker.link(gst_base_src_negotiate, "gst_base_src_negotiate", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_new_seamless_segment, "gst_base_src_new_seamless_segment", LIBRARY_GSTBASE);
+	Linker.link(gst_base_src_new_segment, "gst_base_src_new_segment", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_query_latency, "gst_base_src_query_latency", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_set_async, "gst_base_src_set_async", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_set_automatic_eos, "gst_base_src_set_automatic_eos", LIBRARY_GSTBASE);
@@ -187,6 +195,7 @@ shared static this()
 	Linker.link(gst_base_transform_is_in_place, "gst_base_transform_is_in_place", LIBRARY_GSTBASE);
 	Linker.link(gst_base_transform_is_passthrough, "gst_base_transform_is_passthrough", LIBRARY_GSTBASE);
 	Linker.link(gst_base_transform_is_qos_enabled, "gst_base_transform_is_qos_enabled", LIBRARY_GSTBASE);
+	Linker.link(gst_base_transform_reconfigure, "gst_base_transform_reconfigure", LIBRARY_GSTBASE);
 	Linker.link(gst_base_transform_reconfigure_sink, "gst_base_transform_reconfigure_sink", LIBRARY_GSTBASE);
 	Linker.link(gst_base_transform_reconfigure_src, "gst_base_transform_reconfigure_src", LIBRARY_GSTBASE);
 	Linker.link(gst_base_transform_set_gap_aware, "gst_base_transform_set_gap_aware", LIBRARY_GSTBASE);
@@ -497,12 +506,17 @@ __gshared extern(C)
 
 	GType function() c_gst_aggregator_get_type;
 	GstFlowReturn function(GstAggregator* aggregator, GstBuffer* buffer) c_gst_aggregator_finish_buffer;
+	GstFlowReturn function(GstAggregator* aggregator, GstBufferList* bufferlist) c_gst_aggregator_finish_buffer_list;
 	void function(GstAggregator* self, GstAllocator** allocator, GstAllocationParams* params) c_gst_aggregator_get_allocator;
 	GstBufferPool* function(GstAggregator* self) c_gst_aggregator_get_buffer_pool;
 	GstClockTime function(GstAggregator* self) c_gst_aggregator_get_latency;
+	int function(GstAggregator* self) c_gst_aggregator_negotiate;
+	GstSample* function(GstAggregator* self, GstAggregatorPad* pad) c_gst_aggregator_peek_next_sample;
+	void function(GstAggregator* self, GstClockTime pts, GstClockTime dts, GstClockTime duration, GstStructure* info) c_gst_aggregator_selected_samples;
 	void function(GstAggregator* self, GstClockTime minLatency, GstClockTime maxLatency) c_gst_aggregator_set_latency;
 	void function(GstAggregator* self, GstCaps* caps) c_gst_aggregator_set_src_caps;
 	GstClockTime function(GstAggregator* self) c_gst_aggregator_simple_get_next_time;
+	void function(GstAggregator* self, GstSegment* segment) c_gst_aggregator_update_segment;
 
 	// gst.base.AggregatorPad
 
@@ -554,6 +568,7 @@ __gshared extern(C)
 	long function(GstBaseSink* sink) c_gst_base_sink_get_max_lateness;
 	GstClockTime function(GstBaseSink* sink) c_gst_base_sink_get_processing_deadline;
 	GstClockTime function(GstBaseSink* sink) c_gst_base_sink_get_render_delay;
+	GstStructure* function(GstBaseSink* sink) c_gst_base_sink_get_stats;
 	int function(GstBaseSink* sink) c_gst_base_sink_get_sync;
 	ulong function(GstBaseSink* sink) c_gst_base_sink_get_throttle_time;
 	GstClockTimeDiff function(GstBaseSink* sink) c_gst_base_sink_get_ts_offset;
@@ -586,7 +601,9 @@ __gshared extern(C)
 	int function(GstBaseSrc* src) c_gst_base_src_get_do_timestamp;
 	int function(GstBaseSrc* src) c_gst_base_src_is_async;
 	int function(GstBaseSrc* src) c_gst_base_src_is_live;
+	int function(GstBaseSrc* src) c_gst_base_src_negotiate;
 	int function(GstBaseSrc* src, long start, long stop, long time) c_gst_base_src_new_seamless_segment;
+	int function(GstBaseSrc* src, GstSegment* segment) c_gst_base_src_new_segment;
 	int function(GstBaseSrc* src, int* live, GstClockTime* minLatency, GstClockTime* maxLatency) c_gst_base_src_query_latency;
 	void function(GstBaseSrc* src, int async) c_gst_base_src_set_async;
 	void function(GstBaseSrc* src, int automaticEos) c_gst_base_src_set_automatic_eos;
@@ -609,6 +626,7 @@ __gshared extern(C)
 	int function(GstBaseTransform* trans) c_gst_base_transform_is_in_place;
 	int function(GstBaseTransform* trans) c_gst_base_transform_is_passthrough;
 	int function(GstBaseTransform* trans) c_gst_base_transform_is_qos_enabled;
+	int function(GstBaseTransform* trans) c_gst_base_transform_reconfigure;
 	void function(GstBaseTransform* trans) c_gst_base_transform_reconfigure_sink;
 	void function(GstBaseTransform* trans) c_gst_base_transform_reconfigure_src;
 	void function(GstBaseTransform* trans, int gapAware) c_gst_base_transform_set_gap_aware;
@@ -917,12 +935,17 @@ alias c_gst_adapter_unmap gst_adapter_unmap;
 
 alias c_gst_aggregator_get_type gst_aggregator_get_type;
 alias c_gst_aggregator_finish_buffer gst_aggregator_finish_buffer;
+alias c_gst_aggregator_finish_buffer_list gst_aggregator_finish_buffer_list;
 alias c_gst_aggregator_get_allocator gst_aggregator_get_allocator;
 alias c_gst_aggregator_get_buffer_pool gst_aggregator_get_buffer_pool;
 alias c_gst_aggregator_get_latency gst_aggregator_get_latency;
+alias c_gst_aggregator_negotiate gst_aggregator_negotiate;
+alias c_gst_aggregator_peek_next_sample gst_aggregator_peek_next_sample;
+alias c_gst_aggregator_selected_samples gst_aggregator_selected_samples;
 alias c_gst_aggregator_set_latency gst_aggregator_set_latency;
 alias c_gst_aggregator_set_src_caps gst_aggregator_set_src_caps;
 alias c_gst_aggregator_simple_get_next_time gst_aggregator_simple_get_next_time;
+alias c_gst_aggregator_update_segment gst_aggregator_update_segment;
 
 // gst.base.AggregatorPad
 
@@ -974,6 +997,7 @@ alias c_gst_base_sink_get_max_bitrate gst_base_sink_get_max_bitrate;
 alias c_gst_base_sink_get_max_lateness gst_base_sink_get_max_lateness;
 alias c_gst_base_sink_get_processing_deadline gst_base_sink_get_processing_deadline;
 alias c_gst_base_sink_get_render_delay gst_base_sink_get_render_delay;
+alias c_gst_base_sink_get_stats gst_base_sink_get_stats;
 alias c_gst_base_sink_get_sync gst_base_sink_get_sync;
 alias c_gst_base_sink_get_throttle_time gst_base_sink_get_throttle_time;
 alias c_gst_base_sink_get_ts_offset gst_base_sink_get_ts_offset;
@@ -1006,7 +1030,9 @@ alias c_gst_base_src_get_buffer_pool gst_base_src_get_buffer_pool;
 alias c_gst_base_src_get_do_timestamp gst_base_src_get_do_timestamp;
 alias c_gst_base_src_is_async gst_base_src_is_async;
 alias c_gst_base_src_is_live gst_base_src_is_live;
+alias c_gst_base_src_negotiate gst_base_src_negotiate;
 alias c_gst_base_src_new_seamless_segment gst_base_src_new_seamless_segment;
+alias c_gst_base_src_new_segment gst_base_src_new_segment;
 alias c_gst_base_src_query_latency gst_base_src_query_latency;
 alias c_gst_base_src_set_async gst_base_src_set_async;
 alias c_gst_base_src_set_automatic_eos gst_base_src_set_automatic_eos;
@@ -1029,6 +1055,7 @@ alias c_gst_base_transform_get_buffer_pool gst_base_transform_get_buffer_pool;
 alias c_gst_base_transform_is_in_place gst_base_transform_is_in_place;
 alias c_gst_base_transform_is_passthrough gst_base_transform_is_passthrough;
 alias c_gst_base_transform_is_qos_enabled gst_base_transform_is_qos_enabled;
+alias c_gst_base_transform_reconfigure gst_base_transform_reconfigure;
 alias c_gst_base_transform_reconfigure_sink gst_base_transform_reconfigure_sink;
 alias c_gst_base_transform_reconfigure_src gst_base_transform_reconfigure_src;
 alias c_gst_base_transform_set_gap_aware gst_base_transform_set_gap_aware;

@@ -26,13 +26,11 @@ module gtk.Grid;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtk.Container;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -41,19 +39,19 @@ public  import gtkc.gtktypes;
  * 
  * Children are added using gtk_grid_attach(). They can span multiple
  * rows or columns. It is also possible to add a child next to an
- * existing child, using gtk_grid_attach_next_to(). The behaviour of
- * GtkGrid when several children occupy the same grid cell is undefined.
- * 
- * GtkGrid can be used like a #GtkBox by just using gtk_container_add(),
- * which will place children next to each other in the direction determined
- * by the #GtkOrientable:orientation property. However, if all you want is a
- * single row or column, then #GtkBox is the preferred widget.
+ * existing child, using gtk_grid_attach_next_to(). To remove a child
+ * from the grid, use gtk_grid_remove(). The behaviour of GtkGrid when
+ * several children occupy the same grid cell is undefined.
  * 
  * # CSS nodes
  * 
- * GtkGrid uses a single CSS node with name grid.
+ * GtkGrid uses a single CSS node with name `grid`.
+ * 
+ * # Accessibility
+ * 
+ * GtkGrid uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
-public class Grid : Container, OrientableIF
+public class Grid : Widget, OrientableIF
 {
 	/** the main Gtk struct */
 	protected GtkGrid* gtkGrid;
@@ -78,7 +76,7 @@ public class Grid : Container, OrientableIF
 	public this (GtkGrid* gtkGrid, bool ownedRef = false)
 	{
 		this.gtkGrid = gtkGrid;
-		super(cast(GtkContainer*)gtkGrid, ownedRef);
+		super(cast(GtkWidget*)gtkGrid, ownedRef);
 	}
 
 	// add the Orientable capabilities
@@ -100,33 +98,33 @@ public class Grid : Container, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_grid_new();
+		auto __p = gtk_grid_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGrid*) p);
+		this(cast(GtkGrid*) __p);
 	}
 
 	/**
 	 * Adds a widget to the grid.
 	 *
-	 * The position of @child is determined by @left and @top. The
-	 * number of “cells” that @child will occupy is determined by
-	 * @width and @height.
+	 * The position of @child is determined by @column and @row.
+	 * The number of “cells” that @child will occupy is determined
+	 * by @width and @height.
 	 *
 	 * Params:
 	 *     child = the widget to add
-	 *     left = the column number to attach the left side of @child to
-	 *     top = the row number to attach the top side of @child to
+	 *     column = the column number to attach the left side of @child to
+	 *     row = the row number to attach the top side of @child to
 	 *     width = the number of columns that @child will span
 	 *     height = the number of rows that @child will span
 	 */
-	public void attach(Widget child, int left, int top, int width, int height)
+	public void attach(Widget child, int column, int row, int width, int height)
 	{
-		gtk_grid_attach(gtkGrid, (child is null) ? null : child.getWidgetStruct(), left, top, width, height);
+		gtk_grid_attach(gtkGrid, (child is null) ? null : child.getWidgetStruct(), column, row, width, height);
 	}
 
 	/**
@@ -157,8 +155,6 @@ public class Grid : Container, OrientableIF
 	 * Returns which row defines the global baseline of @grid.
 	 *
 	 * Returns: the row index defining the global baseline
-	 *
-	 * Since: 3.10
 	 */
 	public int getBaselineRow()
 	{
@@ -167,26 +163,24 @@ public class Grid : Container, OrientableIF
 
 	/**
 	 * Gets the child of @grid whose area covers the grid
-	 * cell whose upper left corner is at @left, @top.
+	 * cell at @column, @row.
 	 *
 	 * Params:
-	 *     left = the left edge of the cell
-	 *     top = the top edge of the cell
+	 *     column = the left edge of the cell
+	 *     row = the top edge of the cell
 	 *
 	 * Returns: the child at the given position, or %NULL
-	 *
-	 * Since: 3.2
 	 */
-	public Widget getChildAt(int left, int top)
+	public Widget getChildAt(int column, int row)
 	{
-		auto p = gtk_grid_get_child_at(gtkGrid, left, top);
+		auto __p = gtk_grid_get_child_at(gtkGrid, column, row);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -218,8 +212,6 @@ public class Grid : Container, OrientableIF
 	 *     row = a row index
 	 *
 	 * Returns: the baseline position of @row
-	 *
-	 * Since: 3.10
 	 */
 	public GtkBaselinePosition getRowBaselinePosition(int row)
 	{
@@ -255,8 +247,6 @@ public class Grid : Container, OrientableIF
 	 *
 	 * Params:
 	 *     position = the position to insert the column at
-	 *
-	 * Since: 3.2
 	 */
 	public void insertColumn(int position)
 	{
@@ -275,8 +265,6 @@ public class Grid : Container, OrientableIF
 	 *     sibling = the child of @grid that the new row or column will be
 	 *         placed next to
 	 *     side = the side of @sibling that @child is positioned next to
-	 *
-	 * Since: 3.2
 	 */
 	public void insertNextTo(Widget sibling, GtkPositionType side)
 	{
@@ -292,12 +280,37 @@ public class Grid : Container, OrientableIF
 	 *
 	 * Params:
 	 *     position = the position to insert the row at
-	 *
-	 * Since: 3.2
 	 */
 	public void insertRow(int position)
 	{
 		gtk_grid_insert_row(gtkGrid, position);
+	}
+
+	/**
+	 * Queries the attach points and spans of @child inside the given #GtkGrid.
+	 *
+	 * Params:
+	 *     child = a #GtkWidget child of @grid
+	 *     column = the column used to attach the left side of @child
+	 *     row = the row used to attach the top side of @child
+	 *     width = the number of columns @child spans
+	 *     height = the number of rows @child spans
+	 */
+	public void queryChild(Widget child, out int column, out int row, out int width, out int height)
+	{
+		gtk_grid_query_child(gtkGrid, (child is null) ? null : child.getWidgetStruct(), &column, &row, &width, &height);
+	}
+
+	/**
+	 * Removes a child from @grid, after it has been added
+	 * with gtk_grid_attach() or gtk_grid_attach_next_to().
+	 *
+	 * Params:
+	 *     child = the child widget to remove
+	 */
+	public void remove(Widget child)
+	{
+		gtk_grid_remove(gtkGrid, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -310,8 +323,6 @@ public class Grid : Container, OrientableIF
 	 *
 	 * Params:
 	 *     position = the position of the column to remove
-	 *
-	 * Since: 3.10
 	 */
 	public void removeColumn(int position)
 	{
@@ -328,8 +339,6 @@ public class Grid : Container, OrientableIF
 	 *
 	 * Params:
 	 *     position = the position of the row to remove
-	 *
-	 * Since: 3.10
 	 */
 	public void removeRow(int position)
 	{
@@ -344,8 +353,6 @@ public class Grid : Container, OrientableIF
 	 *
 	 * Params:
 	 *     row = the row index
-	 *
-	 * Since: 3.10
 	 */
 	public void setBaselineRow(int row)
 	{
@@ -381,8 +388,6 @@ public class Grid : Container, OrientableIF
 	 * Params:
 	 *     row = a row index
 	 *     pos = a #GtkBaselinePosition
-	 *
-	 * Since: 3.10
 	 */
 	public void setRowBaselinePosition(int row, GtkBaselinePosition pos)
 	{

@@ -32,15 +32,12 @@ private import gtk.IMContext;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
  * #GtkEventControllerKey is an event controller meant for situations
  * where you need access to key events.
- * 
- * This object was added in 3.24.
  */
 public class EventControllerKey : EventController
 {
@@ -77,69 +74,90 @@ public class EventControllerKey : EventController
 		return gtk_event_controller_key_get_type();
 	}
 
-	/** */
-	public this(Widget widget)
+	/**
+	 * Creates a new event controller that will handle key events.
+	 *
+	 * Returns: a new #GtkEventControllerKey
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
 	{
-		auto p = gtk_event_controller_key_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_event_controller_key_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEventControllerKey*) p, true);
+		this(cast(GtkEventControllerKey*) __p, true);
 	}
 
-	/** */
+	/**
+	 * Forwards the current event of this @controller to a @widget.
+	 *
+	 * This function can only be used in handlers for the
+	 * #GtkEventControllerKey::key-pressed,
+	 * #GtkEventControllerKey::key-released
+	 * or
+	 * #GtkEventControllerKey::modifiers
+	 * signals.
+	 *
+	 * Params:
+	 *     widget = a #GtkWidget
+	 *
+	 * Returns: whether the @widget handled the event
+	 */
 	public bool forward(Widget widget)
 	{
 		return gtk_event_controller_key_forward(gtkEventControllerKey, (widget is null) ? null : widget.getWidgetStruct()) != 0;
 	}
 
-	/** */
+	/**
+	 * Gets the key group of the current event of this @controller.
+	 * See gdk_key_event_get_group().
+	 *
+	 * Returns: the key group
+	 */
 	public uint getGroup()
 	{
 		return gtk_event_controller_key_get_group(gtkEventControllerKey);
 	}
 
 	/**
-	 * Gets the IM context of a key controller.
+	 * Gets the input method context of the key @controller.
 	 *
-	 * Returns: the IM context
-	 *
-	 * Since: 3.24
+	 * Returns: the #GtkIMContext
 	 */
 	public IMContext getImContext()
 	{
-		auto p = gtk_event_controller_key_get_im_context(gtkEventControllerKey);
+		auto __p = gtk_event_controller_key_get_im_context(gtkEventControllerKey);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IMContext)(cast(GtkIMContext*) p);
+		return ObjectG.getDObject!(IMContext)(cast(GtkIMContext*) __p);
 	}
 
-	/** */
+	/**
+	 * Sets the input method context of the key @controller.
+	 *
+	 * Params:
+	 *     imContext = a #GtkIMContext
+	 */
 	public void setImContext(IMContext imContext)
 	{
 		gtk_event_controller_key_set_im_context(gtkEventControllerKey, (imContext is null) ? null : imContext.getIMContextStruct());
 	}
 
-	/** */
-	gulong addOnFocusIn(void delegate(EventControllerKey) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "focus-in", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/** */
-	gulong addOnFocusOut(void delegate(EventControllerKey) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "focus-out", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/** */
+	/**
+	 * This signal is emitted whenever the input method context filters away a
+	 * keypress and prevents the @controller receiving it. See
+	 * gtk_event_controller_key_set_im_context() and
+	 * gtk_im_context_filter_keypress().
+	 */
 	gulong addOnImUpdate(void delegate(EventControllerKey) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "im-update", dlg, connectFlags ^ ConnectFlags.SWAPPED);
@@ -154,8 +172,6 @@ public class EventControllerKey : EventController
 	 *     state = the bitmask, representing the state of modifier keys and pointer buttons. See #GdkModifierType.
 	 *
 	 * Returns: %TRUE if the key press was handled, %FALSE otherwise.
-	 *
-	 * Since: 3.24
 	 */
 	gulong addOnKeyPressed(bool delegate(uint, uint, GdkModifierType, EventControllerKey) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -169,15 +185,19 @@ public class EventControllerKey : EventController
 	 *     keyval = the released key.
 	 *     keycode = the raw code of the released key.
 	 *     state = the bitmask, representing the state of modifier keys and pointer buttons. See #GdkModifierType.
-	 *
-	 * Since: 3.24
 	 */
 	gulong addOnKeyReleased(void delegate(uint, uint, GdkModifierType, EventControllerKey) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "key-released", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/** */
+	/**
+	 * This signal is emitted whenever the state of modifier keys and pointer
+	 * buttons change.
+	 *
+	 * Params:
+	 *     keyval = the released key.
+	 */
 	gulong addOnModifiers(bool delegate(GdkModifierType, EventControllerKey) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "modifiers", dlg, connectFlags ^ ConnectFlags.SWAPPED);

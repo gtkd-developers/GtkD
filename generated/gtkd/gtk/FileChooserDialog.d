@@ -25,18 +25,20 @@
 module gtk.FileChooserDialog;
 
 private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
 private import gtk.Dialog;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
+private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * #GtkFileChooserDialog is a dialog box suitable for use with
- * “File/Open” or “File/Save as” commands.  This widget works by
+ * “File Open” or “File Save” commands.  This widget works by
  * putting a #GtkFileChooserWidget inside a #GtkDialog.  It exposes
  * the #GtkFileChooser interface, so you can use all of the
  * #GtkFileChooser functions on the file chooser dialog as well as
@@ -57,9 +59,25 @@ public  import gtkc.gtktypes;
  * #GtkFileChooserDialog to select a file for opening:
  * 
  * |[
+ * static void
+ * on_open_response (GtkDialog *dialog,
+ * int        response)
+ * {
+ * if (response == GTK_RESPONSE_ACCEPT)
+ * {
+ * GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+ * 
+ * g_autoptr(GFile) file = gtk_file_chooser_get_file (chooser);
+ * 
+ * open_file (file);
+ * }
+ * 
+ * gtk_window_destroy (GTK_WINDOW (dialog));
+ * }
+ * 
+ * // ...
  * GtkWidget *dialog;
  * GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
- * gint res;
  * 
  * dialog = gtk_file_chooser_dialog_new ("Open File",
  * parent_window,
@@ -70,26 +88,36 @@ public  import gtkc.gtktypes;
  * GTK_RESPONSE_ACCEPT,
  * NULL);
  * 
- * res = gtk_dialog_run (GTK_DIALOG (dialog));
- * if (res == GTK_RESPONSE_ACCEPT)
- * {
- * char *filename;
- * GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
- * filename = gtk_file_chooser_get_filename (chooser);
- * open_file (filename);
- * g_free (filename);
- * }
+ * gtk_widget_show (dialog);
  * 
- * gtk_widget_destroy (dialog);
+ * g_signal_connect (dialog, "response",
+ * G_CALLBACK (on_open_response),
+ * NULL);
  * ]|
  * 
  * To use a dialog for saving, you can use this:
  * 
  * |[
+ * static void
+ * on_save_response (GtkDialog *dialog,
+ * int        response)
+ * {
+ * if (response == GTK_RESPONSE_ACCEPT)
+ * {
+ * GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+ * 
+ * g_autoptr(GFile) file = gtk_file_chooser_get_file (chooser);
+ * 
+ * save_to_file (file);
+ * }
+ * 
+ * gtk_window_destroy (GTK_WINDOW (dialog));
+ * }
+ * 
+ * // ...
  * GtkWidget *dialog;
  * GtkFileChooser *chooser;
  * GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
- * gint res;
  * 
  * dialog = gtk_file_chooser_dialog_new ("Save File",
  * parent_window,
@@ -101,26 +129,16 @@ public  import gtkc.gtktypes;
  * NULL);
  * chooser = GTK_FILE_CHOOSER (dialog);
  * 
- * gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
- * 
  * if (user_edited_a_new_document)
- * gtk_file_chooser_set_current_name (chooser,
- * _("Untitled document"));
+ * gtk_file_chooser_set_current_name (chooser, _("Untitled document"));
  * else
- * gtk_file_chooser_set_filename (chooser,
- * existing_filename);
+ * gtk_file_chooser_set_file (chooser, existing_filename);
  * 
- * res = gtk_dialog_run (GTK_DIALOG (dialog));
- * if (res == GTK_RESPONSE_ACCEPT)
- * {
- * char *filename;
+ * gtk_widget_show (dialog);
  * 
- * filename = gtk_file_chooser_get_filename (chooser);
- * save_to_file (filename);
- * g_free (filename);
- * }
- * 
- * gtk_widget_destroy (dialog);
+ * g_signal_connect (dialog, "response",
+ * G_CALLBACK (on_save_response),
+ * NULL);
  * ]|
  * 
  * ## Setting up a file chooser dialog ## {#gtkfilechooserdialog-setting-up}
@@ -133,7 +151,7 @@ public  import gtkc.gtktypes;
  * and suggest a name such as “Untitled” with gtk_file_chooser_set_current_name().
  * 
  * - To save a file under a different name. Use #GTK_FILE_CHOOSER_ACTION_SAVE,
- * and set the existing filename with gtk_file_chooser_set_filename().
+ * and set the existing file with gtk_file_chooser_set_file().
  * 
  * - To choose a folder instead of a file. Use #GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
  * 
@@ -144,7 +162,7 @@ public  import gtkc.gtktypes;
  * considered to be a good policy, as now the file chooser is
  * able to make good suggestions on its own.  In general, you
  * should only cause the file chooser to show a specific folder
- * when it is appropriate to use gtk_file_chooser_set_filename(),
+ * when it is appropriate to use gtk_file_chooser_set_file(),
  * i.e. when you are doing a Save As command and you already
  * have a file saved somewhere.
  * 
@@ -169,7 +187,7 @@ public  import gtkc.gtktypes;
  * NULL);
  * ]|
  * 
- * This will create buttons for “Cancel” and “Open” that use stock
+ * This will create buttons for “Cancel” and “Open” that use predefined
  * response identifiers from #GtkResponseType.  For most dialog
  * boxes you can use your own custom response codes rather than the
  * ones in #GtkResponseType, but #GtkFileChooserDialog assumes that
@@ -188,7 +206,7 @@ public  import gtkc.gtktypes;
  * appropriate.
  * 
  * To summarize, make sure you use a
- * [stock response code][gtkfilechooserdialog-responses]
+ * [predefined response code][gtkfilechooserdialog-responses]
  * when you use #GtkFileChooserDialog to ensure proper operation.
  */
 public class FileChooserDialog : Dialog, FileChooserIF
@@ -222,50 +240,6 @@ public class FileChooserDialog : Dialog, FileChooserIF
 	// add the FileChooser capabilities
 	mixin FileChooserT!(GtkFileChooserDialog);
 
-	/**
-	 * Creates a new FileChooserDialog. This function is analogous to
-	 * gtk_dialog_new_with_buttons().
-	 * Since: 2.4
-	 * Params:
-	 *  title = Title of the dialog, or NULL
-	 *  parent = Transient parent of the dialog, or NULL
-	 *  action = Open or save mode for the dialog
-	 *  buttonsText = text to go in the buttons
-	 *  responses = response ID's for the buttons
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
-	{
-		if ( buttonsText  is  null )
-		{
-			buttonsText ~= "OK";
-			buttonsText ~= "Cancel";
-		}
-		if ( responses  is  null )
-		{
-			responses ~= ResponseType.OK;
-			responses ~= ResponseType.CANCEL;
-		}
-
-		auto p = gtk_file_chooser_dialog_new(
-			Str.toStringz(title),
-			(parent is null) ? null : parent.getWindowStruct(),
-			action,
-			null,
-			0);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
-		}
-
-		this(cast(GtkFileChooserDialog*) p);
-
-		addButtons(buttonsText, responses);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()

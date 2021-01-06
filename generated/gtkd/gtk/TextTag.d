@@ -24,16 +24,11 @@
 
 module gtk.TextTag;
 
-private import gdk.Event;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gobject.Signals;
-private import gtk.TextIter;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import std.algorithm;
 
 
 /**
@@ -46,7 +41,7 @@ private import std.algorithm;
  * before using them with that buffer.
  * 
  * gtk_text_buffer_create_tag() is the best way to create tags.
- * See “gtk3-demo” for numerous examples.
+ * See “gtk4-demo” for numerous examples.
  * 
  * For each property of #GtkTextTag, there is a “set” property, e.g.
  * “font-set” corresponds to “font”. These “set” properties reflect
@@ -101,14 +96,14 @@ public class TextTag : ObjectG
 	 */
 	public this(string name)
 	{
-		auto p = gtk_text_tag_new(Str.toStringz(name));
+		auto __p = gtk_text_tag_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextTag*) p, true);
+		this(cast(GtkTextTag*) __p, true);
 	}
 
 	/**
@@ -120,27 +115,10 @@ public class TextTag : ObjectG
 	 *
 	 * Params:
 	 *     sizeChanged = whether the change affects the #GtkTextView layout.
-	 *
-	 * Since: 3.20
 	 */
 	public void changed(bool sizeChanged)
 	{
 		gtk_text_tag_changed(gtkTextTag, sizeChanged);
-	}
-
-	/**
-	 * Emits the “event” signal on the #GtkTextTag.
-	 *
-	 * Params:
-	 *     eventObject = object that received the event, such as a widget
-	 *     event = the event
-	 *     iter = location where the event was received
-	 *
-	 * Returns: result of signal emission (whether the event was handled)
-	 */
-	public bool event(ObjectG eventObject, Event event, TextIter iter)
-	{
-		return gtk_text_tag_event(gtkTextTag, (eventObject is null) ? null : eventObject.getObjectGStruct(), (event is null) ? null : event.getEventStruct(), (iter is null) ? null : iter.getTextIterStruct()) != 0;
 	}
 
 	/**
@@ -172,22 +150,5 @@ public class TextTag : ObjectG
 	public void setPriority(int priority)
 	{
 		gtk_text_tag_set_priority(gtkTextTag, priority);
-	}
-
-	/**
-	 * The ::event signal is emitted when an event occurs on a region of the
-	 * buffer marked with this tag.
-	 *
-	 * Params:
-	 *     object = the object the event was fired from (typically a #GtkTextView)
-	 *     event = the event which triggered the signal
-	 *     iter = a #GtkTextIter pointing at the location the event occurred
-	 *
-	 * Returns: %TRUE to stop other handlers from being invoked for the
-	 *     event. %FALSE to propagate the event further.
-	 */
-	gulong addOnEvent(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

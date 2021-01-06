@@ -34,7 +34,6 @@ private import gtk.TreePath;
 private import gtk.TreeView;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -91,58 +90,6 @@ public class TreeSelection : ObjectG
 		super(cast(GObject*)gtkTreeSelection, ownedRef);
 	}
 
-	/**
-	 * Returns an TreeIter set to the currently selected node if selection
-	 * is set to Selection.SINGLE or Selection.BROWSE.
-	 * This function will not work if you use selection is Selection.MULTIPLE.
-	 * Returns: A TreeIter for the selected node.
-	 */
-	public TreeIter getSelected()
-	{
-		TreeModelIF model;
-		TreeIter iter = new TreeIter();
-
-		if ( getSelected(model, iter) )
-		{
-			iter.setModel(model);
-			return iter;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	/**
-	 * Creates a list of path of all selected rows. Additionally, if you are
-	 * planning on modifying the model after calling this function, you may
-	 * want to convert the returned list into a list of TreeRowReferences.
-	 * Since: 2.2
-	 * Params:
-	 *  model = A pointer to set to the GtkTreeModel, or NULL.
-	 * Returns:
-	 *  A GList containing a GtkTreePath for each selected row.
-	 */
-	TreePath[] getSelectedRows(out TreeModelIF model)
-	{
-		TreePath[] paths;
-		GtkTreeModel* outmodel = null;
-		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &outmodel);
-		if ( gList !is null )
-		{
-			ListG list = new ListG(gList);
-			for ( int i=0 ; i<list.length() ; i++ )
-			{
-				paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
-			}
-		}
-		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
-
-		return paths;
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -154,8 +101,6 @@ public class TreeSelection : ObjectG
 	 * Returns the number of rows that have been selected in @tree.
 	 *
 	 * Returns: The number of rows selected.
-	 *
-	 * Since: 2.2
 	 */
 	public int countSelectedRows()
 	{
@@ -177,8 +122,6 @@ public class TreeSelection : ObjectG
 	 * Returns the current selection function.
 	 *
 	 * Returns: The function.
-	 *
-	 * Since: 2.14
 	 */
 	public GtkTreeSelectionFunc getSelectFunction()
 	{
@@ -203,12 +146,44 @@ public class TreeSelection : ObjectG
 		GtkTreeModel* outmodel = null;
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
+		auto __p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
 
 		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
+	}
+
+	/**
+	 * Creates a list of path of all selected rows. Additionally, if you are
+	 * planning on modifying the model after calling this function, you may
+	 * want to convert the returned list into a list of #GtkTreeRowReferences.
+	 * To do this, you can use gtk_tree_row_reference_new().
+	 *
+	 * To free the return value, use:
+	 * |[<!-- language="C" -->
+	 * g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
+	 * ]|
+	 *
+	 * Params:
+	 *     model = A pointer to set to the #GtkTreeModel, or %NULL.
+	 *
+	 * Returns: A #GList containing a #GtkTreePath for each selected row.
+	 */
+	public ListG getSelectedRows(out TreeModelIF model)
+	{
+		GtkTreeModel* outmodel = null;
+
+		auto __p = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &outmodel);
+
+		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -218,14 +193,14 @@ public class TreeSelection : ObjectG
 	 */
 	public TreeView getTreeView()
 	{
-		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
+		auto __p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
+		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) __p);
 	}
 
 	/**
@@ -391,8 +366,6 @@ public class TreeSelection : ObjectG
 	 * Params:
 	 *     startPath = The initial node of the range.
 	 *     endPath = The initial node of the range.
-	 *
-	 * Since: 2.2
 	 */
 	public void unselectRange(TreePath startPath, TreePath endPath)
 	{

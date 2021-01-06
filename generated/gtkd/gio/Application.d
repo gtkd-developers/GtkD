@@ -43,7 +43,6 @@ private import glib.Str;
 private import glib.VariantDict;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -70,7 +69,7 @@ private import std.algorithm;
  * arguments are passed through platform communication to the already
  * running program. The already running instance of the program is
  * called the "primary instance"; for non-unique applications this is
- * the always the current instance. On Linux, the D-Bus session bus
+ * always the current instance. On Linux, the D-Bus session bus
  * is used for communication.
  * 
  * The use of #GApplication differs from some other commonly-used
@@ -627,7 +626,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Gets the application's current busy state, as set through
 	 * g_application_mark_busy() or g_application_bind_busy_property().
 	 *
-	 * Returns: %TRUE if @application is currenty marked as busy
+	 * Returns: %TRUE if @application is currently marked as busy
 	 *
 	 * Since: 2.44
 	 */

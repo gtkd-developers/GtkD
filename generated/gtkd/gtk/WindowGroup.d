@@ -24,15 +24,12 @@
 
 module gtk.WindowGroup;
 
-private import gdk.Device;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import gobject.ObjectG;
-private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -88,8 +85,10 @@ public class WindowGroup : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkWindowGroup object. Grabs added with
-	 * gtk_grab_add() only affect windows within the same #GtkWindowGroup.
+	 * Creates a new #GtkWindowGroup object.
+	 *
+	 * Modality of windows only affects windows
+	 * within the same #GtkWindowGroup.
 	 *
 	 * Returns: a new #GtkWindowGroup.
 	 *
@@ -97,14 +96,14 @@ public class WindowGroup : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_window_group_new();
+		auto __p = gtk_window_group_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkWindowGroup*) p, true);
+		this(cast(GtkWindowGroup*) __p, true);
 	}
 
 	/**
@@ -119,65 +118,21 @@ public class WindowGroup : ObjectG
 	}
 
 	/**
-	 * Returns the current grab widget for @device, or %NULL if none.
-	 *
-	 * Params:
-	 *     device = a #GdkDevice
-	 *
-	 * Returns: The grab widget, or %NULL
-	 *
-	 * Since: 3.0
-	 */
-	public Widget getCurrentDeviceGrab(Device device)
-	{
-		auto p = gtk_window_group_get_current_device_grab(gtkWindowGroup, (device is null) ? null : device.getDeviceStruct());
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-	}
-
-	/**
-	 * Gets the current grab widget of the given group,
-	 * see gtk_grab_add().
-	 *
-	 * Returns: the current grab widget of the group
-	 *
-	 * Since: 2.22
-	 */
-	public Widget getCurrentGrab()
-	{
-		auto p = gtk_window_group_get_current_grab(gtkWindowGroup);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-	}
-
-	/**
 	 * Returns a list of the #GtkWindows that belong to @window_group.
 	 *
 	 * Returns: A
 	 *     newly-allocated list of windows inside the group.
-	 *
-	 * Since: 2.14
 	 */
 	public ListG listWindows()
 	{
-		auto p = gtk_window_group_list_windows(gtkWindowGroup);
+		auto __p = gtk_window_group_list_windows(gtkWindowGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

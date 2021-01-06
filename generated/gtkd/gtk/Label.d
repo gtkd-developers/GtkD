@@ -24,16 +24,14 @@
 
 module gtk.Label;
 
+private import gio.MenuModel;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Menu;
-private import gtk.Misc;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
 private import std.algorithm;
@@ -41,8 +39,7 @@ private import std.algorithm;
 
 /**
  * The #GtkLabel widget displays a small amount of text. As the name
- * implies, most labels are used to label another widget such as a
- * #GtkButton, a #GtkMenuItem, or a #GtkComboBox.
+ * implies, most labels are used to label another widget such as a #GtkButton.
  * 
  * # CSS nodes
  * 
@@ -56,14 +53,14 @@ private import std.algorithm;
  * 
  * GtkLabel has a single CSS node with the name label. A wide variety
  * of style classes may be applied to labels, such as .title, .subtitle,
- * .dim-label, etc. In the #GtkShortcutsWindow, labels are used wth the
+ * .dim-label, etc. In the #GtkShortcutsWindow, labels are used with the
  * .keycap style class.
  * 
  * If the label has a selection, it gets a subnode with name selection.
  * 
  * If the label has links, there is one subnode per link. These subnodes
  * carry the link or visited state depending on whether they have been
- * visited.
+ * visited. In this case, label node also gets a .link style class.
  * 
  * # GtkLabel as GtkBuildable
  * 
@@ -89,6 +86,10 @@ private import std.algorithm;
  * sense with translatable attributes. Use markup embedded in the translatable
  * content instead.
  * 
+ * # Accessibility
+ * 
+ * GtkLabel uses the #GTK_ACCESSIBLE_ROLE_LABEL role.
+ * 
  * # Mnemonics
  * 
  * Labels may contain “mnemonics”. Mnemonics are
@@ -108,7 +109,7 @@ private import std.algorithm;
  * // Pressing Alt+H will activate this button
  * GtkWidget *button = gtk_button_new ();
  * GtkWidget *label = gtk_label_new_with_mnemonic ("_Hello");
- * gtk_container_add (GTK_CONTAINER (button), label);
+ * gtk_button_set_child (GTK_BUTTON (button), label);
  * ]|
  * 
  * There’s a convenience function to create buttons with a mnemonic label
@@ -175,7 +176,7 @@ private import std.algorithm;
  * understood by Pango.
  * 
  * Labels can automatically wrap text if you call
- * gtk_label_set_line_wrap().
+ * gtk_label_set_wrap().
  * 
  * gtk_label_set_justify() sets how the lines in a label align
  * with one another. If you want to set how the label as a whole
@@ -197,19 +198,20 @@ private import std.algorithm;
  * 
  * # Links
  * 
- * Since 2.18, GTK+ supports markup for clickable hyperlinks in addition
+ * GTK supports markup for clickable hyperlinks in addition
  * to regular Pango markup. The markup for links is borrowed from HTML,
- * using the `<a>` with “href“ and “title“ attributes. GTK+ renders links
+ * using the `<a>` with “href“, “title“ and “class“ attributes. GTK renders links
  * similar to the way they appear in web browsers, with colored, underlined
- * text. The “title“ attribute is displayed as a tooltip on the link.
+ * text. The “title“ attribute is displayed as a tooltip on the link. The “class“
+ * attribute is used as style class on the CSS node for the link.
  * 
  * An example looks like this:
  * 
  * |[<!-- language="C" -->
- * const gchar *text =
+ * const char *text =
  * "Go to the"
  * "<a href=\"http://www.gtk.org title=\"&lt;i&gt;Our&lt;/i&gt; website\">"
- * "GTK+ website</a> for more...";
+ * "GTK website</a> for more...";
  * GtkWidget *label = gtk_label_new (NULL);
  * gtk_label_set_markup (GTK_LABEL (label), text);
  * ]|
@@ -217,7 +219,7 @@ private import std.algorithm;
  * It is possible to implement custom handling for links and their tooltips with
  * the #GtkLabel::activate-link signal and the gtk_label_get_current_uri() function.
  */
-public class Label : Misc
+public class Label : Widget
 {
 	/** the main Gtk struct */
 	protected GtkLabel* gtkLabel;
@@ -242,54 +244,9 @@ public class Label : Misc
 	public this (GtkLabel* gtkLabel, bool ownedRef = false)
 	{
 		this.gtkLabel = gtkLabel;
-		super(cast(GtkMisc*)gtkLabel, ownedRef);
+		super(cast(GtkWidget*)gtkLabel, ownedRef);
 	}
 
-	/**
-	 * Creates a new GtkLabel, containing the text in str.
-	 * If characters in str are preceded by an underscore, they are
-	 * underlined. If you need a literal underscore character in a label, use
-	 * '__' (two underscores). The first underlined character represents a
-	 * keyboard accelerator called a mnemonic. The mnemonic key can be used
-	 * to activate another widget, chosen automatically, or explicitly using
-	 * setMnemonicWidget().
-	 *
-	 * If setMnemonicWidget() is not called, then the first activatable ancestor of the Label
-	 * will be chosen as the mnemonic widget. For instance, if the
-	 * label is inside a button or menu item, the button or menu item will
-	 * automatically become the mnemonic widget and be activated by
-	 * the mnemonic.
-	 * Params:
-	 *  str = The text of the label, with an underscore in front of the
-	 *  mnemonic character
-	 *  mnemonic = when false uses the literal text passed in without mnemonic
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string str, bool mnemonic=true)
-	{
-		GtkLabel* p;
-
-		if ( mnemonic )
-		{
-			// GtkWidget* gtk_label_new_with_mnemonic (const gchar *str);
-			p = cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str));
-		}
-		else
-		{
-			// GtkWidget* gtk_label_new (const gchar *str);
-			p = cast(GtkLabel*)gtk_label_new(Str.toStringz(str));
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_label_new");
-		}
-
-		this(p);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -298,16 +255,62 @@ public class Label : Misc
 	}
 
 	/**
-	 * Gets the angle of rotation for the label. See
-	 * gtk_label_set_angle().
+	 * Creates a new label with the given text inside it. You can
+	 * pass %NULL to get an empty label widget.
 	 *
-	 * Returns: the angle of rotation for the label
+	 * Params:
+	 *     str = The text of the label
 	 *
-	 * Since: 2.6
+	 * Returns: the new #GtkLabel
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public double getAngle()
+	public this(string str)
 	{
-		return gtk_label_get_angle(gtkLabel);
+		auto __p = gtk_label_new(Str.toStringz(str));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GtkLabel*) __p);
+	}
+
+	/**
+	 * Creates a new #GtkLabel, containing the text in @str.
+	 *
+	 * If characters in @str are preceded by an underscore, they are
+	 * underlined. If you need a literal underscore character in a label, use
+	 * '__' (two underscores). The first underlined character represents a
+	 * keyboard accelerator called a mnemonic. The mnemonic key can be used
+	 * to activate another widget, chosen automatically, or explicitly using
+	 * gtk_label_set_mnemonic_widget().
+	 *
+	 * If gtk_label_set_mnemonic_widget() is not called, then the first
+	 * activatable ancestor of the #GtkLabel will be chosen as the mnemonic
+	 * widget. For instance, if the label is inside a button or menu item,
+	 * the button or menu item will automatically become the mnemonic widget
+	 * and be activated by the mnemonic.
+	 *
+	 * Params:
+	 *     str = The text of the label, with an underscore in front of the
+	 *         mnemonic character
+	 *
+	 * Returns: the new #GtkLabel
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string str)
+	{
+		auto __p = gtk_label_new_with_mnemonic(Str.toStringz(str));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_with_mnemonic");
+		}
+
+		this(cast(GtkLabel*) __p);
 	}
 
 	/**
@@ -316,21 +319,21 @@ public class Label : Misc
 	 * not reflect attributes that come from the labels markup
 	 * (see gtk_label_set_markup()). If you want to get the
 	 * effective attributes for the label, use
-	 * pango_layout_get_attribute (gtk_label_get_layout (label)).
+	 * pango_layout_get_attribute (gtk_label_get_layout (self)).
 	 *
 	 * Returns: the attribute list, or %NULL
 	 *     if none was set.
 	 */
 	public PgAttributeList getAttributes()
 	{
-		auto p = gtk_label_get_attributes(gtkLabel);
+		auto __p = gtk_label_get_attributes(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p);
 	}
 
 	/**
@@ -342,10 +345,8 @@ public class Label : Misc
 	 * This function is intended for use in a #GtkLabel::activate-link handler
 	 * or for use in a #GtkWidget::query-tooltip handler.
 	 *
-	 * Returns: the currently active URI. The string is owned by GTK+ and must
-	 *     not be freed or modified.
-	 *
-	 * Since: 2.18
+	 * Returns: the currently active URI or %NULL if there is none.
+	 *     The string is owned by GTK and must not be freed or modified.
 	 */
 	public string getCurrentUri()
 	{
@@ -356,12 +357,27 @@ public class Label : Misc
 	 * Returns the ellipsizing position of the label. See gtk_label_set_ellipsize().
 	 *
 	 * Returns: #PangoEllipsizeMode
-	 *
-	 * Since: 2.6
 	 */
 	public PangoEllipsizeMode getEllipsize()
 	{
 		return gtk_label_get_ellipsize(gtkLabel);
+	}
+
+	/**
+	 * Gets the menu model set with gtk_label_set_extra_menu().
+	 *
+	 * Returns: the menu model
+	 */
+	public MenuModel getExtraMenu()
+	{
+		auto __p = gtk_label_get_extra_menu(gtkLabel);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
 	}
 
 	/**
@@ -399,24 +415,21 @@ public class Label : Misc
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = gtk_label_get_layout(gtkLabel);
+		auto __p = gtk_label_get_layout(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**
 	 * Obtains the coordinates where the label will draw the #PangoLayout
 	 * representing the text in the label; useful to convert mouse events
 	 * into coordinates inside the #PangoLayout, e.g. to take some action
-	 * if some part of the label is clicked. Of course you will need to
-	 * create a #GtkEventBox to receive the events, and pack the label
-	 * inside it, since labels are windowless (they return %FALSE from
-	 * gtk_widget_get_has_window()). Remember
+	 * if some part of the label is clicked. Remember
 	 * when using the #PangoLayout functions you need to convert to
 	 * and from pixels using PANGO_PIXELS() or #PANGO_SCALE.
 	 *
@@ -430,35 +443,10 @@ public class Label : Misc
 	}
 
 	/**
-	 * Returns whether lines in the label are automatically wrapped.
-	 * See gtk_label_set_line_wrap().
-	 *
-	 * Returns: %TRUE if the lines of the label are automatically wrapped.
-	 */
-	public bool getLineWrap()
-	{
-		return gtk_label_get_line_wrap(gtkLabel) != 0;
-	}
-
-	/**
-	 * Returns line wrap mode used by the label. See gtk_label_set_line_wrap_mode().
-	 *
-	 * Returns: %TRUE if the lines of the label are automatically wrapped.
-	 *
-	 * Since: 2.10
-	 */
-	public PangoWrapMode getLineWrapMode()
-	{
-		return gtk_label_get_line_wrap_mode(gtkLabel);
-	}
-
-	/**
 	 * Gets the number of lines to which an ellipsized, wrapping
 	 * label should be limited. See gtk_label_set_lines().
 	 *
 	 * Returns: The number of lines
-	 *
-	 * Since: 3.10
 	 */
 	public int getLines()
 	{
@@ -470,8 +458,6 @@ public class Label : Misc
 	 * gtk_label_set_width_chars().
 	 *
 	 * Returns: the maximum width of the label in characters.
-	 *
-	 * Since: 2.6
 	 */
 	public int getMaxWidthChars()
 	{
@@ -479,7 +465,7 @@ public class Label : Misc
 	}
 
 	/**
-	 * If the label has been set so that it has an mnemonic key this function
+	 * If the label has been set so that it has a mnemonic key this function
 	 * returns the keyval used for the mnemonic accelerator. If there is no
 	 * mnemonic set up it returns #GDK_KEY_VoidSymbol.
 	 *
@@ -499,14 +485,14 @@ public class Label : Misc
 	 */
 	public Widget getMnemonicWidget()
 	{
-		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
+		auto __p = gtk_label_get_mnemonic_widget(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -538,8 +524,6 @@ public class Label : Misc
 	 * Returns whether the label is in single line mode.
 	 *
 	 * Returns: %TRUE when the label is in single line mode.
-	 *
-	 * Since: 2.6
 	 */
 	public bool getSingleLineMode()
 	{
@@ -557,19 +541,6 @@ public class Label : Misc
 	public string getText()
 	{
 		return Str.toString(gtk_label_get_text(gtkLabel));
-	}
-
-	/**
-	 * Returns whether the label is currently keeping track
-	 * of clicked links.
-	 *
-	 * Returns: %TRUE if clicked links are remembered
-	 *
-	 * Since: 2.18
-	 */
-	public bool getTrackVisitedLinks()
-	{
-		return gtk_label_get_track_visited_links(gtkLabel) != 0;
 	}
 
 	/**
@@ -601,8 +572,6 @@ public class Label : Misc
 	 * gtk_label_set_width_chars().
 	 *
 	 * Returns: the width of the label in characters.
-	 *
-	 * Since: 2.6
 	 */
 	public int getWidthChars()
 	{
@@ -610,11 +579,30 @@ public class Label : Misc
 	}
 
 	/**
+	 * Returns whether lines in the label are automatically wrapped.
+	 * See gtk_label_set_wrap().
+	 *
+	 * Returns: %TRUE if the lines of the label are automatically wrapped.
+	 */
+	public bool getWrap()
+	{
+		return gtk_label_get_wrap(gtkLabel) != 0;
+	}
+
+	/**
+	 * Returns line wrap mode used by the label. See gtk_label_set_wrap_mode().
+	 *
+	 * Returns: %TRUE if the lines of the label are automatically wrapped.
+	 */
+	public PangoWrapMode getWrapMode()
+	{
+		return gtk_label_get_wrap_mode(gtkLabel);
+	}
+
+	/**
 	 * Gets the #GtkLabel:xalign property for @label.
 	 *
 	 * Returns: the xalign property
-	 *
-	 * Since: 3.16
 	 */
 	public float getXalign()
 	{
@@ -625,8 +613,6 @@ public class Label : Misc
 	 * Gets the #GtkLabel:yalign property for @label.
 	 *
 	 * Returns: the yalign property
-	 *
-	 * Since: 3.16
 	 */
 	public float getYalign()
 	{
@@ -646,23 +632,6 @@ public class Label : Misc
 	public void selectRegion(int startOffset, int endOffset)
 	{
 		gtk_label_select_region(gtkLabel, startOffset, endOffset);
-	}
-
-	/**
-	 * Sets the angle of rotation for the label. An angle of 90 reads from
-	 * from bottom to top, an angle of 270, from top to bottom. The angle
-	 * setting for the label is ignored if the label is selectable,
-	 * wrapped, or ellipsized.
-	 *
-	 * Params:
-	 *     angle = the angle that the baseline of the label makes with
-	 *         the horizontal, in degrees, measured counterclockwise
-	 *
-	 * Since: 2.6
-	 */
-	public void setAngle(double angle)
-	{
-		gtk_label_set_angle(gtkLabel, angle);
 	}
 
 	/**
@@ -690,12 +659,22 @@ public class Label : Misc
 	 *
 	 * Params:
 	 *     mode = a #PangoEllipsizeMode
-	 *
-	 * Since: 2.6
 	 */
 	public void setEllipsize(PangoEllipsizeMode mode)
 	{
 		gtk_label_set_ellipsize(gtkLabel, mode);
+	}
+
+	/**
+	 * Sets a menu model to add when constructing
+	 * the context menu for @label.
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 */
+	public void setExtraMenu(MenuModel model)
+	{
+		gtk_label_set_extra_menu(gtkLabel, (model is null) ? null : model.getMenuModelStruct());
 	}
 
 	/**
@@ -729,40 +708,6 @@ public class Label : Misc
 	}
 
 	/**
-	 * Toggles line wrapping within the #GtkLabel widget. %TRUE makes it break
-	 * lines if text exceeds the widget’s size. %FALSE lets the text get cut off
-	 * by the edge of the widget if it exceeds the widget size.
-	 *
-	 * Note that setting line wrapping to %TRUE does not make the label
-	 * wrap at its parent container’s width, because GTK+ widgets
-	 * conceptually can’t make their requisition depend on the parent
-	 * container’s size. For a label that wraps at a specific position,
-	 * set the label’s width using gtk_widget_set_size_request().
-	 *
-	 * Params:
-	 *     wrap = the setting
-	 */
-	public void setLineWrap(bool wrap)
-	{
-		gtk_label_set_line_wrap(gtkLabel, wrap);
-	}
-
-	/**
-	 * If line wrapping is on (see gtk_label_set_line_wrap()) this controls how
-	 * the line wrapping is done. The default is %PANGO_WRAP_WORD which means
-	 * wrap on word boundaries.
-	 *
-	 * Params:
-	 *     wrapMode = the line wrapping mode
-	 *
-	 * Since: 2.10
-	 */
-	public void setLineWrapMode(PangoWrapMode wrapMode)
-	{
-		gtk_label_set_line_wrap_mode(gtkLabel, wrapMode);
-	}
-
-	/**
 	 * Sets the number of lines to which an ellipsized, wrapping label
 	 * should be limited. This has no effect if the label is not wrapping
 	 * or ellipsized. Set this to -1 if you don’t want to limit the
@@ -770,8 +715,6 @@ public class Label : Misc
 	 *
 	 * Params:
 	 *     lines = the desired number of lines, or -1
-	 *
-	 * Since: 3.10
 	 */
 	public void setLines(int lines)
 	{
@@ -787,13 +730,13 @@ public class Label : Misc
 	 * g_markup_escape_text() or g_markup_printf_escaped():
 	 *
 	 * |[<!-- language="C" -->
-	 * GtkWidget *label = gtk_label_new (NULL);
-	 * const char *str = "some text";
+	 * GtkWidget *self = gtk_label_new (NULL);
+	 * const char *str = "...";
 	 * const char *format = "<span style=\"italic\">\%s</span>";
 	 * char *markup;
 	 *
 	 * markup = g_markup_printf_escaped (format, str);
-	 * gtk_label_set_markup (GTK_LABEL (label), markup);
+	 * gtk_label_set_markup (GTK_LABEL (self), markup);
 	 * g_free (markup);
 	 * ]|
 	 *
@@ -838,8 +781,6 @@ public class Label : Misc
 	 *
 	 * Params:
 	 *     nChars = the new desired maximum width, in characters.
-	 *
-	 * Since: 2.6
 	 */
 	public void setMaxWidthChars(int nChars)
 	{
@@ -847,7 +788,7 @@ public class Label : Misc
 	}
 
 	/**
-	 * If the label has been set so that it has an mnemonic key (using
+	 * If the label has been set so that it has a mnemonic key (using
 	 * i.e. gtk_label_set_markup_with_mnemonic(),
 	 * gtk_label_set_text_with_mnemonic(), gtk_label_new_with_mnemonic()
 	 * or the “use_underline” property) the label can be associated with a
@@ -871,20 +812,6 @@ public class Label : Misc
 	}
 
 	/**
-	 * The pattern of underlines you want under the existing text within the
-	 * #GtkLabel widget.  For example if the current text of the label says
-	 * “FooBarBaz” passing a pattern of “___   ___” will underline
-	 * “Foo” and “Baz” but not “Bar”.
-	 *
-	 * Params:
-	 *     pattern = The pattern as described above.
-	 */
-	public void setPattern(string pattern)
-	{
-		gtk_label_set_pattern(gtkLabel, Str.toStringz(pattern));
-	}
-
-	/**
 	 * Selectable labels allow the user to select text from the label, for
 	 * copy-and-paste.
 	 *
@@ -901,8 +828,6 @@ public class Label : Misc
 	 *
 	 * Params:
 	 *     singleLineMode = %TRUE if the label should be in single line mode
-	 *
-	 * Since: 2.6
 	 */
 	public void setSingleLineMode(bool singleLineMode)
 	{
@@ -945,20 +870,6 @@ public class Label : Misc
 	}
 
 	/**
-	 * Sets whether the label should keep track of clicked
-	 * links (and use a different color for them).
-	 *
-	 * Params:
-	 *     trackLinks = %TRUE to track visited links
-	 *
-	 * Since: 2.18
-	 */
-	public void setTrackVisitedLinks(bool trackLinks)
-	{
-		gtk_label_set_track_visited_links(gtkLabel, trackLinks);
-	}
-
-	/**
 	 * Sets whether the text of the label contains markup in
 	 * [Pango’s text markup language][PangoMarkupFormat].
 	 * See gtk_label_set_markup().
@@ -988,8 +899,6 @@ public class Label : Misc
 	 *
 	 * Params:
 	 *     nChars = the new desired width, in characters.
-	 *
-	 * Since: 2.6
 	 */
 	public void setWidthChars(int nChars)
 	{
@@ -997,12 +906,42 @@ public class Label : Misc
 	}
 
 	/**
+	 * Toggles line wrapping within the #GtkLabel widget. %TRUE makes it break
+	 * lines if text exceeds the widget’s size. %FALSE lets the text get cut off
+	 * by the edge of the widget if it exceeds the widget size.
+	 *
+	 * Note that setting line wrapping to %TRUE does not make the label
+	 * wrap at its parent container’s width, because GTK widgets
+	 * conceptually can’t make their requisition depend on the parent
+	 * container’s size. For a label that wraps at a specific position,
+	 * set the label’s width using gtk_widget_set_size_request().
+	 *
+	 * Params:
+	 *     wrap = the setting
+	 */
+	public void setWrap(bool wrap)
+	{
+		gtk_label_set_wrap(gtkLabel, wrap);
+	}
+
+	/**
+	 * If line wrapping is on (see gtk_label_set_wrap()) this controls how
+	 * the line wrapping is done. The default is %PANGO_WRAP_WORD which means
+	 * wrap on word boundaries.
+	 *
+	 * Params:
+	 *     wrapMode = the line wrapping mode
+	 */
+	public void setWrapMode(PangoWrapMode wrapMode)
+	{
+		gtk_label_set_wrap_mode(gtkLabel, wrapMode);
+	}
+
+	/**
 	 * Sets the #GtkLabel:xalign property for @label.
 	 *
 	 * Params:
 	 *     xalign = the new xalign value, between 0 and 1
-	 *
-	 * Since: 3.16
 	 */
 	public void setXalign(float xalign)
 	{
@@ -1014,8 +953,6 @@ public class Label : Misc
 	 *
 	 * Params:
 	 *     yalign = the new yalign value, between 0 and 1
-	 *
-	 * Since: 3.16
 	 */
 	public void setYalign(float yalign)
 	{
@@ -1023,15 +960,13 @@ public class Label : Misc
 	}
 
 	/**
-	 * A [keybinding signal][GtkBindingSignal]
+	 * A [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user activates a link in the label.
 	 *
 	 * Applications may also emit the signal with g_signal_emit_by_name()
 	 * if they need to control activation of URIs programmatically.
 	 *
 	 * The default bindings for this signal are all forms of the Enter key.
-	 *
-	 * Since: 2.18
 	 */
 	gulong addOnActivateCurrentLink(void delegate(Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1041,14 +976,12 @@ public class Label : Misc
 	/**
 	 * The signal which gets emitted to activate a URI.
 	 * Applications may connect to it to override the default behaviour,
-	 * which is to call gtk_show_uri_on_window().
+	 * which is to call gtk_show_uri().
 	 *
 	 * Params:
 	 *     uri = the URI that is activated
 	 *
 	 * Returns: %TRUE if the link has been activated
-	 *
-	 * Since: 2.18
 	 */
 	gulong addOnActivateLink(bool delegate(string, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1057,7 +990,7 @@ public class Label : Misc
 
 	/**
 	 * The ::copy-clipboard signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to copy the selection to the clipboard.
 	 *
 	 * The default binding for this signal is Ctrl-c.
@@ -1069,7 +1002,7 @@ public class Label : Misc
 
 	/**
 	 * The ::move-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates a cursor movement.
 	 * If the cursor is not visible in @entry, this signal causes
 	 * the viewport to be moved instead.
@@ -1080,7 +1013,7 @@ public class Label : Misc
 	 *
 	 * The default bindings for this signal come in two variants,
 	 * the variant with the Shift modifier extends the selection,
-	 * the variant without the Shift modifer does not.
+	 * the variant without the Shift modifier does not.
 	 * There are too many key combinations to list them all here.
 	 * - Arrow keys move by individual characters/lines
 	 * - Ctrl-arrow key combinations move by words/paragraphs
@@ -1094,21 +1027,5 @@ public class Label : Misc
 	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, bool, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "move-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::populate-popup signal gets emitted before showing the
-	 * context menu of the label. Note that only selectable labels
-	 * have context menus.
-	 *
-	 * If you need to add items to the context menu, connect
-	 * to this signal and append your menuitems to the @menu.
-	 *
-	 * Params:
-	 *     menu = the menu that is being populated
-	 */
-	gulong addOnPopulatePopup(void delegate(Menu, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

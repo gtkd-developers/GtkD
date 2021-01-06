@@ -157,14 +157,14 @@ public class ByteWriter
 	 */
 	public Buffer freeAndGetBuffer()
 	{
-		auto p = gst_byte_writer_free_and_get_buffer(gstByteWriter);
+		auto __p = gst_byte_writer_free_and_get_buffer(gstByteWriter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -584,14 +584,14 @@ public class ByteWriter
 	 */
 	public Buffer resetAndGetBuffer()
 	{
-		auto p = gst_byte_writer_reset_and_get_buffer(gstByteWriter);
+		auto __p = gst_byte_writer_reset_and_get_buffer(gstByteWriter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -605,14 +605,14 @@ public class ByteWriter
 	 */
 	public this()
 	{
-		auto p = gst_byte_writer_new();
+		auto __p = gst_byte_writer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstByteWriter*) p);
+		this(cast(GstByteWriter*) __p);
 	}
 
 	/**
@@ -632,14 +632,14 @@ public class ByteWriter
 	 */
 	public this(ubyte[] data, bool initialized)
 	{
-		auto p = gst_byte_writer_new_with_data(data.ptr, cast(uint)data.length, initialized);
+		auto __p = gst_byte_writer_new_with_data(data.ptr, cast(uint)data.length, initialized);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_data");
 		}
 
-		this(cast(GstByteWriter*) p);
+		this(cast(GstByteWriter*) __p);
 	}
 
 	/**
@@ -658,13 +658,13 @@ public class ByteWriter
 	 */
 	public this(uint size, bool fixed)
 	{
-		auto p = gst_byte_writer_new_with_size(size, fixed);
+		auto __p = gst_byte_writer_new_with_size(size, fixed);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_size");
 		}
 
-		this(cast(GstByteWriter*) p);
+		this(cast(GstByteWriter*) __p);
 	}
 }

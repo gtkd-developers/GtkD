@@ -30,7 +30,6 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 public  import std.algorithm;
 
 
@@ -39,10 +38,8 @@ public  import std.algorithm;
  * for choosing colors. Depending on the situation, colors may be
  * allowed to have alpha (translucency).
  * 
- * In GTK+, the main widgets that implement this interface are
+ * In GTK, the main widgets that implement this interface are
  * #GtkColorChooserWidget, #GtkColorChooserDialog and #GtkColorButton.
- *
- * Since: 3.4
  */
 public template ColorChooserT(TStruct)
 {
@@ -79,8 +76,6 @@ public template ColorChooserT(TStruct)
 	 *         be displayed in rows, %GTK_ORIENTATION_VERTICAL for columns
 	 *     colorsPerLine = the number of colors to show in each row/column
 	 *     colors = the colors of the palette, or %NULL
-	 *
-	 * Since: 3.4
 	 */
 	public void addPalette(GtkOrientation orientation, int colorsPerLine, RGBA[] colors)
 	{
@@ -98,8 +93,6 @@ public template ColorChooserT(TStruct)
 	 *
 	 * Params:
 	 *     color = a #GdkRGBA to fill in with the current color
-	 *
-	 * Since: 3.4
 	 */
 	public void getRgba(out RGBA color)
 	{
@@ -115,8 +108,6 @@ public template ColorChooserT(TStruct)
 	 *
 	 * Returns: %TRUE if the color chooser uses the alpha channel,
 	 *     %FALSE if not
-	 *
-	 * Since: 3.4
 	 */
 	public bool getUseAlpha()
 	{
@@ -128,8 +119,6 @@ public template ColorChooserT(TStruct)
 	 *
 	 * Params:
 	 *     color = the new color
-	 *
-	 * Since: 3.4
 	 */
 	public void setRgba(RGBA color)
 	{
@@ -141,8 +130,6 @@ public template ColorChooserT(TStruct)
 	 *
 	 * Params:
 	 *     useAlpha = %TRUE if color chooser should use alpha channel, %FALSE if not
-	 *
-	 * Since: 3.4
 	 */
 	public void setUseAlpha(bool useAlpha)
 	{
@@ -157,8 +144,6 @@ public template ColorChooserT(TStruct)
 	 *
 	 * Params:
 	 *     color = the color
-	 *
-	 * Since: 3.4
 	 */
 	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

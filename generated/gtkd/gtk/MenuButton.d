@@ -26,24 +26,22 @@ module gtk.MenuButton;
 
 private import gio.MenuModel;
 private import glib.ConstructionException;
+private import glib.Str;
 private import gobject.ObjectG;
-private import gtk.Menu;
 private import gtk.Popover;
-private import gtk.ToggleButton;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * The #GtkMenuButton widget is used to display a popup when clicked on.
- * This popup can be provided either as a #GtkMenu, a #GtkPopover or an
- * abstract #GMenuModel.
+ * This popup can be provided either as a #GtkPopover or as an abstract
+ * #GMenuModel.
  * 
- * The #GtkMenuButton widget can hold any valid child widget. That is, it
- * can hold almost any other standard #GtkWidget. The most commonly used
- * child is #GtkImage. If no widget is explicitely added to the #GtkMenuButton,
+ * The #GtkMenuButton widget can show either an icon (set with the
+ * #GtkMenuButton:icon-name property) or a label (set with the
+ * #GtkMenuButton:label property). If neither is explicitly set,
  * a #GtkImage is automatically created, using an arrow image oriented
  * according to #GtkMenuButton:direction or the generic “open-menu-symbolic”
  * icon if the direction is not set.
@@ -120,8 +118,12 @@ public  import gtkc.gtktypes;
  * 
  * GtkMenuButton has a single CSS node with name button. To differentiate
  * it from a plain #GtkButton, it gets the .popup style class.
+ * 
+ * # Accessibility
+ * 
+ * GtkMenuButton uses the #GTK_ACCESSIBLE_ROLE_BUTTON role.
  */
-public class MenuButton : ToggleButton
+public class MenuButton : Widget
 {
 	/** the main Gtk struct */
 	protected GtkMenuButton* gtkMenuButton;
@@ -146,7 +148,7 @@ public class MenuButton : ToggleButton
 	public this (GtkMenuButton* gtkMenuButton, bool ownedRef = false)
 	{
 		this.gtkMenuButton = gtkMenuButton;
-		super(cast(GtkToggleButton*)gtkMenuButton, ownedRef);
+		super(cast(GtkWidget*)gtkMenuButton, ownedRef);
 	}
 
 
@@ -163,70 +165,75 @@ public class MenuButton : ToggleButton
 	 *
 	 * Returns: The newly created #GtkMenuButton widget
 	 *
-	 * Since: 3.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_menu_button_new();
+		auto __p = gtk_menu_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenuButton*) p);
-	}
-
-	/**
-	 * Returns the parent #GtkWidget to use to line up with menu.
-	 *
-	 * Returns: a #GtkWidget value or %NULL
-	 *
-	 * Since: 3.6
-	 */
-	public Widget getAlignWidget()
-	{
-		auto p = gtk_menu_button_get_align_widget(gtkMenuButton);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		this(cast(GtkMenuButton*) __p);
 	}
 
 	/**
 	 * Returns the direction the popup will be pointing at when popped up.
 	 *
 	 * Returns: a #GtkArrowType value
-	 *
-	 * Since: 3.6
 	 */
-	public GtkArrowType getMenuDirection()
+	public override GtkArrowType getDirection()
 	{
 		return gtk_menu_button_get_direction(gtkMenuButton);
+	}
+
+	/**
+	 * Returns whether the button has a frame.
+	 *
+	 * Returns: %TRUE if the button has a frame
+	 */
+	public bool getHasFrame()
+	{
+		return gtk_menu_button_get_has_frame(gtkMenuButton) != 0;
+	}
+
+	/**
+	 * Gets the name of the icon shown in the button.
+	 *
+	 * Returns: the name of the icon shown in the button
+	 */
+	public string getIconName()
+	{
+		return Str.toString(gtk_menu_button_get_icon_name(gtkMenuButton));
+	}
+
+	/**
+	 * Gets the label shown in the button
+	 *
+	 * Returns: the label shown in the button
+	 */
+	public string getLabel()
+	{
+		return Str.toString(gtk_menu_button_get_label(gtkMenuButton));
 	}
 
 	/**
 	 * Returns the #GMenuModel used to generate the popup.
 	 *
 	 * Returns: a #GMenuModel or %NULL
-	 *
-	 * Since: 3.6
 	 */
 	public MenuModel getMenuModel()
 	{
-		auto p = gtk_menu_button_get_menu_model(gtkMenuButton);
+		auto __p = gtk_menu_button_get_menu_model(gtkMenuButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
 	}
 
 	/**
@@ -235,73 +242,70 @@ public class MenuButton : ToggleButton
 	 * returns %NULL.
 	 *
 	 * Returns: a #GtkPopover or %NULL
-	 *
-	 * Since: 3.12
 	 */
 	public Popover getPopover()
 	{
-		auto p = gtk_menu_button_get_popover(gtkMenuButton);
+		auto __p = gtk_menu_button_get_popover(gtkMenuButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Popover)(cast(GtkPopover*) p);
+		return ObjectG.getDObject!(Popover)(cast(GtkPopover*) __p);
 	}
 
 	/**
-	 * Returns the #GtkMenu that pops out of the button.
-	 * If the button does not use a #GtkMenu, this function
-	 * returns %NULL.
+	 * Returns whether an embedded underline in the text indicates a
+	 * mnemonic. See gtk_menu_button_set_use_underline().
 	 *
-	 * Returns: a #GtkMenu or %NULL
-	 *
-	 * Since: 3.6
+	 * Returns: %TRUE whether an embedded underline in the text indicates
+	 *     the mnemonic accelerator keys.
 	 */
-	public Menu getPopup()
+	public bool getUseUnderline()
 	{
-		auto p = gtk_menu_button_get_popup(gtkMenuButton);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
+		return gtk_menu_button_get_use_underline(gtkMenuButton) != 0;
 	}
 
 	/**
-	 * Returns whether a #GtkPopover or a #GtkMenu will be constructed
-	 * from the menu model.
-	 *
-	 * Returns: %TRUE if using a #GtkPopover
-	 *
-	 * Since: 3.12
+	 * Dismiss the menu.
 	 */
-	public bool getUsePopover()
+	public void popdown()
 	{
-		return gtk_menu_button_get_use_popover(gtkMenuButton) != 0;
+		gtk_menu_button_popdown(gtkMenuButton);
 	}
 
 	/**
-	 * Sets the #GtkWidget to use to line the menu with when popped up.
-	 * Note that the @align_widget must contain the #GtkMenuButton itself.
+	 * Pop up the menu.
+	 */
+	public void popup()
+	{
+		gtk_menu_button_popup(gtkMenuButton);
+	}
+
+	/**
+	 * Sets @func to be called when a popup is about to be shown.
+	 * @func should use one of
 	 *
-	 * Setting it to %NULL means that the menu will be aligned with the
-	 * button itself.
+	 * - gtk_menu_button_set_popover()
+	 * - gtk_menu_button_set_menu_model()
 	 *
-	 * Note that this property is only used with menus currently,
-	 * and not for popovers.
+	 * to set a popup for @menu_button.
+	 * If @func is non-%NULL, @menu_button will always be sensitive.
+	 *
+	 * Using this function will not reset the menu widget attached to @menu_button.
+	 * Instead, this can be done manually in @func.
 	 *
 	 * Params:
-	 *     alignWidget = a #GtkWidget
-	 *
-	 * Since: 3.6
+	 *     func = function to call when a popuop is about to
+	 *         be shown, but none has been provided via other means, or %NULL
+	 *         to reset to default behavior.
+	 *     userData = user data to pass to @func.
+	 *     destroyNotify = destroy notify for @user_data
 	 */
-	public void setAlignWidget(Widget alignWidget)
+	public void setCreatePopupFunc(GtkMenuButtonCreatePopupFunc func, void* userData, GDestroyNotify destroyNotify)
 	{
-		gtk_menu_button_set_align_widget(gtkMenuButton, (alignWidget is null) ? null : alignWidget.getWidgetStruct());
+		gtk_menu_button_set_create_popup_func(gtkMenuButton, func, userData, destroyNotify);
 	}
 
 	/**
@@ -310,39 +314,65 @@ public class MenuButton : ToggleButton
 	 * be changed to an arrow if it was customized.
 	 *
 	 * If the does not fit in the available space in the given direction,
-	 * GTK+ will its best to keep it inside the screen and fully visible.
+	 * GTK will its best to keep it inside the screen and fully visible.
 	 *
 	 * If you pass %GTK_ARROW_NONE for a @direction, the popup will behave
 	 * as if you passed %GTK_ARROW_DOWN (although you won’t see any arrows).
 	 *
 	 * Params:
 	 *     direction = a #GtkArrowType
-	 *
-	 * Since: 3.6
 	 */
-	public void setMenuDirection(GtkArrowType direction)
+	public void setDirection(GtkArrowType direction)
 	{
 		gtk_menu_button_set_direction(gtkMenuButton, direction);
+	}
+
+	/**
+	 * Sets the style of the button.
+	 *
+	 * Params:
+	 *     hasFrame = whether the button should have a visible frame
+	 */
+	public void setHasFrame(bool hasFrame)
+	{
+		gtk_menu_button_set_has_frame(gtkMenuButton, hasFrame);
+	}
+
+	/**
+	 * Sets the name of an icon to show inside the menu button.
+	 *
+	 * Params:
+	 *     iconName = the icon name
+	 */
+	public void setIconName(string iconName)
+	{
+		gtk_menu_button_set_icon_name(gtkMenuButton, Str.toStringz(iconName));
+	}
+
+	/**
+	 * Sets the label to show inside the menu button.
+	 *
+	 * Params:
+	 *     label = the label
+	 */
+	public void setLabel(string label)
+	{
+		gtk_menu_button_set_label(gtkMenuButton, Str.toStringz(label));
 	}
 
 	/**
 	 * Sets the #GMenuModel from which the popup will be constructed,
 	 * or %NULL to dissociate any existing menu model and disable the button.
 	 *
-	 * Depending on the value of #GtkMenuButton:use-popover, either a
-	 * #GtkMenu will be created with gtk_menu_new_from_model(), or a
-	 * #GtkPopover with gtk_popover_new_from_model(). In either case,
-	 * actions will be connected as documented for these functions.
+	 * A #GtkPopover will be created from the menu model with gtk_popover_menu_new_from_model().
+	 * Actions will be connected as documented for this function.
 	 *
-	 * If #GtkMenuButton:popup or #GtkMenuButton:popover are already set, those
-	 * widgets are dissociated from the @menu_button, and those properties are set
-	 * to %NULL.
+	 * If #GtkMenuButton:popover is already set, it will be dissociated from the @menu_button,
+	 * and the property is set to %NULL.
 	 *
 	 * Params:
 	 *     menuModel = a #GMenuModel, or %NULL to unset and disable the
 	 *         button
-	 *
-	 * Since: 3.6
 	 */
 	public void setMenuModel(MenuModel menuModel)
 	{
@@ -353,13 +383,11 @@ public class MenuButton : ToggleButton
 	 * Sets the #GtkPopover that will be popped up when the @menu_button is clicked,
 	 * or %NULL to dissociate any existing popover and disable the button.
 	 *
-	 * If #GtkMenuButton:menu-model or #GtkMenuButton:popup are set, those objects
-	 * are dissociated from the @menu_button, and those properties are set to %NULL.
+	 * If #GtkMenuButton:menu-model is set, the menu model is dissociated from the
+	 * @menu_button, and the property is set to %NULL.
 	 *
 	 * Params:
 	 *     popover = a #GtkPopover, or %NULL to unset and disable the button
-	 *
-	 * Since: 3.12
 	 */
 	public void setPopover(Widget popover)
 	{
@@ -367,34 +395,14 @@ public class MenuButton : ToggleButton
 	}
 
 	/**
-	 * Sets the #GtkMenu that will be popped up when the @menu_button is clicked, or
-	 * %NULL to dissociate any existing menu and disable the button.
-	 *
-	 * If #GtkMenuButton:menu-model or #GtkMenuButton:popover are set, those objects
-	 * are dissociated from the @menu_button, and those properties are set to %NULL.
+	 * If true, an underline in the text indicates the next character should be
+	 * used for the mnemonic accelerator key.
 	 *
 	 * Params:
-	 *     menu = a #GtkMenu, or %NULL to unset and disable the button
-	 *
-	 * Since: 3.6
+	 *     useUnderline = %TRUE if underlines in the text indicate mnemonics
 	 */
-	public void setPopup(Widget menu)
+	public void setUseUnderline(bool useUnderline)
 	{
-		gtk_menu_button_set_popup(gtkMenuButton, (menu is null) ? null : menu.getWidgetStruct());
-	}
-
-	/**
-	 * Sets whether to construct a #GtkPopover instead of #GtkMenu
-	 * when gtk_menu_button_set_menu_model() is called. Note that
-	 * this property is only consulted when a new menu model is set.
-	 *
-	 * Params:
-	 *     usePopover = %TRUE to construct a popover from the menu model
-	 *
-	 * Since: 3.12
-	 */
-	public void setUsePopover(bool usePopover)
-	{
-		gtk_menu_button_set_use_popover(gtkMenuButton, usePopover);
+		gtk_menu_button_set_use_underline(gtkMenuButton, useUnderline);
 	}
 }

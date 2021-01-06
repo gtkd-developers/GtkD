@@ -27,7 +27,6 @@ module atk.State;
 private import atk.c.functions;
 public  import atk.c.types;
 private import glib.Str;
-public  import gtkc.atktypes;
 
 
 /** */

@@ -56,30 +56,28 @@ outputRoot: generated
 srcDir: gtkd
 copy: cairo
 copy: gtkd
-copy: gtkc
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
 lookup: APILookupGio.txt
 lookup: APILookupCairo.txt
 lookup: APILookupRsvg.txt
+lookup: APILookupHarfBuzz.txt
 lookup: APILookupPango.txt
 lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
+lookup: APILookupGsk.txt
 lookup: APILookupGtk.txt
 
 #srcDir: gtkdgl
-#bindDir: gtkglc
 #lookup: APILookupGLd.txt
 #lookup: APILookupGLt.txt
 
 srcDir: sourceview
-copy: gsvc
 lookup: APILookupSourceView.txt
 
 srcDir: gstreamer
-copy: gstreamerc
 lookup: APILookupGStreamer.txt
 lookup: APILookupGstInterfaces.txt
 lookup: APILookupGstApp.txt
@@ -88,10 +86,8 @@ lookup: APILookupGstMpegts.txt
 
 version !Windows: start
 	srcDir: vte
-	copy: vtec
 	lookup: APILookupVte.txt
 version: end
 
 srcDir: peas
-copy: peasc
 lookup: APILookupPeas.txt

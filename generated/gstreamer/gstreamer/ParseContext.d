@@ -29,7 +29,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import gtkd.Loader;
 
 
@@ -91,31 +90,33 @@ public class ParseContext
 	 */
 	public this()
 	{
-		auto p = gst_parse_context_new();
+		auto __p = gst_parse_context_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstParseContext*) p);
+		this(cast(GstParseContext*) __p);
 	}
 
 	/**
 	 * Copies the @context.
 	 *
 	 * Returns: A copied #GstParseContext
+	 *
+	 * Since: 1.12.1
 	 */
 	public ParseContext copy()
 	{
-		auto p = gst_parse_context_copy(gstParseContext);
+		auto __p = gst_parse_context_copy(gstParseContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParseContext)(cast(GstParseContext*) p, true);
+		return ObjectG.getDObject!(ParseContext)(cast(GstParseContext*) __p, true);
 	}
 
 	/**

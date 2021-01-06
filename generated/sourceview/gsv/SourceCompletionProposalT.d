@@ -31,7 +31,6 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 public  import std.algorithm;
 
 
@@ -81,14 +80,14 @@ public template SourceCompletionProposalT(TStruct)
 	 */
 	public IconIF getGicon()
 	{
-		auto p = gtk_source_completion_proposal_get_gicon(getSourceCompletionProposalStruct());
+		auto __p = gtk_source_completion_proposal_get_gicon(getSourceCompletionProposalStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -98,14 +97,14 @@ public template SourceCompletionProposalT(TStruct)
 	 */
 	public Pixbuf getIcon()
 	{
-		auto p = gtk_source_completion_proposal_get_icon(getSourceCompletionProposalStruct());
+		auto __p = gtk_source_completion_proposal_get_icon(getSourceCompletionProposalStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**

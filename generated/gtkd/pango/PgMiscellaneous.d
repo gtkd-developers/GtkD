@@ -25,10 +25,8 @@
 module pango.PgMiscellaneous;
 
 private import core.stdc.stdio;
-private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
-public  import gtkc.pangotypes;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -36,62 +34,6 @@ public  import pango.c.types;
 /** */
 public struct PgMiscellaneous
 {
-
-	/**
-	 * Do not use.  Does not do anything.
-	 *
-	 * Params:
-	 *     key = Key to look up, in the form "SECTION/KEY".
-	 *
-	 * Returns: %NULL
-	 */
-	public static string configKeyGet(string key)
-	{
-		auto retStr = pango_config_key_get(Str.toStringz(key));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
-	}
-
-	/**
-	 * Do not use.  Does not do anything.
-	 *
-	 * Params:
-	 *     key = Key to look up, in the form "SECTION/KEY".
-	 *
-	 * Returns: %NULL
-	 */
-	public static string configKeyGetSystem(string key)
-	{
-		auto retStr = pango_config_key_get_system(Str.toStringz(key));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
-	}
-
-	/**
-	 * Returns the name of the "pango" subdirectory of LIBDIR
-	 * (which is set at compile time).
-	 *
-	 * Returns: the Pango lib directory. The returned string should
-	 *     not be freed.
-	 */
-	public static string getLibSubdirectory()
-	{
-		return Str.toString(pango_get_lib_subdirectory());
-	}
-
-	/**
-	 * Returns the name of the "pango" subdirectory of SYSCONFDIR
-	 * (which is set at compile time).
-	 *
-	 * Returns: the Pango sysconf directory. The returned string should
-	 *     not be freed.
-	 */
-	public static string getSysconfSubdirectory()
-	{
-		return Str.toString(pango_get_sysconf_subdirectory());
-	}
 
 	/**
 	 * Checks @ch to see if it is a character that should not be
@@ -138,28 +80,6 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Look up all user defined aliases for the alias @fontname.
-	 * The resulting font family names will be stored in @families,
-	 * and the number of families in @n_families.
-	 *
-	 * Deprecated: This function is not thread-safe.
-	 *
-	 * Params:
-	 *     fontname = an ascii string
-	 *     families = will be set to an array of font family names.
-	 *         this array is owned by pango and should not be freed.
-	 */
-	public static void lookupAliases(string fontname, out string[] families)
-	{
-		char** outfamilies = null;
-		int nFamilies;
-
-		pango_lookup_aliases(Str.toStringz(fontname), &outfamilies, &nFamilies);
-
-		families = Str.toStringArray(outfamilies, nFamilies);
-	}
-
-	/**
 	 * Parses an enum type and stores the result in @value.
 	 *
 	 * If @str does not match the nick name of any of the possible values for the
@@ -185,11 +105,11 @@ public struct PgMiscellaneous
 	{
 		char* outpossibleValues = null;
 
-		auto p = pango_parse_enum(type, Str.toStringz(str), &value, warn, &outpossibleValues) != 0;
+		auto __p = pango_parse_enum(type, Str.toStringz(str), &value, warn, &outpossibleValues) != 0;
 
 		possibleValues = Str.toString(outpossibleValues);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -301,11 +221,11 @@ public struct PgMiscellaneous
 	{
 		char* outpos = Str.toStringz(pos);
 
-		auto p = pango_scan_int(&outpos, &out_) != 0;
+		auto __p = pango_scan_int(&outpos, &out_) != 0;
 
 		pos = Str.toString(outpos);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -320,17 +240,15 @@ public struct PgMiscellaneous
 	 *
 	 * Returns: %FALSE if a parse error occurred.
 	 */
-	public static bool scanString(ref string pos, out StringG out_)
+	public static bool scanString(ref string pos, StringG out_)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outout_ = sliceNew!GString();
 
-		auto p = pango_scan_string(&outpos, outout_) != 0;
+		auto __p = pango_scan_string(&outpos, (out_ is null) ? null : out_.getStringGStruct()) != 0;
 
 		pos = Str.toString(outpos);
-		out_ = new StringG(outout_, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -344,17 +262,15 @@ public struct PgMiscellaneous
 	 *
 	 * Returns: %FALSE if a parse error occurred.
 	 */
-	public static bool scanWord(ref string pos, out StringG out_)
+	public static bool scanWord(ref string pos, StringG out_)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outout_ = sliceNew!GString();
 
-		auto p = pango_scan_word(&outpos, outout_) != 0;
+		auto __p = pango_scan_word(&outpos, (out_ is null) ? null : out_.getStringGStruct()) != 0;
 
 		pos = Str.toString(outpos);
-		out_ = new StringG(outout_, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -370,11 +286,11 @@ public struct PgMiscellaneous
 	{
 		char* outpos = Str.toStringz(pos);
 
-		auto p = pango_skip_space(&outpos) != 0;
+		auto __p = pango_skip_space(&outpos) != 0;
 
 		pos = Str.toString(outpos);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -428,14 +344,8 @@ public struct PgMiscellaneous
 	 *     the number of lines read (this is useful for maintaining
 	 *     a line number counter which doesn't combine lines with '\')
 	 */
-	public static int readLine(FILE* stream, out StringG str)
+	public static int readLine(FILE* stream, StringG str)
 	{
-		GString* outstr = sliceNew!GString();
-
-		auto p = pango_read_line(stream, outstr);
-
-		str = new StringG(outstr, true);
-
-		return p;
+		return pango_read_line(stream, (str is null) ? null : str.getStringGStruct());
 	}
 }

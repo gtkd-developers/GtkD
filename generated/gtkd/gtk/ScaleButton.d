@@ -35,14 +35,13 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
  * #GtkScaleButton provides a button which pops up a scale widget.
  * This kind of widget is commonly used for volume controls in multimedia
- * applications, and GTK+ provides a #GtkVolumeButton subclass that
+ * applications, and GTK provides a #GtkVolumeButton subclass that
  * is tailored for this use case.
  * 
  * # CSS nodes
@@ -50,7 +49,7 @@ private import std.algorithm;
  * GtkScaleButton has a single CSS node with name button. To differentiate
  * it from a plain #GtkButton, it gets the .scale style class.
  */
-public class ScaleButton : Button, OrientableIF
+public class ScaleButton : Widget, OrientableIF
 {
 	/** the main Gtk struct */
 	protected GtkScaleButton* gtkScaleButton;
@@ -75,7 +74,7 @@ public class ScaleButton : Button, OrientableIF
 	public this (GtkScaleButton* gtkScaleButton, bool ownedRef = false)
 	{
 		this.gtkScaleButton = gtkScaleButton;
-		super(cast(GtkButton*)gtkScaleButton, ownedRef);
+		super(cast(GtkWidget*)gtkScaleButton, ownedRef);
 	}
 
 	// add the Orientable capabilities
@@ -93,7 +92,6 @@ public class ScaleButton : Button, OrientableIF
 	 * a stepping of @step.
 	 *
 	 * Params:
-	 *     size = a stock icon size (#GtkIconSize)
 	 *     min = the minimum value of the scale (usually 0)
 	 *     max = the maximum value of the scale (usually 100)
 	 *     step = the stepping of value when a scroll-wheel event,
@@ -104,20 +102,18 @@ public class ScaleButton : Button, OrientableIF
 	 *
 	 * Returns: a new #GtkScaleButton
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(GtkIconSize size, double min, double max, double step, string[] icons)
+	public this(double min, double max, double step, string[] icons)
 	{
-		auto p = gtk_scale_button_new(size, min, max, step, Str.toStringzArray(icons));
+		auto __p = gtk_scale_button_new(min, max, step, Str.toStringzArray(icons));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScaleButton*) p);
+		this(cast(GtkScaleButton*) __p);
 	}
 
 	/**
@@ -125,84 +121,74 @@ public class ScaleButton : Button, OrientableIF
 	 * See gtk_range_get_adjustment() for details.
 	 *
 	 * Returns: the adjustment associated with the scale
-	 *
-	 * Since: 2.12
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_scale_button_get_adjustment(gtkScaleButton);
+		auto __p = gtk_scale_button_get_adjustment(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
 	 * Retrieves the minus button of the #GtkScaleButton.
 	 *
 	 * Returns: the minus button of the #GtkScaleButton as a #GtkButton
-	 *
-	 * Since: 2.14
 	 */
 	public Button getMinusButton()
 	{
-		auto p = gtk_scale_button_get_minus_button(gtkScaleButton);
+		auto __p = gtk_scale_button_get_minus_button(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) __p);
 	}
 
 	/**
 	 * Retrieves the plus button of the #GtkScaleButton.
 	 *
 	 * Returns: the plus button of the #GtkScaleButton as a #GtkButton
-	 *
-	 * Since: 2.14
 	 */
 	public Button getPlusButton()
 	{
-		auto p = gtk_scale_button_get_plus_button(gtkScaleButton);
+		auto __p = gtk_scale_button_get_plus_button(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) __p);
 	}
 
 	/**
 	 * Retrieves the popup of the #GtkScaleButton.
 	 *
 	 * Returns: the popup of the #GtkScaleButton
-	 *
-	 * Since: 2.14
 	 */
 	public Widget getPopup()
 	{
-		auto p = gtk_scale_button_get_popup(gtkScaleButton);
+		auto __p = gtk_scale_button_get_popup(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
 	 * Gets the current value of the scale button.
 	 *
 	 * Returns: current value of the scale button
-	 *
-	 * Since: 2.12
 	 */
 	public double getValue()
 	{
@@ -216,8 +202,6 @@ public class ScaleButton : Button, OrientableIF
 	 *
 	 * Params:
 	 *     adjustment = a #GtkAdjustment
-	 *
-	 * Since: 2.12
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -230,8 +214,6 @@ public class ScaleButton : Button, OrientableIF
 	 *
 	 * Params:
 	 *     icons = a %NULL-terminated array of icon names
-	 *
-	 * Since: 2.12
 	 */
 	public void setIcons(string[] icons)
 	{
@@ -246,8 +228,6 @@ public class ScaleButton : Button, OrientableIF
 	 *
 	 * Params:
 	 *     value = new value of the scale button
-	 *
-	 * Since: 2.12
 	 */
 	public void setValue(double value)
 	{
@@ -256,12 +236,10 @@ public class ScaleButton : Button, OrientableIF
 
 	/**
 	 * The ::popdown signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to popdown the scale widget.
 	 *
 	 * The default binding for this signal is Escape.
-	 *
-	 * Since: 2.12
 	 */
 	gulong addOnPopdown(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -270,12 +248,10 @@ public class ScaleButton : Button, OrientableIF
 
 	/**
 	 * The ::popup signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to popup the scale widget.
 	 *
 	 * The default bindings for this signal are Space, Enter and Return.
-	 *
-	 * Since: 2.12
 	 */
 	gulong addOnPopup(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -288,8 +264,6 @@ public class ScaleButton : Button, OrientableIF
 	 *
 	 * Params:
 	 *     value = the new value
-	 *
-	 * Since: 2.12
 	 */
 	gulong addOnValueChanged(void delegate(double, ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

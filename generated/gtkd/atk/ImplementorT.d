@@ -28,7 +28,6 @@ public  import atk.ObjectAtk;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /** */

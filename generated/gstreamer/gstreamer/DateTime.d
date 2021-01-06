@@ -30,7 +30,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import gtkd.Loader;
 
 
@@ -175,14 +174,14 @@ public class DateTime
 	 */
 	public this(float tzoffset, int year, int month, int day, int hour, int minute, double seconds)
 	{
-		auto p = gst_date_time_new(tzoffset, year, month, day, hour, minute, seconds);
+		auto __p = gst_date_time_new(tzoffset, year, month, day, hour, minute, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -200,14 +199,14 @@ public class DateTime
 	 */
 	public this(GLibDateTime dt)
 	{
-		auto p = gst_date_time_new_from_g_date_time((dt is null) ? null : dt.getDateTimeStruct(true));
+		auto __p = gst_date_time_new_from_g_date_time((dt is null) ? null : dt.getDateTimeStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_g_date_time");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -232,14 +231,64 @@ public class DateTime
 	 */
 	public this(string string_)
 	{
-		auto p = gst_date_time_new_from_iso8601_string(Str.toStringz(string_));
+		auto __p = gst_date_time_new_from_iso8601_string(Str.toStringz(string_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_iso8601_string");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
+	}
+
+	/**
+	 * Creates a new #GstDateTime using the time since Jan 1, 1970 specified by
+	 * @usecs. The #GstDateTime is in the local timezone.
+	 *
+	 * Params:
+	 *     usecs = microseconds from the Unix epoch
+	 *
+	 * Returns: a newly created #GstDateTime
+	 *
+	 * Since: 1.18
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(long usecs)
+	{
+		auto __p = gst_date_time_new_from_unix_epoch_local_time_usecs(usecs);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_unix_epoch_local_time_usecs");
+		}
+
+		this(cast(GstDateTime*) __p);
+	}
+
+	/**
+	 * Creates a new #GstDateTime using the time since Jan 1, 1970 specified by
+	 * @usecs. The #GstDateTime is in UTC.
+	 *
+	 * Params:
+	 *     usecs = microseconds from the Unix epoch
+	 *
+	 * Returns: a newly created #GstDateTime
+	 *
+	 * Since: 1.18
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(long usecs)
+	{
+		auto __p = gst_date_time_new_from_unix_epoch_utc_usecs(usecs);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_unix_epoch_utc_usecs");
+		}
+
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -275,14 +324,14 @@ public class DateTime
 	 */
 	public this(int year, int month, int day, int hour, int minute, double seconds)
 	{
-		auto p = gst_date_time_new_local_time(year, month, day, hour, minute, seconds);
+		auto __p = gst_date_time_new_local_time(year, month, day, hour, minute, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_local_time");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -302,14 +351,14 @@ public class DateTime
 	 */
 	public this(int year)
 	{
-		auto p = gst_date_time_new_y(year);
+		auto __p = gst_date_time_new_y(year);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_y");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -333,14 +382,14 @@ public class DateTime
 	 */
 	public this(int year, int month)
 	{
-		auto p = gst_date_time_new_ym(year, month);
+		auto __p = gst_date_time_new_ym(year, month);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_ym");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -368,14 +417,14 @@ public class DateTime
 	 */
 	public this(int year, int month, int day)
 	{
-		auto p = gst_date_time_new_ymd(year, month, day);
+		auto __p = gst_date_time_new_ymd(year, month, day);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_ymd");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -521,14 +570,14 @@ public class DateTime
 	 */
 	public DateTime ref_()
 	{
-		auto p = gst_date_time_ref(gstDateTime);
+		auto __p = gst_date_time_ref(gstDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) p, true);
+		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) __p, true);
 	}
 
 	/**
@@ -541,14 +590,14 @@ public class DateTime
 	 */
 	public GLibDateTime toGDateTime()
 	{
-		auto p = gst_date_time_to_g_date_time(gstDateTime);
+		auto __p = gst_date_time_to_g_date_time(gstDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new GLibDateTime(cast(GDateTime*) p, true);
+		return new GLibDateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**

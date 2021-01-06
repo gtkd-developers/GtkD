@@ -24,27 +24,24 @@
 
 module gtk.RecentInfo;
 
-private import gdkpixbuf.Pixbuf;
 private import gio.AppInfoIF;
 private import gio.IconIF;
+private import glib.DateTime;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import gtkd.Loader;
 
 
 /**
- * #GtkRecentInfo-struct contains private data only, and should
- * be accessed using the provided API.
+ * #GtkRecentInfo contains private data only, and should be accessed using the
+ * provided API.
  * 
- * #GtkRecentInfo constains all the meta-data
+ * #GtkRecentInfo contains all the meta-data
  * associated with an entry in the recently used files list.
- *
- * Since: 2.10
  */
 public class RecentInfo
 {
@@ -106,19 +103,19 @@ public class RecentInfo
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_info_create_app_info(gtkRecentInfo, Str.toStringz(appName), &err);
+		auto __p = gtk_recent_info_create_app_info(gtkRecentInfo, Str.toStringz(appName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -127,8 +124,6 @@ public class RecentInfo
 	 * to local files.
 	 *
 	 * Returns: %TRUE if the resource exists
-	 *
-	 * Since: 2.10
 	 */
 	public bool exists()
 	{
@@ -136,17 +131,22 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the timestamp (seconds from system’s Epoch) when the resource
+	 * Gets the the time when the resource
 	 * was added to the recently used resources list.
 	 *
-	 * Returns: the number of seconds elapsed from system’s Epoch when
-	 *     the resource was added to the list, or -1 on failure.
-	 *
-	 * Since: 2.10
+	 * Returns: a #GDateTime for the time
+	 *     when the resource was added
 	 */
-	public uint getAdded()
+	public DateTime getAdded()
 	{
-		return gtk_recent_info_get_added(gtkRecentInfo);
+		auto __p = gtk_recent_info_get_added(gtkRecentInfo);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p);
 	}
 
 	/**
@@ -155,8 +155,6 @@ public class RecentInfo
 	 *
 	 * Returns: a positive integer containing the number of days
 	 *     elapsed since the time this resource was last modified
-	 *
-	 * Since: 2.10
 	 */
 	public int getAge()
 	{
@@ -175,25 +173,25 @@ public class RecentInfo
 	 *     appExec = return location for the string containing
 	 *         the command line
 	 *     count = return location for the number of times this item was registered
-	 *     time = return location for the timestamp this item was last registered
-	 *         for this application
+	 *     stamp = return location for the time this item was last
+	 *         registered for this application
 	 *
 	 * Returns: %TRUE if an application with @app_name has registered this
 	 *     resource inside the recently used list, or %FALSE otherwise. The
 	 *     @app_exec string is owned by the #GtkRecentInfo and should not be
 	 *     modified or freed
-	 *
-	 * Since: 2.10
 	 */
-	public bool getApplicationInfo(string appName, out string appExec, out uint count, out uint time)
+	public bool getApplicationInfo(string appName, out string appExec, out uint count, out DateTime stamp)
 	{
 		char* outappExec = null;
+		GDateTime* outstamp = null;
 
-		auto p = gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), &outappExec, &count, &time) != 0;
+		auto __p = gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), &outappExec, &count, &outstamp) != 0;
 
 		appExec = Str.toString(outappExec);
+		stamp = new DateTime(outstamp);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -201,8 +199,6 @@ public class RecentInfo
 	 *
 	 * Returns: a newly allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
-	 *
-	 * Since: 2.10
 	 */
 	public string[] getApplications()
 	{
@@ -219,8 +215,6 @@ public class RecentInfo
 	 *
 	 * Returns: the description of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
-	 *
-	 * Since: 2.10
 	 */
 	public string getDescription()
 	{
@@ -233,8 +227,6 @@ public class RecentInfo
 	 *
 	 * Returns: the display name of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
-	 *
-	 * Since: 2.10
 	 */
 	public string getDisplayName()
 	{
@@ -246,19 +238,17 @@ public class RecentInfo
 	 *
 	 * Returns: a #GIcon containing the icon, or %NULL.
 	 *     Use g_object_unref() when finished using the icon
-	 *
-	 * Since: 2.22
 	 */
 	public IconIF getGicon()
 	{
-		auto p = gtk_recent_info_get_gicon(gtkRecentInfo);
+		auto __p = gtk_recent_info_get_gicon(gtkRecentInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -268,8 +258,6 @@ public class RecentInfo
 	 *
 	 * Returns: a newly allocated %NULL terminated array of strings.
 	 *     Use g_strfreev() to free it.
-	 *
-	 * Since: 2.10
 	 */
 	public string[] getGroups()
 	{
@@ -282,35 +270,10 @@ public class RecentInfo
 	}
 
 	/**
-	 * Retrieves the icon of size @size associated to the resource MIME type.
-	 *
-	 * Params:
-	 *     size = the size of the icon in pixels
-	 *
-	 * Returns: a #GdkPixbuf containing the icon,
-	 *     or %NULL. Use g_object_unref() when finished using the icon.
-	 *
-	 * Since: 2.10
-	 */
-	public Pixbuf getIcon(int size)
-	{
-		auto p = gtk_recent_info_get_icon(gtkRecentInfo, size);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
-	}
-
-	/**
 	 * Gets the MIME type of the resource.
 	 *
 	 * Returns: the MIME type of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
-	 *
-	 * Since: 2.10
 	 */
 	public string getMimeType()
 	{
@@ -318,17 +281,22 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the timestamp (seconds from system’s Epoch) when the meta-data
+	 * Gets the time when the meta-data
 	 * for the resource was last modified.
 	 *
-	 * Returns: the number of seconds elapsed from system’s Epoch when
-	 *     the resource was last modified, or -1 on failure.
-	 *
-	 * Since: 2.10
+	 * Returns: a #GDateTime for the time
+	 *     when the resource was last modified
 	 */
-	public uint getModified()
+	public DateTime getModified()
 	{
-		return gtk_recent_info_get_modified(gtkRecentInfo);
+		auto __p = gtk_recent_info_get_modified(gtkRecentInfo);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p);
 	}
 
 	/**
@@ -337,8 +305,6 @@ public class RecentInfo
 	 * applications that have registered them.
 	 *
 	 * Returns: %TRUE if the private flag was found, %FALSE otherwise
-	 *
-	 * Since: 2.10
 	 */
 	public bool getPrivateHint()
 	{
@@ -353,8 +319,6 @@ public class RecentInfo
 	 *
 	 * Returns: A newly-allocated string in UTF-8 encoding
 	 *     free it with g_free()
-	 *
-	 * Since: 2.10
 	 */
 	public string getShortName()
 	{
@@ -369,8 +333,6 @@ public class RecentInfo
 	 *
 	 * Returns: the URI of the resource. The returned string is
 	 *     owned by the recent manager, and should not be freed.
-	 *
-	 * Since: 2.10
 	 */
 	public string getUri()
 	{
@@ -384,8 +346,6 @@ public class RecentInfo
 	 *
 	 * Returns: a newly allocated UTF-8 string containing the
 	 *     resource’s URI or %NULL. Use g_free() when done using it.
-	 *
-	 * Since: 2.10
 	 */
 	public string getUriDisplay()
 	{
@@ -396,17 +356,22 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the timestamp (seconds from system’s Epoch) when the meta-data
+	 * Gets the time when the meta-data
 	 * for the resource was last visited.
 	 *
-	 * Returns: the number of seconds elapsed from system’s Epoch when
-	 *     the resource was last visited, or -1 on failure.
-	 *
-	 * Since: 2.10
+	 * Returns: a #GDateTime for the time
+	 *     when the resource was last visited
 	 */
-	public uint getVisited()
+	public DateTime getVisited()
 	{
-		return gtk_recent_info_get_visited(gtkRecentInfo);
+		auto __p = gtk_recent_info_get_visited(gtkRecentInfo);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p);
 	}
 
 	/**
@@ -417,8 +382,6 @@ public class RecentInfo
 	 *
 	 * Returns: %TRUE if an application with name @app_name was found,
 	 *     %FALSE otherwise
-	 *
-	 * Since: 2.10
 	 */
 	public bool hasApplication(string appName)
 	{
@@ -433,8 +396,6 @@ public class RecentInfo
 	 *     groupName = name of a group
 	 *
 	 * Returns: %TRUE if the group was found
-	 *
-	 * Since: 2.10
 	 */
 	public bool hasGroup(string groupName)
 	{
@@ -446,8 +407,6 @@ public class RecentInfo
 	 * scheme of its URI.
 	 *
 	 * Returns: %TRUE if the resource is local
-	 *
-	 * Since: 2.10
 	 */
 	public bool isLocal()
 	{
@@ -459,8 +418,6 @@ public class RecentInfo
 	 * recently used resource represented by @info.
 	 *
 	 * Returns: an application name. Use g_free() to free it.
-	 *
-	 * Since: 2.10
 	 */
 	public string lastApplication()
 	{
@@ -471,16 +428,13 @@ public class RecentInfo
 	}
 
 	/**
-	 * Checks whether two #GtkRecentInfo-struct point to the same
-	 * resource.
+	 * Checks whether two #GtkRecentInfo point to the same resource.
 	 *
 	 * Params:
 	 *     infoB = a #GtkRecentInfo
 	 *
-	 * Returns: %TRUE if both #GtkRecentInfo-struct point to the same
+	 * Returns: %TRUE if both #GtkRecentInfo point to the same
 	 *     resource, %FALSE otherwise
-	 *
-	 * Since: 2.10
 	 */
 	public bool match(RecentInfo infoB)
 	{
@@ -493,26 +447,22 @@ public class RecentInfo
 	 *
 	 * Returns: the recent info object with its reference count
 	 *     increased by one
-	 *
-	 * Since: 2.10
 	 */
 	public RecentInfo ref_()
 	{
-		auto p = gtk_recent_info_ref(gtkRecentInfo);
+		auto __p = gtk_recent_info_ref(gtkRecentInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) __p, true);
 	}
 
 	/**
 	 * Decreases the reference count of @info by one. If the reference
 	 * count reaches zero, @info is deallocated, and the memory freed.
-	 *
-	 * Since: 2.10
 	 */
 	public void unref()
 	{

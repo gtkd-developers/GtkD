@@ -159,16 +159,16 @@ struct GstAppSrcClass
 	 * Params:
 	 *     appsrc = a #GstAppSrc
 	 *     buffer = a #GstBuffer to push
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstBuffer* buffer) pushBuffer;
 	/**
 	 *
 	 * Params:
 	 *     appsrc = a #GstAppSrc
-	 * Returns: #GST_FLOW_OK when the EOS was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the EOS was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc) endOfStream;
@@ -178,9 +178,9 @@ struct GstAppSrcClass
 	 *     appsrc = a #GstAppSrc
 	 *     sample = a #GstSample from which buffer and caps may be
 	 *         extracted
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstSample* sample) pushSample;
 	/**
@@ -188,9 +188,9 @@ struct GstAppSrcClass
 	 * Params:
 	 *     appsrc = a #GstAppSrc
 	 *     bufferList = a #GstBufferList to push
-	 * Returns: #GST_FLOW_OK when the buffer list was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer list was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstBufferList* bufferList) pushBufferList;
 	void*[2] GstReserved;

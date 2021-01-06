@@ -32,7 +32,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -105,7 +104,7 @@ public class TcpWrapperConnection : TcpConnection
 	}
 
 	/**
-	 * Get's @conn's base #GIOStream
+	 * Gets @conn's base #GIOStream
 	 *
 	 * Returns: @conn's base #GIOStream
 	 */

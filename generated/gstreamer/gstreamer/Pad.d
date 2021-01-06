@@ -41,7 +41,6 @@ private import gstreamer.StaticPadTemplate;
 private import gstreamer.Stream;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -63,7 +62,7 @@ private import std.algorithm;
  * then a guaranteed unique name will be assigned to it.
  * 
  * A #GstElement creating a pad will typically use the various
- * gst_pad_set_*_function() calls to register callbacks for events, queries or
+ * gst_pad_set_*_function\() calls to register callbacks for events, queries or
  * dataflow on the pads.
  * 
  * gst_pad_get_parent() will retrieve the #GstElement that owns the pad.
@@ -187,14 +186,14 @@ public class Pad : ObjectGst
 	 */
 	public this(string name, GstPadDirection direction)
 	{
-		auto p = gst_pad_new(Str.toStringz(name), direction);
+		auto __p = gst_pad_new(Str.toStringz(name), direction);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstPad*) p);
+		this(cast(GstPad*) __p);
 	}
 
 	/**
@@ -213,14 +212,14 @@ public class Pad : ObjectGst
 	 */
 	public this(StaticPadTemplate templ, string name)
 	{
-		auto p = gst_pad_new_from_static_template((templ is null) ? null : templ.getStaticPadTemplateStruct(), Str.toStringz(name));
+		auto __p = gst_pad_new_from_static_template((templ is null) ? null : templ.getStaticPadTemplateStruct(), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_static_template");
 		}
 
-		this(cast(GstPad*) p);
+		this(cast(GstPad*) __p);
 	}
 
 	/**
@@ -239,14 +238,14 @@ public class Pad : ObjectGst
 	 */
 	public this(PadTemplate templ, string name)
 	{
-		auto p = gst_pad_new_from_template((templ is null) ? null : templ.getPadTemplateStruct(), Str.toStringz(name));
+		auto __p = gst_pad_new_from_template((templ is null) ? null : templ.getPadTemplateStruct(), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_template");
 		}
 
-		this(cast(GstPad*) p);
+		this(cast(GstPad*) __p);
 	}
 
 	/**
@@ -354,7 +353,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn chain(Buffer buffer)
 	{
-		return gst_pad_chain(gstPad, (buffer is null) ? null : buffer.getBufferStruct());
+		return gst_pad_chain(gstPad, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
@@ -383,7 +382,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn chainList(BufferList list)
 	{
-		return gst_pad_chain_list(gstPad, (list is null) ? null : list.getBufferListStruct());
+		return gst_pad_chain_list(gstPad, (list is null) ? null : list.getBufferListStruct(true));
 	}
 
 	/**
@@ -477,7 +476,7 @@ public class Pad : ObjectGst
 	 */
 	public bool eventDefault(ObjectGst parent, Event event)
 	{
-		return gst_pad_event_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct(), (event is null) ? null : event.getEventStruct()) != 0;
+		return gst_pad_event_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct(), (event is null) ? null : event.getEventStruct(true)) != 0;
 	}
 
 	/**
@@ -514,14 +513,14 @@ public class Pad : ObjectGst
 	 */
 	public Caps getAllowedCaps()
 	{
-		auto p = gst_pad_get_allowed_caps(gstPad);
+		auto __p = gst_pad_get_allowed_caps(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -533,14 +532,14 @@ public class Pad : ObjectGst
 	 */
 	public Caps getCurrentCaps()
 	{
-		auto p = gst_pad_get_current_caps(gstPad);
+		auto __p = gst_pad_get_current_caps(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -598,14 +597,14 @@ public class Pad : ObjectGst
 	 */
 	public PadTemplate getPadTemplate()
 	{
-		auto p = gst_pad_get_pad_template(gstPad);
+		auto __p = gst_pad_get_pad_template(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p, true);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) __p, true);
 	}
 
 	/**
@@ -616,14 +615,14 @@ public class Pad : ObjectGst
 	 */
 	public Caps getPadTemplateCaps()
 	{
-		auto p = gst_pad_get_pad_template_caps(gstPad);
+		auto __p = gst_pad_get_pad_template_caps(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -638,14 +637,14 @@ public class Pad : ObjectGst
 	 */
 	public Element getParentElement()
 	{
-		auto p = gst_pad_get_parent_element(gstPad);
+		auto __p = gst_pad_get_parent_element(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p, true);
 	}
 
 	/**
@@ -658,14 +657,14 @@ public class Pad : ObjectGst
 	 */
 	public Pad getPeer()
 	{
-		auto p = gst_pad_get_peer(gstPad);
+		auto __p = gst_pad_get_peer(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -710,11 +709,33 @@ public class Pad : ObjectGst
 	{
 		GstBuffer* outbuffer = null;
 
-		auto p = gst_pad_get_range(gstPad, offset, size, &outbuffer);
+		auto __p = gst_pad_get_range(gstPad, offset, size, &outbuffer);
 
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
 
-		return p;
+		return __p;
+	}
+
+	/**
+	 * If there is a single internal link of the given pad, this function will
+	 * return it. Otherwise, it will return NULL.
+	 *
+	 * Returns: a #GstPad, or %NULL if @pad has none
+	 *     or more than one internal links. Unref returned pad with
+	 *     gst_object_unref().
+	 *
+	 * Since: 1.18
+	 */
+	public Pad getSingleInternalLink()
+	{
+		auto __p = gst_pad_get_single_internal_link(gstPad);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -731,14 +752,14 @@ public class Pad : ObjectGst
 	 */
 	public Event getStickyEvent(GstEventType eventType, uint idx)
 	{
-		auto p = gst_pad_get_sticky_event(gstPad, eventType, idx);
+		auto __p = gst_pad_get_sticky_event(gstPad, eventType, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p, true);
 	}
 
 	/**
@@ -755,14 +776,14 @@ public class Pad : ObjectGst
 	 */
 	public Stream getStream()
 	{
-		auto p = gst_pad_get_stream(gstPad);
+		auto __p = gst_pad_get_stream(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Stream)(cast(GstStream*) p, true);
+		return ObjectG.getDObject!(Stream)(cast(GstStream*) __p, true);
 	}
 
 	/**
@@ -878,14 +899,14 @@ public class Pad : ObjectGst
 	 */
 	public Iterator iterateInternalLinks()
 	{
-		auto p = gst_pad_iterate_internal_links(gstPad);
+		auto __p = gst_pad_iterate_internal_links(gstPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -904,14 +925,14 @@ public class Pad : ObjectGst
 	 */
 	public Iterator iterateInternalLinksDefault(ObjectGst parent)
 	{
-		auto p = gst_pad_iterate_internal_links_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct());
+		auto __p = gst_pad_iterate_internal_links_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -1083,14 +1104,14 @@ public class Pad : ObjectGst
 	 */
 	public Caps peerQueryCaps(Caps filter)
 	{
-		auto p = gst_pad_peer_query_caps(gstPad, (filter is null) ? null : filter.getCapsStruct());
+		auto __p = gst_pad_peer_query_caps(gstPad, (filter is null) ? null : filter.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -1217,11 +1238,11 @@ public class Pad : ObjectGst
 	{
 		GstBuffer* outbuffer = null;
 
-		auto p = gst_pad_pull_range(gstPad, offset, size, &outbuffer);
+		auto __p = gst_pad_pull_range(gstPad, offset, size, &outbuffer);
 
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1247,7 +1268,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn push(Buffer buffer)
 	{
-		return gst_pad_push(gstPad, (buffer is null) ? null : buffer.getBufferStruct());
+		return gst_pad_push(gstPad, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
@@ -1267,7 +1288,7 @@ public class Pad : ObjectGst
 	 */
 	public bool pushEvent(Event event)
 	{
-		return gst_pad_push_event(gstPad, (event is null) ? null : event.getEventStruct()) != 0;
+		return gst_pad_push_event(gstPad, (event is null) ? null : event.getEventStruct(true)) != 0;
 	}
 
 	/**
@@ -1295,7 +1316,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn pushList(BufferList list)
 	{
-		return gst_pad_push_list(gstPad, (list is null) ? null : list.getBufferListStruct());
+		return gst_pad_push_list(gstPad, (list is null) ? null : list.getBufferListStruct(true));
 	}
 
 	/**
@@ -1357,14 +1378,14 @@ public class Pad : ObjectGst
 	 */
 	public Caps queryCaps(Caps filter)
 	{
-		auto p = gst_pad_query_caps(gstPad, (filter is null) ? null : filter.getCapsStruct());
+		auto __p = gst_pad_query_caps(gstPad, (filter is null) ? null : filter.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -1472,7 +1493,7 @@ public class Pad : ObjectGst
 	 */
 	public bool sendEvent(Event event)
 	{
-		return gst_pad_send_event(gstPad, (event is null) ? null : event.getEventStruct()) != 0;
+		return gst_pad_send_event(gstPad, (event is null) ? null : event.getEventStruct(true)) != 0;
 	}
 
 	/**

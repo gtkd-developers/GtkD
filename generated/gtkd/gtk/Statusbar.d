@@ -28,11 +28,9 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Box;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -71,7 +69,7 @@ private import std.algorithm;
  * 
  * GtkStatusbar has a single CSS node with name statusbar.
  */
-public class Statusbar : Box
+public class Statusbar : Widget
 {
 	/** the main Gtk struct */
 	protected GtkStatusbar* gtkStatusbar;
@@ -96,26 +94,9 @@ public class Statusbar : Box
 	public this (GtkStatusbar* gtkStatusbar, bool ownedRef = false)
 	{
 		this.gtkStatusbar = gtkStatusbar;
-		super(cast(GtkBox*)gtkStatusbar, ownedRef);
+		super(cast(GtkWidget*)gtkStatusbar, ownedRef);
 	}
 
-	/**
-	 * Retrieves the box containing the label widget.
-	 * Since 2.20
-	 * Returns: a GtkBox. [transfer none]
-	 */
-	public Box getMessageArea()
-	{
-		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
-		if(p is null)
-		{
-			return null;
-		}
-		return ObjectG.getDObject!(Box)(cast(GtkBox*) p);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -132,14 +113,14 @@ public class Statusbar : Box
 	 */
 	public this()
 	{
-		auto p = gtk_statusbar_new();
+		auto __p = gtk_statusbar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStatusbar*) p);
+		this(cast(GtkStatusbar*) __p);
 	}
 
 	/**
@@ -209,8 +190,6 @@ public class Statusbar : Box
 	 *
 	 * Params:
 	 *     contextId = a context identifier
-	 *
-	 * Since: 2.22
 	 */
 	public void removeAll(uint contextId)
 	{

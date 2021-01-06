@@ -27,7 +27,6 @@ module pango.PgLayoutLine;
 private import glib.ListSG;
 private import glib.MemorySlice;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgLayout;
 private import pango.c.functions;
@@ -188,6 +187,20 @@ public final class PgLayoutLine
 	}
 
 	/**
+	 * Computes the height of the line, ie the distance between
+	 * this and the previous lines baseline.
+	 *
+	 * Params:
+	 *     height = return location for the line height
+	 *
+	 * Since: 1.44
+	 */
+	public void getHeight(out int height)
+	{
+		pango_layout_line_get_height(pangoLayoutLine, &height);
+	}
+
+	/**
 	 * Computes the logical and ink extents of @layout_line in device units.
 	 * This function just calls pango_layout_line_get_extents() followed by
 	 * two pango_extents_to_pixels() calls, rounding @ink_rect and @logical_rect
@@ -265,14 +278,14 @@ public final class PgLayoutLine
 	 */
 	public PgLayoutLine ref_()
 	{
-		auto p = pango_layout_line_ref(pangoLayoutLine);
+		auto __p = pango_layout_line_ref(pangoLayoutLine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p, true);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) __p, true);
 	}
 
 	/**

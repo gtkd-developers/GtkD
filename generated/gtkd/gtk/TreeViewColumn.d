@@ -30,18 +30,15 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-private import gtk.Button;
 private import gtk.CellArea;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.CellRenderer;
 private import gtk.TreeIter;
 private import gtk.TreeModelIF;
-private import gtk.TreeView;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -88,67 +85,6 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkTreeViewColumn);
 
-	/**
-	 * Creates a new Tree view column
-	 * Params:
-	 *  header = th column header text
-	 *  renderer = the rederer for the column cells
-	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
-	 *  column = the column number
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	this(string header, CellRenderer renderer, string type, int column)
-	{
-		auto p = gtk_tree_view_column_new_with_attributes(
-			Str.toStringz(header),
-			renderer.getCellRendererStruct(),
-			Str.toStringz(type),
-			column,
-			null);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
-		}
-
-		this(p);
-	}
-
-	/**
-	 * Returns the button used in the treeview column header
-	 * Returns: The button for the column header. [transfer none] Since 3.0
-	 */
-	public Button getButton()
-	{
-		// GtkWidget * gtk_tree_view_column_get_button (GtkTreeViewColumn *tree_column);
-		auto p = gtk_tree_view_column_get_button(gtkTreeViewColumn);
-		if(p is null)
-		{
-			return null;
-		}
-		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
-	}
-
-	/**
-	 * Returns the GtkTreeView wherein tree_column has been inserted.
-	 * If column is currently not inserted in any tree view, NULL is
-	 * returned.
-	 * Since 2.12
-	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise. [transfer none]
-	 */
-	public TreeView getTreeView()
-	{
-		// GtkWidget * gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
-		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
-		if(p is null)
-		{
-			return null;
-		}
-		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -165,14 +101,14 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public this()
 	{
-		auto p = gtk_tree_view_column_new();
+		auto __p = gtk_tree_view_column_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTreeViewColumn*) p);
+		this(cast(GtkTreeViewColumn*) __p);
 	}
 
 	/**
@@ -183,20 +119,36 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: A newly created #GtkTreeViewColumn.
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(CellArea area)
 	{
-		auto p = gtk_tree_view_column_new_with_area((area is null) ? null : area.getCellAreaStruct());
+		auto __p = gtk_tree_view_column_new_with_area((area is null) ? null : area.getCellAreaStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
 
-		this(cast(GtkTreeViewColumn*) p);
+		this(cast(GtkTreeViewColumn*) __p);
+	}
+
+	/**
+	 * Adds an attribute mapping to the list in @tree_column.  The @column is the
+	 * column of the model to get a value from, and the @attribute is the
+	 * parameter on @cell_renderer to be set from the value. So for example
+	 * if column 2 of the model contains strings, you could have the
+	 * “text” attribute of a #GtkCellRendererText get its values from
+	 * column 2.
+	 *
+	 * Params:
+	 *     cellRenderer = the #GtkCellRenderer to set attributes on
+	 *     attribute = An attribute on the renderer
+	 *     column = The column position on the model to get the attribute from.
+	 */
+	public void addAttribute(CellRenderer cellRenderer, string attribute, int column)
+	{
+		gtk_tree_view_column_add_attribute(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), Str.toStringz(attribute), column);
 	}
 
 	/**
@@ -223,15 +175,14 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * primarily by the #GtkTreeView.
 	 *
 	 * Params:
-	 *     cellArea = The area a cell in the column will be allocated, or %NULL
 	 *     xOffset = location to return x offset of a cell relative to @cell_area, or %NULL
 	 *     yOffset = location to return y offset of a cell relative to @cell_area, or %NULL
 	 *     width = location to return width needed to render a cell, or %NULL
 	 *     height = location to return height needed to render a cell, or %NULL
 	 */
-	public void cellGetSize(GdkRectangle* cellArea, out int xOffset, out int yOffset, out int width, out int height)
+	public void cellGetSize(out int xOffset, out int yOffset, out int width, out int height)
 	{
-		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, cellArea, &xOffset, &yOffset, &width, &height);
+		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, &xOffset, &yOffset, &width, &height);
 	}
 
 	/**
@@ -253,14 +204,34 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * renderer.  This is used primarily by the #GtkTreeView.
 	 *
 	 * Params:
-	 *     treeModel = The #GtkTreeModel to to get the cell renderers attributes from.
-	 *     iter = The #GtkTreeIter to to get the cell renderer’s attributes from.
+	 *     treeModel = The #GtkTreeModel to get the cell renderers attributes from.
+	 *     iter = The #GtkTreeIter to get the cell renderer’s attributes from.
 	 *     isExpander = %TRUE, if the row has children
 	 *     isExpanded = %TRUE, if the row has visible children
 	 */
 	public void cellSetCellData(TreeModelIF treeModel, TreeIter iter, bool isExpander, bool isExpanded)
 	{
 		gtk_tree_view_column_cell_set_cell_data(gtkTreeViewColumn, (treeModel is null) ? null : treeModel.getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct(), isExpander, isExpanded);
+	}
+
+	/**
+	 * Unsets all the mappings on all renderers on the @tree_column.
+	 */
+	public void clear()
+	{
+		gtk_tree_view_column_clear(gtkTreeViewColumn);
+	}
+
+	/**
+	 * Clears all existing attributes previously set with
+	 * gtk_tree_view_column_set_attributes().
+	 *
+	 * Params:
+	 *     cellRenderer = a #GtkCellRenderer to clear the attribute mapping on.
+	 */
+	public void clearAttributes(CellRenderer cellRenderer)
+	{
+		gtk_tree_view_column_clear_attributes(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct());
 	}
 
 	/**
@@ -278,8 +249,6 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     cell = A #GtkCellRenderer
-	 *
-	 * Since: 2.2
 	 */
 	public void focusCell(CellRenderer cell)
 	{
@@ -298,6 +267,23 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	}
 
 	/**
+	 * Returns the button used in the treeview column header
+	 *
+	 * Returns: The button for the column header.
+	 */
+	public Widget getButton()
+	{
+		auto __p = gtk_tree_view_column_get_button(gtkTreeViewColumn);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
 	 * Returns %TRUE if the user can click on the header for the column.
 	 *
 	 * Returns: %TRUE if user can click the column header.
@@ -311,8 +297,6 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns %TRUE if the column expands to fill available space.
 	 *
 	 * Returns: %TRUE if the column expands to fill available space.
-	 *
-	 * Since: 2.4
 	 */
 	public bool getExpand()
 	{
@@ -437,6 +421,26 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	}
 
 	/**
+	 * Returns the #GtkTreeView wherein @tree_column has been inserted.
+	 * If @column is currently not inserted in any tree view, %NULL is
+	 * returned.
+	 *
+	 * Returns: The tree view wherein @column has
+	 *     been inserted if any, %NULL otherwise.
+	 */
+	public Widget getTreeView()
+	{
+		auto __p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
 	 * Returns %TRUE if @tree_column is visible.
 	 *
 	 * Returns: whether the column is visible or not.  If it is visible, then
@@ -456,14 +460,14 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public Widget getWidget()
 	{
-		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
+		auto __p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -480,8 +484,6 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the current X offset of @tree_column in pixels.
 	 *
 	 * Returns: The current X offset of @tree_column.
-	 *
-	 * Since: 3.2
 	 */
 	public int getXOffset()
 	{
@@ -489,10 +491,36 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	}
 
 	/**
+	 * Adds the @cell to end of the column. If @expand is %FALSE, then the @cell
+	 * is allocated no more space than it needs. Any unused space is divided
+	 * evenly between cells for which @expand is %TRUE.
+	 *
+	 * Params:
+	 *     cell = The #GtkCellRenderer.
+	 *     expand = %TRUE if @cell is to be given extra space allocated to @tree_column.
+	 */
+	public void packEnd(CellRenderer cell, bool expand)
+	{
+		gtk_tree_view_column_pack_end(gtkTreeViewColumn, (cell is null) ? null : cell.getCellRendererStruct(), expand);
+	}
+
+	/**
+	 * Packs the @cell into the beginning of the column. If @expand is %FALSE, then
+	 * the @cell is allocated no more space than it needs. Any unused space is divided
+	 * evenly between cells for which @expand is %TRUE.
+	 *
+	 * Params:
+	 *     cell = The #GtkCellRenderer.
+	 *     expand = %TRUE if @cell is to be given extra space allocated to @tree_column.
+	 */
+	public void packStart(CellRenderer cell, bool expand)
+	{
+		gtk_tree_view_column_pack_start(gtkTreeViewColumn, (cell is null) ? null : cell.getCellRendererStruct(), expand);
+	}
+
+	/**
 	 * Flags the column, and the cell renderers added to this column, to have
 	 * their sizes renegotiated.
-	 *
-	 * Since: 2.8
 	 */
 	public void queueResize()
 	{
@@ -553,8 +581,6 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     expand = %TRUE if the column should expand to fill available space.
-	 *
-	 * Since: 2.4
 	 */
 	public void setExpand(bool expand)
 	{
@@ -568,7 +594,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * “fixed-width” property is not clamped.  If the column sizing is
 	 * #GTK_TREE_VIEW_COLUMN_GROW_ONLY or #GTK_TREE_VIEW_COLUMN_AUTOSIZE, setting
 	 * a fixed width overrides the automatically calculated width.  Note that
-	 * @fixed_width is only a hint to GTK+; the width actually allocated to the
+	 * @fixed_width is only a hint to GTK; the width actually allocated to the
 	 * column may be greater or less than requested.
 	 *
 	 * Along with “expand”, the “fixed-width” property changes when the column is
@@ -739,7 +765,9 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		gtk_tree_view_column_set_widget(gtkTreeViewColumn, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
-	/** */
+	/**
+	 * Emitted when the column's header has been clicked.
+	 */
 	gulong addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "clicked", dlg, connectFlags ^ ConnectFlags.SWAPPED);

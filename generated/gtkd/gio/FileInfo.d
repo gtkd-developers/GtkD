@@ -34,7 +34,6 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.TimeVal;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -155,7 +154,7 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets the value of a attribute, formated as a string.
+	 * Gets the value of a attribute, formatted as a string.
 	 * This escapes things as needed to make the string valid
 	 * UTF-8.
 	 *
@@ -258,8 +257,8 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: a #GObject associated with the given @attribute, or
-	 *     %NULL otherwise.
+	 * Returns: a #GObject associated with the given @attribute,
+	 *     or %NULL otherwise.
 	 */
 	public ObjectG getAttributeObject(string attribute)
 	{
@@ -294,8 +293,8 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: the contents of the @attribute value as a UTF-8 string, or
-	 *     %NULL otherwise.
+	 * Returns: the contents of the @attribute value as a UTF-8 string,
+	 *     or %NULL otherwise.
 	 */
 	public string getAttributeString(string attribute)
 	{
@@ -309,8 +308,8 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: the contents of the @attribute value as a stringv, or
-	 *     %NULL otherwise. Do not free. These returned strings are UTF-8.
+	 * Returns: the contents of the @attribute value as a stringv,
+	 *     or %NULL otherwise. Do not free. These returned strings are UTF-8.
 	 *
 	 * Since: 2.22
 	 */
@@ -366,7 +365,8 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the file's content type.
 	 *
-	 * Returns: a string containing the file's content type.
+	 * Returns: a string containing the file's content type,
+	 *     or %NULL if unknown.
 	 */
 	public string getContentType()
 	{
@@ -395,7 +395,7 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets a display name for a file.
+	 * Gets a display name for a file. This is guaranteed to always be set.
 	 *
 	 * Returns: a string containing the display name.
 	 */
@@ -527,7 +527,7 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets the name for a file.
+	 * Gets the name for a file. This is guaranteed to always be set.
 	 *
 	 * Returns: a string containing the file name.
 	 */

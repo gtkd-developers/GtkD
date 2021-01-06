@@ -39,17 +39,16 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
  * GtkPrintOperation is the high-level, portable printing API.
- * It looks a bit different than other GTK+ dialogs such as the
+ * It looks a bit different than other GTK dialogs such as the
  * #GtkFileChooser, since some platforms don’t expose enough
  * infrastructure to implement a good print dialog. On such
  * platforms, GtkPrintOperation uses the native print dialog.
- * On platforms which do not provide a native print dialog, GTK+
+ * On platforms which do not provide a native print dialog, GTK
  * uses its own, see #GtkPrintUnixDialog.
  * 
  * The typical way to use the high-level printing API is to create
@@ -149,20 +148,18 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Returns: a new #GtkPrintOperation
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_print_operation_new();
+		auto __p = gtk_print_operation_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPrintOperation*) p, true);
+		this(cast(GtkPrintOperation*) __p, true);
 	}
 
 	/**
@@ -171,8 +168,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * #GtkPrintOperation::paginate or #GtkPrintOperation::draw-page
 	 * signal handler to stop the currently running print
 	 * operation.
-	 *
-	 * Since: 2.10
 	 */
 	public void cancel()
 	{
@@ -187,8 +182,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * If gtk_print_operation_set_defer_drawing() was called before, then this function
 	 * has to be called by application. In another case it is called by the library
 	 * itself.
-	 *
-	 * Since: 2.16
 	 */
 	public void drawPageFinish()
 	{
@@ -200,27 +193,23 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * gtk_print_operation_set_default_page_setup().
 	 *
 	 * Returns: the default page setup
-	 *
-	 * Since: 2.10
 	 */
 	public PageSetup getDefaultPageSetup()
 	{
-		auto p = gtk_print_operation_get_default_page_setup(gtkPrintOperation);
+		auto __p = gtk_print_operation_get_default_page_setup(gtkPrintOperation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) __p);
 	}
 
 	/**
 	 * Gets the value of #GtkPrintOperation:embed-page-setup property.
 	 *
 	 * Returns: whether page setup selection combos are embedded
-	 *
-	 * Since: 2.18
 	 */
 	public bool getEmbedPageSetup()
 	{
@@ -232,8 +221,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * %GTK_PRINT_OPERATION_RESULT_ERROR, either as returned by
 	 * gtk_print_operation_run(), or in the #GtkPrintOperation::done signal
 	 * handler. The returned #GError will contain more details on what went wrong.
-	 *
-	 * Since: 2.10
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -253,8 +240,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Gets the value of #GtkPrintOperation:has-selection property.
 	 *
 	 * Returns: whether there is a selection
-	 *
-	 * Since: 2.18
 	 */
 	public bool getHasSelection()
 	{
@@ -273,8 +258,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * This is typically used to track the progress of print operation.
 	 *
 	 * Returns: the number of pages that will be printed
-	 *
-	 * Since: 2.18
 	 */
 	public int getNPagesToPrint()
 	{
@@ -289,19 +272,17 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * gtk_print_operation_run() have been called.
 	 *
 	 * Returns: the current print settings of @op.
-	 *
-	 * Since: 2.10
 	 */
 	public PrintSettings getPrintSettings()
 	{
-		auto p = gtk_print_operation_get_print_settings(gtkPrintOperation);
+		auto __p = gtk_print_operation_get_print_settings(gtkPrintOperation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p);
+		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) __p);
 	}
 
 	/**
@@ -309,8 +290,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Also see gtk_print_operation_get_status_string().
 	 *
 	 * Returns: the status of the print operation
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPrintStatus getStatus()
 	{
@@ -327,8 +306,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Returns: a string representation of the status
 	 *     of the print operation
-	 *
-	 * Since: 2.10
 	 */
 	public string getStatusString()
 	{
@@ -339,8 +316,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Gets the value of #GtkPrintOperation:support-selection property.
 	 *
 	 * Returns: whether the application supports print of selection
-	 *
-	 * Since: 2.18
 	 */
 	public bool getSupportSelection()
 	{
@@ -357,8 +332,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * the operation status then tracks the print job status on the printer.
 	 *
 	 * Returns: %TRUE, if the print operation is finished.
-	 *
-	 * Since: 2.10
 	 */
 	public bool isFinished()
 	{
@@ -407,7 +380,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * "Error printing file:\n%s",
 	 * error->message);
 	 * g_signal_connect (error_dialog, "response",
-	 * G_CALLBACK (gtk_widget_destroy), NULL);
+	 * G_CALLBACK (gtk_window_destroy), NULL);
 	 * gtk_widget_show (error_dialog);
 	 * g_error_free (error);
 	 * }
@@ -435,22 +408,20 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     asynchronously, and will emit the #GtkPrintOperation::done signal when
 	 *     done.
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: GException on failure.
 	 */
 	public GtkPrintOperationResult run(GtkPrintOperationAction action, Window parent)
 	{
 		GError* err = null;
 
-		auto p = gtk_print_operation_run(gtkPrintOperation, action, (parent is null) ? null : parent.getWindowStruct(), &err);
+		auto __p = gtk_print_operation_run(gtkPrintOperation, action, (parent is null) ? null : parent.getWindowStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -460,8 +431,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     allowAsync = %TRUE to allow asynchronous operation
-	 *
-	 * Since: 2.10
 	 */
 	public void setAllowAsync(bool allowAsync)
 	{
@@ -478,8 +447,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     currentPage = the current page, 0-based
-	 *
-	 * Since: 2.10
 	 */
 	public void setCurrentPage(int currentPage)
 	{
@@ -491,8 +458,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     label = the label to use, or %NULL to use the default label
-	 *
-	 * Since: 2.10
 	 */
 	public void setCustomTabLabel(string label)
 	{
@@ -508,8 +473,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     defaultPageSetup = a #GtkPageSetup, or %NULL
-	 *
-	 * Since: 2.10
 	 */
 	public void setDefaultPageSetup(PageSetup defaultPageSetup)
 	{
@@ -522,8 +485,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * be used for drawing page in another thread.
 	 *
 	 * This function must be called in the callback of “draw-page” signal.
-	 *
-	 * Since: 2.16
 	 */
 	public void setDeferDrawing()
 	{
@@ -536,8 +497,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     embed = %TRUE to embed page setup selection in the #GtkPrintUnixDialog
-	 *
-	 * Since: 2.18
 	 */
 	public void setEmbedPageSetup(bool embed)
 	{
@@ -546,7 +505,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	/**
 	 * Sets up the #GtkPrintOperation to generate a file instead
-	 * of showing the print dialog. The indended use of this function
+	 * of showing the print dialog. The intended use of this function
 	 * is for implementing “Export to PDF” actions. Currently, PDF
 	 * is the only supported format.
 	 *
@@ -556,8 +515,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     filename = the filename for the exported file
-	 *
-	 * Since: 2.10
 	 */
 	public void setExportFilename(string filename)
 	{
@@ -573,8 +530,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     hasSelection = %TRUE indicates that a selection exists
-	 *
-	 * Since: 2.18
 	 */
 	public void setHasSelection(bool hasSelection)
 	{
@@ -585,13 +540,11 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Sets the name of the print job. The name is used to identify
 	 * the job (e.g. in monitoring applications like eggcups).
 	 *
-	 * If you don’t set a job name, GTK+ picks a default one by
+	 * If you don’t set a job name, GTK picks a default one by
 	 * numbering successive print jobs.
 	 *
 	 * Params:
 	 *     jobName = a string that identifies the print job
-	 *
-	 * Since: 2.10
 	 */
 	public void setJobName(string jobName)
 	{
@@ -603,7 +556,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * This must be set to a positive number
 	 * before the rendering starts. It may be set in a
-	 * #GtkPrintOperation::begin-print signal hander.
+	 * #GtkPrintOperation::begin-print signal handler.
 	 *
 	 * Note that the page numbers passed to the
 	 * #GtkPrintOperation::request-page-setup
@@ -613,8 +566,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     nPages = the number of pages
-	 *
-	 * Since: 2.10
 	 */
 	public void setNPages(int nPages)
 	{
@@ -628,8 +579,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     printSettings = #GtkPrintSettings
-	 *
-	 * Since: 2.10
 	 */
 	public void setPrintSettings(PrintSettings printSettings)
 	{
@@ -642,8 +591,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     showProgress = %TRUE to show a progress dialog
-	 *
-	 * Since: 2.10
 	 */
 	public void setShowProgress(bool showProgress)
 	{
@@ -655,8 +602,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     supportSelection = %TRUE to support selection
-	 *
-	 * Since: 2.18
 	 */
 	public void setSupportSelection(bool supportSelection)
 	{
@@ -674,8 +619,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     trackStatus = %TRUE to track status after printing
-	 *
-	 * Since: 2.10
 	 */
 	public void setTrackPrintStatus(bool trackStatus)
 	{
@@ -689,8 +632,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     unit = the unit to use
-	 *
-	 * Since: 2.10
 	 */
 	public void setUnit(GtkUnit unit)
 	{
@@ -707,8 +648,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     fullPage = %TRUE to set up the #GtkPrintContext for the full page
-	 *
-	 * Since: 2.10
 	 */
 	public void setUseFullPage(bool fullPage)
 	{
@@ -725,8 +664,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     context = the #GtkPrintContext for the current operation
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnBeginPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -747,8 +684,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Returns: A custom widget that gets embedded in
 	 *     the print dialog, or %NULL
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnCreateCustomWidget(ObjectG delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -764,8 +699,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     widget = the custom widget added in create-custom-widget
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnCustomWidgetApply(void delegate(Widget, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -786,8 +719,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     result = the result of the print operation
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnDone(void delegate(GtkPrintOperationResult, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -802,13 +733,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * static void
 	 * draw_page (GtkPrintOperation *operation,
 	 * GtkPrintContext   *context,
-	 * gint               page_nr,
+	 * int                page_nr,
 	 * gpointer           user_data)
 	 * {
 	 * cairo_t *cr;
 	 * PangoLayout *layout;
-	 * gdouble width, text_height;
-	 * gint layout_height;
+	 * double width, text_height;
+	 * int layout_height;
 	 * PangoFontDescription *desc;
 	 *
 	 * cr = gtk_print_context_get_cairo_context (context);
@@ -830,7 +761,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 	 *
 	 * pango_layout_get_size (layout, NULL, &layout_height);
-	 * text_height = (gdouble)layout_height / PANGO_SCALE;
+	 * text_height = (double)layout_height / PANGO_SCALE;
 	 *
 	 * cairo_move_to (cr, width / 2,  (HEADER_HEIGHT - text_height) / 2);
 	 * pango_cairo_show_layout (cr, layout);
@@ -847,8 +778,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Params:
 	 *     context = the #GtkPrintContext for the current operation
 	 *     pageNr = the number of the currently printed page (0-based)
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnDrawPage(void delegate(PrintContext, int, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -862,8 +791,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Params:
 	 *     context = the #GtkPrintContext for the current operation
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnEndPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -889,8 +816,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     context = the #GtkPrintContext for the current operation
 	 *
 	 * Returns: %TRUE if pagination is complete
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnPaginate(bool delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -921,8 +846,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     parent = the #GtkWindow to use as window parent, or %NULL
 	 *
 	 * Returns: %TRUE if the listener wants to take over control of the preview
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnPreview(bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -938,8 +861,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     context = the #GtkPrintContext for the current operation
 	 *     pageNr = the number of the currently printed page (0-based)
 	 *     setup = the #GtkPageSetup
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnRequestPageSetup(void delegate(PrintContext, int, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -951,8 +872,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * See #GtkPrintStatus for the phases that are being discriminated.
 	 * Use gtk_print_operation_get_status() to find out the current
 	 * status.
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnStatusChanged(void delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -968,64 +887,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     widget = the custom widget added in create-custom-widget
 	 *     setup = actual page setup
 	 *     settings = actual print settings
-	 *
-	 * Since: 2.18
 	 */
 	gulong addOnUpdateCustomWidget(void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "update-custom-widget", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * Runs a page setup dialog, letting the user modify the values from
-	 * @page_setup. If the user cancels the dialog, the returned #GtkPageSetup
-	 * is identical to the passed in @page_setup, otherwise it contains the
-	 * modifications done in the dialog.
-	 *
-	 * Note that this function may use a recursive mainloop to show the page
-	 * setup dialog. See gtk_print_run_page_setup_dialog_async() if this is
-	 * a problem.
-	 *
-	 * Params:
-	 *     parent = transient parent
-	 *     pageSetup = an existing #GtkPageSetup
-	 *     settings = a #GtkPrintSettings
-	 *
-	 * Returns: a new #GtkPageSetup
-	 *
-	 * Since: 2.10
-	 */
-	public static PageSetup printRunPageSetupDialog(Window parent, PageSetup pageSetup, PrintSettings settings)
-	{
-		auto p = gtk_print_run_page_setup_dialog((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct());
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p, true);
-	}
-
-	/**
-	 * Runs a page setup dialog, letting the user modify the values from @page_setup.
-	 *
-	 * In contrast to gtk_print_run_page_setup_dialog(), this function  returns after
-	 * showing the page setup dialog on platforms that support this, and calls @done_cb
-	 * from a signal handler for the ::response signal of the dialog.
-	 *
-	 * Params:
-	 *     parent = transient parent, or %NULL
-	 *     pageSetup = an existing #GtkPageSetup, or %NULL
-	 *     settings = a #GtkPrintSettings
-	 *     doneCb = a function to call when the user saves
-	 *         the modified page setup
-	 *     data = user data to pass to @done_cb
-	 *
-	 * Since: 2.10
-	 */
-	public static void printRunPageSetupDialogAsync(Window parent, PageSetup pageSetup, PrintSettings settings, GtkPageSetupDoneFunc doneCb, void* data)
-	{
-		gtk_print_run_page_setup_dialog_async((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct(), doneCb, data);
 	}
 }

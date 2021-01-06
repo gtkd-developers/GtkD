@@ -36,15 +36,13 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * #GtkApplicationWindow is a #GtkWindow subclass that offers some
  * extra functionality for better integration with #GtkApplication
- * features.  Notably, it can handle both the application menu as well
- * as the menubar. See gtk_application_set_app_menu() and
- * gtk_application_set_menubar().
+ * features.  Notably, it can handle an application menubar.
+ * See gtk_application_set_menubar().
  * 
  * This class implements the #GActionGroup and #GActionMap interfaces,
  * to let you add window-specific actions that will be exported by the
@@ -71,11 +69,14 @@ public  import gtkc.gtktypes;
  * will display the application menu, but not the menubar.
  * 
  * If the desktop environment does not display the menubar, then
- * #GtkApplicationWindow will automatically show a #GtkMenuBar for it.
+ * #GtkApplicationWindow will automatically show a menubar for it.
  * This behaviour can be overridden with the #GtkApplicationWindow:show-menubar
  * property. If the desktop environment does not display the application
  * menu, then it will automatically be included in the menubar or in the
  * windows client-side decorations.
+ * 
+ * See #GtkPopoverMenu for information about the XML language
+ * used by #GtkBuilder for menu models.
  * 
  * ## A GtkApplicationWindow with a menubar
  * 
@@ -85,9 +86,16 @@ public  import gtkc.gtktypes;
  * GtkBuilder *builder = gtk_builder_new_from_string (
  * "<interface>"
  * "  <menu id='menubar'>"
- * "    <submenu label='_Edit'>"
- * "      <item label='_Copy' action='win.copy'/>"
- * "      <item label='_Paste' action='win.paste'/>"
+ * "    <submenu>"
+ * "      <attribute name='label' translatable='yes'>_Edit</attribute>"
+ * "      <item>"
+ * "        <attribute name='label' translatable='yes'>_Copy</attribute>"
+ * "        <attribute name='action'>win.copy</attribute>"
+ * "      </item>"
+ * "      <item>"
+ * "        <attribute name='label' translatable='yes'>_Paste</attribute>"
+ * "        <attribute name='action'>win.paste</attribute>"
+ * "      </item>"
  * "    </submenu>"
  * "  </menu>"
  * "</interface>",
@@ -102,47 +110,6 @@ public  import gtkc.gtktypes;
  * 
  * GtkWidget *window = gtk_application_window_new (app);
  * ]|
- * 
- * ## Handling fallback yourself
- * 
- * [A simple example](https://git.gnome.org/browse/gtk+/tree/examples/sunny.c)
- * 
- * The XML format understood by #GtkBuilder for #GMenuModel consists
- * of a toplevel `<menu>` element, which contains one or more `<item>`
- * elements. Each `<item>` element contains `<attribute>` and `<link>`
- * elements with a mandatory name attribute. `<link>` elements have the
- * same content model as `<menu>`. Instead of `<link name="submenu>` or
- * `<link name="section">`, you can use `<submenu>` or `<section>`
- * elements.
- * 
- * Attribute values can be translated using gettext, like other #GtkBuilder
- * content. `<attribute>` elements can be marked for translation with a
- * `translatable="yes"` attribute. It is also possible to specify message
- * context and translator comments, using the context and comments attributes.
- * To make use of this, the #GtkBuilder must have been given the gettext
- * domain to use.
- * 
- * The following attributes are used when constructing menu items:
- * - "label": a user-visible string to display
- * - "action": the prefixed name of the action to trigger
- * - "target": the parameter to use when activating the action
- * - "icon" and "verb-icon": names of icons that may be displayed
- * - "submenu-action": name of an action that may be used to determine
- * if a submenu can be opened
- * - "hidden-when": a string used to determine when the item will be hidden.
- * Possible values include "action-disabled", "action-missing", "macos-menubar".
- * 
- * The following attributes are used when constructing sections:
- * - "label": a user-visible string to use as section heading
- * - "display-hint": a string used to determine special formatting for the section.
- * Possible values include "horizontal-buttons".
- * - "text-direction": a string used to determine the #GtkTextDirection to use
- * when "display-hint" is set to "horizontal-buttons". Possible values
- * include "rtl", "ltr", and "none".
- * 
- * The following attributes are used when constructing submenus:
- * - "label": a user-visible string to display
- * - "icon": icon name to display
  */
 public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 {
@@ -193,20 +160,18 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 *
 	 * Returns: a newly created #GtkApplicationWindow
 	 *
-	 * Since: 3.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Application application)
 	{
-		auto p = gtk_application_window_new((application is null) ? null : application.getGtkApplicationStruct());
+		auto __p = gtk_application_window_new((application is null) ? null : application.getGtkApplicationStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkApplicationWindow*) p);
+		this(cast(GtkApplicationWindow*) __p);
 	}
 
 	/**
@@ -214,19 +179,17 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 * a prior call to gtk_application_window_set_help_overlay().
 	 *
 	 * Returns: the help overlay associated with @window, or %NULL
-	 *
-	 * Since: 3.20
 	 */
 	public ShortcutsWindow getHelpOverlay()
 	{
-		auto p = gtk_application_window_get_help_overlay(gtkApplicationWindow);
+		auto __p = gtk_application_window_get_help_overlay(gtkApplicationWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ShortcutsWindow)(cast(GtkShortcutsWindow*) p);
+		return ObjectG.getDObject!(ShortcutsWindow)(cast(GtkShortcutsWindow*) __p);
 	}
 
 	/**
@@ -235,8 +198,6 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 *
 	 * Returns: the unique ID for @window, or `0` if the window
 	 *     has not yet been added to a #GtkApplication
-	 *
-	 * Since: 3.6
 	 */
 	public uint getId()
 	{
@@ -248,8 +209,6 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 * and menubar as needed.
 	 *
 	 * Returns: %TRUE if @window will display a menubar when needed
-	 *
-	 * Since: 3.4
 	 */
 	public bool getShowMenubar()
 	{
@@ -261,12 +220,10 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 * sets up an action with the name win.show-help-overlay to present
 	 * it.
 	 *
-	 * @window takes resposibility for destroying @help_overlay.
+	 * @window takes responsibility for destroying @help_overlay.
 	 *
 	 * Params:
 	 *     helpOverlay = a #GtkShortcutsWindow
-	 *
-	 * Since: 3.20
 	 */
 	public void setHelpOverlay(ShortcutsWindow helpOverlay)
 	{
@@ -279,8 +236,6 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 *
 	 * Params:
 	 *     showMenubar = whether to show a menubar when needed
-	 *
-	 * Since: 3.4
 	 */
 	public void setShowMenubar(bool showMenubar)
 	{

@@ -30,7 +30,6 @@ public  import gtk.Adjustment;
 public  import gtk.Border;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -76,53 +75,47 @@ public template ScrollableT(TStruct)
 	/**
 	 * Returns the size of a non-scrolling border around the
 	 * outside of the scrollable. An example for this would
-	 * be treeview headers. GTK+ can use this information to
-	 * display overlayed graphics, like the overshoot indication,
+	 * be treeview headers. GTK can use this information to
+	 * display overlaid graphics, like the overshoot indication,
 	 * at the right position.
 	 *
 	 * Params:
 	 *     border = return location for the results
 	 *
 	 * Returns: %TRUE if @border has been set
-	 *
-	 * Since: 3.16
 	 */
 	public bool getBorder(out Border border)
 	{
 		GtkBorder* outborder = sliceNew!GtkBorder();
 
-		auto p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
+		auto __p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
 
 		border = ObjectG.getDObject!(Border)(outborder, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Retrieves the #GtkAdjustment used for horizontal scrolling.
 	 *
 	 * Returns: horizontal #GtkAdjustment.
-	 *
-	 * Since: 3.0
 	 */
 	public Adjustment getHadjustment()
 	{
-		auto p = gtk_scrollable_get_hadjustment(getScrollableStruct());
+		auto __p = gtk_scrollable_get_hadjustment(getScrollableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
 	 * Gets the horizontal #GtkScrollablePolicy.
 	 *
 	 * Returns: The horizontal #GtkScrollablePolicy.
-	 *
-	 * Since: 3.0
 	 */
 	public GtkScrollablePolicy getHscrollPolicy()
 	{
@@ -133,27 +126,23 @@ public template ScrollableT(TStruct)
 	 * Retrieves the #GtkAdjustment used for vertical scrolling.
 	 *
 	 * Returns: vertical #GtkAdjustment.
-	 *
-	 * Since: 3.0
 	 */
 	public Adjustment getVadjustment()
 	{
-		auto p = gtk_scrollable_get_vadjustment(getScrollableStruct());
+		auto __p = gtk_scrollable_get_vadjustment(getScrollableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
 	 * Gets the vertical #GtkScrollablePolicy.
 	 *
 	 * Returns: The vertical #GtkScrollablePolicy.
-	 *
-	 * Since: 3.0
 	 */
 	public GtkScrollablePolicy getVscrollPolicy()
 	{
@@ -165,8 +154,6 @@ public template ScrollableT(TStruct)
 	 *
 	 * Params:
 	 *     hadjustment = a #GtkAdjustment
-	 *
-	 * Since: 3.0
 	 */
 	public void setHadjustment(Adjustment hadjustment)
 	{
@@ -180,8 +167,6 @@ public template ScrollableT(TStruct)
 	 *
 	 * Params:
 	 *     policy = the horizontal #GtkScrollablePolicy
-	 *
-	 * Since: 3.0
 	 */
 	public void setHscrollPolicy(GtkScrollablePolicy policy)
 	{
@@ -193,8 +178,6 @@ public template ScrollableT(TStruct)
 	 *
 	 * Params:
 	 *     vadjustment = a #GtkAdjustment
-	 *
-	 * Since: 3.0
 	 */
 	public void setVadjustment(Adjustment vadjustment)
 	{
@@ -208,8 +191,6 @@ public template ScrollableT(TStruct)
 	 *
 	 * Params:
 	 *     policy = the vertical #GtkScrollablePolicy
-	 *
-	 * Since: 3.0
 	 */
 	public void setVscrollPolicy(GtkScrollablePolicy policy)
 	{

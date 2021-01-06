@@ -24,19 +24,14 @@
 
 module gtk.TextBuffer;
 
-private import core.vararg;
-private import gdk.Color;
-private import gdkpixbuf.Pixbuf;
+private import gdk.Clipboard;
+private import gdk.ContentProvider;
+private import gdk.PaintableIF;
 private import glib.ConstructionException;
-private import glib.ErrorG;
-private import glib.GException;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gobject.c.functions;
-private import gtk.Clipboard;
-private import gtk.TargetList;
 private import gtk.TextChildAnchor;
 private import gtk.TextIter;
 private import gtk.TextMark;
@@ -44,11 +39,7 @@ private import gtk.TextTag;
 private import gtk.TextTagTable;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import pango.PgFontDescription;
-private import pango.PgTabArray;
 private import std.algorithm;
-private import std.stdio;
 
 
 /**
@@ -85,150 +76,6 @@ public class TextBuffer : ObjectG
 		super(cast(GObject*)gtkTextBuffer, ownedRef);
 	}
 
-	/**
-	 * Inserts text into buffer at iter, applying the list of tags to
-	 * the newly-inserted text. The last tag specified must be NULL to
-	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
-	 * then gtk_text_buffer_apply_tag() on the inserted text;
-	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
-	 * Params:
-	 *  iter = an iterator in buffer
-	 *  text = UTF-8 text
-	 *  tags = list of tags to apply
-	 */
-	public void insertWithTags(TextIter iter, string text, TextTag[] tags ... )
-	{
-		int startOffset = iter.getOffset();
-
-		insert(iter, text);
-
-		if ( tags.length == 0 )
-			return;
-
-		TextIter start = new TextIter();
-		getIterAtOffset(start, startOffset);
-
-		foreach( tag; tags )
-		{
-			applyTag(tag, start, iter);
-		}
-	}
-
-	/**
-	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
-	 * to pass in tag names instead of tag objects.
-	 * Params:
-	 *  iter = position in buffer
-	 *  text = UTF-8 text
-	 *  tags = tag names
-	 */
-	public void insertWithTagsByName(TextIter iter, string text, string[] tags ... )
-	{
-		int startOffset = iter.getOffset();
-
-		insert(iter, text);
-
-		if ( tags.length == 0 )
-			return;
-
-		TextIter start = new TextIter();
-		getIterAtOffset(start, startOffset);
-
-		foreach( tag; tags )
-		{
-			applyTagByName(tag, start, iter);
-		}
-	}
-
-	/**
-	 * Creates a tag and adds it to the tag table for buffer. Equivalent to
-	 * adding a new tag to the buffer's tag table.
-	 *
-	 * If tagName is null, the tag is anonymous.
-	 *
-	 * If tagName is non-NULL, a tag called tagName must not already exist
-	 * in the tag table for this buffer.
-	 *
-	 * Params:
-	 *     tagName = the name for the new tag.
-	 *     ...     = A list of property names and there values.
-	 */
-	TextTag createTag(string tagName, ...)
-	{
-		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
-
-		for (size_t i = 0; i < _arguments.length; i+=2)
-		{
-			//TODO: Add a proper eception type for this.
-			if ( _arguments[i] != typeid(string) )
-				throw new Exception("TextBuffer.CreateTag: The property name must be a string.");
-
-			string name = va_arg!(string)(_argptr);
-
-			if ( _arguments[i+1] == typeid(bool) ||
-				_arguments[i+1] == typeid(int) ||
-			_arguments[i+1] == typeid(GtkJustification) ||
-			_arguments[i+1] == typeid(GtkTextDirection) ||
-			_arguments[i+1] == typeid(GtkWrapMode) ||
-			_arguments[i+1] == typeid(PangoStretch) ||
-			_arguments[i+1] == typeid(PangoStyle) ||
-			_arguments[i+1] == typeid(PangoUnderline) ||
-			_arguments[i+1] == typeid(PangoVariant) ||
-			_arguments[i+1] == typeid(PangoWeight) )
-			{
-
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
-			}
-			else if ( _arguments[i+1] == typeid(Color) )
-			{
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(Color)(_argptr).getColorStruct(), null);
-			}
-			else if ( _arguments[i+1] == typeid(double) )
-			{
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
-			}
-			else if ( _arguments[i+1] == typeid(const(double)) )
-			{
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
-			}
-			else if ( _arguments[i+1] == typeid(PgFontDescription) )
-			{
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgFontDescription)(_argptr).getPgFontDescriptionStruct(), null);
-			}
-			else if ( _arguments[i+1] == typeid(PgTabArray) )
-			{
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgTabArray)(_argptr).getPgTabArrayStruct(), null);
-			}
-			else if ( _arguments[i+1] == typeid(string) )
-			{
-				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), Str.toStringz(va_arg!(string)(_argptr)), null);
-			}
-			else
-			{
-				stderr.writefln("TextBuffer.CreateTag: Unsupported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
-
-				//TODO: throw segfaults, druntime bug?
-				throw new Exception("TextBuffer.CreateTag: Unsupported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
-			}
-		}
-
-		return tag;
-	}
-
-	/**
-	 * Obtain the entire text
-	 * Returns: The text string
-	 */
-	string getText()
-	{
-		TextIter start = new TextIter();
-		TextIter end = new TextIter();
-		getBounds(start,end);
-		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -248,14 +95,14 @@ public class TextBuffer : ObjectG
 	 */
 	public this(TextTagTable table)
 	{
-		auto p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
+		auto __p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextBuffer*) p, true);
+		this(cast(GtkTextBuffer*) __p, true);
 	}
 
 	/**
@@ -269,8 +116,6 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     mark = the mark to add
 	 *     where = location to place mark
-	 *
-	 * Since: 2.12
 	 */
 	public void addMark(TextMark mark, TextIter where)
 	{
@@ -280,10 +125,11 @@ public class TextBuffer : ObjectG
 	/**
 	 * Adds @clipboard to the list of clipboards in which the selection
 	 * contents of @buffer are available. In most cases, @clipboard will be
-	 * the #GtkClipboard of type %GDK_SELECTION_PRIMARY for a view of @buffer.
+	 * the #GdkClipboard returned by gtk_widget_get_primary_clipboard()
+	 * for a view of @buffer.
 	 *
 	 * Params:
-	 *     clipboard = a #GtkClipboard
+	 *     clipboard = a #GdkClipboard
 	 */
 	public void addSelectionClipboard(Clipboard clipboard)
 	{
@@ -337,12 +183,26 @@ public class TextBuffer : ObjectG
 	 *     defaultEditable = whether the buffer is editable by default
 	 *
 	 * Returns: %TRUE if the buffer was modified
-	 *
-	 * Since: 2.6
 	 */
 	public bool backspace(TextIter iter, bool interactive, bool defaultEditable)
 	{
 		return gtk_text_buffer_backspace(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), interactive, defaultEditable) != 0;
+	}
+
+	/**
+	 * Denotes the beginning of an action that may not be undone. This will cause
+	 * any previous operations in the undo/redo queue to be cleared.
+	 *
+	 * This should be paired with a call to
+	 * gtk_text_buffer_end_irreversible_action() after the irreversible action
+	 * has completed.
+	 *
+	 * You may nest calls to gtk_text_buffer_begin_irreversible_action() and
+	 * gtk_text_buffer_end_irreversible_action() pairs.
+	 */
+	public void beginIrreversibleAction()
+	{
+		gtk_text_buffer_begin_irreversible_action(gtkTextBuffer);
 	}
 
 	/**
@@ -373,7 +233,7 @@ public class TextBuffer : ObjectG
 	 * Copies the currently-selected text to a clipboard.
 	 *
 	 * Params:
-	 *     clipboard = the #GtkClipboard object to copy to
+	 *     clipboard = the #GdkClipboard object to copy to
 	 */
 	public void copyClipboard(Clipboard clipboard)
 	{
@@ -394,14 +254,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
-		auto p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
+		auto __p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) p);
+		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) __p);
 	}
 
 	/**
@@ -432,14 +292,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark createMark(string markName, TextIter where, bool leftGravity)
 	{
-		auto p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
+		auto __p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
 	}
 
 	/**
@@ -447,7 +307,7 @@ public class TextBuffer : ObjectG
 	 * said text if it’s editable.
 	 *
 	 * Params:
-	 *     clipboard = the #GtkClipboard object to cut to
+	 *     clipboard = the #GdkClipboard object to cut to
 	 *     defaultEditable = default editability of the buffer
 	 */
 	public void cutClipboard(Clipboard clipboard, bool defaultEditable)
@@ -542,83 +402,18 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * This function deserializes rich text in format @format and inserts
-	 * it at @iter.
+	 * Denotes the end of an action that may not be undone. This will cause
+	 * any previous operations in the undo/redo queue to be cleared.
 	 *
-	 * @formats to be used must be registered using
-	 * gtk_text_buffer_register_deserialize_format() or
-	 * gtk_text_buffer_register_deserialize_tagset() beforehand.
+	 * This should be called after completing modifications to the text buffer
+	 * after gtk_text_buffer_begin_irreversible_action() was called.
 	 *
-	 * Params:
-	 *     contentBuffer = the #GtkTextBuffer to deserialize into
-	 *     format = the rich text format to use for deserializing
-	 *     iter = insertion point for the deserialized text
-	 *     data = data to deserialize
-	 *
-	 * Returns: %TRUE on success, %FALSE otherwise.
-	 *
-	 * Since: 2.10
-	 *
-	 * Throws: GException on failure.
+	 * You may nest calls to gtk_text_buffer_begin_irreversible_action() and
+	 * gtk_text_buffer_end_irreversible_action() pairs.
 	 */
-	public bool deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, ubyte[] data)
+	public void endIrreversibleAction()
 	{
-		GError* err = null;
-
-		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data.ptr, cast(size_t)data.length, &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
-	}
-
-	/**
-	 * This functions returns the value set with
-	 * gtk_text_buffer_deserialize_set_can_create_tags()
-	 *
-	 * Params:
-	 *     format = a #GdkAtom representing a registered rich text format
-	 *
-	 * Returns: whether deserializing this format may create tags
-	 *
-	 * Since: 2.10
-	 */
-	public bool deserializeGetCanCreateTags(GdkAtom format)
-	{
-		return gtk_text_buffer_deserialize_get_can_create_tags(gtkTextBuffer, format) != 0;
-	}
-
-	/**
-	 * Use this function to allow a rich text deserialization function to
-	 * create new tags in the receiving buffer. Note that using this
-	 * function is almost always a bad idea, because the rich text
-	 * functions you register should know how to map the rich text format
-	 * they handler to your text buffers set of tags.
-	 *
-	 * The ability of creating new (arbitrary!) tags in the receiving buffer
-	 * is meant for special rich text formats like the internal one that
-	 * is registered using gtk_text_buffer_register_deserialize_tagset(),
-	 * because that format is essentially a dump of the internal structure
-	 * of the source buffer, including its tag names.
-	 *
-	 * You should allow creation of tags only if you know what you are
-	 * doing, e.g. if you defined a tagset name for your application
-	 * suite’s text buffers and you know that it’s fine to receive new
-	 * tags from these buffers, because you know that your application can
-	 * handle the newly created tags.
-	 *
-	 * Params:
-	 *     format = a #GdkAtom representing a registered rich text format
-	 *     canCreateTags = whether deserializing this format may create tags
-	 *
-	 * Since: 2.10
-	 */
-	public void deserializeSetCanCreateTags(GdkAtom format, bool canCreateTags)
-	{
-		gtk_text_buffer_deserialize_set_can_create_tags(gtkTextBuffer, format, canCreateTags);
+		gtk_text_buffer_end_irreversible_action(gtkTextBuffer);
 	}
 
 	/**
@@ -650,6 +445,26 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
+	 * Gets whether there is a redoable action in the history.
+	 *
+	 * Returns: %TRUE if there is an redoable action
+	 */
+	public bool getCanRedo()
+	{
+		return gtk_text_buffer_get_can_redo(gtkTextBuffer) != 0;
+	}
+
+	/**
+	 * Gets whether there is an undoable action in the history.
+	 *
+	 * Returns: %TRUE if there is an undoable action
+	 */
+	public bool getCanUndo()
+	{
+		return gtk_text_buffer_get_can_undo(gtkTextBuffer) != 0;
+	}
+
+	/**
 	 * Gets the number of characters in the buffer; note that characters
 	 * and bytes are not the same, you can’t e.g. expect the contents of
 	 * the buffer in string form to be this many bytes long. The character
@@ -663,45 +478,16 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * This function returns the list of targets this text buffer can
-	 * provide for copying and as DND source. The targets in the list are
-	 * added with @info values from the #GtkTextBufferTargetInfo enum,
-	 * using gtk_target_list_add_rich_text_targets() and
-	 * gtk_target_list_add_text_targets().
+	 * Gets whether the buffer is saving modifications to the buffer to allow for
+	 * undo and redo actions.
 	 *
-	 * Returns: the #GtkTargetList
-	 *
-	 * Since: 2.10
+	 * See gtk_text_buffer_begin_irreversible_action() and
+	 * gtk_text_buffer_end_irreversible_action() to create changes to the buffer
+	 * that cannot be undone.
 	 */
-	public TargetList getCopyTargetList()
+	public bool getEnableUndo()
 	{
-		auto p = gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
-	}
-
-	/**
-	 * This function returns the rich text deserialize formats registered
-	 * with @buffer using gtk_text_buffer_register_deserialize_format() or
-	 * gtk_text_buffer_register_deserialize_tagset()
-	 *
-	 * Returns: an array of
-	 *     #GdkAtoms representing the registered formats.
-	 *
-	 * Since: 2.10
-	 */
-	public GdkAtom[] getDeserializeFormats()
-	{
-		int nFormats;
-
-		auto p = gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, &nFormats);
-
-		return p[0 .. nFormats];
+		return gtk_text_buffer_get_enable_undo(gtkTextBuffer) != 0;
 	}
 
 	/**
@@ -728,8 +514,6 @@ public class TextBuffer : ObjectG
 	 * Indicates whether the buffer has some text currently selected.
 	 *
 	 * Returns: %TRUE if the there is text selected
-	 *
-	 * Since: 2.10
 	 */
 	public bool getHasSelection()
 	{
@@ -746,14 +530,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getInsert()
 	{
-		auto p = gtk_text_buffer_get_insert(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_insert(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
 	}
 
 	/**
@@ -779,14 +563,18 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = iterator to initialize
 	 *     lineNumber = line number counting from 0
+	 *
+	 * Returns: whether the exact position has been found
 	 */
-	public void getIterAtLine(out TextIter iter, int lineNumber)
+	public bool getIterAtLine(out TextIter iter, int lineNumber)
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		gtk_text_buffer_get_iter_at_line(gtkTextBuffer, outiter, lineNumber);
+		auto __p = gtk_text_buffer_get_iter_at_line(gtkTextBuffer, outiter, lineNumber) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
+
+		return __p;
 	}
 
 	/**
@@ -794,9 +582,7 @@ public class TextBuffer : ObjectG
 	 * @byte_index must be the start of a UTF-8 character. Note bytes, not
 	 * characters; UTF-8 may encode one character as multiple bytes.
 	 *
-	 * Before the 3.20 version, it was not allowed to pass an invalid location.
-	 *
-	 * Since the 3.20 version, if @line_number is greater than the number of lines
+	 * If @line_number is greater than the number of lines
 	 * in the @buffer, the end iterator is returned. And if @byte_index is off the
 	 * end of the line, the iterator at the end of the line is returned.
 	 *
@@ -804,14 +590,18 @@ public class TextBuffer : ObjectG
 	 *     iter = iterator to initialize
 	 *     lineNumber = line number counting from 0
 	 *     byteIndex = byte index from start of line
+	 *
+	 * Returns: whether the exact position has been found
 	 */
-	public void getIterAtLineIndex(out TextIter iter, int lineNumber, int byteIndex)
+	public bool getIterAtLineIndex(out TextIter iter, int lineNumber, int byteIndex)
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		gtk_text_buffer_get_iter_at_line_index(gtkTextBuffer, outiter, lineNumber, byteIndex);
+		auto __p = gtk_text_buffer_get_iter_at_line_index(gtkTextBuffer, outiter, lineNumber, byteIndex) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
+
+		return __p;
 	}
 
 	/**
@@ -820,7 +610,7 @@ public class TextBuffer : ObjectG
 	 *
 	 * Before the 3.20 version, it was not allowed to pass an invalid location.
 	 *
-	 * Since the 3.20 version, if @line_number is greater than the number of lines
+	 * If @line_number is greater than the number of lines
 	 * in the @buffer, the end iterator is returned. And if @char_offset is off the
 	 * end of the line, the iterator at the end of the line is returned.
 	 *
@@ -828,14 +618,18 @@ public class TextBuffer : ObjectG
 	 *     iter = iterator to initialize
 	 *     lineNumber = line number counting from 0
 	 *     charOffset = char offset from start of line
+	 *
+	 * Returns: whether the exact position has been found
 	 */
-	public void getIterAtLineOffset(out TextIter iter, int lineNumber, int charOffset)
+	public bool getIterAtLineOffset(out TextIter iter, int lineNumber, int charOffset)
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		gtk_text_buffer_get_iter_at_line_offset(gtkTextBuffer, outiter, lineNumber, charOffset);
+		auto __p = gtk_text_buffer_get_iter_at_line_offset(gtkTextBuffer, outiter, lineNumber, charOffset) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
+
+		return __p;
 	}
 
 	/**
@@ -895,14 +689,25 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getMark(string name)
 	{
-		auto p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
+		auto __p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
+	}
+
+	/**
+	 * Gets the maximum number of undo levels to perform. If 0, unlimited undo
+	 * actions may be performed. Note that this may have a memory usage impact
+	 * as it requires storing an additional copy of the inserted or removed text
+	 * within the text buffer.
+	 */
+	public uint getMaxUndoLevels()
+	{
+		return gtk_text_buffer_get_max_undo_levels(gtkTextBuffer);
 	}
 
 	/**
@@ -916,29 +721,6 @@ public class TextBuffer : ObjectG
 	public bool getModified()
 	{
 		return gtk_text_buffer_get_modified(gtkTextBuffer) != 0;
-	}
-
-	/**
-	 * This function returns the list of targets this text buffer supports
-	 * for pasting and as DND destination. The targets in the list are
-	 * added with @info values from the #GtkTextBufferTargetInfo enum,
-	 * using gtk_target_list_add_rich_text_targets() and
-	 * gtk_target_list_add_text_targets().
-	 *
-	 * Returns: the #GtkTargetList
-	 *
-	 * Since: 2.10
-	 */
-	public TargetList getPasteTargetList()
-	{
-		auto p = gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 
 	/**
@@ -958,14 +740,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getSelectionBound()
 	{
-		auto p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
 	}
 
 	/**
@@ -987,31 +769,31 @@ public class TextBuffer : ObjectG
 		GtkTextIter* outstart = sliceNew!GtkTextIter();
 		GtkTextIter* outend = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_buffer_get_selection_bounds(gtkTextBuffer, outstart, outend) != 0;
+		auto __p = gtk_text_buffer_get_selection_bounds(gtkTextBuffer, outstart, outend) != 0;
 
 		start = ObjectG.getDObject!(TextIter)(outstart, true);
 		end = ObjectG.getDObject!(TextIter)(outend, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * This function returns the rich text serialize formats registered
-	 * with @buffer using gtk_text_buffer_register_serialize_format() or
-	 * gtk_text_buffer_register_serialize_tagset()
+	 * Get a content provider for this buffer. It can be
+	 * used to make the content of @buffer available in a
+	 * #GdkClipboard, see gdk_clipboard_set_content().
 	 *
-	 * Returns: an array of
-	 *     #GdkAtoms representing the registered formats.
-	 *
-	 * Since: 2.10
+	 * Returns: a new #GdkContentProvider.
 	 */
-	public GdkAtom[] getSerializeFormats()
+	public ContentProvider getSelectionContent()
 	{
-		int nFormats;
+		auto __p = gtk_text_buffer_get_selection_content(gtkTextBuffer);
 
-		auto p = gtk_text_buffer_get_serialize_formats(gtkTextBuffer, &nFormats);
+		if(__p is null)
+		{
+			return null;
+		}
 
-		return p[0 .. nFormats];
+		return ObjectG.getDObject!(ContentProvider)(cast(GdkContentProvider*) __p, true);
 	}
 
 	/**
@@ -1023,7 +805,7 @@ public class TextBuffer : ObjectG
 	 * the returned string do correspond to byte
 	 * and character indexes into the buffer. Contrast with
 	 * gtk_text_buffer_get_text(). Note that 0xFFFC can occur in normal
-	 * text as well, so it is not a reliable indicator that a pixbuf or
+	 * text as well, so it is not a reliable indicator that a paintable or
 	 * widget is in the buffer.
 	 *
 	 * Params:
@@ -1065,14 +847,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextTagTable getTagTable()
 	{
-		auto p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextTagTable)(cast(GtkTextTagTable*) p);
+		return ObjectG.getDObject!(TextTagTable)(cast(GtkTextTagTable*) __p);
 	}
 
 	/**
@@ -1111,10 +893,11 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = a position in the buffer
 	 *     text = text in UTF-8 format
+	 *     len = length of text in bytes, or -1
 	 */
-	public void insert(TextIter iter, string text)
+	public void insert(TextIter iter, string text, int len)
 	{
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int)text.length);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len);
 	}
 
 	/**
@@ -1123,10 +906,11 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = text in UTF-8 format
+	 *     len = length of text, in bytes
 	 */
-	public void insertAtCursor(string text)
+	public void insertAtCursor(string text, int len)
 	{
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int)text.length);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), len);
 	}
 
 	/**
@@ -1164,13 +948,14 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = a position in @buffer
 	 *     text = some UTF-8 text
+	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
 	 * Returns: whether text was actually inserted
 	 */
-	public bool insertInteractive(TextIter iter, string text, bool defaultEditable)
+	public bool insertInteractive(TextIter iter, string text, int len, bool defaultEditable)
 	{
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int)text.length, defaultEditable) != 0;
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len, defaultEditable) != 0;
 	}
 
 	/**
@@ -1183,13 +968,14 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = text in UTF-8 format
+	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
 	 * Returns: whether text was actually inserted
 	 */
-	public bool insertInteractiveAtCursor(string text, bool defaultEditable)
+	public bool insertInteractiveAtCursor(string text, int len, bool defaultEditable)
 	{
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int)text.length, defaultEditable) != 0;
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), len, defaultEditable) != 0;
 	}
 
 	/**
@@ -1203,8 +989,6 @@ public class TextBuffer : ObjectG
 	 *     iter = location to insert the markup
 	 *     markup = a nul-terminated UTF-8 string containing [Pango markup][PangoMarkupFormat]
 	 *     len = length of @markup in bytes, or -1
-	 *
-	 * Since: 3.16
 	 */
 	public void insertMarkup(TextIter iter, string markup, int len)
 	{
@@ -1217,21 +1001,21 @@ public class TextBuffer : ObjectG
 	 * the buffer contents as a string, will be represented by the Unicode
 	 * “object replacement character” 0xFFFC. Note that the “slice”
 	 * variants for obtaining portions of the buffer as a string include
-	 * this character for pixbufs, but the “text” variants do
+	 * this character for paintable, but the “text” variants do
 	 * not. e.g. see gtk_text_buffer_get_slice() and
 	 * gtk_text_buffer_get_text().
 	 *
 	 * Params:
-	 *     iter = location to insert the pixbuf
-	 *     pixbuf = a #GdkPixbuf
+	 *     iter = location to insert the paintable
+	 *     paintable = a #GdkPaintable
 	 */
-	public void insertPixbuf(TextIter iter, Pixbuf pixbuf)
+	public void insertPaintable(TextIter iter, PaintableIF paintable)
 	{
-		gtk_text_buffer_insert_pixbuf(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		gtk_text_buffer_insert_paintable(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (paintable is null) ? null : paintable.getPaintableStruct());
 	}
 
 	/**
-	 * Copies text, tags, and pixbufs between @start and @end (the order
+	 * Copies text, tags, and paintables between @start and @end (the order
 	 * of @start and @end doesn’t matter) and inserts the copy at @iter.
 	 * Used instead of simply getting/inserting text because it preserves
 	 * images and tags. If @start and @end are in a different buffer from
@@ -1306,7 +1090,7 @@ public class TextBuffer : ObjectG
 	 * be inserted.
 	 *
 	 * Params:
-	 *     clipboard = the #GtkClipboard to paste from
+	 *     clipboard = the #GdkClipboard to paste from
 	 *     overrideLocation = location to insert pasted text, or %NULL
 	 *     defaultEditable = whether the buffer is editable by default
 	 */
@@ -1333,93 +1117,11 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * This function registers a rich text deserialization @function along with
-	 * its @mime_type with the passed @buffer.
-	 *
-	 * Params:
-	 *     mimeType = the format’s mime-type
-	 *     function_ = the deserialize function to register
-	 *     userData = @function’s user_data
-	 *     userDataDestroy = a function to call when @user_data is no longer needed
-	 *
-	 * Returns: the #GdkAtom that corresponds to the
-	 *     newly registered format’s mime-type.
-	 *
-	 * Since: 2.10
+	 * Redoes the next redoable action on the buffer, if there is one.
 	 */
-	public GdkAtom registerDeserializeFormat(string mimeType, GtkTextBufferDeserializeFunc function_, void* userData, GDestroyNotify userDataDestroy)
+	public void redo()
 	{
-		return gtk_text_buffer_register_deserialize_format(gtkTextBuffer, Str.toStringz(mimeType), function_, userData, userDataDestroy);
-	}
-
-	/**
-	 * This function registers GTK+’s internal rich text serialization
-	 * format with the passed @buffer. See
-	 * gtk_text_buffer_register_serialize_tagset() for details.
-	 *
-	 * Params:
-	 *     tagsetName = an optional tagset name, on %NULL
-	 *
-	 * Returns: the #GdkAtom that corresponds to the
-	 *     newly registered format’s mime-type.
-	 *
-	 * Since: 2.10
-	 */
-	public GdkAtom registerDeserializeTagset(string tagsetName)
-	{
-		return gtk_text_buffer_register_deserialize_tagset(gtkTextBuffer, Str.toStringz(tagsetName));
-	}
-
-	/**
-	 * This function registers a rich text serialization @function along with
-	 * its @mime_type with the passed @buffer.
-	 *
-	 * Params:
-	 *     mimeType = the format’s mime-type
-	 *     function_ = the serialize function to register
-	 *     userData = @function’s user_data
-	 *     userDataDestroy = a function to call when @user_data is no longer needed
-	 *
-	 * Returns: the #GdkAtom that corresponds to the
-	 *     newly registered format’s mime-type.
-	 *
-	 * Since: 2.10
-	 */
-	public GdkAtom registerSerializeFormat(string mimeType, GtkTextBufferSerializeFunc function_, void* userData, GDestroyNotify userDataDestroy)
-	{
-		return gtk_text_buffer_register_serialize_format(gtkTextBuffer, Str.toStringz(mimeType), function_, userData, userDataDestroy);
-	}
-
-	/**
-	 * This function registers GTK+’s internal rich text serialization
-	 * format with the passed @buffer. The internal format does not comply
-	 * to any standard rich text format and only works between #GtkTextBuffer
-	 * instances. It is capable of serializing all of a text buffer’s tags
-	 * and embedded pixbufs.
-	 *
-	 * This function is just a wrapper around
-	 * gtk_text_buffer_register_serialize_format(). The mime type used
-	 * for registering is “application/x-gtk-text-buffer-rich-text”, or
-	 * “application/x-gtk-text-buffer-rich-text;format=@tagset_name” if a
-	 * @tagset_name was passed.
-	 *
-	 * The @tagset_name can be used to restrict the transfer of rich text
-	 * to buffers with compatible sets of tags, in order to avoid unknown
-	 * tags from being pasted. It is probably the common case to pass an
-	 * identifier != %NULL here, since the %NULL tagset requires the
-	 * receiving buffer to deal with with pasting of arbitrary tags.
-	 *
-	 * Params:
-	 *     tagsetName = an optional tagset name, on %NULL
-	 *
-	 * Returns: the #GdkAtom that corresponds to the
-	 *     newly registered format’s mime-type.
-	 *
-	 * Since: 2.10
-	 */
-	public GdkAtom registerSerializeTagset(string tagsetName)
-	{
-		return gtk_text_buffer_register_serialize_tagset(gtkTextBuffer, Str.toStringz(tagsetName));
+		gtk_text_buffer_redo(gtkTextBuffer);
 	}
 
 	/**
@@ -1439,11 +1141,11 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * Removes a #GtkClipboard added with
+	 * Removes a #GdkClipboard added with
 	 * gtk_text_buffer_add_selection_clipboard().
 	 *
 	 * Params:
-	 *     clipboard = a #GtkClipboard added to @buffer by
+	 *     clipboard = a #GdkClipboard added to @buffer by
 	 *         gtk_text_buffer_add_selection_clipboard()
 	 */
 	public void removeSelectionClipboard(Clipboard clipboard)
@@ -1492,8 +1194,6 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     ins = where to put the “insert” mark
 	 *     bound = where to put the “selection_bound” mark
-	 *
-	 * Since: 2.4
 	 */
 	public void selectRange(TextIter ins, TextIter bound)
 	{
@@ -1501,31 +1201,34 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * This function serializes the portion of text between @start
-	 * and @end in the rich text format represented by @format.
+	 * Sets whether or not to enable undoable actions in the text buffer. If
+	 * enabled, the user will be able to undo the last number of actions up to
+	 * gtk_text_buffer_get_max_undo_levels().
 	 *
-	 * @formats to be used must be registered using
-	 * gtk_text_buffer_register_serialize_format() or
-	 * gtk_text_buffer_register_serialize_tagset() beforehand.
+	 * See gtk_text_buffer_begin_irreversible_action() and
+	 * gtk_text_buffer_end_irreversible_action() to create changes to the buffer
+	 * that cannot be undone.
 	 *
 	 * Params:
-	 *     contentBuffer = the #GtkTextBuffer to serialize
-	 *     format = the rich text format to use for serializing
-	 *     start = start of block of text to serialize
-	 *     end = end of block of test to serialize
-	 *
-	 * Returns: the serialized
-	 *     data, encoded as @format
-	 *
-	 * Since: 2.10
+	 *     enableUndo = %TRUE to enable undo
 	 */
-	public ubyte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
+	public void setEnableUndo(bool enableUndo)
 	{
-		size_t length;
+		gtk_text_buffer_set_enable_undo(gtkTextBuffer, enableUndo);
+	}
 
-		auto p = gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), &length);
-
-		return p[0 .. length];
+	/**
+	 * Sets the maximum number of undo levels to perform. If 0, unlimited undo
+	 * actions may be performed. Note that this may have a memory usage impact
+	 * as it requires storing an additional copy of the inserted or removed text
+	 * within the text buffer.
+	 *
+	 * Params:
+	 *     maxUndoLevels = the maximum number of undo actions to perform
+	 */
+	public void setMaxUndoLevels(uint maxUndoLevels)
+	{
+		gtk_text_buffer_set_max_undo_levels(gtkTextBuffer, maxUndoLevels);
 	}
 
 	/**
@@ -1549,44 +1252,23 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = UTF-8 text to insert
+	 *     len = length of @text in bytes
 	 */
-	public void setText(string text)
+	public void setText(string text, int len)
 	{
-		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), cast(int)text.length);
+		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), len);
 	}
 
 	/**
-	 * This function unregisters a rich text format that was previously
-	 * registered using gtk_text_buffer_register_deserialize_format() or
-	 * gtk_text_buffer_register_deserialize_tagset().
-	 *
-	 * Params:
-	 *     format = a #GdkAtom representing a registered rich text format.
-	 *
-	 * Since: 2.10
+	 * Undoes the last undoable action on the buffer, if there is one.
 	 */
-	public void unregisterDeserializeFormat(GdkAtom format)
+	public void undo()
 	{
-		gtk_text_buffer_unregister_deserialize_format(gtkTextBuffer, format);
+		gtk_text_buffer_undo(gtkTextBuffer);
 	}
 
 	/**
-	 * This function unregisters a rich text format that was previously
-	 * registered using gtk_text_buffer_register_serialize_format() or
-	 * gtk_text_buffer_register_serialize_tagset()
-	 *
-	 * Params:
-	 *     format = a #GdkAtom representing a registered rich text format.
-	 *
-	 * Since: 2.10
-	 */
-	public void unregisterSerializeFormat(GdkAtom format)
-	{
-		gtk_text_buffer_unregister_serialize_format(gtkTextBuffer, format);
-	}
-
-	/**
-	 * The ::apply-tag signal is emitted to apply a tag to a
+	 * The #GtkTextBuffer::apply-tag signal is emitted to apply a tag to a
 	 * range of text in a #GtkTextBuffer.
 	 * Applying actually occurs in the default handler.
 	 *
@@ -1609,7 +1291,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::begin-user-action signal is emitted at the beginning of a single
+	 * The #GtkTextBuffer::begin-user-action signal is emitted at the beginning of a single
 	 * user-visible operation on a #GtkTextBuffer.
 	 *
 	 * See also:
@@ -1626,7 +1308,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::changed signal is emitted when the content of a #GtkTextBuffer
+	 * The #GtkTextBuffer::changed signal is emitted when the content of a #GtkTextBuffer
 	 * has changed.
 	 */
 	gulong addOnChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1635,7 +1317,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::delete-range signal is emitted to delete a range
+	 * The #GtkTextBuffer::delete-range signal is emitted to delete a range
 	 * from a #GtkTextBuffer.
 	 *
 	 * Note that if your handler runs before the default handler it must not
@@ -1657,7 +1339,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::end-user-action signal is emitted at the end of a single
+	 * The #GtkTextBuffer::end-user-action signal is emitted at the end of a single
 	 * user-visible operation on the #GtkTextBuffer.
 	 *
 	 * See also:
@@ -1675,7 +1357,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::insert-child-anchor signal is emitted to insert a
+	 * The #GtkTextBuffer::insert-child-anchor signal is emitted to insert a
 	 * #GtkTextChildAnchor in a #GtkTextBuffer.
 	 * Insertion actually occurs in the default handler.
 	 *
@@ -1696,23 +1378,23 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::insert-pixbuf signal is emitted to insert a #GdkPixbuf
+	 * The #GtkTextBuffer::insert-paintable signal is emitted to insert a #GdkPaintable
 	 * in a #GtkTextBuffer. Insertion actually occurs in the default handler.
 	 *
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the @location iter (or has to revalidate it).
 	 * The default signal handler revalidates it to be placed after the
-	 * inserted @pixbuf.
+	 * inserted @paintable.
 	 *
-	 * See also: gtk_text_buffer_insert_pixbuf().
+	 * See also: gtk_text_buffer_insert_paintable().
 	 *
 	 * Params:
-	 *     location = position to insert @pixbuf in @textbuffer
-	 *     pixbuf = the #GdkPixbuf to be inserted
+	 *     location = position to insert @paintable in @textbuffer
+	 *     paintable = the #GdkPaintable to be inserted
 	 */
-	gulong addOnInsertPixbuf(void delegate(TextIter, Pixbuf, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnInsertPaintable(void delegate(TextIter, PaintableIF, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		return Signals.connect(this, "insert-pixbuf", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+		return Signals.connect(this, "insert-paintable", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**
@@ -1739,7 +1421,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::mark-deleted signal is emitted as notification
+	 * The #GtkTextBuffer::mark-deleted signal is emitted as notification
 	 * after a #GtkTextMark is deleted.
 	 *
 	 * See also:
@@ -1754,7 +1436,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::mark-set signal is emitted as notification
+	 * The #GtkTextBuffer::mark-set signal is emitted as notification
 	 * after a #GtkTextMark is set.
 	 *
 	 * See also:
@@ -1771,7 +1453,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::modified-changed signal is emitted when the modified bit of a
+	 * The #GtkTextBuffer::modified-changed signal is emitted when the modified bit of a
 	 * #GtkTextBuffer flips.
 	 *
 	 * See also:
@@ -1788,9 +1470,7 @@ public class TextBuffer : ObjectG
 	 * See gtk_text_buffer_paste_clipboard() for more details.
 	 *
 	 * Params:
-	 *     clipboard = the #GtkClipboard pasted from
-	 *
-	 * Since: 2.16
+	 *     clipboard = the #GdkClipboard pasted from
 	 */
 	gulong addOnPasteDone(void delegate(Clipboard, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1798,8 +1478,17 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * The ::remove-tag signal is emitted to remove all occurrences of @tag from
-	 * a range of text in a #GtkTextBuffer.
+	 * The "redo" signal is emitted when a request has been made to redo the
+	 * previously undone operation.
+	 */
+	gulong addOnRedo(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "redo", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * The #GtkTextBuffer::remove-tag signal is emitted to remove all occurrences
+	 * of @tag from a range of text in a #GtkTextBuffer.
 	 * Removal actually occurs in the default handler.
 	 *
 	 * Note that if your handler runs before the default handler it must not
@@ -1816,5 +1505,14 @@ public class TextBuffer : ObjectG
 	gulong addOnRemoveTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "remove-tag", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * The "undo" signal is emitted when a request has been made to undo the
+	 * previous operation or set of operations that have been grouped together.
+	 */
+	gulong addOnUndo(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "undo", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -24,6 +24,8 @@
 
 module peas.PluginManager;
 
+private import atk.ImplementorIF;
+private import atk.ImplementorT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Box;
@@ -41,7 +43,7 @@ public  import peas.c.types;
  * The #PeasGtkPluginManager structure contains only private data
  * and should only be accessed using the provided API.
  */
-public class PluginManager : Box
+public class PluginManager : Box, ImplementorIF
 {
 	/** the main Gtk struct */
 	protected PeasGtkPluginManager* peasGtkPluginManager;
@@ -69,6 +71,9 @@ public class PluginManager : Box
 		super(cast(GtkBox*)peasGtkPluginManager, ownedRef);
 	}
 
+	// add the Implementor capabilities
+	mixin ImplementorT!(PeasGtkPluginManager);
+
 
 	/** */
 	public static GType getType()
@@ -90,14 +95,14 @@ public class PluginManager : Box
 	 */
 	public this(Engine engine)
 	{
-		auto p = peas_gtk_plugin_manager_new((engine is null) ? null : engine.getEngineStruct());
+		auto __p = peas_gtk_plugin_manager_new((engine is null) ? null : engine.getEngineStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PeasGtkPluginManager*) p);
+		this(cast(PeasGtkPluginManager*) __p);
 	}
 
 	/**
@@ -107,13 +112,13 @@ public class PluginManager : Box
 	 */
 	public Widget getView()
 	{
-		auto p = peas_gtk_plugin_manager_get_view(peasGtkPluginManager);
+		auto __p = peas_gtk_plugin_manager_get_view(peasGtkPluginManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 }

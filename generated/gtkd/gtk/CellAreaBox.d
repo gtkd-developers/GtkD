@@ -32,7 +32,6 @@ private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -97,28 +96,24 @@ public class CellAreaBox : CellArea, OrientableIF
 	 *
 	 * Returns: a newly created #GtkCellAreaBox
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_cell_area_box_new();
+		auto __p = gtk_cell_area_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellAreaBox*) p);
+		this(cast(GtkCellAreaBox*) __p);
 	}
 
 	/**
 	 * Gets the spacing added between cell renderers.
 	 *
 	 * Returns: the space added between cell renderers in @box.
-	 *
-	 * Since: 3.0
 	 */
 	public int getSpacing()
 	{
@@ -137,8 +132,6 @@ public class CellAreaBox : CellArea, OrientableIF
 	 *         more than its natural size
 	 *     align_ = whether @renderer should be aligned in adjacent rows
 	 *     fixed = whether @renderer should have the same size in all rows
-	 *
-	 * Since: 3.0
 	 */
 	public void packEnd(CellRenderer renderer, bool expand, bool align_, bool fixed)
 	{
@@ -157,8 +150,6 @@ public class CellAreaBox : CellArea, OrientableIF
 	 *         more than its natural size
 	 *     align_ = whether @renderer should be aligned in adjacent rows
 	 *     fixed = whether @renderer should have the same size in all rows
-	 *
-	 * Since: 3.0
 	 */
 	public void packStart(CellRenderer renderer, bool expand, bool align_, bool fixed)
 	{
@@ -170,8 +161,6 @@ public class CellAreaBox : CellArea, OrientableIF
 	 *
 	 * Params:
 	 *     spacing = the space to add between #GtkCellRenderers
-	 *
-	 * Since: 3.0
 	 */
 	public void setSpacing(int spacing)
 	{

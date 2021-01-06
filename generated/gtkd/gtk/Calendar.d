@@ -25,12 +25,12 @@
 module gtk.Calendar;
 
 private import glib.ConstructionException;
+private import glib.DateTime;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -38,16 +38,12 @@ private import std.algorithm;
  * #GtkCalendar is a widget that displays a Gregorian calendar, one month
  * at a time. It can be created with gtk_calendar_new().
  * 
- * The month and year currently displayed can be altered with
- * gtk_calendar_select_month(). The exact day can be selected from the
- * displayed month using gtk_calendar_select_day().
+ * The date that is currently displayed can be altered with
+ * gtk_calendar_select_day().
  * 
  * To place a visual marker on a particular day, use gtk_calendar_mark_day()
  * and to remove the marker, gtk_calendar_unmark_day(). Alternative, all
  * marks can be cleared with gtk_calendar_clear_marks().
- * 
- * The way in which the calendar itself is displayed can be altered using
- * gtk_calendar_set_display_options().
  * 
  * The selected date can be retrieved from a #GtkCalendar using
  * gtk_calendar_get_date().
@@ -56,6 +52,33 @@ private import std.algorithm;
  * legal calendar in most countries, it was adopted progressively
  * between 1582 and 1929. Display before these dates is likely to be
  * historically incorrect.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * calendar.view
+ * ├── header
+ * │   ├── button
+ * │   ├── stack.month
+ * │   ├── button
+ * │   ├── button
+ * │   ├── label.year
+ * │   ╰── button
+ * ╰── grid
+ * ╰── label[.day-name][.week-number][.day-number][.other-month][.today]
+ * ]|
+ * 
+ * GtkCalendar has a main node with name calendar. It contains a subnode called header
+ * containing the widgets for switching between years and months.
+ * 
+ * The grid subnode contains all day labels, including week numbers on the left (marked
+ * with the .week-number css class) and day names on top (marked with the .day-name
+ * css class).
+ * 
+ * Day labels that belong to the previous or next month get the .other-month style class.
+ * The label of the current day get the .today style class.
+ * 
+ * Marked day labels get the :selected state assigned.
  */
 public class Calendar : Widget
 {
@@ -101,14 +124,14 @@ public class Calendar : Widget
 	 */
 	public this()
 	{
-		auto p = gtk_calendar_new();
+		auto __p = gtk_calendar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCalendar*) p);
+		this(cast(GtkCalendar*) __p);
 	}
 
 	/**
@@ -120,19 +143,23 @@ public class Calendar : Widget
 	}
 
 	/**
-	 * Obtains the selected date from a #GtkCalendar.
+	 * Returns a #GDateTime representing the shown
+	 * year, month and the selected day, in the local
+	 * time zone.
 	 *
-	 * Params:
-	 *     year = location to store the year as a decimal
-	 *         number (e.g. 2011), or %NULL
-	 *     month = location to store the month number
-	 *         (between 0 and 11), or %NULL
-	 *     day = location to store the day number (between
-	 *         1 and 31), or %NULL
+	 * Returns: the #GDate representing
+	 *     the shown date.
 	 */
-	public void getDate(out uint year, out uint month, out uint day)
+	public DateTime getDate()
 	{
-		gtk_calendar_get_date(gtkCalendar, &year, &month, &day);
+		auto __p = gtk_calendar_get_date(gtkCalendar);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -142,8 +169,6 @@ public class Calendar : Widget
 	 *     day = the day number between 1 and 31.
 	 *
 	 * Returns: whether the day is marked.
-	 *
-	 * Since: 3.0
 	 */
 	public bool getDayIsMarked(uint day)
 	{
@@ -151,41 +176,38 @@ public class Calendar : Widget
 	}
 
 	/**
-	 * Queries the height of detail cells, in rows.
-	 * See #GtkCalendar:detail-width-chars.
+	 * Returns whether @self is currently showing the names
+	 * of the week days above the day numbers, i.e. the value
+	 * of the #GtkCalendar:show-day-names property.
 	 *
-	 * Returns: The height of detail cells, in rows.
-	 *
-	 * Since: 2.14
+	 * Returns: Whether the calendar shows day names.
 	 */
-	public int getDetailHeightRows()
+	public bool getShowDayNames()
 	{
-		return gtk_calendar_get_detail_height_rows(gtkCalendar);
+		return gtk_calendar_get_show_day_names(gtkCalendar) != 0;
 	}
 
 	/**
-	 * Queries the width of detail cells, in characters.
-	 * See #GtkCalendar:detail-width-chars.
+	 * Returns whether @self is currently showing the heading,
+	 * i.e. the value of the #GtkCalendar:show-heading property.
 	 *
-	 * Returns: The width of detail cells, in characters.
-	 *
-	 * Since: 2.14
+	 * Returns: Whether the calendar is showing a heading.
 	 */
-	public int getDetailWidthChars()
+	public bool getShowHeading()
 	{
-		return gtk_calendar_get_detail_width_chars(gtkCalendar);
+		return gtk_calendar_get_show_heading(gtkCalendar) != 0;
 	}
 
 	/**
-	 * Returns the current display options of @calendar.
+	 * Returns whether @self is showing week numbers right
+	 * now, i.e. the value of the #GtkCalendar:show-week-numbers
+	 * property.
 	 *
-	 * Returns: the display options.
-	 *
-	 * Since: 2.4
+	 * Returns: Whether the calendar is showing week numbers.
 	 */
-	public GtkCalendarDisplayOptions getDisplayOptions()
+	public bool getShowWeekNumbers()
 	{
-		return gtk_calendar_get_display_options(gtkCalendar);
+		return gtk_calendar_get_show_week_numbers(gtkCalendar) != 0;
 	}
 
 	/**
@@ -200,93 +222,49 @@ public class Calendar : Widget
 	}
 
 	/**
-	 * Selects a day from the current month.
+	 * Will switch to @date's year and month and select its day.
 	 *
 	 * Params:
-	 *     day = the day number between 1 and 31, or 0 to unselect
-	 *         the currently selected day.
+	 *     date = a #GDateTime representing the day to select
 	 */
-	public void selectDay(uint day)
+	public void selectDay(DateTime date)
 	{
-		gtk_calendar_select_day(gtkCalendar, day);
+		gtk_calendar_select_day(gtkCalendar, (date is null) ? null : date.getDateTimeStruct());
 	}
 
 	/**
-	 * Shifts the calendar to a different month.
+	 * Sets whether the calendar shows day names.
 	 *
 	 * Params:
-	 *     month = a month number between 0 and 11.
-	 *     year = the year the month is in.
+	 *     value = Whether to show day names above the day numbers
 	 */
-	public void selectMonth(uint month, uint year)
+	public void setShowDayNames(bool value)
 	{
-		gtk_calendar_select_month(gtkCalendar, month, year);
+		gtk_calendar_set_show_day_names(gtkCalendar, value);
 	}
 
 	/**
-	 * Installs a function which provides Pango markup with detail information
-	 * for each day. Examples for such details are holidays or appointments. That
-	 * information is shown below each day when #GtkCalendar:show-details is set.
-	 * A tooltip containing with full detail information is provided, if the entire
-	 * text should not fit into the details area, or if #GtkCalendar:show-details
-	 * is not set.
-	 *
-	 * The size of the details area can be restricted by setting the
-	 * #GtkCalendar:detail-width-chars and #GtkCalendar:detail-height-rows
-	 * properties.
+	 * Sets whether the calendar should show a heading
+	 * containing the current year and month as well as
+	 * buttons for changing both.
 	 *
 	 * Params:
-	 *     func = a function providing details for each day.
-	 *     data = data to pass to @func invokations.
-	 *     destroy = a function for releasing @data.
-	 *
-	 * Since: 2.14
+	 *     value = Whether to show the heading in the calendar
 	 */
-	public void setDetailFunc(GtkCalendarDetailFunc func, void* data, GDestroyNotify destroy)
+	public void setShowHeading(bool value)
 	{
-		gtk_calendar_set_detail_func(gtkCalendar, func, data, destroy);
+		gtk_calendar_set_show_heading(gtkCalendar, value);
 	}
 
 	/**
-	 * Updates the height of detail cells.
-	 * See #GtkCalendar:detail-height-rows.
+	 * Sets whether week numbers are shown in the calendar.
 	 *
 	 * Params:
-	 *     rows = detail height in rows.
-	 *
-	 * Since: 2.14
+	 *     value = whether to show week numbers on the left of the days
 	 */
-	public void setDetailHeightRows(int rows)
+	public void setShowWeekNumbers(bool value)
 	{
-		gtk_calendar_set_detail_height_rows(gtkCalendar, rows);
-	}
-
-	/**
-	 * Updates the width of detail cells.
-	 * See #GtkCalendar:detail-width-chars.
-	 *
-	 * Params:
-	 *     chars = detail width in characters.
-	 *
-	 * Since: 2.14
-	 */
-	public void setDetailWidthChars(int chars)
-	{
-		gtk_calendar_set_detail_width_chars(gtkCalendar, chars);
-	}
-
-	/**
-	 * Sets display options (whether to display the heading and the month
-	 * headings).
-	 *
-	 * Params:
-	 *     flags = the display options to set
-	 *
-	 * Since: 2.4
-	 */
-	public void setDisplayOptions(GtkCalendarDisplayOptions flags)
-	{
-		gtk_calendar_set_display_options(gtkCalendar, flags);
+		gtk_calendar_set_show_week_numbers(gtkCalendar, value);
 	}
 
 	/**
@@ -306,23 +284,6 @@ public class Calendar : Widget
 	gulong addOnDaySelected(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "day-selected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * Emitted when the user double-clicks a day.
-	 */
-	gulong addOnDaySelectedDoubleClick(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "day-selected-double-click", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * Emitted when the user clicks a button to change the selected month on a
-	 * calendar.
-	 */
-	gulong addOnMonthChanged(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "month-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

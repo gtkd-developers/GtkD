@@ -26,11 +26,10 @@ module gtk.Fixed;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtk.Container;
+private import gsk.Transform;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -57,7 +56,7 @@ public  import gtkc.gtktypes;
  * 
  * In addition, #GtkFixed does not pay attention to text direction and thus may
  * produce unwanted results if your app is run under right-to-left languages
- * such as Hebrew or Arabic. That is: normally GTK+ will order containers
+ * such as Hebrew or Arabic. That is: normally GTK will order containers
  * appropriately for the text direction, e.g. to put labels to the right of the
  * thing they label when using an RTL language, but it can’t do that with
  * #GtkFixed. So if you need to reorder widgets depending on the text direction,
@@ -71,11 +70,8 @@ public  import gtkc.gtktypes;
  * If you know none of these things are an issue for your application,
  * and prefer the simplicity of #GtkFixed, by all means use the
  * widget. But you should be aware of the tradeoffs.
- * 
- * See also #GtkLayout, which shares the ability to perform fixed positioning
- * of child widgets and additionally adds custom drawing and scrollability.
  */
-public class Fixed : Container
+public class Fixed : Widget
 {
 	/** the main Gtk struct */
 	protected GtkFixed* gtkFixed;
@@ -100,7 +96,7 @@ public class Fixed : Container
 	public this (GtkFixed* gtkFixed, bool ownedRef = false)
 	{
 		this.gtkFixed = gtkFixed;
-		super(cast(GtkContainer*)gtkFixed, ownedRef);
+		super(cast(GtkWidget*)gtkFixed, ownedRef);
 	}
 
 
@@ -119,39 +115,107 @@ public class Fixed : Container
 	 */
 	public this()
 	{
-		auto p = gtk_fixed_new();
+		auto __p = gtk_fixed_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFixed*) p);
+		this(cast(GtkFixed*) __p);
 	}
 
 	/**
-	 * Moves a child of a #GtkFixed container to the given position.
+	 * Retrieves the translation transformation of the given child #GtkWidget
+	 * in the given #GtkFixed container.
+	 *
+	 * See also: gtk_fixed_get_child_transform().
+	 *
+	 * Params:
+	 *     widget = a child of @fixed
+	 *     x = the horizontal position of the @widget
+	 *     y = the vertical position of the @widget
+	 */
+	public void getChildPosition(Widget widget, out double x, out double y)
+	{
+		gtk_fixed_get_child_position(gtkFixed, (widget is null) ? null : widget.getWidgetStruct(), &x, &y);
+	}
+
+	/**
+	 * Retrieves the transformation for @widget set using
+	 * gtk_fixed_set_child_transform().
+	 *
+	 * Params:
+	 *     widget = a #GtkWidget, child of @fixed
+	 *
+	 * Returns: a #GskTransform or %NULL
+	 *     in case no transform has been set on @widget
+	 */
+	public Transform getChildTransform(Widget widget)
+	{
+		auto __p = gtk_fixed_get_child_transform(gtkFixed, (widget is null) ? null : widget.getWidgetStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Transform)(cast(GskTransform*) __p);
+	}
+
+	/**
+	 * Sets a translation transformation to the given @x and @y coordinates to
+	 * the child @widget of the given #GtkFixed container.
 	 *
 	 * Params:
 	 *     widget = the child widget.
 	 *     x = the horizontal position to move the widget to.
 	 *     y = the vertical position to move the widget to.
 	 */
-	public void move(Widget widget, int x, int y)
+	public void move(Widget widget, double x, double y)
 	{
 		gtk_fixed_move(gtkFixed, (widget is null) ? null : widget.getWidgetStruct(), x, y);
 	}
 
 	/**
-	 * Adds a widget to a #GtkFixed container at the given position.
+	 * Adds a widget to a #GtkFixed container and assigns a translation
+	 * transformation to the given @x and @y coordinates to it.
 	 *
 	 * Params:
 	 *     widget = the widget to add.
 	 *     x = the horizontal position to place the widget at.
 	 *     y = the vertical position to place the widget at.
 	 */
-	public void put(Widget widget, int x, int y)
+	public void put(Widget widget, double x, double y)
 	{
 		gtk_fixed_put(gtkFixed, (widget is null) ? null : widget.getWidgetStruct(), x, y);
+	}
+
+	/**
+	 * Removes a child from @fixed, after it has been added
+	 * with gtk_fixed_put().
+	 *
+	 * Params:
+	 *     widget = the child widget to remove
+	 */
+	public void remove(Widget widget)
+	{
+		gtk_fixed_remove(gtkFixed, (widget is null) ? null : widget.getWidgetStruct());
+	}
+
+	/**
+	 * Sets the transformation for @widget.
+	 *
+	 * This is a convenience function that retrieves the #GtkFixedLayoutChild
+	 * instance associated to @widget and calls gtk_fixed_layout_child_set_transform().
+	 *
+	 * Params:
+	 *     widget = a #GtkWidget, child of @fixed
+	 *     transform = the transformation assigned to @widget or %NULL
+	 *         to reset @widget's transform
+	 */
+	public void setChildTransform(Widget widget, Transform transform)
+	{
+		gtk_fixed_set_child_transform(gtkFixed, (widget is null) ? null : widget.getWidgetStruct(), (transform is null) ? null : transform.getTransformStruct());
 	}
 }

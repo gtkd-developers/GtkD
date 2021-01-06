@@ -28,18 +28,14 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.EventController;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
  * #GtkEventControllerMotion is an event controller meant for situations
  * where you need to track the position of the pointer.
- * 
- * This object was added in 3.24.
  */
 public class EventControllerMotion : EventController
 {
@@ -77,36 +73,50 @@ public class EventControllerMotion : EventController
 	}
 
 	/**
-	 * Creates a new event controller that will handle motion events
-	 * for the given @widget.
-	 *
-	 * Params:
-	 *     widget = a #GtkWidget
+	 * Creates a new event controller that will handle motion events.
 	 *
 	 * Returns: a new #GtkEventControllerMotion
 	 *
-	 * Since: 3.24
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget)
+	public this()
 	{
-		auto p = gtk_event_controller_motion_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_event_controller_motion_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEventControllerMotion*) p, true);
+		this(cast(GtkEventControllerMotion*) __p, true);
+	}
+
+	/**
+	 * Returns the value of the GtkEventControllerMotion:contains-pointer property.
+	 *
+	 * Returns: %TRUE if a pointer is within @self or one of its children
+	 */
+	public bool containsPointer()
+	{
+		return gtk_event_controller_motion_contains_pointer(gtkEventControllerMotion) != 0;
+	}
+
+	/**
+	 * Returns the value of the GtkEventControllerMotion:is-pointer property.
+	 *
+	 * Returns: %TRUE if a pointer is within @self but not one of its children
+	 */
+	public bool isPointer()
+	{
+		return gtk_event_controller_motion_is_pointer(gtkEventControllerMotion) != 0;
 	}
 
 	/**
 	 * Signals that the pointer has entered the widget.
 	 *
 	 * Params:
-	 *     x = the x coordinate
-	 *     y = the y coordinate
+	 *     x = coordinates of pointer location
+	 *     y = coordinates of pointer location
 	 */
 	gulong addOnEnter(void delegate(double, double, EventControllerMotion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -114,7 +124,7 @@ public class EventControllerMotion : EventController
 	}
 
 	/**
-	 * Signals that pointer has left the widget.
+	 * Signals that the pointer has left the widget.
 	 */
 	gulong addOnLeave(void delegate(EventControllerMotion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

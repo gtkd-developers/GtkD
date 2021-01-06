@@ -34,7 +34,6 @@ private import gstreamer.Pad;
 private import gstreamer.StaticPadTemplate;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -151,14 +150,14 @@ public class PadTemplate : ObjectGst
 	 */
 	public this(string nameTemplate, GstPadDirection direction, GstPadPresence presence, Caps caps)
 	{
-		auto p = gst_pad_template_new(Str.toStringz(nameTemplate), direction, presence, (caps is null) ? null : caps.getCapsStruct());
+		auto __p = gst_pad_template_new(Str.toStringz(nameTemplate), direction, presence, (caps is null) ? null : caps.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstPadTemplate*) p);
+		this(cast(GstPadTemplate*) __p);
 	}
 
 	/**
@@ -176,14 +175,14 @@ public class PadTemplate : ObjectGst
 	 */
 	public this(StaticPadTemplate padTemplate, GType padType)
 	{
-		auto p = gst_pad_template_new_from_static_pad_template_with_gtype((padTemplate is null) ? null : padTemplate.getStaticPadTemplateStruct(), padType);
+		auto __p = gst_pad_template_new_from_static_pad_template_with_gtype((padTemplate is null) ? null : padTemplate.getStaticPadTemplateStruct(), padType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_static_pad_template_with_gtype");
 		}
 
-		this(cast(GstPadTemplate*) p);
+		this(cast(GstPadTemplate*) __p);
 	}
 
 	/**
@@ -205,14 +204,14 @@ public class PadTemplate : ObjectGst
 	 */
 	public this(string nameTemplate, GstPadDirection direction, GstPadPresence presence, Caps caps, GType padType)
 	{
-		auto p = gst_pad_template_new_with_gtype(Str.toStringz(nameTemplate), direction, presence, (caps is null) ? null : caps.getCapsStruct(), padType);
+		auto __p = gst_pad_template_new_with_gtype(Str.toStringz(nameTemplate), direction, presence, (caps is null) ? null : caps.getCapsStruct(), padType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_gtype");
 		}
 
-		this(cast(GstPadTemplate*) p);
+		this(cast(GstPadTemplate*) __p);
 	}
 
 	/**
@@ -223,14 +222,34 @@ public class PadTemplate : ObjectGst
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_pad_template_get_caps(gstPadTemplate);
+		auto __p = gst_pad_template_get_caps(gstPadTemplate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	/**
+	 * See gst_pad_template_set_documentation_caps().
+	 *
+	 * Returns: The caps to document. For convenience, this will return
+	 *     gst_pad_template_get_caps() when no documentation caps were set.
+	 *
+	 * Since: 1.18
+	 */
+	public Caps getDocumentationCaps()
+	{
+		auto __p = gst_pad_template_get_documentation_caps(gstPadTemplate);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -242,6 +261,22 @@ public class PadTemplate : ObjectGst
 	public void padCreated(Pad pad)
 	{
 		gst_pad_template_pad_created(gstPadTemplate, (pad is null) ? null : pad.getPadStruct());
+	}
+
+	/**
+	 * Certain elements will dynamically construct the caps of their
+	 * pad templates. In order not to let environment-specific information
+	 * into the documentation, element authors should use this method to
+	 * expose "stable" caps to the reader.
+	 *
+	 * Params:
+	 *     caps = the documented capabilities
+	 *
+	 * Since: 1.18
+	 */
+	public void setDocumentationCaps(Caps caps)
+	{
+		gst_pad_template_set_documentation_caps(gstPadTemplate, (caps is null) ? null : caps.getCapsStruct(true));
 	}
 
 	/**

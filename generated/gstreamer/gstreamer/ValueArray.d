@@ -28,10 +28,11 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes an ordered list of #GValue
+ */
 public class ValueArray
 {
 	/** the main Gtk struct */
@@ -119,14 +120,37 @@ public class ValueArray
 	 */
 	public static Value getValue(Value value, uint index)
 	{
-		auto p = gst_value_array_get_value((value is null) ? null : value.getValueStruct(), index);
+		auto __p = gst_value_array_get_value((value is null) ? null : value.getValueStruct(), index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
+	}
+
+	/**
+	 * Initializes and pre-allocates a #GValue of type #GST_VALUE_ARRAY.
+	 *
+	 * Params:
+	 *     value = A zero-filled (uninitialized) #GValue structure
+	 *     prealloc = The number of entries to pre-allocate in the array
+	 *
+	 * Returns: The #GValue structure that has been passed in
+	 *
+	 * Since: 1.18
+	 */
+	public static Value init(Value value, uint prealloc)
+	{
+		auto __p = gst_value_array_init((value is null) ? null : value.getValueStruct(), prealloc);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**

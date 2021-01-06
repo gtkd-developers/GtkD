@@ -24,7 +24,6 @@
 
 module gtk.TreeStore;
 
-private import gdk.Pixbuf;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import gobject.ObjectG;
@@ -38,17 +37,15 @@ private import gtk.TreeDragSourceT;
 private import gtk.TreeIter;
 private import gtk.TreeModelIF;
 private import gtk.TreeModelT;
-private import gtk.TreeNode;
 private import gtk.TreeSortableIF;
 private import gtk.TreeSortableT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * The #GtkTreeStore object is a list model for use with a #GtkTreeView
- * widget.  It implements the #GtkTreeModel interface, and consequentially,
+ * widget.  It implements the #GtkTreeModel interface, and consequently,
  * can use all of the methods available there.  It also implements the
  * #GtkTreeSortable interface so it can be sorted by the view.  Finally,
  * it also implements the tree
@@ -116,133 +113,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	// add the TreeSortable capabilities
 	mixin TreeSortableT!(GtkTreeStore);
 
-	/**
-	 * Creates a top level iteractor.
-	 * I don't think lists have but the top level iteractor
-	 */
-	TreeIter createIter(TreeIter parent=null)
-	{
-		GtkTreeIter* iter = new GtkTreeIter;
-		gtk_tree_store_append(getTreeStoreStruct(), iter, (parent is null) ? null : parent.getTreeIterStruct());
-		return new TreeIter(iter);
-	}
-
-	/**
-	 * Sets one value into one cells.
-	 * \todo confirm we need to destroy the Value instance
-	 * Params:
-	 *  iter = the tree iteractor, effectivly the row
-	 *  column = to column number to set
-	 *  value = the value
-	 */
-	void setValue(TYPE)(TreeIter iter, int column, TYPE value)
-	{
-		Value v = new Value(value);
-		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
-	}
-
-	/**
-	 * sets the values for one row
-	 * Params:
-	 *  iter = the row iteractor
-	 *  columns = an arrays with the columns to set
-	 *  values = an arrays with the values
-	 */
-	void set(TreeIter iter, int[] columns, char*[] values)
-	{
-		for ( int i=0 ; i<columns.length && i<values.length; i++ )
-		{
-			gtk_tree_store_set(
-				gtkTreeStore,
-				iter.getTreeIterStruct(),
-				columns[i],
-				values[i],-1);
-		}
-	}
-
-	/** ditto */
-	void set(TreeIter iter, int[] columns, string[] values)
-	{
-		for ( int i=0 ; i<columns.length && i<values.length; i++ )
-		{
-			gtk_tree_store_set(
-				gtkTreeStore,
-				iter.getTreeIterStruct(),
-				columns[i],
-				Str.toStringz(values[i]),-1);
-		}
-	}
-
-	/**
-	 * Sets an iteractor values from a tree node.
-	 * This is the way to add a new row to the tree,
-	 * the iteractor is either a top level iteractor created from createIter()
-	 * or a nested iteractor created from append()
-	 * Params:
-	 *  iter = the iteractor to set
-	 *  treeNode = the tree node
-	 * See_Also: createIter(), append()
-	 */
-	void set(TreeIter iter, TreeNode treeNode)
-	{
-		int[] cols;
-		string[] vals;
-		for ( int i=0 ; i<treeNode.columnCount() ; i++ )
-		{
-			//printf(">>>>>>>>>>>>> requesting value for %d\n",i);
-			cols ~= i;
-			string value = treeNode.getNodeValue(i);
-			if ( value  is  null )
-			{
-				vals ~= "";
-			}
-			else
-			{
-				vals ~= value;
-			}
-		}
-		set(iter, cols, vals);
-	}
-
-
-	/**
-	 * Creates and prepends a new row to tree_store. If parent is non-NULL, then it will prepend
-	 * the new row before the first child of parent, otherwise it will prepend a row
-	 * to the top level. iter will be changed to point to this new row. The row
-	 * will be empty after this function is called. To fill in values, you need to
-	 * call gtk_tree_store_set() or gtk_tree_store_set_value().
-	 * Params:
-	 *  parent = A valid GtkTreeIter, or NULL
-	 */
-	public TreeIter prepend(TreeIter parent)
-	{
-		TreeIter iter = new TreeIter();
-		// void gtk_tree_store_prepend (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
-		gtk_tree_store_prepend(gtkTreeStore, iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
-		return iter;
-	}
-
-	/**
-	 * Creates and appends a new row to tree_store. If parent is non-NULL, then it will append the
-	 * new row after the last child of parent, otherwise it will append a row to
-	 * the top level. iter will be changed to point to this new row. The row will
-	 * be empty after this function is called. To fill in values, you need to call
-	 * gtk_tree_store_set() or gtk_tree_store_set_value().
-	 * Params:
-	 *  parent = A valid GtkTreeIter, or NULL
-	 */
-	public TreeIter append(TreeIter parent)
-	{
-		TreeIter iter = new TreeIter();
-		// void gtk_tree_store_append (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
-		gtk_tree_store_append(gtkTreeStore,
-		iter.getTreeIterStruct(),
-		(parent is null) ? null : parent.getTreeIterStruct());
-		return iter;
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -262,14 +132,14 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public this(GType[] types)
 	{
-		auto p = gtk_tree_store_newv(cast(int)types.length, types.ptr);
+		auto __p = gtk_tree_store_newv(cast(int)types.length, types.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
 
-		this(cast(GtkTreeStore*) p, true);
+		this(cast(GtkTreeStore*) __p, true);
 	}
 
 	/**
@@ -384,8 +254,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     position = position to insert the new row, or -1 for last
 	 *     columns = an array of column numbers
 	 *     values = an array of GValues
-	 *
-	 * Since: 2.10
 	 */
 	public void insertWithValuesv(out TreeIter iter, TreeIter parent, int position, int[] columns, Value[] values)
 	{
@@ -441,8 +309,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     iter = A #GtkTreeIter.
 	 *
 	 * Returns: %TRUE if the iter is valid, %FALSE if the iter is invalid.
-	 *
-	 * Since: 2.2
 	 */
 	public bool iterIsValid(TreeIter iter)
 	{
@@ -458,8 +324,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     iter = A #GtkTreeIter.
 	 *     position = A #GtkTreeIter.
-	 *
-	 * Since: 2.2
 	 */
 	public void moveAfter(TreeIter iter, TreeIter position)
 	{
@@ -475,8 +339,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     iter = A #GtkTreeIter.
 	 *     position = A #GtkTreeIter or %NULL.
-	 *
-	 * Since: 2.2
 	 */
 	public void moveBefore(TreeIter iter, TreeIter position)
 	{
@@ -528,8 +390,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     newOrder = an array of integers mapping the new position of each child
 	 *         to its old position before the re-ordering,
 	 *         i.e. @new_order`[newpos] = oldpos`.
-	 *
-	 * Since: 2.2
 	 */
 	public void reorder(TreeIter parent, int[] newOrder)
 	{
@@ -588,8 +448,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     iter = A valid #GtkTreeIter for the row being modified
 	 *     columns = an array of column numbers
 	 *     values = an array of GValues
-	 *
-	 * Since: 2.12
 	 */
 	public void setValuesv(TreeIter iter, int[] columns, Value[] values)
 	{
@@ -609,8 +467,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     a = A #GtkTreeIter.
 	 *     b = Another #GtkTreeIter.
-	 *
-	 * Since: 2.2
 	 */
 	public void swap(TreeIter a, TreeIter b)
 	{

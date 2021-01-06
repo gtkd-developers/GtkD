@@ -25,10 +25,14 @@
 module gtk.EditableIF;
 
 private import glib.Str;
+private import gobject.ObjectClass;
+private import gobject.ObjectG;
+private import gobject.ParamSpec;
 private import gobject.Signals;
+private import gobject.Value;
+private import gtk.EditableIF;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -37,7 +41,7 @@ private import std.algorithm;
  * text editing widgets, such as #GtkEntry and #GtkSpinButton. It contains functions
  * for generically manipulating an editable widget, a large number of action
  * signals used for key bindings, and several signals that an application can
- * connect to to modify the behavior of a widget.
+ * connect to modify the behavior of a widget.
  * 
  * As an example of the latter usage, by connecting
  * the following handler to #GtkEditable::insert-text, an application
@@ -46,16 +50,16 @@ private import std.algorithm;
  * ## Forcing entry to uppercase.
  * 
  * |[<!-- language="C" -->
- * #include <ctype.h>;
+ * #include <ctype.h>
  * 
  * void
  * insert_text_handler (GtkEditable *editable,
- * const gchar *text,
- * gint         length,
- * gint        *position,
+ * const char  *text,
+ * int          length,
+ * int         *position,
  * gpointer     data)
  * {
- * gchar *result = g_utf8_strup (text, length);
+ * char *result = g_utf8_strup (text, length);
  * 
  * g_signal_handlers_block_by_func (editable,
  * (gpointer) insert_text_handler, data);
@@ -67,6 +71,88 @@ private import std.algorithm;
  * 
  * g_free (result);
  * }
+ * ]|
+ * 
+ * ## Implementing GtkEditable
+ * 
+ * The most likely scenario for implementing GtkEditable on your own widget
+ * is that you will embed a #GtkText inside a complex widget, and want to
+ * delegate the editable functionality to that text widget. GtkEditable
+ * provides some utility functions to make this easy.
+ * 
+ * In your class_init function, call gtk_editable_install_properties(),
+ * passing the first available property ID:
+ * 
+ * |[
+ * static void
+ * my_class_init (MyClass *class)
+ * {
+ * ...
+ * g_object_class_install_properties (object_class, NUM_PROPERTIES, props);
+ * gtk_editable_install_properties (object_clas, NUM_PROPERTIES);
+ * ...
+ * }
+ * ]|
+ * 
+ * In your interface_init function for the GtkEditable interface, provide
+ * an implementation for the get_delegate vfunc that returns your text widget:
+ * 
+ * |[
+ * GtkEditable *
+ * get_editable_delegate (GtkEditable *editable)
+ * {
+ * return GTK_EDITABLE (MY_WIDGET (editable)->text_widget);
+ * }
+ * 
+ * static void
+ * my_editable_init (GtkEditableInterface *iface)
+ * {
+ * iface->get_delegate = get_editable_delegate;
+ * }
+ * ]|
+ * 
+ * You don't need to provide any other vfuncs. The default implementations
+ * work by forwarding to the delegate that the #GtkEditableInterface.get_delegate()
+ * vfunc returns.
+ * 
+ * In your instance_init function, create your text widget, and then call
+ * gtk_editable_init_delegate():
+ * 
+ * |[
+ * static void
+ * my_widget_init (MyWidget *self)
+ * {
+ * ...
+ * self->text_widget = gtk_text_new ();
+ * gtk_editable_init_delegate (GTK_EDITABLE (self));
+ * ...
+ * }
+ * ]|
+ * 
+ * In your dispose function, call gtk_editable_finish_delegate() before
+ * destroying your text widget:
+ * 
+ * |[
+ * static void
+ * my_widget_dispose (GObject *object)
+ * {
+ * ...
+ * gtk_editable_finish_delegate (GTK_EDITABLE (self));
+ * g_clear_pointer (&self->text_widget, gtk_widget_unparent);
+ * ...
+ * }
+ * ]|
+ * 
+ * Finally, use gtk_editable_delegate_set_property() in your set_property
+ * function (and similar for get_property), to set the editable properties:
+ * 
+ * |[
+ * ...
+ * if (gtk_editable_delegate_set_property (object, prop_id, value, pspec))
+ * return;
+ * 
+ * switch (prop_id)
+ * ...
  * ]|
  */
 public interface EditableIF{
@@ -84,16 +170,66 @@ public interface EditableIF{
 	}
 
 	/**
-	 * Copies the contents of the currently selected content in the editable and
-	 * puts it on the clipboard.
+	 * Gets a property of the #GtkEditable delegate for @object.
+	 *
+	 * This is helper function that should be called in get_property,
+	 * before handling your own properties.
+	 *
+	 * Params:
+	 *     object = a #GObject
+	 *     propId = a property ID
+	 *     value = value to set
+	 *     pspec = the #GParamSpec for the property
+	 *
+	 * Returns: %TRUE if the property was found
 	 */
-	public void copyClipboard();
+	public static bool delegateGetProperty(ObjectG object, uint propId, Value value, ParamSpec pspec)
+	{
+		return gtk_editable_delegate_get_property((object is null) ? null : object.getObjectGStruct(), propId, (value is null) ? null : value.getValueStruct(), (pspec is null) ? null : pspec.getParamSpecStruct()) != 0;
+	}
 
 	/**
-	 * Removes the contents of the currently selected content in the editable and
-	 * puts it on the clipboard.
+	 * Sets a property on the #GtkEditable delegate for @object.
+	 *
+	 * This is a helper function that should be called in set_property,
+	 * before handling your own properties.
+	 *
+	 * Params:
+	 *     object = a #GObject
+	 *     propId = a property ID
+	 *     value = value to set
+	 *     pspec = the #GParamSpec for the property
+	 *
+	 * Returns: %TRUE if the property was found
 	 */
-	public void cutClipboard();
+	public static bool delegateSetProperty(ObjectG object, uint propId, Value value, ParamSpec pspec)
+	{
+		return gtk_editable_delegate_set_property((object is null) ? null : object.getObjectGStruct(), propId, (value is null) ? null : value.getValueStruct(), (pspec is null) ? null : pspec.getParamSpecStruct()) != 0;
+	}
+
+	/**
+	 * Installs the GtkEditable properties for @class.
+	 *
+	 * This is a helper function that should be called in class_init,
+	 * after installing your own properties.
+	 *
+	 * To handle the properties in your set_property and get_property
+	 * functions, you can either use gtk_editable_delegate_set_property()
+	 * and gtk_editable_delegate_get_property() (if you are using a delegate),
+	 * or remember the @first_prop offset and add it to the values in the
+	 * #GtkEditableProperties enumeration to get the property IDs for these
+	 * properties.
+	 *
+	 * Params:
+	 *     objectClass = a #GObjectClass
+	 *     firstProp = property ID to use for the first property
+	 *
+	 * Returns: the number of properties that were installed
+	 */
+	public static uint installProperties(ObjectClass objectClass, uint firstProp)
+	{
+		return gtk_editable_install_properties((objectClass is null) ? null : objectClass.getObjectClassStruct(), firstProp);
+	}
 
 	/**
 	 * Deletes the currently selected text of the editable.
@@ -116,6 +252,21 @@ public interface EditableIF{
 	public void deleteText(int startPos, int endPos);
 
 	/**
+	 * Undoes the setup done by gtk_editable_init_delegate().
+	 *
+	 * This is a helper function that should be called from dispose,
+	 * before removing the delegate object.
+	 */
+	public void finishDelegate();
+
+	/**
+	 * Gets the value set by gtk_editable_set_alignment().
+	 *
+	 * Returns: the alignment
+	 */
+	public float getAlignment();
+
+	/**
 	 * Retrieves a sequence of characters. The characters that are retrieved
 	 * are those characters at positions from @start_pos up to, but not
 	 * including @end_pos. If @end_pos is negative, then the characters
@@ -134,12 +285,35 @@ public interface EditableIF{
 	public string getChars(int startPos, int endPos);
 
 	/**
-	 * Retrieves whether @editable is editable. See
-	 * gtk_editable_set_editable().
+	 * Gets the #GtkEditable that @editable is delegating its
+	 * implementation to. Typically, the delegate is a #GtkText widget.
+	 *
+	 * Returns: the delegate #GtkEditable
+	 */
+	public EditableIF getDelegate();
+
+	/**
+	 * Retrieves whether @editable is editable.
+	 * See gtk_editable_set_editable().
 	 *
 	 * Returns: %TRUE if @editable is editable.
 	 */
 	public bool getEditable();
+
+	/**
+	 * Gets if undo/redo actions are enabled for @editable
+	 *
+	 * Returns: %TRUE if undo is enabled
+	 */
+	public bool getEnableUndo();
+
+	/**
+	 * Retrieves the desired maximum width of @editable, in characters.
+	 * See gtk_editable_set_max_width_chars().
+	 *
+	 * Returns: the maximum width of the entry, in characters
+	 */
+	public int getMaxWidthChars();
 
 	/**
 	 * Retrieves the current position of the cursor relative to the start
@@ -152,9 +326,11 @@ public interface EditableIF{
 	public int getPosition();
 
 	/**
-	 * Retrieves the selection bound of the editable. start_pos will be filled
-	 * with the start of the selection and @end_pos with end. If no text was
-	 * selected both will be identical and %FALSE will be returned.
+	 * Retrieves the selection bound of the editable.
+	 *
+	 * @start_pos will be filled with the start of the selection and
+	 * @end_pos with end. If no text was selected both will be identical
+	 * and %FALSE will be returned.
 	 *
 	 * Note that positions are specified in characters, not bytes.
 	 *
@@ -162,36 +338,56 @@ public interface EditableIF{
 	 *     startPos = location to store the starting position, or %NULL
 	 *     endPos = location to store the end position, or %NULL
 	 *
-	 * Returns: %TRUE if an area is selected, %FALSE otherwise
+	 * Returns: %TRUE if there is a non-empty selection, %FALSE otherwise
 	 */
 	public bool getSelectionBounds(out int startPos, out int endPos);
 
 	/**
-	 * Inserts @new_text_length bytes of @new_text into the contents of the
+	 * Retrieves the contents of @editable. The returned string is
+	 * owned by GTK and must not be modified or freed.
+	 *
+	 * Returns: a pointer to the contents of the editable.
+	 */
+	public string getText();
+
+	/**
+	 * Gets the value set by gtk_editable_set_width_chars().
+	 *
+	 * Returns: number of chars to request space for, or negative if unset
+	 */
+	public int getWidthChars();
+
+	/**
+	 * Sets up a delegate for #GtkEditable, assuming that the
+	 * get_delegate vfunc in the #GtkEditable interface has been
+	 * set up for the @editable's type.
+	 *
+	 * This is a helper function that should be called in instance init,
+	 * after creating the delegate object.
+	 */
+	public void initDelegate();
+
+	/**
+	 * Inserts @length bytes of @text into the contents of the
 	 * widget, at position @position.
 	 *
 	 * Note that the position is in characters, not in bytes.
 	 * The function updates @position to point after the newly inserted text.
 	 *
 	 * Params:
-	 *     newText = the text to append
-	 *     newTextLength = the length of the text in bytes, or -1
+	 *     text = the text to append
+	 *     length = the length of the text in bytes, or -1
 	 *     position = location of the position text will be inserted at
 	 */
-	public void insertText(string newText, int newTextLength, ref int position);
+	public void insertText(string text, int length, ref int position);
 
 	/**
-	 * Pastes the content of the clipboard to the current position of the
-	 * cursor in the editable.
-	 */
-	public void pasteClipboard();
-
-	/**
-	 * Selects a region of text. The characters that are selected are
-	 * those characters at positions from @start_pos up to, but not
-	 * including @end_pos. If @end_pos is negative, then the
-	 * characters selected are those characters from @start_pos to
-	 * the end of the text.
+	 * Selects a region of text.
+	 *
+	 * The characters that are selected are those characters at positions
+	 * from @start_pos up to, but not including @end_pos. If @end_pos is
+	 * negative, then the characters selected are those characters from
+	 * @start_pos to  the end of the text.
 	 *
 	 * Note that positions are specified in characters, not bytes.
 	 *
@@ -202,14 +398,46 @@ public interface EditableIF{
 	public void selectRegion(int startPos, int endPos);
 
 	/**
-	 * Determines if the user can edit the text in the editable
-	 * widget or not.
+	 * Sets the alignment for the contents of the editable.
+	 *
+	 * This controls the horizontal positioning of the contents when
+	 * the displayed text is shorter than the width of the editable.
+	 *
+	 * Params:
+	 *     xalign = The horizontal alignment, from 0 (left) to 1 (right).
+	 *         Reversed for RTL layouts
+	 */
+	public void setAlignment(float xalign);
+
+	/**
+	 * Determines if the user can edit the text
+	 * in the editable widget or not.
 	 *
 	 * Params:
 	 *     isEditable = %TRUE if the user is allowed to edit the text
 	 *         in the widget
 	 */
 	public void setEditable(bool isEditable);
+
+	/**
+	 * If enabled, changes to @editable will be saved for undo/redo actions.
+	 *
+	 * This results in an additional copy of text changes and are not stored in
+	 * secure memory. As such, undo is forcefully disabled when #GtkText:visibility
+	 * is set to %FALSE.
+	 *
+	 * Params:
+	 *     enableUndo = if undo/redo should be enabled
+	 */
+	public void setEnableUndo(bool enableUndo);
+
+	/**
+	 * Sets the desired maximum width in characters of @editable.
+	 *
+	 * Params:
+	 *     nChars = the new desired maximum width, in characters
+	 */
+	public void setMaxWidthChars(int nChars);
 
 	/**
 	 * Sets the cursor position in the editable to the given value.
@@ -224,6 +452,28 @@ public interface EditableIF{
 	 *     position = the position of the cursor
 	 */
 	public void setPosition(int position);
+
+	/**
+	 * Sets the text in the editable to the given value,
+	 * replacing the current contents.
+	 *
+	 * Params:
+	 *     text = the text to set
+	 */
+	public void setText(string text);
+
+	/**
+	 * Changes the size request of the editable to be about the
+	 * right size for @n_chars characters.
+	 *
+	 * Note that it changes the size request, the size can still
+	 * be affected by how you pack the widget into containers.
+	 * If @n_chars is -1, the size reverts to the default size.
+	 *
+	 * Params:
+	 *     nChars = width in chars
+	 */
+	public void setWidthChars(int nChars);
 
 	/**
 	 * The ::changed signal is emitted at the end of a single
@@ -264,8 +514,8 @@ public interface EditableIF{
 	 * it from being inserted entirely.
 	 *
 	 * Params:
-	 *     newText = the new text to insert
-	 *     newTextLength = the length of the new text, in bytes,
+	 *     text = the new text to insert
+	 *     length = the length of the new text, in bytes,
 	 *         or -1 if new_text is nul-terminated
 	 *     position = the position, in characters,
 	 *         at which to insert the new text. this is an in-out

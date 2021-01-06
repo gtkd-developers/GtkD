@@ -25,13 +25,10 @@
 module gtk.AspectFrame;
 
 private import glib.ConstructionException;
-private import glib.Str;
 private import gobject.ObjectG;
-private import gtk.Frame;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -47,7 +44,7 @@ public  import gtkc.gtktypes;
  * 
  * GtkAspectFrame uses a CSS node with name frame.
  */
-public class AspectFrame : Frame
+public class AspectFrame : Widget
 {
 	/** the main Gtk struct */
 	protected GtkAspectFrame* gtkAspectFrame;
@@ -72,7 +69,7 @@ public class AspectFrame : Frame
 	public this (GtkAspectFrame* gtkAspectFrame, bool ownedRef = false)
 	{
 		this.gtkAspectFrame = gtkAspectFrame;
-		super(cast(GtkFrame*)gtkAspectFrame, ownedRef);
+		super(cast(GtkWidget*)gtkAspectFrame, ownedRef);
 	}
 
 
@@ -86,7 +83,6 @@ public class AspectFrame : Frame
 	 * Create a new #GtkAspectFrame.
 	 *
 	 * Params:
-	 *     label = Label text.
 	 *     xalign = Horizontal alignment of the child within the allocation of
 	 *         the #GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 *         to 1.0 (right aligned)
@@ -101,34 +97,135 @@ public class AspectFrame : Frame
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string label, float xalign, float yalign, float ratio, bool obeyChild)
+	public this(float xalign, float yalign, float ratio, bool obeyChild)
 	{
-		auto p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);
+		auto __p = gtk_aspect_frame_new(xalign, yalign, ratio, obeyChild);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAspectFrame*) p);
+		this(cast(GtkAspectFrame*) __p);
 	}
 
 	/**
-	 * Set parameters for an existing #GtkAspectFrame.
+	 * Gets the child widget of @self.
+	 *
+	 * Returns: the child widget of self@
+	 */
+	public Widget getChild()
+	{
+		auto __p = gtk_aspect_frame_get_child(gtkAspectFrame);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Returns whether the child's size request should override
+	 * the set aspect ratio of the #GtkAspectFrame.
+	 *
+	 * Returns: whether to obey the child's size request
+	 */
+	public bool getObeyChild()
+	{
+		return gtk_aspect_frame_get_obey_child(gtkAspectFrame) != 0;
+	}
+
+	/**
+	 * Returns the desired aspect ratio of the child.
+	 *
+	 * Returns: the desired aspect ratio
+	 */
+	public float getRatio()
+	{
+		return gtk_aspect_frame_get_ratio(gtkAspectFrame);
+	}
+
+	/**
+	 * Returns the horizontal alignment of the child within the
+	 * allocation of the #GtkAspectFrame.
+	 *
+	 * Returns: the horizontal alignment
+	 */
+	public float getXalign()
+	{
+		return gtk_aspect_frame_get_xalign(gtkAspectFrame);
+	}
+
+	/**
+	 * Returns the vertical alignment of the child within the
+	 * allocation of the #GtkAspectFrame.
+	 *
+	 * Returns: the vertical alignment
+	 */
+	public float getYalign()
+	{
+		return gtk_aspect_frame_get_yalign(gtkAspectFrame);
+	}
+
+	/**
+	 * Sets the child widget of @self.
 	 *
 	 * Params:
-	 *     xalign = Horizontal alignment of the child within the allocation of
-	 *         the #GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 *         to 1.0 (right aligned)
-	 *     yalign = Vertical alignment of the child within the allocation of
-	 *         the #GtkAspectFrame. This ranges from 0.0 (top aligned)
-	 *         to 1.0 (bottom aligned)
-	 *     ratio = The desired aspect ratio.
+	 *     child = the child widget
+	 */
+	public void setChild(Widget child)
+	{
+		gtk_aspect_frame_set_child(gtkAspectFrame, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
+	 * Sets whether the aspect ratio of the child's size
+	 * request should override the set aspect ratio of
+	 * the #GtkAspectFrame.
+	 *
+	 * Params:
 	 *     obeyChild = If %TRUE, @ratio is ignored, and the aspect
 	 *         ratio is taken from the requistion of the child.
 	 */
-	public void set(float xalign, float yalign, float ratio, bool obeyChild)
+	public void setObeyChild(bool obeyChild)
 	{
-		gtk_aspect_frame_set(gtkAspectFrame, xalign, yalign, ratio, obeyChild);
+		gtk_aspect_frame_set_obey_child(gtkAspectFrame, obeyChild);
+	}
+
+	/**
+	 * Sets the desired aspect ratio of the child.
+	 *
+	 * Params:
+	 *     ratio = aspect ratio of the child
+	 */
+	public void setRatio(float ratio)
+	{
+		gtk_aspect_frame_set_ratio(gtkAspectFrame, ratio);
+	}
+
+	/**
+	 * Sets the horizontal alignment of the child within the allocation
+	 * of the #GtkAspectFrame.
+	 *
+	 * Params:
+	 *     xalign = horizontal alignment, from 0.0 (left aligned) to 1.0 (right aligned)
+	 */
+	public void setXalign(float xalign)
+	{
+		gtk_aspect_frame_set_xalign(gtkAspectFrame, xalign);
+	}
+
+	/**
+	 * Sets the vertical alignment of the child within the allocation
+	 * of the #GtkAspectFrame.
+	 *
+	 * Params:
+	 *     yalign = horizontal alignment, from 0.0 (top aligned) to 1.0 (bottom aligned)
+	 */
+	public void setYalign(float yalign)
+	{
+		gtk_aspect_frame_set_yalign(gtkAspectFrame, yalign);
 	}
 }

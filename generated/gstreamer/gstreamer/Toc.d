@@ -32,7 +32,6 @@ private import gstreamer.TagList;
 private import gstreamer.TocEntry;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -131,14 +130,14 @@ public class Toc
 	 */
 	public this(GstTocScope scope_)
 	{
-		auto p = gst_toc_new(scope_);
+		auto __p = gst_toc_new(scope_);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstToc*) p);
+		this(cast(GstToc*) __p);
 	}
 
 	/**
@@ -169,14 +168,14 @@ public class Toc
 	 */
 	public TocEntry findEntry(string uid)
 	{
-		auto p = gst_toc_find_entry(gstToc, Str.toStringz(uid));
+		auto __p = gst_toc_find_entry(gstToc, Str.toStringz(uid));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) p);
+		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) __p);
 	}
 
 	/**
@@ -186,14 +185,14 @@ public class Toc
 	 */
 	public ListG getEntries()
 	{
-		auto p = gst_toc_get_entries(gstToc);
+		auto __p = gst_toc_get_entries(gstToc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -211,14 +210,14 @@ public class Toc
 	 */
 	public TagList getTags()
 	{
-		auto p = gst_toc_get_tags(gstToc);
+		auto __p = gst_toc_get_tags(gstToc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p);
 	}
 
 	/**
@@ -241,6 +240,6 @@ public class Toc
 	 */
 	public void setTags(TagList tags)
 	{
-		gst_toc_set_tags(gstToc, (tags is null) ? null : tags.getTagListStruct());
+		gst_toc_set_tags(gstToc, (tags is null) ? null : tags.getTagListStruct(true));
 	}
 }

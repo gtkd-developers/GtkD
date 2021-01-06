@@ -24,16 +24,16 @@
 
 module gtk.c.types;
 
-public import atk.c.types;
 public import cairo.c.types;
 public import gdk.c.types;
 public import gdkpixbuf.c.types;
 public import gio.c.types;
 public import glib.c.types;
 public import gobject.c.types;
+public import graphene.c.types;
+public import gsk.c.types;
 public import pango.c.types;
 
-alias GtkAllocation* Allocation;
 
 /**
  * A #GtkAllocation-struct of a widget represents region
@@ -44,45 +44,751 @@ alias GtkAllocation* Allocation;
  */
 public alias GdkRectangle GtkAllocation;
 
-public alias char* GtkStock;
-
 /**
- * Accelerator flags used with gtk_accel_group_connect().
+ * The possible values for the %GTK_ACCESSIBLE_PROPERTY_AUTOCOMPLETE
+ * accessible property.
  */
-public enum GtkAccelFlags
+public enum GtkAccessibleAutocomplete
 {
 	/**
-	 * Accelerator is visible
+	 * Automatic suggestions are not displayed.
 	 */
-	VISIBLE = 1,
+	NONE = 0,
 	/**
-	 * Accelerator not removable
+	 * When a user is providing input, text
+	 * suggesting one way to complete the provided input may be dynamically
+	 * inserted after the caret.
 	 */
-	LOCKED = 2,
+	INLINE = 1,
 	/**
-	 * Mask
+	 * When a user is providing input, an element
+	 * containing a collection of values that could complete the provided input
+	 * may be displayed.
 	 */
-	MASK = 7,
+	LIST = 2,
+	/**
+	 * When a user is providing input, an element
+	 * containing a collection of values that could complete the provided input
+	 * may be displayed. If displayed, one value in the collection is automatically
+	 * selected, and the text needed to complete the automatically selected value
+	 * appears after the caret in the input.
+	 */
+	BOTH = 3,
 }
-alias GtkAccelFlags AccelFlags;
+alias GtkAccessibleAutocomplete AccessibleAutocomplete;
+
+/**
+ * The possible values for the %GTK_ACCESSIBLE_STATE_INVALID
+ * accessible state.
+ *
+ * Note that the %GTK_ACCESSIBLE_INVALID_FALSE and
+ * %GTK_ACCESSIBLE_INVALID_TRUE have the same values
+ * as %FALSE and %TRUE.
+ */
+public enum GtkAccessibleInvalidState
+{
+	/**
+	 * There are no detected errors in the value
+	 */
+	FALSE = 0,
+	/**
+	 * The value entered by the user has failed validation
+	 */
+	TRUE = 1,
+	/**
+	 * A grammatical error was detected
+	 */
+	GRAMMAR = 2,
+	/**
+	 * A spelling error was detected
+	 */
+	SPELLING = 3,
+}
+alias GtkAccessibleInvalidState AccessibleInvalidState;
+
+/**
+ * The possible accessible properties of a #GtkAccessible.
+ */
+public enum GtkAccessibleProperty
+{
+	/**
+	 * Indicates whether inputting text
+	 * could trigger display of one or more predictions of the user's intended
+	 * value for a combobox, searchbox, or textbox and specifies how predictions
+	 * would be presented if they were made. Value type: #GtkAccessibleAutocomplete
+	 */
+	AUTOCOMPLETE = 0,
+	/**
+	 * Defines a string value that describes
+	 * or annotates the current element. Value type: string
+	 */
+	DESCRIPTION = 1,
+	/**
+	 * Indicates the availability and type of
+	 * interactive popup element, such as menu or dialog, that can be triggered
+	 * by an element.
+	 */
+	HAS_POPUP = 2,
+	/**
+	 * Indicates keyboard shortcuts that an
+	 * author has implemented to activate or give focus to an element. Value type:
+	 * string
+	 */
+	KEY_SHORTCUTS = 3,
+	/**
+	 * Defines a string value that labels the current
+	 * element. Value type: string
+	 */
+	LABEL = 4,
+	/**
+	 * Defines the hierarchical level of an element
+	 * within a structure. Value type: integer
+	 */
+	LEVEL = 5,
+	/**
+	 * Indicates whether an element is modal when
+	 * displayed. Value type: boolean
+	 */
+	MODAL = 6,
+	/**
+	 * Indicates whether a text box accepts
+	 * multiple lines of input or only a single line. Value type: boolean
+	 */
+	MULTI_LINE = 7,
+	/**
+	 * Indicates that the user may select
+	 * more than one item from the current selectable descendants. Value type:
+	 * boolean
+	 */
+	MULTI_SELECTABLE = 8,
+	/**
+	 * Indicates whether the element's
+	 * orientation is horizontal, vertical, or unknown/ambiguous. Value type:
+	 * #GtkOrientation
+	 */
+	ORIENTATION = 9,
+	/**
+	 * Defines a short hint (a word or short
+	 * phrase) intended to aid the user with data entry when the control has no
+	 * value. A hint could be a sample value or a brief description of the expected
+	 * format. Value type: string
+	 */
+	PLACEHOLDER = 10,
+	/**
+	 * Indicates that the element is not editable,
+	 * but is otherwise operable. Value type: boolean
+	 */
+	READ_ONLY = 11,
+	/**
+	 * Indicates that user input is required on
+	 * the element before a form may be submitted. Value type: boolean
+	 */
+	REQUIRED = 12,
+	/**
+	 * Defines a human-readable,
+	 * author-localized description for the role of an element. Value type: string
+	 */
+	ROLE_DESCRIPTION = 13,
+	/**
+	 * Indicates if items in a table or grid are
+	 * sorted in ascending or descending order. Possible property values are in
+	 * the #GtkAccessibleSort enumeration. Value type: #GtkAccessibleSort
+	 */
+	SORT = 14,
+	/**
+	 * Defines the maximum allowed value for a
+	 * range widget. Value type: double
+	 */
+	VALUE_MAX = 15,
+	/**
+	 * Defines the minimum allowed value for a
+	 * range widget. Value type: double
+	 */
+	VALUE_MIN = 16,
+	/**
+	 * Defines the current value for a range widget.
+	 * Value type: double
+	 */
+	VALUE_NOW = 17,
+	/**
+	 * Defines the human readable text alternative
+	 * of aria-valuenow for a range widget. Value type: string
+	 */
+	VALUE_TEXT = 18,
+}
+alias GtkAccessibleProperty AccessibleProperty;
+
+/**
+ * The possible accessible relations of a #GtkAccessible.
+ * Accessible relations can be references to other widgets,
+ * integers or strings.
+ */
+public enum GtkAccessibleRelation
+{
+	/**
+	 * Identifies the currently active
+	 * element when focus is on a composite widget, combobox, textbox, group,
+	 * or application. Value type: reference
+	 */
+	ACTIVE_DESCENDANT = 0,
+	/**
+	 * Defines the total number of columns
+	 * in a table, grid, or treegrid. Value type: integer
+	 */
+	COL_COUNT = 1,
+	/**
+	 * Defines an element's column index or
+	 * position with respect to the total number of columns within a table,
+	 * grid, or treegrid. Value type: integer
+	 */
+	COL_INDEX = 2,
+	/**
+	 * Defines a human readable text
+	 * alternative of %GTK_ACCESSIBLE_RELATION_COL_INDEX. Value type: string
+	 */
+	COL_INDEX_TEXT = 3,
+	/**
+	 * Defines the number of columns spanned
+	 * by a cell or gridcell within a table, grid, or treegrid. Value type: integer
+	 */
+	COL_SPAN = 4,
+	/**
+	 * Identifies the element (or elements) whose
+	 * contents or presence are controlled by the current element. Value type: reference
+	 */
+	CONTROLS = 5,
+	/**
+	 * Identifies the element (or elements)
+	 * that describes the object. Value type: reference
+	 */
+	DESCRIBED_BY = 6,
+	/**
+	 * Identifies the element (or elements) that
+	 * provide additional information related to the object. Value type: reference
+	 */
+	DETAILS = 7,
+	/**
+	 * Identifies the element that provides
+	 * an error message for an object. Value type: reference
+	 */
+	ERROR_MESSAGE = 8,
+	/**
+	 * Identifies the next element (or elements)
+	 * in an alternate reading order of content which, at the user's discretion,
+	 * allows assistive technology to override the general default of reading in
+	 * document source order. Value type: reference
+	 */
+	FLOW_TO = 9,
+	/**
+	 * Identifies the element (or elements)
+	 * that labels the current element. Value type: reference
+	 */
+	LABELLED_BY = 10,
+	/**
+	 * Identifies an element (or elements) in order
+	 * to define a visual, functional, or contextual parent/child relationship
+	 * between elements where the widget hierarchy cannot be used to represent
+	 * the relationship. Value type: reference
+	 */
+	OWNS = 11,
+	/**
+	 * Defines an element's number or position
+	 * in the current set of listitems or treeitems. Value type: integer
+	 */
+	POS_IN_SET = 12,
+	/**
+	 * Defines the total number of rows in a table,
+	 * grid, or treegrid. Value type: integer
+	 */
+	ROW_COUNT = 13,
+	/**
+	 * Defines an element's row index or position
+	 * with respect to the total number of rows within a table, grid, or treegrid.
+	 * Value type: integer
+	 */
+	ROW_INDEX = 14,
+	/**
+	 * Defines a human readable text
+	 * alternative of aria-rowindex. Value type: string
+	 */
+	ROW_INDEX_TEXT = 15,
+	/**
+	 * Defines the number of rows spanned by a
+	 * cell or gridcell within a table, grid, or treegrid. Value type: integer
+	 */
+	ROW_SPAN = 16,
+	/**
+	 * Defines the number of items in the current
+	 * set of listitems or treeitems. Value type: integer
+	 */
+	SET_SIZE = 17,
+}
+alias GtkAccessibleRelation AccessibleRelation;
+
+/**
+ * The accessible role for a #GtkAccessible implementation.
+ *
+ * Abstract roles are only used as part of the ontology; application
+ * developers must not use abstract roles in their code.
+ */
+public enum GtkAccessibleRole
+{
+	/**
+	 * An element with important, and usually
+	 * time-sensitive, information
+	 */
+	ALERT = 0,
+	/**
+	 * A type of dialog that contains an
+	 * alert message
+	 */
+	ALERT_DIALOG = 1,
+	/**
+	 * Unused
+	 */
+	BANNER = 2,
+	/**
+	 * An input element that allows for
+	 * user-triggered actions when clicked or pressed
+	 */
+	BUTTON = 3,
+	/**
+	 * Unused
+	 */
+	CAPTION = 4,
+	/**
+	 * Unused
+	 */
+	CELL = 5,
+	/**
+	 * A checkable input element that has
+	 * three possible values: `true`, `false`, or `mixed`
+	 */
+	CHECKBOX = 6,
+	/**
+	 * A header in a columned list.
+	 */
+	COLUMN_HEADER = 7,
+	/**
+	 * An input that controls another element,
+	 * such as a list or a grid, that can dynamically pop up to help the user
+	 * set the value of the input
+	 */
+	COMBO_BOX = 8,
+	/**
+	 * Abstract role.
+	 */
+	COMMAND = 9,
+	/**
+	 * Abstract role.
+	 */
+	COMPOSITE = 10,
+	/**
+	 * A dialog is a window that is designed to interrupt
+	 * the current processing of an application in order to prompt the user to enter
+	 * information or require a response.
+	 */
+	DIALOG = 11,
+	/**
+	 * Unused
+	 */
+	DOCUMENT = 12,
+	/**
+	 * Unused
+	 */
+	FEED = 13,
+	/**
+	 * Unused
+	 */
+	FORM = 14,
+	/**
+	 * Unused
+	 */
+	GENERIC = 15,
+	/**
+	 * A grid of items.
+	 */
+	GRID = 16,
+	/**
+	 * An item in a grid or tree grid.
+	 */
+	GRID_CELL = 17,
+	/**
+	 * An element that groups multiple widgets. GTK uses
+	 * this role for various containers, like #GtkBox, #GtkViewport, and #GtkHeaderBar.
+	 */
+	GROUP = 18,
+	/**
+	 * Unused
+	 */
+	HEADING = 19,
+	/**
+	 * An image.
+	 */
+	IMG = 20,
+	/**
+	 * Abstract role.
+	 */
+	INPUT = 21,
+	/**
+	 * A visible name or caption for a user interface component.
+	 */
+	LABEL = 22,
+	/**
+	 * Abstract role.
+	 */
+	LANDMARK = 23,
+	/**
+	 * Unused
+	 */
+	LEGEND = 24,
+	/**
+	 * A clickable link.
+	 */
+	LINK = 25,
+	/**
+	 * A list of items.
+	 */
+	LIST = 26,
+	/**
+	 * Unused.
+	 */
+	LIST_BOX = 27,
+	/**
+	 * An item in a list.
+	 */
+	LIST_ITEM = 28,
+	/**
+	 * Unused
+	 */
+	LOG = 29,
+	/**
+	 * Unused
+	 */
+	MAIN = 30,
+	/**
+	 * Unused
+	 */
+	MARQUEE = 31,
+	/**
+	 * Unused
+	 */
+	MATH = 32,
+	/**
+	 * An element that represents a value within a known range.
+	 */
+	METER = 33,
+	/**
+	 * A menu.
+	 */
+	MENU = 34,
+	/**
+	 * A menubar.
+	 */
+	MENU_BAR = 35,
+	/**
+	 * An item in a menu.
+	 */
+	MENU_ITEM = 36,
+	/**
+	 * A check item in a menu.
+	 */
+	MENU_ITEM_CHECKBOX = 37,
+	/**
+	 * A radio item in a menu.
+	 */
+	MENU_ITEM_RADIO = 38,
+	/**
+	 * Unused
+	 */
+	NAVIGATION = 39,
+	/**
+	 * An element that is not represented to accessibility technologies.
+	 */
+	NONE = 40,
+	/**
+	 * Unused
+	 */
+	NOTE = 41,
+	/**
+	 * Unused
+	 */
+	OPTION = 42,
+	/**
+	 * An element that is not represented to accessibility technologies.
+	 */
+	PRESENTATION = 43,
+	/**
+	 * An element that displays the progress
+	 * status for tasks that take a long time.
+	 */
+	PROGRESS_BAR = 44,
+	/**
+	 * A checkable input in a group of radio roles,
+	 * only one of which can be checked at a time.
+	 */
+	RADIO = 45,
+	/**
+	 * Unused
+	 */
+	RADIO_GROUP = 46,
+	/**
+	 * Abstract role.
+	 */
+	RANGE = 47,
+	/**
+	 * Unused
+	 */
+	REGION = 48,
+	/**
+	 * A row in a columned list.
+	 */
+	ROW = 49,
+	/**
+	 * Unused
+	 */
+	ROW_GROUP = 50,
+	/**
+	 * Unused
+	 */
+	ROW_HEADER = 51,
+	/**
+	 * A graphical object that controls the scrolling
+	 * of content within a viewing area, regardless of whether the content is fully
+	 * displayed within the viewing area.
+	 */
+	SCROLLBAR = 52,
+	/**
+	 * Unused
+	 */
+	SEARCH = 53,
+	/**
+	 * A type of textbox intended for specifying
+	 * search criteria.
+	 */
+	SEARCH_BOX = 54,
+	/**
+	 * Abstract role.
+	 */
+	SECTION = 55,
+	/**
+	 * Abstract role.
+	 */
+	SECTION_HEAD = 56,
+	/**
+	 * Abstract role.
+	 */
+	SELECT = 57,
+	/**
+	 * A divider that separates and distinguishes
+	 * sections of content or groups of menuitems.
+	 */
+	SEPARATOR = 58,
+	/**
+	 * A user input where the user selects a value
+	 * from within a given range.
+	 */
+	SLIDER = 59,
+	/**
+	 * A form of range that expects the user to
+	 * select from among discrete choices.
+	 */
+	SPIN_BUTTON = 60,
+	/**
+	 * Unused
+	 */
+	STATUS = 61,
+	/**
+	 * Abstract role.
+	 */
+	STRUCTURE = 62,
+	/**
+	 * A type of checkbox that represents on/off values,
+	 * as opposed to checked/unchecked values.
+	 */
+	SWITCH = 63,
+	/**
+	 * An item in a list of tab used for switching pages.
+	 */
+	TAB = 64,
+	/**
+	 * Unused
+	 */
+	TABLE = 65,
+	/**
+	 * A list of tabs for switching pages.
+	 */
+	TAB_LIST = 66,
+	/**
+	 * A page in a notebook or stack.
+	 */
+	TAB_PANEL = 67,
+	/**
+	 * A type of input that allows free-form text
+	 * as its value.
+	 */
+	TEXT_BOX = 68,
+	/**
+	 * Unused
+	 */
+	TIME = 69,
+	/**
+	 * Unused
+	 */
+	TIMER = 70,
+	/**
+	 * Unused
+	 */
+	TOOLBAR = 71,
+	/**
+	 * Unused
+	 */
+	TOOLTIP = 72,
+	/**
+	 * Unused
+	 */
+	TREE = 73,
+	/**
+	 * A treeview-like, columned list.
+	 */
+	TREE_GRID = 74,
+	/**
+	 * Unused
+	 */
+	TREE_ITEM = 75,
+	/**
+	 * An interactive component of a graphical user
+	 * interface. This is the role that GTK uses by default for widgets.
+	 */
+	WIDGET = 76,
+	/**
+	 * An application window.
+	 */
+	WINDOW = 77,
+}
+alias GtkAccessibleRole AccessibleRole;
+
+/**
+ * The possible values for the %GTK_ACCESSIBLE_PROPERTY_SORT
+ * accessible property.
+ */
+public enum GtkAccessibleSort
+{
+	/**
+	 * There is no defined sort applied to the column.
+	 */
+	NONE = 0,
+	/**
+	 * Items are sorted in ascending order by this column.
+	 */
+	ASCENDING = 1,
+	/**
+	 * Items are sorted in descending order by this column.
+	 */
+	DESCENDING = 2,
+	/**
+	 * A sort algorithm other than ascending or
+	 * descending has been applied.
+	 */
+	OTHER = 3,
+}
+alias GtkAccessibleSort AccessibleSort;
+
+/**
+ * The possible accessible states of a #GtkAccessible.
+ */
+public enum GtkAccessibleState
+{
+	/**
+	 * A “busy” state. This state has boolean values
+	 */
+	BUSY = 0,
+	/**
+	 * A “checked” state; indicates the current
+	 * state of a #GtkCheckButton. Value type: #GtkAccessibleTristate
+	 */
+	CHECKED = 1,
+	/**
+	 * A “disabled” state; corresponds to the
+	 * #GtkWidget:sensitive property on #GtkWidget. It indicates a UI element
+	 * that is perceivable, but not editable or operable. Value type: boolean
+	 */
+	DISABLED = 2,
+	/**
+	 * An “expanded” state; corresponds to the
+	 * #GtkExpander:expanded property on #GtkExpander. Value type: boolean
+	 * or undefined
+	 */
+	EXPANDED = 3,
+	/**
+	 * A “hidden” state; corresponds to the
+	 * #GtkWidget:visible property on #GtkWidget. You can use this state
+	 * explicitly on UI elements that should not be exposed to an assistive
+	 * technology. Value type: boolean
+	 * See also: %GTK_ACCESSIBLE_STATE_DISABLED
+	 */
+	HIDDEN = 4,
+	/**
+	 * An “invalid” state; set when a widget
+	 * is showing an error. Value type: #GtkAccessibleInvalidState
+	 */
+	INVALID = 5,
+	/**
+	 * A “pressed” state; indicates the current
+	 * state of a #GtkToggleButton. Value type: #GtkAccessibleTristate
+	 * enumeration
+	 */
+	PRESSED = 6,
+	/**
+	 * A “selected” state; set when a widget
+	 * is selected. Value type: boolean or undefined
+	 */
+	SELECTED = 7,
+}
+alias GtkAccessibleState AccessibleState;
+
+/**
+ * The possible values for the %GTK_ACCESSIBLE_STATE_PRESSED
+ * accessible state.
+ *
+ * Note that the %GTK_ACCESSIBLE_TRISTATE_FALSE and
+ * %GTK_ACCESSIBLE_TRISTATE_TRUE have the same values
+ * as %FALSE and %TRUE.
+ */
+public enum GtkAccessibleTristate
+{
+	/**
+	 * The state is `false`
+	 */
+	FALSE = 0,
+	/**
+	 * The state is `true`
+	 */
+	TRUE = 1,
+	/**
+	 * The state is `mixed`
+	 */
+	MIXED = 2,
+}
+alias GtkAccessibleTristate AccessibleTristate;
 
 /**
  * Controls how a widget deals with extra space in a single (x or y)
  * dimension.
  *
  * Alignment only matters if the widget receives a “too large” allocation,
- * for example if you packed the widget with the #GtkWidget:expand
- * flag inside a #GtkBox, then the widget might get extra space.  If
- * you have for example a 16x16 icon inside a 32x32 space, the icon
+ * for example if you packed the widget with the #GtkWidget:hexpand
+ * property inside a #GtkBox, then the widget might get extra space.
+ * If you have for example a 16x16 icon inside a 32x32 space, the icon
  * could be scaled and stretched, it could be centered, or it could be
  * positioned to one side of the space.
  *
- * Note that in horizontal context @GTK_ALIGN_START and @GTK_ALIGN_END
+ * Note that in horizontal context %GTK_ALIGN_START and %GTK_ALIGN_END
  * are interpreted relative to text direction.
  *
- * GTK_ALIGN_BASELINE support for it is optional for containers and widgets, and
- * it is only supported for vertical alignment.  When its not supported by
- * a child or a container it is treated as @GTK_ALIGN_FILL.
+ * %GTK_ALIGN_BASELINE support is optional for containers and widgets, and
+ * it is only supported for vertical alignment.  When it's not supported by
+ * a child or a container it is treated as %GTK_ALIGN_FILL.
  */
 public enum GtkAlign
 {
@@ -107,7 +813,8 @@ public enum GtkAlign
 	 */
 	CENTER = 3,
 	/**
-	 * align the widget according to the baseline. Since 3.10.
+	 * align the widget according to the baseline. See
+	 * #GtkWidget
 	 */
 	BASELINE = 4,
 }
@@ -115,8 +822,6 @@ alias GtkAlign Align;
 
 /**
  * Types of user actions that may be blocked by gtk_application_inhibit().
- *
- * Since: 3.4
  */
 public enum GtkApplicationInhibitFlags
 {
@@ -143,26 +848,6 @@ public enum GtkApplicationInhibitFlags
 alias GtkApplicationInhibitFlags ApplicationInhibitFlags;
 
 /**
- * Used to specify the placement of scroll arrows in scrolling menus.
- */
-public enum GtkArrowPlacement
-{
-	/**
-	 * Place one arrow on each end of the menu.
-	 */
-	BOTH = 0,
-	/**
-	 * Place both arrows at the top of the menu.
-	 */
-	START = 1,
-	/**
-	 * Place both arrows at the bottom of the menu.
-	 */
-	END = 2,
-}
-alias GtkArrowPlacement ArrowPlacement;
-
-/**
  * Used to indicate the direction in which an arrow should point.
  */
 public enum GtkArrowType
@@ -184,7 +869,7 @@ public enum GtkArrowType
 	 */
 	RIGHT = 3,
 	/**
-	 * No arrow. Since 2.10.
+	 * No arrow.
 	 */
 	NONE = 4,
 }
@@ -240,36 +925,12 @@ public enum GtkAssistantPageType
 alias GtkAssistantPageType AssistantPageType;
 
 /**
- * Denotes the expansion properties that a widget will have when it (or its
- * parent) is resized.
- */
-public enum GtkAttachOptions
-{
-	/**
-	 * the widget should expand to take up any extra space in its
-	 * container that has been allocated.
-	 */
-	EXPAND = 1,
-	/**
-	 * the widget should shrink as and when possible.
-	 */
-	SHRINK = 2,
-	/**
-	 * the widget should fill the space allocated to it.
-	 */
-	FILL = 4,
-}
-alias GtkAttachOptions AttachOptions;
-
-/**
  * Whenever a container has some form of natural row it may align
  * children in that row along a common typographical baseline. If
- * the amount of verical space in the row is taller than the total
+ * the amount of vertical space in the row is taller than the total
  * requested height of the baseline-aligned children then it can use a
  * #GtkBaselinePosition to select where to put the baseline inside the
- * extra availible space.
- *
- * Since: 3.10
+ * extra available space.
  */
 public enum GtkBaselinePosition
 {
@@ -298,21 +959,21 @@ public enum GtkBorderStyle
 	 */
 	NONE = 0,
 	/**
+	 * Same as %GTK_BORDER_STYLE_NONE
+	 */
+	HIDDEN = 1,
+	/**
 	 * A single line segment
 	 */
-	SOLID = 1,
+	SOLID = 2,
 	/**
 	 * Looks as if the content is sunken into the canvas
 	 */
-	INSET = 2,
+	INSET = 3,
 	/**
 	 * Looks as if the content is coming out of the canvas
 	 */
-	OUTSET = 3,
-	/**
-	 * Same as @GTK_BORDER_STYLE_NONE
-	 */
-	HIDDEN = 4,
+	OUTSET = 4,
 	/**
 	 * A series of round dots
 	 */
@@ -335,6 +996,23 @@ public enum GtkBorderStyle
 	RIDGE = 9,
 }
 alias GtkBorderStyle BorderStyle;
+
+/**
+ * The list of flags that can be passed to gtk_builder_create_closure().
+ * New values may be added in the future for new features, so external
+ * implementations of GtkBuilderScopeInterface should test the flags for unknown
+ * values and raise a %GTK_BUILDER_ERROR_INVALID_ATTRIBUTE error when they
+ * encounter one.
+ */
+public enum GtkBuilderClosureFlags
+{
+	/**
+	 * The closure should be created swapped. See
+	 * g_cclosure_new_swap() for details.
+	 */
+	SWAPPED = 1,
+}
+alias GtkBuilderClosureFlags BuilderClosureFlags;
 
 /**
  * Error codes that identify various errors that can occur while using
@@ -379,7 +1057,7 @@ public enum GtkBuilderError
 	INVALID_VALUE = 6,
 	/**
 	 * The input file requires a newer version
-	 * of GTK+.
+	 * of GTK.
 	 */
 	VERSION_MISMATCH = 7,
 	/**
@@ -404,69 +1082,17 @@ public enum GtkBuilderError
 	 */
 	INVALID_SIGNAL = 12,
 	/**
-	 * An object id is unknown
+	 * An object id is unknown.
 	 */
 	INVALID_ID = 13,
+	/**
+	 * A function could not be found. This often happens
+	 * when symbols are set to be kept private. Compiling code with -rdynamic or using the
+	 * `gmodule-export-2.0` pkgconfig module can fix this problem.
+	 */
+	INVALID_FUNCTION = 14,
 }
 alias GtkBuilderError BuilderError;
-
-/**
- * Used to dictate the style that a #GtkButtonBox uses to layout the buttons it
- * contains.
- */
-public enum GtkButtonBoxStyle
-{
-	/**
-	 * Buttons are evenly spread across the box.
-	 */
-	SPREAD = 1,
-	/**
-	 * Buttons are placed at the edges of the box.
-	 */
-	EDGE = 2,
-	/**
-	 * Buttons are grouped towards the start of the box,
-	 * (on the left for a HBox, or the top for a VBox).
-	 */
-	START = 3,
-	/**
-	 * Buttons are grouped towards the end of the box,
-	 * (on the right for a HBox, or the bottom for a VBox).
-	 */
-	END = 4,
-	/**
-	 * Buttons are centered in the box. Since 2.12.
-	 */
-	CENTER = 5,
-	/**
-	 * Buttons expand to fill the box. This entails giving
-	 * buttons a "linked" appearance, making button sizes homogeneous, and
-	 * setting spacing to 0 (same as calling gtk_box_set_homogeneous() and
-	 * gtk_box_set_spacing() manually). Since 3.12.
-	 */
-	EXPAND = 6,
-}
-alias GtkButtonBoxStyle ButtonBoxStyle;
-
-/**
- * The role specifies the desired appearance of a #GtkModelButton.
- */
-public enum GtkButtonRole
-{
-	/**
-	 * A plain button
-	 */
-	NORMAL = 0,
-	/**
-	 * A check button
-	 */
-	CHECK = 1,
-	/**
-	 * A radio button
-	 */
-	RADIO = 2,
-}
-alias GtkButtonRole ButtonRole;
 
 /**
  * Prebuilt sets of buttons for the dialog. If
@@ -507,45 +1133,15 @@ public enum GtkButtonsType
 alias GtkButtonsType ButtonsType;
 
 /**
- * These options can be used to influence the display and behaviour of a #GtkCalendar.
- */
-public enum GtkCalendarDisplayOptions
-{
-	/**
-	 * Specifies that the month and year should be displayed.
-	 */
-	SHOW_HEADING = 1,
-	/**
-	 * Specifies that three letter day descriptions should be present.
-	 */
-	SHOW_DAY_NAMES = 2,
-	/**
-	 * Prevents the user from switching months with the calendar.
-	 */
-	NO_MONTH_CHANGE = 4,
-	/**
-	 * Displays each week numbers of the current year, down the
-	 * left side of the calendar.
-	 */
-	SHOW_WEEK_NUMBERS = 8,
-	/**
-	 * Just show an indicator, not the full details
-	 * text when details are provided. See gtk_calendar_set_detail_func().
-	 */
-	SHOW_DETAILS = 32,
-}
-alias GtkCalendarDisplayOptions CalendarDisplayOptions;
-
-/**
- * Determines if the edited accelerators are GTK+ accelerators. If
+ * Determines if the edited accelerators are GTK accelerators. If
  * they are, consumed modifiers are suppressed, only accelerators
- * accepted by GTK+ are allowed, and the accelerators are rendered
+ * accepted by GTK are allowed, and the accelerators are rendered
  * in the same way as they are in menus.
  */
 public enum GtkCellRendererAccelMode
 {
 	/**
-	 * GTK+ accelerators mode
+	 * GTK accelerators mode
 	 */
 	GTK = 0,
 	/**
@@ -605,15 +1201,159 @@ public enum GtkCellRendererState
 	 */
 	FOCUSED = 16,
 	/**
-	 * The cell is in a row that can be expanded. Since 3.4
+	 * The cell is in a row that can be expanded
 	 */
 	EXPANDABLE = 32,
 	/**
-	 * The cell is in a row that is expanded. Since 3.4
+	 * The cell is in a row that is expanded
 	 */
 	EXPANDED = 64,
 }
 alias GtkCellRendererState CellRendererState;
+
+/**
+ * The widget attributes that can be used when creating a #GtkConstraint.
+ */
+public enum GtkConstraintAttribute
+{
+	/**
+	 * No attribute, used for constant
+	 * relations
+	 */
+	NONE = 0,
+	/**
+	 * The left edge of a widget, regardless of
+	 * text direction
+	 */
+	LEFT = 1,
+	/**
+	 * The right edge of a widget, regardless
+	 * of text direction
+	 */
+	RIGHT = 2,
+	/**
+	 * The top edge of a widget
+	 */
+	TOP = 3,
+	/**
+	 * The bottom edge of a widget
+	 */
+	BOTTOM = 4,
+	/**
+	 * The leading edge of a widget, depending
+	 * on text direction; equivalent to %GTK_CONSTRAINT_ATTRIBUTE_LEFT for LTR
+	 * languages, and %GTK_CONSTRAINT_ATTRIBUTE_RIGHT for RTL ones
+	 */
+	START = 5,
+	/**
+	 * The trailing edge of a widget, depending
+	 * on text direction; equivalent to %GTK_CONSTRAINT_ATTRIBUTE_RIGHT for LTR
+	 * languages, and %GTK_CONSTRAINT_ATTRIBUTE_LEFT for RTL ones
+	 */
+	END = 6,
+	/**
+	 * The width of a widget
+	 */
+	WIDTH = 7,
+	/**
+	 * The height of a widget
+	 */
+	HEIGHT = 8,
+	/**
+	 * The center of a widget, on the
+	 * horizontal axis
+	 */
+	CENTER_X = 9,
+	/**
+	 * The center of a widget, on the
+	 * vertical axis
+	 */
+	CENTER_Y = 10,
+	/**
+	 * The baseline of a widget
+	 */
+	BASELINE = 11,
+}
+alias GtkConstraintAttribute ConstraintAttribute;
+
+/**
+ * The relation between two terms of a constraint.
+ */
+public enum GtkConstraintRelation
+{
+	/**
+	 * Less than, or equal
+	 */
+	LE = -1,
+	/**
+	 * Equal
+	 */
+	EQ = 0,
+	/**
+	 * Greater than, or equal
+	 */
+	GE = 1,
+}
+alias GtkConstraintRelation ConstraintRelation;
+
+/**
+ * The strength of a constraint, expressed as a symbolic constant.
+ *
+ * The strength of a #GtkConstraint can be expressed with any positive
+ * integer; the values of this enumeration can be used for readability.
+ */
+public enum GtkConstraintStrength
+{
+	/**
+	 * The constraint is required towards solving the layout
+	 */
+	REQUIRED = 1001001000,
+	/**
+	 * A strong constraint
+	 */
+	STRONG = 1000000000,
+	/**
+	 * A medium constraint
+	 */
+	MEDIUM = 1000,
+	/**
+	 * A weak constraint
+	 */
+	WEAK = 1,
+}
+alias GtkConstraintStrength ConstraintStrength;
+
+/**
+ * Domain for VFL parsing errors.
+ */
+public enum GtkConstraintVflParserError
+{
+	/**
+	 * Invalid or unknown symbol
+	 */
+	SYMBOL = 0,
+	/**
+	 * Invalid or unknown attribute
+	 */
+	ATTRIBUTE = 1,
+	/**
+	 * Invalid or unknown view
+	 */
+	VIEW = 2,
+	/**
+	 * Invalid or unknown metric
+	 */
+	METRIC = 3,
+	/**
+	 * Invalid or unknown priority
+	 */
+	PRIORITY = 4,
+	/**
+	 * Invalid or unknown relation
+	 */
+	RELATION = 5,
+}
+alias GtkConstraintVflParserError ConstraintVflParserError;
 
 /**
  * Specifies which corner a child widget should be placed in when packed into
@@ -646,121 +1386,86 @@ public enum GtkCornerType
 alias GtkCornerType CornerType;
 
 /**
- * Error codes for %GTK_CSS_PROVIDER_ERROR.
+ * Errors that can occur while parsing CSS.
+ *
+ * These errors are unexpected and will cause parts of the given CSS
+ * to be ignored.
  */
-public enum GtkCssProviderError
+public enum GtkCssParserError
 {
 	/**
-	 * Failed.
+	 * Unknown failure.
 	 */
 	FAILED = 0,
 	/**
-	 * Syntax error.
+	 * The given text does not form valid
+	 * syntax
 	 */
 	SYNTAX = 1,
 	/**
-	 * Import error.
+	 * Failed to import a resource
 	 */
 	IMPORT = 2,
 	/**
-	 * Name error.
+	 * The given name has not been defined
 	 */
 	NAME = 3,
 	/**
-	 * Deprecation error.
+	 * The given value is not
+	 * correct
 	 */
-	DEPRECATED = 4,
-	/**
-	 * Unknown value.
-	 */
-	UNKNOWN_VALUE = 5,
+	UNKNOWN_VALUE = 4,
 }
-alias GtkCssProviderError CssProviderError;
+alias GtkCssParserError CssParserError;
 
 /**
- * The different types of sections indicate parts of a CSS document as
- * parsed by GTK’s CSS parser. They are oriented towards the
- * [CSS Grammar](http://www.w3.org/TR/CSS21/grammar.html),
- * but may contain extensions.
+ * Warnings that can occur while parsing CSS.
  *
- * More types might be added in the future as the parser incorporates
- * more features.
- *
- * Since: 3.2
+ * Unlike #GtkCssParserErrors, warnings do not cause the parser to
+ * skip any input, but they indicate issues that should be fixed.
  */
-public enum GtkCssSectionType
+public enum GtkCssParserWarning
 {
 	/**
-	 * The section describes a complete document.
-	 * This section time is the only one where gtk_css_section_get_parent()
-	 * might return %NULL.
+	 * The given construct is
+	 * deprecated and will be removed in a future version
 	 */
-	DOCUMENT = 0,
+	DEPRECATED = 0,
 	/**
-	 * The section defines an import rule.
+	 * A syntax construct was used
+	 * that should be avoided
 	 */
-	IMPORT = 1,
+	SYNTAX = 1,
 	/**
-	 * The section defines a color. This
-	 * is a GTK extension to CSS.
+	 * A feature is not
+	 * implemented
 	 */
-	COLOR_DEFINITION = 2,
-	/**
-	 * The section defines a binding set. This
-	 * is a GTK extension to CSS.
-	 */
-	BINDING_SET = 3,
-	/**
-	 * The section defines a CSS ruleset.
-	 */
-	RULESET = 4,
-	/**
-	 * The section defines a CSS selector.
-	 */
-	SELECTOR = 5,
-	/**
-	 * The section defines the declaration of
-	 * a CSS variable.
-	 */
-	DECLARATION = 6,
-	/**
-	 * The section defines the value of a CSS declaration.
-	 */
-	VALUE = 7,
-	/**
-	 * The section defines keyframes. See [CSS
-	 * Animations](http://dev.w3.org/csswg/css3-animations/#keyframes) for details. Since 3.6
-	 */
-	KEYFRAMES = 8,
+	UNIMPLEMENTED = 2,
 }
-alias GtkCssSectionType CssSectionType;
+alias GtkCssParserWarning CssParserWarning;
 
-public enum GtkDebugFlag
+public enum GtkDebugFlags
 {
-	MISC = 1,
-	PLUGSOCKET = 2,
-	TEXT = 4,
-	TREE = 8,
-	UPDATES = 16,
-	KEYBINDINGS = 32,
-	MULTIHEAD = 64,
-	MODULES = 128,
-	GEOMETRY = 256,
-	ICONTHEME = 512,
-	PRINTING = 1024,
-	BUILDER = 2048,
-	SIZE_REQUEST = 4096,
-	NO_CSS_CACHE = 8192,
-	BASELINES = 16384,
-	PIXEL_CACHE = 32768,
-	NO_PIXEL_CACHE = 65536,
-	INTERACTIVE = 131072,
-	TOUCHSCREEN = 262144,
-	ACTIONS = 524288,
-	RESIZE = 1048576,
-	LAYOUT = 2097152,
+	TEXT = 1,
+	TREE = 2,
+	KEYBINDINGS = 4,
+	MODULES = 8,
+	GEOMETRY = 16,
+	ICONTHEME = 32,
+	PRINTING = 64,
+	BUILDER = 128,
+	SIZE_REQUEST = 256,
+	NO_CSS_CACHE = 512,
+	INTERACTIVE = 1024,
+	TOUCHSCREEN = 2048,
+	ACTIONS = 4096,
+	LAYOUT = 8192,
+	SNAPSHOT = 16384,
+	CONSTRAINTS = 32768,
+	BUILDER_OBJECTS = 65536,
+	A11Y = 131072,
 }
-alias GtkDebugFlag DebugFlag;
+alias GtkDebugFlags DebugFlags;
 
 /**
  * See also: #GtkEntry::delete-from-cursor.
@@ -782,7 +1487,7 @@ public enum GtkDeleteType
 	WORDS = 2,
 	/**
 	 * Delete display-lines. Display-lines
-	 * refers to the visible lines, with respect to to the current line
+	 * refers to the visible lines, with respect to the current line
 	 * breaks. As opposed to paragraphs, which are defined by line
 	 * breaks in the input.
 	 */
@@ -809,43 +1514,6 @@ public enum GtkDeleteType
 alias GtkDeleteType DeleteType;
 
 /**
- * The #GtkDestDefaults enumeration specifies the various
- * types of action that will be taken on behalf
- * of the user for a drag destination site.
- */
-public enum GtkDestDefaults
-{
-	/**
-	 * If set for a widget, GTK+, during a drag over this
-	 * widget will check if the drag matches this widget’s list of possible targets
-	 * and actions.
-	 * GTK+ will then call gdk_drag_status() as appropriate.
-	 */
-	MOTION = 1,
-	/**
-	 * If set for a widget, GTK+ will draw a highlight on
-	 * this widget as long as a drag is over this widget and the widget drag format
-	 * and action are acceptable.
-	 */
-	HIGHLIGHT = 2,
-	/**
-	 * If set for a widget, when a drop occurs, GTK+ will
-	 * will check if the drag matches this widget’s list of possible targets and
-	 * actions. If so, GTK+ will call gtk_drag_get_data() on behalf of the widget.
-	 * Whether or not the drop is successful, GTK+ will call gtk_drag_finish(). If
-	 * the action was a move, then if the drag was successful, then %TRUE will be
-	 * passed for the @delete parameter to gtk_drag_finish().
-	 */
-	DROP = 4,
-	/**
-	 * If set, specifies that all default actions should
-	 * be taken.
-	 */
-	ALL = 7,
-}
-alias GtkDestDefaults DestDefaults;
-
-/**
  * Flags used to influence dialog construction.
  */
 public enum GtkDialogFlags
@@ -862,7 +1530,7 @@ public enum GtkDialogFlags
 	DESTROY_WITH_PARENT = 2,
 	/**
 	 * Create dialog with actions in header
-	 * bar instead of action area. Since 3.12.
+	 * bar instead of action area
 	 */
 	USE_HEADER_BAR = 4,
 }
@@ -900,46 +1568,22 @@ public enum GtkDirectionType
 }
 alias GtkDirectionType DirectionType;
 
-/**
- * Gives an indication why a drag operation failed.
- * The value can by obtained by connecting to the
- * #GtkWidget::drag-failed signal.
- */
-public enum GtkDragResult
+public enum GtkEditableProperties
 {
-	/**
-	 * The drag operation was successful.
-	 */
-	SUCCESS = 0,
-	/**
-	 * No suitable drag target.
-	 */
-	NO_TARGET = 1,
-	/**
-	 * The user cancelled the drag operation.
-	 */
-	USER_CANCELLED = 2,
-	/**
-	 * The drag operation timed out.
-	 */
-	TIMEOUT_EXPIRED = 3,
-	/**
-	 * The pointer or keyboard grab used
-	 * for the drag operation was broken.
-	 */
-	GRAB_BROKEN = 4,
-	/**
-	 * The drag operation failed due to some
-	 * unspecified error.
-	 */
-	ERROR = 5,
+	PROP_TEXT = 0,
+	PROP_CURSOR_POSITION = 1,
+	PROP_SELECTION_BOUND = 2,
+	PROP_EDITABLE = 3,
+	PROP_WIDTH_CHARS = 4,
+	PROP_MAX_WIDTH_CHARS = 5,
+	PROP_XALIGN = 6,
+	PROP_ENABLE_UNDO = 7,
+	NUM_PROPERTIES = 8,
 }
-alias GtkDragResult DragResult;
+alias GtkEditableProperties EditableProperties;
 
 /**
  * Specifies the side of the entry at which an icon is placed.
- *
- * Since: 2.16
  */
 public enum GtkEntryIconPosition
 {
@@ -956,8 +1600,6 @@ alias GtkEntryIconPosition EntryIconPosition;
 
 /**
  * Describes the behavior of a #GtkEventControllerScroll.
- *
- * Since: 3.24
  */
 public enum GtkEventControllerScrollFlags
 {
@@ -991,8 +1633,6 @@ alias GtkEventControllerScrollFlags EventControllerScrollFlags;
 
 /**
  * Describes the state of a #GdkEventSequence in a #GtkGesture.
- *
- * Since: 3.14
  */
 public enum GtkEventSequenceState
 {
@@ -1010,30 +1650,6 @@ public enum GtkEventSequenceState
 	DENIED = 2,
 }
 alias GtkEventSequenceState EventSequenceState;
-
-/**
- * Used to specify the style of the expanders drawn by a #GtkTreeView.
- */
-public enum GtkExpanderStyle
-{
-	/**
-	 * The style used for a collapsed subtree.
-	 */
-	COLLAPSED = 0,
-	/**
-	 * Intermediate style used during animation.
-	 */
-	SEMI_COLLAPSED = 1,
-	/**
-	 * Intermediate style used during animation.
-	 */
-	SEMI_EXPANDED = 2,
-	/**
-	 * The style used for an expanded subtree.
-	 */
-	EXPANDED = 3,
-}
-alias GtkExpanderStyle ExpanderStyle;
 
 /**
  * Describes whether a #GtkFileChooser is being used to open existing files
@@ -1058,43 +1674,8 @@ public enum GtkFileChooserAction
 	 * existing folder.
 	 */
 	SELECT_FOLDER = 2,
-	/**
-	 * Indicates a mode for creating a
-	 * new folder.  The file chooser will let the user name an existing or
-	 * new folder.
-	 */
-	CREATE_FOLDER = 3,
 }
 alias GtkFileChooserAction FileChooserAction;
-
-/**
- * Used as a return value of handlers for the
- * #GtkFileChooser::confirm-overwrite signal of a #GtkFileChooser. This
- * value determines whether the file chooser will present the stock
- * confirmation dialog, accept the user’s choice of a filename, or
- * let the user choose another filename.
- *
- * Since: 2.8
- */
-public enum GtkFileChooserConfirmation
-{
-	/**
-	 * The file chooser will present
-	 * its stock dialog to confirm about overwriting an existing file.
-	 */
-	CONFIRM = 0,
-	/**
-	 * The file chooser will
-	 * terminate and accept the user’s choice of a file name.
-	 */
-	ACCEPT_FILENAME = 1,
-	/**
-	 * The file chooser will
-	 * continue running, so as to let the user select another file name.
-	 */
-	SELECT_AGAIN = 2,
-}
-alias GtkFileChooserConfirmation FileChooserConfirmation;
 
 /**
  * These identify the various errors that can occur while calling
@@ -1116,37 +1697,69 @@ public enum GtkFileChooserError
 	 */
 	ALREADY_EXISTS = 2,
 	/**
-	 * Indicates an incomplete hostname (e.g. "http://foo" without a slash after that).
+	 * Indicates an incomplete hostname
+	 * (e.g. "http://foo" without a slash after that).
 	 */
 	INCOMPLETE_HOSTNAME = 3,
 }
 alias GtkFileChooserError FileChooserError;
 
 /**
- * These flags indicate what parts of a #GtkFileFilterInfo struct
- * are filled or need to be filled.
+ * Describes changes in a filter in more detail and allows objects
+ * using the filter to optimize refiltering items.
+ *
+ * If you are writing an implementation and are not sure which
+ * value to pass, %GTK_FILTER_CHANGE_DIFFERENT is always a correct
+ * choice.
  */
-public enum GtkFileFilterFlags
+public enum GtkFilterChange
 {
 	/**
-	 * the filename of the file being tested
+	 * The filter change cannot be
+	 * described with any of the other enumeration values.
 	 */
-	FILENAME = 1,
+	DIFFERENT = 0,
 	/**
-	 * the URI for the file being tested
+	 * The filter is less strict than
+	 * it was before: All items that it used to return %TRUE for
+	 * still return %TRUE, others now may, too.
 	 */
-	URI = 2,
+	LESS_STRICT = 1,
 	/**
-	 * the string that will be used to
-	 * display the file in the file chooser
+	 * The filter is more strict than
+	 * it was before: All items that it used to return %FALSE for
+	 * still return %FALSE, others now may, too.
 	 */
-	DISPLAY_NAME = 4,
-	/**
-	 * the mime type of the file
-	 */
-	MIME_TYPE = 8,
+	MORE_STRICT = 2,
 }
-alias GtkFileFilterFlags FileFilterFlags;
+alias GtkFilterChange FilterChange;
+
+/**
+ * Describes the known strictness of a filter.
+ *
+ * Note that for filters where the strictness is not known,
+ * %GTK_FILTER_MATCH_SOME is always an acceptable value,
+ * even if a filter does match all or no items.
+ */
+public enum GtkFilterMatch
+{
+	/**
+	 * The filter matches some items,
+	 * gtk_filter_match() may return %TRUE or %FALSE
+	 */
+	SOME = 0,
+	/**
+	 * The filter does not match any item,
+	 * gtk_filter_match() will always return %FALSE.
+	 */
+	NONE = 1,
+	/**
+	 * The filter matches all items,
+	 * gtk_filter_match() will alays return %TRUE.
+	 */
+	ALL = 2,
+}
+alias GtkFilterMatch FilterMatch;
 
 /**
  * This enumeration specifies the granularity of font selection
@@ -1169,6 +1782,9 @@ public enum GtkFontChooserLevel
 	 * Allow selecting a specific font size
 	 */
 	SIZE = 2,
+	/**
+	 * Allow changing OpenType font variation axes
+	 */
 	VARIATIONS = 4,
 	/**
 	 * Allow selecting specific OpenType font features
@@ -1178,138 +1794,52 @@ public enum GtkFontChooserLevel
 alias GtkFontChooserLevel FontChooserLevel;
 
 /**
- * Style for input method preedit. See also
- * #GtkSettings:gtk-im-preedit-style
- */
-public enum GtkIMPreeditStyle
-{
-	/**
-	 * Deprecated
-	 */
-	NOTHING = 0,
-	/**
-	 * Deprecated
-	 */
-	CALLBACK = 1,
-	/**
-	 * Deprecated
-	 */
-	NONE = 2,
-}
-alias GtkIMPreeditStyle IMPreeditStyle;
-
-/**
- * Style for input method status. See also
- * #GtkSettings:gtk-im-status-style
- */
-public enum GtkIMStatusStyle
-{
-	/**
-	 * Deprecated
-	 */
-	NOTHING = 0,
-	/**
-	 * Deprecated
-	 */
-	CALLBACK = 1,
-	/**
-	 * Deprecated
-	 */
-	NONE = 2,
-}
-alias GtkIMStatusStyle IMStatusStyle;
-
-/**
  * Used to specify options for gtk_icon_theme_lookup_icon()
  */
 public enum GtkIconLookupFlags
 {
 	/**
-	 * Never get SVG icons, even if gdk-pixbuf
-	 * supports them. Cannot be used together with %GTK_ICON_LOOKUP_FORCE_SVG.
-	 */
-	NO_SVG = 1,
-	/**
-	 * Get SVG icons, even if gdk-pixbuf
-	 * doesn’t support them.
-	 * Cannot be used together with %GTK_ICON_LOOKUP_NO_SVG.
-	 */
-	FORCE_SVG = 2,
-	/**
-	 * When passed to
-	 * gtk_icon_theme_lookup_icon() includes builtin icons
-	 * as well as files. For a builtin icon, gtk_icon_info_get_filename()
-	 * is %NULL and you need to call gtk_icon_info_get_builtin_pixbuf().
-	 */
-	USE_BUILTIN = 4,
-	/**
-	 * Try to shorten icon name at '-'
-	 * characters before looking at inherited themes. This flag is only
-	 * supported in functions that take a single icon name. For more general
-	 * fallback, see gtk_icon_theme_choose_icon(). Since 2.12.
-	 */
-	GENERIC_FALLBACK = 8,
-	/**
-	 * Always get the icon scaled to the
-	 * requested size. Since 2.14.
-	 */
-	FORCE_SIZE = 16,
-	/**
 	 * Try to always load regular icons, even
-	 * when symbolic icon names are given. Since 3.14.
+	 * when symbolic icon names are given
 	 */
-	FORCE_REGULAR = 32,
+	FORCE_REGULAR = 1,
 	/**
 	 * Try to always load symbolic icons, even
-	 * when regular icon names are given. Since 3.14.
+	 * when regular icon names are given
 	 */
-	FORCE_SYMBOLIC = 64,
+	FORCE_SYMBOLIC = 2,
 	/**
-	 * Try to load a variant of the icon for left-to-right
-	 * text direction. Since 3.14.
+	 * Starts loading the texture in the background
+	 * so it is ready when later needed.
 	 */
-	DIR_LTR = 128,
-	/**
-	 * Try to load a variant of the icon for right-to-left
-	 * text direction. Since 3.14.
-	 */
-	DIR_RTL = 256,
+	PRELOAD = 4,
 }
 alias GtkIconLookupFlags IconLookupFlags;
 
 /**
- * Built-in stock icon sizes.
+ * Built-in icon sizes.
+ *
+ * Icon sizes default to being inherited. Where they cannot be
+ * inherited, text size is the default.
+ *
+ * All widgets which use GtkIconSize set the normal-icons or large-icons
+ * style classes correspondingly, and let themes determine the actual size
+ * to be used with the -gtk-icon-size CSS property.
  */
 public enum GtkIconSize
 {
 	/**
-	 * Invalid size.
+	 * Keep the size of the parent element
 	 */
-	INVALID = 0,
+	INHERIT = 0,
 	/**
-	 * Size appropriate for menus (16px).
+	 * Size similar to text size
 	 */
-	MENU = 1,
+	NORMAL = 1,
 	/**
-	 * Size appropriate for small toolbars (16px).
+	 * Large size, for example in an icon view
 	 */
-	SMALL_TOOLBAR = 2,
-	/**
-	 * Size appropriate for large toolbars (24px)
-	 */
-	LARGE_TOOLBAR = 3,
-	/**
-	 * Size appropriate for buttons (16px)
-	 */
-	BUTTON = 4,
-	/**
-	 * Size appropriate for drag and drop (32px)
-	 */
-	DND = 5,
-	/**
-	 * Size appropriate for dialogs (48px)
-	 */
-	DIALOG = 6,
+	LARGE = 2,
 }
 alias GtkIconSize IconSize;
 
@@ -1343,7 +1873,7 @@ public enum GtkIconViewDropPosition
 	 */
 	DROP_INTO = 1,
 	/**
-	 * droppped item is inserted to the left
+	 * dropped item is inserted to the left
 	 */
 	DROP_LEFT = 2,
 	/**
@@ -1365,10 +1895,10 @@ alias GtkIconViewDropPosition IconViewDropPosition;
  * Describes the image data representation used by a #GtkImage. If you
  * want to get the image from the widget, you can only get the
  * currently-stored representation. e.g.  if the
- * gtk_image_get_storage_type() returns #GTK_IMAGE_PIXBUF, then you can
- * call gtk_image_get_pixbuf() but not gtk_image_get_stock().  For empty
- * images, you can request any storage type (call any of the "get"
- * functions), but they will all return %NULL values.
+ * gtk_image_get_storage_type() returns #GTK_IMAGE_PAINTABLE, then you can
+ * call gtk_image_get_paintable().  For empty images, you can request any
+ * storage type (call any of the "get" functions), but they will all
+ * return %NULL values.
  */
 public enum GtkImageType
 {
@@ -1377,36 +1907,17 @@ public enum GtkImageType
 	 */
 	EMPTY = 0,
 	/**
-	 * the widget contains a #GdkPixbuf
+	 * the widget contains a named icon
 	 */
-	PIXBUF = 1,
+	ICON_NAME = 1,
 	/**
-	 * the widget contains a [stock item name][gtkstock]
+	 * the widget contains a #GIcon
 	 */
-	STOCK = 2,
+	GICON = 2,
 	/**
-	 * the widget contains a #GtkIconSet
+	 * the widget contains a #GdkPaintable
 	 */
-	ICON_SET = 3,
-	/**
-	 * the widget contains a #GdkPixbufAnimation
-	 */
-	ANIMATION = 4,
-	/**
-	 * the widget contains a named icon.
-	 * This image type was added in GTK+ 2.6
-	 */
-	ICON_NAME = 5,
-	/**
-	 * the widget contains a #GIcon.
-	 * This image type was added in GTK+ 2.14
-	 */
-	GICON = 6,
-	/**
-	 * the widget contains a #cairo_surface_t.
-	 * This image type was added in GTK+ 3.10
-	 */
-	SURFACE = 7,
+	PAINTABLE = 3,
 }
 alias GtkImageType ImageType;
 
@@ -1416,12 +1927,10 @@ alias GtkImageType ImageType;
  * behaviour according to the #GtkInputPurpose of the entry.
  *
  * Some common sense is expected when using these flags - mixing
- * @GTK_INPUT_HINT_LOWERCASE with any of the uppercase hints makes no sense.
+ * %GTK_INPUT_HINT_LOWERCASE with any of the uppercase hints makes no sense.
  *
  * This enumeration may be extended in the future; input methods should
  * ignore unknown values.
- *
- * Since: 3.6
  */
 public enum GtkInputHints
 {
@@ -1465,17 +1974,22 @@ public enum GtkInputHints
 	 */
 	INHIBIT_OSK = 128,
 	/**
-	 * The text is vertical. Since 3.18
+	 * The text is vertical
 	 */
 	VERTICAL_WRITING = 256,
 	/**
-	 * Suggest offering Emoji support. Since 3.22.20
+	 * Suggest offering Emoji support
 	 */
 	EMOJI = 512,
 	/**
-	 * Suggest not offering Emoji support. Since 3.22.20
+	 * Suggest not offering Emoji support
 	 */
 	NO_EMOJI = 1024,
+	/**
+	 * Request that the input method should not
+	 * update personalized data (like typing history)
+	 */
+	PRIVATE = 2048,
 }
 alias GtkInputHints InputHints;
 
@@ -1491,15 +2005,13 @@ alias GtkInputHints InputHints;
  * application is expected to validate the entry contents, even if
  * it specified a purpose.
  *
- * The difference between @GTK_INPUT_PURPOSE_DIGITS and
- * @GTK_INPUT_PURPOSE_NUMBER is that the former accepts only digits
+ * The difference between %GTK_INPUT_PURPOSE_DIGITS and
+ * %GTK_INPUT_PURPOSE_NUMBER is that the former accepts only digits
  * while the latter also some punctuation (like commas or points, plus,
  * minus) and “e” or “E” as in 3.14E+000.
  *
  * This enumeration may be extended in the future; input methods should
  * interpret unknown values as “free form”.
- *
- * Since: 3.6
  */
 public enum GtkInputPurpose
 {
@@ -1536,63 +2048,22 @@ public enum GtkInputPurpose
 	 */
 	NAME = 7,
 	/**
-	 * Like @GTK_INPUT_PURPOSE_FREE_FORM, but characters are hidden
+	 * Like %GTK_INPUT_PURPOSE_FREE_FORM, but characters are hidden
 	 */
 	PASSWORD = 8,
 	/**
-	 * Like @GTK_INPUT_PURPOSE_DIGITS, but characters are hidden
+	 * Like %GTK_INPUT_PURPOSE_DIGITS, but characters are hidden
 	 */
 	PIN = 9,
+	/**
+	 * Allow any character, in addition to control codes
+	 */
+	TERMINAL = 10,
 }
 alias GtkInputPurpose InputPurpose;
 
 /**
- * Describes how a rendered element connects to adjacent elements.
- */
-public enum GtkJunctionSides
-{
-	/**
-	 * No junctions.
-	 */
-	NONE = 0,
-	/**
-	 * Element connects on the top-left corner.
-	 */
-	CORNER_TOPLEFT = 1,
-	/**
-	 * Element connects on the top-right corner.
-	 */
-	CORNER_TOPRIGHT = 2,
-	/**
-	 * Element connects on the bottom-left corner.
-	 */
-	CORNER_BOTTOMLEFT = 4,
-	/**
-	 * Element connects on the bottom-right corner.
-	 */
-	CORNER_BOTTOMRIGHT = 8,
-	/**
-	 * Element connects on the top side.
-	 */
-	TOP = 3,
-	/**
-	 * Element connects on the bottom side.
-	 */
-	BOTTOM = 12,
-	/**
-	 * Element connects on the left side.
-	 */
-	LEFT = 5,
-	/**
-	 * Element connects on the right side.
-	 */
-	RIGHT = 10,
-}
-alias GtkJunctionSides JunctionSides;
-
-/**
- * Used for justifying the text inside a #GtkLabel widget. (See also
- * #GtkAlignment).
+ * Used for justifying the text inside a #GtkLabel widget.
  */
 public enum GtkJustification
 {
@@ -1619,8 +2090,6 @@ alias GtkJustification Justification;
  * Describes how #GtkLevelBar contents should be rendered.
  * Note that this enumeration could be extended with additional modes
  * in the future.
- *
- * Since: 3.6
  */
 public enum GtkLevelBarMode
 {
@@ -1639,8 +2108,6 @@ alias GtkLevelBarMode LevelBarMode;
  * The type of license for an application.
  *
  * This enumeration can be expanded at later date.
- *
- * Since: 3.0
  */
 public enum GtkLicense
 {
@@ -1682,55 +2149,43 @@ public enum GtkLicense
 	 */
 	ARTISTIC = 8,
 	/**
-	 * The GNU General Public License, version 2.0 only. Since 3.12.
+	 * The GNU General Public License, version 2.0 only
 	 */
 	GPL_2_0_ONLY = 9,
 	/**
-	 * The GNU General Public License, version 3.0 only. Since 3.12.
+	 * The GNU General Public License, version 3.0 only
 	 */
 	GPL_3_0_ONLY = 10,
 	/**
-	 * The GNU Lesser General Public License, version 2.1 only. Since 3.12.
+	 * The GNU Lesser General Public License, version 2.1 only
 	 */
 	LGPL_2_1_ONLY = 11,
 	/**
-	 * The GNU Lesser General Public License, version 3.0 only. Since 3.12.
+	 * The GNU Lesser General Public License, version 3.0 only
 	 */
 	LGPL_3_0_ONLY = 12,
 	/**
-	 * The GNU Affero General Public License, version 3.0 or later. Since: 3.22.
+	 * The GNU Affero General Public License, version 3.0 or later
 	 */
 	AGPL_3_0 = 13,
 	/**
-	 * The GNU Affero General Public License, version 3.0 only. Since: 3.22.27.
+	 * The GNU Affero General Public License, version 3.0 only
 	 */
 	AGPL_3_0_ONLY = 14,
+	/**
+	 * The 3-clause BSD licence
+	 */
+	BSD_3 = 15,
+	/**
+	 * The Apache License, version 2.0
+	 */
+	APACHE_2_0 = 16,
+	/**
+	 * The Mozilla Public License, version 2.0
+	 */
+	MPL_2_0 = 17,
 }
 alias GtkLicense License;
-
-/**
- * An enumeration representing directional movements within a menu.
- */
-public enum GtkMenuDirectionType
-{
-	/**
-	 * To the parent menu shell
-	 */
-	PARENT = 0,
-	/**
-	 * To the submenu, if any, associated with the item
-	 */
-	CHILD = 1,
-	/**
-	 * To the next menu item
-	 */
-	NEXT = 2,
-	/**
-	 * To the previous menu item
-	 */
-	PREV = 3,
-}
-alias GtkMenuDirectionType MenuDirectionType;
 
 /**
  * The type of message being displayed in the dialog.
@@ -1805,9 +2260,18 @@ public enum GtkMovementStep
 }
 alias GtkMovementStep MovementStep;
 
+/**
+ * The parameter used in the action signals of #GtkNotebook.
+ */
 public enum GtkNotebookTab
 {
+	/**
+	 * the first tab in the notebook
+	 */
 	FIRST = 0,
+	/**
+	 * the last tab in the notebook
+	 */
 	LAST = 1,
 }
 alias GtkNotebookTab NotebookTab;
@@ -1854,8 +2318,33 @@ public enum GtkNumberUpLayout
 alias GtkNumberUpLayout NumberUpLayout;
 
 /**
+ * Describes the way two values can be compared.
+ *
+ * These values can be used with a #GCompareFunc. However, a
+ * #GCompareFunc is allowed to return any integer values.
+ * For converting such a value to a #GtkOrdering, use
+ * gtk_ordering_from_cmpfunc().
+ */
+public enum GtkOrdering
+{
+	/**
+	 * the first value is smaller than the second
+	 */
+	SMALLER = -1,
+	/**
+	 * the two values are equal
+	 */
+	EQUAL = 0,
+	/**
+	 * the first value is larger than the second
+	 */
+	LARGER = 1,
+}
+alias GtkOrdering Ordering;
+
+/**
  * Represents the orientation of widgets and other objects which can be switched
- * between horizontal and vertical orientation on the fly, like #GtkToolbar or
+ * between horizontal and vertical orientation on the fly, like #GtkBox or
  * #GtkGesturePan.
  */
 public enum GtkOrientation
@@ -1872,42 +2361,37 @@ public enum GtkOrientation
 alias GtkOrientation Orientation;
 
 /**
- * Determines how widgets should be packed inside menubars
- * and menuitems contained in menubars.
+ * Defines how content overflowing a given area should be handled, such as
+ * with gtk_widget_set_overflow(). This property is modeled after the CSS overflow
+ * property, but implements it only partially.
  */
-public enum GtkPackDirection
+public enum GtkOverflow
 {
 	/**
-	 * Widgets are packed left-to-right
+	 * No change is applied. Content is drawn at the specified
+	 * position.
 	 */
-	LTR = 0,
+	VISIBLE = 0,
 	/**
-	 * Widgets are packed right-to-left
+	 * Content is clipped to the bounds of the area. Content
+	 * outside the area is not drawn and cannot be interacted with.
 	 */
-	RTL = 1,
-	/**
-	 * Widgets are packed top-to-bottom
-	 */
-	TTB = 2,
-	/**
-	 * Widgets are packed bottom-to-top
-	 */
-	BTT = 3,
+	HIDDEN = 1,
 }
-alias GtkPackDirection PackDirection;
+alias GtkOverflow Overflow;
 
 /**
- * Represents the packing location #GtkBox children. (See: #GtkVBox,
- * #GtkHBox, and #GtkButtonBox).
+ * Represents the packing location of a children in its parent.
+ * See #GtkWindowControls for example.
  */
 public enum GtkPackType
 {
 	/**
-	 * The child is packed into the start of the box
+	 * The child is packed into the start of the widget
 	 */
 	START = 0,
 	/**
-	 * The child is packed into the end of the box
+	 * The child is packed into the end of the widget
 	 */
 	END = 1,
 }
@@ -1979,8 +2463,6 @@ alias GtkPageSet PageSet;
 
 /**
  * Describes the panning direction of a #GtkGesturePan
- *
- * Since: 3.14
  */
 public enum GtkPanDirection
 {
@@ -2004,97 +2486,24 @@ public enum GtkPanDirection
 alias GtkPanDirection PanDirection;
 
 /**
- * Priorities for path lookups.
- * See also gtk_binding_set_add_path().
+ * Flags that influence the behavior of gtk_widget_pick()
  */
-public enum GtkPathPriorityType
+public enum GtkPickFlags
 {
 	/**
-	 * Deprecated
+	 * The default behavior, include widgets that are receiving events
 	 */
-	LOWEST = 0,
+	DEFAULT = 0,
 	/**
-	 * Deprecated
+	 * Include widgets that are insensitive
 	 */
-	GTK = 4,
+	INSENSITIVE = 1,
 	/**
-	 * Deprecated
+	 * Include widgets that are marked as non-targetable. See #GtkWidget:can-target
 	 */
-	APPLICATION = 8,
-	/**
-	 * Deprecated
-	 */
-	THEME = 10,
-	/**
-	 * Deprecated
-	 */
-	RC = 12,
-	/**
-	 * Deprecated
-	 */
-	HIGHEST = 15,
+	NON_TARGETABLE = 2,
 }
-alias GtkPathPriorityType PathPriorityType;
-
-/**
- * Widget path types.
- * See also gtk_binding_set_add_path().
- */
-public enum GtkPathType
-{
-	/**
-	 * Deprecated
-	 */
-	WIDGET = 0,
-	/**
-	 * Deprecated
-	 */
-	WIDGET_CLASS = 1,
-	/**
-	 * Deprecated
-	 */
-	CLASS = 2,
-}
-alias GtkPathType PathType;
-
-/**
- * These flags serve two purposes.  First, the application can call gtk_places_sidebar_set_open_flags()
- * using these flags as a bitmask.  This tells the sidebar that the application is able to open
- * folders selected from the sidebar in various ways, for example, in new tabs or in new windows in
- * addition to the normal mode.
- *
- * Second, when one of these values gets passed back to the application in the
- * #GtkPlacesSidebar::open-location signal, it means that the application should
- * open the selected location in the normal way, in a new tab, or in a new
- * window.  The sidebar takes care of determining the desired way to open the location,
- * based on the modifier keys that the user is pressing at the time the selection is made.
- *
- * If the application never calls gtk_places_sidebar_set_open_flags(), then the sidebar will only
- * use #GTK_PLACES_OPEN_NORMAL in the #GtkPlacesSidebar::open-location signal.  This is the
- * default mode of operation.
- */
-public enum GtkPlacesOpenFlags
-{
-	/**
-	 * This is the default mode that #GtkPlacesSidebar uses if no other flags
-	 * are specified.  It indicates that the calling application should open the selected location
-	 * in the normal way, for example, in the folder view beside the sidebar.
-	 */
-	NORMAL = 1,
-	/**
-	 * When passed to gtk_places_sidebar_set_open_flags(), this indicates
-	 * that the application can open folders selected from the sidebar in new tabs.  This value
-	 * will be passed to the #GtkPlacesSidebar::open-location signal when the user selects
-	 * that a location be opened in a new tab instead of in the standard fashion.
-	 */
-	NEW_TAB = 2,
-	/**
-	 * Similar to @GTK_PLACES_OPEN_NEW_TAB, but indicates that the application
-	 * can open folders in new windows.
-	 */
-	NEW_WINDOW = 4,
-}
-alias GtkPlacesOpenFlags PlacesOpenFlags;
+alias GtkPickFlags PickFlags;
 
 /**
  * Determines how the size should be computed to achieve the one of the
@@ -2120,37 +2529,30 @@ public enum GtkPolicyType
 	/**
 	 * Don't show a scrollbar, but don't force the
 	 * size to follow the content. This can be used e.g. to make multiple
-	 * scrolled windows share a scrollbar. Since: 3.16
+	 * scrolled windows share a scrollbar.
 	 */
 	EXTERNAL = 3,
 }
 alias GtkPolicyType PolicyType;
 
 /**
- * Describes constraints to positioning of popovers. More values
- * may be added to this enumeration in the future.
- *
- * Since: 3.20
+ * Flags that affect how popover menus are created from
+ * a menu model.
  */
-public enum GtkPopoverConstraint
+public enum GtkPopoverMenuFlags
 {
 	/**
-	 * Don't constrain the popover position
-	 * beyond what is imposed by the implementation
+	 * Create submenus as nested
+	 * popovers. Without this flag, submenus are created as
+	 * sliding pages that replace the main menu.
 	 */
-	NONE = 0,
-	/**
-	 * Constrain the popover to the boundaries
-	 * of the window that it is attached to
-	 */
-	WINDOW = 1,
+	NESTED = 1,
 }
-alias GtkPopoverConstraint PopoverConstraint;
+alias GtkPopoverMenuFlags PopoverMenuFlags;
 
 /**
- * Describes which edge of a widget a certain feature is positioned at, e.g. the
- * tabs of a #GtkNotebook, the handle of a #GtkHandleBox or the label of a
- * #GtkScale.
+ * Describes which edge of a widget a certain feature is positioned at, e.g.
+ * the tabs of a #GtkNotebook, or the label of a #GtkScale.
  */
 public enum GtkPositionType
 {
@@ -2195,7 +2597,7 @@ alias GtkPrintDuplex PrintDuplex;
 
 /**
  * Error codes that identify various errors that can occur while
- * using the GTK+ printing support.
+ * using the GTK printing support.
  */
 public enum GtkPrintError
 {
@@ -2372,17 +2774,32 @@ public enum GtkPrintStatus
 alias GtkPrintStatus PrintStatus;
 
 /**
+ * Describes limits of a #GtkEventController for handling events
+ * targeting other widgets.
+ */
+public enum GtkPropagationLimit
+{
+	/**
+	 * Events are handled regardless of what their
+	 * target is.
+	 */
+	NONE = 0,
+	/**
+	 * Events are only handled if their target
+	 * is in the same #GtkNative as the event controllers widget. Note
+	 * that some event types have two targets (origin and destination).
+	 */
+	SAME_NATIVE = 1,
+}
+alias GtkPropagationLimit PropagationLimit;
+
+/**
  * Describes the stage at which events are fed into a #GtkEventController.
- *
- * Since: 3.14
  */
 public enum GtkPropagationPhase
 {
 	/**
-	 * Events are not delivered automatically. Those can be
-	 * manually fed through gtk_event_controller_handle_event(). This should
-	 * only be used when full control about when, or whether the controller
-	 * handles the event is needed.
+	 * Events are not delivered.
 	 */
 	NONE = 0,
 	/**
@@ -2408,261 +2825,7 @@ public enum GtkPropagationPhase
 alias GtkPropagationPhase PropagationPhase;
 
 /**
- * Deprecated
- */
-public enum GtkRcFlags
-{
-	/**
-	 * Deprecated
-	 */
-	FG = 1,
-	/**
-	 * Deprecated
-	 */
-	BG = 2,
-	/**
-	 * Deprecated
-	 */
-	TEXT = 4,
-	/**
-	 * Deprecated
-	 */
-	BASE = 8,
-}
-alias GtkRcFlags RcFlags;
-
-/**
- * The #GtkRcTokenType enumeration represents the tokens
- * in the RC file. It is exposed so that theme engines
- * can reuse these tokens when parsing the theme-engine
- * specific portions of a RC file.
- *
- * Deprecated: Use #GtkCssProvider instead.
- */
-public enum GtkRcTokenType
-{
-	/**
-	 * Deprecated
-	 */
-	INVALID = 270,
-	/**
-	 * Deprecated
-	 */
-	INCLUDE = 271,
-	/**
-	 * Deprecated
-	 */
-	NORMAL = 272,
-	/**
-	 * Deprecated
-	 */
-	ACTIVE = 273,
-	/**
-	 * Deprecated
-	 */
-	PRELIGHT = 274,
-	/**
-	 * Deprecated
-	 */
-	SELECTED = 275,
-	/**
-	 * Deprecated
-	 */
-	INSENSITIVE = 276,
-	/**
-	 * Deprecated
-	 */
-	FG = 277,
-	/**
-	 * Deprecated
-	 */
-	BG = 278,
-	/**
-	 * Deprecated
-	 */
-	TEXT = 279,
-	/**
-	 * Deprecated
-	 */
-	BASE = 280,
-	/**
-	 * Deprecated
-	 */
-	XTHICKNESS = 281,
-	/**
-	 * Deprecated
-	 */
-	YTHICKNESS = 282,
-	/**
-	 * Deprecated
-	 */
-	FONT = 283,
-	/**
-	 * Deprecated
-	 */
-	FONTSET = 284,
-	/**
-	 * Deprecated
-	 */
-	FONT_NAME = 285,
-	/**
-	 * Deprecated
-	 */
-	BG_PIXMAP = 286,
-	/**
-	 * Deprecated
-	 */
-	PIXMAP_PATH = 287,
-	/**
-	 * Deprecated
-	 */
-	STYLE = 288,
-	/**
-	 * Deprecated
-	 */
-	BINDING = 289,
-	/**
-	 * Deprecated
-	 */
-	BIND = 290,
-	/**
-	 * Deprecated
-	 */
-	WIDGET = 291,
-	/**
-	 * Deprecated
-	 */
-	WIDGET_CLASS = 292,
-	/**
-	 * Deprecated
-	 */
-	CLASS = 293,
-	/**
-	 * Deprecated
-	 */
-	LOWEST = 294,
-	/**
-	 * Deprecated
-	 */
-	GTK = 295,
-	/**
-	 * Deprecated
-	 */
-	APPLICATION = 296,
-	/**
-	 * Deprecated
-	 */
-	THEME = 297,
-	/**
-	 * Deprecated
-	 */
-	RC = 298,
-	/**
-	 * Deprecated
-	 */
-	HIGHEST = 299,
-	/**
-	 * Deprecated
-	 */
-	ENGINE = 300,
-	/**
-	 * Deprecated
-	 */
-	MODULE_PATH = 301,
-	/**
-	 * Deprecated
-	 */
-	IM_MODULE_PATH = 302,
-	/**
-	 * Deprecated
-	 */
-	IM_MODULE_FILE = 303,
-	/**
-	 * Deprecated
-	 */
-	STOCK = 304,
-	/**
-	 * Deprecated
-	 */
-	LTR = 305,
-	/**
-	 * Deprecated
-	 */
-	RTL = 306,
-	/**
-	 * Deprecated
-	 */
-	COLOR = 307,
-	/**
-	 * Deprecated
-	 */
-	UNBIND = 308,
-	/**
-	 * Deprecated
-	 */
-	LAST = 309,
-}
-alias GtkRcTokenType RcTokenType;
-
-/**
- * These identify the various errors that can occur while calling
- * #GtkRecentChooser functions.
- *
- * Since: 2.10
- */
-public enum GtkRecentChooserError
-{
-	/**
-	 * Indicates that a file does not exist
-	 */
-	NOT_FOUND = 0,
-	/**
-	 * Indicates a malformed URI
-	 */
-	INVALID_URI = 1,
-}
-alias GtkRecentChooserError RecentChooserError;
-
-/**
- * These flags indicate what parts of a #GtkRecentFilterInfo struct
- * are filled or need to be filled.
- */
-public enum GtkRecentFilterFlags
-{
-	/**
-	 * the URI of the file being tested
-	 */
-	URI = 1,
-	/**
-	 * the string that will be used to
-	 * display the file in the recent chooser
-	 */
-	DISPLAY_NAME = 2,
-	/**
-	 * the mime type of the file
-	 */
-	MIME_TYPE = 4,
-	/**
-	 * the list of applications that have
-	 * registered the file
-	 */
-	APPLICATION = 8,
-	/**
-	 * the groups to which the file belongs to
-	 */
-	GROUP = 16,
-	/**
-	 * the number of days elapsed since the file
-	 * has been registered
-	 */
-	AGE = 32,
-}
-alias GtkRecentFilterFlags RecentFilterFlags;
-
-/**
  * Error codes for #GtkRecentManager operations
- *
- * Since: 2.10
  */
 public enum GtkRecentManagerError
 {
@@ -2703,108 +2866,8 @@ public enum GtkRecentManagerError
 alias GtkRecentManagerError RecentManagerError;
 
 /**
- * Used to specify the sorting method to be applyed to the recently
- * used resource list.
- *
- * Since: 2.10
- */
-public enum GtkRecentSortType
-{
-	/**
-	 * Do not sort the returned list of recently used
-	 * resources.
-	 */
-	NONE = 0,
-	/**
-	 * Sort the returned list with the most recently used
-	 * items first.
-	 */
-	MRU = 1,
-	/**
-	 * Sort the returned list with the least recently used
-	 * items first.
-	 */
-	LRU = 2,
-	/**
-	 * Sort the returned list using a custom sorting
-	 * function passed using gtk_recent_chooser_set_sort_func().
-	 */
-	CUSTOM = 3,
-}
-alias GtkRecentSortType RecentSortType;
-
-/**
- * Describes a region within a widget.
- */
-public enum GtkRegionFlags
-{
-	/**
-	 * Region has an even number within a set.
-	 */
-	EVEN = 1,
-	/**
-	 * Region has an odd number within a set.
-	 */
-	ODD = 2,
-	/**
-	 * Region is the first one within a set.
-	 */
-	FIRST = 4,
-	/**
-	 * Region is the last one within a set.
-	 */
-	LAST = 8,
-	/**
-	 * Region is the only one within a set.
-	 */
-	ONLY = 16,
-	/**
-	 * Region is part of a sorted area.
-	 */
-	SORTED = 32,
-}
-alias GtkRegionFlags RegionFlags;
-
-/**
- * Indicated the relief to be drawn around a #GtkButton.
- */
-public enum GtkReliefStyle
-{
-	/**
-	 * Draw a normal relief.
-	 */
-	NORMAL = 0,
-	/**
-	 * A half relief. Deprecated in 3.14, does the same as @GTK_RELIEF_NORMAL
-	 */
-	HALF = 1,
-	/**
-	 * No relief.
-	 */
-	NONE = 2,
-}
-alias GtkReliefStyle ReliefStyle;
-
-public enum GtkResizeMode
-{
-	/**
-	 * Pass resize request to the parent
-	 */
-	PARENT = 0,
-	/**
-	 * Queue resizes on this widget
-	 */
-	QUEUE = 1,
-	/**
-	 * Resize immediately. Deprecated.
-	 */
-	IMMEDIATE = 2,
-}
-alias GtkResizeMode ResizeMode;
-
-/**
  * Predefined values for use as response ids in gtk_dialog_add_button().
- * All predefined values are negative; GTK+ leaves values of 0 or greater for
+ * All predefined values are negative; GTK leaves values of 0 or greater for
  * application-defined response ids.
  */
 public enum GtkResponseType
@@ -2815,11 +2878,11 @@ public enum GtkResponseType
 	 */
 	NONE = -1,
 	/**
-	 * Generic response id, not used by GTK+ dialogs
+	 * Generic response id, not used by GTK dialogs
 	 */
 	REJECT = -2,
 	/**
-	 * Generic response id, not used by GTK+ dialogs
+	 * Generic response id, not used by GTK dialogs
 	 */
 	ACCEPT = -3,
 	/**
@@ -2827,31 +2890,31 @@ public enum GtkResponseType
 	 */
 	DELETE_EVENT = -4,
 	/**
-	 * Returned by OK buttons in GTK+ dialogs
+	 * Returned by OK buttons in GTK dialogs
 	 */
 	OK = -5,
 	/**
-	 * Returned by Cancel buttons in GTK+ dialogs
+	 * Returned by Cancel buttons in GTK dialogs
 	 */
 	CANCEL = -6,
 	/**
-	 * Returned by Close buttons in GTK+ dialogs
+	 * Returned by Close buttons in GTK dialogs
 	 */
 	CLOSE = -7,
 	/**
-	 * Returned by Yes buttons in GTK+ dialogs
+	 * Returned by Yes buttons in GTK dialogs
 	 */
 	YES = -8,
 	/**
-	 * Returned by No buttons in GTK+ dialogs
+	 * Returned by No buttons in GTK dialogs
 	 */
 	NO = -9,
 	/**
-	 * Returned by Apply buttons in GTK+ dialogs
+	 * Returned by Apply buttons in GTK dialogs
 	 */
 	APPLY = -10,
 	/**
-	 * Returned by Help buttons in GTK+ dialogs
+	 * Returned by Help buttons in GTK dialogs
 	 */
 	HELP = -11,
 }
@@ -2887,6 +2950,22 @@ public enum GtkRevealerTransitionType
 	 * Slide in from the top
 	 */
 	SLIDE_DOWN = 5,
+	/**
+	 * Floop in from the left
+	 */
+	SWING_RIGHT = 6,
+	/**
+	 * Floop in from the right
+	 */
+	SWING_LEFT = 7,
+	/**
+	 * Floop in from the bottom
+	 */
+	SWING_UP = 8,
+	/**
+	 * Floop in from the top
+	 */
+	SWING_DOWN = 9,
 }
 alias GtkRevealerTransitionType RevealerTransitionType;
 
@@ -3041,64 +3120,69 @@ public enum GtkSelectionMode
 alias GtkSelectionMode SelectionMode;
 
 /**
- * Determines how GTK+ handles the sensitivity of stepper arrows
- * at the end of range widgets.
+ * Determines how GTK handles the sensitivity of various controls,
+ * such as combo box buttons.
  */
 public enum GtkSensitivityType
 {
 	/**
-	 * The arrow is made insensitive if the
-	 * thumb is at the end
+	 * The control is made insensitive if no
+	 * action can be triggered
 	 */
 	AUTO = 0,
 	/**
-	 * The arrow is always sensitive
+	 * The control is always sensitive
 	 */
 	ON = 1,
 	/**
-	 * The arrow is always insensitive
+	 * The control is always insensitive
 	 */
 	OFF = 2,
 }
 alias GtkSensitivityType SensitivityType;
 
 /**
- * Used to change the appearance of an outline typically provided by a #GtkFrame.
- *
- * Note that many themes do not differentiate the appearance of the
- * various shadow types: Either their is no visible shadow (@GTK_SHADOW_NONE),
- * or there is (any other value).
+ * List of flags that can be passed to action activation.
+ * More flags may be added in the future.
  */
-public enum GtkShadowType
+public enum GtkShortcutActionFlags
 {
 	/**
-	 * No outline.
+	 * The action is the only
+	 * action that can be activated. If this flag is not set,
+	 * a future activation may select a different action.
 	 */
-	NONE = 0,
-	/**
-	 * The outline is bevelled inwards.
-	 */
-	IN = 1,
-	/**
-	 * The outline is bevelled outwards like a button.
-	 */
-	OUT = 2,
-	/**
-	 * The outline has a sunken 3d appearance.
-	 */
-	ETCHED_IN = 3,
-	/**
-	 * The outline has a raised 3d appearance.
-	 */
-	ETCHED_OUT = 4,
+	EXCLUSIVE = 1,
 }
-alias GtkShadowType ShadowType;
+alias GtkShortcutActionFlags ShortcutActionFlags;
+
+/**
+ * Describes where #GtkShortcuts added to a
+ * #GtkShortcutController get handled.
+ */
+public enum GtkShortcutScope
+{
+	/**
+	 * Shortcuts are handled inside
+	 * the widget the controller belongs to.
+	 */
+	LOCAL = 0,
+	/**
+	 * Shortcuts are handled by
+	 * the first ancestor that is a #GtkShortcutManager
+	 */
+	MANAGED = 1,
+	/**
+	 * Shortcuts are handled by
+	 * the root widget.
+	 */
+	GLOBAL = 2,
+}
+alias GtkShortcutScope ShortcutScope;
 
 /**
  * GtkShortcutType specifies the kind of shortcut that is being described.
  * More values may be added to this enumeration over time.
- *
- * Since: 3.20
  */
 public enum GtkShortcutType
 {
@@ -3136,6 +3220,14 @@ public enum GtkShortcutType
 	 * used.
 	 */
 	GESTURE = 7,
+	/**
+	 * The shortcut is a swipe gesture. GTK+ provides an icon and subtitle.
+	 */
+	GESTURE_SWIPE_LEFT = 8,
+	/**
+	 * The shortcut is a swipe gesture. GTK+ provides an icon and subtitle.
+	 */
+	GESTURE_SWIPE_RIGHT = 9,
 }
 alias GtkShortcutType ShortcutType;
 
@@ -3200,6 +3292,59 @@ public enum GtkSortType
 	DESCENDING = 1,
 }
 alias GtkSortType SortType;
+
+/**
+ * Describes changes in a sorter in more detail and allows users
+ * to optimize resorting.
+ */
+public enum GtkSorterChange
+{
+	/**
+	 * The sorter change cannot be described
+	 * by any of the other enumeration values
+	 */
+	DIFFERENT = 0,
+	/**
+	 * The sort order was inverted. Comparisons
+	 * that returned %GTK_ORDERING_SMALLER now return %GTK_ORDERING_LARGER
+	 * and vice versa. Other comparisons return the same values as before.
+	 */
+	INVERTED = 1,
+	/**
+	 * The sorter is less strict: Comparisons
+	 * may now return %GTK_ORDERING_EQUAL that did not do so before.
+	 */
+	LESS_STRICT = 2,
+	/**
+	 * The sorter is more strict: Comparisons
+	 * that did return %GTK_ORDERING_EQUAL may not do so anymore.
+	 */
+	MORE_STRICT = 3,
+}
+alias GtkSorterChange SorterChange;
+
+/**
+ * Describes the type of order that a #GtkSorter may describe.
+ */
+public enum GtkSorterOrder
+{
+	/**
+	 * A partial order. Any #GtkOrdering is possible.
+	 */
+	PARTIAL = 0,
+	/**
+	 * No order, all elements are considered equal.
+	 * gtk_sorter_compare() will only return %GTK_ORDERING_EQUAL.
+	 */
+	NONE = 1,
+	/**
+	 * A total order. gtk_sorter_compare() will only
+	 * return %GTK_ORDERING_EQUAL if an item is compared with itself. Two
+	 * different items will never cause this value to be returned.
+	 */
+	TOTAL = 2,
+}
+alias GtkSorterOrder SorterOrder;
 
 /**
  * The spin button update policy determines whether the spin button displays
@@ -3300,53 +3445,65 @@ public enum GtkStackTransitionType
 	 */
 	SLIDE_UP_DOWN = 7,
 	/**
-	 * Cover the old page by sliding up. Since 3.12
+	 * Cover the old page by sliding up
 	 */
 	OVER_UP = 8,
 	/**
-	 * Cover the old page by sliding down. Since: 3.12
+	 * Cover the old page by sliding down
 	 */
 	OVER_DOWN = 9,
 	/**
-	 * Cover the old page by sliding to the left. Since: 3.12
+	 * Cover the old page by sliding to the left
 	 */
 	OVER_LEFT = 10,
 	/**
-	 * Cover the old page by sliding to the right. Since: 3.12
+	 * Cover the old page by sliding to the right
 	 */
 	OVER_RIGHT = 11,
 	/**
-	 * Uncover the new page by sliding up. Since 3.12
+	 * Uncover the new page by sliding up
 	 */
 	UNDER_UP = 12,
 	/**
-	 * Uncover the new page by sliding down. Since: 3.12
+	 * Uncover the new page by sliding down
 	 */
 	UNDER_DOWN = 13,
 	/**
-	 * Uncover the new page by sliding to the left. Since: 3.12
+	 * Uncover the new page by sliding to the left
 	 */
 	UNDER_LEFT = 14,
 	/**
-	 * Uncover the new page by sliding to the right. Since: 3.12
+	 * Uncover the new page by sliding to the right
 	 */
 	UNDER_RIGHT = 15,
 	/**
-	 * Cover the old page sliding up or uncover the new page sliding down, according to order. Since: 3.12
+	 * Cover the old page sliding up or uncover the new page sliding down, according to order
 	 */
 	OVER_UP_DOWN = 16,
 	/**
-	 * Cover the old page sliding down or uncover the new page sliding up, according to order. Since: 3.14
+	 * Cover the old page sliding down or uncover the new page sliding up, according to order
 	 */
 	OVER_DOWN_UP = 17,
 	/**
-	 * Cover the old page sliding left or uncover the new page sliding right, according to order. Since: 3.14
+	 * Cover the old page sliding left or uncover the new page sliding right, according to order
 	 */
 	OVER_LEFT_RIGHT = 18,
 	/**
-	 * Cover the old page sliding right or uncover the new page sliding left, according to order. Since: 3.14
+	 * Cover the old page sliding right or uncover the new page sliding left, according to order
 	 */
 	OVER_RIGHT_LEFT = 19,
+	/**
+	 * Pretend the pages are sides of a cube and rotate that cube to the left
+	 */
+	ROTATE_LEFT = 20,
+	/**
+	 * Pretend the pages are sides of a cube and rotate that cube to the right
+	 */
+	ROTATE_RIGHT = 21,
+	/**
+	 * Pretend the pages are sides of a cube and rotate that cube to the left or right according to the children order
+	 */
+	ROTATE_LEFT_RIGHT = 22,
 }
 alias GtkStackTransitionType StackTransitionType;
 
@@ -3358,109 +3515,94 @@ alias GtkStackTransitionType StackTransitionType;
 public enum GtkStateFlags
 {
 	/**
-	 * State during normal operation.
+	 * State during normal operation
 	 */
 	NORMAL = 0,
 	/**
-	 * Widget is active.
+	 * Widget is active
 	 */
 	ACTIVE = 1,
 	/**
-	 * Widget has a mouse pointer over it.
+	 * Widget has a mouse pointer over it
 	 */
 	PRELIGHT = 2,
 	/**
-	 * Widget is selected.
+	 * Widget is selected
 	 */
 	SELECTED = 4,
 	/**
-	 * Widget is insensitive.
+	 * Widget is insensitive
 	 */
 	INSENSITIVE = 8,
 	/**
-	 * Widget is inconsistent.
+	 * Widget is inconsistent
 	 */
 	INCONSISTENT = 16,
 	/**
-	 * Widget has the keyboard focus.
+	 * Widget has the keyboard focus
 	 */
 	FOCUSED = 32,
 	/**
-	 * Widget is in a background toplevel window.
+	 * Widget is in a background toplevel window
 	 */
 	BACKDROP = 64,
 	/**
-	 * Widget is in left-to-right text direction. Since 3.8
+	 * Widget is in left-to-right text direction
 	 */
 	DIR_LTR = 128,
 	/**
-	 * Widget is in right-to-left text direction. Since 3.8
+	 * Widget is in right-to-left text direction
 	 */
 	DIR_RTL = 256,
 	/**
-	 * Widget is a link. Since 3.12
+	 * Widget is a link
 	 */
 	LINK = 512,
 	/**
-	 * The location the widget points to has already been visited. Since 3.12
+	 * The location the widget points to has already been visited
 	 */
 	VISITED = 1024,
 	/**
-	 * Widget is checked. Since 3.14
+	 * Widget is checked
 	 */
 	CHECKED = 2048,
 	/**
-	 * Widget is highlighted as a drop target for DND. Since 3.20
+	 * Widget is highlighted as a drop target for DND
 	 */
 	DROP_ACTIVE = 4096,
+	/**
+	 * Widget has the visible focus
+	 */
+	FOCUS_VISIBLE = 8192,
+	/**
+	 * Widget contains the keyboard focus
+	 */
+	FOCUS_WITHIN = 16384,
 }
 alias GtkStateFlags StateFlags;
 
 /**
- * This type indicates the current state of a widget; the state determines how
- * the widget is drawn. The #GtkStateType enumeration is also used to
- * identify different colors in a #GtkStyle for drawing, so states can be
- * used for subparts of a widget as well as entire widgets.
- *
- * Deprecated: All APIs that are using this enumeration have been deprecated
- * in favor of alternatives using #GtkStateFlags.
+ * Specifies how search strings are matched inside text.
  */
-public enum GtkStateType
+public enum GtkStringFilterMatchMode
 {
 	/**
-	 * State during normal operation.
+	 * The search string and
+	 * text must match exactly.
 	 */
-	NORMAL = 0,
+	EXACT = 0,
 	/**
-	 * State of a currently active widget, such as a depressed button.
+	 * The search string
+	 * must be contained as a substring inside the text.
 	 */
-	ACTIVE = 1,
+	SUBSTRING = 1,
 	/**
-	 * State indicating that the mouse pointer is over
-	 * the widget and the widget will respond to mouse clicks.
+	 * The text must begin
+	 * with the search string.
 	 */
-	PRELIGHT = 2,
-	/**
-	 * State of a selected item, such the selected row in a list.
-	 */
-	SELECTED = 3,
-	/**
-	 * State indicating that the widget is
-	 * unresponsive to user actions.
-	 */
-	INSENSITIVE = 4,
-	/**
-	 * The widget is inconsistent, such as checkbuttons
-	 * or radiobuttons that aren’t either set to %TRUE nor %FALSE,
-	 * or buttons requiring the user attention.
-	 */
-	INCONSISTENT = 5,
-	/**
-	 * The widget has the keyboard focus.
-	 */
-	FOCUSED = 6,
+	PREFIX = 2,
 }
-alias GtkStateType StateType;
+alias GtkStringFilterMatchMode StringFilterMatchMode;
 
 /**
  * Flags that modify the behavior of gtk_style_context_to_string().
@@ -3468,6 +3610,9 @@ alias GtkStateType StateType;
  */
 public enum GtkStyleContextPrintFlags
 {
+	/**
+	 * Default value.
+	 */
 	NONE = 0,
 	/**
 	 * Print the entire tree of
@@ -3479,62 +3624,52 @@ public enum GtkStyleContextPrintFlags
 	 * CSS properties for each node
 	 */
 	SHOW_STYLE = 2,
+	/**
+	 * Show information about
+	 * what changes affect the styles
+	 */
+	SHOW_CHANGE = 4,
 }
 alias GtkStyleContextPrintFlags StyleContextPrintFlags;
 
 /**
- * The #GtkTargetFlags enumeration is used to specify
- * constraints on a #GtkTargetEntry.
- */
-public enum GtkTargetFlags
-{
-	/**
-	 * If this is set, the target will only be selected
-	 * for drags within a single application.
-	 */
-	SAME_APP = 1,
-	/**
-	 * If this is set, the target will only be selected
-	 * for drags within a single widget.
-	 */
-	SAME_WIDGET = 2,
-	/**
-	 * If this is set, the target will not be selected
-	 * for drags within a single application.
-	 */
-	OTHER_APP = 4,
-	/**
-	 * If this is set, the target will not be selected
-	 * for drags withing a single widget.
-	 */
-	OTHER_WIDGET = 8,
-}
-alias GtkTargetFlags TargetFlags;
-
-/**
- * These values are used as “info” for the targets contained in the
- * lists returned by gtk_text_buffer_get_copy_target_list() and
- * gtk_text_buffer_get_paste_target_list().
+ * Values that can be passed to the GtkWidgetClass.system_setting_changed
+ * vfunc to indicate that a system setting has changed and widgets may
+ * need to drop caches, or react otherwise.
  *
- * The values counts down from `-1` to avoid clashes
- * with application added drag destinations which usually start at 0.
+ * Most of the values correspond to #GtkSettings properties.
+ *
+ * More values may be added over time.
  */
-public enum GtkTextBufferTargetInfo
+public enum GtkSystemSetting
 {
 	/**
-	 * Buffer contents
+	 * the #GtkSettings:gtk-xft-dpi setting has changed
 	 */
-	BUFFER_CONTENTS = -1,
+	DPI = 0,
 	/**
-	 * Rich text
+	 * The #GtkSettings:gtk-font-name setting has changed
 	 */
-	RICH_TEXT = -2,
+	FONT_NAME = 1,
 	/**
-	 * Text
+	 * The font configuration has changed in a way that
+	 * requires text to be redrawn. This can be any of the
+	 * #GtkSettings:gtk-xft-antialias, #GtkSettings:gtk-xft-hinting,
+	 * #GtkSettings:gtk-xft-hintstyle, #GtkSettings:gtk-xft-rgba or
+	 * #GtkSettings:gtk-fontconfig-timestamp settings
 	 */
-	TEXT = -3,
+	FONT_CONFIG = 2,
+	/**
+	 * The display has changed
+	 */
+	DISPLAY = 3,
+	/**
+	 * The icon theme has changed in a way that requires
+	 * icons to be looked up again
+	 */
+	ICON_THEME = 4,
 }
-alias GtkTextBufferTargetInfo TextBufferTargetInfo;
+alias GtkSystemSetting SystemSetting;
 
 /**
  * Reading directions for text.
@@ -3559,8 +3694,6 @@ alias GtkTextDirection TextDirection;
 /**
  * Granularity types that extend the text selection. Use the
  * #GtkTextView::extend-selection signal to customize the selection.
- *
- * Since: 3.16
  */
 public enum GtkTextExtendSelection
 {
@@ -3582,7 +3715,7 @@ alias GtkTextExtendSelection TextExtendSelection;
  *
  * If neither #GTK_TEXT_SEARCH_VISIBLE_ONLY nor #GTK_TEXT_SEARCH_TEXT_ONLY are
  * enabled, the match must be exact; the special 0xFFFC character will match
- * embedded pixbufs or child widgets.
+ * embedded paintables or child widgets.
  */
 public enum GtkTextSearchFlags
 {
@@ -3592,7 +3725,7 @@ public enum GtkTextSearchFlags
 	 */
 	VISIBLE_ONLY = 1,
 	/**
-	 * Search only text. A match may have pixbufs or
+	 * Search only text. A match may have paintables or
 	 * child widgets mixed inside the matched range.
 	 */
 	TEXT_ONLY = 2,
@@ -3606,26 +3739,18 @@ alias GtkTextSearchFlags TextSearchFlags;
 
 /**
  * Used to reference the layers of #GtkTextView for the purpose of customized
- * drawing with the ::draw_layer vfunc.
+ * drawing with the ::snapshot_layer vfunc.
  */
 public enum GtkTextViewLayer
 {
 	/**
-	 * Old deprecated layer, use %GTK_TEXT_VIEW_LAYER_BELOW_TEXT instead
+	 * The layer rendered below the text (but above the background).
 	 */
-	BELOW = 0,
+	BELOW_TEXT = 0,
 	/**
-	 * Old deprecated layer, use %GTK_TEXT_VIEW_LAYER_ABOVE_TEXT instead
+	 * The layer rendered above the text.
 	 */
-	ABOVE = 1,
-	/**
-	 * The layer rendered below the text (but above the background).  Since: 3.20
-	 */
-	BELOW_TEXT = 2,
-	/**
-	 * The layer rendered above the text.  Since: 3.20
-	 */
-	ABOVE_TEXT = 3,
+	ABOVE_TEXT = 1,
 }
 alias GtkTextViewLayer TextViewLayer;
 
@@ -3634,10 +3759,6 @@ alias GtkTextViewLayer TextViewLayer;
  */
 public enum GtkTextWindowType
 {
-	/**
-	 * Invalid value, used as a marker
-	 */
-	PRIVATE = 0,
 	/**
 	 * Window that floats over scrolling areas.
 	 */
@@ -3666,67 +3787,6 @@ public enum GtkTextWindowType
 alias GtkTextWindowType TextWindowType;
 
 /**
- * Flags used to specify the supported drag targets.
- */
-public enum GtkToolPaletteDragTargets
-{
-	/**
-	 * Support drag of items.
-	 */
-	ITEMS = 1,
-	/**
-	 * Support drag of groups.
-	 */
-	GROUPS = 2,
-}
-alias GtkToolPaletteDragTargets ToolPaletteDragTargets;
-
-/**
- * Whether spacers are vertical lines or just blank.
- */
-public enum GtkToolbarSpaceStyle
-{
-	/**
-	 * Use blank spacers.
-	 */
-	EMPTY = 0,
-	/**
-	 * Use vertical lines for spacers.
-	 */
-	LINE = 1,
-}
-alias GtkToolbarSpaceStyle ToolbarSpaceStyle;
-
-/**
- * Used to customize the appearance of a #GtkToolbar. Note that
- * setting the toolbar style overrides the user’s preferences
- * for the default toolbar style.  Note that if the button has only
- * a label set and GTK_TOOLBAR_ICONS is used, the label will be
- * visible, and vice versa.
- */
-public enum GtkToolbarStyle
-{
-	/**
-	 * Buttons display only icons in the toolbar.
-	 */
-	ICONS = 0,
-	/**
-	 * Buttons display only text labels in the toolbar.
-	 */
-	TEXT = 1,
-	/**
-	 * Buttons display text and icons in the toolbar.
-	 */
-	BOTH = 2,
-	/**
-	 * Buttons display icons and text alongside each
-	 * other, rather than vertically stacked
-	 */
-	BOTH_HORIZ = 3,
-}
-alias GtkToolbarStyle ToolbarStyle;
-
-/**
  * These flags indicate various properties of a #GtkTreeModel.
  *
  * They are returned by gtk_tree_model_get_flags(), and must be
@@ -3751,7 +3811,7 @@ alias GtkTreeModelFlags TreeModelFlags;
 
 /**
  * The sizing method the column uses to determine its width.  Please note
- * that @GTK_TREE_VIEW_COLUMN_AUTOSIZE are inefficient for large views, and
+ * that %GTK_TREE_VIEW_COLUMN_AUTOSIZE are inefficient for large views, and
  * can make columns appear choppy.
  */
 public enum GtkTreeViewColumnSizing
@@ -3761,7 +3821,7 @@ public enum GtkTreeViewColumnSizing
 	 */
 	GROW_ONLY = 0,
 	/**
-	 * Columns resize to be the optimal size everytime the model changes.
+	 * Columns resize to be the optimal size every time the model changes.
 	 */
 	AUTOSIZE = 1,
 	/**
@@ -3820,60 +3880,6 @@ public enum GtkTreeViewGridLines
 alias GtkTreeViewGridLines TreeViewGridLines;
 
 /**
- * These enumeration values are used by gtk_ui_manager_add_ui() to determine
- * what UI element to create.
- */
-public enum GtkUIManagerItemType
-{
-	/**
-	 * Pick the type of the UI element according to context.
-	 */
-	AUTO = 0,
-	/**
-	 * Create a menubar.
-	 */
-	MENUBAR = 1,
-	/**
-	 * Create a menu.
-	 */
-	MENU = 2,
-	/**
-	 * Create a toolbar.
-	 */
-	TOOLBAR = 4,
-	/**
-	 * Insert a placeholder.
-	 */
-	PLACEHOLDER = 8,
-	/**
-	 * Create a popup menu.
-	 */
-	POPUP = 16,
-	/**
-	 * Create a menuitem.
-	 */
-	MENUITEM = 32,
-	/**
-	 * Create a toolitem.
-	 */
-	TOOLITEM = 64,
-	/**
-	 * Create a separator.
-	 */
-	SEPARATOR = 128,
-	/**
-	 * Install an accelerator.
-	 */
-	ACCELERATOR = 256,
-	/**
-	 * Same as %GTK_UI_MANAGER_POPUP, but the
-	 * actions’ accelerators are shown.
-	 */
-	POPUP_WITH_ACCELS = 512,
-}
-alias GtkUIManagerItemType UIManagerItemType;
-
-/**
  * See also gtk_print_settings_set_paper_width().
  */
 public enum GtkUnit
@@ -3896,81 +3902,6 @@ public enum GtkUnit
 	MM = 3,
 }
 alias GtkUnit Unit;
-
-/**
- * Kinds of widget-specific help. Used by the ::show-help signal.
- */
-public enum GtkWidgetHelpType
-{
-	/**
-	 * Tooltip.
-	 */
-	TOOLTIP = 0,
-	/**
-	 * What’s this.
-	 */
-	WHATS_THIS = 1,
-}
-alias GtkWidgetHelpType WidgetHelpType;
-
-/**
- * Window placement can be influenced using this enumeration. Note that
- * using #GTK_WIN_POS_CENTER_ALWAYS is almost always a bad idea.
- * It won’t necessarily work well with all window managers or on all windowing systems.
- */
-public enum GtkWindowPosition
-{
-	/**
-	 * No influence is made on placement.
-	 */
-	NONE = 0,
-	/**
-	 * Windows should be placed in the center of the screen.
-	 */
-	CENTER = 1,
-	/**
-	 * Windows should be placed at the current mouse position.
-	 */
-	MOUSE = 2,
-	/**
-	 * Keep window centered as it changes size, etc.
-	 */
-	CENTER_ALWAYS = 3,
-	/**
-	 * Center the window on its transient
-	 * parent (see gtk_window_set_transient_for()).
-	 */
-	CENTER_ON_PARENT = 4,
-}
-alias GtkWindowPosition WindowPosition;
-
-/**
- * A #GtkWindow can be one of these types. Most things you’d consider a
- * “window” should have type #GTK_WINDOW_TOPLEVEL; windows with this type
- * are managed by the window manager and have a frame by default (call
- * gtk_window_set_decorated() to toggle the frame).  Windows with type
- * #GTK_WINDOW_POPUP are ignored by the window manager; window manager
- * keybindings won’t work on them, the window manager won’t decorate the
- * window with a frame, many GTK+ features that rely on the window
- * manager will not work (e.g. resize grips and
- * maximization/minimization). #GTK_WINDOW_POPUP is used to implement
- * widgets such as #GtkMenu or tooltips that you normally don’t think of
- * as windows per se. Nearly all windows should be #GTK_WINDOW_TOPLEVEL.
- * In particular, do not use #GTK_WINDOW_POPUP just to turn off
- * the window borders; use gtk_window_set_decorated() for that.
- */
-public enum GtkWindowType
-{
-	/**
-	 * A regular window, such as a dialog.
-	 */
-	TOPLEVEL = 0,
-	/**
-	 * A special window such as a tooltip.
-	 */
-	POPUP = 1,
-}
-alias GtkWindowType WindowType;
 
 /**
  * Describes a type of line wrapping.
@@ -3999,275 +3930,17 @@ public enum GtkWrapMode
 }
 alias GtkWrapMode WrapMode;
 
-struct GtkAboutDialog
-{
-	GtkDialog parentInstance;
-	GtkAboutDialogPrivate* priv;
-}
+struct GtkATContext;
 
-struct GtkAboutDialogClass
-{
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) int function(GtkAboutDialog* dialog, const(char)* uri) activateLink;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkATContextClass;
 
-struct GtkAboutDialogPrivate;
+struct GtkAboutDialog;
 
-struct GtkAccelGroup
-{
-	GObject parent;
-	GtkAccelGroupPrivate* priv;
-}
+struct GtkAccessible;
 
-struct GtkAccelGroupClass
-{
-	/**
-	 * The parent class.
-	 */
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkAccelGroup* accelGroup, uint keyval, GdkModifierType modifier, GClosure* accelClosure) accelChanged;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkAccessibleInterface;
 
-struct GtkAccelGroupEntry
-{
-	GtkAccelKey key;
-	GClosure* closure;
-	GQuark accelPathQuark;
-}
-
-struct GtkAccelGroupPrivate;
-
-struct GtkAccelKey
-{
-	/**
-	 * The accelerator keyval
-	 */
-	uint accelKey;
-	/**
-	 * The accelerator modifiers
-	 */
-	GdkModifierType accelMods;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "accelFlags", 16,
-		uint, "", 16
-	));
-}
-
-struct GtkAccelLabel
-{
-	GtkLabel label;
-	GtkAccelLabelPrivate* priv;
-}
-
-struct GtkAccelLabelClass
-{
-	GtkLabelClass parentClass;
-	char* signalQuote1;
-	char* signalQuote2;
-	char* modNameShift;
-	char* modNameControl;
-	char* modNameAlt;
-	char* modSeparator;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkAccelLabelPrivate;
-
-struct GtkAccelMap;
-
-struct GtkAccelMapClass;
-
-struct GtkAccessible
-{
-	AtkObject parent;
-	GtkAccessiblePrivate* priv;
-}
-
-struct GtkAccessibleClass
-{
-	AtkObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkAccessible* accessible) connectWidgetDestroyed;
-	/** */
-	extern(C) void function(GtkAccessible* accessible) widgetSet;
-	/** */
-	extern(C) void function(GtkAccessible* accessible) widgetUnset;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkAccessiblePrivate;
-
-struct GtkAction
-{
-	GObject object;
-	GtkActionPrivate* privateData;
-}
-
-struct GtkActionBar
-{
-	GtkBin bin;
-}
-
-struct GtkActionBarClass
-{
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkActionBarPrivate;
-
-struct GtkActionClass
-{
-	/**
-	 * The parent class.
-	 */
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkAction* action) activate;
-	GType menuItemType;
-	GType toolbarItemType;
-	/**
-	 *
-	 * Params:
-	 *     action = the action object
-	 * Returns: a menu item connected to the action.
-	 */
-	extern(C) GtkWidget* function(GtkAction* action) createMenuItem;
-	/**
-	 *
-	 * Params:
-	 *     action = the action object
-	 * Returns: a toolbar item connected to the action.
-	 */
-	extern(C) GtkWidget* function(GtkAction* action) createToolItem;
-	/** */
-	extern(C) void function(GtkAction* action, GtkWidget* proxy) connectProxy;
-	/** */
-	extern(C) void function(GtkAction* action, GtkWidget* proxy) disconnectProxy;
-	/**
-	 *
-	 * Params:
-	 *     action = a #GtkAction
-	 * Returns: the menu item provided by the
-	 *     action, or %NULL.
-	 */
-	extern(C) GtkWidget* function(GtkAction* action) createMenu;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-/**
- * #GtkActionEntry structs are used with gtk_action_group_add_actions() to
- * construct actions.
- */
-struct GtkActionEntry
-{
-	/**
-	 * The name of the action.
-	 */
-	const(char)* name;
-	/**
-	 * The stock id for the action, or the name of an icon from the
-	 * icon theme.
-	 */
-	const(char)* stockId;
-	/**
-	 * The label for the action. This field should typically be marked
-	 * for translation, see gtk_action_group_set_translation_domain(). If
-	 * @label is %NULL, the label of the stock item with id @stock_id is used.
-	 */
-	const(char)* label;
-	/**
-	 * The accelerator for the action, in the format understood by
-	 * gtk_accelerator_parse().
-	 */
-	const(char)* accelerator;
-	/**
-	 * The tooltip for the action. This field should typically be
-	 * marked for translation, see gtk_action_group_set_translation_domain().
-	 */
-	const(char)* tooltip;
-	/**
-	 * The function to call when the action is activated.
-	 */
-	GCallback callback;
-}
-
-struct GtkActionGroup
-{
-	GObject parent;
-	GtkActionGroupPrivate* priv;
-}
-
-struct GtkActionGroupClass
-{
-	/**
-	 * The parent class.
-	 */
-	GObjectClass parentClass;
-	/**
-	 *
-	 * Params:
-	 *     actionGroup = the action group
-	 *     actionName = the name of the action
-	 * Returns: the action, or %NULL if no action by that name exists
-	 */
-	extern(C) GtkAction* function(GtkActionGroup* actionGroup, const(char)* actionName) getAction;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkActionGroupPrivate;
-
-struct GtkActionPrivate;
+struct GtkActionBar;
 
 struct GtkActionable;
 
@@ -4297,26 +3970,13 @@ struct GtkActionableInterface
 	extern(C) void function(GtkActionable* actionable, GVariant* targetValue) setActionTargetValue;
 }
 
-struct GtkActivatable;
+struct GtkActivateAction;
 
-/**
- * > This method can be called with a %NULL action at times.
- *
- * Since: 2.16
- */
-struct GtkActivatableIface
-{
-	GTypeInterface gIface;
-	/** */
-	extern(C) void function(GtkActivatable* activatable, GtkAction* action, const(char)* propertyName) update;
-	/** */
-	extern(C) void function(GtkActivatable* activatable, GtkAction* action) syncActionProperties;
-}
+struct GtkActivateActionClass;
 
 struct GtkAdjustment
 {
 	GObject parentInstance;
-	GtkAdjustmentPrivate* priv;
 }
 
 struct GtkAdjustmentClass
@@ -4336,97 +3996,25 @@ struct GtkAdjustmentClass
 	extern(C) void function() GtkReserved4;
 }
 
-struct GtkAdjustmentPrivate;
+struct GtkAlternativeTrigger;
 
-struct GtkAlignment
-{
-	GtkBin bin;
-	GtkAlignmentPrivate* priv;
-}
+struct GtkAlternativeTriggerClass;
 
-struct GtkAlignmentClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkAnyFilter;
 
-struct GtkAlignmentPrivate;
+struct GtkAnyFilterClass;
 
 struct GtkAppChooser;
 
-struct GtkAppChooserButton
-{
-	GtkComboBox parent;
-	GtkAppChooserButtonPrivate* priv;
-}
+struct GtkAppChooserButton;
 
-struct GtkAppChooserButtonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkComboBoxClass parentClass;
-	/** */
-	extern(C) void function(GtkAppChooserButton* self, const(char)* itemName) customItemActivated;
-	void*[16] padding;
-}
+struct GtkAppChooserDialog;
 
-struct GtkAppChooserButtonPrivate;
-
-struct GtkAppChooserDialog
-{
-	GtkDialog parent;
-	GtkAppChooserDialogPrivate* priv;
-}
-
-struct GtkAppChooserDialogClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkDialogClass parentClass;
-	void*[16] padding;
-}
-
-struct GtkAppChooserDialogPrivate;
-
-struct GtkAppChooserWidget
-{
-	GtkBox parent;
-	GtkAppChooserWidgetPrivate* priv;
-}
-
-struct GtkAppChooserWidgetClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function(GtkAppChooserWidget* self, GAppInfo* appInfo) applicationSelected;
-	/** */
-	extern(C) void function(GtkAppChooserWidget* self, GAppInfo* appInfo) applicationActivated;
-	/** */
-	extern(C) void function(GtkAppChooserWidget* self, GtkMenu* menu, GAppInfo* appInfo) populatePopup;
-	void*[16] padding;
-}
-
-struct GtkAppChooserWidgetPrivate;
+struct GtkAppChooserWidget;
 
 struct GtkApplication
 {
-	GApplication parent;
-	GtkApplicationPrivate* priv;
+	GApplication parentInstance;
 }
 
 struct GtkApplicationClass
@@ -4439,15 +4027,12 @@ struct GtkApplicationClass
 	extern(C) void function(GtkApplication* application, GtkWindow* window) windowAdded;
 	/** */
 	extern(C) void function(GtkApplication* application, GtkWindow* window) windowRemoved;
-	void*[12] padding;
+	void*[8] padding;
 }
-
-struct GtkApplicationPrivate;
 
 struct GtkApplicationWindow
 {
 	GtkWindow parentInstance;
-	GtkApplicationWindowPrivate* priv;
 }
 
 struct GtkApplicationWindowClass
@@ -4456,260 +4041,42 @@ struct GtkApplicationWindowClass
 	 * The parent class.
 	 */
 	GtkWindowClass parentClass;
-	void*[14] padding;
+	void*[8] padding;
 }
 
-struct GtkApplicationWindowPrivate;
+struct GtkAspectFrame;
 
-struct GtkArrow
+struct GtkAssistant;
+
+struct GtkAssistantPage;
+
+struct GtkBinLayout;
+
+struct GtkBinLayoutClass
 {
-	GtkMisc misc;
-	GtkArrowPrivate* priv;
+	GtkLayoutManagerClass parentClass;
 }
 
-struct GtkArrowAccessible
+struct GtkBitset;
+
+struct GtkBitsetIter
 {
-	GtkWidgetAccessible parent;
-	GtkArrowAccessiblePrivate* priv;
+	void*[10] privateData;
 }
 
-struct GtkArrowAccessibleClass
+struct GtkBookmarkList;
+
+struct GtkBookmarkListClass
 {
-	GtkWidgetAccessibleClass parentClass;
+	GObjectClass parentClass;
 }
 
-struct GtkArrowAccessiblePrivate;
+struct GtkBoolFilter;
 
-struct GtkArrowClass
+struct GtkBoolFilterClass
 {
-	GtkMiscClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	GtkFilterClass parentClass;
 }
-
-struct GtkArrowPrivate;
-
-struct GtkAspectFrame
-{
-	GtkFrame frame;
-	GtkAspectFramePrivate* priv;
-}
-
-struct GtkAspectFrameClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkFrameClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkAspectFramePrivate;
-
-struct GtkAssistant
-{
-	GtkWindow parent;
-	GtkAssistantPrivate* priv;
-}
-
-struct GtkAssistantClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkWindowClass parentClass;
-	/** */
-	extern(C) void function(GtkAssistant* assistant, GtkWidget* page) prepare;
-	/** */
-	extern(C) void function(GtkAssistant* assistant) apply;
-	/** */
-	extern(C) void function(GtkAssistant* assistant) close;
-	/** */
-	extern(C) void function(GtkAssistant* assistant) cancel;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-}
-
-struct GtkAssistantPrivate;
-
-struct GtkBin
-{
-	GtkContainer container;
-	GtkBinPrivate* priv;
-}
-
-struct GtkBinClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkBinPrivate;
-
-/**
- * A #GtkBindingArg holds the data associated with
- * an argument for a key binding signal emission as
- * stored in #GtkBindingSignal.
- */
-struct GtkBindingArg
-{
-	/**
-	 * implementation detail
-	 */
-	GType argType;
-	union D
-	{
-		glong longData;
-		double doubleData;
-		char* stringData;
-	}
-	D d;
-}
-
-/**
- * Each key binding element of a binding sets binding list is
- * represented by a GtkBindingEntry.
- */
-struct GtkBindingEntry
-{
-	/**
-	 * key value to match
-	 */
-	uint keyval;
-	/**
-	 * key modifiers to match
-	 */
-	GdkModifierType modifiers;
-	/**
-	 * binding set this entry belongs to
-	 */
-	GtkBindingSet* bindingSet;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "destroyed", 1,
-		uint, "inEmission", 1,
-		uint, "marksUnbound", 1,
-		uint, "", 29
-	));
-	/**
-	 * linked list of entries maintained by binding set
-	 */
-	GtkBindingEntry* setNext;
-	/**
-	 * implementation detail
-	 */
-	GtkBindingEntry* hashNext;
-	/**
-	 * action signals of this entry
-	 */
-	GtkBindingSignal* signals;
-}
-
-struct GtkBindingSet
-{
-	/**
-	 * unique name of this binding set
-	 */
-	char* setName;
-	/**
-	 * unused
-	 */
-	int priority;
-	/**
-	 * unused
-	 */
-	GSList* widgetPathPspecs;
-	/**
-	 * unused
-	 */
-	GSList* widgetClassPspecs;
-	/**
-	 * unused
-	 */
-	GSList* classBranchPspecs;
-	/**
-	 * the key binding entries in this binding set
-	 */
-	GtkBindingEntry* entries;
-	/**
-	 * implementation detail
-	 */
-	GtkBindingEntry* current;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "parsed", 1,
-		uint, "", 31
-	));
-}
-
-/**
- * A GtkBindingSignal stores the necessary information to
- * activate a widget in response to a key press via a signal
- * emission.
- */
-struct GtkBindingSignal
-{
-	/**
-	 * implementation detail
-	 */
-	GtkBindingSignal* next;
-	/**
-	 * the action signal to be emitted
-	 */
-	char* signalName;
-	/**
-	 * number of arguments specified for the signal
-	 */
-	uint nArgs;
-	/**
-	 * the arguments specified for the signal
-	 */
-	GtkBindingArg* args;
-}
-
-struct GtkBooleanCellAccessible
-{
-	GtkRendererCellAccessible parent;
-	GtkBooleanCellAccessiblePrivate* priv;
-}
-
-struct GtkBooleanCellAccessibleClass
-{
-	GtkRendererCellAccessibleClass parentClass;
-}
-
-struct GtkBooleanCellAccessiblePrivate;
 
 struct GtkBorder
 {
@@ -4733,8 +4100,7 @@ struct GtkBorder
 
 struct GtkBox
 {
-	GtkContainer container;
-	GtkBoxPrivate* priv;
+	GtkWidget parentInstance;
 }
 
 struct GtkBoxClass
@@ -4742,18 +4108,16 @@ struct GtkBoxClass
 	/**
 	 * The parent class.
 	 */
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	GtkWidgetClass parentClass;
+	void*[8] padding;
 }
 
-struct GtkBoxPrivate;
+struct GtkBoxLayout;
+
+struct GtkBoxLayoutClass
+{
+	GtkLayoutManagerClass parentClass;
+}
 
 struct GtkBuildable;
 
@@ -4769,26 +4133,14 @@ struct GtkBuildableIface
 	 */
 	GTypeInterface gIface;
 	/** */
-	extern(C) void function(GtkBuildable* buildable, const(char)* name) setName;
-	/**
-	 *
-	 * Params:
-	 *     buildable = a #GtkBuildable
-	 * Returns: the name set with gtk_buildable_set_name()
-	 */
-	extern(C) const(char)* function(GtkBuildable* buildable) getName;
+	extern(C) void function(GtkBuildable* buildable, const(char)* id) setId;
+	/** */
+	extern(C) const(char)* function(GtkBuildable* buildable) getId;
 	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* type) addChild;
 	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, const(char)* name, GValue* value) setBuildableProperty;
-	/**
-	 *
-	 * Params:
-	 *     buildable = A #GtkBuildable
-	 *     builder = #GtkBuilder used to construct this object
-	 *     name = name of child to construct
-	 * Returns: the constructed child
-	 */
+	/** */
 	extern(C) GObject* function(GtkBuildable* buildable, GtkBuilder* builder, const(char)* name) constructChild;
 	/**
 	 *
@@ -4797,15 +4149,15 @@ struct GtkBuildableIface
 	 *     builder = a #GtkBuilder used to construct this object
 	 *     child = child object or %NULL for non-child tags
 	 *     tagname = name of tag
-	 *     parser = a #GMarkupParser to fill in
+	 *     parser = a #GtkBuildableParser to fill in
 	 *     data = return location for user data that will be passed in
 	 *         to parser functions
-	 * Returns: %TRUE if a object has a custom implementation, %FALSE
+	 * Returns: %TRUE if an object has a custom implementation, %FALSE
 	 *     if it doesn't.
 	 */
-	extern(C) int function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, GMarkupParser* parser, void** data) customTagStart;
+	extern(C) int function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, GtkBuildableParser* parser, void** data) customTagStart;
 	/** */
-	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, void** data) customTagEnd;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, void* data) customTagEnd;
 	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, void* data) customFinished;
 	/** */
@@ -4821,224 +4173,94 @@ struct GtkBuildableIface
 	extern(C) GObject* function(GtkBuildable* buildable, GtkBuilder* builder, const(char)* childname) getInternalChild;
 }
 
-struct GtkBuilder
+struct GtkBuildableParseContext;
+
+/**
+ * A sub-parser for #GtkBuildable implementations.
+ */
+struct GtkBuildableParser
+{
+	/** */
+	extern(C) void function(GtkBuildableParseContext* context, const(char)* elementName, char** attributeNames, char** attributeValues, void* userData, GError** err) startElement;
+	/** */
+	extern(C) void function(GtkBuildableParseContext* context, const(char)* elementName, void* userData, GError** err) endElement;
+	/** */
+	extern(C) void function(GtkBuildableParseContext* context, const(char)* text, size_t textLen, void* userData, GError** err) text;
+	/** */
+	extern(C) void function(GtkBuildableParseContext* context, GError* error, void* userData) error;
+	void*[4] padding;
+}
+
+struct GtkBuilder;
+
+struct GtkBuilderCScope
 {
 	GObject parentInstance;
-	GtkBuilderPrivate* priv;
 }
 
-struct GtkBuilderClass
+struct GtkBuilderCScopeClass
 {
 	GObjectClass parentClass;
-	/**
-	 *
-	 * Params:
-	 *     builder = a #GtkBuilder
-	 *     typeName = type name to lookup
-	 * Returns: the #GType found for @type_name or #G_TYPE_INVALID
-	 *     if no type was found
-	 */
-	extern(C) GType function(GtkBuilder* builder, const(char)* typeName) getTypeFromName;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
 }
 
-struct GtkBuilderPrivate;
+struct GtkBuilderClass;
+
+struct GtkBuilderListItemFactory;
+
+struct GtkBuilderListItemFactoryClass;
+
+struct GtkBuilderScope;
+
+/**
+ * The virtual function table to implement for #GtkBuilderScope implementations.
+ * Default implementations for each function do exist, but they usually just fail,
+ * so it is suggested that implementations implement all of them.
+ */
+struct GtkBuilderScopeInterface
+{
+	GTypeInterface gIface;
+	/** */
+	extern(C) GType function(GtkBuilderScope* self, GtkBuilder* builder, const(char)* typeName) getTypeFromName;
+	/** */
+	extern(C) GType function(GtkBuilderScope* self, GtkBuilder* builder, const(char)* functionName) getTypeFromFunction;
+	/** */
+	extern(C) GClosure* function(GtkBuilderScope* self, GtkBuilder* builder, const(char)* functionName, GtkBuilderClosureFlags flags, GObject* object, GError** err) createClosure;
+}
 
 struct GtkButton
 {
-	GtkBin bin;
-	GtkButtonPrivate* priv;
+	GtkWidget parentInstance;
 }
-
-struct GtkButtonAccessible
-{
-	GtkContainerAccessible parent;
-	GtkButtonAccessiblePrivate* priv;
-}
-
-struct GtkButtonAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkButtonAccessiblePrivate;
-
-struct GtkButtonBox
-{
-	GtkBox box;
-	GtkButtonBoxPrivate* priv;
-}
-
-struct GtkButtonBoxClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkButtonBoxPrivate;
 
 struct GtkButtonClass
 {
 	/**
 	 * The parent class.
 	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function(GtkButton* button) pressed;
-	/** */
-	extern(C) void function(GtkButton* button) released;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkButton* button) clicked;
 	/** */
-	extern(C) void function(GtkButton* button) enter;
-	/** */
-	extern(C) void function(GtkButton* button) leave;
-	/** */
 	extern(C) void function(GtkButton* button) activate;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkButtonPrivate;
 
-struct GtkCalendar
-{
-	GtkWidget widget;
-	GtkCalendarPrivate* priv;
-}
+struct GtkCClosureExpression;
 
-struct GtkCalendarClass
-{
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function(GtkCalendar* calendar) monthChanged;
-	/** */
-	extern(C) void function(GtkCalendar* calendar) daySelected;
-	/** */
-	extern(C) void function(GtkCalendar* calendar) daySelectedDoubleClick;
-	/** */
-	extern(C) void function(GtkCalendar* calendar) prevMonth;
-	/** */
-	extern(C) void function(GtkCalendar* calendar) nextMonth;
-	/** */
-	extern(C) void function(GtkCalendar* calendar) prevYear;
-	/** */
-	extern(C) void function(GtkCalendar* calendar) nextYear;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkCalendar;
 
-struct GtkCalendarPrivate;
+struct GtkCallbackAction;
 
-struct GtkCellAccessible
-{
-	GtkAccessible parent;
-	GtkCellAccessiblePrivate* priv;
-}
-
-struct GtkCellAccessibleClass
-{
-	GtkAccessibleClass parentClass;
-	/** */
-	extern(C) void function(GtkCellAccessible* cell, int emitSignal) updateCache;
-}
-
-struct GtkCellAccessibleParent;
-
-struct GtkCellAccessibleParentIface
-{
-	GTypeInterface parent;
-	/** */
-	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, int* x, int* y, int* width, int* height, AtkCoordType coordType) getCellExtents;
-	/** */
-	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, GdkRectangle* cellRect) getCellArea;
-	/** */
-	extern(C) int function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) grabFocus;
-	/** */
-	extern(C) int function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getChildIndex;
-	/** */
-	extern(C) GtkCellRendererState function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getRendererState;
-	/** */
-	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) expandCollapse;
-	/** */
-	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) activate;
-	/** */
-	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) edit;
-	/** */
-	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, AtkRelationSet* relationset) updateRelationset;
-	/** */
-	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, int* row, int* column) getCellPosition;
-	/** */
-	extern(C) GPtrArray* function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getColumnHeaderCells;
-	/** */
-	extern(C) GPtrArray* function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getRowHeaderCells;
-}
-
-struct GtkCellAccessiblePrivate;
+struct GtkCallbackActionClass;
 
 struct GtkCellArea
 {
 	GObject parentInstance;
-	GtkCellAreaPrivate* priv;
 }
 
-struct GtkCellAreaBox
-{
-	GtkCellArea parentInstance;
-	GtkCellAreaBoxPrivate* priv;
-}
-
-struct GtkCellAreaBoxClass
-{
-	GtkCellAreaClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellAreaBoxPrivate;
+struct GtkCellAreaBox;
 
 struct GtkCellAreaClass
 {
@@ -5064,7 +4286,7 @@ struct GtkCellAreaClass
 	 */
 	extern(C) int function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkEvent* event, GdkRectangle* cellArea, GtkCellRendererState flags) event;
 	/** */
-	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, cairo_t* cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags, int paintFocus) render;
+	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GtkSnapshot* snapshot, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags, int paintFocus) snapshot;
 	/** */
 	extern(C) void function(GtkCellArea* area, GtkTreeModel* treeModel, GtkTreeIter* iter, int isExpander, int isExpanded) applyAttributes;
 	/**
@@ -5129,28 +4351,12 @@ struct GtkCellAreaClass
 	 * Returns: Whether @area was successfully activated.
 	 */
 	extern(C) int function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkRectangle* cellArea, GtkCellRendererState flags, int editOnly) activate;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
+	void*[8] padding;
 }
 
 struct GtkCellAreaContext
 {
 	GObject parentInstance;
-	GtkCellAreaContextPrivate* priv;
 }
 
 struct GtkCellAreaContextClass
@@ -5164,23 +4370,10 @@ struct GtkCellAreaContextClass
 	extern(C) void function(GtkCellAreaContext* context, int width, int* minimumHeight, int* naturalHeight) getPreferredHeightForWidth;
 	/** */
 	extern(C) void function(GtkCellAreaContext* context, int height, int* minimumWidth, int* naturalWidth) getPreferredWidthForHeight;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
+	void*[8] padding;
 }
 
 struct GtkCellAreaContextPrivate;
-
-struct GtkCellAreaPrivate;
 
 struct GtkCellEditable;
 
@@ -5239,32 +4432,7 @@ struct GtkCellRenderer
 	GtkCellRendererPrivate* priv;
 }
 
-struct GtkCellRendererAccel
-{
-	GtkCellRendererText parent;
-	GtkCellRendererAccelPrivate* priv;
-}
-
-struct GtkCellRendererAccelClass
-{
-	GtkCellRendererTextClass parentClass;
-	/** */
-	extern(C) void function(GtkCellRendererAccel* accel, const(char)* pathString, uint accelKey, GdkModifierType accelMods, uint hardwareKeycode) accelEdited;
-	/** */
-	extern(C) void function(GtkCellRendererAccel* accel, const(char)* pathString) accelCleared;
-	/** */
-	extern(C) void function() GtkReserved0;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellRendererAccelPrivate;
+struct GtkCellRendererAccel;
 
 struct GtkCellRendererClass
 {
@@ -5287,9 +4455,7 @@ struct GtkCellRendererClass
 	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, GtkCellRendererState flags, GdkRectangle* cellArea, GdkRectangle* alignedArea) getAlignedArea;
 	/** */
-	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, GdkRectangle* cellArea, int* xOffset, int* yOffset, int* width, int* height) getSize;
-	/** */
-	extern(C) void function(GtkCellRenderer* cell, cairo_t* cr, GtkWidget* widget, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) render;
+	extern(C) void function(GtkCellRenderer* cell, GtkSnapshot* snapshot, GtkWidget* widget, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) snapshot;
 	/**
 	 *
 	 * Params:
@@ -5323,128 +4489,26 @@ struct GtkCellRendererClass
 	extern(C) void function(GtkCellRenderer* cell) editingCanceled;
 	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkCellEditable* editable, const(char)* path) editingStarted;
-	GtkCellRendererClassPrivate* priv;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkCellRendererClassPrivate;
 
-struct GtkCellRendererCombo
-{
-	GtkCellRendererText parent;
-	GtkCellRendererComboPrivate* priv;
-}
+struct GtkCellRendererCombo;
 
-struct GtkCellRendererComboClass
-{
-	GtkCellRendererTextClass parent;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellRendererComboPrivate;
-
-struct GtkCellRendererPixbuf
-{
-	GtkCellRenderer parent;
-	GtkCellRendererPixbufPrivate* priv;
-}
-
-struct GtkCellRendererPixbufClass
-{
-	GtkCellRendererClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellRendererPixbufPrivate;
+struct GtkCellRendererPixbuf;
 
 struct GtkCellRendererPrivate;
 
-struct GtkCellRendererProgress
-{
-	GtkCellRenderer parentInstance;
-	GtkCellRendererProgressPrivate* priv;
-}
+struct GtkCellRendererProgress;
 
-struct GtkCellRendererProgressClass
-{
-	GtkCellRendererClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkCellRendererSpin;
 
-struct GtkCellRendererProgressPrivate;
-
-struct GtkCellRendererSpin
-{
-	GtkCellRendererText parent;
-	GtkCellRendererSpinPrivate* priv;
-}
-
-struct GtkCellRendererSpinClass
-{
-	GtkCellRendererTextClass parent;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellRendererSpinPrivate;
-
-struct GtkCellRendererSpinner
-{
-	GtkCellRenderer parent;
-	GtkCellRendererSpinnerPrivate* priv;
-}
-
-struct GtkCellRendererSpinnerClass
-{
-	GtkCellRendererClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellRendererSpinnerPrivate;
+struct GtkCellRendererSpinner;
 
 struct GtkCellRendererText
 {
 	GtkCellRenderer parent;
-	GtkCellRendererTextPrivate* priv;
 }
 
 struct GtkCellRendererTextClass
@@ -5452,173 +4516,46 @@ struct GtkCellRendererTextClass
 	GtkCellRendererClass parentClass;
 	/** */
 	extern(C) void function(GtkCellRendererText* cellRendererText, const(char)* path, const(char)* newText) edited;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
-struct GtkCellRendererTextPrivate;
+struct GtkCellRendererToggle;
 
-struct GtkCellRendererToggle
+struct GtkCellView;
+
+struct GtkCenterBox;
+
+struct GtkCenterBoxClass;
+
+struct GtkCenterLayout;
+
+struct GtkCenterLayoutClass
 {
-	GtkCellRenderer parent;
-	GtkCellRendererTogglePrivate* priv;
+	GtkLayoutManagerClass parentClass;
 }
-
-struct GtkCellRendererToggleClass
-{
-	GtkCellRendererClass parentClass;
-	/** */
-	extern(C) void function(GtkCellRendererToggle* cellRendererToggle, const(char)* path) toggled;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellRendererTogglePrivate;
-
-struct GtkCellView
-{
-	GtkWidget parentInstance;
-	GtkCellViewPrivate* priv;
-}
-
-struct GtkCellViewClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCellViewPrivate;
 
 struct GtkCheckButton
 {
-	GtkToggleButton toggleButton;
+	GtkWidget parentInstance;
 }
 
 struct GtkCheckButtonClass
 {
-	GtkToggleButtonClass parentClass;
+	GtkWidgetClass parentClass;
 	/** */
-	extern(C) void function(GtkCheckButton* checkButton, cairo_t* cr) drawIndicator;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	extern(C) void function(GtkCheckButton* checkButton) toggled;
+	void*[8] padding;
 }
-
-struct GtkCheckMenuItem
-{
-	GtkMenuItem menuItem;
-	GtkCheckMenuItemPrivate* priv;
-}
-
-struct GtkCheckMenuItemAccessible
-{
-	GtkMenuItemAccessible parent;
-	GtkCheckMenuItemAccessiblePrivate* priv;
-}
-
-struct GtkCheckMenuItemAccessibleClass
-{
-	GtkMenuItemAccessibleClass parentClass;
-}
-
-struct GtkCheckMenuItemAccessiblePrivate;
-
-struct GtkCheckMenuItemClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkMenuItemClass parentClass;
-	/** */
-	extern(C) void function(GtkCheckMenuItem* checkMenuItem) toggled;
-	/** */
-	extern(C) void function(GtkCheckMenuItem* checkMenuItem, cairo_t* cr) drawIndicator;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkCheckMenuItemPrivate;
 
 struct GtkClipboard;
 
-struct GtkColorButton
-{
-	GtkButton button;
-	GtkColorButtonPrivate* priv;
-}
+struct GtkClosureExpression;
 
-struct GtkColorButtonClass
-{
-	GtkButtonClass parentClass;
-	/** */
-	extern(C) void function(GtkColorButton* cp) colorSet;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkColorButtonPrivate;
+struct GtkColorButton;
 
 struct GtkColorChooser;
 
-struct GtkColorChooserDialog
-{
-	GtkDialog parentInstance;
-	GtkColorChooserDialogPrivate* priv;
-}
-
-struct GtkColorChooserDialogClass
-{
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkColorChooserDialogPrivate;
+struct GtkColorChooserDialog;
 
 struct GtkColorChooserInterface
 {
@@ -5634,270 +4571,148 @@ struct GtkColorChooserInterface
 	void*[12] padding;
 }
 
-struct GtkColorChooserWidget
-{
-	GtkBox parentInstance;
-	GtkColorChooserWidgetPrivate* priv;
-}
+struct GtkColorChooserWidget;
 
-struct GtkColorChooserWidgetClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
-}
+struct GtkColumnView;
 
-struct GtkColorChooserWidgetPrivate;
+struct GtkColumnViewClass;
 
-struct GtkColorSelection
-{
-	GtkBox parentInstance;
-	GtkColorSelectionPrivate* privateData;
-}
+struct GtkColumnViewColumn;
 
-struct GtkColorSelectionClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function(GtkColorSelection* colorSelection) colorChanged;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkColorSelectionDialog
-{
-	GtkDialog parentInstance;
-	GtkColorSelectionDialogPrivate* priv;
-}
-
-struct GtkColorSelectionDialogClass
-{
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkColorSelectionDialogPrivate;
-
-struct GtkColorSelectionPrivate;
+struct GtkColumnViewColumnClass;
 
 struct GtkComboBox
 {
-	GtkBin parentInstance;
-	GtkComboBoxPrivate* priv;
+	GtkWidget parentInstance;
 }
-
-struct GtkComboBoxAccessible
-{
-	GtkContainerAccessible parent;
-	GtkComboBoxAccessiblePrivate* priv;
-}
-
-struct GtkComboBoxAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkComboBoxAccessiblePrivate;
 
 struct GtkComboBoxClass
 {
 	/**
 	 * The parent class.
 	 */
-	GtkBinClass parentClass;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkComboBox* comboBox) changed;
 	/** */
 	extern(C) char* function(GtkComboBox* comboBox, const(char)* path) formatEntryText;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
+	void*[8] padding;
 }
 
-struct GtkComboBoxPrivate;
+struct GtkComboBoxText;
 
-struct GtkComboBoxText
+struct GtkConstantExpression;
+
+struct GtkConstraint;
+
+struct GtkConstraintClass
 {
-	GtkComboBox parentInstance;
-	GtkComboBoxTextPrivate* priv;
+	GObjectClass parentClass;
 }
 
-struct GtkComboBoxTextClass
+struct GtkConstraintGuide;
+
+struct GtkConstraintGuideClass
 {
-	GtkComboBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	GObjectClass parentClass;
 }
 
-struct GtkComboBoxTextPrivate;
+struct GtkConstraintLayout;
 
-struct GtkContainer
+struct GtkConstraintLayoutChild;
+
+struct GtkConstraintLayoutChildClass
 {
-	GtkWidget widget;
-	GtkContainerPrivate* priv;
+	GtkLayoutChildClass parentClass;
 }
 
-struct GtkContainerAccessible
+struct GtkConstraintLayoutClass
 {
-	GtkWidgetAccessible parent;
-	GtkContainerAccessiblePrivate* priv;
+	GtkLayoutManagerClass parentClass;
 }
 
-struct GtkContainerAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-	/** */
-	extern(C) int function(GtkContainer* container, GtkWidget* widget, void* data) addGtk;
-	/** */
-	extern(C) int function(GtkContainer* container, GtkWidget* widget, void* data) removeGtk;
-}
+struct GtkConstraintTarget;
 
-struct GtkContainerAccessiblePrivate;
+struct GtkConstraintTargetInterface;
 
-struct GtkContainerCellAccessible
-{
-	GtkCellAccessible parent;
-	GtkContainerCellAccessiblePrivate* priv;
-}
-
-struct GtkContainerCellAccessibleClass
-{
-	GtkCellAccessibleClass parentClass;
-}
-
-struct GtkContainerCellAccessiblePrivate;
-
-struct GtkContainerClass
+/**
+ * @GtkCssLocation is used to present a location in a file - or other
+ * source of data parsed by the CSS engine.
+ *
+ * The @bytes and @line_bytes offsets are meant to be used to
+ * programmatically match data. The @lines and @line_chars offsets
+ * can be used for printing the location in a file.
+ *
+ * Note that the @lines parameter starts from 0 and is increased
+ * whenever a CSS line break is encountered. (CSS defines the C character
+ * sequences "\r\n", "\r", "\n" and "\f" as newlines.)
+ * If your document uses different rules for line breaking, you might want
+ * run into problems here.
+ */
+struct GtkCssLocation
 {
 	/**
-	 * The parent class.
+	 * number of bytes parsed since the beginning
 	 */
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function(GtkContainer* container, GtkWidget* widget) add;
-	/** */
-	extern(C) void function(GtkContainer* container, GtkWidget* widget) remove;
-	/** */
-	extern(C) void function(GtkContainer* container) checkResize;
-	/** */
-	extern(C) void function(GtkContainer* container, int includeInternals, GtkCallback callback, void* callbackData) forall;
-	/** */
-	extern(C) void function(GtkContainer* container, GtkWidget* child) setFocusChild;
+	size_t bytes;
 	/**
-	 *
-	 * Params:
-	 *     container = a #GtkContainer
-	 * Returns: a #GType.
+	 * number of characters parsed since the beginning
 	 */
-	extern(C) GType function(GtkContainer* container) childType;
-	/** */
-	extern(C) char* function(GtkContainer* container, GtkWidget* child) compositeName;
-	/** */
-	extern(C) void function(GtkContainer* container, GtkWidget* child, uint propertyId, GValue* value, GParamSpec* pspec) setChildProperty;
-	/** */
-	extern(C) void function(GtkContainer* container, GtkWidget* child, uint propertyId, GValue* value, GParamSpec* pspec) getChildProperty;
+	size_t chars;
 	/**
-	 *
-	 * Params:
-	 *     container = a #GtkContainer
-	 *     child = a child of @container
-	 * Returns: A newly created #GtkWidgetPath
+	 * number of full lines that have been parsed
+	 * If you want to display this as a line number, you
+	 * need to add 1 to this.
 	 */
-	extern(C) GtkWidgetPath* function(GtkContainer* container, GtkWidget* child) getPathForChild;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "HandleBorderWidth", 1,
-		uint, "", 31
-	));
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
+	size_t lines;
+	/**
+	 * Number of bytes parsed since the last line break
+	 */
+	size_t lineBytes;
+	/**
+	 * Number of characters parsed since the last line
+	 * break
+	 */
+	size_t lineChars;
 }
-
-struct GtkContainerPrivate;
 
 struct GtkCssProvider
 {
 	GObject parentInstance;
-	GtkCssProviderPrivate* priv;
 }
 
-struct GtkCssProviderClass
-{
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkCssProvider* provider, GtkCssSection* section, GError* error) parsingError;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkCssProviderClass;
 
 struct GtkCssProviderPrivate;
 
 struct GtkCssSection;
 
+struct GtkCssStyleChange;
+
+struct GtkCustomFilter;
+
+struct GtkCustomFilterClass
+{
+	GtkFilterClass parentClass;
+}
+
+struct GtkCustomLayout;
+
+struct GtkCustomLayoutClass
+{
+	GtkLayoutManagerClass parentClass;
+}
+
+struct GtkCustomSorter;
+
+struct GtkCustomSorterClass
+{
+	GtkSorterClass parentClass;
+}
+
 struct GtkDialog
 {
-	GtkWindow window;
-	GtkDialogPrivate* priv;
+	GtkWindow parentInstance;
 }
 
 struct GtkDialogClass
@@ -5910,36 +4725,58 @@ struct GtkDialogClass
 	extern(C) void function(GtkDialog* dialog, int responseId) response;
 	/** */
 	extern(C) void function(GtkDialog* dialog) close;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
-struct GtkDialogPrivate;
+struct GtkDirectoryList;
+
+struct GtkDirectoryListClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkDragIcon;
+
+struct GtkDragIconClass
+{
+	GtkWidgetClass parentClass;
+}
+
+struct GtkDragSource;
+
+struct GtkDragSourceClass;
 
 struct GtkDrawingArea
 {
 	GtkWidget widget;
-	void* dummy;
 }
 
 struct GtkDrawingAreaClass
 {
 	GtkWidgetClass parentClass;
 	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	extern(C) void function(GtkDrawingArea* area, int width, int height) resize;
+	void*[8] padding;
 }
+
+struct GtkDropControllerMotion;
+
+struct GtkDropControllerMotionClass;
+
+struct GtkDropDown;
+
+struct GtkDropDownClass
+{
+	GtkWidgetClass parentClass;
+}
+
+struct GtkDropTarget;
+
+struct GtkDropTargetAsync;
+
+struct GtkDropTargetAsyncClass;
+
+struct GtkDropTargetClass;
 
 struct GtkEditable;
 
@@ -5947,71 +4784,61 @@ struct GtkEditableInterface
 {
 	GTypeInterface baseIface;
 	/** */
-	extern(C) void function(GtkEditable* editable, const(char)* newText, int newTextLength, int* position) insertText;
+	extern(C) void function(GtkEditable* editable, const(char)* text, int length, int* position) insertText;
 	/** */
 	extern(C) void function(GtkEditable* editable, int startPos, int endPos) deleteText;
 	/** */
 	extern(C) void function(GtkEditable* editable) changed;
+	/**
+	 *
+	 * Params:
+	 *     editable = a #GtkEditable
+	 * Returns: a pointer to the contents of the editable.
+	 */
+	extern(C) const(char)* function(GtkEditable* editable) getText;
 	/** */
-	extern(C) void function(GtkEditable* editable, const(char)* newText, int newTextLength, int* position) doInsertText;
+	extern(C) void function(GtkEditable* editable, const(char)* text, int length, int* position) doInsertText;
 	/** */
 	extern(C) void function(GtkEditable* editable, int startPos, int endPos) doDeleteText;
 	/**
 	 *
 	 * Params:
 	 *     editable = a #GtkEditable
-	 *     startPos = start of text
-	 *     endPos = end of text
-	 * Returns: a pointer to the contents of the widget as a
-	 *     string. This string is allocated by the #GtkEditable
-	 *     implementation and should be freed by the caller.
+	 *     startPos = location to store the starting position, or %NULL
+	 *     endPos = location to store the end position, or %NULL
+	 * Returns: %TRUE if there is a non-empty selection, %FALSE otherwise
 	 */
-	extern(C) char* function(GtkEditable* editable, int startPos, int endPos) getChars;
+	extern(C) int function(GtkEditable* editable, int* startPos, int* endPos) getSelectionBounds;
 	/** */
 	extern(C) void function(GtkEditable* editable, int startPos, int endPos) setSelectionBounds;
 	/**
 	 *
 	 * Params:
 	 *     editable = a #GtkEditable
-	 *     startPos = location to store the starting position, or %NULL
-	 *     endPos = location to store the end position, or %NULL
-	 * Returns: %TRUE if an area is selected, %FALSE otherwise
+	 * Returns: the delegate #GtkEditable
 	 */
-	extern(C) int function(GtkEditable* editable, int* startPos, int* endPos) getSelectionBounds;
-	/** */
-	extern(C) void function(GtkEditable* editable, int position) setPosition;
-	/**
-	 *
-	 * Params:
-	 *     editable = a #GtkEditable
-	 * Returns: the cursor position
-	 */
-	extern(C) int function(GtkEditable* editable) getPosition;
+	extern(C) GtkEditable* function(GtkEditable* editable) getDelegate;
 }
+
+struct GtkEditableLabel;
+
+struct GtkEditableLabelClass
+{
+	GtkWidgetClass parentClass;
+}
+
+struct GtkEmojiChooser;
+
+struct GtkEmojiChooserClass;
 
 struct GtkEntry
 {
 	GtkWidget parentInstance;
-	GtkEntryPrivate* priv;
 }
-
-struct GtkEntryAccessible
-{
-	GtkWidgetAccessible parent;
-	GtkEntryAccessiblePrivate* priv;
-}
-
-struct GtkEntryAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkEntryAccessiblePrivate;
 
 struct GtkEntryBuffer
 {
 	GObject parentInstance;
-	GtkEntryBufferPrivate* priv;
 }
 
 struct GtkEntryBufferClass
@@ -6067,8 +4894,6 @@ struct GtkEntryBufferClass
 	extern(C) void function() GtkReserved8;
 }
 
-struct GtkEntryBufferPrivate;
-
 /**
  * Class structure for #GtkEntry. All virtual functions have a default
  * implementation. Derived classes may set the virtual function pointers for the
@@ -6083,109 +4908,27 @@ struct GtkEntryClass
 	 */
 	GtkWidgetClass parentClass;
 	/** */
-	extern(C) void function(GtkEntry* entry, GtkWidget* popup) populatePopup;
-	/** */
 	extern(C) void function(GtkEntry* entry) activate;
-	/** */
-	extern(C) void function(GtkEntry* entry, GtkMovementStep step, int count, int extendSelection) moveCursor;
-	/** */
-	extern(C) void function(GtkEntry* entry, const(char)* str) insertAtCursor;
-	/** */
-	extern(C) void function(GtkEntry* entry, GtkDeleteType type, int count) deleteFromCursor;
-	/** */
-	extern(C) void function(GtkEntry* entry) backspace;
-	/** */
-	extern(C) void function(GtkEntry* entry) cutClipboard;
-	/** */
-	extern(C) void function(GtkEntry* entry) copyClipboard;
-	/** */
-	extern(C) void function(GtkEntry* entry) pasteClipboard;
-	/** */
-	extern(C) void function(GtkEntry* entry) toggleOverwrite;
-	/** */
-	extern(C) void function(GtkEntry* entry, int* x, int* y, int* width, int* height) getTextAreaSize;
-	/** */
-	extern(C) void function(GtkEntry* entry, int* x, int* y, int* width, int* height) getFrameSize;
-	/** */
-	extern(C) void function(GtkEntry* entry) insertEmoji;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
+	void*[8] padding;
 }
 
-struct GtkEntryCompletion
-{
-	GObject parentInstance;
-	GtkEntryCompletionPrivate* priv;
-}
-
-struct GtkEntryCompletionClass
-{
-	GObjectClass parentClass;
-	/** */
-	extern(C) int function(GtkEntryCompletion* completion, GtkTreeModel* model, GtkTreeIter* iter) matchSelected;
-	/** */
-	extern(C) void function(GtkEntryCompletion* completion, int index) actionActivated;
-	/** */
-	extern(C) int function(GtkEntryCompletion* completion, const(char)* prefix) insertPrefix;
-	/** */
-	extern(C) int function(GtkEntryCompletion* completion, GtkTreeModel* model, GtkTreeIter* iter) cursorOnMatch;
-	/** */
-	extern(C) void function(GtkEntryCompletion* completion) noMatches;
-	/** */
-	extern(C) void function() GtkReserved0;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-}
-
-struct GtkEntryCompletionPrivate;
-
-struct GtkEntryIconAccessible;
-
-struct GtkEntryPrivate;
-
-struct GtkEventBox
-{
-	GtkBin bin;
-	GtkEventBoxPrivate* priv;
-}
-
-struct GtkEventBoxClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkEventBoxPrivate;
+struct GtkEntryCompletion;
 
 struct GtkEventController;
 
 struct GtkEventControllerClass;
 
+struct GtkEventControllerFocus;
+
+struct GtkEventControllerFocusClass;
+
 struct GtkEventControllerKey;
 
 struct GtkEventControllerKeyClass;
+
+struct GtkEventControllerLegacy;
+
+struct GtkEventControllerLegacyClass;
 
 struct GtkEventControllerMotion;
 
@@ -6195,93 +4938,19 @@ struct GtkEventControllerScroll;
 
 struct GtkEventControllerScrollClass;
 
-struct GtkExpander
-{
-	GtkBin bin;
-	GtkExpanderPrivate* priv;
-}
+struct GtkEveryFilter;
 
-struct GtkExpanderAccessible
-{
-	GtkContainerAccessible parent;
-	GtkExpanderAccessiblePrivate* priv;
-}
+struct GtkEveryFilterClass;
 
-struct GtkExpanderAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
+struct GtkExpander;
 
-struct GtkExpanderAccessiblePrivate;
+struct GtkExpression;
 
-struct GtkExpanderClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function(GtkExpander* expander) activate;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkExpanderPrivate;
+struct GtkExpressionWatch;
 
 struct GtkFileChooser;
 
-struct GtkFileChooserButton
-{
-	GtkBox parent;
-	GtkFileChooserButtonPrivate* priv;
-}
-
-struct GtkFileChooserButtonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function(GtkFileChooserButton* fc) fileSet;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkFileChooserButtonPrivate;
-
-struct GtkFileChooserDialog
-{
-	GtkDialog parentInstance;
-	GtkFileChooserDialogPrivate* priv;
-}
-
-struct GtkFileChooserDialogClass
-{
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkFileChooserDialogPrivate;
+struct GtkFileChooserDialog;
 
 struct GtkFileChooserNative;
 
@@ -6290,151 +4959,34 @@ struct GtkFileChooserNativeClass
 	GtkNativeDialogClass parentClass;
 }
 
-struct GtkFileChooserWidget
-{
-	GtkBox parentInstance;
-	GtkFileChooserWidgetPrivate* priv;
-}
-
-struct GtkFileChooserWidgetClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkFileChooserWidgetPrivate;
+struct GtkFileChooserWidget;
 
 struct GtkFileFilter;
 
-/**
- * A #GtkFileFilterInfo-struct is used to pass information about the
- * tested file to gtk_file_filter_filter().
- */
-struct GtkFileFilterInfo
+struct GtkFilter
 {
+	GObject parentInstance;
+}
+
+struct GtkFilterClass
+{
+	GObjectClass parentClass;
 	/**
-	 * Flags indicating which of the following fields need
-	 * are filled
+	 *
+	 * Params:
+	 *     self = a #GtkFilter
+	 *     item = The item to check
+	 * Returns: %TRUE if the filter matches the item and a filter model should
+	 *     keep it, %FALSE if not.
 	 */
-	GtkFileFilterFlags contains;
+	extern(C) int function(GtkFilter* self, void* item) match;
 	/**
-	 * the filename of the file being tested
+	 *
+	 * Params:
+	 *     self = a #GtkFilter
+	 * Returns: the strictness of @self
 	 */
-	const(char)* filename;
-	/**
-	 * the URI for the file being tested
-	 */
-	const(char)* uri;
-	/**
-	 * the string that will be used to display the file
-	 * in the file chooser
-	 */
-	const(char)* displayName;
-	/**
-	 * the mime type of the file
-	 */
-	const(char)* mimeType;
-}
-
-struct GtkFixed
-{
-	GtkContainer container;
-	GtkFixedPrivate* priv;
-}
-
-struct GtkFixedChild
-{
-	GtkWidget* widget;
-	int x;
-	int y;
-}
-
-struct GtkFixedClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkFixedPrivate;
-
-struct GtkFlowBox
-{
-	GtkContainer container;
-}
-
-struct GtkFlowBoxAccessible
-{
-	GtkContainerAccessible parent;
-	GtkFlowBoxAccessiblePrivate* priv;
-}
-
-struct GtkFlowBoxAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkFlowBoxAccessiblePrivate;
-
-struct GtkFlowBoxChild
-{
-	GtkBin parentInstance;
-}
-
-struct GtkFlowBoxChildAccessible
-{
-	GtkContainerAccessible parent;
-}
-
-struct GtkFlowBoxChildAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkFlowBoxChildClass
-{
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function(GtkFlowBoxChild* child) activate;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-}
-
-struct GtkFlowBoxClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function(GtkFlowBox* box, GtkFlowBoxChild* child) childActivated;
-	/** */
-	extern(C) void function(GtkFlowBox* box) selectedChildrenChanged;
-	/** */
-	extern(C) void function(GtkFlowBox* box) activateCursorChild;
-	/** */
-	extern(C) void function(GtkFlowBox* box) toggleCursorChild;
-	/** */
-	extern(C) int function(GtkFlowBox* box, GtkMovementStep step, int count) moveCursor;
-	/** */
-	extern(C) void function(GtkFlowBox* box) selectAll;
-	/** */
-	extern(C) void function(GtkFlowBox* box) unselectAll;
+	extern(C) GtkFilterMatch function(GtkFilter* self) getStrictness;
 	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
@@ -6447,56 +4999,71 @@ struct GtkFlowBoxClass
 	extern(C) void function() GtkReserved5;
 	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
+	extern(C) void function() GtkReserved7;
+	/** */
+	extern(C) void function() GtkReserved8;
 }
 
-struct GtkFontButton
+struct GtkFilterListModel;
+
+struct GtkFilterListModelClass
 {
-	GtkButton button;
-	GtkFontButtonPrivate* priv;
+	GObjectClass parentClass;
 }
 
-struct GtkFontButtonClass
+struct GtkFixed
 {
-	GtkButtonClass parentClass;
-	/** */
-	extern(C) void function(GtkFontButton* gfp) fontSet;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	GtkWidget parentInstance;
 }
 
-struct GtkFontButtonPrivate;
+struct GtkFixedClass
+{
+	GtkWidgetClass parentClass;
+	void*[8] padding;
+}
+
+struct GtkFixedLayout;
+
+struct GtkFixedLayoutChild;
+
+struct GtkFixedLayoutChildClass
+{
+	GtkLayoutChildClass parentClass;
+}
+
+struct GtkFixedLayoutClass
+{
+	GtkLayoutManagerClass parentClass;
+}
+
+struct GtkFlattenListModel;
+
+struct GtkFlattenListModelClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkFlowBox;
+
+struct GtkFlowBoxChild
+{
+	GtkWidget parentInstance;
+}
+
+struct GtkFlowBoxChildClass
+{
+	GtkWidgetClass parentClass;
+	/** */
+	extern(C) void function(GtkFlowBoxChild* child) activate;
+	void*[8] padding;
+}
+
+struct GtkFontButton;
 
 struct GtkFontChooser;
 
-struct GtkFontChooserDialog
-{
-	GtkDialog parentInstance;
-	GtkFontChooserDialogPrivate* priv;
-}
-
-struct GtkFontChooserDialogClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkFontChooserDialogPrivate;
+struct GtkFontChooserDialog;
 
 struct GtkFontChooserIface
 {
@@ -6543,118 +5110,23 @@ struct GtkFontChooserIface
 	void*[10] padding;
 }
 
-struct GtkFontChooserWidget
-{
-	GtkBox parentInstance;
-	GtkFontChooserWidgetPrivate* priv;
-}
-
-struct GtkFontChooserWidgetClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
-}
-
-struct GtkFontChooserWidgetPrivate;
-
-struct GtkFontSelection
-{
-	GtkBox parentInstance;
-	GtkFontSelectionPrivate* priv;
-}
-
-struct GtkFontSelectionClass
-{
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkFontSelectionDialog
-{
-	GtkDialog parentInstance;
-	GtkFontSelectionDialogPrivate* priv;
-}
-
-struct GtkFontSelectionDialogClass
-{
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkFontSelectionDialogPrivate;
-
-struct GtkFontSelectionPrivate;
+struct GtkFontChooserWidget;
 
 struct GtkFrame
 {
-	GtkBin bin;
-	GtkFramePrivate* priv;
+	GtkWidget parentInstance;
 }
-
-struct GtkFrameAccessible
-{
-	GtkContainerAccessible parent;
-	GtkFrameAccessiblePrivate* priv;
-}
-
-struct GtkFrameAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkFrameAccessiblePrivate;
 
 struct GtkFrameClass
 {
 	/**
 	 * The parent class.
 	 */
-	GtkBinClass parentClass;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkFrame* frame, GtkAllocation* allocation) computeChildAllocation;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
-
-struct GtkFramePrivate;
 
 struct GtkGLArea
 {
@@ -6663,8 +5135,6 @@ struct GtkGLArea
 
 /**
  * The `GtkGLAreaClass` structure contains only private data.
- *
- * Since: 3.16
  */
 struct GtkGLAreaClass
 {
@@ -6675,12 +5145,16 @@ struct GtkGLAreaClass
 	extern(C) void function(GtkGLArea* area, int width, int height) resize;
 	/** */
 	extern(C) GdkGLContext* function(GtkGLArea* area) createContext;
-	void*[6] Padding;
+	void*[8] Padding;
 }
 
 struct GtkGesture;
 
 struct GtkGestureClass;
+
+struct GtkGestureClick;
+
+struct GtkGestureClickClass;
 
 struct GtkGestureDrag;
 
@@ -6689,10 +5163,6 @@ struct GtkGestureDragClass;
 struct GtkGestureLongPress;
 
 struct GtkGestureLongPressClass;
-
-struct GtkGestureMultiPress;
-
-struct GtkGestureMultiPressClass;
 
 struct GtkGesturePan;
 
@@ -6718,12 +5188,9 @@ struct GtkGestureZoom;
 
 struct GtkGestureZoomClass;
 
-struct GtkGradient;
-
 struct GtkGrid
 {
-	GtkContainer container;
-	GtkGridPrivate* priv;
+	GtkWidget parentInstance;
 }
 
 struct GtkGridClass
@@ -6731,159 +5198,29 @@ struct GtkGridClass
 	/**
 	 * The parent class.
 	 */
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
-}
-
-struct GtkGridPrivate;
-
-struct GtkHBox
-{
-	GtkBox box;
-}
-
-struct GtkHBoxClass
-{
-	GtkBoxClass parentClass;
-}
-
-struct GtkHButtonBox
-{
-	GtkButtonBox buttonBox;
-}
-
-struct GtkHButtonBoxClass
-{
-	GtkButtonBoxClass parentClass;
-}
-
-struct GtkHPaned
-{
-	GtkPaned paned;
-}
-
-struct GtkHPanedClass
-{
-	GtkPanedClass parentClass;
-}
-
-struct GtkHSV
-{
-	GtkWidget parentInstance;
-	GtkHSVPrivate* priv;
-}
-
-struct GtkHSVClass
-{
 	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function(GtkHSV* hsv) changed;
-	/** */
-	extern(C) void function(GtkHSV* hsv, GtkDirectionType type) move;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
-struct GtkHSVPrivate;
+struct GtkGridLayout;
 
-struct GtkHScale
+struct GtkGridLayoutChild;
+
+struct GtkGridLayoutChildClass
 {
-	GtkScale scale;
+	GtkLayoutChildClass parentClass;
 }
 
-struct GtkHScaleClass
+struct GtkGridLayoutClass
 {
-	GtkScaleClass parentClass;
+	GtkLayoutManagerClass parentClass;
 }
 
-struct GtkHScrollbar
-{
-	GtkScrollbar scrollbar;
-}
+struct GtkGridView;
 
-struct GtkHScrollbarClass
-{
-	GtkScrollbarClass parentClass;
-}
+struct GtkGridViewClass;
 
-struct GtkHSeparator
-{
-	GtkSeparator separator;
-}
-
-struct GtkHSeparatorClass
-{
-	GtkSeparatorClass parentClass;
-}
-
-struct GtkHandleBox
-{
-	GtkBin bin;
-	GtkHandleBoxPrivate* priv;
-}
-
-struct GtkHandleBoxClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function(GtkHandleBox* handleBox, GtkWidget* child) childAttached;
-	/** */
-	extern(C) void function(GtkHandleBox* handleBox, GtkWidget* child) childDetached;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkHandleBoxPrivate;
-
-struct GtkHeaderBar
-{
-	GtkContainer container;
-}
-
-struct GtkHeaderBarClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkHeaderBarPrivate;
+struct GtkHeaderBar;
 
 struct GtkIMContext
 {
@@ -6914,7 +5251,7 @@ struct GtkIMContextClass
 	 */
 	extern(C) int function(GtkIMContext* context, int offset, int nChars) deleteSurrounding;
 	/** */
-	extern(C) void function(GtkIMContext* context, GdkWindow* window) setClientWindow;
+	extern(C) void function(GtkIMContext* context, GtkWidget* widget) setClientWidget;
 	/** */
 	extern(C) void function(GtkIMContext* context, char** str, PangoAttrList** attrs, int* cursorPos) getPreeditString;
 	/**
@@ -6924,7 +5261,7 @@ struct GtkIMContextClass
 	 *     event = the key event
 	 * Returns: %TRUE if the input method handled the key event.
 	 */
-	extern(C) int function(GtkIMContext* context, GdkEventKey* event) filterKeypress;
+	extern(C) int function(GtkIMContext* context, GdkEvent* event) filterKeypress;
 	/** */
 	extern(C) void function(GtkIMContext* context) focusIn;
 	/** */
@@ -6965,34 +5302,6 @@ struct GtkIMContextClass
 	extern(C) void function() GtkReserved6;
 }
 
-/**
- * Bookkeeping information about a loadable input method.
- */
-struct GtkIMContextInfo
-{
-	/**
-	 * The unique identification string of the input method.
-	 */
-	const(char)* contextId;
-	/**
-	 * The human-readable name of the input method.
-	 */
-	const(char)* contextName;
-	/**
-	 * Translation domain to be used with dgettext()
-	 */
-	const(char)* domain;
-	/**
-	 * Name of locale directory for use with bindtextdomain()
-	 */
-	const(char)* domainDirname;
-	/**
-	 * A colon-separated list of locales where this input method
-	 * should be the default. The asterisk “*” sets the default for all locales.
-	 */
-	const(char)* defaultLocales;
-}
-
 struct GtkIMContextSimple
 {
 	GtkIMContext object;
@@ -7027,220 +5336,152 @@ struct GtkIMMulticontextClass
 
 struct GtkIMMulticontextPrivate;
 
-struct GtkIconFactory
+struct GtkIconPaintable;
+
+struct GtkIconTheme;
+
+struct GtkIconView;
+
+struct GtkImage;
+
+struct GtkInfoBar;
+
+struct GtkKeyvalTrigger;
+
+struct GtkKeyvalTriggerClass;
+
+struct GtkLabel;
+
+struct GtkLayoutChild
 {
 	GObject parentInstance;
-	GtkIconFactoryPrivate* priv;
 }
 
-struct GtkIconFactoryClass
+struct GtkLayoutChildClass
 {
-	/**
-	 * The parent class.
-	 */
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
 }
 
-struct GtkIconFactoryPrivate;
-
-struct GtkIconInfo;
-
-struct GtkIconInfoClass;
-
-struct GtkIconSet;
-
-struct GtkIconSource;
-
-struct GtkIconTheme
+struct GtkLayoutManager
 {
 	GObject parentInstance;
-	GtkIconThemePrivate* priv;
 }
 
-struct GtkIconThemeClass
+/**
+ * The `GtkLayoutManagerClass` structure contains only private data, and
+ * should only be accessed through the provided API, or when subclassing
+ * #GtkLayoutManager.
+ */
+struct GtkLayoutManagerClass
 {
-	/**
-	 * The parent class.
-	 */
 	GObjectClass parentClass;
 	/** */
-	extern(C) void function(GtkIconTheme* iconTheme) changed;
+	extern(C) GtkSizeRequestMode function(GtkLayoutManager* manager, GtkWidget* widget) getRequestMode;
 	/** */
-	extern(C) void function() GtkReserved1;
+	extern(C) void function(GtkLayoutManager* manager, GtkWidget* widget, GtkOrientation orientation, int forSize, int* minimum, int* natural, int* minimumBaseline, int* naturalBaseline) measure;
 	/** */
-	extern(C) void function() GtkReserved2;
+	extern(C) void function(GtkLayoutManager* manager, GtkWidget* widget, int width, int height, int baseline) allocate;
+	/**
+	 * the type of #GtkLayoutChild used by this layout manager
+	 */
+	GType layoutChildType;
+	/**
+	 *
+	 * Params:
+	 *     manager = the #GtkLayoutManager
+	 *     widget = the widget using the @manager
+	 *     forChild = the child of @widget
+	 * Returns: a #GtkLayoutChild
+	 */
+	extern(C) GtkLayoutChild* function(GtkLayoutManager* manager, GtkWidget* widget, GtkWidget* forChild) createLayoutChild;
 	/** */
-	extern(C) void function() GtkReserved3;
+	extern(C) void function(GtkLayoutManager* manager) root;
 	/** */
-	extern(C) void function() GtkReserved4;
+	extern(C) void function(GtkLayoutManager* manager) unroot;
+	void*[16] Padding;
 }
 
-struct GtkIconThemePrivate;
+struct GtkLevelBar;
 
-struct GtkIconView
+struct GtkLinkButton;
+
+struct GtkListBase;
+
+struct GtkListBaseClass;
+
+struct GtkListBox;
+
+struct GtkListBoxRow
 {
-	GtkContainer parent;
-	GtkIconViewPrivate* priv;
+	GtkWidget parentInstance;
 }
 
-struct GtkIconViewAccessible
-{
-	GtkContainerAccessible parent;
-	GtkIconViewAccessiblePrivate* priv;
-}
-
-struct GtkIconViewAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkIconViewAccessiblePrivate;
-
-struct GtkIconViewClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function(GtkIconView* iconView, GtkTreePath* path) itemActivated;
-	/** */
-	extern(C) void function(GtkIconView* iconView) selectionChanged;
-	/** */
-	extern(C) void function(GtkIconView* iconView) selectAll;
-	/** */
-	extern(C) void function(GtkIconView* iconView) unselectAll;
-	/** */
-	extern(C) void function(GtkIconView* iconView) selectCursorItem;
-	/** */
-	extern(C) void function(GtkIconView* iconView) toggleCursorItem;
-	/** */
-	extern(C) int function(GtkIconView* iconView, GtkMovementStep step, int count) moveCursor;
-	/** */
-	extern(C) int function(GtkIconView* iconView) activateCursorItem;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkIconViewPrivate;
-
-struct GtkImage
-{
-	GtkMisc misc;
-	GtkImagePrivate* priv;
-}
-
-struct GtkImageAccessible
-{
-	GtkWidgetAccessible parent;
-	GtkImageAccessiblePrivate* priv;
-}
-
-struct GtkImageAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkImageAccessiblePrivate;
-
-struct GtkImageCellAccessible
-{
-	GtkRendererCellAccessible parent;
-	GtkImageCellAccessiblePrivate* priv;
-}
-
-struct GtkImageCellAccessibleClass
-{
-	GtkRendererCellAccessibleClass parentClass;
-}
-
-struct GtkImageCellAccessiblePrivate;
-
-struct GtkImageClass
-{
-	GtkMiscClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkImageMenuItem
-{
-	GtkMenuItem menuItem;
-	GtkImageMenuItemPrivate* priv;
-}
-
-struct GtkImageMenuItemClass
+struct GtkListBoxRowClass
 {
 	/**
 	 * The parent class.
 	 */
-	GtkMenuItemClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkImageMenuItemPrivate;
-
-struct GtkImagePrivate;
-
-struct GtkInfoBar
-{
-	GtkBox parent;
-	GtkInfoBarPrivate* priv;
-}
-
-struct GtkInfoBarClass
-{
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function(GtkInfoBar* infoBar, int responseId) response;
-	/** */
-	extern(C) void function(GtkInfoBar* infoBar) close;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkInfoBarPrivate;
-
-struct GtkInvisible
-{
-	GtkWidget widget;
-	GtkInvisiblePrivate* priv;
-}
-
-struct GtkInvisibleClass
-{
 	GtkWidgetClass parentClass;
 	/** */
+	extern(C) void function(GtkListBoxRow* row) activate;
+	void*[8] padding;
+}
+
+struct GtkListItem;
+
+struct GtkListItemClass;
+
+struct GtkListItemFactory;
+
+struct GtkListItemFactoryClass;
+
+struct GtkListStore
+{
+	GObject parent;
+	GtkListStorePrivate* priv;
+}
+
+struct GtkListStoreClass
+{
+	GObjectClass parentClass;
+	void*[8] padding;
+}
+
+struct GtkListStorePrivate;
+
+struct GtkListView;
+
+struct GtkListViewClass;
+
+struct GtkLockButton;
+
+struct GtkMapListModel;
+
+struct GtkMapListModelClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkMediaControls;
+
+struct GtkMediaControlsClass
+{
+	GtkWidgetClass parentClass;
+}
+
+struct GtkMediaFile
+{
+	GtkMediaStream parentInstance;
+}
+
+struct GtkMediaFileClass
+{
+	GtkMediaStreamClass parentClass;
+	/** */
+	extern(C) void function(GtkMediaFile* self) open;
+	/** */
+	extern(C) void function(GtkMediaFile* self) close;
+	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
 	extern(C) void function() GtkReserved2;
@@ -7250,38 +5491,26 @@ struct GtkInvisibleClass
 	extern(C) void function() GtkReserved4;
 }
 
-struct GtkInvisiblePrivate;
-
-struct GtkLabel
+struct GtkMediaStream
 {
-	GtkMisc misc;
-	GtkLabelPrivate* priv;
+	GObject parentInstance;
 }
 
-struct GtkLabelAccessible
+struct GtkMediaStreamClass
 {
-	GtkWidgetAccessible parent;
-	GtkLabelAccessiblePrivate* priv;
-}
-
-struct GtkLabelAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkLabelAccessiblePrivate;
-
-struct GtkLabelClass
-{
-	GtkMiscClass parentClass;
+	GObjectClass parentClass;
 	/** */
-	extern(C) void function(GtkLabel* label, GtkMovementStep step, int count, int extendSelection) moveCursor;
+	extern(C) int function(GtkMediaStream* self) play;
 	/** */
-	extern(C) void function(GtkLabel* label) copyClipboard;
+	extern(C) void function(GtkMediaStream* self) pause;
 	/** */
-	extern(C) void function(GtkLabel* label, GtkMenu* menu) populatePopup;
+	extern(C) void function(GtkMediaStream* self, long timestamp) seek;
 	/** */
-	extern(C) int function(GtkLabel* label, const(char)* uri) activateLink;
+	extern(C) void function(GtkMediaStream* self, int muted, double volume) updateAudio;
+	/** */
+	extern(C) void function(GtkMediaStream* self, GdkSurface* surface) realize;
+	/** */
+	extern(C) void function(GtkMediaStream* self, GdkSurface* surface) unrealize;
 	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
@@ -7300,522 +5529,22 @@ struct GtkLabelClass
 	extern(C) void function() GtkReserved8;
 }
 
-struct GtkLabelPrivate;
-
-struct GtkLabelSelectionInfo;
-
-struct GtkLayout
-{
-	GtkContainer container;
-	GtkLayoutPrivate* priv;
-}
-
-struct GtkLayoutClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkLayoutPrivate;
-
-struct GtkLevelBar
-{
-	GtkWidget parent;
-	GtkLevelBarPrivate* priv;
-}
-
-struct GtkLevelBarAccessible
-{
-	GtkWidgetAccessible parent;
-	GtkLevelBarAccessiblePrivate* priv;
-}
-
-struct GtkLevelBarAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkLevelBarAccessiblePrivate;
-
-struct GtkLevelBarClass
-{
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function(GtkLevelBar* self, const(char)* name) offsetChanged;
-	void*[16] padding;
-}
-
-struct GtkLevelBarPrivate;
-
-struct GtkLinkButton
-{
-	GtkButton parentInstance;
-	GtkLinkButtonPrivate* priv;
-}
-
-struct GtkLinkButtonAccessible
-{
-	GtkButtonAccessible parent;
-	GtkLinkButtonAccessiblePrivate* priv;
-}
-
-struct GtkLinkButtonAccessibleClass
-{
-	GtkButtonAccessibleClass parentClass;
-}
-
-struct GtkLinkButtonAccessiblePrivate;
-
-/**
- * The #GtkLinkButtonClass contains only
- * private data.
- */
-struct GtkLinkButtonClass
-{
-	GtkButtonClass parentClass;
-	/** */
-	extern(C) int function(GtkLinkButton* button) activateLink;
-	/** */
-	extern(C) void function() GtkPadding1;
-	/** */
-	extern(C) void function() GtkPadding2;
-	/** */
-	extern(C) void function() GtkPadding3;
-	/** */
-	extern(C) void function() GtkPadding4;
-}
-
-struct GtkLinkButtonPrivate;
-
-struct GtkListBox
-{
-	GtkContainer parentInstance;
-}
-
-struct GtkListBoxAccessible
-{
-	GtkContainerAccessible parent;
-	GtkListBoxAccessiblePrivate* priv;
-}
-
-struct GtkListBoxAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkListBoxAccessiblePrivate;
-
-struct GtkListBoxClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function(GtkListBox* box, GtkListBoxRow* row) rowSelected;
-	/** */
-	extern(C) void function(GtkListBox* box, GtkListBoxRow* row) rowActivated;
-	/** */
-	extern(C) void function(GtkListBox* box) activateCursorRow;
-	/** */
-	extern(C) void function(GtkListBox* box) toggleCursorRow;
-	/** */
-	extern(C) void function(GtkListBox* box, GtkMovementStep step, int count) moveCursor;
-	/** */
-	extern(C) void function(GtkListBox* box) selectedRowsChanged;
-	/** */
-	extern(C) void function(GtkListBox* box) selectAll;
-	/** */
-	extern(C) void function(GtkListBox* box) unselectAll;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-}
-
-struct GtkListBoxRow
-{
-	GtkBin parentInstance;
-}
-
-struct GtkListBoxRowAccessible
-{
-	GtkContainerAccessible parent;
-}
-
-struct GtkListBoxRowAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkListBoxRowClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function(GtkListBoxRow* row) activate;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-}
-
-struct GtkListStore
-{
-	GObject parent;
-	GtkListStorePrivate* priv;
-}
-
-struct GtkListStoreClass
-{
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkListStorePrivate;
-
-struct GtkLockButton
-{
-	GtkButton parent;
-	GtkLockButtonPrivate* priv;
-}
-
-struct GtkLockButtonAccessible
-{
-	GtkButtonAccessible parent;
-	GtkLockButtonAccessiblePrivate* priv;
-}
-
-struct GtkLockButtonAccessibleClass
-{
-	GtkButtonAccessibleClass parentClass;
-}
-
-struct GtkLockButtonAccessiblePrivate;
-
-struct GtkLockButtonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkButtonClass parentClass;
-	/** */
-	extern(C) void function() reserved0;
-	/** */
-	extern(C) void function() reserved1;
-	/** */
-	extern(C) void function() reserved2;
-	/** */
-	extern(C) void function() reserved3;
-	/** */
-	extern(C) void function() reserved4;
-	/** */
-	extern(C) void function() reserved5;
-	/** */
-	extern(C) void function() reserved6;
-	/** */
-	extern(C) void function() reserved7;
-}
-
-struct GtkLockButtonPrivate;
-
-struct GtkMenu
-{
-	GtkMenuShell menuShell;
-	GtkMenuPrivate* priv;
-}
-
-struct GtkMenuAccessible
-{
-	GtkMenuShellAccessible parent;
-	GtkMenuAccessiblePrivate* priv;
-}
-
-struct GtkMenuAccessibleClass
-{
-	GtkMenuShellAccessibleClass parentClass;
-}
-
-struct GtkMenuAccessiblePrivate;
-
-struct GtkMenuBar
-{
-	GtkMenuShell menuShell;
-	GtkMenuBarPrivate* priv;
-}
-
-struct GtkMenuBarClass
-{
-	GtkMenuShellClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkMenuBarPrivate;
-
-struct GtkMenuButton
-{
-	GtkToggleButton parent;
-	GtkMenuButtonPrivate* priv;
-}
-
-struct GtkMenuButtonAccessible
-{
-	GtkToggleButtonAccessible parent;
-	GtkMenuButtonAccessiblePrivate* priv;
-}
-
-struct GtkMenuButtonAccessibleClass
-{
-	GtkToggleButtonAccessibleClass parentClass;
-}
-
-struct GtkMenuButtonAccessiblePrivate;
-
-struct GtkMenuButtonClass
-{
-	GtkToggleButtonClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkMenuButtonPrivate;
-
-struct GtkMenuClass
-{
-	GtkMenuShellClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkMenuItem
-{
-	GtkBin bin;
-	GtkMenuItemPrivate* priv;
-}
-
-struct GtkMenuItemAccessible
-{
-	GtkContainerAccessible parent;
-	GtkMenuItemAccessiblePrivate* priv;
-}
-
-struct GtkMenuItemAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkMenuItemAccessiblePrivate;
-
-struct GtkMenuItemClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "hideOnActivate", 1,
-		uint, "", 31
-	));
-	/** */
-	extern(C) void function(GtkMenuItem* menuItem) activate;
-	/** */
-	extern(C) void function(GtkMenuItem* menuItem) activateItem;
-	/** */
-	extern(C) void function(GtkMenuItem* menuItem, int* requisition) toggleSizeRequest;
-	/** */
-	extern(C) void function(GtkMenuItem* menuItem, int allocation) toggleSizeAllocate;
-	/** */
-	extern(C) void function(GtkMenuItem* menuItem, const(char)* label) setLabel;
-	/**
-	 *
-	 * Params:
-	 *     menuItem = a #GtkMenuItem
-	 * Returns: The text in the @menu_item label. This is the internal
-	 *     string used by the label, and must not be modified.
-	 */
-	extern(C) const(char)* function(GtkMenuItem* menuItem) getLabel;
-	/** */
-	extern(C) void function(GtkMenuItem* menuItem) select;
-	/** */
-	extern(C) void function(GtkMenuItem* menuItem) deselect;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkMenuItemPrivate;
-
-struct GtkMenuPrivate;
-
-struct GtkMenuShell
-{
-	GtkContainer container;
-	GtkMenuShellPrivate* priv;
-}
-
-struct GtkMenuShellAccessible
-{
-	GtkContainerAccessible parent;
-	GtkMenuShellAccessiblePrivate* priv;
-}
-
-struct GtkMenuShellAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkMenuShellAccessiblePrivate;
-
-struct GtkMenuShellClass
-{
-	GtkContainerClass parentClass;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "submenuPlacement", 1,
-		uint, "", 31
-	));
-	/** */
-	extern(C) void function(GtkMenuShell* menuShell) deactivate;
-	/** */
-	extern(C) void function(GtkMenuShell* menuShell) selectionDone;
-	/** */
-	extern(C) void function(GtkMenuShell* menuShell, GtkMenuDirectionType direction) moveCurrent;
-	/** */
-	extern(C) void function(GtkMenuShell* menuShell, int forceHide) activateCurrent;
-	/** */
-	extern(C) void function(GtkMenuShell* menuShell) cancel;
-	/** */
-	extern(C) void function(GtkMenuShell* menuShell, GtkWidget* menuItem) selectItem;
-	/** */
-	extern(C) void function(GtkMenuShell* menuShell, GtkWidget* child, int position) insert;
-	/** */
-	extern(C) int function(GtkMenuShell* menuShell) getPopupDelay;
-	/** */
-	extern(C) int function(GtkMenuShell* menuShell, int distance) moveSelected;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkMenuShellPrivate;
-
-struct GtkMenuToolButton
-{
-	GtkToolButton parent;
-	GtkMenuToolButtonPrivate* priv;
-}
-
-struct GtkMenuToolButtonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkToolButtonClass parentClass;
-	/** */
-	extern(C) void function(GtkMenuToolButton* button) showMenu;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkMenuToolButtonPrivate;
+struct GtkMenuButton;
 
 struct GtkMessageDialog
 {
 	GtkDialog parentInstance;
-	GtkMessageDialogPrivate* priv;
 }
 
-struct GtkMessageDialogClass
-{
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkMessageDialogClass;
 
-struct GtkMessageDialogPrivate;
+struct GtkMnemonicAction;
 
-struct GtkMisc
-{
-	GtkWidget widget;
-	GtkMiscPrivate* priv;
-}
+struct GtkMnemonicActionClass;
 
-struct GtkMiscClass
-{
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkMnemonicTrigger;
 
-struct GtkMiscPrivate;
-
-struct GtkModelButton;
+struct GtkMnemonicTriggerClass;
 
 struct GtkMountOperation
 {
@@ -7841,11 +5570,38 @@ struct GtkMountOperationClass
 
 struct GtkMountOperationPrivate;
 
+struct GtkMultiFilter;
+
+struct GtkMultiFilterClass;
+
+struct GtkMultiSelection;
+
+struct GtkMultiSelectionClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkMultiSorter;
+
+struct GtkMultiSorterClass
+{
+	GtkSorterClass parentClass;
+}
+
+struct GtkNamedAction;
+
+struct GtkNamedActionClass;
+
+struct GtkNative;
+
 struct GtkNativeDialog
 {
 	GObject parentInstance;
 }
 
+/**
+ * Class structure for #GtkNativeDialog.
+ */
 struct GtkNativeDialogClass
 {
 	GObjectClass parentClass;
@@ -7865,117 +5621,35 @@ struct GtkNativeDialogClass
 	extern(C) void function() GtkReserved4;
 }
 
-struct GtkNotebook
+struct GtkNativeInterface;
+
+struct GtkNeverTrigger;
+
+struct GtkNeverTriggerClass;
+
+struct GtkNoSelection;
+
+struct GtkNoSelectionClass
 {
-	GtkContainer container;
-	GtkNotebookPrivate* priv;
+	GObjectClass parentClass;
 }
 
-struct GtkNotebookAccessible
+struct GtkNotebook;
+
+struct GtkNotebookPage;
+
+struct GtkNothingAction;
+
+struct GtkNothingActionClass;
+
+struct GtkNumericSorter;
+
+struct GtkNumericSorterClass
 {
-	GtkContainerAccessible parent;
-	GtkNotebookAccessiblePrivate* priv;
+	GtkSorterClass parentClass;
 }
 
-struct GtkNotebookAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkNotebookAccessiblePrivate;
-
-struct GtkNotebookClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function(GtkNotebook* notebook, GtkWidget* page, uint pageNum) switchPage;
-	/** */
-	extern(C) int function(GtkNotebook* notebook, int moveFocus) selectPage;
-	/** */
-	extern(C) int function(GtkNotebook* notebook, GtkNotebookTab type) focusTab;
-	/** */
-	extern(C) int function(GtkNotebook* notebook, int offset) changeCurrentPage;
-	/** */
-	extern(C) void function(GtkNotebook* notebook, GtkDirectionType direction) moveFocusOut;
-	/** */
-	extern(C) int function(GtkNotebook* notebook, GtkDirectionType direction, int moveToLast) reorderTab;
-	/** */
-	extern(C) int function(GtkNotebook* notebook, GtkWidget* child, GtkWidget* tabLabel, GtkWidget* menuLabel, int position) insertPage;
-	/** */
-	extern(C) GtkNotebook* function(GtkNotebook* notebook, GtkWidget* page, int x, int y) createWindow;
-	/** */
-	extern(C) void function(GtkNotebook* notebook, GtkWidget* child, uint pageNum) pageReordered;
-	/** */
-	extern(C) void function(GtkNotebook* notebook, GtkWidget* child, uint pageNum) pageRemoved;
-	/** */
-	extern(C) void function(GtkNotebook* notebook, GtkWidget* child, uint pageNum) pageAdded;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
-}
-
-struct GtkNotebookPageAccessible
-{
-	AtkObject parent;
-	GtkNotebookPageAccessiblePrivate* priv;
-}
-
-struct GtkNotebookPageAccessibleClass
-{
-	AtkObjectClass parentClass;
-}
-
-struct GtkNotebookPageAccessiblePrivate;
-
-struct GtkNotebookPrivate;
-
-struct GtkNumerableIcon
-{
-	GEmblemedIcon parent;
-	GtkNumerableIconPrivate* priv;
-}
-
-struct GtkNumerableIconClass
-{
-	GEmblemedIconClass parentClass;
-	void*[16] padding;
-}
-
-struct GtkNumerableIconPrivate;
-
-struct GtkOffscreenWindow
-{
-	GtkWindow parentObject;
-}
-
-struct GtkOffscreenWindowClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkWindowClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkObjectExpression;
 
 struct GtkOrientable;
 
@@ -7984,39 +5658,21 @@ struct GtkOrientableIface
 	GTypeInterface baseIface;
 }
 
-struct GtkOverlay
+struct GtkOverlay;
+
+struct GtkOverlayLayout;
+
+struct GtkOverlayLayoutChild;
+
+struct GtkOverlayLayoutChildClass
 {
-	GtkBin parent;
-	GtkOverlayPrivate* priv;
+	GtkLayoutChildClass parentClass;
 }
 
-struct GtkOverlayClass
+struct GtkOverlayLayoutClass
 {
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) int function(GtkOverlay* overlay, GtkWidget* widget, GtkAllocation* allocation) getChildPosition;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
+	GtkLayoutManagerClass parentClass;
 }
-
-struct GtkOverlayPrivate;
 
 /**
  * Struct defining a pad action entry.
@@ -8040,11 +5696,11 @@ struct GtkPadActionEntry
 	 * Human readable description of this action entry, this string should
 	 * be deemed user-visible.
 	 */
-	char* label;
+	const(char)* label;
 	/**
 	 * action name that will be activated in the #GActionGroup.
 	 */
-	char* actionName;
+	const(char)* actionName;
 }
 
 struct GtkPadController;
@@ -8068,114 +5724,44 @@ struct GtkPageRange
 
 struct GtkPageSetup;
 
-struct GtkPaned
-{
-	GtkContainer container;
-	GtkPanedPrivate* priv;
-}
-
-struct GtkPanedAccessible
-{
-	GtkContainerAccessible parent;
-	GtkPanedAccessiblePrivate* priv;
-}
-
-struct GtkPanedAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkPanedAccessiblePrivate;
-
-struct GtkPanedClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) int function(GtkPaned* paned, int reverse) cycleChildFocus;
-	/** */
-	extern(C) int function(GtkPaned* paned) toggleHandleFocus;
-	/** */
-	extern(C) int function(GtkPaned* paned, GtkScrollType scroll) moveHandle;
-	/** */
-	extern(C) int function(GtkPaned* paned, int reverse) cycleHandleFocus;
-	/** */
-	extern(C) int function(GtkPaned* paned) acceptPosition;
-	/** */
-	extern(C) int function(GtkPaned* paned) cancelPosition;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkPanedPrivate;
+struct GtkPaned;
 
 struct GtkPaperSize;
 
-struct GtkPlacesSidebar;
-
-struct GtkPlacesSidebarClass;
-
-struct GtkPlug
+struct GtkParamSpecExpression
 {
-	GtkWindow window;
-	GtkPlugPrivate* priv;
+	GParamSpec parentInstance;
 }
 
-struct GtkPlugClass
-{
-	GtkWindowClass parentClass;
-	/** */
-	extern(C) void function(GtkPlug* plug) embedded;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkPasswordEntry;
 
-struct GtkPlugPrivate;
+struct GtkPasswordEntryClass;
+
+struct GtkPicture;
+
+struct GtkPictureClass
+{
+	GtkWidgetClass parentClass;
+}
 
 struct GtkPopover
 {
-	GtkBin parentInstance;
-	GtkPopoverPrivate* priv;
-}
-
-struct GtkPopoverAccessible
-{
-	GtkContainerAccessible parent;
-}
-
-struct GtkPopoverAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
+	GtkWidget parent;
 }
 
 struct GtkPopoverClass
 {
-	GtkBinClass parentClass;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkPopover* popover) closed;
-	void*[10] reserved;
+	/** */
+	extern(C) void function(GtkPopover* popover) activateDefault;
+	void*[8] reserved;
 }
 
 struct GtkPopoverMenu;
 
-struct GtkPopoverMenuClass
-{
-	GtkPopoverClass parentClass;
-	void*[10] reserved;
-}
-
-struct GtkPopoverPrivate;
+struct GtkPopoverMenuBar;
 
 struct GtkPrintContext;
 
@@ -8213,22 +5799,7 @@ struct GtkPrintOperationClass
 	extern(C) int function(GtkPrintOperation* operation, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent) preview;
 	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings) updateCustomWidget;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
+	void*[8] padding;
 }
 
 struct GtkPrintOperationPreview;
@@ -8274,214 +5845,18 @@ struct GtkPrintOperationPrivate;
 
 struct GtkPrintSettings;
 
-struct GtkProgressBar
-{
-	GtkWidget parent;
-	GtkProgressBarPrivate* priv;
-}
+struct GtkProgressBar;
 
-struct GtkProgressBarAccessible
-{
-	GtkWidgetAccessible parent;
-	GtkProgressBarAccessiblePrivate* priv;
-}
-
-struct GtkProgressBarAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkProgressBarAccessiblePrivate;
-
-struct GtkProgressBarClass
-{
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkProgressBarPrivate;
-
-struct GtkRadioAction
-{
-	GtkToggleAction parent;
-	GtkRadioActionPrivate* privateData;
-}
-
-struct GtkRadioActionClass
-{
-	GtkToggleActionClass parentClass;
-	/** */
-	extern(C) void function(GtkRadioAction* action, GtkRadioAction* current) changed;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-/**
- * #GtkRadioActionEntry structs are used with
- * gtk_action_group_add_radio_actions() to construct groups of radio actions.
- */
-struct GtkRadioActionEntry
-{
-	/**
-	 * The name of the action.
-	 */
-	const(char)* name;
-	/**
-	 * The stock id for the action, or the name of an icon from the
-	 * icon theme.
-	 */
-	const(char)* stockId;
-	/**
-	 * The label for the action. This field should typically be marked
-	 * for translation, see gtk_action_group_set_translation_domain().
-	 */
-	const(char)* label;
-	/**
-	 * The accelerator for the action, in the format understood by
-	 * gtk_accelerator_parse().
-	 */
-	const(char)* accelerator;
-	/**
-	 * The tooltip for the action. This field should typically be
-	 * marked for translation, see gtk_action_group_set_translation_domain().
-	 */
-	const(char)* tooltip;
-	/**
-	 * The value to set on the radio action. See
-	 * gtk_radio_action_get_current_value().
-	 */
-	int value;
-}
-
-struct GtkRadioActionPrivate;
-
-struct GtkRadioButton
-{
-	GtkCheckButton checkButton;
-	GtkRadioButtonPrivate* priv;
-}
-
-struct GtkRadioButtonAccessible
-{
-	GtkToggleButtonAccessible parent;
-	GtkRadioButtonAccessiblePrivate* priv;
-}
-
-struct GtkRadioButtonAccessibleClass
-{
-	GtkToggleButtonAccessibleClass parentClass;
-}
-
-struct GtkRadioButtonAccessiblePrivate;
-
-struct GtkRadioButtonClass
-{
-	GtkCheckButtonClass parentClass;
-	/** */
-	extern(C) void function(GtkRadioButton* radioButton) groupChanged;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkRadioButtonPrivate;
-
-struct GtkRadioMenuItem
-{
-	GtkCheckMenuItem checkMenuItem;
-	GtkRadioMenuItemPrivate* priv;
-}
-
-struct GtkRadioMenuItemAccessible
-{
-	GtkCheckMenuItemAccessible parent;
-	GtkRadioMenuItemAccessiblePrivate* priv;
-}
-
-struct GtkRadioMenuItemAccessibleClass
-{
-	GtkCheckMenuItemAccessibleClass parentClass;
-}
-
-struct GtkRadioMenuItemAccessiblePrivate;
-
-struct GtkRadioMenuItemClass
-{
-	GtkCheckMenuItemClass parentClass;
-	/** */
-	extern(C) void function(GtkRadioMenuItem* radioMenuItem) groupChanged;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkRadioMenuItemPrivate;
-
-struct GtkRadioToolButton
-{
-	GtkToggleToolButton parent;
-}
-
-struct GtkRadioToolButtonClass
-{
-	GtkToggleToolButtonClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkPropertyExpression;
 
 struct GtkRange
 {
-	GtkWidget widget;
-	GtkRangePrivate* priv;
+	GtkWidget parentInstance;
 }
-
-struct GtkRangeAccessible
-{
-	GtkWidgetAccessible parent;
-	GtkRangeAccessiblePrivate* priv;
-}
-
-struct GtkRangeAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkRangeAccessiblePrivate;
 
 struct GtkRangeClass
 {
 	GtkWidgetClass parentClass;
-	char* sliderDetail;
-	char* stepperDetail;
 	/** */
 	extern(C) void function(GtkRange* range) valueChanged;
 	/** */
@@ -8492,275 +5867,8 @@ struct GtkRangeClass
 	extern(C) void function(GtkRange* range, GtkBorder* border) getRangeBorder;
 	/** */
 	extern(C) int function(GtkRange* range, GtkScrollType scroll, double newValue) changeValue;
-	/** */
-	extern(C) void function(GtkRange* range, GtkOrientation orientation, int* minimum, int* natural) getRangeSizeRequest;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
+	void*[8] padding;
 }
-
-struct GtkRangePrivate;
-
-struct GtkRcContext;
-
-/**
- * Deprecated
- */
-struct GtkRcProperty
-{
-	/**
-	 * quark-ified type identifier
-	 */
-	GQuark typeName;
-	/**
-	 * quark-ified property identifier like
-	 * “GtkScrollbar::spacing”
-	 */
-	GQuark propertyName;
-	/**
-	 * field similar to one found in #GtkSettingsValue
-	 */
-	char* origin;
-	/**
-	 * field similar to one found in #GtkSettingsValue
-	 */
-	GValue value;
-}
-
-struct GtkRcStyle
-{
-	GObject parentInstance;
-	/**
-	 * Name
-	 */
-	char* name;
-	/**
-	 * Pixmap name
-	 */
-	char*[5] bgPixmapName;
-	/**
-	 * A #PangoFontDescription
-	 */
-	PangoFontDescription* fontDesc;
-	/**
-	 * #GtkRcFlags
-	 */
-	GtkRcFlags[5] colorFlags;
-	/**
-	 * Foreground colors
-	 */
-	GdkColor[5] fg;
-	/**
-	 * Background colors
-	 */
-	GdkColor[5] bg;
-	/**
-	 * Text colors
-	 */
-	GdkColor[5] text;
-	/**
-	 * Base colors
-	 */
-	GdkColor[5] base;
-	/**
-	 * X thickness
-	 */
-	int xthickness;
-	/**
-	 * Y thickness
-	 */
-	int ythickness;
-	GArray* rcProperties;
-	GSList* rcStyleLists;
-	GSList* iconFactories;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "engineSpecified", 1,
-		uint, "", 31
-	));
-}
-
-struct GtkRcStyleClass
-{
-	/**
-	 * The parent class.
-	 */
-	GObjectClass parentClass;
-	/** */
-	extern(C) GtkRcStyle* function(GtkRcStyle* rcStyle) createRcStyle;
-	/** */
-	extern(C) uint function(GtkRcStyle* rcStyle, GtkSettings* settings, GScanner* scanner) parse;
-	/** */
-	extern(C) void function(GtkRcStyle* dest, GtkRcStyle* src) merge;
-	/** */
-	extern(C) GtkStyle* function(GtkRcStyle* rcStyle) createStyle;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkRecentAction
-{
-	GtkAction parentInstance;
-	GtkRecentActionPrivate* priv;
-}
-
-struct GtkRecentActionClass
-{
-	GtkActionClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkRecentActionPrivate;
-
-struct GtkRecentChooser;
-
-struct GtkRecentChooserDialog
-{
-	GtkDialog parentInstance;
-	GtkRecentChooserDialogPrivate* priv;
-}
-
-struct GtkRecentChooserDialogClass
-{
-	GtkDialogClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkRecentChooserDialogPrivate;
-
-struct GtkRecentChooserIface
-{
-	GTypeInterface baseIface;
-	/**
-	 *
-	 * Params:
-	 *     chooser = a #GtkRecentChooser
-	 *     uri = a URI
-	 * Returns: %TRUE if the URI was found.
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) int function(GtkRecentChooser* chooser, const(char)* uri, GError** err) setCurrentUri;
-	/**
-	 *
-	 * Params:
-	 *     chooser = a #GtkRecentChooser
-	 * Returns: a newly allocated string holding a URI.
-	 */
-	extern(C) char* function(GtkRecentChooser* chooser) getCurrentUri;
-	/**
-	 *
-	 * Params:
-	 *     chooser = a #GtkRecentChooser
-	 *     uri = a URI
-	 * Returns: %TRUE if @uri was found.
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) int function(GtkRecentChooser* chooser, const(char)* uri, GError** err) selectUri;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser, const(char)* uri) unselectUri;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser) selectAll;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser) unselectAll;
-	/**
-	 *
-	 * Params:
-	 *     chooser = a #GtkRecentChooser
-	 * Returns: A newly allocated
-	 *     list of #GtkRecentInfo objects.  You should
-	 *     use gtk_recent_info_unref() on every item of the list, and then free
-	 *     the list itself using g_list_free().
-	 */
-	extern(C) GList* function(GtkRecentChooser* chooser) getItems;
-	/** */
-	extern(C) GtkRecentManager* function(GtkRecentChooser* chooser) getRecentManager;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser, GtkRecentFilter* filter) addFilter;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser, GtkRecentFilter* filter) removeFilter;
-	/**
-	 *
-	 * Params:
-	 *     chooser = a #GtkRecentChooser
-	 * Returns: A singly linked list
-	 *     of #GtkRecentFilter objects.  You
-	 *     should just free the returned list using g_slist_free().
-	 */
-	extern(C) GSList* function(GtkRecentChooser* chooser) listFilters;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser, GtkRecentSortFunc sortFunc, void* sortData, GDestroyNotify dataDestroy) setSortFunc;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser) itemActivated;
-	/** */
-	extern(C) void function(GtkRecentChooser* chooser) selectionChanged;
-}
-
-struct GtkRecentChooserMenu
-{
-	GtkMenu parentInstance;
-	GtkRecentChooserMenuPrivate* priv;
-}
-
-struct GtkRecentChooserMenuClass
-{
-	GtkMenuClass parentClass;
-	/** */
-	extern(C) void function() gtkRecent1;
-	/** */
-	extern(C) void function() gtkRecent2;
-	/** */
-	extern(C) void function() gtkRecent3;
-	/** */
-	extern(C) void function() gtkRecent4;
-}
-
-struct GtkRecentChooserMenuPrivate;
-
-struct GtkRecentChooserWidget
-{
-	GtkBox parentInstance;
-	GtkRecentChooserWidgetPrivate* priv;
-}
-
-struct GtkRecentChooserWidgetClass
-{
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkRecentChooserWidgetPrivate;
 
 /**
  * Meta-data to be passed to gtk_recent_manager_add_full() when
@@ -8806,48 +5914,6 @@ struct GtkRecentData
 	bool isPrivate;
 }
 
-struct GtkRecentFilter;
-
-/**
- * A GtkRecentFilterInfo struct is used
- * to pass information about the tested file to gtk_recent_filter_filter().
- */
-struct GtkRecentFilterInfo
-{
-	/**
-	 * #GtkRecentFilterFlags to indicate which fields are set.
-	 */
-	GtkRecentFilterFlags contains;
-	/**
-	 * The URI of the file being tested.
-	 */
-	const(char)* uri;
-	/**
-	 * The string that will be used to display
-	 * the file in the recent chooser.
-	 */
-	const(char)* displayName;
-	/**
-	 * MIME type of the file.
-	 */
-	const(char)* mimeType;
-	/**
-	 * The list of
-	 * applications that have registered the file.
-	 */
-	char** applications;
-	/**
-	 * The groups to which
-	 * the file belongs to.
-	 */
-	char** groups;
-	/**
-	 * The number of days elapsed since the file has been
-	 * registered.
-	 */
-	int age;
-}
-
 struct GtkRecentInfo;
 
 struct GtkRecentManager
@@ -8858,8 +5924,6 @@ struct GtkRecentManager
 
 /**
  * #GtkRecentManagerClass contains only private data.
- *
- * Since: 2.10
  */
 struct GtkRecentManagerClass
 {
@@ -8877,19 +5941,6 @@ struct GtkRecentManagerClass
 }
 
 struct GtkRecentManagerPrivate;
-
-struct GtkRendererCellAccessible
-{
-	GtkCellAccessible parent;
-	GtkRendererCellAccessiblePrivate* priv;
-}
-
-struct GtkRendererCellAccessibleClass
-{
-	GtkCellAccessibleClass parentClass;
-}
-
-struct GtkRendererCellAccessiblePrivate;
 
 /**
  * Represents a request of a screen object in a given orientation. These
@@ -8924,94 +5975,37 @@ struct GtkRequisition
 	int height;
 }
 
-struct GtkRevealer
-{
-	GtkBin parentInstance;
-}
+struct GtkRevealer;
 
-struct GtkRevealerClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-}
+struct GtkRoot;
+
+struct GtkRootInterface;
 
 struct GtkScale
 {
-	GtkRange range;
-	GtkScalePrivate* priv;
+	GtkRange parentInstance;
 }
-
-struct GtkScaleAccessible
-{
-	GtkRangeAccessible parent;
-	GtkScaleAccessiblePrivate* priv;
-}
-
-struct GtkScaleAccessibleClass
-{
-	GtkRangeAccessibleClass parentClass;
-}
-
-struct GtkScaleAccessiblePrivate;
 
 struct GtkScaleButton
 {
-	GtkButton parent;
-	GtkScaleButtonPrivate* priv;
+	GtkWidget parentInstance;
 }
-
-struct GtkScaleButtonAccessible
-{
-	GtkButtonAccessible parent;
-	GtkScaleButtonAccessiblePrivate* priv;
-}
-
-struct GtkScaleButtonAccessibleClass
-{
-	GtkButtonAccessibleClass parentClass;
-}
-
-struct GtkScaleButtonAccessiblePrivate;
 
 struct GtkScaleButtonClass
 {
-	GtkButtonClass parentClass;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkScaleButton* button, double value) valueChanged;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
-
-struct GtkScaleButtonPrivate;
 
 struct GtkScaleClass
 {
 	GtkRangeClass parentClass;
 	/** */
-	extern(C) char* function(GtkScale* scale, double value) formatValue;
-	/** */
-	extern(C) void function(GtkScale* scale) drawValue;
-	/** */
 	extern(C) void function(GtkScale* scale, int* x, int* y) getLayoutOffsets;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
-
-struct GtkScalePrivate;
 
 struct GtkScrollable;
 
@@ -9028,193 +6022,132 @@ struct GtkScrollableInterface
 	extern(C) int function(GtkScrollable* scrollable, GtkBorder* border) getBorder;
 }
 
-struct GtkScrollbar
-{
-	GtkRange range;
-}
+struct GtkScrollbar;
 
-struct GtkScrollbarClass
-{
-	GtkRangeClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
+struct GtkScrolledWindow;
 
-struct GtkScrolledWindow
-{
-	GtkBin container;
-	GtkScrolledWindowPrivate* priv;
-}
+struct GtkSearchBar;
 
-struct GtkScrolledWindowAccessible
-{
-	GtkContainerAccessible parent;
-	GtkScrolledWindowAccessiblePrivate* priv;
-}
+struct GtkSearchEntry;
 
-struct GtkScrolledWindowAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
+struct GtkSelectionFilterModel;
 
-struct GtkScrolledWindowAccessiblePrivate;
-
-struct GtkScrolledWindowClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	int scrollbarSpacing;
-	/** */
-	extern(C) int function(GtkScrolledWindow* scrolledWindow, GtkScrollType scroll, int horizontal) scrollChild;
-	/** */
-	extern(C) void function(GtkScrolledWindow* scrolledWindow, GtkDirectionType direction) moveFocusOut;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkScrolledWindowPrivate;
-
-struct GtkSearchBar
-{
-	GtkBin parent;
-}
-
-struct GtkSearchBarClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkSearchEntry
-{
-	GtkEntry parent;
-}
-
-struct GtkSearchEntryClass
-{
-	GtkEntryClass parentClass;
-	/** */
-	extern(C) void function(GtkSearchEntry* entry) searchChanged;
-	/** */
-	extern(C) void function(GtkSearchEntry* entry) nextMatch;
-	/** */
-	extern(C) void function(GtkSearchEntry* entry) previousMatch;
-	/** */
-	extern(C) void function(GtkSearchEntry* entry) stopSearch;
-}
-
-struct GtkSelectionData;
-
-struct GtkSeparator
-{
-	GtkWidget widget;
-	GtkSeparatorPrivate* priv;
-}
-
-struct GtkSeparatorClass
-{
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkSeparatorMenuItem
-{
-	GtkMenuItem menuItem;
-}
-
-struct GtkSeparatorMenuItemClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkMenuItemClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkSeparatorPrivate;
-
-struct GtkSeparatorToolItem
-{
-	GtkToolItem parent;
-	GtkSeparatorToolItemPrivate* priv;
-}
-
-struct GtkSeparatorToolItemClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkToolItemClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkSeparatorToolItemPrivate;
-
-struct GtkSettings
-{
-	GObject parentInstance;
-	GtkSettingsPrivate* priv;
-}
-
-struct GtkSettingsClass
+struct GtkSelectionFilterModelClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
 }
 
-struct GtkSettingsPrivate;
+struct GtkSelectionModel;
+
+/**
+ * The list of virtual functions for the #GtkSelectionModel interface.
+ * No function must be implemented, but unless #GtkSelectionModel::is_selected()
+ * is implemented, it will not be possible to select items in the set.
+ *
+ * The model does not need to implement any functions to support either
+ * selecting or unselecting items. Of course, if the model does not do that,
+ * it means that users cannot select or unselect items in a list widget
+ * using the model.
+ *
+ * All selection functions fall back to #GtkSelectionModel::set_selection()
+ * so it is sufficient to implement just that function for full selection
+ * support.
+ */
+struct GtkSelectionModelInterface
+{
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 *     position = the position of the item to query
+	 * Returns: %TRUE if the item is selected
+	 */
+	extern(C) int function(GtkSelectionModel* model, uint position) isSelected;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 *     position = start of the queired range
+	 *     nItems = number of items in the queried range
+	 * Returns: A #GtkBitset that matches the selection state for the given state
+	 *     with all other values being undefined.
+	 *     The bitset must not be modified.
+	 */
+	extern(C) GtkBitset* function(GtkSelectionModel* model, uint position, uint nItems) getSelectionInRange;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 *     position = the position of the item to select
+	 *     unselectRest = whether previously selected items should be unselected
+	 * Returns: %TRUE if this action was supported and no fallback should be
+	 *     tried. This does not mean the item was selected.
+	 */
+	extern(C) int function(GtkSelectionModel* model, uint position, int unselectRest) selectItem;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 *     position = the position of the item to unselect
+	 * Returns: %TRUE if this action was supported and no fallback should be
+	 *     tried. This does not mean the item was unselected.
+	 */
+	extern(C) int function(GtkSelectionModel* model, uint position) unselectItem;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 *     position = the first item to select
+	 *     nItems = the number of items to select
+	 *     unselectRest = whether previously selected items should be unselected
+	 * Returns: %TRUE if this action was supported and no fallback should be
+	 *     tried. This does not mean the range was selected.
+	 */
+	extern(C) int function(GtkSelectionModel* model, uint position, uint nItems, int unselectRest) selectRange;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 *     position = the first item to unselect
+	 *     nItems = the number of items to unselect
+	 * Returns: %TRUE if this action was supported and no fallback should be
+	 *     tried. This does not mean the range was unselected.
+	 */
+	extern(C) int function(GtkSelectionModel* model, uint position, uint nItems) unselectRange;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 * Returns: %TRUE if this action was supported and no fallback should be
+	 *     tried. This does not mean that all items are now selected.
+	 */
+	extern(C) int function(GtkSelectionModel* model) selectAll;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 * Returns: %TRUE if this action was supported and no fallback should be
+	 *     tried. This does not mean that all items are now unselected.
+	 */
+	extern(C) int function(GtkSelectionModel* model) unselectAll;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GtkSelectionModel
+	 *     selected = bitmask specifying if items should be selected or
+	 *         unselected
+	 *     mask = bitmask specifying which items should be updated
+	 * Returns: %TRUE if this action was supported and no fallback should be
+	 *     tried. This does not mean that all items were updated according
+	 *     to the inputs.
+	 */
+	extern(C) int function(GtkSelectionModel* model, GtkBitset* selected, GtkBitset* mask) setSelection;
+}
+
+struct GtkSeparator;
+
+struct GtkSettings;
 
 struct GtkSettingsValue
 {
@@ -9230,9 +6163,45 @@ struct GtkSettingsValue
 	GValue value;
 }
 
+struct GtkShortcut;
+
+struct GtkShortcutAction;
+
+struct GtkShortcutActionClass;
+
+struct GtkShortcutClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkShortcutController;
+
+struct GtkShortcutControllerClass;
+
 struct GtkShortcutLabel;
 
 struct GtkShortcutLabelClass;
+
+struct GtkShortcutManager;
+
+/**
+ * The list of functions that can be implemented for the #GtkShortcutManager interface.
+ *
+ * Note that no function is mandatory to implement, the default implementation will work
+ * fine.
+ */
+struct GtkShortcutManagerInterface
+{
+	GTypeInterface gIface;
+	/** */
+	extern(C) void function(GtkShortcutManager* self, GtkShortcutController* controller) addController;
+	/** */
+	extern(C) void function(GtkShortcutManager* self, GtkShortcutController* controller) removeController;
+}
+
+struct GtkShortcutTrigger;
+
+struct GtkShortcutTriggerClass;
 
 struct GtkShortcutsGroup;
 
@@ -9246,442 +6215,75 @@ struct GtkShortcutsShortcut;
 
 struct GtkShortcutsShortcutClass;
 
-struct GtkShortcutsWindow
-{
-	GtkWindow window;
-}
+struct GtkShortcutsWindow;
 
-struct GtkShortcutsWindowClass
+struct GtkSignalAction;
+
+struct GtkSignalActionClass;
+
+struct GtkSignalListItemFactory;
+
+struct GtkSignalListItemFactoryClass;
+
+struct GtkSingleSelection;
+
+struct GtkSingleSelectionClass
 {
-	GtkWindowClass parentClass;
-	/** */
-	extern(C) void function(GtkShortcutsWindow* self) close;
-	/** */
-	extern(C) void function(GtkShortcutsWindow* self) search;
+	GObjectClass parentClass;
 }
 
 struct GtkSizeGroup
 {
 	GObject parentInstance;
-	GtkSizeGroupPrivate* priv;
 }
 
-struct GtkSizeGroupClass
+struct GtkSliceListModel;
+
+struct GtkSliceListModelClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
 }
 
-struct GtkSizeGroupPrivate;
+struct GtkSnapshot;
 
-struct GtkSocket
+struct GtkSnapshotClass;
+
+struct GtkSortListModel;
+
+struct GtkSortListModelClass
 {
-	GtkContainer container;
-	GtkSocketPrivate* priv;
+	GObjectClass parentClass;
 }
 
-struct GtkSocketClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function(GtkSocket* socket) plugAdded;
-	/** */
-	extern(C) int function(GtkSocket* socket) plugRemoved;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkSocketPrivate;
-
-struct GtkSpinButton
-{
-	GtkEntry entry;
-	GtkSpinButtonPrivate* priv;
-}
-
-struct GtkSpinButtonAccessible
-{
-	GtkEntryAccessible parent;
-	GtkSpinButtonAccessiblePrivate* priv;
-}
-
-struct GtkSpinButtonAccessibleClass
-{
-	GtkEntryAccessibleClass parentClass;
-}
-
-struct GtkSpinButtonAccessiblePrivate;
-
-struct GtkSpinButtonClass
-{
-	GtkEntryClass parentClass;
-	/** */
-	extern(C) int function(GtkSpinButton* spinButton, double* newValue) input;
-	/** */
-	extern(C) int function(GtkSpinButton* spinButton) output;
-	/** */
-	extern(C) void function(GtkSpinButton* spinButton) valueChanged;
-	/** */
-	extern(C) void function(GtkSpinButton* spinButton, GtkScrollType scroll) changeValue;
-	/** */
-	extern(C) void function(GtkSpinButton* spinButton) wrapped;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkSpinButtonPrivate;
-
-struct GtkSpinner
-{
-	GtkWidget parent;
-	GtkSpinnerPrivate* priv;
-}
-
-struct GtkSpinnerAccessible
-{
-	GtkWidgetAccessible parent;
-	GtkSpinnerAccessiblePrivate* priv;
-}
-
-struct GtkSpinnerAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkSpinnerAccessiblePrivate;
-
-struct GtkSpinnerClass
-{
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkSpinnerPrivate;
-
-struct GtkStack
-{
-	GtkContainer parentInstance;
-}
-
-struct GtkStackAccessible
-{
-	GtkContainerAccessible parent;
-}
-
-struct GtkStackAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkStackClass
-{
-	GtkContainerClass parentClass;
-}
-
-struct GtkStackSidebar
-{
-	GtkBin parent;
-}
-
-struct GtkStackSidebarClass
-{
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkStackSidebarPrivate;
-
-struct GtkStackSwitcher
-{
-	GtkBox widget;
-}
-
-struct GtkStackSwitcherClass
-{
-	GtkBoxClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkStatusIcon
+struct GtkSorter
 {
 	GObject parentInstance;
-	GtkStatusIconPrivate* priv;
 }
 
-struct GtkStatusIconClass
+/**
+ * The virtual table for #GtkSorter.
+ */
+struct GtkSorterClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkStatusIcon* statusIcon) activate;
-	/** */
-	extern(C) void function(GtkStatusIcon* statusIcon, uint button, uint activateTime) popupMenu;
-	/** */
-	extern(C) int function(GtkStatusIcon* statusIcon, int size) sizeChanged;
-	/** */
-	extern(C) int function(GtkStatusIcon* statusIcon, GdkEventButton* event) buttonPressEvent;
-	/** */
-	extern(C) int function(GtkStatusIcon* statusIcon, GdkEventButton* event) buttonReleaseEvent;
-	/** */
-	extern(C) int function(GtkStatusIcon* statusIcon, GdkEventScroll* event) scrollEvent;
-	/** */
-	extern(C) int function(GtkStatusIcon* statusIcon, int x, int y, int keyboardMode, GtkTooltip* tooltip) queryTooltip;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkStatusIconPrivate;
-
-struct GtkStatusbar
-{
-	GtkBox parentWidget;
-	GtkStatusbarPrivate* priv;
-}
-
-struct GtkStatusbarAccessible
-{
-	GtkContainerAccessible parent;
-	GtkStatusbarAccessiblePrivate* priv;
-}
-
-struct GtkStatusbarAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkStatusbarAccessiblePrivate;
-
-struct GtkStatusbarClass
-{
-	GtkBoxClass parentClass;
-	void* reserved;
-	/** */
-	extern(C) void function(GtkStatusbar* statusbar, uint contextId, const(char)* text) textPushed;
-	/** */
-	extern(C) void function(GtkStatusbar* statusbar, uint contextId, const(char)* text) textPopped;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkStatusbarPrivate;
-
-struct GtkStockItem
-{
-	/**
-	 * Identifier.
-	 */
-	char* stockId;
-	/**
-	 * User visible label.
-	 */
-	char* label;
-	/**
-	 * Modifier type for keyboard accelerator
-	 */
-	GdkModifierType modifier;
-	/**
-	 * Keyboard accelerator
-	 */
-	uint keyval;
-	/**
-	 * Translation domain of the menu or toolbar item
-	 */
-	char* translationDomain;
-}
-
-struct GtkStyle
-{
-	GObject parentInstance;
-	/**
-	 * Set of foreground #GdkColor
-	 */
-	GdkColor[5] fg;
-	/**
-	 * Set of background #GdkColor
-	 */
-	GdkColor[5] bg;
-	/**
-	 * Set of light #GdkColor
-	 */
-	GdkColor[5] light;
-	/**
-	 * Set of dark #GdkColor
-	 */
-	GdkColor[5] dark;
-	/**
-	 * Set of mid #GdkColor
-	 */
-	GdkColor[5] mid;
-	/**
-	 * Set of text #GdkColor
-	 */
-	GdkColor[5] text;
-	/**
-	 * Set of base #GdkColor
-	 */
-	GdkColor[5] base;
-	/**
-	 * Color halfway between text/base
-	 */
-	GdkColor[5] textAa;
-	/**
-	 * #GdkColor to use for black
-	 */
-	GdkColor black;
-	/**
-	 * #GdkColor to use for white
-	 */
-	GdkColor white;
-	/**
-	 * #PangoFontDescription
-	 */
-	PangoFontDescription* fontDesc;
-	/**
-	 * Thickness in X direction
-	 */
-	int xthickness;
-	/**
-	 * Thickness in Y direction
-	 */
-	int ythickness;
-	/**
-	 * Set of background #cairo_pattern_t
-	 */
-	cairo_pattern_t*[5] background;
-	int attachCount;
-	GdkVisual* visual;
-	PangoFontDescription* privateFontDesc;
-	GtkRcStyle* rcStyle;
-	GSList* styles;
-	GArray* propertyCache;
-	GSList* iconFactories;
-}
-
-struct GtkStyleClass
-{
-	/**
-	 * The parent class.
-	 */
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkStyle* style) realize;
-	/** */
-	extern(C) void function(GtkStyle* style) unrealize;
-	/** */
-	extern(C) void function(GtkStyle* style, GtkStyle* src) copy;
-	/** */
-	extern(C) GtkStyle* function(GtkStyle* style) clone;
-	/** */
-	extern(C) void function(GtkStyle* style, GtkRcStyle* rcStyle) initFromRc;
-	/** */
-	extern(C) void function(GtkStyle* style, GdkWindow* window, GtkStateType stateType) setBackground;
 	/**
 	 *
 	 * Params:
-	 *     style = a #GtkStyle
-	 *     source = the #GtkIconSource specifying the icon to render
-	 *     direction = a text direction
-	 *     state = a state
-	 *     size = the size to render the icon at (#GtkIconSize). A size of
-	 *         `(GtkIconSize)-1` means render at the size of the source and
-	 *         don’t scale.
-	 *     widget = the widget
-	 *     detail = a style detail
-	 * Returns: a newly-created #GdkPixbuf
-	 *     containing the rendered icon
+	 *     self = a #GtkSorter
+	 *     item1 = first item to compare
+	 *     item2 = second item to compare
+	 * Returns: %GTK_ORDERING_EQUAL if @item1 == @item2,
+	 *     %GTK_ORDERING_SMALLER if @item1 < @item2,
+	 *     %GTK_ORDERING_LARGER if @item1 > @item2
 	 */
-	extern(C) GdkPixbuf* function(GtkStyle* style, GtkIconSource* source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, GtkWidget* widget, const(char)* detail) renderIcon;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int x1, int x2, int y) drawHline;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int y1, int y2, int x) drawVline;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawShadow;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, GtkArrowType arrowType, int fill, int x, int y, int width, int height) drawArrow;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawDiamond;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawBox;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawFlatBox;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawCheck;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawOption;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawTab;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth) drawShadowGap;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth) drawBoxGap;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkPositionType gapSide) drawExtension;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawFocus;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkOrientation orientation) drawSlider;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkOrientation orientation) drawHandle;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int x, int y, GtkExpanderStyle expanderStyle) drawExpander;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, int useText, GtkWidget* widget, const(char)* detail, int x, int y, PangoLayout* layout) drawLayout;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, GdkWindowEdge edge, int x, int y, int width, int height) drawResizeGrip;
-	/** */
-	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, uint step, int x, int y, int width, int height) drawSpinner;
+	extern(C) GtkOrdering function(GtkSorter* self, void* item1, void* item2) compare;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GtkSorter
+	 * Returns: The order
+	 */
+	extern(C) GtkSorterOrder function(GtkSorter* self) getOrder;
 	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
@@ -9698,18 +6300,53 @@ struct GtkStyleClass
 	extern(C) void function() GtkReserved7;
 	/** */
 	extern(C) void function() GtkReserved8;
-	/** */
-	extern(C) void function() GtkReserved9;
-	/** */
-	extern(C) void function() GtkReserved10;
-	/** */
-	extern(C) void function() GtkReserved11;
+}
+
+struct GtkSpinButton;
+
+struct GtkSpinner;
+
+struct GtkStack;
+
+struct GtkStackPage;
+
+struct GtkStackSidebar;
+
+struct GtkStackSwitcher;
+
+struct GtkStatusbar;
+
+struct GtkStringFilter;
+
+struct GtkStringFilterClass
+{
+	GtkFilterClass parentClass;
+}
+
+struct GtkStringList;
+
+struct GtkStringListClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkStringObject;
+
+struct GtkStringObjectClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkStringSorter;
+
+struct GtkStringSorterClass
+{
+	GtkSorterClass parentClass;
 }
 
 struct GtkStyleContext
 {
 	GObject parentObject;
-	GtkStyleContextPrivate* priv;
 }
 
 struct GtkStyleContextClass
@@ -9727,345 +6364,13 @@ struct GtkStyleContextClass
 	extern(C) void function() GtkReserved4;
 }
 
-struct GtkStyleContextPrivate;
-
-struct GtkStyleProperties
-{
-	GObject parentObject;
-	GtkStylePropertiesPrivate* priv;
-}
-
-struct GtkStylePropertiesClass
-{
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkStylePropertiesPrivate;
-
 struct GtkStyleProvider;
 
-struct GtkStyleProviderIface
-{
-	GTypeInterface gIface;
-	/**
-	 *
-	 * Params:
-	 *     provider = a #GtkStyleProvider
-	 *     path = #GtkWidgetPath to query
-	 * Returns: a #GtkStyleProperties containing the
-	 *     style settings affecting @path
-	 */
-	extern(C) GtkStyleProperties* function(GtkStyleProvider* provider, GtkWidgetPath* path) getStyle;
-	/**
-	 *
-	 * Params:
-	 *     provider = a #GtkStyleProvider
-	 *     path = #GtkWidgetPath to query
-	 *     state = state to query the style property for
-	 *     pspec = The #GParamSpec to query
-	 *     value = return location for the property value
-	 * Returns: %TRUE if the property was found and has a value, %FALSE otherwise
-	 */
-	extern(C) int function(GtkStyleProvider* provider, GtkWidgetPath* path, GtkStateFlags state, GParamSpec* pspec, GValue* value) getStyleProperty;
-	/**
-	 *
-	 * Params:
-	 *     provider = a #GtkStyleProvider
-	 *     path = #GtkWidgetPath to query
-	 * Returns: The icon factory to use for @path, or %NULL
-	 */
-	extern(C) GtkIconFactory* function(GtkStyleProvider* provider, GtkWidgetPath* path) getIconFactory;
-}
+struct GtkSwitch;
 
-struct GtkSwitch
+struct GtkText
 {
 	GtkWidget parentInstance;
-	GtkSwitchPrivate* priv;
-}
-
-struct GtkSwitchAccessible
-{
-	GtkWidgetAccessible parent;
-	GtkSwitchAccessiblePrivate* priv;
-}
-
-struct GtkSwitchAccessibleClass
-{
-	GtkWidgetAccessibleClass parentClass;
-}
-
-struct GtkSwitchAccessiblePrivate;
-
-struct GtkSwitchClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkWidgetClass parentClass;
-	/** */
-	extern(C) void function(GtkSwitch* sw) activate;
-	/** */
-	extern(C) int function(GtkSwitch* sw, int state) stateSet;
-	/** */
-	extern(C) void function() SwitchPadding1;
-	/** */
-	extern(C) void function() SwitchPadding2;
-	/** */
-	extern(C) void function() SwitchPadding3;
-	/** */
-	extern(C) void function() SwitchPadding4;
-	/** */
-	extern(C) void function() SwitchPadding5;
-}
-
-struct GtkSwitchPrivate;
-
-struct GtkSymbolicColor;
-
-struct GtkTable
-{
-	GtkContainer container;
-	GtkTablePrivate* priv;
-}
-
-struct GtkTableChild
-{
-	GtkWidget* widget;
-	ushort leftAttach;
-	ushort rightAttach;
-	ushort topAttach;
-	ushort bottomAttach;
-	ushort xpadding;
-	ushort ypadding;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "xexpand", 1,
-		uint, "yexpand", 1,
-		uint, "xshrink", 1,
-		uint, "yshrink", 1,
-		uint, "xfill", 1,
-		uint, "yfill", 1,
-		uint, "", 26
-	));
-}
-
-struct GtkTableClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkTablePrivate;
-
-struct GtkTableRowCol
-{
-	ushort requisition;
-	ushort allocation;
-	ushort spacing;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "needExpand", 1,
-		uint, "needShrink", 1,
-		uint, "expand", 1,
-		uint, "shrink", 1,
-		uint, "empty", 1,
-		uint, "", 27
-	));
-}
-
-struct GtkTargetEntry
-{
-	/**
-	 * a string representation of the target type
-	 */
-	char* target;
-	/**
-	 * #GtkTargetFlags for DND
-	 */
-	uint flags;
-	/**
-	 * an application-assigned integer ID which will
-	 * get passed as a parameter to e.g the #GtkWidget::selection-get
-	 * signal. It allows the application to identify the target
-	 * type without extensive string compares.
-	 */
-	uint info;
-}
-
-struct GtkTargetList;
-
-/**
- * A #GtkTargetPair is used to represent the same
- * information as a table of #GtkTargetEntry, but in
- * an efficient form.
- */
-struct GtkTargetPair
-{
-	/**
-	 * #GdkAtom representation of the target type
-	 */
-	GdkAtom target;
-	/**
-	 * #GtkTargetFlags for DND
-	 */
-	uint flags;
-	/**
-	 * an application-assigned integer ID which will
-	 * get passed as a parameter to e.g the #GtkWidget::selection-get
-	 * signal. It allows the application to identify the target
-	 * type without extensive string compares.
-	 */
-	uint info;
-}
-
-struct GtkTearoffMenuItem
-{
-	GtkMenuItem menuItem;
-	GtkTearoffMenuItemPrivate* priv;
-}
-
-struct GtkTearoffMenuItemClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkMenuItemClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkTearoffMenuItemPrivate;
-
-struct GtkTextAppearance
-{
-	/**
-	 * Background #GdkColor.
-	 */
-	GdkColor bgColor;
-	/**
-	 * Foreground #GdkColor.
-	 */
-	GdkColor fgColor;
-	/**
-	 * Super/subscript rise, can be negative.
-	 */
-	int rise;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "underline", 4,
-		uint, "strikethrough", 1,
-		uint, "drawBg", 1,
-		uint, "insideSelection", 1,
-		uint, "isText", 1,
-		uint, "", 24
-	));
-	union
-	{
-		GdkRGBA*[2] rgba;
-		uint[4] padding;
-	}
-}
-
-struct GtkTextAttributes
-{
-	uint refcount;
-	/**
-	 * #GtkTextAppearance for text.
-	 */
-	GtkTextAppearance appearance;
-	/**
-	 * #GtkJustification for text.
-	 */
-	GtkJustification justification;
-	/**
-	 * #GtkTextDirection for text.
-	 */
-	GtkTextDirection direction;
-	/**
-	 * #PangoFontDescription for text.
-	 */
-	PangoFontDescription* font;
-	/**
-	 * Font scale factor.
-	 */
-	double fontScale;
-	/**
-	 * Width of the left margin in pixels.
-	 */
-	int leftMargin;
-	/**
-	 * Width of the right margin in pixels.
-	 */
-	int rightMargin;
-	/**
-	 * Amount to indent the paragraph, in pixels.
-	 */
-	int indent;
-	/**
-	 * Pixels of blank space above paragraphs.
-	 */
-	int pixelsAboveLines;
-	/**
-	 * Pixels of blank space below paragraphs.
-	 */
-	int pixelsBelowLines;
-	/**
-	 * Pixels of blank space between wrapped lines in
-	 * a paragraph.
-	 */
-	int pixelsInsideWrap;
-	/**
-	 * Custom #PangoTabArray for this text.
-	 */
-	PangoTabArray* tabs;
-	/**
-	 * #GtkWrapMode for text.
-	 */
-	GtkWrapMode wrapMode;
-	/**
-	 * #PangoLanguage for text.
-	 */
-	PangoLanguage* language;
-	GdkColor* pgBgColor;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "invisible", 1,
-		uint, "bgFullHeight", 1,
-		uint, "editable", 1,
-		uint, "noFallback", 1,
-		uint, "", 28
-	));
-	GdkRGBA* pgBgRgba;
-	/**
-	 * Extra space to insert between graphemes, in Pango units
-	 */
-	int letterSpacing;
-	union
-	{
-		char* fontFeatures;
-		uint[2] padding;
-	}
 }
 
 struct GtkTextBTree;
@@ -10076,6 +6381,9 @@ struct GtkTextBuffer
 	GtkTextBufferPrivate* priv;
 }
 
+/**
+ * The class structure for #GtkTextBuffer.
+ */
 struct GtkTextBufferClass
 {
 	/**
@@ -10085,7 +6393,7 @@ struct GtkTextBufferClass
 	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* pos, const(char)* newText, int newTextLength) insertText;
 	/** */
-	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* iter, GdkPixbuf* pixbuf) insertPixbuf;
+	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* iter, GdkPaintable* paintable) insertPaintable;
 	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* iter, GtkTextChildAnchor* anchor) insertChildAnchor;
 	/** */
@@ -10107,7 +6415,11 @@ struct GtkTextBufferClass
 	/** */
 	extern(C) void function(GtkTextBuffer* buffer) endUserAction;
 	/** */
-	extern(C) void function(GtkTextBuffer* buffer, GtkClipboard* clipboard) pasteDone;
+	extern(C) void function(GtkTextBuffer* buffer, GdkClipboard* clipboard) pasteDone;
+	/** */
+	extern(C) void function(GtkTextBuffer* buffer) undo;
+	/** */
+	extern(C) void function(GtkTextBuffer* buffer) redo;
 	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
@@ -10119,19 +6431,6 @@ struct GtkTextBufferClass
 }
 
 struct GtkTextBufferPrivate;
-
-struct GtkTextCellAccessible
-{
-	GtkRendererCellAccessible parent;
-	GtkTextCellAccessiblePrivate* priv;
-}
-
-struct GtkTextCellAccessibleClass
-{
-	GtkRendererCellAccessibleClass parentClass;
-}
-
-struct GtkTextCellAccessiblePrivate;
 
 struct GtkTextChildAnchor
 {
@@ -10179,14 +6478,7 @@ struct GtkTextMark
 struct GtkTextMarkClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkTextTag
@@ -10198,82 +6490,25 @@ struct GtkTextTag
 struct GtkTextTagClass
 {
 	GObjectClass parentClass;
-	/**
-	 *
-	 * Params:
-	 *     tag = a #GtkTextTag
-	 *     eventObject = object that received the event, such as a widget
-	 *     event = the event
-	 *     iter = location where the event was received
-	 * Returns: result of signal emission (whether the event was handled)
-	 */
-	extern(C) int function(GtkTextTag* tag, GObject* eventObject, GdkEvent* event, GtkTextIter* iter) event;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkTextTagPrivate;
 
-struct GtkTextTagTable
-{
-	GObject parentInstance;
-	GtkTextTagTablePrivate* priv;
-}
-
-struct GtkTextTagTableClass
-{
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkTextTagTable* table, GtkTextTag* tag, int sizeChanged) tagChanged;
-	/** */
-	extern(C) void function(GtkTextTagTable* table, GtkTextTag* tag) tagAdded;
-	/** */
-	extern(C) void function(GtkTextTagTable* table, GtkTextTag* tag) tagRemoved;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkTextTagTablePrivate;
+struct GtkTextTagTable;
 
 struct GtkTextView
 {
-	GtkContainer parentInstance;
+	GtkWidget parentInstance;
 	GtkTextViewPrivate* priv;
 }
-
-struct GtkTextViewAccessible
-{
-	GtkContainerAccessible parent;
-	GtkTextViewAccessiblePrivate* priv;
-}
-
-struct GtkTextViewAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkTextViewAccessiblePrivate;
 
 struct GtkTextViewClass
 {
 	/**
 	 * The object class structure needs to be the first
 	 */
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function(GtkTextView* textView, GtkWidget* popup) populatePopup;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkTextView* textView, GtkMovementStep step, int count, int extendSelection) moveCursor;
 	/** */
@@ -10295,411 +6530,30 @@ struct GtkTextViewClass
 	/** */
 	extern(C) GtkTextBuffer* function(GtkTextView* textView) createBuffer;
 	/** */
-	extern(C) void function(GtkTextView* textView, GtkTextViewLayer layer, cairo_t* cr) drawLayer;
+	extern(C) void function(GtkTextView* textView, GtkTextViewLayer layer, GtkSnapshot* snapshot) snapshotLayer;
 	/** */
 	extern(C) int function(GtkTextView* textView, GtkTextExtendSelection granularity, GtkTextIter* location, GtkTextIter* start, GtkTextIter* end) extendSelection;
 	/** */
 	extern(C) void function(GtkTextView* textView) insertEmoji;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkTextViewPrivate;
 
-struct GtkThemeEngine;
-
-struct GtkThemingEngine
-{
-	GObject parentObject;
-	GtkThemingEnginePrivate* priv;
-}
-
-/**
- * Base class for theming engines.
- */
-struct GtkThemingEngineClass
-{
-	/**
-	 * The parent class.
-	 */
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x0, double y0, double x1, double y1) renderLine;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderBackground;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderFrame;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height, GtkPositionType gapSide, double xy0Gap, double xy1Gap) renderFrameGap;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height, GtkPositionType gapSide) renderExtension;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderCheck;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderOption;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double angle, double x, double y, double size) renderArrow;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderExpander;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderFocus;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, PangoLayout* layout) renderLayout;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height, GtkOrientation orientation) renderSlider;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderHandle;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderActivity;
-	/** */
-	extern(C) GdkPixbuf* function(GtkThemingEngine* engine, GtkIconSource* source, GtkIconSize size) renderIconPixbuf;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, GdkPixbuf* pixbuf, double x, double y) renderIcon;
-	/** */
-	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, cairo_surface_t* surface, double x, double y) renderIconSurface;
-	void*[14] padding;
-}
-
-struct GtkThemingEnginePrivate;
-
-struct GtkToggleAction
-{
-	GtkAction parent;
-	GtkToggleActionPrivate* privateData;
-}
-
-struct GtkToggleActionClass
-{
-	GtkActionClass parentClass;
-	/** */
-	extern(C) void function(GtkToggleAction* action) toggled;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-/**
- * #GtkToggleActionEntry structs are used with
- * gtk_action_group_add_toggle_actions() to construct toggle actions.
- */
-struct GtkToggleActionEntry
-{
-	/**
-	 * The name of the action.
-	 */
-	const(char)* name;
-	/**
-	 * The stock id for the action, or the name of an icon from the
-	 * icon theme.
-	 */
-	const(char)* stockId;
-	/**
-	 * The label for the action. This field should typically be marked
-	 * for translation, see gtk_action_group_set_translation_domain().
-	 */
-	const(char)* label;
-	/**
-	 * The accelerator for the action, in the format understood by
-	 * gtk_accelerator_parse().
-	 */
-	const(char)* accelerator;
-	/**
-	 * The tooltip for the action. This field should typically be
-	 * marked for translation, see gtk_action_group_set_translation_domain().
-	 */
-	const(char)* tooltip;
-	/**
-	 * The function to call when the action is activated.
-	 */
-	GCallback callback;
-	/**
-	 * The initial state of the toggle action.
-	 */
-	bool isActive;
-}
-
-struct GtkToggleActionPrivate;
-
 struct GtkToggleButton
 {
 	GtkButton button;
-	GtkToggleButtonPrivate* priv;
 }
-
-struct GtkToggleButtonAccessible
-{
-	GtkButtonAccessible parent;
-	GtkToggleButtonAccessiblePrivate* priv;
-}
-
-struct GtkToggleButtonAccessibleClass
-{
-	GtkButtonAccessibleClass parentClass;
-}
-
-struct GtkToggleButtonAccessiblePrivate;
 
 struct GtkToggleButtonClass
 {
 	GtkButtonClass parentClass;
 	/** */
 	extern(C) void function(GtkToggleButton* toggleButton) toggled;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
-
-struct GtkToggleButtonPrivate;
-
-struct GtkToggleToolButton
-{
-	GtkToolButton parent;
-	GtkToggleToolButtonPrivate* priv;
-}
-
-struct GtkToggleToolButtonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkToolButtonClass parentClass;
-	/** */
-	extern(C) void function(GtkToggleToolButton* button) toggled;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkToggleToolButtonPrivate;
-
-struct GtkToolButton
-{
-	GtkToolItem parent;
-	GtkToolButtonPrivate* priv;
-}
-
-struct GtkToolButtonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkToolItemClass parentClass;
-	GType buttonType;
-	/** */
-	extern(C) void function(GtkToolButton* toolItem) clicked;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkToolButtonPrivate;
-
-struct GtkToolItem
-{
-	GtkBin parent;
-	GtkToolItemPrivate* priv;
-}
-
-struct GtkToolItemClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) int function(GtkToolItem* toolItem) createMenuProxy;
-	/** */
-	extern(C) void function(GtkToolItem* toolItem) toolbarReconfigured;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkToolItemGroup
-{
-	GtkContainer parentInstance;
-	GtkToolItemGroupPrivate* priv;
-}
-
-struct GtkToolItemGroupClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkToolItemGroupPrivate;
-
-struct GtkToolItemPrivate;
-
-struct GtkToolPalette
-{
-	GtkContainer parentInstance;
-	GtkToolPalettePrivate* priv;
-}
-
-struct GtkToolPaletteClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkToolPalettePrivate;
-
-struct GtkToolShell;
-
-/**
- * Virtual function table for the #GtkToolShell interface.
- */
-struct GtkToolShellIface
-{
-	GTypeInterface gIface;
-	/** */
-	extern(C) GtkIconSize function(GtkToolShell* shell) getIconSize;
-	/**
-	 *
-	 * Params:
-	 *     shell = a #GtkToolShell
-	 * Returns: the current orientation of @shell
-	 */
-	extern(C) GtkOrientation function(GtkToolShell* shell) getOrientation;
-	/**
-	 *
-	 * Params:
-	 *     shell = a #GtkToolShell
-	 * Returns: the current style of @shell
-	 */
-	extern(C) GtkToolbarStyle function(GtkToolShell* shell) getStyle;
-	/**
-	 *
-	 * Params:
-	 *     shell = a #GtkToolShell
-	 * Returns: The relief style of buttons on @shell.
-	 */
-	extern(C) GtkReliefStyle function(GtkToolShell* shell) getReliefStyle;
-	/** */
-	extern(C) void function(GtkToolShell* shell) rebuildMenu;
-	/**
-	 *
-	 * Params:
-	 *     shell = a #GtkToolShell
-	 * Returns: the current text orientation of @shell
-	 */
-	extern(C) GtkOrientation function(GtkToolShell* shell) getTextOrientation;
-	/**
-	 *
-	 * Params:
-	 *     shell = a #GtkToolShell
-	 * Returns: the current text alignment of @shell
-	 */
-	extern(C) float function(GtkToolShell* shell) getTextAlignment;
-	/**
-	 *
-	 * Params:
-	 *     shell = a #GtkToolShell
-	 * Returns: the current ellipsize mode of @shell
-	 */
-	extern(C) PangoEllipsizeMode function(GtkToolShell* shell) getEllipsizeMode;
-	/**
-	 *
-	 * Params:
-	 *     shell = a #GtkToolShell
-	 * Returns: the current text size group of @shell
-	 */
-	extern(C) GtkSizeGroup* function(GtkToolShell* shell) getTextSizeGroup;
-}
-
-struct GtkToolbar
-{
-	GtkContainer container;
-	GtkToolbarPrivate* priv;
-}
-
-struct GtkToolbarClass
-{
-	GtkContainerClass parentClass;
-	/** */
-	extern(C) void function(GtkToolbar* toolbar, GtkOrientation orientation) orientationChanged;
-	/** */
-	extern(C) void function(GtkToolbar* toolbar, GtkToolbarStyle style) styleChanged;
-	/** */
-	extern(C) int function(GtkToolbar* toolbar, int x, int y, int buttonNumber) popupContextMenu;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkToolbarPrivate;
 
 struct GtkTooltip;
-
-struct GtkToplevelAccessible
-{
-	AtkObject parent;
-	GtkToplevelAccessiblePrivate* priv;
-}
-
-struct GtkToplevelAccessibleClass
-{
-	AtkObjectClass parentClass;
-}
-
-struct GtkToplevelAccessiblePrivate;
 
 struct GtkTreeDragDest;
 
@@ -10711,19 +6565,19 @@ struct GtkTreeDragDestIface
 	 * Params:
 	 *     dragDest = a #GtkTreeDragDest
 	 *     dest = row to drop in front of
-	 *     selectionData = data to drop
+	 *     value = data to drop
 	 * Returns: whether a new row was created before position @dest
 	 */
-	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* dest, GtkSelectionData* selectionData) dragDataReceived;
+	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* dest, GValue* value) dragDataReceived;
 	/**
 	 *
 	 * Params:
 	 *     dragDest = a #GtkTreeDragDest
 	 *     destPath = destination row
-	 *     selectionData = the data being dragged
+	 *     value = the data being dropped
 	 * Returns: %TRUE if a drop is possible before @dest_path
 	 */
-	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* destPath, GtkSelectionData* selectionData) rowDropPossible;
+	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* destPath, GValue* value) rowDropPossible;
 }
 
 struct GtkTreeDragSource;
@@ -10744,11 +6598,10 @@ struct GtkTreeDragSourceIface
 	 * Params:
 	 *     dragSource = a #GtkTreeDragSource
 	 *     path = row that was dragged
-	 *     selectionData = a #GtkSelectionData to fill with data
-	 *         from the dragged row
-	 * Returns: %TRUE if data of the required type was provided
+	 * Returns: a #GdkContentProvider for the
+	 *     given @path or %NULL if none exists
 	 */
-	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path, GtkSelectionData* selectionData) dragDataGet;
+	extern(C) GdkContentProvider* function(GtkTreeDragSource* dragSource, GtkTreePath* path) dragDataGet;
 	/**
 	 *
 	 * Params:
@@ -10757,6 +6610,13 @@ struct GtkTreeDragSourceIface
 	 * Returns: %TRUE if the row was successfully deleted
 	 */
 	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path) dragDataDelete;
+}
+
+struct GtkTreeExpander;
+
+struct GtkTreeExpanderClass
+{
+	GtkWidgetClass parentClass;
 }
 
 struct GtkTreeIter
@@ -10779,6 +6639,27 @@ struct GtkTreeIter
 	void* userData3;
 }
 
+struct GtkTreeListModel;
+
+struct GtkTreeListModelClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkTreeListRow;
+
+struct GtkTreeListRowClass
+{
+	GObjectClass parentClass;
+}
+
+struct GtkTreeListRowSorter;
+
+struct GtkTreeListRowSorterClass
+{
+	GtkSorterClass parentClass;
+}
+
 struct GtkTreeModel;
 
 struct GtkTreeModelFilter
@@ -10794,14 +6675,7 @@ struct GtkTreeModelFilterClass
 	extern(C) int function(GtkTreeModelFilter* self, GtkTreeModel* childModel, GtkTreeIter* iter) visible;
 	/** */
 	extern(C) void function(GtkTreeModelFilter* self, GtkTreeModel* childModel, GtkTreeIter* iter, GValue* value, int column) modify;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkTreeModelFilterPrivate;
@@ -10935,14 +6809,7 @@ struct GtkTreeModelSort
 struct GtkTreeModelSortClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkTreeModelSortPrivate;
@@ -10951,31 +6818,7 @@ struct GtkTreePath;
 
 struct GtkTreeRowReference;
 
-struct GtkTreeSelection
-{
-	GObject parent;
-	GtkTreeSelectionPrivate* priv;
-}
-
-struct GtkTreeSelectionClass
-{
-	/**
-	 * The parent class.
-	 */
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkTreeSelection* selection) changed;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkTreeSelectionPrivate;
+struct GtkTreeSelection;
 
 struct GtkTreeSortable;
 
@@ -11018,40 +6861,19 @@ struct GtkTreeStore
 struct GtkTreeStoreClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
+	void*[8] padding;
 }
 
 struct GtkTreeStorePrivate;
 
 struct GtkTreeView
 {
-	GtkContainer parent;
-	GtkTreeViewPrivate* priv;
+	GtkWidget parentInstance;
 }
-
-struct GtkTreeViewAccessible
-{
-	GtkContainerAccessible parent;
-	GtkTreeViewAccessiblePrivate* priv;
-}
-
-struct GtkTreeViewAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkTreeViewAccessiblePrivate;
 
 struct GtkTreeViewClass
 {
-	GtkContainerClass parentClass;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* column) rowActivated;
 	/** */
@@ -11067,7 +6889,7 @@ struct GtkTreeViewClass
 	/** */
 	extern(C) void function(GtkTreeView* treeView) cursorChanged;
 	/** */
-	extern(C) int function(GtkTreeView* treeView, GtkMovementStep step, int count) moveCursor;
+	extern(C) int function(GtkTreeView* treeView, GtkMovementStep step, int count, int extend, int modify) moveCursor;
 	/** */
 	extern(C) int function(GtkTreeView* treeView) selectAll;
 	/** */
@@ -11082,200 +6904,23 @@ struct GtkTreeViewClass
 	extern(C) int function(GtkTreeView* treeView) selectCursorParent;
 	/** */
 	extern(C) int function(GtkTreeView* treeView) startInteractiveSearch;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
-	/** */
-	extern(C) void function() GtkReserved8;
+	void*[16] Reserved;
 }
 
-struct GtkTreeViewColumn
+struct GtkTreeViewColumn;
+
+struct GtkVideo;
+
+struct GtkVideoClass
 {
-	GObject parentInstance;
-	GtkTreeViewColumnPrivate* priv;
+	GtkWidgetClass parentClass;
 }
 
-struct GtkTreeViewColumnClass
-{
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkTreeViewColumn* treeColumn) clicked;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkTreeViewColumnPrivate;
-
-struct GtkTreeViewPrivate;
-
-struct GtkUIManager
-{
-	GObject parent;
-	GtkUIManagerPrivate* privateData;
-}
-
-struct GtkUIManagerClass
-{
-	GObjectClass parentClass;
-	/** */
-	extern(C) void function(GtkUIManager* manager, GtkWidget* widget) addWidget;
-	/** */
-	extern(C) void function(GtkUIManager* manager) actionsChanged;
-	/** */
-	extern(C) void function(GtkUIManager* manager, GtkAction* action, GtkWidget* proxy) connectProxy;
-	/** */
-	extern(C) void function(GtkUIManager* manager, GtkAction* action, GtkWidget* proxy) disconnectProxy;
-	/** */
-	extern(C) void function(GtkUIManager* manager, GtkAction* action) preActivate;
-	/** */
-	extern(C) void function(GtkUIManager* manager, GtkAction* action) postActivate;
-	/**
-	 *
-	 * Params:
-	 *     manager = a #GtkUIManager
-	 *     path = a path
-	 * Returns: the widget found by following the path,
-	 *     or %NULL if no widget was found
-	 */
-	extern(C) GtkWidget* function(GtkUIManager* manager, const(char)* path) getWidget;
-	/**
-	 *
-	 * Params:
-	 *     manager = a #GtkUIManager
-	 *     path = a path
-	 * Returns: the action whose proxy widget is found by following the path,
-	 *     or %NULL if no widget was found.
-	 */
-	extern(C) GtkAction* function(GtkUIManager* manager, const(char)* path) getAction;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkUIManagerPrivate;
-
-struct GtkVBox
-{
-	GtkBox box;
-}
-
-struct GtkVBoxClass
-{
-	GtkBoxClass parentClass;
-}
-
-struct GtkVButtonBox
-{
-	GtkButtonBox buttonBox;
-}
-
-struct GtkVButtonBoxClass
-{
-	GtkButtonBoxClass parentClass;
-}
-
-struct GtkVPaned
-{
-	GtkPaned paned;
-}
-
-struct GtkVPanedClass
-{
-	GtkPanedClass parentClass;
-}
-
-struct GtkVScale
-{
-	GtkScale scale;
-}
-
-struct GtkVScaleClass
-{
-	GtkScaleClass parentClass;
-}
-
-struct GtkVScrollbar
-{
-	GtkScrollbar scrollbar;
-}
-
-struct GtkVScrollbarClass
-{
-	GtkScrollbarClass parentClass;
-}
-
-struct GtkVSeparator
-{
-	GtkSeparator separator;
-}
-
-struct GtkVSeparatorClass
-{
-	GtkSeparatorClass parentClass;
-}
-
-struct GtkViewport
-{
-	GtkBin bin;
-	GtkViewportPrivate* priv;
-}
-
-struct GtkViewportClass
-{
-	/**
-	 * The parent class.
-	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
-}
-
-struct GtkViewportPrivate;
+struct GtkViewport;
 
 struct GtkVolumeButton
 {
 	GtkScaleButton parent;
-}
-
-struct GtkVolumeButtonClass
-{
-	GtkScaleButtonClass parentClass;
-	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
 }
 
 struct GtkWidget
@@ -11283,21 +6928,6 @@ struct GtkWidget
 	GObject parentInstance;
 	GtkWidgetPrivate* priv;
 }
-
-struct GtkWidgetAccessible
-{
-	GtkAccessible parent;
-	GtkWidgetAccessiblePrivate* priv;
-}
-
-struct GtkWidgetAccessibleClass
-{
-	GtkAccessibleClass parentClass;
-	/** */
-	extern(C) void function(GObject* object, GParamSpec* pspec) notifyGtk;
-}
-
-struct GtkWidgetAccessiblePrivate;
 
 struct GtkWidgetClass
 {
@@ -11308,20 +6938,8 @@ struct GtkWidgetClass
 	 * a GObjectClass pointer.
 	 */
 	GObjectClass parentClass;
-	/**
-	 * The signal to emit when a widget of this class is
-	 * activated, gtk_widget_activate() handles the emission.
-	 * Implementation of this signal is optional.
-	 */
-	uint activateSignal;
-	/** */
-	extern(C) void function(GtkWidget* widget, uint nPspecs, GParamSpec** pspecs) dispatchChildPropertiesChanged;
-	/** */
-	extern(C) void function(GtkWidget* widget) destroy;
 	/** */
 	extern(C) void function(GtkWidget* widget) show;
-	/** */
-	extern(C) void function(GtkWidget* widget) showAll;
 	/** */
 	extern(C) void function(GtkWidget* widget) hide;
 	/** */
@@ -11333,25 +6951,15 @@ struct GtkWidgetClass
 	/** */
 	extern(C) void function(GtkWidget* widget) unrealize;
 	/** */
-	extern(C) void function(GtkWidget* widget, GtkAllocation* allocation) sizeAllocate;
+	extern(C) void function(GtkWidget* widget) root;
 	/** */
-	extern(C) void function(GtkWidget* widget, GtkStateType previousState) stateChanged;
+	extern(C) void function(GtkWidget* widget) unroot;
+	/** */
+	extern(C) void function(GtkWidget* widget, int width, int height, int baseline) sizeAllocate;
 	/** */
 	extern(C) void function(GtkWidget* widget, GtkStateFlags previousStateFlags) stateFlagsChanged;
 	/** */
-	extern(C) void function(GtkWidget* widget, GtkWidget* previousParent) parentSet;
-	/** */
-	extern(C) void function(GtkWidget* widget, GtkWidget* previousToplevel) hierarchyChanged;
-	/** */
-	extern(C) void function(GtkWidget* widget, GtkStyle* previousStyle) styleSet;
-	/** */
 	extern(C) void function(GtkWidget* widget, GtkTextDirection previousDirection) directionChanged;
-	/** */
-	extern(C) void function(GtkWidget* widget, int wasGrabbed) grabNotify;
-	/** */
-	extern(C) void function(GtkWidget* widget, GParamSpec* childProperty) childNotify;
-	/** */
-	extern(C) int function(GtkWidget* widget, cairo_t* cr) draw;
 	/**
 	 *
 	 * Params:
@@ -11360,13 +6968,7 @@ struct GtkWidgetClass
 	 */
 	extern(C) GtkSizeRequestMode function(GtkWidget* widget) getRequestMode;
 	/** */
-	extern(C) void function(GtkWidget* widget, int* minimumHeight, int* naturalHeight) getPreferredHeight;
-	/** */
-	extern(C) void function(GtkWidget* widget, int height, int* minimumWidth, int* naturalWidth) getPreferredWidthForHeight;
-	/** */
-	extern(C) void function(GtkWidget* widget, int* minimumWidth, int* naturalWidth) getPreferredWidth;
-	/** */
-	extern(C) void function(GtkWidget* widget, int width, int* minimumHeight, int* naturalHeight) getPreferredHeightForWidth;
+	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, int forSize, int* minimum, int* natural, int* minimumBaseline, int* naturalBaseline) measure;
 	/**
 	 *
 	 * Params:
@@ -11375,10 +6977,17 @@ struct GtkWidgetClass
 	 * Returns: %TRUE if the signal has been handled
 	 */
 	extern(C) int function(GtkWidget* widget, int groupCycling) mnemonicActivate;
-	/** */
-	extern(C) void function(GtkWidget* widget) grabFocus;
+	/**
+	 *
+	 * Params:
+	 *     widget = a #GtkWidget
+	 * Returns: %TRUE if focus is now inside @widget.
+	 */
+	extern(C) int function(GtkWidget* widget) grabFocus;
 	/** */
 	extern(C) int function(GtkWidget* widget, GtkDirectionType direction) focus;
+	/** */
+	extern(C) void function(GtkWidget* widget, GtkWidget* child) setFocusChild;
 	/** */
 	extern(C) void function(GtkWidget* widget, GtkDirectionType direction) moveFocus;
 	/**
@@ -11391,170 +7000,51 @@ struct GtkWidgetClass
 	 *     navigation attempt in its parent container(s).
 	 */
 	extern(C) int function(GtkWidget* widget, GtkDirectionType direction) keynavFailed;
-	/**
-	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *     event = a #GdkEvent
-	 * Returns: return from the event signal emission (%TRUE if
-	 *     the event was handled)
-	 */
-	extern(C) int function(GtkWidget* widget, GdkEvent* event) event;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventButton* event) buttonPressEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventButton* event) buttonReleaseEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventScroll* event) scrollEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventMotion* event) motionNotifyEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventAny* event) deleteEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventAny* event) destroyEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventKey* event) keyPressEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventKey* event) keyReleaseEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventCrossing* event) enterNotifyEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventCrossing* event) leaveNotifyEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventConfigure* event) configureEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventFocus* event) focusInEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventFocus* event) focusOutEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventAny* event) mapEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventAny* event) unmapEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventProperty* event) propertyNotifyEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventSelection* event) selectionClearEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventSelection* event) selectionRequestEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventSelection* event) selectionNotifyEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventProximity* event) proximityInEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventProximity* event) proximityOutEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventVisibility* event) visibilityNotifyEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventWindowState* event) windowStateEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventExpose* event) damageEvent;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventGrabBroken* event) grabBrokenEvent;
-	/** */
-	extern(C) void function(GtkWidget* widget, GtkSelectionData* selectionData, uint info, uint time) selectionGet;
-	/** */
-	extern(C) void function(GtkWidget* widget, GtkSelectionData* selectionData, uint time) selectionReceived;
-	/** */
-	extern(C) void function(GtkWidget* widget, GdkDragContext* context) dragBegin;
-	/** */
-	extern(C) void function(GtkWidget* widget, GdkDragContext* context) dragEnd;
-	/** */
-	extern(C) void function(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selectionData, uint info, uint time) dragDataGet;
-	/** */
-	extern(C) void function(GtkWidget* widget, GdkDragContext* context) dragDataDelete;
-	/** */
-	extern(C) void function(GtkWidget* widget, GdkDragContext* context, uint time) dragLeave;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkDragContext* context, int x, int y, uint time) dragMotion;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkDragContext* context, int x, int y, uint time) dragDrop;
-	/** */
-	extern(C) void function(GtkWidget* widget, GdkDragContext* context, int x, int y, GtkSelectionData* selectionData, uint info, uint time) dragDataReceived;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkDragContext* context, GtkDragResult result) dragFailed;
-	/** */
-	extern(C) int function(GtkWidget* widget) popupMenu;
-	/** */
-	extern(C) int function(GtkWidget* widget, GtkWidgetHelpType helpType) showHelp;
-	/**
-	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 * Returns: the #AtkObject associated with @widget
-	 */
-	extern(C) AtkObject* function(GtkWidget* widget) getAccessible;
-	/** */
-	extern(C) void function(GtkWidget* widget, GdkScreen* previousScreen) screenChanged;
-	/**
-	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *     signalId = the ID of a signal installed on @widget
-	 * Returns: %TRUE if the accelerator can be activated.
-	 */
-	extern(C) int function(GtkWidget* widget, uint signalId) canActivateAccel;
-	/** */
-	extern(C) void function(GtkWidget* widget) compositedChanged;
 	/** */
 	extern(C) int function(GtkWidget* widget, int x, int y, int keyboardTooltip, GtkTooltip* tooltip) queryTooltip;
 	/** */
 	extern(C) void function(GtkWidget* widget, int* hexpandP, int* vexpandP) computeExpand;
 	/** */
-	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, int* minimumSize, int* naturalSize) adjustSizeRequest;
+	extern(C) void function(GtkWidget* widget, GtkCssStyleChange* change) cssChanged;
 	/** */
-	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, int* minimumSize, int* naturalSize, int* allocatedPos, int* allocatedSize) adjustSizeAllocation;
+	extern(C) void function(GtkWidget* widget, GtkSystemSetting settings) systemSettingChanged;
 	/** */
-	extern(C) void function(GtkWidget* widget) styleUpdated;
-	/** */
-	extern(C) int function(GtkWidget* widget, GdkEventTouch* event) touchEvent;
-	/** */
-	extern(C) void function(GtkWidget* widget, int width, int* minimumHeight, int* naturalHeight, int* minimumBaseline, int* naturalBaseline) getPreferredHeightAndBaselineForWidth;
-	/** */
-	extern(C) void function(GtkWidget* widget, int* minimumBaseline, int* naturalBaseline) adjustBaselineRequest;
-	/** */
-	extern(C) void function(GtkWidget* widget, int* baseline) adjustBaselineAllocation;
-	/** */
-	extern(C) void function(GtkWidget* widget, cairo_region_t* region) queueDrawRegion;
+	extern(C) void function(GtkWidget* widget, GtkSnapshot* snapshot) snapshot;
+	/**
+	 *
+	 * Params:
+	 *     widget = the widget to query
+	 *     x = X coordinate to test, relative to @widget's origin
+	 *     y = Y coordinate to test, relative to @widget's origin
+	 * Returns: %TRUE if @widget contains (@x, @y).
+	 */
+	extern(C) int function(GtkWidget* widget, double x, double y) contains;
 	GtkWidgetClassPrivate* priv;
-	/** */
-	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
+	void*[8] padding;
 }
 
 struct GtkWidgetClassPrivate;
 
-struct GtkWidgetPath;
+struct GtkWidgetPaintable;
+
+struct GtkWidgetPaintableClass
+{
+	GObjectClass parentClass;
+}
 
 struct GtkWidgetPrivate;
 
 struct GtkWindow
 {
-	GtkBin bin;
-	GtkWindowPrivate* priv;
+	GtkWidget parentInstance;
 }
-
-struct GtkWindowAccessible
-{
-	GtkContainerAccessible parent;
-	GtkWindowAccessiblePrivate* priv;
-}
-
-struct GtkWindowAccessibleClass
-{
-	GtkContainerAccessibleClass parentClass;
-}
-
-struct GtkWindowAccessiblePrivate;
 
 struct GtkWindowClass
 {
 	/**
 	 * The parent class.
 	 */
-	GtkBinClass parentClass;
-	/** */
-	extern(C) void function(GtkWindow* window, GtkWidget* focus) setFocus;
+	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkWindow* window) activateFocus;
 	/** */
@@ -11564,11 +7054,15 @@ struct GtkWindowClass
 	/** */
 	extern(C) int function(GtkWindow* window, int toggle) enableDebugging;
 	/** */
-	extern(C) void function() GtkReserved1;
-	/** */
-	extern(C) void function() GtkReserved2;
-	/** */
-	extern(C) void function() GtkReserved3;
+	extern(C) int function(GtkWindow* window) closeRequest;
+	void*[8] padding;
+}
+
+struct GtkWindowControls;
+
+struct GtkWindowControlsClass
+{
+	GtkWidgetClass parentClass;
 }
 
 struct GtkWindowGeometryInfo;
@@ -11594,84 +7088,12 @@ struct GtkWindowGroupClass
 
 struct GtkWindowGroupPrivate;
 
-struct GtkWindowPrivate;
+struct GtkWindowHandle;
 
-/**
- * Abstract interface type for the D-Bus interface <link linkend="gdbus-interface-org-Gtk-MountOperationHandler.top_of_page">org.Gtk.MountOperationHandler</link>.
- */
-struct _GtkMountOperationHandler;
-
-/**
- * Virtual table for the D-Bus interface <link linkend="gdbus-interface-org-Gtk-MountOperationHandler.top_of_page">org.Gtk.MountOperationHandler</link>.
- */
-struct _GtkMountOperationHandlerIface
+struct GtkWindowHandleClass
 {
-	/**
-	 * The parent interface.
-	 */
-	GTypeInterface parentIface;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, const(char)* argDefaultUser, const(char)* argDefaultDomain, uint argFlags) handleAskPassword;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, const(char)* argChoices) handleAskQuestion;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation) handleClose;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, GVariant* argApplicationPids, const(char)* argChoices) handleShowProcesses;
+	GtkWidgetClass parentClass;
 }
-
-/**
- * The #_GtkMountOperationHandlerProxy structure contains only private data and should only be accessed using the provided API.
- */
-struct _GtkMountOperationHandlerProxy
-{
-	GDBusProxy parentInstance;
-	_GtkMountOperationHandlerProxyPrivate* priv;
-}
-
-/**
- * Class structure for #_GtkMountOperationHandlerProxy.
- */
-struct _GtkMountOperationHandlerProxyClass
-{
-	/**
-	 * The parent class.
-	 */
-	GDBusProxyClass parentClass;
-}
-
-struct _GtkMountOperationHandlerProxyPrivate;
-
-/**
- * The #_GtkMountOperationHandlerSkeleton structure contains only private data and should only be accessed using the provided API.
- */
-struct _GtkMountOperationHandlerSkeleton
-{
-	GDBusInterfaceSkeleton parentInstance;
-	_GtkMountOperationHandlerSkeletonPrivate* priv;
-}
-
-/**
- * Class structure for #_GtkMountOperationHandlerSkeleton.
- */
-struct _GtkMountOperationHandlerSkeletonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GDBusInterfaceSkeletonClass parentClass;
-}
-
-struct _GtkMountOperationHandlerSkeletonPrivate;
-
-/** */
-public alias extern(C) int function(GtkAccelGroup* accelGroup, GObject* acceleratable, uint keyval, GdkModifierType modifier) GtkAccelGroupActivate;
-
-/** */
-public alias extern(C) int function(GtkAccelKey* key, GClosure* closure, void* data) GtkAccelGroupFindFunc;
-
-/** */
-public alias extern(C) void function(void* data, const(char)* accelPath, uint accelKey, GdkModifierType accelMods, int changed) GtkAccelMapForeach;
 
 /**
  * A function used by gtk_assistant_set_forward_page_func() to know which
@@ -11686,56 +7108,6 @@ public alias extern(C) void function(void* data, const(char)* accelPath, uint ac
  * Returns: The next page number.
  */
 public alias extern(C) int function(int currentPage, void* data) GtkAssistantPageFunc;
-
-/**
- * This is the signature of a function used to connect signals.  It is used
- * by the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
- * methods.  It is mainly intended for interpreted language bindings, but
- * could be useful where the programmer wants more control over the signal
- * connection process. Note that this function can only be called once,
- * subsequent calls will do nothing.
- *
- * Params:
- *     builder = a #GtkBuilder
- *     object = object to connect a signal to
- *     signalName = name of the signal
- *     handlerName = name of the handler
- *     connectObject = a #GObject, if non-%NULL, use g_signal_connect_object()
- *     flags = #GConnectFlags to use
- *     userData = user data
- *
- * Since: 2.12
- */
-public alias extern(C) void function(GtkBuilder* builder, GObject* object, const(char)* signalName, const(char)* handlerName, GObject* connectObject, GConnectFlags flags, void* userData) GtkBuilderConnectFunc;
-
-/**
- * This kind of functions provide Pango markup with detail information for the
- * specified day. Examples for such details are holidays or appointments. The
- * function returns %NULL when no information is available.
- *
- * Params:
- *     calendar = a #GtkCalendar.
- *     year = the year for which details are needed.
- *     month = the month for which details are needed.
- *     day = the day of @month for which details are needed.
- *     userData = the data passed with gtk_calendar_set_detail_func().
- *
- * Returns: Newly allocated string with Pango markup
- *     with details for the specified day or %NULL.
- *
- * Since: 2.14
- */
-public alias extern(C) char* function(GtkCalendar* calendar, uint year, uint month, uint day, void* userData) GtkCalendarDetailFunc;
-
-/**
- * The type of the callback functions used for e.g. iterating over
- * the children of a container, see gtk_container_foreach().
- *
- * Params:
- *     widget = the widget to operate on
- *     data = user-supplied data
- */
-public alias extern(C) void function(GtkWidget* widget, void* data) GtkCallback;
 
 /**
  * The type of the callback functions used for iterating over the
@@ -11780,135 +7152,69 @@ public alias extern(C) int function(GtkCellRenderer* renderer, void* data) GtkCe
 public alias extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkTreeModel* treeModel, GtkTreeIter* iter, void* data) GtkCellLayoutDataFunc;
 
 /**
- * A function that will be called when the contents of the clipboard are changed
- * or cleared. Once this has called, the @user_data_or_owner argument
- * will not be used again.
+ * A function to be used by #GtkCustomLayout to allocate a widget.
  *
  * Params:
- *     clipboard = the #GtkClipboard
- *     userDataOrOwner = the @user_data argument passed to gtk_clipboard_set_with_data(),
- *         or the @owner argument passed to gtk_clipboard_set_with_owner()
+ *     widget = the widget to allocate
+ *     width = the new width of the widget
+ *     height = the new height of the widget
+ *     baseline = the new baseline of the widget, or -1
  */
-public alias extern(C) void function(GtkClipboard* clipboard, void* userDataOrOwner) GtkClipboardClearFunc;
+public alias extern(C) void function(GtkWidget* widget, int width, int height, int baseline) GtkCustomAllocateFunc;
 
 /**
- * A function that will be called to provide the contents of the selection.
- * If multiple types of data were advertised, the requested type can
- * be determined from the @info parameter or by checking the target field
- * of @selection_data. If the data could successfully be converted into
- * then it should be stored into the @selection_data object by
- * calling gtk_selection_data_set() (or related functions such
- * as gtk_selection_data_set_text()). If no data is set, the requestor
- * will be informed that the attempt to get the data failed.
+ * User function that is called to determine if the @item should be matched.
+ * If the filter matches the item, this function must return %TRUE. If the
+ * item should be filtered out, %FALSE must be returned.
  *
  * Params:
- *     clipboard = the #GtkClipboard
- *     selectionData = a #GtkSelectionData argument in which the requested
- *         data should be stored.
- *     info = the info field corresponding to the requested target from the
- *         #GtkTargetEntry array passed to gtk_clipboard_set_with_data() or
- *         gtk_clipboard_set_with_owner().
- *     userDataOrOwner = the @user_data argument passed to
- *         gtk_clipboard_set_with_data(), or the @owner argument passed to
- *         gtk_clipboard_set_with_owner()
+ *     item = The item to be matched
+ *     userData = user data
+ *
+ * Returns: %TRUE to keep the item around
  */
-public alias extern(C) void function(GtkClipboard* clipboard, GtkSelectionData* selectionData, uint info, void* userDataOrOwner) GtkClipboardGetFunc;
+public alias extern(C) int function(void* item, void* userData) GtkCustomFilterFunc;
 
 /**
- * A function to be called when the results of gtk_clipboard_request_image()
- * are received, or when the request fails.
+ * A function to be used by #GtkCustomLayout to measure a widget.
  *
  * Params:
- *     clipboard = the #GtkClipboard
- *     pixbuf = the received image
- *     data = the @user_data supplied to
- *         gtk_clipboard_request_image().
- *
- * Since: 2.6
+ *     widget = the widget to be measured
+ *     orientation = the direction to be measured
+ *     forSize = the size to be measured for
+ *     minimum = the measured minimum size of the widget
+ *     natural = the measured natural size of the widget
+ *     minimumBaseline = the measured minimum baseline of the widget
+ *     naturalBaseline = the measured natural baseline of the widget
  */
-public alias extern(C) void function(GtkClipboard* clipboard, GdkPixbuf* pixbuf, void* data) GtkClipboardImageReceivedFunc;
+public alias extern(C) void function(GtkWidget* widget, GtkOrientation orientation, int forSize, int* minimum, int* natural, int* minimumBaseline, int* naturalBaseline) GtkCustomMeasureFunc;
 
 /**
- * A function to be called when the results of gtk_clipboard_request_contents()
- * are received, or when the request fails.
+ * Queries a widget for its preferred size request mode.
  *
  * Params:
- *     clipboard = the #GtkClipboard
- *     selectionData = a #GtkSelectionData containing the data was received.
- *         If retrieving the data failed, then then length field
- *         of @selection_data will be negative.
- *     data = the @user_data supplied to
- *         gtk_clipboard_request_contents().
+ *     widget = the widget to be queried
+ *
+ * Returns: the size request mode
  */
-public alias extern(C) void function(GtkClipboard* clipboard, GtkSelectionData* selectionData, void* data) GtkClipboardReceivedFunc;
+public alias extern(C) GtkSizeRequestMode function(GtkWidget* widget) GtkCustomRequestModeFunc;
 
 /**
- * A function to be called when the results of
- * gtk_clipboard_request_rich_text() are received, or when the request
- * fails.
+ * Whenever @drawing_area needs to redraw, this function will be called.
+ *
+ * This function should exclusively redraw the contents of the drawing area
+ * and must not call any widget functions that cause changes.
  *
  * Params:
- *     clipboard = the #GtkClipboard
- *     format = The format of the rich text
- *     text = the rich text received, as
- *         a UTF-8 encoded string, or %NULL if retrieving the data failed.
- *     length = Length of the text.
- *     data = the @user_data supplied to
- *         gtk_clipboard_request_rich_text().
- *
- * Since: 2.10
+ *     drawingArea = the #GtkDrawingArea to redraw
+ *     cr = the context to draw to
+ *     width = the actual width of the contents. This value will be at least
+ *         as wide as GtkDrawingArea:width.
+ *     height = the actual height of the contents. This value will be at least
+ *         as wide as GtkDrawingArea:height.
+ *     userData = user data
  */
-public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom format, const(char)* text, size_t length, void* data) GtkClipboardRichTextReceivedFunc;
-
-/**
- * A function to be called when the results of gtk_clipboard_request_targets()
- * are received, or when the request fails.
- *
- * Params:
- *     clipboard = the #GtkClipboard
- *     atoms = the supported targets,
- *         as array of #GdkAtom, or %NULL if retrieving the data failed.
- *     nAtoms = the length of the @atoms array.
- *     data = the @user_data supplied to
- *         gtk_clipboard_request_targets().
- *
- * Since: 2.4
- */
-public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom* atoms, int nAtoms, void* data) GtkClipboardTargetsReceivedFunc;
-
-/**
- * A function to be called when the results of gtk_clipboard_request_text()
- * are received, or when the request fails.
- *
- * Params:
- *     clipboard = the #GtkClipboard
- *     text = the text received, as a UTF-8 encoded string, or
- *         %NULL if retrieving the data failed.
- *     data = the @user_data supplied to
- *         gtk_clipboard_request_text().
- */
-public alias extern(C) void function(GtkClipboard* clipboard, const(char)* text, void* data) GtkClipboardTextReceivedFunc;
-
-/**
- * A function to be called when the results of
- * gtk_clipboard_request_uris() are received, or when the request
- * fails.
- *
- * Params:
- *     clipboard = the #GtkClipboard
- *     uris = the received URIs
- *     data = the @user_data supplied to
- *         gtk_clipboard_request_uris().
- *
- * Since: 2.14
- */
-public alias extern(C) void function(GtkClipboard* clipboard, char** uris, void* data) GtkClipboardURIReceivedFunc;
-
-/** */
-public alias extern(C) void function(GdkColor* colors, int nColors) GtkColorSelectionChangePaletteFunc;
-
-/** */
-public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nColors) GtkColorSelectionChangePaletteWithScreenFunc;
+public alias extern(C) void function(GtkDrawingArea* drawingArea, cairo_t* cr, int width, int height, void* userData) GtkDrawingAreaDrawFunc;
 
 /**
  * A function which decides whether the row indicated by @iter matches
@@ -11916,7 +7222,7 @@ public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nC
  * Note that @key is normalized and case-folded (see g_utf8_normalize()
  * and g_utf8_casefold()). If this is not appropriate, match functions
  * have access to the unmodified key via
- * `gtk_entry_get_text (GTK_ENTRY (gtk_entry_completion_get_entry ()))`.
+ * `gtk_editable_get_text (GTK_EDITABLE (gtk_entry_completion_get_entry ()))`.
  *
  * Params:
  *     completion = the #GtkEntryCompletion
@@ -11930,17 +7236,13 @@ public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nC
 public alias extern(C) int function(GtkEntryCompletion* completion, const(char)* key, GtkTreeIter* iter, void* userData) GtkEntryCompletionMatchFunc;
 
 /**
- * The type of function that is used with custom filters, see
- * gtk_file_filter_add_custom().
+ * Callback called by gtk_expression_watch() when the
+ * expression value changes.
  *
  * Params:
- *     filterInfo = a #GtkFileFilterInfo that is filled according
- *         to the @needed flags passed to gtk_file_filter_add_custom()
- *     data = user data passed to gtk_file_filter_add_custom()
- *
- * Returns: %TRUE if the file should be displayed
+ *     userData = data passed to gtk_expression_watch()
  */
-public alias extern(C) int function(GtkFileFilterInfo* filterInfo, void* data) GtkFileFilterFunc;
+public alias extern(C) void function(void* userData) GtkExpressionNotify;
 
 /**
  * Called for flow boxes that are bound to a #GListModel with
@@ -11951,13 +7253,11 @@ public alias extern(C) int function(GtkFileFilterInfo* filterInfo, void* data) G
  *     userData = user data from gtk_flow_box_bind_model()
  *
  * Returns: a #GtkWidget that represents @item
- *
- * Since: 3.18
  */
 public alias extern(C) GtkWidget* function(void* item, void* userData) GtkFlowBoxCreateWidgetFunc;
 
 /**
- * A function that will be called whenrever a child changes
+ * A function that will be called whenever a child changes
  * or is added. It lets you control if the child should be
  * visible or not.
  *
@@ -11966,8 +7266,6 @@ public alias extern(C) GtkWidget* function(void* item, void* userData) GtkFlowBo
  *     userData = user data
  *
  * Returns: %TRUE if the row should be visible, %FALSE otherwise
- *
- * Since: 3.12
  */
 public alias extern(C) int function(GtkFlowBoxChild* child, void* userData) GtkFlowBoxFilterFunc;
 
@@ -11979,8 +7277,6 @@ public alias extern(C) int function(GtkFlowBoxChild* child, void* userData) GtkF
  *     box = a #GtkFlowBox
  *     child = a #GtkFlowBoxChild
  *     userData = user data
- *
- * Since: 3.12
  */
 public alias extern(C) void function(GtkFlowBox* box, GtkFlowBoxChild* child, void* userData) GtkFlowBoxForeachFunc;
 
@@ -11995,8 +7291,6 @@ public alias extern(C) void function(GtkFlowBox* box, GtkFlowBoxChild* child, vo
  *
  * Returns: < 0 if @child1 should be before @child2, 0 if
  *     the are equal, and > 0 otherwise
- *
- * Since: 3.12
  */
 public alias extern(C) int function(GtkFlowBoxChild* child1, GtkFlowBoxChild* child2, void* userData) GtkFlowBoxSortFunc;
 
@@ -12025,34 +7319,14 @@ public alias extern(C) int function(PangoFontFamily* family, PangoFontFace* face
 public alias extern(C) void function(GtkIconView* iconView, GtkTreePath* path, void* data) GtkIconViewForeachFunc;
 
 /**
- * Key snooper functions are called before normal event delivery.
- * They can be used to implement custom key event handling.
- *
- * Params:
- *     grabWidget = the widget to which the event will be delivered
- *     event = the key event
- *     funcData = data supplied to gtk_key_snooper_install()
- *
- * Returns: %TRUE to stop further processing of @event, %FALSE to continue.
- */
-public alias extern(C) int function(GtkWidget* grabWidget, GdkEventKey* event, void* funcData) GtkKeySnoopFunc;
-
-/**
  * Called for list boxes that are bound to a #GListModel with
  * gtk_list_box_bind_model() for each item that gets added to the model.
- *
- * Versions of GTK+ prior to 3.18 called gtk_widget_show_all() on the rows
- * created by the GtkListBoxCreateWidgetFunc, but this forced all widgets
- * inside the row to be shown, and is no longer the case. Applications should
- * be updated to show the desired row widgets.
  *
  * Params:
  *     item = the item from the model for which to create a widget for
  *     userData = user data
  *
  * Returns: a #GtkWidget that represents @item
- *
- * Since: 3.16
  */
 public alias extern(C) GtkWidget* function(void* item, void* userData) GtkListBoxCreateWidgetFunc;
 
@@ -12065,8 +7339,6 @@ public alias extern(C) GtkWidget* function(void* item, void* userData) GtkListBo
  *     userData = user data
  *
  * Returns: %TRUE if the row should be visible, %FALSE otherwise
- *
- * Since: 3.10
  */
 public alias extern(C) int function(GtkListBoxRow* row, void* userData) GtkListBoxFilterFunc;
 
@@ -12078,8 +7350,6 @@ public alias extern(C) int function(GtkListBoxRow* row, void* userData) GtkListB
  *     box = a #GtkListBox
  *     row = a #GtkListBoxRow
  *     userData = user data
- *
- * Since: 3.14
  */
 public alias extern(C) void function(GtkListBox* box, GtkListBoxRow* row, void* userData) GtkListBoxForeachFunc;
 
@@ -12093,8 +7363,6 @@ public alias extern(C) void function(GtkListBox* box, GtkListBoxRow* row, void* 
  *
  * Returns: < 0 if @row1 should be before @row2, 0 if they are
  *     equal and > 0 otherwise
- *
- * Since: 3.10
  */
 public alias extern(C) int function(GtkListBoxRow* row1, GtkListBoxRow* row2, void* userData) GtkListBoxSortFunc;
 
@@ -12108,71 +7376,35 @@ public alias extern(C) int function(GtkListBoxRow* row1, GtkListBoxRow* row2, vo
  *     row = the row to update
  *     before = the row before @row, or %NULL if it is first
  *     userData = user data
- *
- * Since: 3.10
  */
 public alias extern(C) void function(GtkListBoxRow* row, GtkListBoxRow* before, void* userData) GtkListBoxUpdateHeaderFunc;
 
 /**
- * A user function supplied when calling gtk_menu_attach_to_widget() which
- * will be called when the menu is later detached from the widget.
+ * User function that is called to map an @item of the original model to
+ * an item expected by the map model.
+ *
+ * The returned items must conform to the item type of the model they are
+ * used with.
  *
  * Params:
- *     attachWidget = the #GtkWidget that the menu is being detached from.
- *     menu = the #GtkMenu being detached.
+ *     item = The item to map
+ *     userData = user data
+ *
+ * Returns: The item to map to.
+ *     This function may not return %NULL
  */
-public alias extern(C) void function(GtkWidget* attachWidget, GtkMenu* menu) GtkMenuDetachFunc;
+public alias extern(C) void* function(void* item, void* userData) GtkMapListModelMapFunc;
 
 /**
- * A user function supplied when calling gtk_menu_popup() which
- * controls the positioning of the menu when it is displayed.  The
- * function sets the @x and @y parameters to the coordinates where the
- * menu is to be drawn.  To make the menu appear on a different
- * monitor than the mouse pointer, gtk_menu_set_monitor() must be
- * called.
+ * User-provided callback function to create a popup for @menu_button on demand.
+ * This function is called when the popup of @menu_button is shown, but none has
+ * been provided via gtk_menu_button_set_popover() or gtk_menu_button_set_menu_model().
  *
  * Params:
- *     menu = a #GtkMenu.
- *     x = address of the #gint representing the horizontal
- *         position where the menu shall be drawn.
- *     y = address of the #gint representing the vertical position
- *         where the menu shall be drawn.  This is an output parameter.
- *     pushIn = This parameter controls how menus placed outside
- *         the monitor are handled.  If this is set to %TRUE and part of
- *         the menu is outside the monitor then GTK+ pushes the window
- *         into the visible area, effectively modifying the popup
- *         position.  Note that moving and possibly resizing the menu
- *         around will alter the scroll position to keep the menu items
- *         “in place”, i.e. at the same monitor position they would have
- *         been without resizing.  In practice, this behavior is only
- *         useful for combobox popups or option menus and cannot be used
- *         to simply confine a menu to monitor boundaries.  In that case,
- *         changing the scroll offset is not desirable.
- *     userData = the data supplied by the user in the gtk_menu_popup()
- *         @data parameter.
+ *     menuButton = the #GtkMenuButton
+ *     userData = User data passed to gtk_menu_button_set_create_popup_func()
  */
-public alias extern(C) void function(GtkMenu* menu, int* x, int* y, int* pushIn, void* userData) GtkMenuPositionFunc;
-
-/**
- * A multihead-aware GTK+ module may have a gtk_module_display_init() function
- * with this prototype. GTK+ calls this function for each opened display.
- *
- * Params:
- *     display = an open #GdkDisplay
- *
- * Since: 2.2
- */
-public alias extern(C) void function(GdkDisplay* display) GtkModuleDisplayInitFunc;
-
-/**
- * Each GTK+ module must have a function gtk_module_init() with this prototype.
- * This function is called after loading the module.
- *
- * Params:
- *     argc = GTK+ always passes %NULL for this argument
- *     argv = GTK+ always passes %NULL for this argument
- */
-public alias extern(C) void function(int* argc, char*** argv) GtkModuleInitFunc;
+public alias extern(C) void function(GtkMenuButton* menuButton, void* userData) GtkMenuButtonCreatePopupFunc;
 
 /**
  * The type of function that is passed to
@@ -12191,68 +7423,48 @@ public alias extern(C) void function(GtkPageSetup* pageSetup, void* data) GtkPag
 /** */
 public alias extern(C) void function(const(char)* key, const(char)* value, void* userData) GtkPrintSettingsFunc;
 
-/** */
-public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue* propertyValue) GtkRcPropertyParser;
-
 /**
- * The type of function that is used with custom filters,
- * see gtk_recent_filter_add_custom().
  *
  * Params:
- *     filterInfo = a #GtkRecentFilterInfo that is filled according
- *         to the @needed flags passed to gtk_recent_filter_add_custom()
- *     userData = user data passed to gtk_recent_filter_add_custom()
- *
- * Returns: %TRUE if the file should be displayed
+ *     scale = The #GtkScale
+ *     value = The numeric value to format
+ *     userData = user data
+ * Returns: A newly allocated string describing a textual representation
+ *     of the given numerical value.
  */
-public alias extern(C) int function(GtkRecentFilterInfo* filterInfo, void* userData) GtkRecentFilterFunc;
-
-/** */
-public alias extern(C) int function(GtkRecentInfo* a, GtkRecentInfo* b, void* userData) GtkRecentSortFunc;
-
-/** */
-public alias extern(C) int function(const(char)* string_, GValue* value, GError** err) GtkStylePropertyParser;
+public alias extern(C) char* function(GtkScale* scale, double value, void* userData) GtkScaleFormatValueFunc;
 
 /**
- * A function that is called to deserialize rich text that has been
- * serialized with gtk_text_buffer_serialize(), and insert it at @iter.
+ * Prototype for shortcuts based on user callbacks.
  *
  * Params:
- *     registerBuffer = the #GtkTextBuffer the format is registered with
- *     contentBuffer = the #GtkTextBuffer to deserialize into
- *     iter = insertion point for the deserialized text
- *     data = data to deserialize
- *     length = length of @data
- *     createTags = %TRUE if deserializing may create tags
- *     userData = user data that was specified when registering the format
- *
- * Returns: %TRUE on success, %FALSE otherwise
- *
- * Throws: GException on failure.
+ *     widget = The widget passed to the activation
+ *     args = The arguments passed to the activation
+ *     userData = The user data provided when activating the action
  */
-public alias extern(C) int function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GtkTextIter* iter, ubyte* data, size_t length, int createTags, void* userData, GError** err) GtkTextBufferDeserializeFunc;
+public alias extern(C) int function(GtkWidget* widget, GVariant* args, void* userData) GtkShortcutFunc;
 
 /**
- * A function that is called to serialize the content of a text buffer.
- * It must return the serialized form of the content.
+ * The predicate function used by gtk_text_iter_forward_find_char() and
+ * gtk_text_iter_backward_find_char().
  *
  * Params:
- *     registerBuffer = the #GtkTextBuffer for which the format is registered
- *     contentBuffer = the #GtkTextBuffer to serialize
- *     start = start of the block of text to serialize
- *     end = end of the block of text to serialize
- *     length = Return location for the length of the serialized data
- *     userData = user data that was specified when registering the format
+ *     ch = a Unicode code point
+ *     userData = data passed to the callback
  *
- * Returns: a newly-allocated array of guint8 which contains
- *     the serialized data, or %NULL if an error occurred
+ * Returns: %TRUE if the predicate is satisfied, and the iteration should
+ *     stop, and %FALSE otherwise
  */
-public alias extern(C) ubyte* function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GtkTextIter* start, GtkTextIter* end, size_t* length, void* userData) GtkTextBufferSerializeFunc;
-
-/** */
 public alias extern(C) int function(dchar ch, void* userData) GtkTextCharPredicate;
 
-/** */
+/**
+ * A function used with gtk_text_tag_table_foreach(), to iterate over every
+ * #GtkTextTag inside a #GtkTextTagTable.
+ *
+ * Params:
+ *     tag = the #GtkTextTag
+ *     data = data passed to gtk_text_tag_table_foreach()
+ */
 public alias extern(C) void function(GtkTextTag* tag, void* data) GtkTextTagTableForeach;
 
 /**
@@ -12265,24 +7477,8 @@ public alias extern(C) void function(GtkTextTag* tag, void* data) GtkTextTagTabl
  *
  * Returns: %G_SOURCE_CONTINUE if the tick callback should continue to be called,
  *     %G_SOURCE_REMOVE if the tick callback should be removed.
- *
- * Since: 3.8
  */
 public alias extern(C) int function(GtkWidget* widget, GdkFrameClock* frameClock, void* userData) GtkTickCallback;
-
-/**
- * The function used to translate messages in e.g. #GtkIconFactory
- * and #GtkActionGroup.
- *
- * Params:
- *     path = The id of the message. In #GtkActionGroup this will be a label
- *         or tooltip from a #GtkActionEntry.
- *     funcData = user data passed in when registering the
- *         function
- *
- * Returns: the translated message
- */
-public alias extern(C) char* function(const(char)* path, void* funcData) GtkTranslateFunc;
 
 /**
  * A function to set the properties of a cell instead of just using the
@@ -12300,9 +7496,6 @@ public alias extern(C) char* function(const(char)* path, void* funcData) GtkTran
  *     data = user data
  */
 public alias extern(C) void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cell, GtkTreeModel* treeModel, GtkTreeIter* iter, void* data) GtkTreeCellDataFunc;
-
-/** */
-public alias extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, int children, void* userData) GtkTreeDestroyCountFunc;
 
 /**
  * A GtkTreeIterCompareFunc should return a negative integer, zero, or a positive
@@ -12327,6 +7520,24 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, i
  *     @a sorts before, with or after @b
  */
 public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* a, GtkTreeIter* b, void* userData) GtkTreeIterCompareFunc;
+
+/**
+ * Prototype of the function called to create new child models when
+ * gtk_tree_list_row_set_expanded() is called.
+ *
+ * This function can return %NULL to indicate that @item is guaranteed to be
+ * a leaf node and will never have children.
+ * If it does not have children but may get children later, it should return
+ * an empty model that is filled once children arrive.
+ *
+ * Params:
+ *     item = The item that is being expanded
+ *     userData = User data passed when registering the function
+ *
+ * Returns: The model tracking the children of @item or %NULL if
+ *     @item can never have children
+ */
+public alias extern(C) GListModel* function(void* item, void* userData) GtkTreeListModelCreateModelFunc;
 
 /**
  * A function which calculates display values from raw values in the model.
@@ -12466,16 +7677,36 @@ public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void
  */
 public alias extern(C) int function(GtkTreeModel* model, int column, const(char)* key, GtkTreeIter* iter, void* searchData) GtkTreeViewSearchEqualFunc;
 
-/** */
-public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDialog, void* userData) GtkTreeViewSearchPositionFunc;
+/**
+ * The type of the callback functions used for activating
+ * actions installed with gtk_widget_class_install_action().
+ *
+ * The @parameter must match the @parameter_type of the action.
+ *
+ * Params:
+ *     widget = the widget to which the action belongs
+ *     actionName = the action name
+ *     parameter = parameter for activation
+ */
+public alias extern(C) void function(GtkWidget* widget, const(char)* actionName, GVariant* parameter) GtkWidgetActionActivateFunc;
+
+/**
+ * An undefined value. The accessible attribute is either unset, or its
+ * value is undefined.
+ */
+enum ACCESSIBLE_VALUE_UNDEFINED = -1;
+alias GTK_ACCESSIBLE_VALUE_UNDEFINED = ACCESSIBLE_VALUE_UNDEFINED;
 
 /**
  * Like gtk_get_binary_age(), but from the headers used at
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2408;
+enum BINARY_AGE = 0;
 alias GTK_BINARY_AGE = BINARY_AGE;
+
+enum IM_MODULE_EXTENSION_POINT_NAME = "gtk-im-module";
+alias GTK_IM_MODULE_EXTENSION_POINT_NAME = IM_MODULE_EXTENSION_POINT_NAME;
 
 /**
  * Constant to return from a signal handler for the #GtkSpinButton::input
@@ -12489,7 +7720,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 4;
+enum INTERFACE_AGE = 0;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -12515,7 +7746,7 @@ alias GTK_LEVEL_BAR_OFFSET_LOW = LEVEL_BAR_OFFSET_LOW;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MAJOR_VERSION = 3;
+enum MAJOR_VERSION = 4;
 alias GTK_MAJOR_VERSION = MAJOR_VERSION;
 
 /**
@@ -12524,12 +7755,15 @@ alias GTK_MAJOR_VERSION = MAJOR_VERSION;
 enum MAX_COMPOSE_LEN = 7;
 alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
 
+enum MEDIA_FILE_EXTENSION_POINT_NAME = "gtk-media-file";
+alias GTK_MEDIA_FILE_EXTENSION_POINT_NAME = MEDIA_FILE_EXTENSION_POINT_NAME;
+
 /**
  * Like gtk_get_micro_version(), but from the headers used at
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 8;
+enum MICRO_VERSION = 0;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -12537,7 +7771,7 @@ alias GTK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 24;
+enum MINOR_VERSION = 0;
 alias GTK_MINOR_VERSION = MINOR_VERSION;
 
 /**
@@ -12581,9 +7815,6 @@ alias GTK_PAPER_NAME_LEGAL = PAPER_NAME_LEGAL;
  */
 enum PAPER_NAME_LETTER = "na_letter";
 alias GTK_PAPER_NAME_LETTER = PAPER_NAME_LETTER;
-
-enum PATH_PRIO_MASK = 15;
-alias GTK_PATH_PRIO_MASK = PATH_PRIO_MASK;
 
 enum PRINT_SETTINGS_COLLATE = "collate";
 alias GTK_PRINT_SETTINGS_COLLATE = PRINT_SETTINGS_COLLATE;
@@ -12642,7 +7873,7 @@ alias GTK_PRINT_SETTINGS_OUTPUT_FILE_FORMAT = PRINT_SETTINGS_OUTPUT_FILE_FORMAT;
 
 /**
  * The key used by the “Print to file” printer to store the URI
- * to which the output should be written. GTK+ itself supports
+ * to which the output should be written. GTK itself supports
  * only “file://” URIs.
  */
 enum PRINT_SETTINGS_OUTPUT_URI = "output-uri";
@@ -12710,790 +7941,6 @@ enum PRIORITY_RESIZE = 110;
 alias GTK_PRIORITY_RESIZE = PRIORITY_RESIZE;
 
 /**
- * A CSS class to match an accelerator.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_ACCELERATOR = "accelerator";
-alias GTK_STYLE_CLASS_ACCELERATOR = STYLE_CLASS_ACCELERATOR;
-
-/**
- * A CSS class used when rendering an arrow element.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_ARROW = "arrow";
-alias GTK_STYLE_CLASS_ARROW = STYLE_CLASS_ARROW;
-
-/**
- * A CSS class to match the window background.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_BACKGROUND = "background";
-alias GTK_STYLE_CLASS_BACKGROUND = STYLE_CLASS_BACKGROUND;
-
-/**
- * A CSS class to indicate an area at the bottom of a widget.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_BOTTOM = "bottom";
-alias GTK_STYLE_CLASS_BOTTOM = STYLE_CLASS_BOTTOM;
-
-/**
- * A CSS class to match buttons.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_BUTTON = "button";
-alias GTK_STYLE_CLASS_BUTTON = STYLE_CLASS_BUTTON;
-
-/**
- * A CSS class to match calendars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_CALENDAR = "calendar";
-alias GTK_STYLE_CLASS_CALENDAR = STYLE_CLASS_CALENDAR;
-
-/**
- * A CSS class to match content rendered in cell views.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_CELL = "cell";
-alias GTK_STYLE_CLASS_CELL = STYLE_CLASS_CELL;
-
-/**
- * A CSS class to match check boxes.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_CHECK = "check";
-alias GTK_STYLE_CLASS_CHECK = STYLE_CLASS_CHECK;
-
-/**
- * A CSS class to match combobox entries.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_COMBOBOX_ENTRY = "combobox-entry";
-alias GTK_STYLE_CLASS_COMBOBOX_ENTRY = STYLE_CLASS_COMBOBOX_ENTRY;
-
-/**
- * A CSS class to match context menus.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_CONTEXT_MENU = "context-menu";
-alias GTK_STYLE_CLASS_CONTEXT_MENU = STYLE_CLASS_CONTEXT_MENU;
-
-/**
- * A CSS class that gets added to windows which have client-side decorations.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_CSD = "csd";
-alias GTK_STYLE_CLASS_CSD = STYLE_CLASS_CSD;
-
-/**
- * A CSS class used when rendering a drag handle for
- * text selection.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_CURSOR_HANDLE = "cursor-handle";
-alias GTK_STYLE_CLASS_CURSOR_HANDLE = STYLE_CLASS_CURSOR_HANDLE;
-
-/**
- * A CSS class to match the default widget.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_DEFAULT = "default";
-alias GTK_STYLE_CLASS_DEFAULT = STYLE_CLASS_DEFAULT;
-
-/**
- * A CSS class used when an action (usually a button) is
- * one that is expected to remove or destroy something visible
- * to the user.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_DESTRUCTIVE_ACTION = "destructive-action";
-alias GTK_STYLE_CLASS_DESTRUCTIVE_ACTION = STYLE_CLASS_DESTRUCTIVE_ACTION;
-
-/**
- * A CSS class to match dimmed labels.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_DIM_LABEL = "dim-label";
-alias GTK_STYLE_CLASS_DIM_LABEL = STYLE_CLASS_DIM_LABEL;
-
-/**
- * A CSS class for a drag-and-drop indicator.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_DND = "dnd";
-alias GTK_STYLE_CLASS_DND = STYLE_CLASS_DND;
-
-/**
- * A CSS class defining a dock area.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_DOCK = "dock";
-alias GTK_STYLE_CLASS_DOCK = STYLE_CLASS_DOCK;
-
-/**
- * A CSS class to match text entries.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_ENTRY = "entry";
-alias GTK_STYLE_CLASS_ENTRY = STYLE_CLASS_ENTRY;
-
-/**
- * A CSS class for an area displaying an error message,
- * such as those in infobars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_ERROR = "error";
-alias GTK_STYLE_CLASS_ERROR = STYLE_CLASS_ERROR;
-
-/**
- * A CSS class defining an expander, such as those in treeviews.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_EXPANDER = "expander";
-alias GTK_STYLE_CLASS_EXPANDER = STYLE_CLASS_EXPANDER;
-
-/**
- * A CSS class that is added when widgets that usually have
- * a frame or border (like buttons or entries) should appear
- * without it.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_FLAT = "flat";
-alias GTK_STYLE_CLASS_FLAT = STYLE_CLASS_FLAT;
-
-/**
- * A CSS class defining a frame delimiting content, such as
- * #GtkFrame or the scrolled window frame around the
- * scrollable area.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_FRAME = "frame";
-alias GTK_STYLE_CLASS_FRAME = STYLE_CLASS_FRAME;
-
-/**
- * A CSS class defining a resize grip.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_GRIP = "grip";
-alias GTK_STYLE_CLASS_GRIP = STYLE_CLASS_GRIP;
-
-/**
- * A CSS class to match a header element.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_HEADER = "header";
-alias GTK_STYLE_CLASS_HEADER = STYLE_CLASS_HEADER;
-
-/**
- * A CSS class defining a highlighted area, such as headings in
- * assistants and calendars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_HIGHLIGHT = "highlight";
-alias GTK_STYLE_CLASS_HIGHLIGHT = STYLE_CLASS_HIGHLIGHT;
-
-/**
- * A CSS class for horizontally layered widgets.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_HORIZONTAL = "horizontal";
-alias GTK_STYLE_CLASS_HORIZONTAL = STYLE_CLASS_HORIZONTAL;
-
-/**
- * A CSS class defining an image, such as the icon in an entry.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_IMAGE = "image";
-alias GTK_STYLE_CLASS_IMAGE = STYLE_CLASS_IMAGE;
-
-/**
- * A CSS class for an area displaying an informational message,
- * such as those in infobars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_INFO = "info";
-alias GTK_STYLE_CLASS_INFO = STYLE_CLASS_INFO;
-
-/**
- * A CSS class to match inline toolbars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_INLINE_TOOLBAR = "inline-toolbar";
-alias GTK_STYLE_CLASS_INLINE_TOOLBAR = STYLE_CLASS_INLINE_TOOLBAR;
-
-/**
- * A CSS class used when rendering a drag handle for
- * the insertion cursor position.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_INSERTION_CURSOR = "insertion-cursor";
-alias GTK_STYLE_CLASS_INSERTION_CURSOR = STYLE_CLASS_INSERTION_CURSOR;
-
-/**
- * A CSS class to match labels.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_LABEL = "label";
-alias GTK_STYLE_CLASS_LABEL = STYLE_CLASS_LABEL;
-
-/**
- * A CSS class to indicate an area at the left of a widget.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_LEFT = "left";
-alias GTK_STYLE_CLASS_LEFT = STYLE_CLASS_LEFT;
-
-/**
- * A CSS class used when rendering a level indicator, such
- * as a battery charge level, or a password strength.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_LEVEL_BAR = "level-bar";
-alias GTK_STYLE_CLASS_LEVEL_BAR = STYLE_CLASS_LEVEL_BAR;
-
-/**
- * A CSS class to match a linked area, such as a box containing buttons
- * belonging to the same control.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_LINKED = "linked";
-alias GTK_STYLE_CLASS_LINKED = STYLE_CLASS_LINKED;
-
-/**
- * A CSS class to match lists.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_LIST = "list";
-alias GTK_STYLE_CLASS_LIST = STYLE_CLASS_LIST;
-
-/**
- * A CSS class to match list rows.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_LIST_ROW = "list-row";
-alias GTK_STYLE_CLASS_LIST_ROW = STYLE_CLASS_LIST_ROW;
-
-/**
- * A CSS class defining marks in a widget, such as in scales.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_MARK = "mark";
-alias GTK_STYLE_CLASS_MARK = STYLE_CLASS_MARK;
-
-/**
- * A CSS class to match menus.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_MENU = "menu";
-alias GTK_STYLE_CLASS_MENU = STYLE_CLASS_MENU;
-
-/**
- * A CSS class to menubars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_MENUBAR = "menubar";
-alias GTK_STYLE_CLASS_MENUBAR = STYLE_CLASS_MENUBAR;
-
-/**
- * A CSS class to match menu items.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_MENUITEM = "menuitem";
-alias GTK_STYLE_CLASS_MENUITEM = STYLE_CLASS_MENUITEM;
-
-/**
- * A CSS class that is added to message dialogs.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_MESSAGE_DIALOG = "message-dialog";
-alias GTK_STYLE_CLASS_MESSAGE_DIALOG = STYLE_CLASS_MESSAGE_DIALOG;
-
-/**
- * A CSS class that is added to text view that should use
- * a monospace font.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_MONOSPACE = "monospace";
-alias GTK_STYLE_CLASS_MONOSPACE = STYLE_CLASS_MONOSPACE;
-
-/**
- * A CSS class used when an element needs the user attention,
- * for instance a button in a stack switcher corresponding to
- * a hidden page that changed state.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_NEEDS_ATTENTION = "needs-attention";
-alias GTK_STYLE_CLASS_NEEDS_ATTENTION = STYLE_CLASS_NEEDS_ATTENTION;
-
-/**
- * A CSS class defining a notebook.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_NOTEBOOK = "notebook";
-alias GTK_STYLE_CLASS_NOTEBOOK = STYLE_CLASS_NOTEBOOK;
-
-/**
- * A CSS class used when rendering an OSD (On Screen Display) element,
- * on top of another container.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_OSD = "osd";
-alias GTK_STYLE_CLASS_OSD = STYLE_CLASS_OSD;
-
-/**
- * A CSS class that is added on the visual hints that happen
- * when scrolling is attempted past the limits of a scrollable
- * area.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_OVERSHOOT = "overshoot";
-alias GTK_STYLE_CLASS_OVERSHOOT = STYLE_CLASS_OVERSHOOT;
-
-/**
- * A CSS class for a pane separator, such as those in #GtkPaned.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_PANE_SEPARATOR = "pane-separator";
-alias GTK_STYLE_CLASS_PANE_SEPARATOR = STYLE_CLASS_PANE_SEPARATOR;
-
-/**
- * A CSS class that is added to areas that should look like paper.
- *
- * This is used in print previews and themes are encouraged to
- * style it as black text on white background.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_PAPER = "paper";
-alias GTK_STYLE_CLASS_PAPER = STYLE_CLASS_PAPER;
-
-/**
- * A CSS class that matches popovers.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_POPOVER = "popover";
-alias GTK_STYLE_CLASS_POPOVER = STYLE_CLASS_POPOVER;
-
-/**
- * A CSS class that is added to the toplevel windows used for menus.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_POPUP = "popup";
-alias GTK_STYLE_CLASS_POPUP = STYLE_CLASS_POPUP;
-
-/**
- * A CSS class to match primary toolbars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_PRIMARY_TOOLBAR = "primary-toolbar";
-alias GTK_STYLE_CLASS_PRIMARY_TOOLBAR = STYLE_CLASS_PRIMARY_TOOLBAR;
-
-/**
- * A CSS class to use when rendering activity as a progressbar.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_PROGRESSBAR = "progressbar";
-alias GTK_STYLE_CLASS_PROGRESSBAR = STYLE_CLASS_PROGRESSBAR;
-
-/**
- * A CSS class to use when rendering a pulse in an indeterminate progress bar.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_PULSE = "pulse";
-alias GTK_STYLE_CLASS_PULSE = STYLE_CLASS_PULSE;
-
-/**
- * A CSS class for an area displaying a question to the user,
- * such as those in infobars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_QUESTION = "question";
-alias GTK_STYLE_CLASS_QUESTION = STYLE_CLASS_QUESTION;
-
-/**
- * A CSS class to match radio buttons.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_RADIO = "radio";
-alias GTK_STYLE_CLASS_RADIO = STYLE_CLASS_RADIO;
-
-/**
- * A CSS class to match a raised control, such as a raised
- * button on a toolbar.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_RAISED = "raised";
-alias GTK_STYLE_CLASS_RAISED = STYLE_CLASS_RAISED;
-
-/**
- * A CSS class used to indicate a read-only state.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_READ_ONLY = "read-only";
-alias GTK_STYLE_CLASS_READ_ONLY = STYLE_CLASS_READ_ONLY;
-
-/**
- * A CSS class to indicate an area at the right of a widget.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_RIGHT = "right";
-alias GTK_STYLE_CLASS_RIGHT = STYLE_CLASS_RIGHT;
-
-/**
- * A CSS class to match the rubberband selection rectangle.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_RUBBERBAND = "rubberband";
-alias GTK_STYLE_CLASS_RUBBERBAND = STYLE_CLASS_RUBBERBAND;
-
-/**
- * A CSS class to match scale widgets.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SCALE = "scale";
-alias GTK_STYLE_CLASS_SCALE = STYLE_CLASS_SCALE;
-
-/**
- * A CSS class to match scale widgets with marks attached,
- * all the marks are above for horizontal #GtkScale.
- * left for vertical #GtkScale.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SCALE_HAS_MARKS_ABOVE = "scale-has-marks-above";
-alias GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE = STYLE_CLASS_SCALE_HAS_MARKS_ABOVE;
-
-/**
- * A CSS class to match scale widgets with marks attached,
- * all the marks are below for horizontal #GtkScale,
- * right for vertical #GtkScale.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SCALE_HAS_MARKS_BELOW = "scale-has-marks-below";
-alias GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW = STYLE_CLASS_SCALE_HAS_MARKS_BELOW;
-
-/**
- * A CSS class to match scrollbars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SCROLLBAR = "scrollbar";
-alias GTK_STYLE_CLASS_SCROLLBAR = STYLE_CLASS_SCROLLBAR;
-
-/**
- * A CSS class to match the junction area between an horizontal
- * and vertical scrollbar, when they’re both shown.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SCROLLBARS_JUNCTION = "scrollbars-junction";
-alias GTK_STYLE_CLASS_SCROLLBARS_JUNCTION = STYLE_CLASS_SCROLLBARS_JUNCTION;
-
-/**
- * A CSS class for a separator.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SEPARATOR = "separator";
-alias GTK_STYLE_CLASS_SEPARATOR = STYLE_CLASS_SEPARATOR;
-
-/**
- * A CSS class defining a sidebar, such as the left side in
- * a file chooser.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SIDEBAR = "sidebar";
-alias GTK_STYLE_CLASS_SIDEBAR = STYLE_CLASS_SIDEBAR;
-
-/**
- * A CSS class to match sliders.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SLIDER = "slider";
-alias GTK_STYLE_CLASS_SLIDER = STYLE_CLASS_SLIDER;
-
-/**
- * A CSS class defining an spinbutton.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SPINBUTTON = "spinbutton";
-alias GTK_STYLE_CLASS_SPINBUTTON = STYLE_CLASS_SPINBUTTON;
-
-/**
- * A CSS class to use when rendering activity as a “spinner”.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SPINNER = "spinner";
-alias GTK_STYLE_CLASS_SPINNER = STYLE_CLASS_SPINNER;
-
-/**
- * A CSS class to match statusbars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_STATUSBAR = "statusbar";
-alias GTK_STYLE_CLASS_STATUSBAR = STYLE_CLASS_STATUSBAR;
-
-/**
- * A CSS class used for the subtitle label in a titlebar in
- * a toplevel window.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SUBTITLE = "subtitle";
-alias GTK_STYLE_CLASS_SUBTITLE = STYLE_CLASS_SUBTITLE;
-
-/**
- * A CSS class used when an action (usually a button) is the
- * primary suggested action in a specific context.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_SUGGESTED_ACTION = "suggested-action";
-alias GTK_STYLE_CLASS_SUGGESTED_ACTION = STYLE_CLASS_SUGGESTED_ACTION;
-
-/**
- * A CSS class used for the title label in a titlebar in
- * a toplevel window.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_TITLE = "title";
-alias GTK_STYLE_CLASS_TITLE = STYLE_CLASS_TITLE;
-
-/**
- * A CSS class used when rendering a titlebar in a toplevel window.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_TITLEBAR = "titlebar";
-alias GTK_STYLE_CLASS_TITLEBAR = STYLE_CLASS_TITLEBAR;
-
-/**
- * A CSS class to match toolbars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_TOOLBAR = "toolbar";
-alias GTK_STYLE_CLASS_TOOLBAR = STYLE_CLASS_TOOLBAR;
-
-/**
- * A CSS class to match tooltip windows.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_TOOLTIP = "tooltip";
-alias GTK_STYLE_CLASS_TOOLTIP = STYLE_CLASS_TOOLTIP;
-
-/**
- * A CSS class to indicate an area at the top of a widget.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_TOP = "top";
-alias GTK_STYLE_CLASS_TOP = STYLE_CLASS_TOP;
-
-/**
- * A CSS class for touch selection popups on entries
- * and text views.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_TOUCH_SELECTION = "touch-selection";
-alias GTK_STYLE_CLASS_TOUCH_SELECTION = STYLE_CLASS_TOUCH_SELECTION;
-
-/**
- * A CSS class to match troughs, as in scrollbars and progressbars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_TROUGH = "trough";
-alias GTK_STYLE_CLASS_TROUGH = STYLE_CLASS_TROUGH;
-
-/**
- * A CSS class that is added on the visual hints that happen
- * where content is 'scrolled off' and can be made visible
- * by scrolling.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_UNDERSHOOT = "undershoot";
-alias GTK_STYLE_CLASS_UNDERSHOOT = STYLE_CLASS_UNDERSHOOT;
-
-/**
- * A CSS class for vertically layered widgets.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_VERTICAL = "vertical";
-alias GTK_STYLE_CLASS_VERTICAL = STYLE_CLASS_VERTICAL;
-
-/**
- * A CSS class defining a view, such as iconviews or treeviews.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_VIEW = "view";
-alias GTK_STYLE_CLASS_VIEW = STYLE_CLASS_VIEW;
-
-/**
- * A CSS class for an area displaying a warning message,
- * such as those in infobars.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_WARNING = "warning";
-alias GTK_STYLE_CLASS_WARNING = STYLE_CLASS_WARNING;
-
-/**
- * A CSS class to indicate that a UI element should be 'wide'.
- * Used by #GtkPaned.
- *
- * Refer to individual widget documentation for used style classes.
- */
-enum STYLE_CLASS_WIDE = "wide";
-alias GTK_STYLE_CLASS_WIDE = STYLE_CLASS_WIDE;
-
-/**
- * A property holding the background color of rendered elements as a #GdkRGBA.
- */
-enum STYLE_PROPERTY_BACKGROUND_COLOR = "background-color";
-alias GTK_STYLE_PROPERTY_BACKGROUND_COLOR = STYLE_PROPERTY_BACKGROUND_COLOR;
-
-/**
- * A property holding the element’s background as a #cairo_pattern_t.
- */
-enum STYLE_PROPERTY_BACKGROUND_IMAGE = "background-image";
-alias GTK_STYLE_PROPERTY_BACKGROUND_IMAGE = STYLE_PROPERTY_BACKGROUND_IMAGE;
-
-/**
- * A property holding the element’s border color as a #GdkRGBA.
- */
-enum STYLE_PROPERTY_BORDER_COLOR = "border-color";
-alias GTK_STYLE_PROPERTY_BORDER_COLOR = STYLE_PROPERTY_BORDER_COLOR;
-
-/**
- * A property holding the rendered element’s border radius in pixels as a #gint.
- */
-enum STYLE_PROPERTY_BORDER_RADIUS = "border-radius";
-alias GTK_STYLE_PROPERTY_BORDER_RADIUS = STYLE_PROPERTY_BORDER_RADIUS;
-
-/**
- * A property holding the element’s border style as a #GtkBorderStyle.
- */
-enum STYLE_PROPERTY_BORDER_STYLE = "border-style";
-alias GTK_STYLE_PROPERTY_BORDER_STYLE = STYLE_PROPERTY_BORDER_STYLE;
-
-/**
- * A property holding the rendered element’s border width in pixels as
- * a #GtkBorder. The border is the intermediary spacing property of the
- * padding/border/margin series.
- *
- * gtk_render_frame() uses this property to find out the frame line width,
- * so #GtkWidgets rendering frames may need to add up this padding when
- * requesting size
- */
-enum STYLE_PROPERTY_BORDER_WIDTH = "border-width";
-alias GTK_STYLE_PROPERTY_BORDER_WIDTH = STYLE_PROPERTY_BORDER_WIDTH;
-
-/**
- * A property holding the foreground color of rendered elements as a #GdkRGBA.
- */
-enum STYLE_PROPERTY_COLOR = "color";
-alias GTK_STYLE_PROPERTY_COLOR = STYLE_PROPERTY_COLOR;
-
-/**
- * A property holding the font properties used when rendering text
- * as a #PangoFontDescription.
- */
-enum STYLE_PROPERTY_FONT = "font";
-alias GTK_STYLE_PROPERTY_FONT = STYLE_PROPERTY_FONT;
-
-/**
- * A property holding the rendered element’s margin as a #GtkBorder. The
- * margin is defined as the spacing between the border of the element
- * and its surrounding elements. It is external to #GtkWidget's
- * size allocations, and the most external spacing property of the
- * padding/border/margin series.
- */
-enum STYLE_PROPERTY_MARGIN = "margin";
-alias GTK_STYLE_PROPERTY_MARGIN = STYLE_PROPERTY_MARGIN;
-
-/**
- * A property holding the rendered element’s padding as a #GtkBorder. The
- * padding is defined as the spacing between the inner part of the element border
- * and its child. It’s the innermost spacing property of the padding/border/margin
- * series.
- */
-enum STYLE_PROPERTY_PADDING = "padding";
-alias GTK_STYLE_PROPERTY_PADDING = STYLE_PROPERTY_PADDING;
-
-/**
  * A priority that can be used when adding a #GtkStyleProvider
  * for application-specific style information.
  */
@@ -13531,45 +7978,13 @@ alias GTK_STYLE_PROVIDER_PRIORITY_THEME = STYLE_PROVIDER_PRIORITY_THEME;
 
 /**
  * The priority used for the style information from
- * `XDG_CONFIG_HOME/gtk-3.0/gtk.css`.
+ * `$XDG_CONFIG_HOME/gtk-4.0/gtk.css`.
  *
  * You should not use priorities higher than this, to
  * give the user the last word.
  */
 enum STYLE_PROVIDER_PRIORITY_USER = 800;
 alias GTK_STYLE_PROVIDER_PRIORITY_USER = STYLE_PROVIDER_PRIORITY_USER;
-
-/**
- * A widget region name to define a treeview column.
- *
- * Deprecated: Don't use regions.
- */
-enum STYLE_REGION_COLUMN = "column";
-alias GTK_STYLE_REGION_COLUMN = STYLE_REGION_COLUMN;
-
-/**
- * A widget region name to define a treeview column header.
- *
- * Deprecated: Don't use regions.
- */
-enum STYLE_REGION_COLUMN_HEADER = "column-header";
-alias GTK_STYLE_REGION_COLUMN_HEADER = STYLE_REGION_COLUMN_HEADER;
-
-/**
- * A widget region name to define a treeview row.
- *
- * Deprecated: Don't use regions.
- */
-enum STYLE_REGION_ROW = "row";
-alias GTK_STYLE_REGION_ROW = STYLE_REGION_ROW;
-
-/**
- * A widget region name to define a notebook tab.
- *
- * Deprecated: Don't use regions.
- */
-enum STYLE_REGION_TAB = "tab";
-alias GTK_STYLE_REGION_TAB = STYLE_REGION_TAB;
 
 /**
  * The priority at which the text view validates onscreen lines
@@ -13588,606 +8003,10 @@ enum TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID = -1;
 alias GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID = TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID;
 
 /**
- * The GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID can be used to make a
+ * The GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID can be used to make a
  * #GtkTreeSortable use no sorting.
  *
  * See also gtk_tree_sortable_set_sort_column_id()
  */
 enum TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID = -2;
 alias GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID = TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID;
-
-/**
- * StockIds
- */
-public enum StockID
-{
-	/**
-	 * The “About” item.
-	 * ![](help-about.png)
-	 *
-	 * Deprecated: Use named icon &quot;help-about&quot; or the label &quot;_About&quot;.
-	 */
-	ABOUT = "gtk-about",
-	/**
-	 * The “Add” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;list-add&quot; or the label &quot;_Add&quot;.
-	 */
-	ADD = "gtk-add",
-	/**
-	 * The “Apply” item and icon.
-	 *
-	 * Deprecated: Do not use an icon. Use label &quot;_Apply&quot;.
-	 */
-	APPLY = "gtk-apply",
-	/**
-	 * The “Bold” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-text-bold&quot;.
-	 */
-	BOLD = "gtk-bold",
-	/**
-	 * The “Cancel” item and icon.
-	 *
-	 * Deprecated: Do not use an icon. Use label &quot;_Cancel&quot;.
-	 */
-	CANCEL = "gtk-cancel",
-	/**
-	 * The “Caps Lock Warning” icon.
-	 *
-	 * Deprecated: Use named icon &quot;dialog-warning-symbolic&quot;.
-	 */
-	CAPS_LOCK_WARNING = "gtk-caps-lock-warning",
-	/**
-	 * The “CD-Rom” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;media-optical&quot;.
-	 */
-	CDROM = "gtk-cdrom",
-	/**
-	 * The “Clear” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;edit-clear&quot;.
-	 */
-	CLEAR = "gtk-clear",
-	/**
-	 * The “Close” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;window-close&quot; or the label &quot;_Close&quot;.
-	 */
-	CLOSE = "gtk-close",
-	/**
-	 * The “Color Picker” item and icon.
-	 */
-	COLOR_PICKER = "gtk-color-picker",
-	/**
-	 * The “Connect” icon.
-	 */
-	CONNECT = "gtk-connect",
-	/**
-	 * The “Convert” item and icon.
-	 */
-	CONVERT = "gtk-convert",
-	/**
-	 * The “Copy” item and icon.
-	 *
-	 * Deprecated: Use the named icon &quot;edit-copy&quot; or the label &quot;_Copy&quot;.
-	 */
-	COPY = "gtk-copy",
-	/**
-	 * The “Cut” item and icon.
-	 *
-	 * Deprecated: Use the named icon &quot;edit-cut&quot; or the label &quot;Cu_t&quot;.
-	 */
-	CUT = "gtk-cut",
-	/**
-	 * The “Delete” item and icon.
-	 *
-	 * Deprecated: Use the named icon &quot;edit-delete&quot; or the label &quot;_Delete&quot;.
-	 */
-	DELETE = "gtk-delete",
-	/**
-	 * The “Authentication” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;dialog-password&quot;.
-	 */
-	DIALOG_AUTHENTICATION = "gtk-dialog-authentication",
-	/**
-	 * The “Error” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;dialog-error&quot;.
-	 */
-	DIALOG_ERROR = "gtk-dialog-error",
-	/**
-	 * The “Information” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;dialog-information&quot;.
-	 */
-	DIALOG_INFO = "gtk-dialog-info",
-	/**
-	 * The “Question” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;dialog-question&quot;.
-	 */
-	DIALOG_QUESTION = "gtk-dialog-question",
-	/**
-	 * The “Warning” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;dialog-warning&quot;.
-	 */
-	DIALOG_WARNING = "gtk-dialog-warning",
-	/**
-	 * The “Directory” icon.
-	 *
-	 * Deprecated: Use named icon &quot;folder&quot;.
-	 */
-	DIRECTORY = "gtk-directory",
-	/**
-	 * The “Discard” item.
-	 */
-	DISCARD = "gtk-discard",
-	/**
-	 * The “Disconnect” icon.
-	 */
-	DISCONNECT = "gtk-disconnect",
-	/**
-	 * The “Drag-And-Drop” icon.
-	 */
-	DND = "gtk-dnd",
-	/**
-	 * The “Drag-And-Drop multiple” icon.
-	 */
-	DND_MULTIPLE = "gtk-dnd-multiple",
-	/**
-	 * The “Edit” item and icon.
-	 */
-	EDIT = "gtk-edit",
-	/**
-	 * The “Execute” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;system-run&quot;.
-	 */
-	EXECUTE = "gtk-execute",
-	/**
-	 * The “File” item and icon.
-	 *
-	 * Since 3.0, this item has a label, before it only had an icon.
-	 *
-	 * Deprecated: Use named icon &quot;text-x-generic&quot;.
-	 */
-	FILE = "gtk-file",
-	/**
-	 * The “Find” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;edit-find&quot;.
-	 */
-	FIND = "gtk-find",
-	/**
-	 * The “Find and Replace” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;edit-find-replace&quot;.
-	 */
-	FIND_AND_REPLACE = "gtk-find-and-replace",
-	/**
-	 * The “Floppy” item and icon.
-	 */
-	FLOPPY = "gtk-floppy",
-	/**
-	 * The “Fullscreen” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;view-fullscreen&quot;.
-	 */
-	FULLSCREEN = "gtk-fullscreen",
-	/**
-	 * The “Bottom” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;go-bottom&quot;.
-	 */
-	GOTO_BOTTOM = "gtk-goto-bottom",
-	/**
-	 * The “First” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;go-first&quot;.
-	 */
-	GOTO_FIRST = "gtk-goto-first",
-	/**
-	 * The “Last” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;go-last&quot;.
-	 */
-	GOTO_LAST = "gtk-goto-last",
-	/**
-	 * The “Top” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;go-top&quot;.
-	 */
-	GOTO_TOP = "gtk-goto-top",
-	/**
-	 * The “Back” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;go-previous&quot;.
-	 */
-	GO_BACK = "gtk-go-back",
-	/**
-	 * The “Down” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;go-down&quot;.
-	 */
-	GO_DOWN = "gtk-go-down",
-	/**
-	 * The “Forward” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;go-next&quot;.
-	 */
-	GO_FORWARD = "gtk-go-forward",
-	/**
-	 * The “Up” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;go-up&quot;.
-	 */
-	GO_UP = "gtk-go-up",
-	/**
-	 * The “Harddisk” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;drive-harddisk&quot;.
-	 */
-	HARDDISK = "gtk-harddisk",
-	/**
-	 * The “Help” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;help-browser&quot;.
-	 */
-	HELP = "gtk-help",
-	/**
-	 * The “Home” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;go-home&quot;.
-	 */
-	HOME = "gtk-home",
-	/**
-	 * The “Indent” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;format-indent-more&quot;.
-	 */
-	INDENT = "gtk-indent",
-	/**
-	 * The “Index” item and icon.
-	 */
-	INDEX = "gtk-index",
-	/**
-	 * The “Info” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;dialog-information&quot;.
-	 */
-	INFO = "gtk-info",
-	/**
-	 * The “Italic” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-text-italic&quot;.
-	 */
-	ITALIC = "gtk-italic",
-	/**
-	 * The “Jump to” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;go-jump&quot;.
-	 */
-	JUMP_TO = "gtk-jump-to",
-	/**
-	 * The “Center” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-justify-center&quot;.
-	 */
-	JUSTIFY_CENTER = "gtk-justify-center",
-	/**
-	 * The “Fill” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-justify-fill&quot;.
-	 */
-	JUSTIFY_FILL = "gtk-justify-fill",
-	/**
-	 * The “Left” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-justify-left&quot;.
-	 */
-	JUSTIFY_LEFT = "gtk-justify-left",
-	/**
-	 * The “Right” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-justify-right&quot;.
-	 */
-	JUSTIFY_RIGHT = "gtk-justify-right",
-	/**
-	 * The “Leave Fullscreen” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;view-restore&quot;.
-	 */
-	LEAVE_FULLSCREEN = "gtk-leave-fullscreen",
-	/**
-	 * The “Media Forward” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;media-seek-forward&quot; or the label &quot;_Forward&quot;.
-	 */
-	MEDIA_FORWARD = "gtk-media-forward",
-	/**
-	 * The “Media Next” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;media-skip-forward&quot; or the label &quot;_Next&quot;.
-	 */
-	MEDIA_NEXT = "gtk-media-next",
-	/**
-	 * The “Media Pause” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;media-playback-pause&quot; or the label &quot;P_ause&quot;.
-	 */
-	MEDIA_PAUSE = "gtk-media-pause",
-	/**
-	 * The “Media Play” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;media-playback-start&quot; or the label &quot;_Play&quot;.
-	 */
-	MEDIA_PLAY = "gtk-media-play",
-	/**
-	 * The “Media Previous” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;media-skip-backward&quot; or the label &quot;Pre_vious&quot;.
-	 */
-	MEDIA_PREVIOUS = "gtk-media-previous",
-	/**
-	 * The “Media Record” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;media-record&quot; or the label &quot;_Record&quot;.
-	 */
-	MEDIA_RECORD = "gtk-media-record",
-	/**
-	 * The “Media Rewind” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;media-seek-backward&quot; or the label &quot;R_ewind&quot;.
-	 */
-	MEDIA_REWIND = "gtk-media-rewind",
-	/**
-	 * The “Media Stop” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;media-playback-stop&quot; or the label &quot;_Stop&quot;.
-	 */
-	MEDIA_STOP = "gtk-media-stop",
-	/**
-	 * The “Missing image” icon.
-	 *
-	 * Deprecated: Use named icon &quot;image-missing&quot;.
-	 */
-	MISSING_IMAGE = "gtk-missing-image",
-	/**
-	 * The “Network” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;network-workgroup&quot;.
-	 */
-	NETWORK = "gtk-network",
-	/**
-	 * The “New” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;document-new&quot; or the label &quot;_New&quot;.
-	 */
-	NEW = "gtk-new",
-	/**
-	 * The “No” item and icon.
-	 */
-	NO = "gtk-no",
-	/**
-	 * The “OK” item and icon.
-	 *
-	 * Deprecated: Do not use an icon. Use label &quot;_OK&quot;.
-	 */
-	OK = "gtk-ok",
-	/**
-	 * The “Open” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;document-open&quot; or the label &quot;_Open&quot;.
-	 */
-	OPEN = "gtk-open",
-	/**
-	 * The “Landscape Orientation” item and icon.
-	 */
-	ORIENTATION_LANDSCAPE = "gtk-orientation-landscape",
-	/**
-	 * The “Portrait Orientation” item and icon.
-	 */
-	ORIENTATION_PORTRAIT = "gtk-orientation-portrait",
-	/**
-	 * The “Reverse Landscape Orientation” item and icon.
-	 */
-	ORIENTATION_REVERSE_LANDSCAPE = "gtk-orientation-reverse-landscape",
-	/**
-	 * The “Reverse Portrait Orientation” item and icon.
-	 */
-	ORIENTATION_REVERSE_PORTRAIT = "gtk-orientation-reverse-portrait",
-	/**
-	 * The “Page Setup” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;document-page-setup&quot; or the label &quot;Page Set_up&quot;.
-	 */
-	PAGE_SETUP = "gtk-page-setup",
-	/**
-	 * The “Paste” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;edit-paste&quot; or the label &quot;_Paste&quot;.
-	 */
-	PASTE = "gtk-paste",
-	/**
-	 * The “Preferences” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;preferences-system&quot; or the label &quot;_Preferences&quot;.
-	 */
-	PREFERENCES = "gtk-preferences",
-	/**
-	 * The “Print” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;document-print&quot; or the label &quot;_Print&quot;.
-	 */
-	PRINT = "gtk-print",
-	/**
-	 * The “Print Error” icon.
-	 *
-	 * Deprecated: Use named icon &quot;printer-error&quot;.
-	 */
-	PRINT_ERROR = "gtk-print-error",
-	/**
-	 * The “Print Paused” icon.
-	 */
-	PRINT_PAUSED = "gtk-print-paused",
-	/**
-	 * The “Print Preview” item and icon.
-	 *
-	 * Deprecated: Use label &quot;Pre_view&quot;.
-	 */
-	PRINT_PREVIEW = "gtk-print-preview",
-	/**
-	 * The “Print Report” icon.
-	 */
-	PRINT_REPORT = "gtk-print-report",
-	/**
-	 * The “Print Warning” icon.
-	 */
-	PRINT_WARNING = "gtk-print-warning",
-	/**
-	 * The “Properties” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;document-properties&quot; or the label &quot;_Properties&quot;.
-	 */
-	PROPERTIES = "gtk-properties",
-	/**
-	 * The “Quit” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;application-exit&quot; or the label &quot;_Quit&quot;.
-	 */
-	QUIT = "gtk-quit",
-	/**
-	 * The “Redo” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;edit-redo&quot; or the label &quot;_Redo&quot;.
-	 */
-	REDO = "gtk-redo",
-	/**
-	 * The “Refresh” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;view-refresh&quot; or the label &quot;_Refresh&quot;.
-	 */
-	REFRESH = "gtk-refresh",
-	/**
-	 * The “Remove” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;list-remove&quot; or the label &quot;_Remove&quot;.
-	 */
-	REMOVE = "gtk-remove",
-	/**
-	 * The “Revert” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;document-revert&quot; or the label &quot;_Revert&quot;.
-	 */
-	REVERT_TO_SAVED = "gtk-revert-to-saved",
-	/**
-	 * The “Save” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;document-save&quot; or the label &quot;_Save&quot;.
-	 */
-	SAVE = "gtk-save",
-	/**
-	 * The “Save As” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;document-save-as&quot; or the label &quot;Save _As&quot;.
-	 */
-	SAVE_AS = "gtk-save-as",
-	/**
-	 * The “Select All” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;edit-select-all&quot; or the label &quot;Select _All&quot;.
-	 */
-	SELECT_ALL = "gtk-select-all",
-	/**
-	 * The “Color” item and icon.
-	 */
-	SELECT_COLOR = "gtk-select-color",
-	/**
-	 * The “Font” item and icon.
-	 */
-	SELECT_FONT = "gtk-select-font",
-	/**
-	 * The “Ascending” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;view-sort-ascending&quot;.
-	 */
-	SORT_ASCENDING = "gtk-sort-ascending",
-	/**
-	 * The “Descending” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;view-sort-descending&quot;.
-	 */
-	SORT_DESCENDING = "gtk-sort-descending",
-	/**
-	 * The “Spell Check” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;tools-check-spelling&quot;.
-	 */
-	SPELL_CHECK = "gtk-spell-check",
-	/**
-	 * The “Stop” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;process-stop&quot; or the label &quot;_Stop&quot;.
-	 */
-	STOP = "gtk-stop",
-	/**
-	 * The “Strikethrough” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-text-strikethrough&quot; or the label &quot;_Strikethrough&quot;.
-	 */
-	STRIKETHROUGH = "gtk-strikethrough",
-	/**
-	 * The “Undelete” item and icon. The icon has an RTL variant.
-	 */
-	UNDELETE = "gtk-undelete",
-	/**
-	 * The “Underline” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;format-text-underline&quot; or the label &quot;_Underline&quot;.
-	 */
-	UNDERLINE = "gtk-underline",
-	/**
-	 * The “Undo” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;edit-undo&quot; or the label &quot;_Undo&quot;.
-	 */
-	UNDO = "gtk-undo",
-	/**
-	 * The “Unindent” item and icon. The icon has an RTL variant.
-	 *
-	 * Deprecated: Use named icon &quot;format-indent-less&quot;.
-	 */
-	UNINDENT = "gtk-unindent",
-	/**
-	 * The “Yes” item and icon.
-	 */
-	YES = "gtk-yes",
-	/**
-	 * The “Zoom 100%” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;zoom-original&quot; or the label &quot;_Normal Size&quot;.
-	 */
-	ZOOM_100 = "gtk-zoom-100",
-	/**
-	 * The “Zoom to Fit” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;zoom-fit-best&quot; or the label &quot;Best _Fit&quot;.
-	 */
-	ZOOM_FIT = "gtk-zoom-fit",
-	/**
-	 * The “Zoom In” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;zoom-in&quot; or the label &quot;Zoom _In&quot;.
-	 */
-	ZOOM_IN = "gtk-zoom-in",
-	/**
-	 * The “Zoom Out” item and icon.
-	 *
-	 * Deprecated: Use named icon &quot;zoom-out&quot; or the label &quot;Zoom _Out&quot;.
-	 */
-	ZOOM_OUT = "gtk-zoom-out",
-}

@@ -34,7 +34,6 @@ public  import gsv.SourceCompletionInfo;
 public  import gsv.SourceCompletionProposalIF;
 public  import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 public  import gtk.TextIter;
 public  import gtk.Widget;
 
@@ -95,14 +94,14 @@ public template SourceCompletionProviderT(TStruct)
 	 */
 	public IconIF getGicon()
 	{
-		auto p = gtk_source_completion_provider_get_gicon(getSourceCompletionProviderStruct());
+		auto __p = gtk_source_completion_provider_get_gicon(getSourceCompletionProviderStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -113,14 +112,14 @@ public template SourceCompletionProviderT(TStruct)
 	 */
 	public Pixbuf getIcon()
 	{
-		auto p = gtk_source_completion_provider_get_icon(getSourceCompletionProviderStruct());
+		auto __p = gtk_source_completion_provider_get_icon(getSourceCompletionProviderStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -162,14 +161,14 @@ public template SourceCompletionProviderT(TStruct)
 	 */
 	public Widget getInfoWidget(SourceCompletionProposalIF proposal)
 	{
-		auto p = gtk_source_completion_provider_get_info_widget(getSourceCompletionProviderStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct());
+		auto __p = gtk_source_completion_provider_get_info_widget(getSourceCompletionProviderStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -236,11 +235,11 @@ public template SourceCompletionProviderT(TStruct)
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		auto p = gtk_source_completion_provider_get_start_iter(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), outiter) != 0;
+		auto __p = gtk_source_completion_provider_get_start_iter(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), outiter) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -36,7 +36,6 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdkpixbuftypes;
 private import std.algorithm;
 
 
@@ -134,14 +133,14 @@ public class PixbufLoader : ObjectG
 	 */
 	public this()
 	{
-		auto p = gdk_pixbuf_loader_new();
+		auto __p = gdk_pixbuf_loader_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GdkPixbufLoader*) p, true);
+		this(cast(GdkPixbufLoader*) __p, true);
 	}
 
 	/**
@@ -167,14 +166,14 @@ public class PixbufLoader : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gdk_pixbuf_loader_close(gdkPixbufLoader, &err) != 0;
+		auto __p = gdk_pixbuf_loader_close(gdkPixbufLoader, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -189,14 +188,14 @@ public class PixbufLoader : ObjectG
 	 */
 	public PixbufAnimation getAnimation()
 	{
-		auto p = gdk_pixbuf_loader_get_animation(gdkPixbufLoader);
+		auto __p = gdk_pixbuf_loader_get_animation(gdkPixbufLoader);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PixbufAnimation)(cast(GdkPixbufAnimation*) p);
+		return ObjectG.getDObject!(PixbufAnimation)(cast(GdkPixbufAnimation*) __p);
 	}
 
 	/**
@@ -211,14 +210,14 @@ public class PixbufLoader : ObjectG
 	 */
 	public PixbufFormat getFormat()
 	{
-		auto p = gdk_pixbuf_loader_get_format(gdkPixbufLoader);
+		auto __p = gdk_pixbuf_loader_get_format(gdkPixbufLoader);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p);
+		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) __p);
 	}
 
 	/**
@@ -239,14 +238,14 @@ public class PixbufLoader : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader);
+		auto __p = gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -289,14 +288,14 @@ public class PixbufLoader : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, cast(size_t)buf.length, &err) != 0;
+		auto __p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, cast(size_t)buf.length, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -323,14 +322,14 @@ public class PixbufLoader : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gdk_pixbuf_loader_write_bytes(gdkPixbufLoader, (buffer is null) ? null : buffer.getBytesStruct(), &err) != 0;
+		auto __p = gdk_pixbuf_loader_write_bytes(gdkPixbufLoader, (buffer is null) ? null : buffer.getBytesStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -197,6 +196,10 @@ public class ArrayG
 	 * The elements between the old end of the array and the newly inserted elements
 	 * will be initialised to zero if the array was configured to clear elements;
 	 * otherwise their values will be undefined.
+	 *
+	 * If @index_ is less than the array’s current length, new entries will be
+	 * inserted into the array, and the existing entries above @index_ will be moved
+	 * upwards.
 	 *
 	 * @data may be %NULL if (and only if) @len is zero. If @len is zero, this
 	 * function is a no-op.

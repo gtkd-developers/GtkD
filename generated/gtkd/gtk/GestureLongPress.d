@@ -29,10 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -83,32 +81,47 @@ public class GestureLongPress : GestureSingle
 	/**
 	 * Returns a newly created #GtkGesture that recognizes long presses.
 	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *
 	 * Returns: a newly created #GtkGestureLongPress
-	 *
-	 * Since: 3.14
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget)
+	public this()
 	{
-		auto p = gtk_gesture_long_press_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_long_press_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureLongPress*) p, true);
+		this(cast(GtkGestureLongPress*) __p, true);
+	}
+
+	/**
+	 * Returns the delay factor as set by gtk_gesture_long_press_set_delay_factor().
+	 *
+	 * Returns: the delay factor
+	 */
+	public double getDelayFactor()
+	{
+		return gtk_gesture_long_press_get_delay_factor(gtkGestureLongPress);
+	}
+
+	/**
+	 * Applies the given delay factor. The default long press time will be
+	 * multiplied by this value. Valid values are in the range [0.5..2.0].
+	 *
+	 * Params:
+	 *     delayFactor = The delay factor to apply
+	 */
+	public void setDelayFactor(double delayFactor)
+	{
+		gtk_gesture_long_press_set_delay_factor(gtkGestureLongPress, delayFactor);
 	}
 
 	/**
 	 * This signal is emitted whenever a press moved too far, or was released
 	 * before #GtkGestureLongPress::pressed happened.
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnCancelled(void delegate(GestureLongPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -117,13 +130,11 @@ public class GestureLongPress : GestureSingle
 
 	/**
 	 * This signal is emitted whenever a press goes unmoved/unreleased longer than
-	 * what the GTK+ defaults tell.
+	 * what the GTK defaults tell.
 	 *
 	 * Params:
 	 *     x = the X coordinate where the press happened, relative to the widget allocation
 	 *     y = the Y coordinate where the press happened, relative to the widget allocation
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnPressed(void delegate(double, double, GestureLongPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

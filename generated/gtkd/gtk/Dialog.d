@@ -24,19 +24,16 @@
 
 module gtk.Dialog;
 
-private import gdk.Screen;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Button;
-private import gtk.HButtonBox;
-private import gtk.VBox;
+private import gtk.Box;
+private import gtk.HeaderBar;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -45,8 +42,8 @@ private import std.algorithm;
  * of input, e.g. to display a message, ask a question, or anything else
  * that does not require extensive effort on the user’s part.
  * 
- * GTK+ treats a dialog as a window split vertically. The top section is a
- * #GtkVBox, and is where widgets such as a #GtkLabel or a #GtkEntry should
+ * GTK treats a dialog as a window split vertically. The top section is a
+ * #GtkBox, and is where widgets such as a #GtkLabel or a #GtkEntry should
  * be packed. The bottom area is known as the
  * “action area”. This is generally used for
  * packing buttons into the dialog which may perform functions such as
@@ -57,10 +54,6 @@ private import std.algorithm;
  * recommended; it allows you to set the dialog title, some convenient
  * flags, and add simple buttons.
  * 
- * If “dialog” is a newly created dialog, the two primary areas of the
- * window can be accessed through gtk_dialog_get_content_area() and
- * gtk_dialog_get_action_area(), as can be seen from the example below.
- * 
  * A “modal” dialog (that is, one which freezes the rest of the application
  * from user input), can be created by calling gtk_window_set_modal() on the
  * dialog. Use the GTK_WINDOW() macro to cast the widget returned from
@@ -70,18 +63,12 @@ private import std.algorithm;
  * If you add buttons to #GtkDialog using gtk_dialog_new_with_buttons(),
  * gtk_dialog_add_button(), gtk_dialog_add_buttons(), or
  * gtk_dialog_add_action_widget(), clicking the button will emit a signal
- * called #GtkDialog::response with a response ID that you specified. GTK+
+ * called #GtkDialog::response with a response ID that you specified. GTK
  * will never assign a meaning to positive response IDs; these are entirely
  * user-defined. But for convenience, you can use the response IDs in the
  * #GtkResponseType enumeration (these all have values less than zero). If
  * a dialog receives a delete event, the #GtkDialog::response signal will
  * be emitted with a response ID of #GTK_RESPONSE_DELETE_EVENT.
- * 
- * If you want to block waiting for a dialog to return before returning
- * control flow to your code, you can call gtk_dialog_run(). This function
- * enters a recursive main loop and waits for the user to respond to the
- * dialog, returning the response ID corresponding to the button the user
- * clicked.
  * 
  * For the simple dialog in the following example, in reality you’d probably
  * use #GtkMessageDialog to save yourself some effort. But you’d need to
@@ -92,7 +79,7 @@ private import std.algorithm;
  * |[<!-- language="C" -->
  * // Function to open a dialog box with a message
  * void
- * quick_message (GtkWindow *parent, gchar *message)
+ * quick_message (GtkWindow *parent, char *message)
  * {
  * GtkWidget *dialog, *label, *content_area;
  * GtkDialogFlags flags;
@@ -112,21 +99,21 @@ private import std.algorithm;
  * 
  * g_signal_connect_swapped (dialog,
  * "response",
- * G_CALLBACK (gtk_widget_destroy),
+ * G_CALLBACK (gtk_window_destroy),
  * dialog);
  * 
  * // Add the label, and show everything we’ve added
  * 
- * gtk_container_add (GTK_CONTAINER (content_area), label);
- * gtk_widget_show_all (dialog);
+ * gtk_box_append (GTK_BOX (content_area), label);
+ * gtk_widget_show (dialog);
  * }
  * ]|
  * 
  * # GtkDialog as GtkBuildable
  * 
  * The GtkDialog implementation of the #GtkBuildable interface exposes the
- * @vbox and @action_area as internal children with the names “vbox” and
- * “action_area”.
+ * @content_area and @action_area as internal children with the names
+ * “content_area” and “action_area”.
  * 
  * GtkDialog supports a custom <action-widgets> element, which can contain
  * multiple <action-widget> elements. The “response” attribute specifies a
@@ -149,7 +136,6 @@ private import std.algorithm;
  * </child>
  * <child type="action">
  * <object class="GtkButton" id="button_ok">
- * <property name="can-default">True</property>
  * </object>
  * </child>
  * <action-widgets>
@@ -158,6 +144,10 @@ private import std.algorithm;
  * </action-widgets>
  * </object>
  * ]|
+ * 
+ * # Accessibility
+ * 
+ * GtkDialog uses the #GTK_ACCESSIBLE_ROLE_DIALOG role.
  */
 public class Dialog : Window
 {
@@ -187,101 +177,6 @@ public class Dialog : Window
 		super(cast(GtkWindow*)gtkDialog, ownedRef);
 	}
 
-	/**
-	 * Both title and parent can be null.
-	 */
-	this(string title, Window parent, GtkDialogFlags flags, string[] buttonsText, ResponseType[] responses)
-	{
-		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, null);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
-		}
-
-		this(cast(GtkDialog*)p);
-
-		addButtons(buttonsText[], responses[]);
-	}
-
-	/** ditto */
-	this(string title, Window parent, GtkDialogFlags flags, StockID[] stockIDs, ResponseType[] responses)
-	{
-		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, null);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
-		}
-
-		this(cast(GtkDialog*)p);
-
-		addButtons(stockIDs, responses);
-	}
-
-	/** */
-	public Button addButton(StockID stockID, int responseId)
-	{
-		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(stockID), responseId);
-
-		if ( p is null )
-		{
-			return null;
-		}
-
-		return new Button(cast(GtkButton*)p);
-	}
-
-	/** */
-	public void addButtons(string[] buttonsText, ResponseType[] responses)
-	{
-		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
-		{
-			addButton(buttonsText[i], responses[i]);
-		}
-	}
-
-	/** */
-	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
-	{
-		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
-		{
-			addButton(stockIDs[i], responses[i]);
-		}
-	}
-
-	//Return the corect class instead of Widget
-	/**
-	 * Returns the action area of dialog.
-	 * Since: 2.14
-	 * Returns: the action area.
-	 */
-	public HButtonBox getActionArea()
-	{
-		auto p = gtk_dialog_get_action_area(gtkDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new HButtonBox(cast(GtkHButtonBox*) p);
-	}
-
-	//Return the corect class instead of Widget
-	/**
-	 * Returns the content area of dialog.
-	 * Since: 2.14
-	 * Returns: the content area GtkVBox.
-	 */
-	public VBox getContentArea()
-	{
-		auto p = gtk_dialog_get_content_area(gtkDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new VBox(cast(GtkVBox*) p);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -293,7 +188,7 @@ public class Dialog : Window
 	 * Creates a new dialog box.
 	 *
 	 * Widgets should not be packed into this #GtkWindow
-	 * directly, but into the @vbox and @action_area, as described above.
+	 * directly, but into the @content_area and @action_area, as described above.
 	 *
 	 * Returns: the new dialog as a #GtkWidget
 	 *
@@ -301,14 +196,14 @@ public class Dialog : Window
 	 */
 	public this()
 	{
-		auto p = gtk_dialog_new();
+		auto __p = gtk_dialog_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkDialog*) p);
+		this(cast(GtkDialog*) __p);
 	}
 
 	/**
@@ -343,14 +238,31 @@ public class Dialog : Window
 	 */
 	public Widget addButton(string buttonText, int responseId)
 	{
-		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
+		auto __p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Returns the content area of @dialog.
+	 *
+	 * Returns: the content area #GtkBox.
+	 */
+	public Box getContentArea()
+	{
+		auto __p = gtk_dialog_get_content_area(gtkDialog);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Box)(cast(GtkBox*) __p);
 	}
 
 	/**
@@ -359,19 +271,17 @@ public class Dialog : Window
 	 * #GtkDialog:use-header-bar property is %TRUE.
 	 *
 	 * Returns: the header bar
-	 *
-	 * Since: 3.12
 	 */
-	public Widget getHeaderBar()
+	public HeaderBar getHeaderBar()
 	{
-		auto p = gtk_dialog_get_header_bar(gtkDialog);
+		auto __p = gtk_dialog_get_header_bar(gtkDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(HeaderBar)(cast(GtkHeaderBar*) __p);
 	}
 
 	/**
@@ -383,8 +293,6 @@ public class Dialog : Window
 	 *
 	 * Returns: the response id of @widget, or %GTK_RESPONSE_NONE
 	 *     if @widget doesn’t have a response id set.
-	 *
-	 * Since: 2.8
 	 */
 	public int getResponseForWidget(Widget widget)
 	{
@@ -400,26 +308,23 @@ public class Dialog : Window
 	 *
 	 * Returns: the @widget button that uses the given
 	 *     @response_id, or %NULL.
-	 *
-	 * Since: 2.20
 	 */
 	public Widget getWidgetForResponse(int responseId)
 	{
-		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
+		auto __p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
 	 * Emits the #GtkDialog::response signal with the given response ID.
-	 * Used to indicate that the user has responded to the dialog in some way;
-	 * typically either you or gtk_dialog_run() will be monitoring the
-	 * ::response signal and take appropriate action.
+	 *
+	 * Used to indicate that the user has responded to the dialog in some way.
 	 *
 	 * Params:
 	 *     responseId = response ID
@@ -427,83 +332,6 @@ public class Dialog : Window
 	public void response(int responseId)
 	{
 		gtk_dialog_response(gtkDialog, responseId);
-	}
-
-	/**
-	 * Blocks in a recursive main loop until the @dialog either emits the
-	 * #GtkDialog::response signal, or is destroyed. If the dialog is
-	 * destroyed during the call to gtk_dialog_run(), gtk_dialog_run() returns
-	 * #GTK_RESPONSE_NONE. Otherwise, it returns the response ID from the
-	 * ::response signal emission.
-	 *
-	 * Before entering the recursive main loop, gtk_dialog_run() calls
-	 * gtk_widget_show() on the dialog for you. Note that you still
-	 * need to show any children of the dialog yourself.
-	 *
-	 * During gtk_dialog_run(), the default behavior of #GtkWidget::delete-event
-	 * is disabled; if the dialog receives ::delete_event, it will not be
-	 * destroyed as windows usually are, and gtk_dialog_run() will return
-	 * #GTK_RESPONSE_DELETE_EVENT. Also, during gtk_dialog_run() the dialog
-	 * will be modal. You can force gtk_dialog_run() to return at any time by
-	 * calling gtk_dialog_response() to emit the ::response signal. Destroying
-	 * the dialog during gtk_dialog_run() is a very bad idea, because your
-	 * post-run code won’t know whether the dialog was destroyed or not.
-	 *
-	 * After gtk_dialog_run() returns, you are responsible for hiding or
-	 * destroying the dialog if you wish to do so.
-	 *
-	 * Typical usage of this function might be:
-	 * |[<!-- language="C" -->
-	 * GtkWidget *dialog = gtk_dialog_new ();
-	 * // Set up dialog...
-	 *
-	 * int result = gtk_dialog_run (GTK_DIALOG (dialog));
-	 * switch (result)
-	 * {
-	 * case GTK_RESPONSE_ACCEPT:
-	 * // do_application_specific_something ();
-	 * break;
-	 * default:
-	 * // do_nothing_since_dialog_was_cancelled ();
-	 * break;
-	 * }
-	 * gtk_widget_destroy (dialog);
-	 * ]|
-	 *
-	 * Note that even though the recursive main loop gives the effect of a
-	 * modal dialog (it prevents the user from interacting with other
-	 * windows in the same window group while the dialog is run), callbacks
-	 * such as timeouts, IO channel watches, DND drops, etc, will
-	 * be triggered during a gtk_dialog_run() call.
-	 *
-	 * Returns: response ID
-	 */
-	public int run()
-	{
-		return gtk_dialog_run(gtkDialog);
-	}
-
-	/**
-	 * Sets an alternative button order. If the
-	 * #GtkSettings:gtk-alternative-button-order setting is set to %TRUE,
-	 * the dialog buttons are reordered according to the order of the
-	 * response ids in @new_order.
-	 *
-	 * See gtk_dialog_set_alternative_button_order() for more information.
-	 *
-	 * This function is for use by language bindings.
-	 *
-	 * Deprecated: Deprecated
-	 *
-	 * Params:
-	 *     newOrder = an array of response ids of
-	 *         @dialog’s buttons
-	 *
-	 * Since: 2.6
-	 */
-	public void setAlternativeButtonOrder(int[] newOrder)
-	{
-		gtk_dialog_set_alternative_button_order_from_array(gtkDialog, cast(int)newOrder.length, newOrder.ptr);
 	}
 
 	/**
@@ -535,7 +363,7 @@ public class Dialog : Window
 
 	/**
 	 * The ::close signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user uses a keybinding to close
 	 * the dialog.
 	 *
@@ -558,30 +386,5 @@ public class Dialog : Window
 	gulong addOnResponse(void delegate(int, Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "response", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * Returns %TRUE if dialogs are expected to use an alternative
-	 * button order on the screen @screen. See
-	 * gtk_dialog_set_alternative_button_order() for more details
-	 * about alternative button order.
-	 *
-	 * If you need to use this function, you should probably connect
-	 * to the ::notify:gtk-alternative-button-order signal on the
-	 * #GtkSettings object associated to @screen, in order to be
-	 * notified if the button order setting changes.
-	 *
-	 * Deprecated: Deprecated
-	 *
-	 * Params:
-	 *     screen = a #GdkScreen, or %NULL to use the default screen
-	 *
-	 * Returns: Whether the alternative button order should be used
-	 *
-	 * Since: 2.6
-	 */
-	public static bool alternativeDialogButtonOrder(Screen screen)
-	{
-		return gtk_alternative_dialog_button_order((screen is null) ? null : screen.getScreenStruct()) != 0;
 	}
 }

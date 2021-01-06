@@ -29,7 +29,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -47,6 +46,13 @@ public  import std.algorithm;
  * - Run a garbage collection cycle
  * - Try and compress fragmented allocations
  * - Exit on idle if the process has no reason to stay around
+ * - Call [`malloc_trim(3)`](man:malloc_trim) to return cached heap pages to
+ * the kernel (if supported by your libc)
+ * 
+ * Note that some actions may not always improve system performance, and so
+ * should be profiled for your application. `malloc_trim()`, for example, may
+ * make future heap allocations slower (due to releasing cached heap pages back
+ * to the kernel).
  * 
  * See #GMemoryMonitorWarningLevel for details on the various warning levels.
  * 

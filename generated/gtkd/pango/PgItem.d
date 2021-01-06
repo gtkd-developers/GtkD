@@ -27,8 +27,8 @@ module pango.PgItem;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.PgAttributeIterator;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -144,14 +144,36 @@ public final class PgItem
 	 */
 	public this()
 	{
-		auto p = pango_item_new();
+		auto __p = pango_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoItem*) p);
+		this(cast(PangoItem*) __p);
+	}
+
+	/**
+	 * Add attributes to a PangoItem. The idea is that you have
+	 * attributes that don't affect itemization, such as font features,
+	 * so you filter them out using pango_attr_list_filter(), itemize
+	 * your text, then reapply the attributes to the resulting items
+	 * using this function.
+	 *
+	 * The @iter should be positioned before the range of the item,
+	 * and will be advanced past it. This function is meant to be called
+	 * in a loop over the items resulting from itemization, while passing
+	 * the iter to each call.
+	 *
+	 * Params:
+	 *     iter = a #PangoAttrIterator
+	 *
+	 * Since: 1.44
+	 */
+	public void applyAttrs(PgAttributeIterator iter)
+	{
+		pango_item_apply_attrs(pangoItem, (iter is null) ? null : iter.getPgAttributeIteratorStruct());
 	}
 
 	/**
@@ -163,14 +185,14 @@ public final class PgItem
 	 */
 	public PgItem copy()
 	{
-		auto p = pango_item_copy(pangoItem);
+		auto __p = pango_item_copy(pangoItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
+		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) __p, true);
 	}
 
 	/**
@@ -203,13 +225,13 @@ public final class PgItem
 	 */
 	public PgItem split(int splitIndex, int splitOffset)
 	{
-		auto p = pango_item_split(pangoItem, splitIndex, splitOffset);
+		auto __p = pango_item_split(pangoItem, splitIndex, splitOffset);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
+		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) __p, true);
 	}
 }

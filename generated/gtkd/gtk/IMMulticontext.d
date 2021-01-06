@@ -28,10 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.IMContext;
-private import gtk.MenuShell;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -79,40 +77,20 @@ public class IMMulticontext : IMContext
 	 */
 	public this()
 	{
-		auto p = gtk_im_multicontext_new();
+		auto __p = gtk_im_multicontext_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIMMulticontext*) p, true);
+		this(cast(GtkIMMulticontext*) __p, true);
 	}
 
 	/**
-	 * Add menuitems for various available input methods to a menu;
-	 * the menuitems, when selected, will switch the input method
-	 * for the context and the global default input method.
+	 * Gets the id of the currently active delegate of the @context.
 	 *
-	 * Deprecated: It is better to use the system-wide input
-	 * method framework for changing input methods. Modern
-	 * desktop shells offer on-screen displays for this that
-	 * can triggered with a keyboard shortcut, e.g. Super-Space.
-	 *
-	 * Params:
-	 *     menushell = a #GtkMenuShell
-	 */
-	public void appendMenuitems(MenuShell menushell)
-	{
-		gtk_im_multicontext_append_menuitems(gtkIMMulticontext, (menushell is null) ? null : menushell.getMenuShellStruct());
-	}
-
-	/**
-	 * Gets the id of the currently active slave of the @context.
-	 *
-	 * Returns: the id of the currently active slave
-	 *
-	 * Since: 2.16
+	 * Returns: the id of the currently active delegate
 	 */
 	public string getContextId()
 	{
@@ -122,13 +100,11 @@ public class IMMulticontext : IMContext
 	/**
 	 * Sets the context id for @context.
 	 *
-	 * This causes the currently active slave of @context to be
-	 * replaced by the slave corresponding to the new context id.
+	 * This causes the currently active delegate of @context to be
+	 * replaced by the delegate corresponding to the new context id.
 	 *
 	 * Params:
 	 *     contextId = the id to use
-	 *
-	 * Since: 2.16
 	 */
 	public void setContextId(string contextId)
 	{

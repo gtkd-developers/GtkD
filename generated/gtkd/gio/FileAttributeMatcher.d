@@ -29,7 +29,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -140,7 +139,7 @@ public class FileAttributeMatcher
 	/**
 	 * Gets the next matched attribute from a #GFileAttributeMatcher.
 	 *
-	 * Returns: a string containing the next attribute or %NULL if
+	 * Returns: a string containing the next attribute or, %NULL if
 	 *     no more attribute exist.
 	 */
 	public string enumerateNext()

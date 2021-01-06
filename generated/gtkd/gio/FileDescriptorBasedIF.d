@@ -26,7 +26,6 @@ module gio.FileDescriptorBasedIF;
 
 private import gio.c.functions;
 public  import gio.c.types;
-public  import gtkc.giotypes;
 
 
 /**

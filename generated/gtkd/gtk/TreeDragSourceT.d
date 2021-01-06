@@ -24,13 +24,11 @@
 
 module gtk.TreeDragSourceT;
 
+public  import gdk.ContentProvider;
 public  import gobject.ObjectG;
-public  import gtk.SelectionData;
-public  import gtk.TreeModelIF;
 public  import gtk.TreePath;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -63,21 +61,26 @@ public template TreeDragSourceT(TStruct)
 	}
 
 	/**
-	 * Asks the #GtkTreeDragSource to fill in @selection_data with a
-	 * representation of the row at @path. @selection_data->target gives
-	 * the required type of the data.  Should robustly handle a @path no
+	 * Asks the #GtkTreeDragSource to return a #GdkContentProvider representing
+	 * the row at @path. Should robustly handle a @path no
 	 * longer found in the model!
 	 *
 	 * Params:
 	 *     path = row that was dragged
-	 *     selectionData = a #GtkSelectionData to fill with data
-	 *         from the dragged row
 	 *
-	 * Returns: %TRUE if data of the required type was provided
+	 * Returns: a #GdkContentProvider for the
+	 *     given @path or %NULL if none exists
 	 */
-	public bool dragDataGet(TreePath path, SelectionData selectionData)
+	public ContentProvider dragDataGet(TreePath path)
 	{
-		return gtk_tree_drag_source_drag_data_get(getTreeDragSourceStruct(), (path is null) ? null : path.getTreePathStruct(), (selectionData is null) ? null : selectionData.getSelectionDataStruct()) != 0;
+		auto __p = gtk_tree_drag_source_drag_data_get(getTreeDragSourceStruct(), (path is null) ? null : path.getTreePathStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ContentProvider)(cast(GdkContentProvider*) __p, true);
 	}
 
 	/**

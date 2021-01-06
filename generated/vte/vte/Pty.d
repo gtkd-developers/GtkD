@@ -35,7 +35,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import vte.c.functions;
 public  import vte.c.types;
-public  import vtec.vtetypes;
 
 
 /** */
@@ -98,19 +97,19 @@ public class Pty : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = vte_pty_new_foreign_sync(fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = vte_pty_new_foreign_sync(fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_foreign_sync");
 		}
 
-		this(cast(VtePty*) p, true);
+		this(cast(VtePty*) __p, true);
 	}
 
 	/**
@@ -131,6 +130,16 @@ public class Pty : ObjectG, InitableIF
 	 *
 	 * Also, you MUST pass the %G_SPAWN_DO_NOT_REAP_CHILD flag.
 	 *
+	 * Note also that %G_SPAWN_STDOUT_TO_DEV_NULL, %G_SPAWN_STDERR_TO_DEV_NULL,
+	 * and %G_SPAWN_CHILD_INHERITS_STDIN are not supported, since stdin, stdout
+	 * and stderr of the child process will always be connected to the PTY.
+	 *
+	 * Note that you should set the PTY's size using vte_pty_set_size() before
+	 * spawning the child process, so that the child process has the correct
+	 * size from the start instead of starting with a default size and then
+	 * shortly afterwards receiving a SIGWINCH signal. You should prefer
+	 * using vte_terminal_pty_new_sync() which does this automatically.
+	 *
 	 * Params:
 	 *     flags = flags from #VtePtyFlags
 	 *     cancellable = a #GCancellable, or %NULL
@@ -144,24 +153,22 @@ public class Pty : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = vte_pty_new_sync(flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = vte_pty_new_sync(flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
 
-		this(cast(VtePty*) p, true);
+		this(cast(VtePty*) __p, true);
 	}
 
-	/**
-	 * FIXMEchpe
-	 */
+	/** */
 	public void childSetup()
 	{
 		vte_pty_child_setup(vtePty);
@@ -177,7 +184,8 @@ public class Pty : ObjectG, InitableIF
 
 	/**
 	 * Returns: the file descriptor of the PTY master in @pty. The
-	 *     file descriptor belongs to @pty and must not be closed
+	 *     file descriptor belongs to @pty and must not be closed or have
+	 *     its flags changed
 	 */
 	public int getFd()
 	{
@@ -201,14 +209,14 @@ public class Pty : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = vte_pty_get_size(vtePty, &rows, &columns, &err) != 0;
+		auto __p = vte_pty_get_size(vtePty, &rows, &columns, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -229,14 +237,14 @@ public class Pty : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = vte_pty_set_size(vtePty, rows, columns, &err) != 0;
+		auto __p = vte_pty_set_size(vtePty, rows, columns, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -255,31 +263,20 @@ public class Pty : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = vte_pty_set_utf8(vtePty, utf8, &err) != 0;
+		auto __p = vte_pty_set_utf8(vtePty, utf8, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Starts the specified command under the pseudo-terminal @pty.
-	 * The @argv and @envv lists should be %NULL-terminated.
-	 * The "TERM" environment variable is automatically set to a default value,
-	 * but can be overridden from @envv.
-	 * @pty_flags controls logging the session to the specified system log files.
-	 *
-	 * Note that %G_SPAWN_DO_NOT_REAP_CHILD will always be added to @spawn_flags.
-	 *
-	 * Note that all open file descriptors will be closed in the child. If you want
-	 * to keep some file descriptor open for use in the child process, you need to
-	 * use a child setup function that unsets the FD_CLOEXEC flag on that file
-	 * descriptor.
-	 *
-	 * See vte_pty_new(), g_spawn_async() and vte_terminal_watch_child() for more information.
+	 * Like vte_pty_spawn_with_fds_async(), except that this function does not
+	 * allow passing file descriptors to the child process. See vte_pty_spawn_with_fds_async()
+	 * for more information.
 	 *
 	 * Params:
 	 *     workingDirectory = the name of a directory the command should start
@@ -291,8 +288,10 @@ public class Pty : ObjectG, InitableIF
 	 *     childSetup = an extra child setup function to run in the child just before exec(), or %NULL
 	 *     childSetupData = user data for @child_setup, or %NULL
 	 *     childSetupDataDestroy = a #GDestroyNotify for @child_setup_data, or %NULL
-	 *     timeout = a timeout value in ms, or -1 to wait indefinitely
+	 *     timeout = a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
 	 *     cancellable = a #GCancellable, or %NULL
+	 *     callback = a #GAsyncReadyCallback, or %NULL
+	 *     userData = user data for @callback
 	 *
 	 * Since: 0.48
 	 */
@@ -316,13 +315,72 @@ public class Pty : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = vte_pty_spawn_finish(vtePty, (result is null) ? null : result.getAsyncResultStruct(), &childPid, &err) != 0;
+		auto __p = vte_pty_spawn_finish(vtePty, (result is null) ? null : result.getAsyncResultStruct(), &childPid, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
+	}
+
+	/**
+	 * Starts the specified command under the pseudo-terminal @pty.
+	 * The @argv and @envv lists should be %NULL-terminated.
+	 * The "TERM" environment variable is automatically set to a default value,
+	 * but can be overridden from @envv.
+	 * @pty_flags controls logging the session to the specified system log files.
+	 *
+	 * Note also that %G_SPAWN_STDOUT_TO_DEV_NULL, %G_SPAWN_STDERR_TO_DEV_NULL,
+	 * and %G_SPAWN_CHILD_INHERITS_STDIN are not supported in @spawn_flags, since
+	 * stdin, stdout and stderr of the child process will always be connected to
+	 * the PTY. Also %G_SPAWN_LEAVE_DESCRIPTORS_OPEN is not supported; and
+	 * %G_SPAWN_DO_NOT_REAP_CHILD will always be added to @spawn_flags.
+	 *
+	 * If @fds is not %NULL, the child process will map the file descriptors from
+	 * @fds according to @map_fds; @n_map_fds must be less or equal to @n_fds.
+	 * This function will take ownership of the file descriptors in @fds;
+	 * you must not use or close them after this call. All file descriptors in @fds
+	 * must have the FD_CLOEXEC flag set on them; it will be unset in the child process
+	 * before calling exec.
+	 *
+	 * Note that all  open file descriptors apart from those mapped as above
+	 * will be closed in the child. (If you want to keep some other file descriptor
+	 * open for use in the child process, you need to use a child setup function
+	 * that unsets the FD_CLOEXEC flag on that file descriptor manually.)
+	 *
+	 * Beginning with 0.60, and on linux only, and unless %VTE_SPAWN_NO_SYSTEMD_SCOPE is
+	 * passed in @spawn_flags, the newly created child process will be moved to its own
+	 * systemd user scope; and if %VTE_SPAWN_REQUIRE_SYSTEMD_SCOPE is passed, and creation
+	 * of the systemd user scope fails, the whole spawn will fail.
+	 * You can override the options used for the systemd user scope by
+	 * providing a systemd override file for 'vte-spawn-.scope' unit. See man:systemd.unit(5)
+	 * for further information.
+	 *
+	 * See vte_pty_new(), and vte_terminal_watch_child() for more information.
+	 *
+	 * Params:
+	 *     workingDirectory = the name of a directory the command should start
+	 *         in, or %NULL to use the current working directory
+	 *     argv = child's argument vector
+	 *     envv = a list of environment
+	 *         variables to be added to the environment before starting the process, or %NULL
+	 *     fds = an array of file descriptors, or %NULL
+	 *     mapFds = an array of integers, or %NULL
+	 *     spawnFlags = flags from #GSpawnFlags
+	 *     childSetup = an extra child setup function to run in the child just before exec(), or %NULL
+	 *     childSetupData = user data for @child_setup, or %NULL
+	 *     childSetupDataDestroy = a #GDestroyNotify for @child_setup_data, or %NULL
+	 *     timeout = a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
+	 *     cancellable = a #GCancellable, or %NULL
+	 *     callback = a #GAsyncReadyCallback, or %NULL
+	 *     userData = user data for @callback
+	 *
+	 * Since: 0.62
+	 */
+	public void spawnWithFdsAsync(string workingDirectory, string[] argv, string[] envv, int[] fds, int[] mapFds, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		vte_pty_spawn_with_fds_async(vtePty, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), fds.ptr, cast(int)fds.length, mapFds.ptr, cast(int)mapFds.length, spawnFlags, childSetup, childSetupData, childSetupDataDestroy, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 }

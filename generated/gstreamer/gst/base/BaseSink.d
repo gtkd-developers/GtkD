@@ -30,6 +30,7 @@ public  import gst.base.c.types;
 private import gstreamer.Element;
 private import gstreamer.MiniObject;
 private import gstreamer.Sample;
+private import gstreamer.Structure;
 
 
 /**
@@ -240,14 +241,14 @@ public class BaseSink : Element
 	 */
 	public Sample getLastSample()
 	{
-		auto p = gst_base_sink_get_last_sample(gstBaseSink);
+		auto __p = gst_base_sink_get_last_sample(gstBaseSink);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) p, true);
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -308,6 +309,30 @@ public class BaseSink : Element
 	public GstClockTime getRenderDelay()
 	{
 		return gst_base_sink_get_render_delay(gstBaseSink);
+	}
+
+	/**
+	 * Return various #GstBaseSink statistics. This function returns a #GstStructure
+	 * with name `application/x-gst-base-sink-stats` with the following fields:
+	 *
+	 * - "average-rate" G_TYPE_DOUBLE   average frame rate
+	 * - "dropped" G_TYPE_UINT64   Number of dropped frames
+	 * - "rendered" G_TYPE_UINT64   Number of rendered frames
+	 *
+	 * Returns: pointer to #GstStructure
+	 *
+	 * Since: 1.18
+	 */
+	public Structure getStats()
+	{
+		auto __p = gst_base_sink_get_stats(gstBaseSink);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
@@ -401,12 +426,12 @@ public class BaseSink : Element
 		int outlive;
 		int outupstreamLive;
 
-		auto p = gst_base_sink_query_latency(gstBaseSink, &outlive, &outupstreamLive, &minLatency, &maxLatency) != 0;
+		auto __p = gst_base_sink_query_latency(gstBaseSink, &outlive, &outupstreamLive, &minLatency, &maxLatency) != 0;
 
 		live = (outlive == 1);
 		upstreamLive = (outupstreamLive == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**

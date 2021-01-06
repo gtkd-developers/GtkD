@@ -31,7 +31,6 @@ private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import gtkd.Loader;
 
 
@@ -100,14 +99,14 @@ public class TreeRowReference
 	 */
 	public this(TreeModelIF model, TreePath path)
 	{
-		auto p = gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
+		auto __p = gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTreeRowReference*) p);
+		this(cast(GtkTreeRowReference*) __p);
 	}
 
 	/**
@@ -126,7 +125,7 @@ public class TreeRowReference
 	 *
 	 * These functions must be called exactly once per proxy when the
 	 * corresponding signal on the model is emitted. This single call
-	 * updates all row references for that proxy. Since built-in GTK+
+	 * updates all row references for that proxy. Since built-in GTK
 	 * objects like #GtkTreeView already use this mechanism internally,
 	 * using them as the proxy object will produce unpredictable results.
 	 * Further more, passing the same object as @model and @proxy
@@ -147,33 +146,31 @@ public class TreeRowReference
 	 */
 	public this(ObjectG proxy, TreeModelIF model, TreePath path)
 	{
-		auto p = gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
+		auto __p = gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_proxy");
 		}
 
-		this(cast(GtkTreeRowReference*) p);
+		this(cast(GtkTreeRowReference*) __p);
 	}
 
 	/**
 	 * Copies a #GtkTreeRowReference.
 	 *
 	 * Returns: a copy of @reference
-	 *
-	 * Since: 2.2
 	 */
 	public TreeRowReference copy()
 	{
-		auto p = gtk_tree_row_reference_copy(gtkTreeRowReference);
+		auto __p = gtk_tree_row_reference_copy(gtkTreeRowReference);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeRowReference)(cast(GtkTreeRowReference*) p, true);
+		return ObjectG.getDObject!(TreeRowReference)(cast(GtkTreeRowReference*) __p, true);
 	}
 
 	/**
@@ -189,19 +186,17 @@ public class TreeRowReference
 	 * Returns the model that the row reference is monitoring.
 	 *
 	 * Returns: the model
-	 *
-	 * Since: 2.8
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_tree_row_reference_get_model(gtkTreeRowReference);
+		auto __p = gtk_tree_row_reference_get_model(gtkTreeRowReference);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
@@ -212,14 +207,14 @@ public class TreeRowReference
 	 */
 	public TreePath getPath()
 	{
-		auto p = gtk_tree_row_reference_get_path(gtkTreeRowReference);
+		auto __p = gtk_tree_row_reference_get_path(gtkTreeRowReference);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**

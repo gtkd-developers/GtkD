@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgFontDescription;
 private import pango.PgFontFace;
 private import pango.PgFontFamily;
@@ -39,10 +38,9 @@ private import std.algorithm;
 
 /**
  * #GtkFontChooser is an interface that can be implemented by widgets
- * displaying the list of fonts. In GTK+, the main objects
+ * displaying the list of fonts. In GTK, the main objects
  * that implement this interface are #GtkFontChooserWidget,
- * #GtkFontChooserDialog and #GtkFontButton. The GtkFontChooser interface
- * has been introducted in GTK+ 3.2.
+ * #GtkFontChooserDialog and #GtkFontButton.
  */
 public interface FontChooserIF{
 	/** Get the main Gtk struct */
@@ -73,8 +71,6 @@ public interface FontChooserIF{
 	 * Returns: A string with the name
 	 *     of the current font, or %NULL if  no font is selected. You must
 	 *     free this string with g_free().
-	 *
-	 * Since: 3.2
 	 */
 	public string getFont();
 
@@ -92,8 +88,6 @@ public interface FontChooserIF{
 	 *
 	 * Returns: A #PangoFontDescription for the
 	 *     current font, or %NULL if  no font is selected.
-	 *
-	 * Since: 3.2
 	 */
 	public PgFontDescription getFontDesc();
 
@@ -106,8 +100,6 @@ public interface FontChooserIF{
 	 * Returns: A #PangoFontFace representing the
 	 *     selected font group details, or %NULL. The returned object is owned by
 	 *     @fontchooser and must not be modified or freed.
-	 *
-	 * Since: 3.2
 	 */
 	public PgFontFace getFontFace();
 
@@ -120,8 +112,6 @@ public interface FontChooserIF{
 	 * Returns: A #PangoFontFamily representing the
 	 *     selected font family, or %NULL. The returned object is owned by @fontchooser
 	 *     and must not be modified or freed.
-	 *
-	 * Since: 3.2
 	 */
 	public PgFontFamily getFontFamily();
 
@@ -129,8 +119,6 @@ public interface FontChooserIF{
 	 * Gets the currently-selected font features.
 	 *
 	 * Returns: the currently selected font features
-	 *
-	 * Since: 3.24
 	 */
 	public string getFontFeatures();
 
@@ -139,8 +127,6 @@ public interface FontChooserIF{
 	 * or %NULL if it does not have one.
 	 *
 	 * Returns: a #PangoFontMap, or %NULL
-	 *
-	 * Since: 3.18
 	 */
 	public PgFontMap getFontMap();
 
@@ -149,8 +135,6 @@ public interface FontChooserIF{
 	 *
 	 * Returns: A n integer representing the selected font size,
 	 *     or -1 if no font size is selected.
-	 *
-	 * Since: 3.2
 	 */
 	public int getFontSize();
 
@@ -158,8 +142,6 @@ public interface FontChooserIF{
 	 * Gets the language that is used for font features.
 	 *
 	 * Returns: the currently selected language
-	 *
-	 * Since: 3.24
 	 */
 	public string getLanguage();
 
@@ -167,8 +149,6 @@ public interface FontChooserIF{
 	 * Returns the current level of granularity for selecting fonts.
 	 *
 	 * Returns: the current granularity level
-	 *
-	 * Since: 3.24
 	 */
 	public GtkFontChooserLevel getLevel();
 
@@ -177,8 +157,6 @@ public interface FontChooserIF{
 	 *
 	 * Returns: the text displayed in the
 	 *     preview area
-	 *
-	 * Since: 3.2
 	 */
 	public string getPreviewText();
 
@@ -187,8 +165,6 @@ public interface FontChooserIF{
 	 *
 	 * Returns: %TRUE if the preview entry is shown
 	 *     or %FALSE if it is hidden.
-	 *
-	 * Since: 3.2
 	 */
 	public bool getShowPreviewEntry();
 
@@ -200,8 +176,6 @@ public interface FontChooserIF{
 	 *     filter = a #GtkFontFilterFunc, or %NULL
 	 *     userData = data to pass to @filter
 	 *     destroy = function to call to free @data when it is no longer needed
-	 *
-	 * Since: 3.2
 	 */
 	public void setFilterFunc(GtkFontFilterFunc filter, void* userData, GDestroyNotify destroy);
 
@@ -210,8 +184,6 @@ public interface FontChooserIF{
 	 *
 	 * Params:
 	 *     fontname = a font name like “Helvetica 12” or “Times Bold 18”
-	 *
-	 * Since: 3.2
 	 */
 	public void setFont(string fontname);
 
@@ -220,8 +192,6 @@ public interface FontChooserIF{
 	 *
 	 * Params:
 	 *     fontDesc = a #PangoFontDescription
-	 *
-	 * Since: 3.2
 	 */
 	public void setFontDesc(PgFontDescription fontDesc);
 
@@ -243,7 +213,7 @@ public interface FontChooserIF{
 	 * gtk_font_chooser_set_font_map (font_chooser, fontmap);
 	 * ]|
 	 *
-	 * Note that other GTK+ widgets will only be able to use the application-specific
+	 * Note that other GTK widgets will only be able to use the application-specific
 	 * font if it is present in the font map they use:
 	 *
 	 * |[
@@ -253,8 +223,6 @@ public interface FontChooserIF{
 	 *
 	 * Params:
 	 *     fontmap = a #PangoFontMap
-	 *
-	 * Since: 3.18
 	 */
 	public void setFontMap(PgFontMap fontmap);
 
@@ -263,8 +231,6 @@ public interface FontChooserIF{
 	 *
 	 * Params:
 	 *     language = a language
-	 *
-	 * Since: 3.24
 	 */
 	public void setLanguage(string language);
 
@@ -273,8 +239,6 @@ public interface FontChooserIF{
 	 *
 	 * Params:
 	 *     level = the desired level of granularity
-	 *
-	 * Since: 3.24
 	 */
 	public void setLevel(GtkFontChooserLevel level);
 
@@ -284,8 +248,6 @@ public interface FontChooserIF{
 	 *
 	 * Params:
 	 *     text = the text to display in the preview area
-	 *
-	 * Since: 3.2
 	 */
 	public void setPreviewText(string text);
 
@@ -294,8 +256,6 @@ public interface FontChooserIF{
 	 *
 	 * Params:
 	 *     showPreviewEntry = whether to show the editable preview entry or not
-	 *
-	 * Since: 3.2
 	 */
 	public void setShowPreviewEntry(bool showPreviewEntry);
 

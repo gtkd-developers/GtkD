@@ -24,24 +24,25 @@
 
 module gsv.StyleSchemeChooserWidget;
 
+private import atk.ImplementorIF;
+private import atk.ImplementorT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gsv.StyleSchemeChooserIF;
 private import gsv.StyleSchemeChooserT;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
-private import gtk.Bin;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.Widget;
 
 
 /** */
-public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
+public class StyleSchemeChooserWidget : ImplementorIF, BuildableIF, StyleSchemeChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkSourceStyleSchemeChooserWidget* gtkSourceStyleSchemeChooserWidget;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkSourceStyleSchemeChooserWidget* getStyleSchemeChooserWidgetStruct(bool transferOwnership = false)
@@ -52,7 +53,7 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	}
 
 	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
+	protected void* getStruct()
 	{
 		return cast(void*)gtkSourceStyleSchemeChooserWidget;
 	}
@@ -63,8 +64,14 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	public this (GtkSourceStyleSchemeChooserWidget* gtkSourceStyleSchemeChooserWidget, bool ownedRef = false)
 	{
 		this.gtkSourceStyleSchemeChooserWidget = gtkSourceStyleSchemeChooserWidget;
-		super(cast(GtkBin*)gtkSourceStyleSchemeChooserWidget, ownedRef);
+		this.ownedRef = ownedRef;
 	}
+
+	// add the Implementor capabilities
+	mixin ImplementorT!(GtkSourceStyleSchemeChooserWidget);
+
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkSourceStyleSchemeChooserWidget);
 
 	// add the StyleSchemeChooser capabilities
 	mixin StyleSchemeChooserT!(GtkSourceStyleSchemeChooserWidget);
@@ -87,13 +94,13 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_source_style_scheme_chooser_widget_new();
+		auto __p = gtk_source_style_scheme_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceStyleSchemeChooserWidget*) p);
+		this(cast(GtkSourceStyleSchemeChooserWidget*) __p);
 	}
 }

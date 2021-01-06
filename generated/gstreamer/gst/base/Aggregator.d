@@ -26,14 +26,21 @@ module gst.base.Aggregator;
 
 private import glib.MemorySlice;
 private import gobject.ObjectG;
+private import gobject.Signals;
+private import gst.base.AggregatorPad;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
 private import gstreamer.Buffer;
+private import gstreamer.BufferList;
 private import gstreamer.BufferPool;
 private import gstreamer.Caps;
 private import gstreamer.Element;
+private import gstreamer.Sample;
+private import gstreamer.Segment;
+private import gstreamer.Structure;
+private import std.algorithm;
 
 
 /**
@@ -52,16 +59,35 @@ private import gstreamer.Element;
  * * When data is queued on all pads, the aggregate vmethod is called.
  * 
  * * One can peek at the data on any given GstAggregatorPad with the
- * gst_aggregator_pad_peek_buffer () method, and remove it from the pad
+ * gst_aggregator_pad_peek_buffer() method, and remove it from the pad
  * with the gst_aggregator_pad_pop_buffer () method. When a buffer
  * has been taken with pop_buffer (), a new buffer can be queued
  * on that pad.
  * 
+ * * When gst_aggregator_pad_peek_buffer() or gst_aggregator_pad_has_buffer()
+ * are called, a reference is taken to the returned buffer, which stays
+ * valid until either:
+ * 
+ * - gst_aggregator_pad_pop_buffer() is called, in which case the caller
+ * is guaranteed that the buffer they receive is the same as the peeked
+ * buffer.
+ * - gst_aggregator_pad_drop_buffer() is called, in which case the caller
+ * is guaranteed that the dropped buffer is the one that was peeked.
+ * - the subclass implementation of #GstAggregatorClass.aggregate returns.
+ * 
+ * Subsequent calls to gst_aggregator_pad_peek_buffer() or
+ * gst_aggregator_pad_has_buffer() return / check the same buffer that was
+ * returned / checked, until one of the conditions listed above is met.
+ * 
+ * Subclasses are only allowed to call these methods from the aggregate
+ * thread.
+ * 
  * * If the subclass wishes to push a buffer downstream in its aggregate
  * implementation, it should do so through the
- * gst_aggregator_finish_buffer () method. This method will take care
+ * gst_aggregator_finish_buffer() method. This method will take care
  * of sending and ordering mandatory events such as stream start, caps
- * and segment.
+ * and segment. Buffer lists can also be pushed out with
+ * gst_aggregator_finish_buffer_list().
  * 
  * * Same goes for EOS events, which should not be pushed directly by the
  * subclass, it should instead return GST_FLOW_EOS in its aggregate
@@ -125,7 +151,22 @@ public class Aggregator : Element
 	 */
 	public GstFlowReturn finishBuffer(Buffer buffer)
 	{
-		return gst_aggregator_finish_buffer(gstAggregator, (buffer is null) ? null : buffer.getBufferStruct());
+		return gst_aggregator_finish_buffer(gstAggregator, (buffer is null) ? null : buffer.getBufferStruct(true));
+	}
+
+	/**
+	 * This method will push the provided output buffer list downstream. If needed,
+	 * mandatory events such as stream-start, caps, and segment events will be
+	 * sent before pushing the buffer.
+	 *
+	 * Params:
+	 *     bufferlist = the #GstBufferList to push.
+	 *
+	 * Since: 1.18
+	 */
+	public GstFlowReturn finishBufferList(BufferList bufferlist)
+	{
+		return gst_aggregator_finish_buffer_list(gstAggregator, (bufferlist is null) ? null : bufferlist.getBufferListStruct(true));
 	}
 
 	/**
@@ -157,14 +198,14 @@ public class Aggregator : Element
 	 */
 	public BufferPool getBufferPool()
 	{
-		auto p = gst_aggregator_get_buffer_pool(gstAggregator);
+		auto __p = gst_aggregator_get_buffer_pool(gstAggregator);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) p, true);
+		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) __p, true);
 	}
 
 	/**
@@ -179,6 +220,71 @@ public class Aggregator : Element
 	public GstClockTime getLatency()
 	{
 		return gst_aggregator_get_latency(gstAggregator);
+	}
+
+	/**
+	 * Negotiates src pad caps with downstream elements.
+	 * Unmarks GST_PAD_FLAG_NEED_RECONFIGURE in any case. But marks it again
+	 * if #GstAggregatorClass.negotiate() fails.
+	 *
+	 * Returns: %TRUE if the negotiation succeeded, else %FALSE.
+	 *
+	 * Since: 1.18
+	 */
+	public bool negotiate()
+	{
+		return gst_aggregator_negotiate(gstAggregator) != 0;
+	}
+
+	/**
+	 * Use this function to determine what input buffers will be aggregated
+	 * to produce the next output buffer. This should only be called from
+	 * a #GstAggregator::samples-selected handler, and can be used to precisely
+	 * control aggregating parameters for a given set of input samples.
+	 *
+	 * Returns: The sample that is about to be aggregated. It may hold a #GstBuffer
+	 *     or a #GstBufferList. The contents of its info structure is subclass-dependent,
+	 *     and documented on a subclass basis. The buffers held by the sample are
+	 *     not writable.
+	 *
+	 * Since: 1.18
+	 */
+	public Sample peekNextSample(AggregatorPad pad)
+	{
+		auto __p = gst_aggregator_peek_next_sample(gstAggregator, (pad is null) ? null : pad.getAggregatorPadStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
+	}
+
+	/**
+	 * Subclasses should call this when they have prepared the
+	 * buffers they will aggregate for each of their sink pads, but
+	 * before using any of the properties of the pads that govern
+	 * *how* aggregation should be performed, for example z-index
+	 * for video aggregators.
+	 *
+	 * If gst_aggregator_update_segment() is used by the subclass,
+	 * it MUST be called before gst_aggregator_selected_samples().
+	 *
+	 * This function MUST only be called from the #GstAggregatorClass::aggregate()
+	 * function.
+	 *
+	 * Params:
+	 *     pts = The presentation timestamp of the next output buffer
+	 *     dts = The decoding timestamp of the next output buffer
+	 *     duration = The duration of the next output buffer
+	 *     info = a #GstStructure containing additional information
+	 *
+	 * Since: 1.18
+	 */
+	public void selectedSamples(GstClockTime pts, GstClockTime dts, GstClockTime duration, Structure info)
+	{
+		gst_aggregator_selected_samples(gstAggregator, pts, dts, duration, (info is null) ? null : info.getStructureStruct());
 	}
 
 	/**
@@ -207,7 +313,7 @@ public class Aggregator : Element
 	}
 
 	/**
-	 * This is a simple #GstAggregator::get_next_time implementation that
+	 * This is a simple #GstAggregatorClass.get_next_time() implementation that
 	 * just looks at the #GstSegment on the srcpad of the aggregator and bases
 	 * the next time on the running time there.
 	 *
@@ -221,5 +327,39 @@ public class Aggregator : Element
 	public GstClockTime simpleGetNextTime()
 	{
 		return gst_aggregator_simple_get_next_time(gstAggregator);
+	}
+
+	/**
+	 * Subclasses should use this to update the segment on their
+	 * source pad, instead of directly pushing new segment events
+	 * downstream.
+	 *
+	 * Subclasses MUST call this before gst_aggregator_selected_samples(),
+	 * if it is used at all.
+	 *
+	 * Since: 1.18
+	 */
+	public void updateSegment(Segment segment)
+	{
+		gst_aggregator_update_segment(gstAggregator, (segment is null) ? null : segment.getSegmentStruct());
+	}
+
+	/**
+	 * Signals that the #GstAggregator subclass has selected the next set
+	 * of input samples it will aggregate. Handlers may call
+	 * gst_aggregator_peek_next_sample() at that point.
+	 *
+	 * Params:
+	 *     segment = The #GstSegment the next output buffer is part of
+	 *     pts = The presentation timestamp of the next output buffer
+	 *     dts = The decoding timestamp of the next output buffer
+	 *     duration = The duration of the next output buffer
+	 *     info = a #GstStructure containing additional information
+	 *
+	 * Since: 1.18
+	 */
+	gulong addOnSamplesSelected(void delegate(Segment, ulong, ulong, ulong, Structure, Aggregator) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "samples-selected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

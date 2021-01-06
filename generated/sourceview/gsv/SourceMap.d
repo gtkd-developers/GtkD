@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gsv.SourceView;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.Widget;
 
 
@@ -80,14 +79,14 @@ public class SourceMap : SourceView
 	 */
 	public this()
 	{
-		auto p = gtk_source_map_new();
+		auto __p = gtk_source_map_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceMap*) p);
+		this(cast(GtkSourceMap*) __p);
 	}
 
 	/**
@@ -99,14 +98,14 @@ public class SourceMap : SourceView
 	 */
 	public SourceView getView()
 	{
-		auto p = gtk_source_map_get_view(gtkSourceMap);
+		auto __p = gtk_source_map_get_view(gtkSourceMap);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
+		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) __p);
 	}
 
 	/**

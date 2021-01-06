@@ -24,7 +24,6 @@
 
 module gtk.TreeModelFilter;
 
-private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.TreeDragSourceIF;
@@ -35,7 +34,6 @@ private import gtk.TreeModelT;
 private import gtk.TreePath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -78,7 +76,7 @@ public  import gtkc.gtktypes;
  * or its parents. Usually, having a dependency on the state of any child
  * node is not possible, unless references are taken on these explicitly.
  * When no such reference exists, no signals may be received for these child
- * nodes (see reference couting rule number 3 in the #GtkTreeModel section).
+ * nodes (see reference counting rule number 3 in the #GtkTreeModel section).
  * 
  * Determining the visibility state of a given node based on the state
  * of its child nodes is a frequently occurring use case. Therefore,
@@ -153,8 +151,6 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 * being filtered is static (and doesn’t change often) and there has been
 	 * a lot of unreffed access to nodes. As a side effect of this function,
 	 * all unreffed iters will be invalid.
-	 *
-	 * Since: 2.4
 	 */
 	public void clearCache()
 	{
@@ -172,18 +168,16 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 *
 	 * Returns: %TRUE, if @filter_iter was set, i.e. if @child_iter is a
 	 *     valid iterator pointing to a visible row in child model.
-	 *
-	 * Since: 2.4
 	 */
 	public bool convertChildIterToIter(out TreeIter filterIter, TreeIter childIter)
 	{
 		GtkTreeIter* outfilterIter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, outfilterIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
+		auto __p = gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, outfilterIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
 
 		filterIter = ObjectG.getDObject!(TreeIter)(outfilterIter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -197,19 +191,17 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 *     childPath = A #GtkTreePath to convert.
 	 *
 	 * Returns: A newly allocated #GtkTreePath, or %NULL.
-	 *
-	 * Since: 2.4
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
-		auto p = gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct());
+		auto __p = gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -218,8 +210,6 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 * Params:
 	 *     childIter = An uninitialized #GtkTreeIter.
 	 *     filterIter = A valid #GtkTreeIter pointing to a row on @filter.
-	 *
-	 * Since: 2.4
 	 */
 	public void convertIterToChildIter(out TreeIter childIter, TreeIter filterIter)
 	{
@@ -240,45 +230,39 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 *     filterPath = A #GtkTreePath to convert.
 	 *
 	 * Returns: A newly allocated #GtkTreePath, or %NULL.
-	 *
-	 * Since: 2.4
 	 */
 	public TreePath convertPathToChildPath(TreePath filterPath)
 	{
-		auto p = gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct());
+		auto __p = gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
 	 * Returns a pointer to the child model of @filter.
 	 *
 	 * Returns: A pointer to a #GtkTreeModel.
-	 *
-	 * Since: 2.4
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);
+		auto __p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
 	 * Emits ::row_changed for each row in the child model, which causes
 	 * the filter to re-evaluate whether a row is visible or not.
-	 *
-	 * Since: 2.4
 	 */
 	public void refilter()
 	{
@@ -302,8 +286,6 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 *     func = A #GtkTreeModelFilterModifyFunc
 	 *     data = User data to pass to the modify function, or %NULL.
 	 *     destroy = Destroy notifier of @data, or %NULL.
-	 *
-	 * Since: 2.4
 	 */
 	public void setModifyFunc(GType[] types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -321,9 +303,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 * once for a given filter model.
 	 *
 	 * Params:
-	 *     column = A #gint which is the column containing the visible information
-	 *
-	 * Since: 2.4
+	 *     column = A #int which is the column containing the visible information
 	 */
 	public void setVisibleColumn(int column)
 	{
@@ -351,7 +331,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 * gpointer      data)
 	 * {
 	 * // Visible if row is non-empty and first column is “HI”
-	 * gchar *str;
+	 * char *str;
 	 * gboolean visible = FALSE;
 	 *
 	 * gtk_tree_model_get (model, iter, 0, &str, -1);
@@ -371,37 +351,9 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 *     func = A #GtkTreeModelFilterVisibleFunc, the visible function
 	 *     data = User data to pass to the visible function, or %NULL
 	 *     destroy = Destroy notifier of @data, or %NULL
-	 *
-	 * Since: 2.4
 	 */
 	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy)
 	{
 		gtk_tree_model_filter_set_visible_func(gtkTreeModelFilter, func, data, destroy);
-	}
-
-	/**
-	 * Creates a new #GtkTreeModel, with @child_model as the child_model
-	 * and @root as the virtual root.
-	 *
-	 * Params:
-	 *     childModel = A #GtkTreeModel.
-	 *     root = A #GtkTreePath or %NULL.
-	 *
-	 * Returns: A new #GtkTreeModel.
-	 *
-	 * Since: 2.4
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(TreeModelIF childModel, TreePath root)
-	{
-		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GtkTreeModelFilter*) p, true);
 	}
 }

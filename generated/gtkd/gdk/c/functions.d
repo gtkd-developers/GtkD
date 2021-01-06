@@ -30,106 +30,181 @@ import cairo.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GDK = ["libgdk-3-0.dll;gdk-3-3.0.dll;gdk-3.dll"];
+	static immutable LIBRARY_GDK = ["libgtk-4-1.dll;gtk-4-4.1.dll;gtk-4.dll"];
 else version (OSX)
-	static immutable LIBRARY_GDK = ["libgdk-3.0.dylib"];
+	static immutable LIBRARY_GDK = ["libgtk-4.1.dylib"];
 else
-	static immutable LIBRARY_GDK = ["libgdk-3.so.0"];
+	static immutable LIBRARY_GDK = ["libgtk-4.so.1"];
 
 shared static this()
 {
 	// gdk.AppLaunchContext
 
 	Linker.link(gdk_app_launch_context_get_type, "gdk_app_launch_context_get_type", LIBRARY_GDK);
-	Linker.link(gdk_app_launch_context_new, "gdk_app_launch_context_new", LIBRARY_GDK);
+	Linker.link(gdk_app_launch_context_get_display, "gdk_app_launch_context_get_display", LIBRARY_GDK);
 	Linker.link(gdk_app_launch_context_set_desktop, "gdk_app_launch_context_set_desktop", LIBRARY_GDK);
-	Linker.link(gdk_app_launch_context_set_display, "gdk_app_launch_context_set_display", LIBRARY_GDK);
 	Linker.link(gdk_app_launch_context_set_icon, "gdk_app_launch_context_set_icon", LIBRARY_GDK);
 	Linker.link(gdk_app_launch_context_set_icon_name, "gdk_app_launch_context_set_icon_name", LIBRARY_GDK);
-	Linker.link(gdk_app_launch_context_set_screen, "gdk_app_launch_context_set_screen", LIBRARY_GDK);
 	Linker.link(gdk_app_launch_context_set_timestamp, "gdk_app_launch_context_set_timestamp", LIBRARY_GDK);
 
-	// gdk.Atom
+	// gdk.ButtonEvent
 
-	Linker.link(gdk_atom_name, "gdk_atom_name", LIBRARY_GDK);
-	Linker.link(gdk_atom_intern, "gdk_atom_intern", LIBRARY_GDK);
-	Linker.link(gdk_atom_intern_static_string, "gdk_atom_intern_static_string", LIBRARY_GDK);
-	Linker.link(gdk_property_change, "gdk_property_change", LIBRARY_GDK);
-	Linker.link(gdk_property_delete, "gdk_property_delete", LIBRARY_GDK);
-	Linker.link(gdk_property_get, "gdk_property_get", LIBRARY_GDK);
-	Linker.link(gdk_text_property_to_utf8_list_for_display, "gdk_text_property_to_utf8_list_for_display", LIBRARY_GDK);
-	Linker.link(gdk_utf8_to_string_target, "gdk_utf8_to_string_target", LIBRARY_GDK);
+	Linker.link(gdk_button_event_get_type, "gdk_button_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_button_event_get_button, "gdk_button_event_get_button", LIBRARY_GDK);
 
-	// gdk.Color
+	// gdk.CairoContext
 
-	Linker.link(gdk_color_get_type, "gdk_color_get_type", LIBRARY_GDK);
-	Linker.link(gdk_color_copy, "gdk_color_copy", LIBRARY_GDK);
-	Linker.link(gdk_color_equal, "gdk_color_equal", LIBRARY_GDK);
-	Linker.link(gdk_color_free, "gdk_color_free", LIBRARY_GDK);
-	Linker.link(gdk_color_hash, "gdk_color_hash", LIBRARY_GDK);
-	Linker.link(gdk_color_to_string, "gdk_color_to_string", LIBRARY_GDK);
-	Linker.link(gdk_color_parse, "gdk_color_parse", LIBRARY_GDK);
+	Linker.link(gdk_cairo_context_get_type, "gdk_cairo_context_get_type", LIBRARY_GDK);
+	Linker.link(gdk_cairo_context_cairo_create, "gdk_cairo_context_cairo_create", LIBRARY_GDK);
+
+	// gdk.Clipboard
+
+	Linker.link(gdk_clipboard_get_type, "gdk_clipboard_get_type", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_get_content, "gdk_clipboard_get_content", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_get_display, "gdk_clipboard_get_display", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_get_formats, "gdk_clipboard_get_formats", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_is_local, "gdk_clipboard_is_local", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_async, "gdk_clipboard_read_async", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_finish, "gdk_clipboard_read_finish", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_text_async, "gdk_clipboard_read_text_async", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_text_finish, "gdk_clipboard_read_text_finish", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_texture_async, "gdk_clipboard_read_texture_async", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_texture_finish, "gdk_clipboard_read_texture_finish", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_value_async, "gdk_clipboard_read_value_async", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_read_value_finish, "gdk_clipboard_read_value_finish", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_set, "gdk_clipboard_set", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_set_content, "gdk_clipboard_set_content", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_set_text, "gdk_clipboard_set_text", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_set_texture, "gdk_clipboard_set_texture", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_set_valist, "gdk_clipboard_set_valist", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_set_value, "gdk_clipboard_set_value", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_store_async, "gdk_clipboard_store_async", LIBRARY_GDK);
+	Linker.link(gdk_clipboard_store_finish, "gdk_clipboard_store_finish", LIBRARY_GDK);
+
+	// gdk.ContentDeserializer
+
+	Linker.link(gdk_content_deserializer_get_type, "gdk_content_deserializer_get_type", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_cancellable, "gdk_content_deserializer_get_cancellable", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_gtype, "gdk_content_deserializer_get_gtype", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_input_stream, "gdk_content_deserializer_get_input_stream", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_mime_type, "gdk_content_deserializer_get_mime_type", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_priority, "gdk_content_deserializer_get_priority", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_task_data, "gdk_content_deserializer_get_task_data", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_user_data, "gdk_content_deserializer_get_user_data", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_get_value, "gdk_content_deserializer_get_value", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_return_error, "gdk_content_deserializer_return_error", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_return_success, "gdk_content_deserializer_return_success", LIBRARY_GDK);
+	Linker.link(gdk_content_deserializer_set_task_data, "gdk_content_deserializer_set_task_data", LIBRARY_GDK);
+
+	// gdk.ContentFormats
+
+	Linker.link(gdk_content_formats_get_type, "gdk_content_formats_get_type", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_new, "gdk_content_formats_new", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_new_for_gtype, "gdk_content_formats_new_for_gtype", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_contain_gtype, "gdk_content_formats_contain_gtype", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_contain_mime_type, "gdk_content_formats_contain_mime_type", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_get_gtypes, "gdk_content_formats_get_gtypes", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_get_mime_types, "gdk_content_formats_get_mime_types", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_match, "gdk_content_formats_match", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_match_gtype, "gdk_content_formats_match_gtype", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_match_mime_type, "gdk_content_formats_match_mime_type", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_print, "gdk_content_formats_print", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_ref, "gdk_content_formats_ref", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_to_string, "gdk_content_formats_to_string", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_union, "gdk_content_formats_union", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_union_deserialize_gtypes, "gdk_content_formats_union_deserialize_gtypes", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_union_deserialize_mime_types, "gdk_content_formats_union_deserialize_mime_types", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_union_serialize_gtypes, "gdk_content_formats_union_serialize_gtypes", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_union_serialize_mime_types, "gdk_content_formats_union_serialize_mime_types", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_unref, "gdk_content_formats_unref", LIBRARY_GDK);
+
+	// gdk.ContentFormatsBuilder
+
+	Linker.link(gdk_content_formats_builder_get_type, "gdk_content_formats_builder_get_type", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_new, "gdk_content_formats_builder_new", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_add_formats, "gdk_content_formats_builder_add_formats", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_add_gtype, "gdk_content_formats_builder_add_gtype", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_add_mime_type, "gdk_content_formats_builder_add_mime_type", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_free_to_formats, "gdk_content_formats_builder_free_to_formats", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_ref, "gdk_content_formats_builder_ref", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_to_formats, "gdk_content_formats_builder_to_formats", LIBRARY_GDK);
+	Linker.link(gdk_content_formats_builder_unref, "gdk_content_formats_builder_unref", LIBRARY_GDK);
+
+	// gdk.ContentProvider
+
+	Linker.link(gdk_content_provider_get_type, "gdk_content_provider_get_type", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_new_for_bytes, "gdk_content_provider_new_for_bytes", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_new_for_value, "gdk_content_provider_new_for_value", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_new_typed, "gdk_content_provider_new_typed", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_new_union, "gdk_content_provider_new_union", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_content_changed, "gdk_content_provider_content_changed", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_get_value, "gdk_content_provider_get_value", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_ref_formats, "gdk_content_provider_ref_formats", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_ref_storable_formats, "gdk_content_provider_ref_storable_formats", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_write_mime_type_async, "gdk_content_provider_write_mime_type_async", LIBRARY_GDK);
+	Linker.link(gdk_content_provider_write_mime_type_finish, "gdk_content_provider_write_mime_type_finish", LIBRARY_GDK);
+
+	// gdk.ContentSerializer
+
+	Linker.link(gdk_content_serializer_get_type, "gdk_content_serializer_get_type", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_cancellable, "gdk_content_serializer_get_cancellable", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_gtype, "gdk_content_serializer_get_gtype", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_mime_type, "gdk_content_serializer_get_mime_type", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_output_stream, "gdk_content_serializer_get_output_stream", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_priority, "gdk_content_serializer_get_priority", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_task_data, "gdk_content_serializer_get_task_data", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_user_data, "gdk_content_serializer_get_user_data", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_get_value, "gdk_content_serializer_get_value", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_return_error, "gdk_content_serializer_return_error", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_return_success, "gdk_content_serializer_return_success", LIBRARY_GDK);
+	Linker.link(gdk_content_serializer_set_task_data, "gdk_content_serializer_set_task_data", LIBRARY_GDK);
+
+	// gdk.CrossingEvent
+
+	Linker.link(gdk_crossing_event_get_type, "gdk_crossing_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_crossing_event_get_detail, "gdk_crossing_event_get_detail", LIBRARY_GDK);
+	Linker.link(gdk_crossing_event_get_focus, "gdk_crossing_event_get_focus", LIBRARY_GDK);
+	Linker.link(gdk_crossing_event_get_mode, "gdk_crossing_event_get_mode", LIBRARY_GDK);
 
 	// gdk.Cursor
 
 	Linker.link(gdk_cursor_get_type, "gdk_cursor_get_type", LIBRARY_GDK);
-	Linker.link(gdk_cursor_new, "gdk_cursor_new", LIBRARY_GDK);
-	Linker.link(gdk_cursor_new_for_display, "gdk_cursor_new_for_display", LIBRARY_GDK);
 	Linker.link(gdk_cursor_new_from_name, "gdk_cursor_new_from_name", LIBRARY_GDK);
-	Linker.link(gdk_cursor_new_from_pixbuf, "gdk_cursor_new_from_pixbuf", LIBRARY_GDK);
-	Linker.link(gdk_cursor_new_from_surface, "gdk_cursor_new_from_surface", LIBRARY_GDK);
-	Linker.link(gdk_cursor_get_cursor_type, "gdk_cursor_get_cursor_type", LIBRARY_GDK);
-	Linker.link(gdk_cursor_get_display, "gdk_cursor_get_display", LIBRARY_GDK);
-	Linker.link(gdk_cursor_get_image, "gdk_cursor_get_image", LIBRARY_GDK);
-	Linker.link(gdk_cursor_get_surface, "gdk_cursor_get_surface", LIBRARY_GDK);
-	Linker.link(gdk_cursor_ref, "gdk_cursor_ref", LIBRARY_GDK);
-	Linker.link(gdk_cursor_unref, "gdk_cursor_unref", LIBRARY_GDK);
+	Linker.link(gdk_cursor_new_from_texture, "gdk_cursor_new_from_texture", LIBRARY_GDK);
+	Linker.link(gdk_cursor_get_fallback, "gdk_cursor_get_fallback", LIBRARY_GDK);
+	Linker.link(gdk_cursor_get_hotspot_x, "gdk_cursor_get_hotspot_x", LIBRARY_GDK);
+	Linker.link(gdk_cursor_get_hotspot_y, "gdk_cursor_get_hotspot_y", LIBRARY_GDK);
+	Linker.link(gdk_cursor_get_name, "gdk_cursor_get_name", LIBRARY_GDK);
+	Linker.link(gdk_cursor_get_texture, "gdk_cursor_get_texture", LIBRARY_GDK);
+
+	// gdk.DNDEvent
+
+	Linker.link(gdk_dnd_event_get_type, "gdk_dnd_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_dnd_event_get_drop, "gdk_dnd_event_get_drop", LIBRARY_GDK);
+
+	// gdk.DeleteEvent
+
+	Linker.link(gdk_delete_event_get_type, "gdk_delete_event_get_type", LIBRARY_GDK);
 
 	// gdk.Device
 
 	Linker.link(gdk_device_get_type, "gdk_device_get_type", LIBRARY_GDK);
-	Linker.link(gdk_device_free_history, "gdk_device_free_history", LIBRARY_GDK);
-	Linker.link(gdk_device_grab_info_libgtk_only, "gdk_device_grab_info_libgtk_only", LIBRARY_GDK);
-	Linker.link(gdk_device_get_associated_device, "gdk_device_get_associated_device", LIBRARY_GDK);
-	Linker.link(gdk_device_get_axes, "gdk_device_get_axes", LIBRARY_GDK);
-	Linker.link(gdk_device_get_axis, "gdk_device_get_axis", LIBRARY_GDK);
-	Linker.link(gdk_device_get_axis_use, "gdk_device_get_axis_use", LIBRARY_GDK);
-	Linker.link(gdk_device_get_axis_value, "gdk_device_get_axis_value", LIBRARY_GDK);
-	Linker.link(gdk_device_get_device_type, "gdk_device_get_device_type", LIBRARY_GDK);
+	Linker.link(gdk_device_get_caps_lock_state, "gdk_device_get_caps_lock_state", LIBRARY_GDK);
+	Linker.link(gdk_device_get_device_tool, "gdk_device_get_device_tool", LIBRARY_GDK);
+	Linker.link(gdk_device_get_direction, "gdk_device_get_direction", LIBRARY_GDK);
 	Linker.link(gdk_device_get_display, "gdk_device_get_display", LIBRARY_GDK);
 	Linker.link(gdk_device_get_has_cursor, "gdk_device_get_has_cursor", LIBRARY_GDK);
-	Linker.link(gdk_device_get_history, "gdk_device_get_history", LIBRARY_GDK);
-	Linker.link(gdk_device_get_key, "gdk_device_get_key", LIBRARY_GDK);
-	Linker.link(gdk_device_get_last_event_window, "gdk_device_get_last_event_window", LIBRARY_GDK);
-	Linker.link(gdk_device_get_mode, "gdk_device_get_mode", LIBRARY_GDK);
-	Linker.link(gdk_device_get_n_axes, "gdk_device_get_n_axes", LIBRARY_GDK);
-	Linker.link(gdk_device_get_n_keys, "gdk_device_get_n_keys", LIBRARY_GDK);
+	Linker.link(gdk_device_get_modifier_state, "gdk_device_get_modifier_state", LIBRARY_GDK);
 	Linker.link(gdk_device_get_name, "gdk_device_get_name", LIBRARY_GDK);
-	Linker.link(gdk_device_get_position, "gdk_device_get_position", LIBRARY_GDK);
-	Linker.link(gdk_device_get_position_double, "gdk_device_get_position_double", LIBRARY_GDK);
+	Linker.link(gdk_device_get_num_lock_state, "gdk_device_get_num_lock_state", LIBRARY_GDK);
+	Linker.link(gdk_device_get_num_touches, "gdk_device_get_num_touches", LIBRARY_GDK);
 	Linker.link(gdk_device_get_product_id, "gdk_device_get_product_id", LIBRARY_GDK);
+	Linker.link(gdk_device_get_scroll_lock_state, "gdk_device_get_scroll_lock_state", LIBRARY_GDK);
 	Linker.link(gdk_device_get_seat, "gdk_device_get_seat", LIBRARY_GDK);
 	Linker.link(gdk_device_get_source, "gdk_device_get_source", LIBRARY_GDK);
-	Linker.link(gdk_device_get_state, "gdk_device_get_state", LIBRARY_GDK);
+	Linker.link(gdk_device_get_surface_at_position, "gdk_device_get_surface_at_position", LIBRARY_GDK);
 	Linker.link(gdk_device_get_vendor_id, "gdk_device_get_vendor_id", LIBRARY_GDK);
-	Linker.link(gdk_device_get_window_at_position, "gdk_device_get_window_at_position", LIBRARY_GDK);
-	Linker.link(gdk_device_get_window_at_position_double, "gdk_device_get_window_at_position_double", LIBRARY_GDK);
-	Linker.link(gdk_device_grab, "gdk_device_grab", LIBRARY_GDK);
-	Linker.link(gdk_device_list_axes, "gdk_device_list_axes", LIBRARY_GDK);
-	Linker.link(gdk_device_list_slave_devices, "gdk_device_list_slave_devices", LIBRARY_GDK);
-	Linker.link(gdk_device_set_axis_use, "gdk_device_set_axis_use", LIBRARY_GDK);
-	Linker.link(gdk_device_set_key, "gdk_device_set_key", LIBRARY_GDK);
-	Linker.link(gdk_device_set_mode, "gdk_device_set_mode", LIBRARY_GDK);
-	Linker.link(gdk_device_ungrab, "gdk_device_ungrab", LIBRARY_GDK);
-	Linker.link(gdk_device_warp, "gdk_device_warp", LIBRARY_GDK);
-
-	// gdk.DeviceManager
-
-	Linker.link(gdk_device_manager_get_type, "gdk_device_manager_get_type", LIBRARY_GDK);
-	Linker.link(gdk_device_manager_get_client_pointer, "gdk_device_manager_get_client_pointer", LIBRARY_GDK);
-	Linker.link(gdk_device_manager_get_display, "gdk_device_manager_get_display", LIBRARY_GDK);
-	Linker.link(gdk_device_manager_list_devices, "gdk_device_manager_list_devices", LIBRARY_GDK);
-	Linker.link(gdk_disable_multidevice, "gdk_disable_multidevice", LIBRARY_GDK);
+	Linker.link(gdk_device_has_bidi_layouts, "gdk_device_has_bidi_layouts", LIBRARY_GDK);
 
 	// gdk.DevicePad
 
@@ -142,6 +217,7 @@ shared static this()
 	// gdk.DeviceTool
 
 	Linker.link(gdk_device_tool_get_type, "gdk_device_tool_get_type", LIBRARY_GDK);
+	Linker.link(gdk_device_tool_get_axes, "gdk_device_tool_get_axes", LIBRARY_GDK);
 	Linker.link(gdk_device_tool_get_hardware_id, "gdk_device_tool_get_hardware_id", LIBRARY_GDK);
 	Linker.link(gdk_device_tool_get_serial, "gdk_device_tool_get_serial", LIBRARY_GDK);
 	Linker.link(gdk_device_tool_get_tool_type, "gdk_device_tool_get_tool_type", LIBRARY_GDK);
@@ -151,52 +227,30 @@ shared static this()
 	Linker.link(gdk_display_get_type, "gdk_display_get_type", LIBRARY_GDK);
 	Linker.link(gdk_display_get_default, "gdk_display_get_default", LIBRARY_GDK);
 	Linker.link(gdk_display_open, "gdk_display_open", LIBRARY_GDK);
-	Linker.link(gdk_display_open_default_libgtk_only, "gdk_display_open_default_libgtk_only", LIBRARY_GDK);
 	Linker.link(gdk_display_beep, "gdk_display_beep", LIBRARY_GDK);
 	Linker.link(gdk_display_close, "gdk_display_close", LIBRARY_GDK);
 	Linker.link(gdk_display_device_is_grabbed, "gdk_display_device_is_grabbed", LIBRARY_GDK);
 	Linker.link(gdk_display_flush, "gdk_display_flush", LIBRARY_GDK);
 	Linker.link(gdk_display_get_app_launch_context, "gdk_display_get_app_launch_context", LIBRARY_GDK);
-	Linker.link(gdk_display_get_default_cursor_size, "gdk_display_get_default_cursor_size", LIBRARY_GDK);
-	Linker.link(gdk_display_get_default_group, "gdk_display_get_default_group", LIBRARY_GDK);
-	Linker.link(gdk_display_get_default_screen, "gdk_display_get_default_screen", LIBRARY_GDK);
+	Linker.link(gdk_display_get_clipboard, "gdk_display_get_clipboard", LIBRARY_GDK);
 	Linker.link(gdk_display_get_default_seat, "gdk_display_get_default_seat", LIBRARY_GDK);
-	Linker.link(gdk_display_get_device_manager, "gdk_display_get_device_manager", LIBRARY_GDK);
-	Linker.link(gdk_display_get_event, "gdk_display_get_event", LIBRARY_GDK);
-	Linker.link(gdk_display_get_maximal_cursor_size, "gdk_display_get_maximal_cursor_size", LIBRARY_GDK);
-	Linker.link(gdk_display_get_monitor, "gdk_display_get_monitor", LIBRARY_GDK);
-	Linker.link(gdk_display_get_monitor_at_point, "gdk_display_get_monitor_at_point", LIBRARY_GDK);
-	Linker.link(gdk_display_get_monitor_at_window, "gdk_display_get_monitor_at_window", LIBRARY_GDK);
-	Linker.link(gdk_display_get_n_monitors, "gdk_display_get_n_monitors", LIBRARY_GDK);
-	Linker.link(gdk_display_get_n_screens, "gdk_display_get_n_screens", LIBRARY_GDK);
+	Linker.link(gdk_display_get_monitor_at_surface, "gdk_display_get_monitor_at_surface", LIBRARY_GDK);
+	Linker.link(gdk_display_get_monitors, "gdk_display_get_monitors", LIBRARY_GDK);
 	Linker.link(gdk_display_get_name, "gdk_display_get_name", LIBRARY_GDK);
-	Linker.link(gdk_display_get_pointer, "gdk_display_get_pointer", LIBRARY_GDK);
-	Linker.link(gdk_display_get_primary_monitor, "gdk_display_get_primary_monitor", LIBRARY_GDK);
-	Linker.link(gdk_display_get_screen, "gdk_display_get_screen", LIBRARY_GDK);
-	Linker.link(gdk_display_get_window_at_pointer, "gdk_display_get_window_at_pointer", LIBRARY_GDK);
-	Linker.link(gdk_display_has_pending, "gdk_display_has_pending", LIBRARY_GDK);
+	Linker.link(gdk_display_get_primary_clipboard, "gdk_display_get_primary_clipboard", LIBRARY_GDK);
+	Linker.link(gdk_display_get_setting, "gdk_display_get_setting", LIBRARY_GDK);
+	Linker.link(gdk_display_get_startup_notification_id, "gdk_display_get_startup_notification_id", LIBRARY_GDK);
 	Linker.link(gdk_display_is_closed, "gdk_display_is_closed", LIBRARY_GDK);
-	Linker.link(gdk_display_keyboard_ungrab, "gdk_display_keyboard_ungrab", LIBRARY_GDK);
-	Linker.link(gdk_display_list_devices, "gdk_display_list_devices", LIBRARY_GDK);
+	Linker.link(gdk_display_is_composited, "gdk_display_is_composited", LIBRARY_GDK);
+	Linker.link(gdk_display_is_rgba, "gdk_display_is_rgba", LIBRARY_GDK);
 	Linker.link(gdk_display_list_seats, "gdk_display_list_seats", LIBRARY_GDK);
+	Linker.link(gdk_display_map_keycode, "gdk_display_map_keycode", LIBRARY_GDK);
+	Linker.link(gdk_display_map_keyval, "gdk_display_map_keyval", LIBRARY_GDK);
 	Linker.link(gdk_display_notify_startup_complete, "gdk_display_notify_startup_complete", LIBRARY_GDK);
-	Linker.link(gdk_display_peek_event, "gdk_display_peek_event", LIBRARY_GDK);
-	Linker.link(gdk_display_pointer_is_grabbed, "gdk_display_pointer_is_grabbed", LIBRARY_GDK);
-	Linker.link(gdk_display_pointer_ungrab, "gdk_display_pointer_ungrab", LIBRARY_GDK);
 	Linker.link(gdk_display_put_event, "gdk_display_put_event", LIBRARY_GDK);
-	Linker.link(gdk_display_request_selection_notification, "gdk_display_request_selection_notification", LIBRARY_GDK);
-	Linker.link(gdk_display_set_double_click_distance, "gdk_display_set_double_click_distance", LIBRARY_GDK);
-	Linker.link(gdk_display_set_double_click_time, "gdk_display_set_double_click_time", LIBRARY_GDK);
-	Linker.link(gdk_display_store_clipboard, "gdk_display_store_clipboard", LIBRARY_GDK);
-	Linker.link(gdk_display_supports_clipboard_persistence, "gdk_display_supports_clipboard_persistence", LIBRARY_GDK);
-	Linker.link(gdk_display_supports_composite, "gdk_display_supports_composite", LIBRARY_GDK);
-	Linker.link(gdk_display_supports_cursor_alpha, "gdk_display_supports_cursor_alpha", LIBRARY_GDK);
-	Linker.link(gdk_display_supports_cursor_color, "gdk_display_supports_cursor_color", LIBRARY_GDK);
 	Linker.link(gdk_display_supports_input_shapes, "gdk_display_supports_input_shapes", LIBRARY_GDK);
-	Linker.link(gdk_display_supports_selection_notification, "gdk_display_supports_selection_notification", LIBRARY_GDK);
-	Linker.link(gdk_display_supports_shapes, "gdk_display_supports_shapes", LIBRARY_GDK);
 	Linker.link(gdk_display_sync, "gdk_display_sync", LIBRARY_GDK);
-	Linker.link(gdk_display_warp_pointer, "gdk_display_warp_pointer", LIBRARY_GDK);
+	Linker.link(gdk_display_translate_key, "gdk_display_translate_key", LIBRARY_GDK);
 
 	// gdk.DisplayManager
 
@@ -207,92 +261,84 @@ shared static this()
 	Linker.link(gdk_display_manager_open_display, "gdk_display_manager_open_display", LIBRARY_GDK);
 	Linker.link(gdk_display_manager_set_default_display, "gdk_display_manager_set_default_display", LIBRARY_GDK);
 
-	// gdk.DragContext
+	// gdk.Drag
 
-	Linker.link(gdk_drag_context_get_type, "gdk_drag_context_get_type", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_actions, "gdk_drag_context_get_actions", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_dest_window, "gdk_drag_context_get_dest_window", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_device, "gdk_drag_context_get_device", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_drag_window, "gdk_drag_context_get_drag_window", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_protocol, "gdk_drag_context_get_protocol", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_selected_action, "gdk_drag_context_get_selected_action", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_source_window, "gdk_drag_context_get_source_window", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_get_suggested_action, "gdk_drag_context_get_suggested_action", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_list_targets, "gdk_drag_context_list_targets", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_manage_dnd, "gdk_drag_context_manage_dnd", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_set_device, "gdk_drag_context_set_device", LIBRARY_GDK);
-	Linker.link(gdk_drag_context_set_hotspot, "gdk_drag_context_set_hotspot", LIBRARY_GDK);
-	Linker.link(gdk_drag_abort, "gdk_drag_abort", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_type, "gdk_drag_get_type", LIBRARY_GDK);
 	Linker.link(gdk_drag_begin, "gdk_drag_begin", LIBRARY_GDK);
-	Linker.link(gdk_drag_begin_for_device, "gdk_drag_begin_for_device", LIBRARY_GDK);
-	Linker.link(gdk_drag_begin_from_point, "gdk_drag_begin_from_point", LIBRARY_GDK);
-	Linker.link(gdk_drag_drop, "gdk_drag_drop", LIBRARY_GDK);
 	Linker.link(gdk_drag_drop_done, "gdk_drag_drop_done", LIBRARY_GDK);
-	Linker.link(gdk_drag_drop_succeeded, "gdk_drag_drop_succeeded", LIBRARY_GDK);
-	Linker.link(gdk_drag_find_window_for_screen, "gdk_drag_find_window_for_screen", LIBRARY_GDK);
-	Linker.link(gdk_drag_get_selection, "gdk_drag_get_selection", LIBRARY_GDK);
-	Linker.link(gdk_drag_motion, "gdk_drag_motion", LIBRARY_GDK);
-	Linker.link(gdk_drag_status, "gdk_drag_status", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_actions, "gdk_drag_get_actions", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_content, "gdk_drag_get_content", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_device, "gdk_drag_get_device", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_display, "gdk_drag_get_display", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_drag_surface, "gdk_drag_get_drag_surface", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_formats, "gdk_drag_get_formats", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_selected_action, "gdk_drag_get_selected_action", LIBRARY_GDK);
+	Linker.link(gdk_drag_get_surface, "gdk_drag_get_surface", LIBRARY_GDK);
+	Linker.link(gdk_drag_set_hotspot, "gdk_drag_set_hotspot", LIBRARY_GDK);
+
+	// gdk.DragSurface
+
+	Linker.link(gdk_drag_surface_get_type, "gdk_drag_surface_get_type", LIBRARY_GDK);
+	Linker.link(gdk_drag_surface_present, "gdk_drag_surface_present", LIBRARY_GDK);
+
+	// gdk.DrawContext
+
+	Linker.link(gdk_draw_context_get_type, "gdk_draw_context_get_type", LIBRARY_GDK);
+	Linker.link(gdk_draw_context_begin_frame, "gdk_draw_context_begin_frame", LIBRARY_GDK);
+	Linker.link(gdk_draw_context_end_frame, "gdk_draw_context_end_frame", LIBRARY_GDK);
+	Linker.link(gdk_draw_context_get_display, "gdk_draw_context_get_display", LIBRARY_GDK);
+	Linker.link(gdk_draw_context_get_frame_region, "gdk_draw_context_get_frame_region", LIBRARY_GDK);
+	Linker.link(gdk_draw_context_get_surface, "gdk_draw_context_get_surface", LIBRARY_GDK);
+	Linker.link(gdk_draw_context_is_in_frame, "gdk_draw_context_is_in_frame", LIBRARY_GDK);
+
+	// gdk.Drop
+
+	Linker.link(gdk_drop_get_type, "gdk_drop_get_type", LIBRARY_GDK);
 	Linker.link(gdk_drop_finish, "gdk_drop_finish", LIBRARY_GDK);
-	Linker.link(gdk_drop_reply, "gdk_drop_reply", LIBRARY_GDK);
-
-	// gdk.DrawingContext
-
-	Linker.link(gdk_drawing_context_get_type, "gdk_drawing_context_get_type", LIBRARY_GDK);
-	Linker.link(gdk_drawing_context_get_cairo_context, "gdk_drawing_context_get_cairo_context", LIBRARY_GDK);
-	Linker.link(gdk_drawing_context_get_clip, "gdk_drawing_context_get_clip", LIBRARY_GDK);
-	Linker.link(gdk_drawing_context_get_window, "gdk_drawing_context_get_window", LIBRARY_GDK);
-	Linker.link(gdk_drawing_context_is_valid, "gdk_drawing_context_is_valid", LIBRARY_GDK);
+	Linker.link(gdk_drop_get_actions, "gdk_drop_get_actions", LIBRARY_GDK);
+	Linker.link(gdk_drop_get_device, "gdk_drop_get_device", LIBRARY_GDK);
+	Linker.link(gdk_drop_get_display, "gdk_drop_get_display", LIBRARY_GDK);
+	Linker.link(gdk_drop_get_drag, "gdk_drop_get_drag", LIBRARY_GDK);
+	Linker.link(gdk_drop_get_formats, "gdk_drop_get_formats", LIBRARY_GDK);
+	Linker.link(gdk_drop_get_surface, "gdk_drop_get_surface", LIBRARY_GDK);
+	Linker.link(gdk_drop_read_async, "gdk_drop_read_async", LIBRARY_GDK);
+	Linker.link(gdk_drop_read_finish, "gdk_drop_read_finish", LIBRARY_GDK);
+	Linker.link(gdk_drop_read_value_async, "gdk_drop_read_value_async", LIBRARY_GDK);
+	Linker.link(gdk_drop_read_value_finish, "gdk_drop_read_value_finish", LIBRARY_GDK);
+	Linker.link(gdk_drop_status, "gdk_drop_status", LIBRARY_GDK);
 
 	// gdk.Event
 
 	Linker.link(gdk_event_get_type, "gdk_event_get_type", LIBRARY_GDK);
-	Linker.link(gdk_event_new, "gdk_event_new", LIBRARY_GDK);
 	Linker.link(gdk_events_get_angle, "gdk_events_get_angle", LIBRARY_GDK);
 	Linker.link(gdk_events_get_center, "gdk_events_get_center", LIBRARY_GDK);
 	Linker.link(gdk_events_get_distance, "gdk_events_get_distance", LIBRARY_GDK);
-	Linker.link(gdk_event_copy, "gdk_event_copy", LIBRARY_GDK);
-	Linker.link(gdk_event_free, "gdk_event_free", LIBRARY_GDK);
+	Linker.link(gdk_event_get_axes, "gdk_event_get_axes", LIBRARY_GDK);
 	Linker.link(gdk_event_get_axis, "gdk_event_get_axis", LIBRARY_GDK);
-	Linker.link(gdk_event_get_button, "gdk_event_get_button", LIBRARY_GDK);
-	Linker.link(gdk_event_get_click_count, "gdk_event_get_click_count", LIBRARY_GDK);
-	Linker.link(gdk_event_get_coords, "gdk_event_get_coords", LIBRARY_GDK);
 	Linker.link(gdk_event_get_device, "gdk_event_get_device", LIBRARY_GDK);
 	Linker.link(gdk_event_get_device_tool, "gdk_event_get_device_tool", LIBRARY_GDK);
+	Linker.link(gdk_event_get_display, "gdk_event_get_display", LIBRARY_GDK);
 	Linker.link(gdk_event_get_event_sequence, "gdk_event_get_event_sequence", LIBRARY_GDK);
 	Linker.link(gdk_event_get_event_type, "gdk_event_get_event_type", LIBRARY_GDK);
-	Linker.link(gdk_event_get_keycode, "gdk_event_get_keycode", LIBRARY_GDK);
-	Linker.link(gdk_event_get_keyval, "gdk_event_get_keyval", LIBRARY_GDK);
+	Linker.link(gdk_event_get_history, "gdk_event_get_history", LIBRARY_GDK);
+	Linker.link(gdk_event_get_modifier_state, "gdk_event_get_modifier_state", LIBRARY_GDK);
 	Linker.link(gdk_event_get_pointer_emulated, "gdk_event_get_pointer_emulated", LIBRARY_GDK);
-	Linker.link(gdk_event_get_root_coords, "gdk_event_get_root_coords", LIBRARY_GDK);
-	Linker.link(gdk_event_get_scancode, "gdk_event_get_scancode", LIBRARY_GDK);
-	Linker.link(gdk_event_get_screen, "gdk_event_get_screen", LIBRARY_GDK);
-	Linker.link(gdk_event_get_scroll_deltas, "gdk_event_get_scroll_deltas", LIBRARY_GDK);
-	Linker.link(gdk_event_get_scroll_direction, "gdk_event_get_scroll_direction", LIBRARY_GDK);
+	Linker.link(gdk_event_get_position, "gdk_event_get_position", LIBRARY_GDK);
 	Linker.link(gdk_event_get_seat, "gdk_event_get_seat", LIBRARY_GDK);
-	Linker.link(gdk_event_get_source_device, "gdk_event_get_source_device", LIBRARY_GDK);
-	Linker.link(gdk_event_get_state, "gdk_event_get_state", LIBRARY_GDK);
+	Linker.link(gdk_event_get_surface, "gdk_event_get_surface", LIBRARY_GDK);
 	Linker.link(gdk_event_get_time, "gdk_event_get_time", LIBRARY_GDK);
-	Linker.link(gdk_event_get_window, "gdk_event_get_window", LIBRARY_GDK);
-	Linker.link(gdk_event_is_scroll_stop_event, "gdk_event_is_scroll_stop_event", LIBRARY_GDK);
-	Linker.link(gdk_event_put, "gdk_event_put", LIBRARY_GDK);
-	Linker.link(gdk_event_set_device, "gdk_event_set_device", LIBRARY_GDK);
-	Linker.link(gdk_event_set_device_tool, "gdk_event_set_device_tool", LIBRARY_GDK);
-	Linker.link(gdk_event_set_screen, "gdk_event_set_screen", LIBRARY_GDK);
-	Linker.link(gdk_event_set_source_device, "gdk_event_set_source_device", LIBRARY_GDK);
+	Linker.link(gdk_event_ref, "gdk_event_ref", LIBRARY_GDK);
 	Linker.link(gdk_event_triggers_context_menu, "gdk_event_triggers_context_menu", LIBRARY_GDK);
-	Linker.link(gdk_event_get, "gdk_event_get", LIBRARY_GDK);
-	Linker.link(gdk_event_handler_set, "gdk_event_handler_set", LIBRARY_GDK);
-	Linker.link(gdk_event_peek, "gdk_event_peek", LIBRARY_GDK);
-	Linker.link(gdk_event_request_motions, "gdk_event_request_motions", LIBRARY_GDK);
-	Linker.link(gdk_events_pending, "gdk_events_pending", LIBRARY_GDK);
-	Linker.link(gdk_get_show_events, "gdk_get_show_events", LIBRARY_GDK);
-	Linker.link(gdk_set_show_events, "gdk_set_show_events", LIBRARY_GDK);
-	Linker.link(gdk_setting_get, "gdk_setting_get", LIBRARY_GDK);
+	Linker.link(gdk_event_unref, "gdk_event_unref", LIBRARY_GDK);
 
 	// gdk.EventSequence
 
 	Linker.link(gdk_event_sequence_get_type, "gdk_event_sequence_get_type", LIBRARY_GDK);
+
+	// gdk.FocusEvent
+
+	Linker.link(gdk_focus_event_get_type, "gdk_focus_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_focus_event_get_in, "gdk_focus_event_get_in", LIBRARY_GDK);
 
 	// gdk.FrameClock
 
@@ -300,6 +346,7 @@ shared static this()
 	Linker.link(gdk_frame_clock_begin_updating, "gdk_frame_clock_begin_updating", LIBRARY_GDK);
 	Linker.link(gdk_frame_clock_end_updating, "gdk_frame_clock_end_updating", LIBRARY_GDK);
 	Linker.link(gdk_frame_clock_get_current_timings, "gdk_frame_clock_get_current_timings", LIBRARY_GDK);
+	Linker.link(gdk_frame_clock_get_fps, "gdk_frame_clock_get_fps", LIBRARY_GDK);
 	Linker.link(gdk_frame_clock_get_frame_counter, "gdk_frame_clock_get_frame_counter", LIBRARY_GDK);
 	Linker.link(gdk_frame_clock_get_frame_time, "gdk_frame_clock_get_frame_time", LIBRARY_GDK);
 	Linker.link(gdk_frame_clock_get_history_start, "gdk_frame_clock_get_history_start", LIBRARY_GDK);
@@ -329,9 +376,9 @@ shared static this()
 	Linker.link(gdk_gl_context_get_forward_compatible, "gdk_gl_context_get_forward_compatible", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_get_required_version, "gdk_gl_context_get_required_version", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_get_shared_context, "gdk_gl_context_get_shared_context", LIBRARY_GDK);
+	Linker.link(gdk_gl_context_get_surface, "gdk_gl_context_get_surface", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_get_use_es, "gdk_gl_context_get_use_es", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_get_version, "gdk_gl_context_get_version", LIBRARY_GDK);
-	Linker.link(gdk_gl_context_get_window, "gdk_gl_context_get_window", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_is_legacy, "gdk_gl_context_is_legacy", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_make_current, "gdk_gl_context_make_current", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_realize, "gdk_gl_context_realize", LIBRARY_GDK);
@@ -340,37 +387,39 @@ shared static this()
 	Linker.link(gdk_gl_context_set_required_version, "gdk_gl_context_set_required_version", LIBRARY_GDK);
 	Linker.link(gdk_gl_context_set_use_es, "gdk_gl_context_set_use_es", LIBRARY_GDK);
 
-	// gdk.Keymap
+	// gdk.GLTexture
 
-	Linker.link(gdk_keymap_get_type, "gdk_keymap_get_type", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_default, "gdk_keymap_get_default", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_for_display, "gdk_keymap_get_for_display", LIBRARY_GDK);
-	Linker.link(gdk_keymap_add_virtual_modifiers, "gdk_keymap_add_virtual_modifiers", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_caps_lock_state, "gdk_keymap_get_caps_lock_state", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_direction, "gdk_keymap_get_direction", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_entries_for_keycode, "gdk_keymap_get_entries_for_keycode", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_entries_for_keyval, "gdk_keymap_get_entries_for_keyval", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_modifier_mask, "gdk_keymap_get_modifier_mask", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_modifier_state, "gdk_keymap_get_modifier_state", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_num_lock_state, "gdk_keymap_get_num_lock_state", LIBRARY_GDK);
-	Linker.link(gdk_keymap_get_scroll_lock_state, "gdk_keymap_get_scroll_lock_state", LIBRARY_GDK);
-	Linker.link(gdk_keymap_have_bidi_layouts, "gdk_keymap_have_bidi_layouts", LIBRARY_GDK);
-	Linker.link(gdk_keymap_lookup_key, "gdk_keymap_lookup_key", LIBRARY_GDK);
-	Linker.link(gdk_keymap_map_virtual_modifiers, "gdk_keymap_map_virtual_modifiers", LIBRARY_GDK);
-	Linker.link(gdk_keymap_translate_keyboard_state, "gdk_keymap_translate_keyboard_state", LIBRARY_GDK);
-	Linker.link(gdk_keyval_convert_case, "gdk_keyval_convert_case", LIBRARY_GDK);
-	Linker.link(gdk_keyval_from_name, "gdk_keyval_from_name", LIBRARY_GDK);
-	Linker.link(gdk_keyval_is_lower, "gdk_keyval_is_lower", LIBRARY_GDK);
-	Linker.link(gdk_keyval_is_upper, "gdk_keyval_is_upper", LIBRARY_GDK);
-	Linker.link(gdk_keyval_name, "gdk_keyval_name", LIBRARY_GDK);
-	Linker.link(gdk_keyval_to_lower, "gdk_keyval_to_lower", LIBRARY_GDK);
-	Linker.link(gdk_keyval_to_unicode, "gdk_keyval_to_unicode", LIBRARY_GDK);
-	Linker.link(gdk_keyval_to_upper, "gdk_keyval_to_upper", LIBRARY_GDK);
-	Linker.link(gdk_unicode_to_keyval, "gdk_unicode_to_keyval", LIBRARY_GDK);
+	Linker.link(gdk_gl_texture_get_type, "gdk_gl_texture_get_type", LIBRARY_GDK);
+	Linker.link(gdk_gl_texture_new, "gdk_gl_texture_new", LIBRARY_GDK);
+	Linker.link(gdk_gl_texture_release, "gdk_gl_texture_release", LIBRARY_GDK);
 
-	// gdk.MonitorG
+	// gdk.GrabBrokenEvent
+
+	Linker.link(gdk_grab_broken_event_get_type, "gdk_grab_broken_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_grab_broken_event_get_grab_surface, "gdk_grab_broken_event_get_grab_surface", LIBRARY_GDK);
+	Linker.link(gdk_grab_broken_event_get_implicit, "gdk_grab_broken_event_get_implicit", LIBRARY_GDK);
+
+	// gdk.KeyEvent
+
+	Linker.link(gdk_key_event_get_type, "gdk_key_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_key_event_get_consumed_modifiers, "gdk_key_event_get_consumed_modifiers", LIBRARY_GDK);
+	Linker.link(gdk_key_event_get_keycode, "gdk_key_event_get_keycode", LIBRARY_GDK);
+	Linker.link(gdk_key_event_get_keyval, "gdk_key_event_get_keyval", LIBRARY_GDK);
+	Linker.link(gdk_key_event_get_layout, "gdk_key_event_get_layout", LIBRARY_GDK);
+	Linker.link(gdk_key_event_get_level, "gdk_key_event_get_level", LIBRARY_GDK);
+	Linker.link(gdk_key_event_get_match, "gdk_key_event_get_match", LIBRARY_GDK);
+	Linker.link(gdk_key_event_is_modifier, "gdk_key_event_is_modifier", LIBRARY_GDK);
+	Linker.link(gdk_key_event_matches, "gdk_key_event_matches", LIBRARY_GDK);
+
+	// gdk.MemoryTexture
+
+	Linker.link(gdk_memory_texture_get_type, "gdk_memory_texture_get_type", LIBRARY_GDK);
+	Linker.link(gdk_memory_texture_new, "gdk_memory_texture_new", LIBRARY_GDK);
+
+	// gdk.MonitorGdk
 
 	Linker.link(gdk_monitor_get_type, "gdk_monitor_get_type", LIBRARY_GDK);
+	Linker.link(gdk_monitor_get_connector, "gdk_monitor_get_connector", LIBRARY_GDK);
 	Linker.link(gdk_monitor_get_display, "gdk_monitor_get_display", LIBRARY_GDK);
 	Linker.link(gdk_monitor_get_geometry, "gdk_monitor_get_geometry", LIBRARY_GDK);
 	Linker.link(gdk_monitor_get_height_mm, "gdk_monitor_get_height_mm", LIBRARY_GDK);
@@ -380,8 +429,66 @@ shared static this()
 	Linker.link(gdk_monitor_get_scale_factor, "gdk_monitor_get_scale_factor", LIBRARY_GDK);
 	Linker.link(gdk_monitor_get_subpixel_layout, "gdk_monitor_get_subpixel_layout", LIBRARY_GDK);
 	Linker.link(gdk_monitor_get_width_mm, "gdk_monitor_get_width_mm", LIBRARY_GDK);
-	Linker.link(gdk_monitor_get_workarea, "gdk_monitor_get_workarea", LIBRARY_GDK);
-	Linker.link(gdk_monitor_is_primary, "gdk_monitor_is_primary", LIBRARY_GDK);
+	Linker.link(gdk_monitor_is_valid, "gdk_monitor_is_valid", LIBRARY_GDK);
+
+	// gdk.MotionEvent
+
+	Linker.link(gdk_motion_event_get_type, "gdk_motion_event_get_type", LIBRARY_GDK);
+
+	// gdk.PadEvent
+
+	Linker.link(gdk_pad_event_get_type, "gdk_pad_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_pad_event_get_axis_value, "gdk_pad_event_get_axis_value", LIBRARY_GDK);
+	Linker.link(gdk_pad_event_get_button, "gdk_pad_event_get_button", LIBRARY_GDK);
+	Linker.link(gdk_pad_event_get_group_mode, "gdk_pad_event_get_group_mode", LIBRARY_GDK);
+
+	// gdk.Paintable
+
+	Linker.link(gdk_paintable_get_type, "gdk_paintable_get_type", LIBRARY_GDK);
+	Linker.link(gdk_paintable_new_empty, "gdk_paintable_new_empty", LIBRARY_GDK);
+	Linker.link(gdk_paintable_compute_concrete_size, "gdk_paintable_compute_concrete_size", LIBRARY_GDK);
+	Linker.link(gdk_paintable_get_current_image, "gdk_paintable_get_current_image", LIBRARY_GDK);
+	Linker.link(gdk_paintable_get_flags, "gdk_paintable_get_flags", LIBRARY_GDK);
+	Linker.link(gdk_paintable_get_intrinsic_aspect_ratio, "gdk_paintable_get_intrinsic_aspect_ratio", LIBRARY_GDK);
+	Linker.link(gdk_paintable_get_intrinsic_height, "gdk_paintable_get_intrinsic_height", LIBRARY_GDK);
+	Linker.link(gdk_paintable_get_intrinsic_width, "gdk_paintable_get_intrinsic_width", LIBRARY_GDK);
+	Linker.link(gdk_paintable_invalidate_contents, "gdk_paintable_invalidate_contents", LIBRARY_GDK);
+	Linker.link(gdk_paintable_invalidate_size, "gdk_paintable_invalidate_size", LIBRARY_GDK);
+	Linker.link(gdk_paintable_snapshot, "gdk_paintable_snapshot", LIBRARY_GDK);
+
+	// gdk.Popup
+
+	Linker.link(gdk_popup_get_type, "gdk_popup_get_type", LIBRARY_GDK);
+	Linker.link(gdk_popup_get_autohide, "gdk_popup_get_autohide", LIBRARY_GDK);
+	Linker.link(gdk_popup_get_parent, "gdk_popup_get_parent", LIBRARY_GDK);
+	Linker.link(gdk_popup_get_position_x, "gdk_popup_get_position_x", LIBRARY_GDK);
+	Linker.link(gdk_popup_get_position_y, "gdk_popup_get_position_y", LIBRARY_GDK);
+	Linker.link(gdk_popup_get_rect_anchor, "gdk_popup_get_rect_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_get_surface_anchor, "gdk_popup_get_surface_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_present, "gdk_popup_present", LIBRARY_GDK);
+
+	// gdk.PopupLayout
+
+	Linker.link(gdk_popup_layout_get_type, "gdk_popup_layout_get_type", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_new, "gdk_popup_layout_new", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_copy, "gdk_popup_layout_copy", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_equal, "gdk_popup_layout_equal", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_get_anchor_hints, "gdk_popup_layout_get_anchor_hints", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_get_anchor_rect, "gdk_popup_layout_get_anchor_rect", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_get_offset, "gdk_popup_layout_get_offset", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_get_rect_anchor, "gdk_popup_layout_get_rect_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_get_surface_anchor, "gdk_popup_layout_get_surface_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_ref, "gdk_popup_layout_ref", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_set_anchor_hints, "gdk_popup_layout_set_anchor_hints", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_set_anchor_rect, "gdk_popup_layout_set_anchor_rect", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_set_offset, "gdk_popup_layout_set_offset", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_set_rect_anchor, "gdk_popup_layout_set_rect_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_set_surface_anchor, "gdk_popup_layout_set_surface_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_unref, "gdk_popup_layout_unref", LIBRARY_GDK);
+
+	// gdk.ProximityEvent
+
+	Linker.link(gdk_proximity_event_get_type, "gdk_proximity_event_get_type", LIBRARY_GDK);
 
 	// gdk.RGBA
 
@@ -390,357 +497,143 @@ shared static this()
 	Linker.link(gdk_rgba_equal, "gdk_rgba_equal", LIBRARY_GDK);
 	Linker.link(gdk_rgba_free, "gdk_rgba_free", LIBRARY_GDK);
 	Linker.link(gdk_rgba_hash, "gdk_rgba_hash", LIBRARY_GDK);
+	Linker.link(gdk_rgba_is_clear, "gdk_rgba_is_clear", LIBRARY_GDK);
+	Linker.link(gdk_rgba_is_opaque, "gdk_rgba_is_opaque", LIBRARY_GDK);
 	Linker.link(gdk_rgba_parse, "gdk_rgba_parse", LIBRARY_GDK);
 	Linker.link(gdk_rgba_to_string, "gdk_rgba_to_string", LIBRARY_GDK);
 
 	// gdk.Rectangle
 
 	Linker.link(gdk_rectangle_get_type, "gdk_rectangle_get_type", LIBRARY_GDK);
+	Linker.link(gdk_rectangle_contains_point, "gdk_rectangle_contains_point", LIBRARY_GDK);
 	Linker.link(gdk_rectangle_equal, "gdk_rectangle_equal", LIBRARY_GDK);
 	Linker.link(gdk_rectangle_intersect, "gdk_rectangle_intersect", LIBRARY_GDK);
 	Linker.link(gdk_rectangle_union, "gdk_rectangle_union", LIBRARY_GDK);
 
-	// gdk.Screen
+	// gdk.ScrollEvent
 
-	Linker.link(gdk_screen_get_type, "gdk_screen_get_type", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_default, "gdk_screen_get_default", LIBRARY_GDK);
-	Linker.link(gdk_screen_height, "gdk_screen_height", LIBRARY_GDK);
-	Linker.link(gdk_screen_height_mm, "gdk_screen_height_mm", LIBRARY_GDK);
-	Linker.link(gdk_screen_width, "gdk_screen_width", LIBRARY_GDK);
-	Linker.link(gdk_screen_width_mm, "gdk_screen_width_mm", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_active_window, "gdk_screen_get_active_window", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_display, "gdk_screen_get_display", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_font_options, "gdk_screen_get_font_options", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_height, "gdk_screen_get_height", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_height_mm, "gdk_screen_get_height_mm", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_at_point, "gdk_screen_get_monitor_at_point", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_at_window, "gdk_screen_get_monitor_at_window", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_geometry, "gdk_screen_get_monitor_geometry", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_height_mm, "gdk_screen_get_monitor_height_mm", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_plug_name, "gdk_screen_get_monitor_plug_name", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_scale_factor, "gdk_screen_get_monitor_scale_factor", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_width_mm, "gdk_screen_get_monitor_width_mm", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_monitor_workarea, "gdk_screen_get_monitor_workarea", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_n_monitors, "gdk_screen_get_n_monitors", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_number, "gdk_screen_get_number", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_primary_monitor, "gdk_screen_get_primary_monitor", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_resolution, "gdk_screen_get_resolution", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_rgba_visual, "gdk_screen_get_rgba_visual", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_root_window, "gdk_screen_get_root_window", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_setting, "gdk_screen_get_setting", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_system_visual, "gdk_screen_get_system_visual", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_toplevel_windows, "gdk_screen_get_toplevel_windows", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_width, "gdk_screen_get_width", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_width_mm, "gdk_screen_get_width_mm", LIBRARY_GDK);
-	Linker.link(gdk_screen_get_window_stack, "gdk_screen_get_window_stack", LIBRARY_GDK);
-	Linker.link(gdk_screen_is_composited, "gdk_screen_is_composited", LIBRARY_GDK);
-	Linker.link(gdk_screen_list_visuals, "gdk_screen_list_visuals", LIBRARY_GDK);
-	Linker.link(gdk_screen_make_display_name, "gdk_screen_make_display_name", LIBRARY_GDK);
-	Linker.link(gdk_screen_set_font_options, "gdk_screen_set_font_options", LIBRARY_GDK);
-	Linker.link(gdk_screen_set_resolution, "gdk_screen_set_resolution", LIBRARY_GDK);
+	Linker.link(gdk_scroll_event_get_type, "gdk_scroll_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_scroll_event_get_deltas, "gdk_scroll_event_get_deltas", LIBRARY_GDK);
+	Linker.link(gdk_scroll_event_get_direction, "gdk_scroll_event_get_direction", LIBRARY_GDK);
+	Linker.link(gdk_scroll_event_is_stop, "gdk_scroll_event_is_stop", LIBRARY_GDK);
 
 	// gdk.Seat
 
 	Linker.link(gdk_seat_get_type, "gdk_seat_get_type", LIBRARY_GDK);
 	Linker.link(gdk_seat_get_capabilities, "gdk_seat_get_capabilities", LIBRARY_GDK);
+	Linker.link(gdk_seat_get_devices, "gdk_seat_get_devices", LIBRARY_GDK);
 	Linker.link(gdk_seat_get_display, "gdk_seat_get_display", LIBRARY_GDK);
 	Linker.link(gdk_seat_get_keyboard, "gdk_seat_get_keyboard", LIBRARY_GDK);
 	Linker.link(gdk_seat_get_pointer, "gdk_seat_get_pointer", LIBRARY_GDK);
-	Linker.link(gdk_seat_get_slaves, "gdk_seat_get_slaves", LIBRARY_GDK);
-	Linker.link(gdk_seat_grab, "gdk_seat_grab", LIBRARY_GDK);
-	Linker.link(gdk_seat_ungrab, "gdk_seat_ungrab", LIBRARY_GDK);
+	Linker.link(gdk_seat_get_tools, "gdk_seat_get_tools", LIBRARY_GDK);
 
-	// gdk.Visual
+	// gdk.Snapshot
 
-	Linker.link(gdk_visual_get_type, "gdk_visual_get_type", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_best, "gdk_visual_get_best", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_best_depth, "gdk_visual_get_best_depth", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_best_type, "gdk_visual_get_best_type", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_best_with_both, "gdk_visual_get_best_with_both", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_best_with_depth, "gdk_visual_get_best_with_depth", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_best_with_type, "gdk_visual_get_best_with_type", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_system, "gdk_visual_get_system", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_bits_per_rgb, "gdk_visual_get_bits_per_rgb", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_blue_pixel_details, "gdk_visual_get_blue_pixel_details", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_byte_order, "gdk_visual_get_byte_order", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_colormap_size, "gdk_visual_get_colormap_size", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_depth, "gdk_visual_get_depth", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_green_pixel_details, "gdk_visual_get_green_pixel_details", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_red_pixel_details, "gdk_visual_get_red_pixel_details", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_screen, "gdk_visual_get_screen", LIBRARY_GDK);
-	Linker.link(gdk_visual_get_visual_type, "gdk_visual_get_visual_type", LIBRARY_GDK);
-	Linker.link(gdk_list_visuals, "gdk_list_visuals", LIBRARY_GDK);
-	Linker.link(gdk_query_depths, "gdk_query_depths", LIBRARY_GDK);
-	Linker.link(gdk_query_visual_types, "gdk_query_visual_types", LIBRARY_GDK);
+	Linker.link(gdk_snapshot_get_type, "gdk_snapshot_get_type", LIBRARY_GDK);
 
-	// gdk.Window
+	// gdk.Surface
 
-	Linker.link(gdk_window_get_type, "gdk_window_get_type", LIBRARY_GDK);
-	Linker.link(gdk_window_new, "gdk_window_new", LIBRARY_GDK);
-	Linker.link(gdk_window_at_pointer, "gdk_window_at_pointer", LIBRARY_GDK);
-	Linker.link(gdk_window_constrain_size, "gdk_window_constrain_size", LIBRARY_GDK);
-	Linker.link(gdk_window_process_all_updates, "gdk_window_process_all_updates", LIBRARY_GDK);
-	Linker.link(gdk_window_set_debug_updates, "gdk_window_set_debug_updates", LIBRARY_GDK);
-	Linker.link(gdk_window_add_filter, "gdk_window_add_filter", LIBRARY_GDK);
-	Linker.link(gdk_window_beep, "gdk_window_beep", LIBRARY_GDK);
-	Linker.link(gdk_window_begin_draw_frame, "gdk_window_begin_draw_frame", LIBRARY_GDK);
-	Linker.link(gdk_window_begin_move_drag, "gdk_window_begin_move_drag", LIBRARY_GDK);
-	Linker.link(gdk_window_begin_move_drag_for_device, "gdk_window_begin_move_drag_for_device", LIBRARY_GDK);
-	Linker.link(gdk_window_begin_paint_rect, "gdk_window_begin_paint_rect", LIBRARY_GDK);
-	Linker.link(gdk_window_begin_paint_region, "gdk_window_begin_paint_region", LIBRARY_GDK);
-	Linker.link(gdk_window_begin_resize_drag, "gdk_window_begin_resize_drag", LIBRARY_GDK);
-	Linker.link(gdk_window_begin_resize_drag_for_device, "gdk_window_begin_resize_drag_for_device", LIBRARY_GDK);
-	Linker.link(gdk_window_configure_finished, "gdk_window_configure_finished", LIBRARY_GDK);
-	Linker.link(gdk_window_coords_from_parent, "gdk_window_coords_from_parent", LIBRARY_GDK);
-	Linker.link(gdk_window_coords_to_parent, "gdk_window_coords_to_parent", LIBRARY_GDK);
-	Linker.link(gdk_window_create_gl_context, "gdk_window_create_gl_context", LIBRARY_GDK);
-	Linker.link(gdk_window_create_similar_image_surface, "gdk_window_create_similar_image_surface", LIBRARY_GDK);
-	Linker.link(gdk_window_create_similar_surface, "gdk_window_create_similar_surface", LIBRARY_GDK);
-	Linker.link(gdk_window_deiconify, "gdk_window_deiconify", LIBRARY_GDK);
-	Linker.link(gdk_window_destroy, "gdk_window_destroy", LIBRARY_GDK);
-	Linker.link(gdk_window_destroy_notify, "gdk_window_destroy_notify", LIBRARY_GDK);
-	Linker.link(gdk_window_enable_synchronized_configure, "gdk_window_enable_synchronized_configure", LIBRARY_GDK);
-	Linker.link(gdk_window_end_draw_frame, "gdk_window_end_draw_frame", LIBRARY_GDK);
-	Linker.link(gdk_window_end_paint, "gdk_window_end_paint", LIBRARY_GDK);
-	Linker.link(gdk_window_ensure_native, "gdk_window_ensure_native", LIBRARY_GDK);
-	Linker.link(gdk_window_flush, "gdk_window_flush", LIBRARY_GDK);
-	Linker.link(gdk_window_focus, "gdk_window_focus", LIBRARY_GDK);
-	Linker.link(gdk_window_freeze_toplevel_updates_libgtk_only, "gdk_window_freeze_toplevel_updates_libgtk_only", LIBRARY_GDK);
-	Linker.link(gdk_window_freeze_updates, "gdk_window_freeze_updates", LIBRARY_GDK);
-	Linker.link(gdk_window_fullscreen, "gdk_window_fullscreen", LIBRARY_GDK);
-	Linker.link(gdk_window_fullscreen_on_monitor, "gdk_window_fullscreen_on_monitor", LIBRARY_GDK);
-	Linker.link(gdk_window_geometry_changed, "gdk_window_geometry_changed", LIBRARY_GDK);
-	Linker.link(gdk_window_get_accept_focus, "gdk_window_get_accept_focus", LIBRARY_GDK);
-	Linker.link(gdk_window_get_background_pattern, "gdk_window_get_background_pattern", LIBRARY_GDK);
-	Linker.link(gdk_window_get_children, "gdk_window_get_children", LIBRARY_GDK);
-	Linker.link(gdk_window_get_children_with_user_data, "gdk_window_get_children_with_user_data", LIBRARY_GDK);
-	Linker.link(gdk_window_get_clip_region, "gdk_window_get_clip_region", LIBRARY_GDK);
-	Linker.link(gdk_window_get_composited, "gdk_window_get_composited", LIBRARY_GDK);
-	Linker.link(gdk_window_get_cursor, "gdk_window_get_cursor", LIBRARY_GDK);
-	Linker.link(gdk_window_get_decorations, "gdk_window_get_decorations", LIBRARY_GDK);
-	Linker.link(gdk_window_get_device_cursor, "gdk_window_get_device_cursor", LIBRARY_GDK);
-	Linker.link(gdk_window_get_device_events, "gdk_window_get_device_events", LIBRARY_GDK);
-	Linker.link(gdk_window_get_device_position, "gdk_window_get_device_position", LIBRARY_GDK);
-	Linker.link(gdk_window_get_device_position_double, "gdk_window_get_device_position_double", LIBRARY_GDK);
-	Linker.link(gdk_window_get_display, "gdk_window_get_display", LIBRARY_GDK);
-	Linker.link(gdk_window_get_drag_protocol, "gdk_window_get_drag_protocol", LIBRARY_GDK);
-	Linker.link(gdk_window_get_effective_parent, "gdk_window_get_effective_parent", LIBRARY_GDK);
-	Linker.link(gdk_window_get_effective_toplevel, "gdk_window_get_effective_toplevel", LIBRARY_GDK);
-	Linker.link(gdk_window_get_event_compression, "gdk_window_get_event_compression", LIBRARY_GDK);
-	Linker.link(gdk_window_get_events, "gdk_window_get_events", LIBRARY_GDK);
-	Linker.link(gdk_window_get_focus_on_map, "gdk_window_get_focus_on_map", LIBRARY_GDK);
-	Linker.link(gdk_window_get_frame_clock, "gdk_window_get_frame_clock", LIBRARY_GDK);
-	Linker.link(gdk_window_get_frame_extents, "gdk_window_get_frame_extents", LIBRARY_GDK);
-	Linker.link(gdk_window_get_fullscreen_mode, "gdk_window_get_fullscreen_mode", LIBRARY_GDK);
-	Linker.link(gdk_window_get_geometry, "gdk_window_get_geometry", LIBRARY_GDK);
-	Linker.link(gdk_window_get_group, "gdk_window_get_group", LIBRARY_GDK);
-	Linker.link(gdk_window_get_height, "gdk_window_get_height", LIBRARY_GDK);
-	Linker.link(gdk_window_get_modal_hint, "gdk_window_get_modal_hint", LIBRARY_GDK);
-	Linker.link(gdk_window_get_origin, "gdk_window_get_origin", LIBRARY_GDK);
-	Linker.link(gdk_window_get_parent, "gdk_window_get_parent", LIBRARY_GDK);
-	Linker.link(gdk_window_get_pass_through, "gdk_window_get_pass_through", LIBRARY_GDK);
-	Linker.link(gdk_window_get_pointer, "gdk_window_get_pointer", LIBRARY_GDK);
-	Linker.link(gdk_window_get_position, "gdk_window_get_position", LIBRARY_GDK);
-	Linker.link(gdk_window_get_root_coords, "gdk_window_get_root_coords", LIBRARY_GDK);
-	Linker.link(gdk_window_get_root_origin, "gdk_window_get_root_origin", LIBRARY_GDK);
-	Linker.link(gdk_window_get_scale_factor, "gdk_window_get_scale_factor", LIBRARY_GDK);
-	Linker.link(gdk_window_get_screen, "gdk_window_get_screen", LIBRARY_GDK);
-	Linker.link(gdk_window_get_source_events, "gdk_window_get_source_events", LIBRARY_GDK);
-	Linker.link(gdk_window_get_state, "gdk_window_get_state", LIBRARY_GDK);
-	Linker.link(gdk_window_get_support_multidevice, "gdk_window_get_support_multidevice", LIBRARY_GDK);
-	Linker.link(gdk_window_get_toplevel, "gdk_window_get_toplevel", LIBRARY_GDK);
-	Linker.link(gdk_window_get_type_hint, "gdk_window_get_type_hint", LIBRARY_GDK);
-	Linker.link(gdk_window_get_update_area, "gdk_window_get_update_area", LIBRARY_GDK);
-	Linker.link(gdk_window_get_user_data, "gdk_window_get_user_data", LIBRARY_GDK);
-	Linker.link(gdk_window_get_visible_region, "gdk_window_get_visible_region", LIBRARY_GDK);
-	Linker.link(gdk_window_get_visual, "gdk_window_get_visual", LIBRARY_GDK);
-	Linker.link(gdk_window_get_width, "gdk_window_get_width", LIBRARY_GDK);
-	Linker.link(gdk_window_get_window_type, "gdk_window_get_window_type", LIBRARY_GDK);
-	Linker.link(gdk_window_has_native, "gdk_window_has_native", LIBRARY_GDK);
-	Linker.link(gdk_window_hide, "gdk_window_hide", LIBRARY_GDK);
-	Linker.link(gdk_window_iconify, "gdk_window_iconify", LIBRARY_GDK);
-	Linker.link(gdk_window_input_shape_combine_region, "gdk_window_input_shape_combine_region", LIBRARY_GDK);
-	Linker.link(gdk_window_invalidate_maybe_recurse, "gdk_window_invalidate_maybe_recurse", LIBRARY_GDK);
-	Linker.link(gdk_window_invalidate_rect, "gdk_window_invalidate_rect", LIBRARY_GDK);
-	Linker.link(gdk_window_invalidate_region, "gdk_window_invalidate_region", LIBRARY_GDK);
-	Linker.link(gdk_window_is_destroyed, "gdk_window_is_destroyed", LIBRARY_GDK);
-	Linker.link(gdk_window_is_input_only, "gdk_window_is_input_only", LIBRARY_GDK);
-	Linker.link(gdk_window_is_shaped, "gdk_window_is_shaped", LIBRARY_GDK);
-	Linker.link(gdk_window_is_viewable, "gdk_window_is_viewable", LIBRARY_GDK);
-	Linker.link(gdk_window_is_visible, "gdk_window_is_visible", LIBRARY_GDK);
-	Linker.link(gdk_window_lower, "gdk_window_lower", LIBRARY_GDK);
-	Linker.link(gdk_window_mark_paint_from_clip, "gdk_window_mark_paint_from_clip", LIBRARY_GDK);
-	Linker.link(gdk_window_maximize, "gdk_window_maximize", LIBRARY_GDK);
-	Linker.link(gdk_window_merge_child_input_shapes, "gdk_window_merge_child_input_shapes", LIBRARY_GDK);
-	Linker.link(gdk_window_merge_child_shapes, "gdk_window_merge_child_shapes", LIBRARY_GDK);
-	Linker.link(gdk_window_move, "gdk_window_move", LIBRARY_GDK);
-	Linker.link(gdk_window_move_region, "gdk_window_move_region", LIBRARY_GDK);
-	Linker.link(gdk_window_move_resize, "gdk_window_move_resize", LIBRARY_GDK);
-	Linker.link(gdk_window_move_to_rect, "gdk_window_move_to_rect", LIBRARY_GDK);
-	Linker.link(gdk_window_peek_children, "gdk_window_peek_children", LIBRARY_GDK);
-	Linker.link(gdk_window_process_updates, "gdk_window_process_updates", LIBRARY_GDK);
-	Linker.link(gdk_window_raise, "gdk_window_raise", LIBRARY_GDK);
-	Linker.link(gdk_window_register_dnd, "gdk_window_register_dnd", LIBRARY_GDK);
-	Linker.link(gdk_window_remove_filter, "gdk_window_remove_filter", LIBRARY_GDK);
-	Linker.link(gdk_window_reparent, "gdk_window_reparent", LIBRARY_GDK);
-	Linker.link(gdk_window_resize, "gdk_window_resize", LIBRARY_GDK);
-	Linker.link(gdk_window_restack, "gdk_window_restack", LIBRARY_GDK);
-	Linker.link(gdk_window_scroll, "gdk_window_scroll", LIBRARY_GDK);
-	Linker.link(gdk_window_set_accept_focus, "gdk_window_set_accept_focus", LIBRARY_GDK);
-	Linker.link(gdk_window_set_background, "gdk_window_set_background", LIBRARY_GDK);
-	Linker.link(gdk_window_set_background_pattern, "gdk_window_set_background_pattern", LIBRARY_GDK);
-	Linker.link(gdk_window_set_background_rgba, "gdk_window_set_background_rgba", LIBRARY_GDK);
-	Linker.link(gdk_window_set_child_input_shapes, "gdk_window_set_child_input_shapes", LIBRARY_GDK);
-	Linker.link(gdk_window_set_child_shapes, "gdk_window_set_child_shapes", LIBRARY_GDK);
-	Linker.link(gdk_window_set_composited, "gdk_window_set_composited", LIBRARY_GDK);
-	Linker.link(gdk_window_set_cursor, "gdk_window_set_cursor", LIBRARY_GDK);
-	Linker.link(gdk_window_set_decorations, "gdk_window_set_decorations", LIBRARY_GDK);
-	Linker.link(gdk_window_set_device_cursor, "gdk_window_set_device_cursor", LIBRARY_GDK);
-	Linker.link(gdk_window_set_device_events, "gdk_window_set_device_events", LIBRARY_GDK);
-	Linker.link(gdk_window_set_event_compression, "gdk_window_set_event_compression", LIBRARY_GDK);
-	Linker.link(gdk_window_set_events, "gdk_window_set_events", LIBRARY_GDK);
-	Linker.link(gdk_window_set_focus_on_map, "gdk_window_set_focus_on_map", LIBRARY_GDK);
-	Linker.link(gdk_window_set_fullscreen_mode, "gdk_window_set_fullscreen_mode", LIBRARY_GDK);
-	Linker.link(gdk_window_set_functions, "gdk_window_set_functions", LIBRARY_GDK);
-	Linker.link(gdk_window_set_geometry_hints, "gdk_window_set_geometry_hints", LIBRARY_GDK);
-	Linker.link(gdk_window_set_group, "gdk_window_set_group", LIBRARY_GDK);
-	Linker.link(gdk_window_set_icon_list, "gdk_window_set_icon_list", LIBRARY_GDK);
-	Linker.link(gdk_window_set_icon_name, "gdk_window_set_icon_name", LIBRARY_GDK);
-	Linker.link(gdk_window_set_invalidate_handler, "gdk_window_set_invalidate_handler", LIBRARY_GDK);
-	Linker.link(gdk_window_set_keep_above, "gdk_window_set_keep_above", LIBRARY_GDK);
-	Linker.link(gdk_window_set_keep_below, "gdk_window_set_keep_below", LIBRARY_GDK);
-	Linker.link(gdk_window_set_modal_hint, "gdk_window_set_modal_hint", LIBRARY_GDK);
-	Linker.link(gdk_window_set_opacity, "gdk_window_set_opacity", LIBRARY_GDK);
-	Linker.link(gdk_window_set_opaque_region, "gdk_window_set_opaque_region", LIBRARY_GDK);
-	Linker.link(gdk_window_set_override_redirect, "gdk_window_set_override_redirect", LIBRARY_GDK);
-	Linker.link(gdk_window_set_pass_through, "gdk_window_set_pass_through", LIBRARY_GDK);
-	Linker.link(gdk_window_set_role, "gdk_window_set_role", LIBRARY_GDK);
-	Linker.link(gdk_window_set_shadow_width, "gdk_window_set_shadow_width", LIBRARY_GDK);
-	Linker.link(gdk_window_set_skip_pager_hint, "gdk_window_set_skip_pager_hint", LIBRARY_GDK);
-	Linker.link(gdk_window_set_skip_taskbar_hint, "gdk_window_set_skip_taskbar_hint", LIBRARY_GDK);
-	Linker.link(gdk_window_set_source_events, "gdk_window_set_source_events", LIBRARY_GDK);
-	Linker.link(gdk_window_set_startup_id, "gdk_window_set_startup_id", LIBRARY_GDK);
-	Linker.link(gdk_window_set_static_gravities, "gdk_window_set_static_gravities", LIBRARY_GDK);
-	Linker.link(gdk_window_set_support_multidevice, "gdk_window_set_support_multidevice", LIBRARY_GDK);
-	Linker.link(gdk_window_set_title, "gdk_window_set_title", LIBRARY_GDK);
-	Linker.link(gdk_window_set_transient_for, "gdk_window_set_transient_for", LIBRARY_GDK);
-	Linker.link(gdk_window_set_type_hint, "gdk_window_set_type_hint", LIBRARY_GDK);
-	Linker.link(gdk_window_set_urgency_hint, "gdk_window_set_urgency_hint", LIBRARY_GDK);
-	Linker.link(gdk_window_set_user_data, "gdk_window_set_user_data", LIBRARY_GDK);
-	Linker.link(gdk_window_shape_combine_region, "gdk_window_shape_combine_region", LIBRARY_GDK);
-	Linker.link(gdk_window_show, "gdk_window_show", LIBRARY_GDK);
-	Linker.link(gdk_window_show_unraised, "gdk_window_show_unraised", LIBRARY_GDK);
-	Linker.link(gdk_window_show_window_menu, "gdk_window_show_window_menu", LIBRARY_GDK);
-	Linker.link(gdk_window_stick, "gdk_window_stick", LIBRARY_GDK);
-	Linker.link(gdk_window_thaw_toplevel_updates_libgtk_only, "gdk_window_thaw_toplevel_updates_libgtk_only", LIBRARY_GDK);
-	Linker.link(gdk_window_thaw_updates, "gdk_window_thaw_updates", LIBRARY_GDK);
-	Linker.link(gdk_window_unfullscreen, "gdk_window_unfullscreen", LIBRARY_GDK);
-	Linker.link(gdk_window_unmaximize, "gdk_window_unmaximize", LIBRARY_GDK);
-	Linker.link(gdk_window_unstick, "gdk_window_unstick", LIBRARY_GDK);
-	Linker.link(gdk_window_withdraw, "gdk_window_withdraw", LIBRARY_GDK);
-	Linker.link(gdk_get_default_root_window, "gdk_get_default_root_window", LIBRARY_GDK);
-	Linker.link(gdk_offscreen_window_get_embedder, "gdk_offscreen_window_get_embedder", LIBRARY_GDK);
-	Linker.link(gdk_offscreen_window_get_surface, "gdk_offscreen_window_get_surface", LIBRARY_GDK);
-	Linker.link(gdk_offscreen_window_set_embedder, "gdk_offscreen_window_set_embedder", LIBRARY_GDK);
-	Linker.link(gdk_synthesize_window_state, "gdk_synthesize_window_state", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_type, "gdk_surface_get_type", LIBRARY_GDK);
+	Linker.link(gdk_surface_new_popup, "gdk_surface_new_popup", LIBRARY_GDK);
+	Linker.link(gdk_surface_new_toplevel, "gdk_surface_new_toplevel", LIBRARY_GDK);
+	Linker.link(gdk_surface_beep, "gdk_surface_beep", LIBRARY_GDK);
+	Linker.link(gdk_surface_create_cairo_context, "gdk_surface_create_cairo_context", LIBRARY_GDK);
+	Linker.link(gdk_surface_create_gl_context, "gdk_surface_create_gl_context", LIBRARY_GDK);
+	Linker.link(gdk_surface_create_similar_surface, "gdk_surface_create_similar_surface", LIBRARY_GDK);
+	Linker.link(gdk_surface_create_vulkan_context, "gdk_surface_create_vulkan_context", LIBRARY_GDK);
+	Linker.link(gdk_surface_destroy, "gdk_surface_destroy", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_cursor, "gdk_surface_get_cursor", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_device_cursor, "gdk_surface_get_device_cursor", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_device_position, "gdk_surface_get_device_position", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_display, "gdk_surface_get_display", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_frame_clock, "gdk_surface_get_frame_clock", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_height, "gdk_surface_get_height", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_mapped, "gdk_surface_get_mapped", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_scale_factor, "gdk_surface_get_scale_factor", LIBRARY_GDK);
+	Linker.link(gdk_surface_get_width, "gdk_surface_get_width", LIBRARY_GDK);
+	Linker.link(gdk_surface_hide, "gdk_surface_hide", LIBRARY_GDK);
+	Linker.link(gdk_surface_is_destroyed, "gdk_surface_is_destroyed", LIBRARY_GDK);
+	Linker.link(gdk_surface_queue_render, "gdk_surface_queue_render", LIBRARY_GDK);
+	Linker.link(gdk_surface_request_layout, "gdk_surface_request_layout", LIBRARY_GDK);
+	Linker.link(gdk_surface_set_cursor, "gdk_surface_set_cursor", LIBRARY_GDK);
+	Linker.link(gdk_surface_set_device_cursor, "gdk_surface_set_device_cursor", LIBRARY_GDK);
+	Linker.link(gdk_surface_set_input_region, "gdk_surface_set_input_region", LIBRARY_GDK);
+	Linker.link(gdk_surface_set_opaque_region, "gdk_surface_set_opaque_region", LIBRARY_GDK);
+	Linker.link(gdk_surface_translate_coordinates, "gdk_surface_translate_coordinates", LIBRARY_GDK);
 
-	// gdk.X11
+	// gdk.Texture
 
-	Linker.link(gdk_x11_window_get_type, "gdk_x11_window_get_type", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_foreign_new_for_display, "gdk_x11_window_foreign_new_for_display", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_lookup_for_display, "gdk_x11_window_lookup_for_display", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_get_desktop, "gdk_x11_window_get_desktop", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_get_xid, "gdk_x11_window_get_xid", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_move_to_current_desktop, "gdk_x11_window_move_to_current_desktop", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_move_to_desktop, "gdk_x11_window_move_to_desktop", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_set_frame_extents, "gdk_x11_window_set_frame_extents", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_set_frame_sync_enabled, "gdk_x11_window_set_frame_sync_enabled", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_set_hide_titlebar_when_maximized, "gdk_x11_window_set_hide_titlebar_when_maximized", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_set_theme_variant, "gdk_x11_window_set_theme_variant", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_set_user_time, "gdk_x11_window_set_user_time", LIBRARY_GDK);
-	Linker.link(gdk_x11_window_set_utf8_property, "gdk_x11_window_set_utf8_property", LIBRARY_GDK);
+	Linker.link(gdk_texture_get_type, "gdk_texture_get_type", LIBRARY_GDK);
+	Linker.link(gdk_texture_new_for_pixbuf, "gdk_texture_new_for_pixbuf", LIBRARY_GDK);
+	Linker.link(gdk_texture_new_from_file, "gdk_texture_new_from_file", LIBRARY_GDK);
+	Linker.link(gdk_texture_new_from_resource, "gdk_texture_new_from_resource", LIBRARY_GDK);
+	Linker.link(gdk_texture_download, "gdk_texture_download", LIBRARY_GDK);
+	Linker.link(gdk_texture_get_height, "gdk_texture_get_height", LIBRARY_GDK);
+	Linker.link(gdk_texture_get_width, "gdk_texture_get_width", LIBRARY_GDK);
+	Linker.link(gdk_texture_save_to_png, "gdk_texture_save_to_png", LIBRARY_GDK);
 
-	// gdk.Cairo
+	// gdk.Toplevel
 
-	Linker.link(gdk_cairo_create, "gdk_cairo_create", LIBRARY_GDK);
-	Linker.link(gdk_cairo_draw_from_gl, "gdk_cairo_draw_from_gl", LIBRARY_GDK);
-	Linker.link(gdk_cairo_get_clip_rectangle, "gdk_cairo_get_clip_rectangle", LIBRARY_GDK);
-	Linker.link(gdk_cairo_rectangle, "gdk_cairo_rectangle", LIBRARY_GDK);
-	Linker.link(gdk_cairo_region, "gdk_cairo_region", LIBRARY_GDK);
-	Linker.link(gdk_cairo_region_create_from_surface, "gdk_cairo_region_create_from_surface", LIBRARY_GDK);
-	Linker.link(gdk_cairo_set_source_color, "gdk_cairo_set_source_color", LIBRARY_GDK);
-	Linker.link(gdk_cairo_set_source_pixbuf, "gdk_cairo_set_source_pixbuf", LIBRARY_GDK);
-	Linker.link(gdk_cairo_set_source_rgba, "gdk_cairo_set_source_rgba", LIBRARY_GDK);
-	Linker.link(gdk_cairo_set_source_window, "gdk_cairo_set_source_window", LIBRARY_GDK);
-	Linker.link(gdk_cairo_surface_create_from_pixbuf, "gdk_cairo_surface_create_from_pixbuf", LIBRARY_GDK);
-	Linker.link(gdk_cairo_get_drawing_context, "gdk_cairo_get_drawing_context", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_get_type, "gdk_toplevel_get_type", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_begin_move, "gdk_toplevel_begin_move", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_begin_resize, "gdk_toplevel_begin_resize", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_focus, "gdk_toplevel_focus", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_get_state, "gdk_toplevel_get_state", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_inhibit_system_shortcuts, "gdk_toplevel_inhibit_system_shortcuts", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_lower, "gdk_toplevel_lower", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_minimize, "gdk_toplevel_minimize", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_present, "gdk_toplevel_present", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_restore_system_shortcuts, "gdk_toplevel_restore_system_shortcuts", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_set_decorated, "gdk_toplevel_set_decorated", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_set_deletable, "gdk_toplevel_set_deletable", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_set_icon_list, "gdk_toplevel_set_icon_list", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_set_modal, "gdk_toplevel_set_modal", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_set_startup_id, "gdk_toplevel_set_startup_id", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_set_title, "gdk_toplevel_set_title", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_set_transient_for, "gdk_toplevel_set_transient_for", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_show_window_menu, "gdk_toplevel_show_window_menu", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_supports_edge_constraints, "gdk_toplevel_supports_edge_constraints", LIBRARY_GDK);
 
-	// gdk.Pango
+	// gdk.ToplevelLayout
 
-	Linker.link(gdk_pango_context_get, "gdk_pango_context_get", LIBRARY_GDK);
-	Linker.link(gdk_pango_context_get_for_screen, "gdk_pango_context_get_for_screen", LIBRARY_GDK);
-	Linker.link(gdk_pango_layout_get_clip_region, "gdk_pango_layout_get_clip_region", LIBRARY_GDK);
-	Linker.link(gdk_pango_layout_line_get_clip_region, "gdk_pango_layout_line_get_clip_region", LIBRARY_GDK);
-	Linker.link(gdk_pango_context_get_for_display, "gdk_pango_context_get_for_display", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_get_type, "gdk_toplevel_layout_get_type", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_new, "gdk_toplevel_layout_new", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_copy, "gdk_toplevel_layout_copy", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_equal, "gdk_toplevel_layout_equal", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_get_fullscreen, "gdk_toplevel_layout_get_fullscreen", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_get_fullscreen_monitor, "gdk_toplevel_layout_get_fullscreen_monitor", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_get_maximized, "gdk_toplevel_layout_get_maximized", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_get_resizable, "gdk_toplevel_layout_get_resizable", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_ref, "gdk_toplevel_layout_ref", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_set_fullscreen, "gdk_toplevel_layout_set_fullscreen", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_set_maximized, "gdk_toplevel_layout_set_maximized", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_set_resizable, "gdk_toplevel_layout_set_resizable", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_layout_unref, "gdk_toplevel_layout_unref", LIBRARY_GDK);
 
-	// gdk.Pixbuf
+	// gdk.ToplevelSize
 
-	Linker.link(gdk_pixbuf_get_from_surface, "gdk_pixbuf_get_from_surface", LIBRARY_GDK);
-	Linker.link(gdk_pixbuf_get_from_window, "gdk_pixbuf_get_from_window", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_size_get_bounds, "gdk_toplevel_size_get_bounds", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_size_set_min_size, "gdk_toplevel_size_set_min_size", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_size_set_shadow_width, "gdk_toplevel_size_set_shadow_width", LIBRARY_GDK);
+	Linker.link(gdk_toplevel_size_set_size, "gdk_toplevel_size_set_size", LIBRARY_GDK);
 
-	// gdk.Threads
+	// gdk.TouchEvent
 
-	Linker.link(gdk_threads_add_idle, "gdk_threads_add_idle", LIBRARY_GDK);
-	Linker.link(gdk_threads_add_idle_full, "gdk_threads_add_idle_full", LIBRARY_GDK);
-	Linker.link(gdk_threads_add_timeout, "gdk_threads_add_timeout", LIBRARY_GDK);
-	Linker.link(gdk_threads_add_timeout_full, "gdk_threads_add_timeout_full", LIBRARY_GDK);
-	Linker.link(gdk_threads_add_timeout_seconds, "gdk_threads_add_timeout_seconds", LIBRARY_GDK);
-	Linker.link(gdk_threads_add_timeout_seconds_full, "gdk_threads_add_timeout_seconds_full", LIBRARY_GDK);
-	Linker.link(gdk_threads_enter, "gdk_threads_enter", LIBRARY_GDK);
-	Linker.link(gdk_threads_init, "gdk_threads_init", LIBRARY_GDK);
-	Linker.link(gdk_threads_leave, "gdk_threads_leave", LIBRARY_GDK);
-	Linker.link(gdk_threads_set_lock_functions, "gdk_threads_set_lock_functions", LIBRARY_GDK);
+	Linker.link(gdk_touch_event_get_type, "gdk_touch_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_touch_event_get_emulating_pointer, "gdk_touch_event_get_emulating_pointer", LIBRARY_GDK);
 
-	// gdk.Gdk
+	// gdk.TouchpadEvent
 
-	Linker.link(gdk_beep, "gdk_beep", LIBRARY_GDK);
-	Linker.link(gdk_error_trap_pop, "gdk_error_trap_pop", LIBRARY_GDK);
-	Linker.link(gdk_error_trap_pop_ignored, "gdk_error_trap_pop_ignored", LIBRARY_GDK);
-	Linker.link(gdk_error_trap_push, "gdk_error_trap_push", LIBRARY_GDK);
-	Linker.link(gdk_flush, "gdk_flush", LIBRARY_GDK);
-	Linker.link(gdk_get_display, "gdk_get_display", LIBRARY_GDK);
-	Linker.link(gdk_get_display_arg_name, "gdk_get_display_arg_name", LIBRARY_GDK);
-	Linker.link(gdk_get_program_class, "gdk_get_program_class", LIBRARY_GDK);
-	Linker.link(gdk_init, "gdk_init", LIBRARY_GDK);
-	Linker.link(gdk_init_check, "gdk_init_check", LIBRARY_GDK);
-	Linker.link(gdk_keyboard_grab, "gdk_keyboard_grab", LIBRARY_GDK);
-	Linker.link(gdk_keyboard_ungrab, "gdk_keyboard_ungrab", LIBRARY_GDK);
-	Linker.link(gdk_notify_startup_complete, "gdk_notify_startup_complete", LIBRARY_GDK);
-	Linker.link(gdk_notify_startup_complete_with_id, "gdk_notify_startup_complete_with_id", LIBRARY_GDK);
-	Linker.link(gdk_parse_args, "gdk_parse_args", LIBRARY_GDK);
-	Linker.link(gdk_pointer_grab, "gdk_pointer_grab", LIBRARY_GDK);
-	Linker.link(gdk_pointer_is_grabbed, "gdk_pointer_is_grabbed", LIBRARY_GDK);
-	Linker.link(gdk_pointer_ungrab, "gdk_pointer_ungrab", LIBRARY_GDK);
-	Linker.link(gdk_set_allowed_backends, "gdk_set_allowed_backends", LIBRARY_GDK);
-	Linker.link(gdk_set_double_click_time, "gdk_set_double_click_time", LIBRARY_GDK);
-	Linker.link(gdk_set_program_class, "gdk_set_program_class", LIBRARY_GDK);
+	Linker.link(gdk_touchpad_event_get_type, "gdk_touchpad_event_get_type", LIBRARY_GDK);
+	Linker.link(gdk_touchpad_event_get_deltas, "gdk_touchpad_event_get_deltas", LIBRARY_GDK);
+	Linker.link(gdk_touchpad_event_get_gesture_phase, "gdk_touchpad_event_get_gesture_phase", LIBRARY_GDK);
+	Linker.link(gdk_touchpad_event_get_n_fingers, "gdk_touchpad_event_get_n_fingers", LIBRARY_GDK);
+	Linker.link(gdk_touchpad_event_get_pinch_angle_delta, "gdk_touchpad_event_get_pinch_angle_delta", LIBRARY_GDK);
+	Linker.link(gdk_touchpad_event_get_pinch_scale, "gdk_touchpad_event_get_pinch_scale", LIBRARY_GDK);
 
-	// gdk.Selection
+	// gdk.VulkanContext
 
-	Linker.link(gdk_selection_convert, "gdk_selection_convert", LIBRARY_GDK);
-	Linker.link(gdk_selection_owner_get, "gdk_selection_owner_get", LIBRARY_GDK);
-	Linker.link(gdk_selection_owner_get_for_display, "gdk_selection_owner_get_for_display", LIBRARY_GDK);
-	Linker.link(gdk_selection_owner_set, "gdk_selection_owner_set", LIBRARY_GDK);
-	Linker.link(gdk_selection_owner_set_for_display, "gdk_selection_owner_set_for_display", LIBRARY_GDK);
-	Linker.link(gdk_selection_property_get, "gdk_selection_property_get", LIBRARY_GDK);
-	Linker.link(gdk_selection_send_notify, "gdk_selection_send_notify", LIBRARY_GDK);
-	Linker.link(gdk_selection_send_notify_for_display, "gdk_selection_send_notify_for_display", LIBRARY_GDK);
-
-	// gdk.Testing
-
-	Linker.link(gdk_test_render_sync, "gdk_test_render_sync", LIBRARY_GDK);
-	Linker.link(gdk_test_simulate_button, "gdk_test_simulate_button", LIBRARY_GDK);
-	Linker.link(gdk_test_simulate_key, "gdk_test_simulate_key", LIBRARY_GDK);
+	Linker.link(gdk_vulkan_context_get_type, "gdk_vulkan_context_get_type", LIBRARY_GDK);
 }
 
 __gshared extern(C)
@@ -749,95 +642,170 @@ __gshared extern(C)
 	// gdk.AppLaunchContext
 
 	GType function() c_gdk_app_launch_context_get_type;
-	GdkAppLaunchContext* function() c_gdk_app_launch_context_new;
+	GdkDisplay* function(GdkAppLaunchContext* context) c_gdk_app_launch_context_get_display;
 	void function(GdkAppLaunchContext* context, int desktop) c_gdk_app_launch_context_set_desktop;
-	void function(GdkAppLaunchContext* context, GdkDisplay* display) c_gdk_app_launch_context_set_display;
 	void function(GdkAppLaunchContext* context, GIcon* icon) c_gdk_app_launch_context_set_icon;
 	void function(GdkAppLaunchContext* context, const(char)* iconName) c_gdk_app_launch_context_set_icon_name;
-	void function(GdkAppLaunchContext* context, GdkScreen* screen) c_gdk_app_launch_context_set_screen;
 	void function(GdkAppLaunchContext* context, uint timestamp) c_gdk_app_launch_context_set_timestamp;
 
-	// gdk.Atom
+	// gdk.ButtonEvent
 
-	char* function(GdkAtom atom) c_gdk_atom_name;
-	GdkAtom function(const(char)* atomName, int onlyIfExists) c_gdk_atom_intern;
-	GdkAtom function(const(char)* atomName) c_gdk_atom_intern_static_string;
-	void function(GdkWindow* window, GdkAtom property, GdkAtom type, int format, GdkPropMode mode, char* data, int nelements) c_gdk_property_change;
-	void function(GdkWindow* window, GdkAtom property) c_gdk_property_delete;
-	int function(GdkWindow* window, GdkAtom property, GdkAtom type, gulong offset, gulong length, int pdelete, GdkAtom* actualPropertyType, int* actualFormat, int* actualLength, char** data) c_gdk_property_get;
-	int function(GdkDisplay* display, GdkAtom encoding, int format, char* text, int length, char*** list) c_gdk_text_property_to_utf8_list_for_display;
-	char* function(const(char)* str) c_gdk_utf8_to_string_target;
+	GType function() c_gdk_button_event_get_type;
+	uint function(GdkEvent* event) c_gdk_button_event_get_button;
 
-	// gdk.Color
+	// gdk.CairoContext
 
-	GType function() c_gdk_color_get_type;
-	GdkColor* function(GdkColor* color) c_gdk_color_copy;
-	int function(GdkColor* colora, GdkColor* colorb) c_gdk_color_equal;
-	void function(GdkColor* color) c_gdk_color_free;
-	uint function(GdkColor* color) c_gdk_color_hash;
-	char* function(GdkColor* color) c_gdk_color_to_string;
-	int function(const(char)* spec, GdkColor* color) c_gdk_color_parse;
+	GType function() c_gdk_cairo_context_get_type;
+	cairo_t* function(GdkCairoContext* self) c_gdk_cairo_context_cairo_create;
+
+	// gdk.Clipboard
+
+	GType function() c_gdk_clipboard_get_type;
+	GdkContentProvider* function(GdkClipboard* clipboard) c_gdk_clipboard_get_content;
+	GdkDisplay* function(GdkClipboard* clipboard) c_gdk_clipboard_get_display;
+	GdkContentFormats* function(GdkClipboard* clipboard) c_gdk_clipboard_get_formats;
+	int function(GdkClipboard* clipboard) c_gdk_clipboard_is_local;
+	void function(GdkClipboard* clipboard, char** mimeTypes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_clipboard_read_async;
+	GInputStream* function(GdkClipboard* clipboard, GAsyncResult* result, char** outMimeType, GError** err) c_gdk_clipboard_read_finish;
+	void function(GdkClipboard* clipboard, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_clipboard_read_text_async;
+	char* function(GdkClipboard* clipboard, GAsyncResult* result, GError** err) c_gdk_clipboard_read_text_finish;
+	void function(GdkClipboard* clipboard, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_clipboard_read_texture_async;
+	GdkTexture* function(GdkClipboard* clipboard, GAsyncResult* result, GError** err) c_gdk_clipboard_read_texture_finish;
+	void function(GdkClipboard* clipboard, GType type, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_clipboard_read_value_async;
+	GValue* function(GdkClipboard* clipboard, GAsyncResult* result, GError** err) c_gdk_clipboard_read_value_finish;
+	void function(GdkClipboard* clipboard, GType type, ... ) c_gdk_clipboard_set;
+	int function(GdkClipboard* clipboard, GdkContentProvider* provider) c_gdk_clipboard_set_content;
+	void function(GdkClipboard* clipboard, const(char)* text) c_gdk_clipboard_set_text;
+	void function(GdkClipboard* clipboard, GdkTexture* texture) c_gdk_clipboard_set_texture;
+	void function(GdkClipboard* clipboard, GType type, void* args) c_gdk_clipboard_set_valist;
+	void function(GdkClipboard* clipboard, GValue* value) c_gdk_clipboard_set_value;
+	void function(GdkClipboard* clipboard, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_clipboard_store_async;
+	int function(GdkClipboard* clipboard, GAsyncResult* result, GError** err) c_gdk_clipboard_store_finish;
+
+	// gdk.ContentDeserializer
+
+	GType function() c_gdk_content_deserializer_get_type;
+	GCancellable* function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_cancellable;
+	GType function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_gtype;
+	GInputStream* function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_input_stream;
+	const(char)* function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_mime_type;
+	int function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_priority;
+	void* function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_task_data;
+	void* function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_user_data;
+	GValue* function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_get_value;
+	void function(GdkContentDeserializer* deserializer, GError* error) c_gdk_content_deserializer_return_error;
+	void function(GdkContentDeserializer* deserializer) c_gdk_content_deserializer_return_success;
+	void function(GdkContentDeserializer* deserializer, void* data, GDestroyNotify notify) c_gdk_content_deserializer_set_task_data;
+
+	// gdk.ContentFormats
+
+	GType function() c_gdk_content_formats_get_type;
+	GdkContentFormats* function(char** mimeTypes, uint nMimeTypes) c_gdk_content_formats_new;
+	GdkContentFormats* function(GType type) c_gdk_content_formats_new_for_gtype;
+	int function(GdkContentFormats* formats, GType type) c_gdk_content_formats_contain_gtype;
+	int function(GdkContentFormats* formats, const(char)* mimeType) c_gdk_content_formats_contain_mime_type;
+	GType* function(GdkContentFormats* formats, size_t* nGtypes) c_gdk_content_formats_get_gtypes;
+	char** function(GdkContentFormats* formats, size_t* nMimeTypes) c_gdk_content_formats_get_mime_types;
+	int function(GdkContentFormats* first, GdkContentFormats* second) c_gdk_content_formats_match;
+	GType function(GdkContentFormats* first, GdkContentFormats* second) c_gdk_content_formats_match_gtype;
+	const(char)* function(GdkContentFormats* first, GdkContentFormats* second) c_gdk_content_formats_match_mime_type;
+	void function(GdkContentFormats* formats, GString* string_) c_gdk_content_formats_print;
+	GdkContentFormats* function(GdkContentFormats* formats) c_gdk_content_formats_ref;
+	char* function(GdkContentFormats* formats) c_gdk_content_formats_to_string;
+	GdkContentFormats* function(GdkContentFormats* first, GdkContentFormats* second) c_gdk_content_formats_union;
+	GdkContentFormats* function(GdkContentFormats* formats) c_gdk_content_formats_union_deserialize_gtypes;
+	GdkContentFormats* function(GdkContentFormats* formats) c_gdk_content_formats_union_deserialize_mime_types;
+	GdkContentFormats* function(GdkContentFormats* formats) c_gdk_content_formats_union_serialize_gtypes;
+	GdkContentFormats* function(GdkContentFormats* formats) c_gdk_content_formats_union_serialize_mime_types;
+	void function(GdkContentFormats* formats) c_gdk_content_formats_unref;
+
+	// gdk.ContentFormatsBuilder
+
+	GType function() c_gdk_content_formats_builder_get_type;
+	GdkContentFormatsBuilder* function() c_gdk_content_formats_builder_new;
+	void function(GdkContentFormatsBuilder* builder, GdkContentFormats* formats) c_gdk_content_formats_builder_add_formats;
+	void function(GdkContentFormatsBuilder* builder, GType type) c_gdk_content_formats_builder_add_gtype;
+	void function(GdkContentFormatsBuilder* builder, const(char)* mimeType) c_gdk_content_formats_builder_add_mime_type;
+	GdkContentFormats* function(GdkContentFormatsBuilder* builder) c_gdk_content_formats_builder_free_to_formats;
+	GdkContentFormatsBuilder* function(GdkContentFormatsBuilder* builder) c_gdk_content_formats_builder_ref;
+	GdkContentFormats* function(GdkContentFormatsBuilder* builder) c_gdk_content_formats_builder_to_formats;
+	void function(GdkContentFormatsBuilder* builder) c_gdk_content_formats_builder_unref;
+
+	// gdk.ContentProvider
+
+	GType function() c_gdk_content_provider_get_type;
+	GdkContentProvider* function(const(char)* mimeType, GBytes* bytes) c_gdk_content_provider_new_for_bytes;
+	GdkContentProvider* function(GValue* value) c_gdk_content_provider_new_for_value;
+	GdkContentProvider* function(GType type, ... ) c_gdk_content_provider_new_typed;
+	GdkContentProvider* function(GdkContentProvider** providers, size_t nProviders) c_gdk_content_provider_new_union;
+	void function(GdkContentProvider* provider) c_gdk_content_provider_content_changed;
+	int function(GdkContentProvider* provider, GValue* value, GError** err) c_gdk_content_provider_get_value;
+	GdkContentFormats* function(GdkContentProvider* provider) c_gdk_content_provider_ref_formats;
+	GdkContentFormats* function(GdkContentProvider* provider) c_gdk_content_provider_ref_storable_formats;
+	void function(GdkContentProvider* provider, const(char)* mimeType, GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_content_provider_write_mime_type_async;
+	int function(GdkContentProvider* provider, GAsyncResult* result, GError** err) c_gdk_content_provider_write_mime_type_finish;
+
+	// gdk.ContentSerializer
+
+	GType function() c_gdk_content_serializer_get_type;
+	GCancellable* function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_cancellable;
+	GType function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_gtype;
+	const(char)* function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_mime_type;
+	GOutputStream* function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_output_stream;
+	int function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_priority;
+	void* function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_task_data;
+	void* function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_user_data;
+	GValue* function(GdkContentSerializer* serializer) c_gdk_content_serializer_get_value;
+	void function(GdkContentSerializer* serializer, GError* error) c_gdk_content_serializer_return_error;
+	void function(GdkContentSerializer* serializer) c_gdk_content_serializer_return_success;
+	void function(GdkContentSerializer* serializer, void* data, GDestroyNotify notify) c_gdk_content_serializer_set_task_data;
+
+	// gdk.CrossingEvent
+
+	GType function() c_gdk_crossing_event_get_type;
+	GdkNotifyType function(GdkEvent* event) c_gdk_crossing_event_get_detail;
+	int function(GdkEvent* event) c_gdk_crossing_event_get_focus;
+	GdkCrossingMode function(GdkEvent* event) c_gdk_crossing_event_get_mode;
 
 	// gdk.Cursor
 
 	GType function() c_gdk_cursor_get_type;
-	GdkCursor* function(GdkCursorType cursorType) c_gdk_cursor_new;
-	GdkCursor* function(GdkDisplay* display, GdkCursorType cursorType) c_gdk_cursor_new_for_display;
-	GdkCursor* function(GdkDisplay* display, const(char)* name) c_gdk_cursor_new_from_name;
-	GdkCursor* function(GdkDisplay* display, GdkPixbuf* pixbuf, int x, int y) c_gdk_cursor_new_from_pixbuf;
-	GdkCursor* function(GdkDisplay* display, cairo_surface_t* surface, double x, double y) c_gdk_cursor_new_from_surface;
-	GdkCursorType function(GdkCursor* cursor) c_gdk_cursor_get_cursor_type;
-	GdkDisplay* function(GdkCursor* cursor) c_gdk_cursor_get_display;
-	GdkPixbuf* function(GdkCursor* cursor) c_gdk_cursor_get_image;
-	cairo_surface_t* function(GdkCursor* cursor, double* xHot, double* yHot) c_gdk_cursor_get_surface;
-	GdkCursor* function(GdkCursor* cursor) c_gdk_cursor_ref;
-	void function(GdkCursor* cursor) c_gdk_cursor_unref;
+	GdkCursor* function(const(char)* name, GdkCursor* fallback) c_gdk_cursor_new_from_name;
+	GdkCursor* function(GdkTexture* texture, int hotspotX, int hotspotY, GdkCursor* fallback) c_gdk_cursor_new_from_texture;
+	GdkCursor* function(GdkCursor* cursor) c_gdk_cursor_get_fallback;
+	int function(GdkCursor* cursor) c_gdk_cursor_get_hotspot_x;
+	int function(GdkCursor* cursor) c_gdk_cursor_get_hotspot_y;
+	const(char)* function(GdkCursor* cursor) c_gdk_cursor_get_name;
+	GdkTexture* function(GdkCursor* cursor) c_gdk_cursor_get_texture;
+
+	// gdk.DNDEvent
+
+	GType function() c_gdk_dnd_event_get_type;
+	GdkDrop* function(GdkEvent* event) c_gdk_dnd_event_get_drop;
+
+	// gdk.DeleteEvent
+
+	GType function() c_gdk_delete_event_get_type;
 
 	// gdk.Device
 
 	GType function() c_gdk_device_get_type;
-	void function(GdkTimeCoord** events, int nEvents) c_gdk_device_free_history;
-	int function(GdkDisplay* display, GdkDevice* device, GdkWindow** grabWindow, int* ownerEvents) c_gdk_device_grab_info_libgtk_only;
-	GdkDevice* function(GdkDevice* device) c_gdk_device_get_associated_device;
-	GdkAxisFlags function(GdkDevice* device) c_gdk_device_get_axes;
-	int function(GdkDevice* device, double* axes, GdkAxisUse use, double* value) c_gdk_device_get_axis;
-	GdkAxisUse function(GdkDevice* device, uint index) c_gdk_device_get_axis_use;
-	int function(GdkDevice* device, double* axes, GdkAtom axisLabel, double* value) c_gdk_device_get_axis_value;
-	GdkDeviceType function(GdkDevice* device) c_gdk_device_get_device_type;
+	int function(GdkDevice* device) c_gdk_device_get_caps_lock_state;
+	GdkDeviceTool* function(GdkDevice* device) c_gdk_device_get_device_tool;
+	PangoDirection function(GdkDevice* device) c_gdk_device_get_direction;
 	GdkDisplay* function(GdkDevice* device) c_gdk_device_get_display;
 	int function(GdkDevice* device) c_gdk_device_get_has_cursor;
-	int function(GdkDevice* device, GdkWindow* window, uint start, uint stop, GdkTimeCoord*** events, int* nEvents) c_gdk_device_get_history;
-	int function(GdkDevice* device, uint index, uint* keyval, GdkModifierType* modifiers) c_gdk_device_get_key;
-	GdkWindow* function(GdkDevice* device) c_gdk_device_get_last_event_window;
-	GdkInputMode function(GdkDevice* device) c_gdk_device_get_mode;
-	int function(GdkDevice* device) c_gdk_device_get_n_axes;
-	int function(GdkDevice* device) c_gdk_device_get_n_keys;
+	GdkModifierType function(GdkDevice* device) c_gdk_device_get_modifier_state;
 	const(char)* function(GdkDevice* device) c_gdk_device_get_name;
-	void function(GdkDevice* device, GdkScreen** screen, int* x, int* y) c_gdk_device_get_position;
-	void function(GdkDevice* device, GdkScreen** screen, double* x, double* y) c_gdk_device_get_position_double;
+	int function(GdkDevice* device) c_gdk_device_get_num_lock_state;
+	uint function(GdkDevice* device) c_gdk_device_get_num_touches;
 	const(char)* function(GdkDevice* device) c_gdk_device_get_product_id;
+	int function(GdkDevice* device) c_gdk_device_get_scroll_lock_state;
 	GdkSeat* function(GdkDevice* device) c_gdk_device_get_seat;
 	GdkInputSource function(GdkDevice* device) c_gdk_device_get_source;
-	void function(GdkDevice* device, GdkWindow* window, double* axes, GdkModifierType* mask) c_gdk_device_get_state;
+	GdkSurface* function(GdkDevice* device, double* winX, double* winY) c_gdk_device_get_surface_at_position;
 	const(char)* function(GdkDevice* device) c_gdk_device_get_vendor_id;
-	GdkWindow* function(GdkDevice* device, int* winX, int* winY) c_gdk_device_get_window_at_position;
-	GdkWindow* function(GdkDevice* device, double* winX, double* winY) c_gdk_device_get_window_at_position_double;
-	GdkGrabStatus function(GdkDevice* device, GdkWindow* window, GdkGrabOwnership grabOwnership, int ownerEvents, GdkEventMask eventMask, GdkCursor* cursor, uint time) c_gdk_device_grab;
-	GList* function(GdkDevice* device) c_gdk_device_list_axes;
-	GList* function(GdkDevice* device) c_gdk_device_list_slave_devices;
-	void function(GdkDevice* device, uint index, GdkAxisUse use) c_gdk_device_set_axis_use;
-	void function(GdkDevice* device, uint index, uint keyval, GdkModifierType modifiers) c_gdk_device_set_key;
-	int function(GdkDevice* device, GdkInputMode mode) c_gdk_device_set_mode;
-	void function(GdkDevice* device, uint time) c_gdk_device_ungrab;
-	void function(GdkDevice* device, GdkScreen* screen, int x, int y) c_gdk_device_warp;
-
-	// gdk.DeviceManager
-
-	GType function() c_gdk_device_manager_get_type;
-	GdkDevice* function(GdkDeviceManager* deviceManager) c_gdk_device_manager_get_client_pointer;
-	GdkDisplay* function(GdkDeviceManager* deviceManager) c_gdk_device_manager_get_display;
-	GList* function(GdkDeviceManager* deviceManager, GdkDeviceType type) c_gdk_device_manager_list_devices;
-	void function() c_gdk_disable_multidevice;
+	int function(GdkDevice* device) c_gdk_device_has_bidi_layouts;
 
 	// gdk.DevicePad
 
@@ -850,6 +818,7 @@ __gshared extern(C)
 	// gdk.DeviceTool
 
 	GType function() c_gdk_device_tool_get_type;
+	GdkAxisFlags function(GdkDeviceTool* tool) c_gdk_device_tool_get_axes;
 	ulong function(GdkDeviceTool* tool) c_gdk_device_tool_get_hardware_id;
 	ulong function(GdkDeviceTool* tool) c_gdk_device_tool_get_serial;
 	GdkDeviceToolType function(GdkDeviceTool* tool) c_gdk_device_tool_get_tool_type;
@@ -859,52 +828,30 @@ __gshared extern(C)
 	GType function() c_gdk_display_get_type;
 	GdkDisplay* function() c_gdk_display_get_default;
 	GdkDisplay* function(const(char)* displayName) c_gdk_display_open;
-	GdkDisplay* function() c_gdk_display_open_default_libgtk_only;
 	void function(GdkDisplay* display) c_gdk_display_beep;
 	void function(GdkDisplay* display) c_gdk_display_close;
 	int function(GdkDisplay* display, GdkDevice* device) c_gdk_display_device_is_grabbed;
 	void function(GdkDisplay* display) c_gdk_display_flush;
 	GdkAppLaunchContext* function(GdkDisplay* display) c_gdk_display_get_app_launch_context;
-	uint function(GdkDisplay* display) c_gdk_display_get_default_cursor_size;
-	GdkWindow* function(GdkDisplay* display) c_gdk_display_get_default_group;
-	GdkScreen* function(GdkDisplay* display) c_gdk_display_get_default_screen;
+	GdkClipboard* function(GdkDisplay* display) c_gdk_display_get_clipboard;
 	GdkSeat* function(GdkDisplay* display) c_gdk_display_get_default_seat;
-	GdkDeviceManager* function(GdkDisplay* display) c_gdk_display_get_device_manager;
-	GdkEvent* function(GdkDisplay* display) c_gdk_display_get_event;
-	void function(GdkDisplay* display, uint* width, uint* height) c_gdk_display_get_maximal_cursor_size;
-	GdkMonitor* function(GdkDisplay* display, int monitorNum) c_gdk_display_get_monitor;
-	GdkMonitor* function(GdkDisplay* display, int x, int y) c_gdk_display_get_monitor_at_point;
-	GdkMonitor* function(GdkDisplay* display, GdkWindow* window) c_gdk_display_get_monitor_at_window;
-	int function(GdkDisplay* display) c_gdk_display_get_n_monitors;
-	int function(GdkDisplay* display) c_gdk_display_get_n_screens;
+	GdkMonitor* function(GdkDisplay* display, GdkSurface* surface) c_gdk_display_get_monitor_at_surface;
+	GListModel* function(GdkDisplay* self) c_gdk_display_get_monitors;
 	const(char)* function(GdkDisplay* display) c_gdk_display_get_name;
-	void function(GdkDisplay* display, GdkScreen** screen, int* x, int* y, GdkModifierType* mask) c_gdk_display_get_pointer;
-	GdkMonitor* function(GdkDisplay* display) c_gdk_display_get_primary_monitor;
-	GdkScreen* function(GdkDisplay* display, int screenNum) c_gdk_display_get_screen;
-	GdkWindow* function(GdkDisplay* display, int* winX, int* winY) c_gdk_display_get_window_at_pointer;
-	int function(GdkDisplay* display) c_gdk_display_has_pending;
+	GdkClipboard* function(GdkDisplay* display) c_gdk_display_get_primary_clipboard;
+	int function(GdkDisplay* display, const(char)* name, GValue* value) c_gdk_display_get_setting;
+	const(char)* function(GdkDisplay* display) c_gdk_display_get_startup_notification_id;
 	int function(GdkDisplay* display) c_gdk_display_is_closed;
-	void function(GdkDisplay* display, uint time) c_gdk_display_keyboard_ungrab;
-	GList* function(GdkDisplay* display) c_gdk_display_list_devices;
+	int function(GdkDisplay* display) c_gdk_display_is_composited;
+	int function(GdkDisplay* display) c_gdk_display_is_rgba;
 	GList* function(GdkDisplay* display) c_gdk_display_list_seats;
+	int function(GdkDisplay* display, uint keycode, GdkKeymapKey** keys, uint** keyvals, int* nEntries) c_gdk_display_map_keycode;
+	int function(GdkDisplay* display, uint keyval, GdkKeymapKey** keys, int* nKeys) c_gdk_display_map_keyval;
 	void function(GdkDisplay* display, const(char)* startupId) c_gdk_display_notify_startup_complete;
-	GdkEvent* function(GdkDisplay* display) c_gdk_display_peek_event;
-	int function(GdkDisplay* display) c_gdk_display_pointer_is_grabbed;
-	void function(GdkDisplay* display, uint time) c_gdk_display_pointer_ungrab;
 	void function(GdkDisplay* display, GdkEvent* event) c_gdk_display_put_event;
-	int function(GdkDisplay* display, GdkAtom selection) c_gdk_display_request_selection_notification;
-	void function(GdkDisplay* display, uint distance) c_gdk_display_set_double_click_distance;
-	void function(GdkDisplay* display, uint msec) c_gdk_display_set_double_click_time;
-	void function(GdkDisplay* display, GdkWindow* clipboardWindow, uint time, GdkAtom* targets, int nTargets) c_gdk_display_store_clipboard;
-	int function(GdkDisplay* display) c_gdk_display_supports_clipboard_persistence;
-	int function(GdkDisplay* display) c_gdk_display_supports_composite;
-	int function(GdkDisplay* display) c_gdk_display_supports_cursor_alpha;
-	int function(GdkDisplay* display) c_gdk_display_supports_cursor_color;
 	int function(GdkDisplay* display) c_gdk_display_supports_input_shapes;
-	int function(GdkDisplay* display) c_gdk_display_supports_selection_notification;
-	int function(GdkDisplay* display) c_gdk_display_supports_shapes;
 	void function(GdkDisplay* display) c_gdk_display_sync;
-	void function(GdkDisplay* display, GdkScreen* screen, int x, int y) c_gdk_display_warp_pointer;
+	int function(GdkDisplay* display, uint keycode, GdkModifierType state, int group, uint* keyval, int* effectiveGroup, int* level, GdkModifierType* consumed) c_gdk_display_translate_key;
 
 	// gdk.DisplayManager
 
@@ -915,92 +862,84 @@ __gshared extern(C)
 	GdkDisplay* function(GdkDisplayManager* manager, const(char)* name) c_gdk_display_manager_open_display;
 	void function(GdkDisplayManager* manager, GdkDisplay* display) c_gdk_display_manager_set_default_display;
 
-	// gdk.DragContext
+	// gdk.Drag
 
-	GType function() c_gdk_drag_context_get_type;
-	GdkDragAction function(GdkDragContext* context) c_gdk_drag_context_get_actions;
-	GdkWindow* function(GdkDragContext* context) c_gdk_drag_context_get_dest_window;
-	GdkDevice* function(GdkDragContext* context) c_gdk_drag_context_get_device;
-	GdkWindow* function(GdkDragContext* context) c_gdk_drag_context_get_drag_window;
-	GdkDragProtocol function(GdkDragContext* context) c_gdk_drag_context_get_protocol;
-	GdkDragAction function(GdkDragContext* context) c_gdk_drag_context_get_selected_action;
-	GdkWindow* function(GdkDragContext* context) c_gdk_drag_context_get_source_window;
-	GdkDragAction function(GdkDragContext* context) c_gdk_drag_context_get_suggested_action;
-	GList* function(GdkDragContext* context) c_gdk_drag_context_list_targets;
-	int function(GdkDragContext* context, GdkWindow* ipcWindow, GdkDragAction actions) c_gdk_drag_context_manage_dnd;
-	void function(GdkDragContext* context, GdkDevice* device) c_gdk_drag_context_set_device;
-	void function(GdkDragContext* context, int hotX, int hotY) c_gdk_drag_context_set_hotspot;
-	void function(GdkDragContext* context, uint time) c_gdk_drag_abort;
-	GdkDragContext* function(GdkWindow* window, GList* targets) c_gdk_drag_begin;
-	GdkDragContext* function(GdkWindow* window, GdkDevice* device, GList* targets) c_gdk_drag_begin_for_device;
-	GdkDragContext* function(GdkWindow* window, GdkDevice* device, GList* targets, int xRoot, int yRoot) c_gdk_drag_begin_from_point;
-	void function(GdkDragContext* context, uint time) c_gdk_drag_drop;
-	void function(GdkDragContext* context, int success) c_gdk_drag_drop_done;
-	int function(GdkDragContext* context) c_gdk_drag_drop_succeeded;
-	void function(GdkDragContext* context, GdkWindow* dragWindow, GdkScreen* screen, int xRoot, int yRoot, GdkWindow** destWindow, GdkDragProtocol* protocol) c_gdk_drag_find_window_for_screen;
-	GdkAtom function(GdkDragContext* context) c_gdk_drag_get_selection;
-	int function(GdkDragContext* context, GdkWindow* destWindow, GdkDragProtocol protocol, int xRoot, int yRoot, GdkDragAction suggestedAction, GdkDragAction possibleActions, uint time) c_gdk_drag_motion;
-	void function(GdkDragContext* context, GdkDragAction action, uint time) c_gdk_drag_status;
-	void function(GdkDragContext* context, int success, uint time) c_gdk_drop_finish;
-	void function(GdkDragContext* context, int accepted, uint time) c_gdk_drop_reply;
+	GType function() c_gdk_drag_get_type;
+	GdkDrag* function(GdkSurface* surface, GdkDevice* device, GdkContentProvider* content, GdkDragAction actions, double dx, double dy) c_gdk_drag_begin;
+	void function(GdkDrag* drag, int success) c_gdk_drag_drop_done;
+	GdkDragAction function(GdkDrag* drag) c_gdk_drag_get_actions;
+	GdkContentProvider* function(GdkDrag* drag) c_gdk_drag_get_content;
+	GdkDevice* function(GdkDrag* drag) c_gdk_drag_get_device;
+	GdkDisplay* function(GdkDrag* drag) c_gdk_drag_get_display;
+	GdkSurface* function(GdkDrag* drag) c_gdk_drag_get_drag_surface;
+	GdkContentFormats* function(GdkDrag* drag) c_gdk_drag_get_formats;
+	GdkDragAction function(GdkDrag* drag) c_gdk_drag_get_selected_action;
+	GdkSurface* function(GdkDrag* drag) c_gdk_drag_get_surface;
+	void function(GdkDrag* drag, int hotX, int hotY) c_gdk_drag_set_hotspot;
 
-	// gdk.DrawingContext
+	// gdk.DragSurface
 
-	GType function() c_gdk_drawing_context_get_type;
-	cairo_t* function(GdkDrawingContext* context) c_gdk_drawing_context_get_cairo_context;
-	cairo_region_t* function(GdkDrawingContext* context) c_gdk_drawing_context_get_clip;
-	GdkWindow* function(GdkDrawingContext* context) c_gdk_drawing_context_get_window;
-	int function(GdkDrawingContext* context) c_gdk_drawing_context_is_valid;
+	GType function() c_gdk_drag_surface_get_type;
+	int function(GdkDragSurface* dragSurface, int width, int height) c_gdk_drag_surface_present;
+
+	// gdk.DrawContext
+
+	GType function() c_gdk_draw_context_get_type;
+	void function(GdkDrawContext* context, cairo_region_t* region) c_gdk_draw_context_begin_frame;
+	void function(GdkDrawContext* context) c_gdk_draw_context_end_frame;
+	GdkDisplay* function(GdkDrawContext* context) c_gdk_draw_context_get_display;
+	cairo_region_t* function(GdkDrawContext* context) c_gdk_draw_context_get_frame_region;
+	GdkSurface* function(GdkDrawContext* context) c_gdk_draw_context_get_surface;
+	int function(GdkDrawContext* context) c_gdk_draw_context_is_in_frame;
+
+	// gdk.Drop
+
+	GType function() c_gdk_drop_get_type;
+	void function(GdkDrop* self, GdkDragAction action) c_gdk_drop_finish;
+	GdkDragAction function(GdkDrop* self) c_gdk_drop_get_actions;
+	GdkDevice* function(GdkDrop* self) c_gdk_drop_get_device;
+	GdkDisplay* function(GdkDrop* self) c_gdk_drop_get_display;
+	GdkDrag* function(GdkDrop* self) c_gdk_drop_get_drag;
+	GdkContentFormats* function(GdkDrop* self) c_gdk_drop_get_formats;
+	GdkSurface* function(GdkDrop* self) c_gdk_drop_get_surface;
+	void function(GdkDrop* self, char** mimeTypes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_drop_read_async;
+	GInputStream* function(GdkDrop* self, GAsyncResult* result, char** outMimeType, GError** err) c_gdk_drop_read_finish;
+	void function(GdkDrop* self, GType type, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_drop_read_value_async;
+	GValue* function(GdkDrop* self, GAsyncResult* result, GError** err) c_gdk_drop_read_value_finish;
+	void function(GdkDrop* self, GdkDragAction actions, GdkDragAction preferred) c_gdk_drop_status;
 
 	// gdk.Event
 
 	GType function() c_gdk_event_get_type;
-	GdkEvent* function(GdkEventType type) c_gdk_event_new;
 	int function(GdkEvent* event1, GdkEvent* event2, double* angle) c_gdk_events_get_angle;
 	int function(GdkEvent* event1, GdkEvent* event2, double* x, double* y) c_gdk_events_get_center;
 	int function(GdkEvent* event1, GdkEvent* event2, double* distance) c_gdk_events_get_distance;
-	GdkEvent* function(GdkEvent* event) c_gdk_event_copy;
-	void function(GdkEvent* event) c_gdk_event_free;
+	int function(GdkEvent* event, double** axes, uint* nAxes) c_gdk_event_get_axes;
 	int function(GdkEvent* event, GdkAxisUse axisUse, double* value) c_gdk_event_get_axis;
-	int function(GdkEvent* event, uint* button) c_gdk_event_get_button;
-	int function(GdkEvent* event, uint* clickCount) c_gdk_event_get_click_count;
-	int function(GdkEvent* event, double* xWin, double* yWin) c_gdk_event_get_coords;
 	GdkDevice* function(GdkEvent* event) c_gdk_event_get_device;
 	GdkDeviceTool* function(GdkEvent* event) c_gdk_event_get_device_tool;
+	GdkDisplay* function(GdkEvent* event) c_gdk_event_get_display;
 	GdkEventSequence* function(GdkEvent* event) c_gdk_event_get_event_sequence;
 	GdkEventType function(GdkEvent* event) c_gdk_event_get_event_type;
-	int function(GdkEvent* event, ushort* keycode) c_gdk_event_get_keycode;
-	int function(GdkEvent* event, uint* keyval) c_gdk_event_get_keyval;
+	GdkTimeCoord* function(GdkEvent* event, uint* outNCoords) c_gdk_event_get_history;
+	GdkModifierType function(GdkEvent* event) c_gdk_event_get_modifier_state;
 	int function(GdkEvent* event) c_gdk_event_get_pointer_emulated;
-	int function(GdkEvent* event, double* xRoot, double* yRoot) c_gdk_event_get_root_coords;
-	int function(GdkEvent* event) c_gdk_event_get_scancode;
-	GdkScreen* function(GdkEvent* event) c_gdk_event_get_screen;
-	int function(GdkEvent* event, double* deltaX, double* deltaY) c_gdk_event_get_scroll_deltas;
-	int function(GdkEvent* event, GdkScrollDirection* direction) c_gdk_event_get_scroll_direction;
+	int function(GdkEvent* event, double* x, double* y) c_gdk_event_get_position;
 	GdkSeat* function(GdkEvent* event) c_gdk_event_get_seat;
-	GdkDevice* function(GdkEvent* event) c_gdk_event_get_source_device;
-	int function(GdkEvent* event, GdkModifierType* state) c_gdk_event_get_state;
+	GdkSurface* function(GdkEvent* event) c_gdk_event_get_surface;
 	uint function(GdkEvent* event) c_gdk_event_get_time;
-	GdkWindow* function(GdkEvent* event) c_gdk_event_get_window;
-	int function(GdkEvent* event) c_gdk_event_is_scroll_stop_event;
-	void function(GdkEvent* event) c_gdk_event_put;
-	void function(GdkEvent* event, GdkDevice* device) c_gdk_event_set_device;
-	void function(GdkEvent* event, GdkDeviceTool* tool) c_gdk_event_set_device_tool;
-	void function(GdkEvent* event, GdkScreen* screen) c_gdk_event_set_screen;
-	void function(GdkEvent* event, GdkDevice* device) c_gdk_event_set_source_device;
+	GdkEvent* function(GdkEvent* event) c_gdk_event_ref;
 	int function(GdkEvent* event) c_gdk_event_triggers_context_menu;
-	GdkEvent* function() c_gdk_event_get;
-	void function(GdkEventFunc func, void* data, GDestroyNotify notify) c_gdk_event_handler_set;
-	GdkEvent* function() c_gdk_event_peek;
-	void function(GdkEventMotion* event) c_gdk_event_request_motions;
-	int function() c_gdk_events_pending;
-	int function() c_gdk_get_show_events;
-	void function(int showEvents) c_gdk_set_show_events;
-	int function(const(char)* name, GValue* value) c_gdk_setting_get;
+	void function(GdkEvent* event) c_gdk_event_unref;
 
 	// gdk.EventSequence
 
 	GType function() c_gdk_event_sequence_get_type;
+
+	// gdk.FocusEvent
+
+	GType function() c_gdk_focus_event_get_type;
+	int function(GdkEvent* event) c_gdk_focus_event_get_in;
 
 	// gdk.FrameClock
 
@@ -1008,6 +947,7 @@ __gshared extern(C)
 	void function(GdkFrameClock* frameClock) c_gdk_frame_clock_begin_updating;
 	void function(GdkFrameClock* frameClock) c_gdk_frame_clock_end_updating;
 	GdkFrameTimings* function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_current_timings;
+	double function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_fps;
 	long function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_frame_counter;
 	long function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_frame_time;
 	long function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_history_start;
@@ -1037,9 +977,9 @@ __gshared extern(C)
 	int function(GdkGLContext* context) c_gdk_gl_context_get_forward_compatible;
 	void function(GdkGLContext* context, int* major, int* minor) c_gdk_gl_context_get_required_version;
 	GdkGLContext* function(GdkGLContext* context) c_gdk_gl_context_get_shared_context;
+	GdkSurface* function(GdkGLContext* context) c_gdk_gl_context_get_surface;
 	int function(GdkGLContext* context) c_gdk_gl_context_get_use_es;
 	void function(GdkGLContext* context, int* major, int* minor) c_gdk_gl_context_get_version;
-	GdkWindow* function(GdkGLContext* context) c_gdk_gl_context_get_window;
 	int function(GdkGLContext* context) c_gdk_gl_context_is_legacy;
 	void function(GdkGLContext* context) c_gdk_gl_context_make_current;
 	int function(GdkGLContext* context, GError** err) c_gdk_gl_context_realize;
@@ -1048,37 +988,39 @@ __gshared extern(C)
 	void function(GdkGLContext* context, int major, int minor) c_gdk_gl_context_set_required_version;
 	void function(GdkGLContext* context, int useEs) c_gdk_gl_context_set_use_es;
 
-	// gdk.Keymap
+	// gdk.GLTexture
 
-	GType function() c_gdk_keymap_get_type;
-	GdkKeymap* function() c_gdk_keymap_get_default;
-	GdkKeymap* function(GdkDisplay* display) c_gdk_keymap_get_for_display;
-	void function(GdkKeymap* keymap, GdkModifierType* state) c_gdk_keymap_add_virtual_modifiers;
-	int function(GdkKeymap* keymap) c_gdk_keymap_get_caps_lock_state;
-	PangoDirection function(GdkKeymap* keymap) c_gdk_keymap_get_direction;
-	int function(GdkKeymap* keymap, uint hardwareKeycode, GdkKeymapKey** keys, uint** keyvals, int* nEntries) c_gdk_keymap_get_entries_for_keycode;
-	int function(GdkKeymap* keymap, uint keyval, GdkKeymapKey** keys, int* nKeys) c_gdk_keymap_get_entries_for_keyval;
-	GdkModifierType function(GdkKeymap* keymap, GdkModifierIntent intent) c_gdk_keymap_get_modifier_mask;
-	uint function(GdkKeymap* keymap) c_gdk_keymap_get_modifier_state;
-	int function(GdkKeymap* keymap) c_gdk_keymap_get_num_lock_state;
-	int function(GdkKeymap* keymap) c_gdk_keymap_get_scroll_lock_state;
-	int function(GdkKeymap* keymap) c_gdk_keymap_have_bidi_layouts;
-	uint function(GdkKeymap* keymap, GdkKeymapKey* key) c_gdk_keymap_lookup_key;
-	int function(GdkKeymap* keymap, GdkModifierType* state) c_gdk_keymap_map_virtual_modifiers;
-	int function(GdkKeymap* keymap, uint hardwareKeycode, GdkModifierType state, int group, uint* keyval, int* effectiveGroup, int* level, GdkModifierType* consumedModifiers) c_gdk_keymap_translate_keyboard_state;
-	void function(uint symbol, uint* lower, uint* upper) c_gdk_keyval_convert_case;
-	uint function(const(char)* keyvalName) c_gdk_keyval_from_name;
-	int function(uint keyval) c_gdk_keyval_is_lower;
-	int function(uint keyval) c_gdk_keyval_is_upper;
-	char* function(uint keyval) c_gdk_keyval_name;
-	uint function(uint keyval) c_gdk_keyval_to_lower;
-	uint function(uint keyval) c_gdk_keyval_to_unicode;
-	uint function(uint keyval) c_gdk_keyval_to_upper;
-	uint function(uint wc) c_gdk_unicode_to_keyval;
+	GType function() c_gdk_gl_texture_get_type;
+	GdkTexture* function(GdkGLContext* context, uint id, int width, int height, GDestroyNotify destroy, void* data) c_gdk_gl_texture_new;
+	void function(GdkGLTexture* self) c_gdk_gl_texture_release;
 
-	// gdk.MonitorG
+	// gdk.GrabBrokenEvent
+
+	GType function() c_gdk_grab_broken_event_get_type;
+	GdkSurface* function(GdkEvent* event) c_gdk_grab_broken_event_get_grab_surface;
+	int function(GdkEvent* event) c_gdk_grab_broken_event_get_implicit;
+
+	// gdk.KeyEvent
+
+	GType function() c_gdk_key_event_get_type;
+	GdkModifierType function(GdkEvent* event) c_gdk_key_event_get_consumed_modifiers;
+	uint function(GdkEvent* event) c_gdk_key_event_get_keycode;
+	uint function(GdkEvent* event) c_gdk_key_event_get_keyval;
+	uint function(GdkEvent* event) c_gdk_key_event_get_layout;
+	uint function(GdkEvent* event) c_gdk_key_event_get_level;
+	int function(GdkEvent* event, uint* keyval, GdkModifierType* modifiers) c_gdk_key_event_get_match;
+	int function(GdkEvent* event) c_gdk_key_event_is_modifier;
+	GdkKeyMatch function(GdkEvent* event, uint keyval, GdkModifierType modifiers) c_gdk_key_event_matches;
+
+	// gdk.MemoryTexture
+
+	GType function() c_gdk_memory_texture_get_type;
+	GdkTexture* function(int width, int height, GdkMemoryFormat format, GBytes* bytes, size_t stride) c_gdk_memory_texture_new;
+
+	// gdk.MonitorGdk
 
 	GType function() c_gdk_monitor_get_type;
+	const(char)* function(GdkMonitor* monitor) c_gdk_monitor_get_connector;
 	GdkDisplay* function(GdkMonitor* monitor) c_gdk_monitor_get_display;
 	void function(GdkMonitor* monitor, GdkRectangle* geometry) c_gdk_monitor_get_geometry;
 	int function(GdkMonitor* monitor) c_gdk_monitor_get_height_mm;
@@ -1088,8 +1030,66 @@ __gshared extern(C)
 	int function(GdkMonitor* monitor) c_gdk_monitor_get_scale_factor;
 	GdkSubpixelLayout function(GdkMonitor* monitor) c_gdk_monitor_get_subpixel_layout;
 	int function(GdkMonitor* monitor) c_gdk_monitor_get_width_mm;
-	void function(GdkMonitor* monitor, GdkRectangle* workarea) c_gdk_monitor_get_workarea;
-	int function(GdkMonitor* monitor) c_gdk_monitor_is_primary;
+	int function(GdkMonitor* monitor) c_gdk_monitor_is_valid;
+
+	// gdk.MotionEvent
+
+	GType function() c_gdk_motion_event_get_type;
+
+	// gdk.PadEvent
+
+	GType function() c_gdk_pad_event_get_type;
+	void function(GdkEvent* event, uint* index, double* value) c_gdk_pad_event_get_axis_value;
+	uint function(GdkEvent* event) c_gdk_pad_event_get_button;
+	void function(GdkEvent* event, uint* group, uint* mode) c_gdk_pad_event_get_group_mode;
+
+	// gdk.Paintable
+
+	GType function() c_gdk_paintable_get_type;
+	GdkPaintable* function(int intrinsicWidth, int intrinsicHeight) c_gdk_paintable_new_empty;
+	void function(GdkPaintable* paintable, double specifiedWidth, double specifiedHeight, double defaultWidth, double defaultHeight, double* concreteWidth, double* concreteHeight) c_gdk_paintable_compute_concrete_size;
+	GdkPaintable* function(GdkPaintable* paintable) c_gdk_paintable_get_current_image;
+	GdkPaintableFlags function(GdkPaintable* paintable) c_gdk_paintable_get_flags;
+	double function(GdkPaintable* paintable) c_gdk_paintable_get_intrinsic_aspect_ratio;
+	int function(GdkPaintable* paintable) c_gdk_paintable_get_intrinsic_height;
+	int function(GdkPaintable* paintable) c_gdk_paintable_get_intrinsic_width;
+	void function(GdkPaintable* paintable) c_gdk_paintable_invalidate_contents;
+	void function(GdkPaintable* paintable) c_gdk_paintable_invalidate_size;
+	void function(GdkPaintable* paintable, GdkSnapshot* snapshot, double width, double height) c_gdk_paintable_snapshot;
+
+	// gdk.Popup
+
+	GType function() c_gdk_popup_get_type;
+	int function(GdkPopup* popup) c_gdk_popup_get_autohide;
+	GdkSurface* function(GdkPopup* popup) c_gdk_popup_get_parent;
+	int function(GdkPopup* popup) c_gdk_popup_get_position_x;
+	int function(GdkPopup* popup) c_gdk_popup_get_position_y;
+	GdkGravity function(GdkPopup* popup) c_gdk_popup_get_rect_anchor;
+	GdkGravity function(GdkPopup* popup) c_gdk_popup_get_surface_anchor;
+	int function(GdkPopup* popup, int width, int height, GdkPopupLayout* layout) c_gdk_popup_present;
+
+	// gdk.PopupLayout
+
+	GType function() c_gdk_popup_layout_get_type;
+	GdkPopupLayout* function(GdkRectangle* anchorRect, GdkGravity rectAnchor, GdkGravity surfaceAnchor) c_gdk_popup_layout_new;
+	GdkPopupLayout* function(GdkPopupLayout* layout) c_gdk_popup_layout_copy;
+	int function(GdkPopupLayout* layout, GdkPopupLayout* other) c_gdk_popup_layout_equal;
+	GdkAnchorHints function(GdkPopupLayout* layout) c_gdk_popup_layout_get_anchor_hints;
+	GdkRectangle* function(GdkPopupLayout* layout) c_gdk_popup_layout_get_anchor_rect;
+	void function(GdkPopupLayout* layout, int* dx, int* dy) c_gdk_popup_layout_get_offset;
+	GdkGravity function(GdkPopupLayout* layout) c_gdk_popup_layout_get_rect_anchor;
+	GdkGravity function(GdkPopupLayout* layout) c_gdk_popup_layout_get_surface_anchor;
+	GdkPopupLayout* function(GdkPopupLayout* layout) c_gdk_popup_layout_ref;
+	void function(GdkPopupLayout* layout, GdkAnchorHints anchorHints) c_gdk_popup_layout_set_anchor_hints;
+	void function(GdkPopupLayout* layout, GdkRectangle* anchorRect) c_gdk_popup_layout_set_anchor_rect;
+	void function(GdkPopupLayout* layout, int dx, int dy) c_gdk_popup_layout_set_offset;
+	void function(GdkPopupLayout* layout, GdkGravity anchor) c_gdk_popup_layout_set_rect_anchor;
+	void function(GdkPopupLayout* layout, GdkGravity anchor) c_gdk_popup_layout_set_surface_anchor;
+	void function(GdkPopupLayout* layout) c_gdk_popup_layout_unref;
+
+	// gdk.ProximityEvent
+
+	GType function() c_gdk_proximity_event_get_type;
 
 	// gdk.RGBA
 
@@ -1098,452 +1098,313 @@ __gshared extern(C)
 	int function(void* p1, void* p2) c_gdk_rgba_equal;
 	void function(GdkRGBA* rgba) c_gdk_rgba_free;
 	uint function(void* p) c_gdk_rgba_hash;
+	int function(GdkRGBA* rgba) c_gdk_rgba_is_clear;
+	int function(GdkRGBA* rgba) c_gdk_rgba_is_opaque;
 	int function(GdkRGBA* rgba, const(char)* spec) c_gdk_rgba_parse;
 	char* function(GdkRGBA* rgba) c_gdk_rgba_to_string;
 
 	// gdk.Rectangle
 
 	GType function() c_gdk_rectangle_get_type;
+	int function(GdkRectangle* rect, int x, int y) c_gdk_rectangle_contains_point;
 	int function(GdkRectangle* rect1, GdkRectangle* rect2) c_gdk_rectangle_equal;
 	int function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_intersect;
 	void function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_union;
 
-	// gdk.Screen
+	// gdk.ScrollEvent
 
-	GType function() c_gdk_screen_get_type;
-	GdkScreen* function() c_gdk_screen_get_default;
-	int function() c_gdk_screen_height;
-	int function() c_gdk_screen_height_mm;
-	int function() c_gdk_screen_width;
-	int function() c_gdk_screen_width_mm;
-	GdkWindow* function(GdkScreen* screen) c_gdk_screen_get_active_window;
-	GdkDisplay* function(GdkScreen* screen) c_gdk_screen_get_display;
-	cairo_font_options_t* function(GdkScreen* screen) c_gdk_screen_get_font_options;
-	int function(GdkScreen* screen) c_gdk_screen_get_height;
-	int function(GdkScreen* screen) c_gdk_screen_get_height_mm;
-	int function(GdkScreen* screen, int x, int y) c_gdk_screen_get_monitor_at_point;
-	int function(GdkScreen* screen, GdkWindow* window) c_gdk_screen_get_monitor_at_window;
-	void function(GdkScreen* screen, int monitorNum, GdkRectangle* dest) c_gdk_screen_get_monitor_geometry;
-	int function(GdkScreen* screen, int monitorNum) c_gdk_screen_get_monitor_height_mm;
-	char* function(GdkScreen* screen, int monitorNum) c_gdk_screen_get_monitor_plug_name;
-	int function(GdkScreen* screen, int monitorNum) c_gdk_screen_get_monitor_scale_factor;
-	int function(GdkScreen* screen, int monitorNum) c_gdk_screen_get_monitor_width_mm;
-	void function(GdkScreen* screen, int monitorNum, GdkRectangle* dest) c_gdk_screen_get_monitor_workarea;
-	int function(GdkScreen* screen) c_gdk_screen_get_n_monitors;
-	int function(GdkScreen* screen) c_gdk_screen_get_number;
-	int function(GdkScreen* screen) c_gdk_screen_get_primary_monitor;
-	double function(GdkScreen* screen) c_gdk_screen_get_resolution;
-	GdkVisual* function(GdkScreen* screen) c_gdk_screen_get_rgba_visual;
-	GdkWindow* function(GdkScreen* screen) c_gdk_screen_get_root_window;
-	int function(GdkScreen* screen, const(char)* name, GValue* value) c_gdk_screen_get_setting;
-	GdkVisual* function(GdkScreen* screen) c_gdk_screen_get_system_visual;
-	GList* function(GdkScreen* screen) c_gdk_screen_get_toplevel_windows;
-	int function(GdkScreen* screen) c_gdk_screen_get_width;
-	int function(GdkScreen* screen) c_gdk_screen_get_width_mm;
-	GList* function(GdkScreen* screen) c_gdk_screen_get_window_stack;
-	int function(GdkScreen* screen) c_gdk_screen_is_composited;
-	GList* function(GdkScreen* screen) c_gdk_screen_list_visuals;
-	char* function(GdkScreen* screen) c_gdk_screen_make_display_name;
-	void function(GdkScreen* screen, cairo_font_options_t* options) c_gdk_screen_set_font_options;
-	void function(GdkScreen* screen, double dpi) c_gdk_screen_set_resolution;
+	GType function() c_gdk_scroll_event_get_type;
+	void function(GdkEvent* event, double* deltaX, double* deltaY) c_gdk_scroll_event_get_deltas;
+	GdkScrollDirection function(GdkEvent* event) c_gdk_scroll_event_get_direction;
+	int function(GdkEvent* event) c_gdk_scroll_event_is_stop;
 
 	// gdk.Seat
 
 	GType function() c_gdk_seat_get_type;
 	GdkSeatCapabilities function(GdkSeat* seat) c_gdk_seat_get_capabilities;
+	GList* function(GdkSeat* seat, GdkSeatCapabilities capabilities) c_gdk_seat_get_devices;
 	GdkDisplay* function(GdkSeat* seat) c_gdk_seat_get_display;
 	GdkDevice* function(GdkSeat* seat) c_gdk_seat_get_keyboard;
 	GdkDevice* function(GdkSeat* seat) c_gdk_seat_get_pointer;
-	GList* function(GdkSeat* seat, GdkSeatCapabilities capabilities) c_gdk_seat_get_slaves;
-	GdkGrabStatus function(GdkSeat* seat, GdkWindow* window, GdkSeatCapabilities capabilities, int ownerEvents, GdkCursor* cursor, GdkEvent* event, GdkSeatGrabPrepareFunc prepareFunc, void* prepareFuncData) c_gdk_seat_grab;
-	void function(GdkSeat* seat) c_gdk_seat_ungrab;
+	GList* function(GdkSeat* seat) c_gdk_seat_get_tools;
 
-	// gdk.Visual
+	// gdk.Snapshot
 
-	GType function() c_gdk_visual_get_type;
-	GdkVisual* function() c_gdk_visual_get_best;
-	int function() c_gdk_visual_get_best_depth;
-	GdkVisualType function() c_gdk_visual_get_best_type;
-	GdkVisual* function(int depth, GdkVisualType visualType) c_gdk_visual_get_best_with_both;
-	GdkVisual* function(int depth) c_gdk_visual_get_best_with_depth;
-	GdkVisual* function(GdkVisualType visualType) c_gdk_visual_get_best_with_type;
-	GdkVisual* function() c_gdk_visual_get_system;
-	int function(GdkVisual* visual) c_gdk_visual_get_bits_per_rgb;
-	void function(GdkVisual* visual, uint* mask, int* shift, int* precision) c_gdk_visual_get_blue_pixel_details;
-	GdkByteOrder function(GdkVisual* visual) c_gdk_visual_get_byte_order;
-	int function(GdkVisual* visual) c_gdk_visual_get_colormap_size;
-	int function(GdkVisual* visual) c_gdk_visual_get_depth;
-	void function(GdkVisual* visual, uint* mask, int* shift, int* precision) c_gdk_visual_get_green_pixel_details;
-	void function(GdkVisual* visual, uint* mask, int* shift, int* precision) c_gdk_visual_get_red_pixel_details;
-	GdkScreen* function(GdkVisual* visual) c_gdk_visual_get_screen;
-	GdkVisualType function(GdkVisual* visual) c_gdk_visual_get_visual_type;
-	GList* function() c_gdk_list_visuals;
-	void function(int** depths, int* count) c_gdk_query_depths;
-	void function(GdkVisualType** visualTypes, int* count) c_gdk_query_visual_types;
+	GType function() c_gdk_snapshot_get_type;
 
-	// gdk.Window
+	// gdk.Surface
 
-	GType function() c_gdk_window_get_type;
-	GdkWindow* function(GdkWindow* parent, GdkWindowAttr* attributes, int attributesMask) c_gdk_window_new;
-	GdkWindow* function(int* winX, int* winY) c_gdk_window_at_pointer;
-	void function(GdkGeometry* geometry, GdkWindowHints flags, int width, int height, int* newWidth, int* newHeight) c_gdk_window_constrain_size;
-	void function() c_gdk_window_process_all_updates;
-	void function(int setting) c_gdk_window_set_debug_updates;
-	void function(GdkWindow* window, GdkFilterFunc function_, void* data) c_gdk_window_add_filter;
-	void function(GdkWindow* window) c_gdk_window_beep;
-	GdkDrawingContext* function(GdkWindow* window, cairo_region_t* region) c_gdk_window_begin_draw_frame;
-	void function(GdkWindow* window, int button, int rootX, int rootY, uint timestamp) c_gdk_window_begin_move_drag;
-	void function(GdkWindow* window, GdkDevice* device, int button, int rootX, int rootY, uint timestamp) c_gdk_window_begin_move_drag_for_device;
-	void function(GdkWindow* window, GdkRectangle* rectangle) c_gdk_window_begin_paint_rect;
-	void function(GdkWindow* window, cairo_region_t* region) c_gdk_window_begin_paint_region;
-	void function(GdkWindow* window, GdkWindowEdge edge, int button, int rootX, int rootY, uint timestamp) c_gdk_window_begin_resize_drag;
-	void function(GdkWindow* window, GdkWindowEdge edge, GdkDevice* device, int button, int rootX, int rootY, uint timestamp) c_gdk_window_begin_resize_drag_for_device;
-	void function(GdkWindow* window) c_gdk_window_configure_finished;
-	void function(GdkWindow* window, double parentX, double parentY, double* x, double* y) c_gdk_window_coords_from_parent;
-	void function(GdkWindow* window, double x, double y, double* parentX, double* parentY) c_gdk_window_coords_to_parent;
-	GdkGLContext* function(GdkWindow* window, GError** err) c_gdk_window_create_gl_context;
-	cairo_surface_t* function(GdkWindow* window, cairo_format_t format, int width, int height, int scale) c_gdk_window_create_similar_image_surface;
-	cairo_surface_t* function(GdkWindow* window, cairo_content_t content, int width, int height) c_gdk_window_create_similar_surface;
-	void function(GdkWindow* window) c_gdk_window_deiconify;
-	void function(GdkWindow* window) c_gdk_window_destroy;
-	void function(GdkWindow* window) c_gdk_window_destroy_notify;
-	void function(GdkWindow* window) c_gdk_window_enable_synchronized_configure;
-	void function(GdkWindow* window, GdkDrawingContext* context) c_gdk_window_end_draw_frame;
-	void function(GdkWindow* window) c_gdk_window_end_paint;
-	int function(GdkWindow* window) c_gdk_window_ensure_native;
-	void function(GdkWindow* window) c_gdk_window_flush;
-	void function(GdkWindow* window, uint timestamp) c_gdk_window_focus;
-	void function(GdkWindow* window) c_gdk_window_freeze_toplevel_updates_libgtk_only;
-	void function(GdkWindow* window) c_gdk_window_freeze_updates;
-	void function(GdkWindow* window) c_gdk_window_fullscreen;
-	void function(GdkWindow* window, int monitor) c_gdk_window_fullscreen_on_monitor;
-	void function(GdkWindow* window) c_gdk_window_geometry_changed;
-	int function(GdkWindow* window) c_gdk_window_get_accept_focus;
-	cairo_pattern_t* function(GdkWindow* window) c_gdk_window_get_background_pattern;
-	GList* function(GdkWindow* window) c_gdk_window_get_children;
-	GList* function(GdkWindow* window, void* userData) c_gdk_window_get_children_with_user_data;
-	cairo_region_t* function(GdkWindow* window) c_gdk_window_get_clip_region;
-	int function(GdkWindow* window) c_gdk_window_get_composited;
-	GdkCursor* function(GdkWindow* window) c_gdk_window_get_cursor;
-	int function(GdkWindow* window, GdkWMDecoration* decorations) c_gdk_window_get_decorations;
-	GdkCursor* function(GdkWindow* window, GdkDevice* device) c_gdk_window_get_device_cursor;
-	GdkEventMask function(GdkWindow* window, GdkDevice* device) c_gdk_window_get_device_events;
-	GdkWindow* function(GdkWindow* window, GdkDevice* device, int* x, int* y, GdkModifierType* mask) c_gdk_window_get_device_position;
-	GdkWindow* function(GdkWindow* window, GdkDevice* device, double* x, double* y, GdkModifierType* mask) c_gdk_window_get_device_position_double;
-	GdkDisplay* function(GdkWindow* window) c_gdk_window_get_display;
-	GdkDragProtocol function(GdkWindow* window, GdkWindow** target) c_gdk_window_get_drag_protocol;
-	GdkWindow* function(GdkWindow* window) c_gdk_window_get_effective_parent;
-	GdkWindow* function(GdkWindow* window) c_gdk_window_get_effective_toplevel;
-	int function(GdkWindow* window) c_gdk_window_get_event_compression;
-	GdkEventMask function(GdkWindow* window) c_gdk_window_get_events;
-	int function(GdkWindow* window) c_gdk_window_get_focus_on_map;
-	GdkFrameClock* function(GdkWindow* window) c_gdk_window_get_frame_clock;
-	void function(GdkWindow* window, GdkRectangle* rect) c_gdk_window_get_frame_extents;
-	GdkFullscreenMode function(GdkWindow* window) c_gdk_window_get_fullscreen_mode;
-	void function(GdkWindow* window, int* x, int* y, int* width, int* height) c_gdk_window_get_geometry;
-	GdkWindow* function(GdkWindow* window) c_gdk_window_get_group;
-	int function(GdkWindow* window) c_gdk_window_get_height;
-	int function(GdkWindow* window) c_gdk_window_get_modal_hint;
-	int function(GdkWindow* window, int* x, int* y) c_gdk_window_get_origin;
-	GdkWindow* function(GdkWindow* window) c_gdk_window_get_parent;
-	int function(GdkWindow* window) c_gdk_window_get_pass_through;
-	GdkWindow* function(GdkWindow* window, int* x, int* y, GdkModifierType* mask) c_gdk_window_get_pointer;
-	void function(GdkWindow* window, int* x, int* y) c_gdk_window_get_position;
-	void function(GdkWindow* window, int x, int y, int* rootX, int* rootY) c_gdk_window_get_root_coords;
-	void function(GdkWindow* window, int* x, int* y) c_gdk_window_get_root_origin;
-	int function(GdkWindow* window) c_gdk_window_get_scale_factor;
-	GdkScreen* function(GdkWindow* window) c_gdk_window_get_screen;
-	GdkEventMask function(GdkWindow* window, GdkInputSource source) c_gdk_window_get_source_events;
-	GdkWindowState function(GdkWindow* window) c_gdk_window_get_state;
-	int function(GdkWindow* window) c_gdk_window_get_support_multidevice;
-	GdkWindow* function(GdkWindow* window) c_gdk_window_get_toplevel;
-	GdkWindowTypeHint function(GdkWindow* window) c_gdk_window_get_type_hint;
-	cairo_region_t* function(GdkWindow* window) c_gdk_window_get_update_area;
-	void function(GdkWindow* window, void** data) c_gdk_window_get_user_data;
-	cairo_region_t* function(GdkWindow* window) c_gdk_window_get_visible_region;
-	GdkVisual* function(GdkWindow* window) c_gdk_window_get_visual;
-	int function(GdkWindow* window) c_gdk_window_get_width;
-	GdkWindowType function(GdkWindow* window) c_gdk_window_get_window_type;
-	int function(GdkWindow* window) c_gdk_window_has_native;
-	void function(GdkWindow* window) c_gdk_window_hide;
-	void function(GdkWindow* window) c_gdk_window_iconify;
-	void function(GdkWindow* window, cairo_region_t* shapeRegion, int offsetX, int offsetY) c_gdk_window_input_shape_combine_region;
-	void function(GdkWindow* window, cairo_region_t* region, GdkWindowChildFunc childFunc, void* userData) c_gdk_window_invalidate_maybe_recurse;
-	void function(GdkWindow* window, GdkRectangle* rect, int invalidateChildren) c_gdk_window_invalidate_rect;
-	void function(GdkWindow* window, cairo_region_t* region, int invalidateChildren) c_gdk_window_invalidate_region;
-	int function(GdkWindow* window) c_gdk_window_is_destroyed;
-	int function(GdkWindow* window) c_gdk_window_is_input_only;
-	int function(GdkWindow* window) c_gdk_window_is_shaped;
-	int function(GdkWindow* window) c_gdk_window_is_viewable;
-	int function(GdkWindow* window) c_gdk_window_is_visible;
-	void function(GdkWindow* window) c_gdk_window_lower;
-	void function(GdkWindow* window, cairo_t* cr) c_gdk_window_mark_paint_from_clip;
-	void function(GdkWindow* window) c_gdk_window_maximize;
-	void function(GdkWindow* window) c_gdk_window_merge_child_input_shapes;
-	void function(GdkWindow* window) c_gdk_window_merge_child_shapes;
-	void function(GdkWindow* window, int x, int y) c_gdk_window_move;
-	void function(GdkWindow* window, cairo_region_t* region, int dx, int dy) c_gdk_window_move_region;
-	void function(GdkWindow* window, int x, int y, int width, int height) c_gdk_window_move_resize;
-	void function(GdkWindow* window, GdkRectangle* rect, GdkGravity rectAnchor, GdkGravity windowAnchor, GdkAnchorHints anchorHints, int rectAnchorDx, int rectAnchorDy) c_gdk_window_move_to_rect;
-	GList* function(GdkWindow* window) c_gdk_window_peek_children;
-	void function(GdkWindow* window, int updateChildren) c_gdk_window_process_updates;
-	void function(GdkWindow* window) c_gdk_window_raise;
-	void function(GdkWindow* window) c_gdk_window_register_dnd;
-	void function(GdkWindow* window, GdkFilterFunc function_, void* data) c_gdk_window_remove_filter;
-	void function(GdkWindow* window, GdkWindow* newParent, int x, int y) c_gdk_window_reparent;
-	void function(GdkWindow* window, int width, int height) c_gdk_window_resize;
-	void function(GdkWindow* window, GdkWindow* sibling, int above) c_gdk_window_restack;
-	void function(GdkWindow* window, int dx, int dy) c_gdk_window_scroll;
-	void function(GdkWindow* window, int acceptFocus) c_gdk_window_set_accept_focus;
-	void function(GdkWindow* window, GdkColor* color) c_gdk_window_set_background;
-	void function(GdkWindow* window, cairo_pattern_t* pattern) c_gdk_window_set_background_pattern;
-	void function(GdkWindow* window, GdkRGBA* rgba) c_gdk_window_set_background_rgba;
-	void function(GdkWindow* window) c_gdk_window_set_child_input_shapes;
-	void function(GdkWindow* window) c_gdk_window_set_child_shapes;
-	void function(GdkWindow* window, int composited) c_gdk_window_set_composited;
-	void function(GdkWindow* window, GdkCursor* cursor) c_gdk_window_set_cursor;
-	void function(GdkWindow* window, GdkWMDecoration decorations) c_gdk_window_set_decorations;
-	void function(GdkWindow* window, GdkDevice* device, GdkCursor* cursor) c_gdk_window_set_device_cursor;
-	void function(GdkWindow* window, GdkDevice* device, GdkEventMask eventMask) c_gdk_window_set_device_events;
-	void function(GdkWindow* window, int eventCompression) c_gdk_window_set_event_compression;
-	void function(GdkWindow* window, GdkEventMask eventMask) c_gdk_window_set_events;
-	void function(GdkWindow* window, int focusOnMap) c_gdk_window_set_focus_on_map;
-	void function(GdkWindow* window, GdkFullscreenMode mode) c_gdk_window_set_fullscreen_mode;
-	void function(GdkWindow* window, GdkWMFunction functions) c_gdk_window_set_functions;
-	void function(GdkWindow* window, GdkGeometry* geometry, GdkWindowHints geomMask) c_gdk_window_set_geometry_hints;
-	void function(GdkWindow* window, GdkWindow* leader) c_gdk_window_set_group;
-	void function(GdkWindow* window, GList* pixbufs) c_gdk_window_set_icon_list;
-	void function(GdkWindow* window, const(char)* name) c_gdk_window_set_icon_name;
-	void function(GdkWindow* window, GdkWindowInvalidateHandlerFunc handler) c_gdk_window_set_invalidate_handler;
-	void function(GdkWindow* window, int setting) c_gdk_window_set_keep_above;
-	void function(GdkWindow* window, int setting) c_gdk_window_set_keep_below;
-	void function(GdkWindow* window, int modal) c_gdk_window_set_modal_hint;
-	void function(GdkWindow* window, double opacity) c_gdk_window_set_opacity;
-	void function(GdkWindow* window, cairo_region_t* region) c_gdk_window_set_opaque_region;
-	void function(GdkWindow* window, int overrideRedirect) c_gdk_window_set_override_redirect;
-	void function(GdkWindow* window, int passThrough) c_gdk_window_set_pass_through;
-	void function(GdkWindow* window, const(char)* role) c_gdk_window_set_role;
-	void function(GdkWindow* window, int left, int right, int top, int bottom) c_gdk_window_set_shadow_width;
-	void function(GdkWindow* window, int skipsPager) c_gdk_window_set_skip_pager_hint;
-	void function(GdkWindow* window, int skipsTaskbar) c_gdk_window_set_skip_taskbar_hint;
-	void function(GdkWindow* window, GdkInputSource source, GdkEventMask eventMask) c_gdk_window_set_source_events;
-	void function(GdkWindow* window, const(char)* startupId) c_gdk_window_set_startup_id;
-	int function(GdkWindow* window, int useStatic) c_gdk_window_set_static_gravities;
-	void function(GdkWindow* window, int supportMultidevice) c_gdk_window_set_support_multidevice;
-	void function(GdkWindow* window, const(char)* title) c_gdk_window_set_title;
-	void function(GdkWindow* window, GdkWindow* parent) c_gdk_window_set_transient_for;
-	void function(GdkWindow* window, GdkWindowTypeHint hint) c_gdk_window_set_type_hint;
-	void function(GdkWindow* window, int urgent) c_gdk_window_set_urgency_hint;
-	void function(GdkWindow* window, void* userData) c_gdk_window_set_user_data;
-	void function(GdkWindow* window, cairo_region_t* shapeRegion, int offsetX, int offsetY) c_gdk_window_shape_combine_region;
-	void function(GdkWindow* window) c_gdk_window_show;
-	void function(GdkWindow* window) c_gdk_window_show_unraised;
-	int function(GdkWindow* window, GdkEvent* event) c_gdk_window_show_window_menu;
-	void function(GdkWindow* window) c_gdk_window_stick;
-	void function(GdkWindow* window) c_gdk_window_thaw_toplevel_updates_libgtk_only;
-	void function(GdkWindow* window) c_gdk_window_thaw_updates;
-	void function(GdkWindow* window) c_gdk_window_unfullscreen;
-	void function(GdkWindow* window) c_gdk_window_unmaximize;
-	void function(GdkWindow* window) c_gdk_window_unstick;
-	void function(GdkWindow* window) c_gdk_window_withdraw;
-	GdkWindow* function() c_gdk_get_default_root_window;
-	GdkWindow* function(GdkWindow* window) c_gdk_offscreen_window_get_embedder;
-	cairo_surface_t* function(GdkWindow* window) c_gdk_offscreen_window_get_surface;
-	void function(GdkWindow* window, GdkWindow* embedder) c_gdk_offscreen_window_set_embedder;
-	void function(GdkWindow* window, GdkWindowState unsetFlags, GdkWindowState setFlags) c_gdk_synthesize_window_state;
+	GType function() c_gdk_surface_get_type;
+	GdkSurface* function(GdkSurface* parent, int autohide) c_gdk_surface_new_popup;
+	GdkSurface* function(GdkDisplay* display) c_gdk_surface_new_toplevel;
+	void function(GdkSurface* surface) c_gdk_surface_beep;
+	GdkCairoContext* function(GdkSurface* surface) c_gdk_surface_create_cairo_context;
+	GdkGLContext* function(GdkSurface* surface, GError** err) c_gdk_surface_create_gl_context;
+	cairo_surface_t* function(GdkSurface* surface, cairo_content_t content, int width, int height) c_gdk_surface_create_similar_surface;
+	GdkVulkanContext* function(GdkSurface* surface, GError** err) c_gdk_surface_create_vulkan_context;
+	void function(GdkSurface* surface) c_gdk_surface_destroy;
+	GdkCursor* function(GdkSurface* surface) c_gdk_surface_get_cursor;
+	GdkCursor* function(GdkSurface* surface, GdkDevice* device) c_gdk_surface_get_device_cursor;
+	int function(GdkSurface* surface, GdkDevice* device, double* x, double* y, GdkModifierType* mask) c_gdk_surface_get_device_position;
+	GdkDisplay* function(GdkSurface* surface) c_gdk_surface_get_display;
+	GdkFrameClock* function(GdkSurface* surface) c_gdk_surface_get_frame_clock;
+	int function(GdkSurface* surface) c_gdk_surface_get_height;
+	int function(GdkSurface* surface) c_gdk_surface_get_mapped;
+	int function(GdkSurface* surface) c_gdk_surface_get_scale_factor;
+	int function(GdkSurface* surface) c_gdk_surface_get_width;
+	void function(GdkSurface* surface) c_gdk_surface_hide;
+	int function(GdkSurface* surface) c_gdk_surface_is_destroyed;
+	void function(GdkSurface* surface) c_gdk_surface_queue_render;
+	void function(GdkSurface* surface) c_gdk_surface_request_layout;
+	void function(GdkSurface* surface, GdkCursor* cursor) c_gdk_surface_set_cursor;
+	void function(GdkSurface* surface, GdkDevice* device, GdkCursor* cursor) c_gdk_surface_set_device_cursor;
+	void function(GdkSurface* surface, cairo_region_t* region) c_gdk_surface_set_input_region;
+	void function(GdkSurface* surface, cairo_region_t* region) c_gdk_surface_set_opaque_region;
+	int function(GdkSurface* from, GdkSurface* to, double* x, double* y) c_gdk_surface_translate_coordinates;
 
-	// gdk.X11
+	// gdk.Texture
 
-	GType function() c_gdk_x11_window_get_type;
-	GdkWindow* function(GdkDisplay* display, uint window) c_gdk_x11_window_foreign_new_for_display;
-	GdkWindow* function(GdkDisplay* display, uint window) c_gdk_x11_window_lookup_for_display;
-	uint function(GdkWindow* window) c_gdk_x11_window_get_desktop;
-	uint function(GdkWindow* window) c_gdk_x11_window_get_xid;
-	void function(GdkWindow* window) c_gdk_x11_window_move_to_current_desktop;
-	void function(GdkWindow* window, uint desktop) c_gdk_x11_window_move_to_desktop;
-	void function(GdkWindow* window, int left, int right, int top, int bottom) c_gdk_x11_window_set_frame_extents;
-	void function(GdkWindow* window, int frameSyncEnabled) c_gdk_x11_window_set_frame_sync_enabled;
-	void function(GdkWindow* window, int hideTitlebarWhenMaximized) c_gdk_x11_window_set_hide_titlebar_when_maximized;
-	void function(GdkWindow* window, char* variant) c_gdk_x11_window_set_theme_variant;
-	void function(GdkWindow* window, uint timestamp) c_gdk_x11_window_set_user_time;
-	void function(GdkWindow* window, const(char)* name, const(char)* value) c_gdk_x11_window_set_utf8_property;
+	GType function() c_gdk_texture_get_type;
+	GdkTexture* function(GdkPixbuf* pixbuf) c_gdk_texture_new_for_pixbuf;
+	GdkTexture* function(GFile* file, GError** err) c_gdk_texture_new_from_file;
+	GdkTexture* function(const(char)* resourcePath) c_gdk_texture_new_from_resource;
+	void function(GdkTexture* texture, char* data, size_t stride) c_gdk_texture_download;
+	int function(GdkTexture* texture) c_gdk_texture_get_height;
+	int function(GdkTexture* texture) c_gdk_texture_get_width;
+	int function(GdkTexture* texture, const(char)* filename) c_gdk_texture_save_to_png;
 
-	// gdk.Cairo
+	// gdk.Toplevel
 
-	cairo_t* function(GdkWindow* window) c_gdk_cairo_create;
-	void function(cairo_t* cr, GdkWindow* window, int source, int sourceType, int bufferScale, int x, int y, int width, int height) c_gdk_cairo_draw_from_gl;
-	int function(cairo_t* cr, GdkRectangle* rect) c_gdk_cairo_get_clip_rectangle;
-	void function(cairo_t* cr, GdkRectangle* rectangle) c_gdk_cairo_rectangle;
-	void function(cairo_t* cr, cairo_region_t* region) c_gdk_cairo_region;
-	cairo_region_t* function(cairo_surface_t* surface) c_gdk_cairo_region_create_from_surface;
-	void function(cairo_t* cr, GdkColor* color) c_gdk_cairo_set_source_color;
-	void function(cairo_t* cr, GdkPixbuf* pixbuf, double pixbufX, double pixbufY) c_gdk_cairo_set_source_pixbuf;
-	void function(cairo_t* cr, GdkRGBA* rgba) c_gdk_cairo_set_source_rgba;
-	void function(cairo_t* cr, GdkWindow* window, double x, double y) c_gdk_cairo_set_source_window;
-	cairo_surface_t* function(GdkPixbuf* pixbuf, int scale, GdkWindow* forWindow) c_gdk_cairo_surface_create_from_pixbuf;
-	GdkDrawingContext* function(cairo_t* cr) c_gdk_cairo_get_drawing_context;
+	GType function() c_gdk_toplevel_get_type;
+	void function(GdkToplevel* toplevel, GdkDevice* device, int button, double x, double y, uint timestamp) c_gdk_toplevel_begin_move;
+	void function(GdkToplevel* toplevel, GdkSurfaceEdge edge, GdkDevice* device, int button, double x, double y, uint timestamp) c_gdk_toplevel_begin_resize;
+	void function(GdkToplevel* toplevel, uint timestamp) c_gdk_toplevel_focus;
+	GdkToplevelState function(GdkToplevel* toplevel) c_gdk_toplevel_get_state;
+	void function(GdkToplevel* toplevel, GdkEvent* event) c_gdk_toplevel_inhibit_system_shortcuts;
+	int function(GdkToplevel* toplevel) c_gdk_toplevel_lower;
+	int function(GdkToplevel* toplevel) c_gdk_toplevel_minimize;
+	void function(GdkToplevel* toplevel, GdkToplevelLayout* layout) c_gdk_toplevel_present;
+	void function(GdkToplevel* toplevel) c_gdk_toplevel_restore_system_shortcuts;
+	void function(GdkToplevel* toplevel, int decorated) c_gdk_toplevel_set_decorated;
+	void function(GdkToplevel* toplevel, int deletable) c_gdk_toplevel_set_deletable;
+	void function(GdkToplevel* toplevel, GList* surfaces) c_gdk_toplevel_set_icon_list;
+	void function(GdkToplevel* toplevel, int modal) c_gdk_toplevel_set_modal;
+	void function(GdkToplevel* toplevel, const(char)* startupId) c_gdk_toplevel_set_startup_id;
+	void function(GdkToplevel* toplevel, const(char)* title) c_gdk_toplevel_set_title;
+	void function(GdkToplevel* toplevel, GdkSurface* parent) c_gdk_toplevel_set_transient_for;
+	int function(GdkToplevel* toplevel, GdkEvent* event) c_gdk_toplevel_show_window_menu;
+	int function(GdkToplevel* toplevel) c_gdk_toplevel_supports_edge_constraints;
 
-	// gdk.Pango
+	// gdk.ToplevelLayout
 
-	PangoContext* function() c_gdk_pango_context_get;
-	PangoContext* function(GdkScreen* screen) c_gdk_pango_context_get_for_screen;
-	cairo_region_t* function(PangoLayout* layout, int xOrigin, int yOrigin, int* indexRanges, int nRanges) c_gdk_pango_layout_get_clip_region;
-	cairo_region_t* function(PangoLayoutLine* line, int xOrigin, int yOrigin, int* indexRanges, int nRanges) c_gdk_pango_layout_line_get_clip_region;
-	PangoContext* function(GdkDisplay* display) c_gdk_pango_context_get_for_display;
+	GType function() c_gdk_toplevel_layout_get_type;
+	GdkToplevelLayout* function() c_gdk_toplevel_layout_new;
+	GdkToplevelLayout* function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_copy;
+	int function(GdkToplevelLayout* layout, GdkToplevelLayout* other) c_gdk_toplevel_layout_equal;
+	int function(GdkToplevelLayout* layout, int* fullscreen) c_gdk_toplevel_layout_get_fullscreen;
+	GdkMonitor* function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_get_fullscreen_monitor;
+	int function(GdkToplevelLayout* layout, int* maximize) c_gdk_toplevel_layout_get_maximized;
+	int function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_get_resizable;
+	GdkToplevelLayout* function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_ref;
+	void function(GdkToplevelLayout* layout, int fullscreen, GdkMonitor* monitor) c_gdk_toplevel_layout_set_fullscreen;
+	void function(GdkToplevelLayout* layout, int maximized) c_gdk_toplevel_layout_set_maximized;
+	void function(GdkToplevelLayout* layout, int resizable) c_gdk_toplevel_layout_set_resizable;
+	void function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_unref;
 
-	// gdk.Pixbuf
+	// gdk.ToplevelSize
 
-	GdkPixbuf* function(cairo_surface_t* surface, int srcX, int srcY, int width, int height) c_gdk_pixbuf_get_from_surface;
-	GdkPixbuf* function(GdkWindow* window, int srcX, int srcY, int width, int height) c_gdk_pixbuf_get_from_window;
+	void function(GdkToplevelSize* size, int* boundsWidth, int* boundsHeight) c_gdk_toplevel_size_get_bounds;
+	void function(GdkToplevelSize* size, int minWidth, int minHeight) c_gdk_toplevel_size_set_min_size;
+	void function(GdkToplevelSize* size, int left, int right, int top, int bottom) c_gdk_toplevel_size_set_shadow_width;
+	void function(GdkToplevelSize* size, int width, int height) c_gdk_toplevel_size_set_size;
 
-	// gdk.Threads
+	// gdk.TouchEvent
 
-	uint function(GSourceFunc function_, void* data) c_gdk_threads_add_idle;
-	uint function(int priority, GSourceFunc function_, void* data, GDestroyNotify notify) c_gdk_threads_add_idle_full;
-	uint function(uint interval, GSourceFunc function_, void* data) c_gdk_threads_add_timeout;
-	uint function(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_full;
-	uint function(uint interval, GSourceFunc function_, void* data) c_gdk_threads_add_timeout_seconds;
-	uint function(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_seconds_full;
-	void function() c_gdk_threads_enter;
-	void function() c_gdk_threads_init;
-	void function() c_gdk_threads_leave;
-	void function(GCallback enterFn, GCallback leaveFn) c_gdk_threads_set_lock_functions;
+	GType function() c_gdk_touch_event_get_type;
+	int function(GdkEvent* event) c_gdk_touch_event_get_emulating_pointer;
 
-	// gdk.Gdk
+	// gdk.TouchpadEvent
 
-	void function() c_gdk_beep;
-	int function() c_gdk_error_trap_pop;
-	void function() c_gdk_error_trap_pop_ignored;
-	void function() c_gdk_error_trap_push;
-	void function() c_gdk_flush;
-	char* function() c_gdk_get_display;
-	const(char)* function() c_gdk_get_display_arg_name;
-	const(char)* function() c_gdk_get_program_class;
-	void function(int* argc, char*** argv) c_gdk_init;
-	int function(int* argc, char*** argv) c_gdk_init_check;
-	GdkGrabStatus function(GdkWindow* window, int ownerEvents, uint time) c_gdk_keyboard_grab;
-	void function(uint time) c_gdk_keyboard_ungrab;
-	void function() c_gdk_notify_startup_complete;
-	void function(const(char)* startupId) c_gdk_notify_startup_complete_with_id;
-	void function(int* argc, char*** argv) c_gdk_parse_args;
-	GdkGrabStatus function(GdkWindow* window, int ownerEvents, GdkEventMask eventMask, GdkWindow* confineTo, GdkCursor* cursor, uint time) c_gdk_pointer_grab;
-	int function() c_gdk_pointer_is_grabbed;
-	void function(uint time) c_gdk_pointer_ungrab;
-	void function(const(char)* backends) c_gdk_set_allowed_backends;
-	void function(uint msec) c_gdk_set_double_click_time;
-	void function(const(char)* programClass) c_gdk_set_program_class;
+	GType function() c_gdk_touchpad_event_get_type;
+	void function(GdkEvent* event, double* dx, double* dy) c_gdk_touchpad_event_get_deltas;
+	GdkTouchpadGesturePhase function(GdkEvent* event) c_gdk_touchpad_event_get_gesture_phase;
+	uint function(GdkEvent* event) c_gdk_touchpad_event_get_n_fingers;
+	double function(GdkEvent* event) c_gdk_touchpad_event_get_pinch_angle_delta;
+	double function(GdkEvent* event) c_gdk_touchpad_event_get_pinch_scale;
 
-	// gdk.Selection
+	// gdk.VulkanContext
 
-	void function(GdkWindow* requestor, GdkAtom selection, GdkAtom target, uint time) c_gdk_selection_convert;
-	GdkWindow* function(GdkAtom selection) c_gdk_selection_owner_get;
-	GdkWindow* function(GdkDisplay* display, GdkAtom selection) c_gdk_selection_owner_get_for_display;
-	int function(GdkWindow* owner, GdkAtom selection, uint time, int sendEvent) c_gdk_selection_owner_set;
-	int function(GdkDisplay* display, GdkWindow* owner, GdkAtom selection, uint time, int sendEvent) c_gdk_selection_owner_set_for_display;
-	int function(GdkWindow* requestor, char** data, GdkAtom* propType, int* propFormat) c_gdk_selection_property_get;
-	void function(GdkWindow* requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time) c_gdk_selection_send_notify;
-	void function(GdkDisplay* display, GdkWindow* requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time) c_gdk_selection_send_notify_for_display;
-
-	// gdk.Testing
-
-	void function(GdkWindow* window) c_gdk_test_render_sync;
-	int function(GdkWindow* window, int x, int y, uint button, GdkModifierType modifiers, GdkEventType buttonPressrelease) c_gdk_test_simulate_button;
-	int function(GdkWindow* window, int x, int y, uint keyval, GdkModifierType modifiers, GdkEventType keyPressrelease) c_gdk_test_simulate_key;
+	GType function() c_gdk_vulkan_context_get_type;
 }
 
 
 // gdk.AppLaunchContext
 
 alias c_gdk_app_launch_context_get_type gdk_app_launch_context_get_type;
-alias c_gdk_app_launch_context_new gdk_app_launch_context_new;
+alias c_gdk_app_launch_context_get_display gdk_app_launch_context_get_display;
 alias c_gdk_app_launch_context_set_desktop gdk_app_launch_context_set_desktop;
-alias c_gdk_app_launch_context_set_display gdk_app_launch_context_set_display;
 alias c_gdk_app_launch_context_set_icon gdk_app_launch_context_set_icon;
 alias c_gdk_app_launch_context_set_icon_name gdk_app_launch_context_set_icon_name;
-alias c_gdk_app_launch_context_set_screen gdk_app_launch_context_set_screen;
 alias c_gdk_app_launch_context_set_timestamp gdk_app_launch_context_set_timestamp;
 
-// gdk.Atom
+// gdk.ButtonEvent
 
-alias c_gdk_atom_name gdk_atom_name;
-alias c_gdk_atom_intern gdk_atom_intern;
-alias c_gdk_atom_intern_static_string gdk_atom_intern_static_string;
-alias c_gdk_property_change gdk_property_change;
-alias c_gdk_property_delete gdk_property_delete;
-alias c_gdk_property_get gdk_property_get;
-alias c_gdk_text_property_to_utf8_list_for_display gdk_text_property_to_utf8_list_for_display;
-alias c_gdk_utf8_to_string_target gdk_utf8_to_string_target;
+alias c_gdk_button_event_get_type gdk_button_event_get_type;
+alias c_gdk_button_event_get_button gdk_button_event_get_button;
 
-// gdk.Color
+// gdk.CairoContext
 
-alias c_gdk_color_get_type gdk_color_get_type;
-alias c_gdk_color_copy gdk_color_copy;
-alias c_gdk_color_equal gdk_color_equal;
-alias c_gdk_color_free gdk_color_free;
-alias c_gdk_color_hash gdk_color_hash;
-alias c_gdk_color_to_string gdk_color_to_string;
-alias c_gdk_color_parse gdk_color_parse;
+alias c_gdk_cairo_context_get_type gdk_cairo_context_get_type;
+alias c_gdk_cairo_context_cairo_create gdk_cairo_context_cairo_create;
+
+// gdk.Clipboard
+
+alias c_gdk_clipboard_get_type gdk_clipboard_get_type;
+alias c_gdk_clipboard_get_content gdk_clipboard_get_content;
+alias c_gdk_clipboard_get_display gdk_clipboard_get_display;
+alias c_gdk_clipboard_get_formats gdk_clipboard_get_formats;
+alias c_gdk_clipboard_is_local gdk_clipboard_is_local;
+alias c_gdk_clipboard_read_async gdk_clipboard_read_async;
+alias c_gdk_clipboard_read_finish gdk_clipboard_read_finish;
+alias c_gdk_clipboard_read_text_async gdk_clipboard_read_text_async;
+alias c_gdk_clipboard_read_text_finish gdk_clipboard_read_text_finish;
+alias c_gdk_clipboard_read_texture_async gdk_clipboard_read_texture_async;
+alias c_gdk_clipboard_read_texture_finish gdk_clipboard_read_texture_finish;
+alias c_gdk_clipboard_read_value_async gdk_clipboard_read_value_async;
+alias c_gdk_clipboard_read_value_finish gdk_clipboard_read_value_finish;
+alias c_gdk_clipboard_set gdk_clipboard_set;
+alias c_gdk_clipboard_set_content gdk_clipboard_set_content;
+alias c_gdk_clipboard_set_text gdk_clipboard_set_text;
+alias c_gdk_clipboard_set_texture gdk_clipboard_set_texture;
+alias c_gdk_clipboard_set_valist gdk_clipboard_set_valist;
+alias c_gdk_clipboard_set_value gdk_clipboard_set_value;
+alias c_gdk_clipboard_store_async gdk_clipboard_store_async;
+alias c_gdk_clipboard_store_finish gdk_clipboard_store_finish;
+
+// gdk.ContentDeserializer
+
+alias c_gdk_content_deserializer_get_type gdk_content_deserializer_get_type;
+alias c_gdk_content_deserializer_get_cancellable gdk_content_deserializer_get_cancellable;
+alias c_gdk_content_deserializer_get_gtype gdk_content_deserializer_get_gtype;
+alias c_gdk_content_deserializer_get_input_stream gdk_content_deserializer_get_input_stream;
+alias c_gdk_content_deserializer_get_mime_type gdk_content_deserializer_get_mime_type;
+alias c_gdk_content_deserializer_get_priority gdk_content_deserializer_get_priority;
+alias c_gdk_content_deserializer_get_task_data gdk_content_deserializer_get_task_data;
+alias c_gdk_content_deserializer_get_user_data gdk_content_deserializer_get_user_data;
+alias c_gdk_content_deserializer_get_value gdk_content_deserializer_get_value;
+alias c_gdk_content_deserializer_return_error gdk_content_deserializer_return_error;
+alias c_gdk_content_deserializer_return_success gdk_content_deserializer_return_success;
+alias c_gdk_content_deserializer_set_task_data gdk_content_deserializer_set_task_data;
+
+// gdk.ContentFormats
+
+alias c_gdk_content_formats_get_type gdk_content_formats_get_type;
+alias c_gdk_content_formats_new gdk_content_formats_new;
+alias c_gdk_content_formats_new_for_gtype gdk_content_formats_new_for_gtype;
+alias c_gdk_content_formats_contain_gtype gdk_content_formats_contain_gtype;
+alias c_gdk_content_formats_contain_mime_type gdk_content_formats_contain_mime_type;
+alias c_gdk_content_formats_get_gtypes gdk_content_formats_get_gtypes;
+alias c_gdk_content_formats_get_mime_types gdk_content_formats_get_mime_types;
+alias c_gdk_content_formats_match gdk_content_formats_match;
+alias c_gdk_content_formats_match_gtype gdk_content_formats_match_gtype;
+alias c_gdk_content_formats_match_mime_type gdk_content_formats_match_mime_type;
+alias c_gdk_content_formats_print gdk_content_formats_print;
+alias c_gdk_content_formats_ref gdk_content_formats_ref;
+alias c_gdk_content_formats_to_string gdk_content_formats_to_string;
+alias c_gdk_content_formats_union gdk_content_formats_union;
+alias c_gdk_content_formats_union_deserialize_gtypes gdk_content_formats_union_deserialize_gtypes;
+alias c_gdk_content_formats_union_deserialize_mime_types gdk_content_formats_union_deserialize_mime_types;
+alias c_gdk_content_formats_union_serialize_gtypes gdk_content_formats_union_serialize_gtypes;
+alias c_gdk_content_formats_union_serialize_mime_types gdk_content_formats_union_serialize_mime_types;
+alias c_gdk_content_formats_unref gdk_content_formats_unref;
+
+// gdk.ContentFormatsBuilder
+
+alias c_gdk_content_formats_builder_get_type gdk_content_formats_builder_get_type;
+alias c_gdk_content_formats_builder_new gdk_content_formats_builder_new;
+alias c_gdk_content_formats_builder_add_formats gdk_content_formats_builder_add_formats;
+alias c_gdk_content_formats_builder_add_gtype gdk_content_formats_builder_add_gtype;
+alias c_gdk_content_formats_builder_add_mime_type gdk_content_formats_builder_add_mime_type;
+alias c_gdk_content_formats_builder_free_to_formats gdk_content_formats_builder_free_to_formats;
+alias c_gdk_content_formats_builder_ref gdk_content_formats_builder_ref;
+alias c_gdk_content_formats_builder_to_formats gdk_content_formats_builder_to_formats;
+alias c_gdk_content_formats_builder_unref gdk_content_formats_builder_unref;
+
+// gdk.ContentProvider
+
+alias c_gdk_content_provider_get_type gdk_content_provider_get_type;
+alias c_gdk_content_provider_new_for_bytes gdk_content_provider_new_for_bytes;
+alias c_gdk_content_provider_new_for_value gdk_content_provider_new_for_value;
+alias c_gdk_content_provider_new_typed gdk_content_provider_new_typed;
+alias c_gdk_content_provider_new_union gdk_content_provider_new_union;
+alias c_gdk_content_provider_content_changed gdk_content_provider_content_changed;
+alias c_gdk_content_provider_get_value gdk_content_provider_get_value;
+alias c_gdk_content_provider_ref_formats gdk_content_provider_ref_formats;
+alias c_gdk_content_provider_ref_storable_formats gdk_content_provider_ref_storable_formats;
+alias c_gdk_content_provider_write_mime_type_async gdk_content_provider_write_mime_type_async;
+alias c_gdk_content_provider_write_mime_type_finish gdk_content_provider_write_mime_type_finish;
+
+// gdk.ContentSerializer
+
+alias c_gdk_content_serializer_get_type gdk_content_serializer_get_type;
+alias c_gdk_content_serializer_get_cancellable gdk_content_serializer_get_cancellable;
+alias c_gdk_content_serializer_get_gtype gdk_content_serializer_get_gtype;
+alias c_gdk_content_serializer_get_mime_type gdk_content_serializer_get_mime_type;
+alias c_gdk_content_serializer_get_output_stream gdk_content_serializer_get_output_stream;
+alias c_gdk_content_serializer_get_priority gdk_content_serializer_get_priority;
+alias c_gdk_content_serializer_get_task_data gdk_content_serializer_get_task_data;
+alias c_gdk_content_serializer_get_user_data gdk_content_serializer_get_user_data;
+alias c_gdk_content_serializer_get_value gdk_content_serializer_get_value;
+alias c_gdk_content_serializer_return_error gdk_content_serializer_return_error;
+alias c_gdk_content_serializer_return_success gdk_content_serializer_return_success;
+alias c_gdk_content_serializer_set_task_data gdk_content_serializer_set_task_data;
+
+// gdk.CrossingEvent
+
+alias c_gdk_crossing_event_get_type gdk_crossing_event_get_type;
+alias c_gdk_crossing_event_get_detail gdk_crossing_event_get_detail;
+alias c_gdk_crossing_event_get_focus gdk_crossing_event_get_focus;
+alias c_gdk_crossing_event_get_mode gdk_crossing_event_get_mode;
 
 // gdk.Cursor
 
 alias c_gdk_cursor_get_type gdk_cursor_get_type;
-alias c_gdk_cursor_new gdk_cursor_new;
-alias c_gdk_cursor_new_for_display gdk_cursor_new_for_display;
 alias c_gdk_cursor_new_from_name gdk_cursor_new_from_name;
-alias c_gdk_cursor_new_from_pixbuf gdk_cursor_new_from_pixbuf;
-alias c_gdk_cursor_new_from_surface gdk_cursor_new_from_surface;
-alias c_gdk_cursor_get_cursor_type gdk_cursor_get_cursor_type;
-alias c_gdk_cursor_get_display gdk_cursor_get_display;
-alias c_gdk_cursor_get_image gdk_cursor_get_image;
-alias c_gdk_cursor_get_surface gdk_cursor_get_surface;
-alias c_gdk_cursor_ref gdk_cursor_ref;
-alias c_gdk_cursor_unref gdk_cursor_unref;
+alias c_gdk_cursor_new_from_texture gdk_cursor_new_from_texture;
+alias c_gdk_cursor_get_fallback gdk_cursor_get_fallback;
+alias c_gdk_cursor_get_hotspot_x gdk_cursor_get_hotspot_x;
+alias c_gdk_cursor_get_hotspot_y gdk_cursor_get_hotspot_y;
+alias c_gdk_cursor_get_name gdk_cursor_get_name;
+alias c_gdk_cursor_get_texture gdk_cursor_get_texture;
+
+// gdk.DNDEvent
+
+alias c_gdk_dnd_event_get_type gdk_dnd_event_get_type;
+alias c_gdk_dnd_event_get_drop gdk_dnd_event_get_drop;
+
+// gdk.DeleteEvent
+
+alias c_gdk_delete_event_get_type gdk_delete_event_get_type;
 
 // gdk.Device
 
 alias c_gdk_device_get_type gdk_device_get_type;
-alias c_gdk_device_free_history gdk_device_free_history;
-alias c_gdk_device_grab_info_libgtk_only gdk_device_grab_info_libgtk_only;
-alias c_gdk_device_get_associated_device gdk_device_get_associated_device;
-alias c_gdk_device_get_axes gdk_device_get_axes;
-alias c_gdk_device_get_axis gdk_device_get_axis;
-alias c_gdk_device_get_axis_use gdk_device_get_axis_use;
-alias c_gdk_device_get_axis_value gdk_device_get_axis_value;
-alias c_gdk_device_get_device_type gdk_device_get_device_type;
+alias c_gdk_device_get_caps_lock_state gdk_device_get_caps_lock_state;
+alias c_gdk_device_get_device_tool gdk_device_get_device_tool;
+alias c_gdk_device_get_direction gdk_device_get_direction;
 alias c_gdk_device_get_display gdk_device_get_display;
 alias c_gdk_device_get_has_cursor gdk_device_get_has_cursor;
-alias c_gdk_device_get_history gdk_device_get_history;
-alias c_gdk_device_get_key gdk_device_get_key;
-alias c_gdk_device_get_last_event_window gdk_device_get_last_event_window;
-alias c_gdk_device_get_mode gdk_device_get_mode;
-alias c_gdk_device_get_n_axes gdk_device_get_n_axes;
-alias c_gdk_device_get_n_keys gdk_device_get_n_keys;
+alias c_gdk_device_get_modifier_state gdk_device_get_modifier_state;
 alias c_gdk_device_get_name gdk_device_get_name;
-alias c_gdk_device_get_position gdk_device_get_position;
-alias c_gdk_device_get_position_double gdk_device_get_position_double;
+alias c_gdk_device_get_num_lock_state gdk_device_get_num_lock_state;
+alias c_gdk_device_get_num_touches gdk_device_get_num_touches;
 alias c_gdk_device_get_product_id gdk_device_get_product_id;
+alias c_gdk_device_get_scroll_lock_state gdk_device_get_scroll_lock_state;
 alias c_gdk_device_get_seat gdk_device_get_seat;
 alias c_gdk_device_get_source gdk_device_get_source;
-alias c_gdk_device_get_state gdk_device_get_state;
+alias c_gdk_device_get_surface_at_position gdk_device_get_surface_at_position;
 alias c_gdk_device_get_vendor_id gdk_device_get_vendor_id;
-alias c_gdk_device_get_window_at_position gdk_device_get_window_at_position;
-alias c_gdk_device_get_window_at_position_double gdk_device_get_window_at_position_double;
-alias c_gdk_device_grab gdk_device_grab;
-alias c_gdk_device_list_axes gdk_device_list_axes;
-alias c_gdk_device_list_slave_devices gdk_device_list_slave_devices;
-alias c_gdk_device_set_axis_use gdk_device_set_axis_use;
-alias c_gdk_device_set_key gdk_device_set_key;
-alias c_gdk_device_set_mode gdk_device_set_mode;
-alias c_gdk_device_ungrab gdk_device_ungrab;
-alias c_gdk_device_warp gdk_device_warp;
-
-// gdk.DeviceManager
-
-alias c_gdk_device_manager_get_type gdk_device_manager_get_type;
-alias c_gdk_device_manager_get_client_pointer gdk_device_manager_get_client_pointer;
-alias c_gdk_device_manager_get_display gdk_device_manager_get_display;
-alias c_gdk_device_manager_list_devices gdk_device_manager_list_devices;
-alias c_gdk_disable_multidevice gdk_disable_multidevice;
+alias c_gdk_device_has_bidi_layouts gdk_device_has_bidi_layouts;
 
 // gdk.DevicePad
 
@@ -1556,6 +1417,7 @@ alias c_gdk_device_pad_get_n_groups gdk_device_pad_get_n_groups;
 // gdk.DeviceTool
 
 alias c_gdk_device_tool_get_type gdk_device_tool_get_type;
+alias c_gdk_device_tool_get_axes gdk_device_tool_get_axes;
 alias c_gdk_device_tool_get_hardware_id gdk_device_tool_get_hardware_id;
 alias c_gdk_device_tool_get_serial gdk_device_tool_get_serial;
 alias c_gdk_device_tool_get_tool_type gdk_device_tool_get_tool_type;
@@ -1565,52 +1427,30 @@ alias c_gdk_device_tool_get_tool_type gdk_device_tool_get_tool_type;
 alias c_gdk_display_get_type gdk_display_get_type;
 alias c_gdk_display_get_default gdk_display_get_default;
 alias c_gdk_display_open gdk_display_open;
-alias c_gdk_display_open_default_libgtk_only gdk_display_open_default_libgtk_only;
 alias c_gdk_display_beep gdk_display_beep;
 alias c_gdk_display_close gdk_display_close;
 alias c_gdk_display_device_is_grabbed gdk_display_device_is_grabbed;
 alias c_gdk_display_flush gdk_display_flush;
 alias c_gdk_display_get_app_launch_context gdk_display_get_app_launch_context;
-alias c_gdk_display_get_default_cursor_size gdk_display_get_default_cursor_size;
-alias c_gdk_display_get_default_group gdk_display_get_default_group;
-alias c_gdk_display_get_default_screen gdk_display_get_default_screen;
+alias c_gdk_display_get_clipboard gdk_display_get_clipboard;
 alias c_gdk_display_get_default_seat gdk_display_get_default_seat;
-alias c_gdk_display_get_device_manager gdk_display_get_device_manager;
-alias c_gdk_display_get_event gdk_display_get_event;
-alias c_gdk_display_get_maximal_cursor_size gdk_display_get_maximal_cursor_size;
-alias c_gdk_display_get_monitor gdk_display_get_monitor;
-alias c_gdk_display_get_monitor_at_point gdk_display_get_monitor_at_point;
-alias c_gdk_display_get_monitor_at_window gdk_display_get_monitor_at_window;
-alias c_gdk_display_get_n_monitors gdk_display_get_n_monitors;
-alias c_gdk_display_get_n_screens gdk_display_get_n_screens;
+alias c_gdk_display_get_monitor_at_surface gdk_display_get_monitor_at_surface;
+alias c_gdk_display_get_monitors gdk_display_get_monitors;
 alias c_gdk_display_get_name gdk_display_get_name;
-alias c_gdk_display_get_pointer gdk_display_get_pointer;
-alias c_gdk_display_get_primary_monitor gdk_display_get_primary_monitor;
-alias c_gdk_display_get_screen gdk_display_get_screen;
-alias c_gdk_display_get_window_at_pointer gdk_display_get_window_at_pointer;
-alias c_gdk_display_has_pending gdk_display_has_pending;
+alias c_gdk_display_get_primary_clipboard gdk_display_get_primary_clipboard;
+alias c_gdk_display_get_setting gdk_display_get_setting;
+alias c_gdk_display_get_startup_notification_id gdk_display_get_startup_notification_id;
 alias c_gdk_display_is_closed gdk_display_is_closed;
-alias c_gdk_display_keyboard_ungrab gdk_display_keyboard_ungrab;
-alias c_gdk_display_list_devices gdk_display_list_devices;
+alias c_gdk_display_is_composited gdk_display_is_composited;
+alias c_gdk_display_is_rgba gdk_display_is_rgba;
 alias c_gdk_display_list_seats gdk_display_list_seats;
+alias c_gdk_display_map_keycode gdk_display_map_keycode;
+alias c_gdk_display_map_keyval gdk_display_map_keyval;
 alias c_gdk_display_notify_startup_complete gdk_display_notify_startup_complete;
-alias c_gdk_display_peek_event gdk_display_peek_event;
-alias c_gdk_display_pointer_is_grabbed gdk_display_pointer_is_grabbed;
-alias c_gdk_display_pointer_ungrab gdk_display_pointer_ungrab;
 alias c_gdk_display_put_event gdk_display_put_event;
-alias c_gdk_display_request_selection_notification gdk_display_request_selection_notification;
-alias c_gdk_display_set_double_click_distance gdk_display_set_double_click_distance;
-alias c_gdk_display_set_double_click_time gdk_display_set_double_click_time;
-alias c_gdk_display_store_clipboard gdk_display_store_clipboard;
-alias c_gdk_display_supports_clipboard_persistence gdk_display_supports_clipboard_persistence;
-alias c_gdk_display_supports_composite gdk_display_supports_composite;
-alias c_gdk_display_supports_cursor_alpha gdk_display_supports_cursor_alpha;
-alias c_gdk_display_supports_cursor_color gdk_display_supports_cursor_color;
 alias c_gdk_display_supports_input_shapes gdk_display_supports_input_shapes;
-alias c_gdk_display_supports_selection_notification gdk_display_supports_selection_notification;
-alias c_gdk_display_supports_shapes gdk_display_supports_shapes;
 alias c_gdk_display_sync gdk_display_sync;
-alias c_gdk_display_warp_pointer gdk_display_warp_pointer;
+alias c_gdk_display_translate_key gdk_display_translate_key;
 
 // gdk.DisplayManager
 
@@ -1621,92 +1461,84 @@ alias c_gdk_display_manager_list_displays gdk_display_manager_list_displays;
 alias c_gdk_display_manager_open_display gdk_display_manager_open_display;
 alias c_gdk_display_manager_set_default_display gdk_display_manager_set_default_display;
 
-// gdk.DragContext
+// gdk.Drag
 
-alias c_gdk_drag_context_get_type gdk_drag_context_get_type;
-alias c_gdk_drag_context_get_actions gdk_drag_context_get_actions;
-alias c_gdk_drag_context_get_dest_window gdk_drag_context_get_dest_window;
-alias c_gdk_drag_context_get_device gdk_drag_context_get_device;
-alias c_gdk_drag_context_get_drag_window gdk_drag_context_get_drag_window;
-alias c_gdk_drag_context_get_protocol gdk_drag_context_get_protocol;
-alias c_gdk_drag_context_get_selected_action gdk_drag_context_get_selected_action;
-alias c_gdk_drag_context_get_source_window gdk_drag_context_get_source_window;
-alias c_gdk_drag_context_get_suggested_action gdk_drag_context_get_suggested_action;
-alias c_gdk_drag_context_list_targets gdk_drag_context_list_targets;
-alias c_gdk_drag_context_manage_dnd gdk_drag_context_manage_dnd;
-alias c_gdk_drag_context_set_device gdk_drag_context_set_device;
-alias c_gdk_drag_context_set_hotspot gdk_drag_context_set_hotspot;
-alias c_gdk_drag_abort gdk_drag_abort;
+alias c_gdk_drag_get_type gdk_drag_get_type;
 alias c_gdk_drag_begin gdk_drag_begin;
-alias c_gdk_drag_begin_for_device gdk_drag_begin_for_device;
-alias c_gdk_drag_begin_from_point gdk_drag_begin_from_point;
-alias c_gdk_drag_drop gdk_drag_drop;
 alias c_gdk_drag_drop_done gdk_drag_drop_done;
-alias c_gdk_drag_drop_succeeded gdk_drag_drop_succeeded;
-alias c_gdk_drag_find_window_for_screen gdk_drag_find_window_for_screen;
-alias c_gdk_drag_get_selection gdk_drag_get_selection;
-alias c_gdk_drag_motion gdk_drag_motion;
-alias c_gdk_drag_status gdk_drag_status;
+alias c_gdk_drag_get_actions gdk_drag_get_actions;
+alias c_gdk_drag_get_content gdk_drag_get_content;
+alias c_gdk_drag_get_device gdk_drag_get_device;
+alias c_gdk_drag_get_display gdk_drag_get_display;
+alias c_gdk_drag_get_drag_surface gdk_drag_get_drag_surface;
+alias c_gdk_drag_get_formats gdk_drag_get_formats;
+alias c_gdk_drag_get_selected_action gdk_drag_get_selected_action;
+alias c_gdk_drag_get_surface gdk_drag_get_surface;
+alias c_gdk_drag_set_hotspot gdk_drag_set_hotspot;
+
+// gdk.DragSurface
+
+alias c_gdk_drag_surface_get_type gdk_drag_surface_get_type;
+alias c_gdk_drag_surface_present gdk_drag_surface_present;
+
+// gdk.DrawContext
+
+alias c_gdk_draw_context_get_type gdk_draw_context_get_type;
+alias c_gdk_draw_context_begin_frame gdk_draw_context_begin_frame;
+alias c_gdk_draw_context_end_frame gdk_draw_context_end_frame;
+alias c_gdk_draw_context_get_display gdk_draw_context_get_display;
+alias c_gdk_draw_context_get_frame_region gdk_draw_context_get_frame_region;
+alias c_gdk_draw_context_get_surface gdk_draw_context_get_surface;
+alias c_gdk_draw_context_is_in_frame gdk_draw_context_is_in_frame;
+
+// gdk.Drop
+
+alias c_gdk_drop_get_type gdk_drop_get_type;
 alias c_gdk_drop_finish gdk_drop_finish;
-alias c_gdk_drop_reply gdk_drop_reply;
-
-// gdk.DrawingContext
-
-alias c_gdk_drawing_context_get_type gdk_drawing_context_get_type;
-alias c_gdk_drawing_context_get_cairo_context gdk_drawing_context_get_cairo_context;
-alias c_gdk_drawing_context_get_clip gdk_drawing_context_get_clip;
-alias c_gdk_drawing_context_get_window gdk_drawing_context_get_window;
-alias c_gdk_drawing_context_is_valid gdk_drawing_context_is_valid;
+alias c_gdk_drop_get_actions gdk_drop_get_actions;
+alias c_gdk_drop_get_device gdk_drop_get_device;
+alias c_gdk_drop_get_display gdk_drop_get_display;
+alias c_gdk_drop_get_drag gdk_drop_get_drag;
+alias c_gdk_drop_get_formats gdk_drop_get_formats;
+alias c_gdk_drop_get_surface gdk_drop_get_surface;
+alias c_gdk_drop_read_async gdk_drop_read_async;
+alias c_gdk_drop_read_finish gdk_drop_read_finish;
+alias c_gdk_drop_read_value_async gdk_drop_read_value_async;
+alias c_gdk_drop_read_value_finish gdk_drop_read_value_finish;
+alias c_gdk_drop_status gdk_drop_status;
 
 // gdk.Event
 
 alias c_gdk_event_get_type gdk_event_get_type;
-alias c_gdk_event_new gdk_event_new;
 alias c_gdk_events_get_angle gdk_events_get_angle;
 alias c_gdk_events_get_center gdk_events_get_center;
 alias c_gdk_events_get_distance gdk_events_get_distance;
-alias c_gdk_event_copy gdk_event_copy;
-alias c_gdk_event_free gdk_event_free;
+alias c_gdk_event_get_axes gdk_event_get_axes;
 alias c_gdk_event_get_axis gdk_event_get_axis;
-alias c_gdk_event_get_button gdk_event_get_button;
-alias c_gdk_event_get_click_count gdk_event_get_click_count;
-alias c_gdk_event_get_coords gdk_event_get_coords;
 alias c_gdk_event_get_device gdk_event_get_device;
 alias c_gdk_event_get_device_tool gdk_event_get_device_tool;
+alias c_gdk_event_get_display gdk_event_get_display;
 alias c_gdk_event_get_event_sequence gdk_event_get_event_sequence;
 alias c_gdk_event_get_event_type gdk_event_get_event_type;
-alias c_gdk_event_get_keycode gdk_event_get_keycode;
-alias c_gdk_event_get_keyval gdk_event_get_keyval;
+alias c_gdk_event_get_history gdk_event_get_history;
+alias c_gdk_event_get_modifier_state gdk_event_get_modifier_state;
 alias c_gdk_event_get_pointer_emulated gdk_event_get_pointer_emulated;
-alias c_gdk_event_get_root_coords gdk_event_get_root_coords;
-alias c_gdk_event_get_scancode gdk_event_get_scancode;
-alias c_gdk_event_get_screen gdk_event_get_screen;
-alias c_gdk_event_get_scroll_deltas gdk_event_get_scroll_deltas;
-alias c_gdk_event_get_scroll_direction gdk_event_get_scroll_direction;
+alias c_gdk_event_get_position gdk_event_get_position;
 alias c_gdk_event_get_seat gdk_event_get_seat;
-alias c_gdk_event_get_source_device gdk_event_get_source_device;
-alias c_gdk_event_get_state gdk_event_get_state;
+alias c_gdk_event_get_surface gdk_event_get_surface;
 alias c_gdk_event_get_time gdk_event_get_time;
-alias c_gdk_event_get_window gdk_event_get_window;
-alias c_gdk_event_is_scroll_stop_event gdk_event_is_scroll_stop_event;
-alias c_gdk_event_put gdk_event_put;
-alias c_gdk_event_set_device gdk_event_set_device;
-alias c_gdk_event_set_device_tool gdk_event_set_device_tool;
-alias c_gdk_event_set_screen gdk_event_set_screen;
-alias c_gdk_event_set_source_device gdk_event_set_source_device;
+alias c_gdk_event_ref gdk_event_ref;
 alias c_gdk_event_triggers_context_menu gdk_event_triggers_context_menu;
-alias c_gdk_event_get gdk_event_get;
-alias c_gdk_event_handler_set gdk_event_handler_set;
-alias c_gdk_event_peek gdk_event_peek;
-alias c_gdk_event_request_motions gdk_event_request_motions;
-alias c_gdk_events_pending gdk_events_pending;
-alias c_gdk_get_show_events gdk_get_show_events;
-alias c_gdk_set_show_events gdk_set_show_events;
-alias c_gdk_setting_get gdk_setting_get;
+alias c_gdk_event_unref gdk_event_unref;
 
 // gdk.EventSequence
 
 alias c_gdk_event_sequence_get_type gdk_event_sequence_get_type;
+
+// gdk.FocusEvent
+
+alias c_gdk_focus_event_get_type gdk_focus_event_get_type;
+alias c_gdk_focus_event_get_in gdk_focus_event_get_in;
 
 // gdk.FrameClock
 
@@ -1714,6 +1546,7 @@ alias c_gdk_frame_clock_get_type gdk_frame_clock_get_type;
 alias c_gdk_frame_clock_begin_updating gdk_frame_clock_begin_updating;
 alias c_gdk_frame_clock_end_updating gdk_frame_clock_end_updating;
 alias c_gdk_frame_clock_get_current_timings gdk_frame_clock_get_current_timings;
+alias c_gdk_frame_clock_get_fps gdk_frame_clock_get_fps;
 alias c_gdk_frame_clock_get_frame_counter gdk_frame_clock_get_frame_counter;
 alias c_gdk_frame_clock_get_frame_time gdk_frame_clock_get_frame_time;
 alias c_gdk_frame_clock_get_history_start gdk_frame_clock_get_history_start;
@@ -1743,9 +1576,9 @@ alias c_gdk_gl_context_get_display gdk_gl_context_get_display;
 alias c_gdk_gl_context_get_forward_compatible gdk_gl_context_get_forward_compatible;
 alias c_gdk_gl_context_get_required_version gdk_gl_context_get_required_version;
 alias c_gdk_gl_context_get_shared_context gdk_gl_context_get_shared_context;
+alias c_gdk_gl_context_get_surface gdk_gl_context_get_surface;
 alias c_gdk_gl_context_get_use_es gdk_gl_context_get_use_es;
 alias c_gdk_gl_context_get_version gdk_gl_context_get_version;
-alias c_gdk_gl_context_get_window gdk_gl_context_get_window;
 alias c_gdk_gl_context_is_legacy gdk_gl_context_is_legacy;
 alias c_gdk_gl_context_make_current gdk_gl_context_make_current;
 alias c_gdk_gl_context_realize gdk_gl_context_realize;
@@ -1754,37 +1587,39 @@ alias c_gdk_gl_context_set_forward_compatible gdk_gl_context_set_forward_compati
 alias c_gdk_gl_context_set_required_version gdk_gl_context_set_required_version;
 alias c_gdk_gl_context_set_use_es gdk_gl_context_set_use_es;
 
-// gdk.Keymap
+// gdk.GLTexture
 
-alias c_gdk_keymap_get_type gdk_keymap_get_type;
-alias c_gdk_keymap_get_default gdk_keymap_get_default;
-alias c_gdk_keymap_get_for_display gdk_keymap_get_for_display;
-alias c_gdk_keymap_add_virtual_modifiers gdk_keymap_add_virtual_modifiers;
-alias c_gdk_keymap_get_caps_lock_state gdk_keymap_get_caps_lock_state;
-alias c_gdk_keymap_get_direction gdk_keymap_get_direction;
-alias c_gdk_keymap_get_entries_for_keycode gdk_keymap_get_entries_for_keycode;
-alias c_gdk_keymap_get_entries_for_keyval gdk_keymap_get_entries_for_keyval;
-alias c_gdk_keymap_get_modifier_mask gdk_keymap_get_modifier_mask;
-alias c_gdk_keymap_get_modifier_state gdk_keymap_get_modifier_state;
-alias c_gdk_keymap_get_num_lock_state gdk_keymap_get_num_lock_state;
-alias c_gdk_keymap_get_scroll_lock_state gdk_keymap_get_scroll_lock_state;
-alias c_gdk_keymap_have_bidi_layouts gdk_keymap_have_bidi_layouts;
-alias c_gdk_keymap_lookup_key gdk_keymap_lookup_key;
-alias c_gdk_keymap_map_virtual_modifiers gdk_keymap_map_virtual_modifiers;
-alias c_gdk_keymap_translate_keyboard_state gdk_keymap_translate_keyboard_state;
-alias c_gdk_keyval_convert_case gdk_keyval_convert_case;
-alias c_gdk_keyval_from_name gdk_keyval_from_name;
-alias c_gdk_keyval_is_lower gdk_keyval_is_lower;
-alias c_gdk_keyval_is_upper gdk_keyval_is_upper;
-alias c_gdk_keyval_name gdk_keyval_name;
-alias c_gdk_keyval_to_lower gdk_keyval_to_lower;
-alias c_gdk_keyval_to_unicode gdk_keyval_to_unicode;
-alias c_gdk_keyval_to_upper gdk_keyval_to_upper;
-alias c_gdk_unicode_to_keyval gdk_unicode_to_keyval;
+alias c_gdk_gl_texture_get_type gdk_gl_texture_get_type;
+alias c_gdk_gl_texture_new gdk_gl_texture_new;
+alias c_gdk_gl_texture_release gdk_gl_texture_release;
 
-// gdk.MonitorG
+// gdk.GrabBrokenEvent
+
+alias c_gdk_grab_broken_event_get_type gdk_grab_broken_event_get_type;
+alias c_gdk_grab_broken_event_get_grab_surface gdk_grab_broken_event_get_grab_surface;
+alias c_gdk_grab_broken_event_get_implicit gdk_grab_broken_event_get_implicit;
+
+// gdk.KeyEvent
+
+alias c_gdk_key_event_get_type gdk_key_event_get_type;
+alias c_gdk_key_event_get_consumed_modifiers gdk_key_event_get_consumed_modifiers;
+alias c_gdk_key_event_get_keycode gdk_key_event_get_keycode;
+alias c_gdk_key_event_get_keyval gdk_key_event_get_keyval;
+alias c_gdk_key_event_get_layout gdk_key_event_get_layout;
+alias c_gdk_key_event_get_level gdk_key_event_get_level;
+alias c_gdk_key_event_get_match gdk_key_event_get_match;
+alias c_gdk_key_event_is_modifier gdk_key_event_is_modifier;
+alias c_gdk_key_event_matches gdk_key_event_matches;
+
+// gdk.MemoryTexture
+
+alias c_gdk_memory_texture_get_type gdk_memory_texture_get_type;
+alias c_gdk_memory_texture_new gdk_memory_texture_new;
+
+// gdk.MonitorGdk
 
 alias c_gdk_monitor_get_type gdk_monitor_get_type;
+alias c_gdk_monitor_get_connector gdk_monitor_get_connector;
 alias c_gdk_monitor_get_display gdk_monitor_get_display;
 alias c_gdk_monitor_get_geometry gdk_monitor_get_geometry;
 alias c_gdk_monitor_get_height_mm gdk_monitor_get_height_mm;
@@ -1794,8 +1629,66 @@ alias c_gdk_monitor_get_refresh_rate gdk_monitor_get_refresh_rate;
 alias c_gdk_monitor_get_scale_factor gdk_monitor_get_scale_factor;
 alias c_gdk_monitor_get_subpixel_layout gdk_monitor_get_subpixel_layout;
 alias c_gdk_monitor_get_width_mm gdk_monitor_get_width_mm;
-alias c_gdk_monitor_get_workarea gdk_monitor_get_workarea;
-alias c_gdk_monitor_is_primary gdk_monitor_is_primary;
+alias c_gdk_monitor_is_valid gdk_monitor_is_valid;
+
+// gdk.MotionEvent
+
+alias c_gdk_motion_event_get_type gdk_motion_event_get_type;
+
+// gdk.PadEvent
+
+alias c_gdk_pad_event_get_type gdk_pad_event_get_type;
+alias c_gdk_pad_event_get_axis_value gdk_pad_event_get_axis_value;
+alias c_gdk_pad_event_get_button gdk_pad_event_get_button;
+alias c_gdk_pad_event_get_group_mode gdk_pad_event_get_group_mode;
+
+// gdk.Paintable
+
+alias c_gdk_paintable_get_type gdk_paintable_get_type;
+alias c_gdk_paintable_new_empty gdk_paintable_new_empty;
+alias c_gdk_paintable_compute_concrete_size gdk_paintable_compute_concrete_size;
+alias c_gdk_paintable_get_current_image gdk_paintable_get_current_image;
+alias c_gdk_paintable_get_flags gdk_paintable_get_flags;
+alias c_gdk_paintable_get_intrinsic_aspect_ratio gdk_paintable_get_intrinsic_aspect_ratio;
+alias c_gdk_paintable_get_intrinsic_height gdk_paintable_get_intrinsic_height;
+alias c_gdk_paintable_get_intrinsic_width gdk_paintable_get_intrinsic_width;
+alias c_gdk_paintable_invalidate_contents gdk_paintable_invalidate_contents;
+alias c_gdk_paintable_invalidate_size gdk_paintable_invalidate_size;
+alias c_gdk_paintable_snapshot gdk_paintable_snapshot;
+
+// gdk.Popup
+
+alias c_gdk_popup_get_type gdk_popup_get_type;
+alias c_gdk_popup_get_autohide gdk_popup_get_autohide;
+alias c_gdk_popup_get_parent gdk_popup_get_parent;
+alias c_gdk_popup_get_position_x gdk_popup_get_position_x;
+alias c_gdk_popup_get_position_y gdk_popup_get_position_y;
+alias c_gdk_popup_get_rect_anchor gdk_popup_get_rect_anchor;
+alias c_gdk_popup_get_surface_anchor gdk_popup_get_surface_anchor;
+alias c_gdk_popup_present gdk_popup_present;
+
+// gdk.PopupLayout
+
+alias c_gdk_popup_layout_get_type gdk_popup_layout_get_type;
+alias c_gdk_popup_layout_new gdk_popup_layout_new;
+alias c_gdk_popup_layout_copy gdk_popup_layout_copy;
+alias c_gdk_popup_layout_equal gdk_popup_layout_equal;
+alias c_gdk_popup_layout_get_anchor_hints gdk_popup_layout_get_anchor_hints;
+alias c_gdk_popup_layout_get_anchor_rect gdk_popup_layout_get_anchor_rect;
+alias c_gdk_popup_layout_get_offset gdk_popup_layout_get_offset;
+alias c_gdk_popup_layout_get_rect_anchor gdk_popup_layout_get_rect_anchor;
+alias c_gdk_popup_layout_get_surface_anchor gdk_popup_layout_get_surface_anchor;
+alias c_gdk_popup_layout_ref gdk_popup_layout_ref;
+alias c_gdk_popup_layout_set_anchor_hints gdk_popup_layout_set_anchor_hints;
+alias c_gdk_popup_layout_set_anchor_rect gdk_popup_layout_set_anchor_rect;
+alias c_gdk_popup_layout_set_offset gdk_popup_layout_set_offset;
+alias c_gdk_popup_layout_set_rect_anchor gdk_popup_layout_set_rect_anchor;
+alias c_gdk_popup_layout_set_surface_anchor gdk_popup_layout_set_surface_anchor;
+alias c_gdk_popup_layout_unref gdk_popup_layout_unref;
+
+// gdk.ProximityEvent
+
+alias c_gdk_proximity_event_get_type gdk_proximity_event_get_type;
 
 // gdk.RGBA
 
@@ -1804,354 +1697,140 @@ alias c_gdk_rgba_copy gdk_rgba_copy;
 alias c_gdk_rgba_equal gdk_rgba_equal;
 alias c_gdk_rgba_free gdk_rgba_free;
 alias c_gdk_rgba_hash gdk_rgba_hash;
+alias c_gdk_rgba_is_clear gdk_rgba_is_clear;
+alias c_gdk_rgba_is_opaque gdk_rgba_is_opaque;
 alias c_gdk_rgba_parse gdk_rgba_parse;
 alias c_gdk_rgba_to_string gdk_rgba_to_string;
 
 // gdk.Rectangle
 
 alias c_gdk_rectangle_get_type gdk_rectangle_get_type;
+alias c_gdk_rectangle_contains_point gdk_rectangle_contains_point;
 alias c_gdk_rectangle_equal gdk_rectangle_equal;
 alias c_gdk_rectangle_intersect gdk_rectangle_intersect;
 alias c_gdk_rectangle_union gdk_rectangle_union;
 
-// gdk.Screen
+// gdk.ScrollEvent
 
-alias c_gdk_screen_get_type gdk_screen_get_type;
-alias c_gdk_screen_get_default gdk_screen_get_default;
-alias c_gdk_screen_height gdk_screen_height;
-alias c_gdk_screen_height_mm gdk_screen_height_mm;
-alias c_gdk_screen_width gdk_screen_width;
-alias c_gdk_screen_width_mm gdk_screen_width_mm;
-alias c_gdk_screen_get_active_window gdk_screen_get_active_window;
-alias c_gdk_screen_get_display gdk_screen_get_display;
-alias c_gdk_screen_get_font_options gdk_screen_get_font_options;
-alias c_gdk_screen_get_height gdk_screen_get_height;
-alias c_gdk_screen_get_height_mm gdk_screen_get_height_mm;
-alias c_gdk_screen_get_monitor_at_point gdk_screen_get_monitor_at_point;
-alias c_gdk_screen_get_monitor_at_window gdk_screen_get_monitor_at_window;
-alias c_gdk_screen_get_monitor_geometry gdk_screen_get_monitor_geometry;
-alias c_gdk_screen_get_monitor_height_mm gdk_screen_get_monitor_height_mm;
-alias c_gdk_screen_get_monitor_plug_name gdk_screen_get_monitor_plug_name;
-alias c_gdk_screen_get_monitor_scale_factor gdk_screen_get_monitor_scale_factor;
-alias c_gdk_screen_get_monitor_width_mm gdk_screen_get_monitor_width_mm;
-alias c_gdk_screen_get_monitor_workarea gdk_screen_get_monitor_workarea;
-alias c_gdk_screen_get_n_monitors gdk_screen_get_n_monitors;
-alias c_gdk_screen_get_number gdk_screen_get_number;
-alias c_gdk_screen_get_primary_monitor gdk_screen_get_primary_monitor;
-alias c_gdk_screen_get_resolution gdk_screen_get_resolution;
-alias c_gdk_screen_get_rgba_visual gdk_screen_get_rgba_visual;
-alias c_gdk_screen_get_root_window gdk_screen_get_root_window;
-alias c_gdk_screen_get_setting gdk_screen_get_setting;
-alias c_gdk_screen_get_system_visual gdk_screen_get_system_visual;
-alias c_gdk_screen_get_toplevel_windows gdk_screen_get_toplevel_windows;
-alias c_gdk_screen_get_width gdk_screen_get_width;
-alias c_gdk_screen_get_width_mm gdk_screen_get_width_mm;
-alias c_gdk_screen_get_window_stack gdk_screen_get_window_stack;
-alias c_gdk_screen_is_composited gdk_screen_is_composited;
-alias c_gdk_screen_list_visuals gdk_screen_list_visuals;
-alias c_gdk_screen_make_display_name gdk_screen_make_display_name;
-alias c_gdk_screen_set_font_options gdk_screen_set_font_options;
-alias c_gdk_screen_set_resolution gdk_screen_set_resolution;
+alias c_gdk_scroll_event_get_type gdk_scroll_event_get_type;
+alias c_gdk_scroll_event_get_deltas gdk_scroll_event_get_deltas;
+alias c_gdk_scroll_event_get_direction gdk_scroll_event_get_direction;
+alias c_gdk_scroll_event_is_stop gdk_scroll_event_is_stop;
 
 // gdk.Seat
 
 alias c_gdk_seat_get_type gdk_seat_get_type;
 alias c_gdk_seat_get_capabilities gdk_seat_get_capabilities;
+alias c_gdk_seat_get_devices gdk_seat_get_devices;
 alias c_gdk_seat_get_display gdk_seat_get_display;
 alias c_gdk_seat_get_keyboard gdk_seat_get_keyboard;
 alias c_gdk_seat_get_pointer gdk_seat_get_pointer;
-alias c_gdk_seat_get_slaves gdk_seat_get_slaves;
-alias c_gdk_seat_grab gdk_seat_grab;
-alias c_gdk_seat_ungrab gdk_seat_ungrab;
+alias c_gdk_seat_get_tools gdk_seat_get_tools;
 
-// gdk.Visual
+// gdk.Snapshot
 
-alias c_gdk_visual_get_type gdk_visual_get_type;
-alias c_gdk_visual_get_best gdk_visual_get_best;
-alias c_gdk_visual_get_best_depth gdk_visual_get_best_depth;
-alias c_gdk_visual_get_best_type gdk_visual_get_best_type;
-alias c_gdk_visual_get_best_with_both gdk_visual_get_best_with_both;
-alias c_gdk_visual_get_best_with_depth gdk_visual_get_best_with_depth;
-alias c_gdk_visual_get_best_with_type gdk_visual_get_best_with_type;
-alias c_gdk_visual_get_system gdk_visual_get_system;
-alias c_gdk_visual_get_bits_per_rgb gdk_visual_get_bits_per_rgb;
-alias c_gdk_visual_get_blue_pixel_details gdk_visual_get_blue_pixel_details;
-alias c_gdk_visual_get_byte_order gdk_visual_get_byte_order;
-alias c_gdk_visual_get_colormap_size gdk_visual_get_colormap_size;
-alias c_gdk_visual_get_depth gdk_visual_get_depth;
-alias c_gdk_visual_get_green_pixel_details gdk_visual_get_green_pixel_details;
-alias c_gdk_visual_get_red_pixel_details gdk_visual_get_red_pixel_details;
-alias c_gdk_visual_get_screen gdk_visual_get_screen;
-alias c_gdk_visual_get_visual_type gdk_visual_get_visual_type;
-alias c_gdk_list_visuals gdk_list_visuals;
-alias c_gdk_query_depths gdk_query_depths;
-alias c_gdk_query_visual_types gdk_query_visual_types;
+alias c_gdk_snapshot_get_type gdk_snapshot_get_type;
 
-// gdk.Window
+// gdk.Surface
 
-alias c_gdk_window_get_type gdk_window_get_type;
-alias c_gdk_window_new gdk_window_new;
-alias c_gdk_window_at_pointer gdk_window_at_pointer;
-alias c_gdk_window_constrain_size gdk_window_constrain_size;
-alias c_gdk_window_process_all_updates gdk_window_process_all_updates;
-alias c_gdk_window_set_debug_updates gdk_window_set_debug_updates;
-alias c_gdk_window_add_filter gdk_window_add_filter;
-alias c_gdk_window_beep gdk_window_beep;
-alias c_gdk_window_begin_draw_frame gdk_window_begin_draw_frame;
-alias c_gdk_window_begin_move_drag gdk_window_begin_move_drag;
-alias c_gdk_window_begin_move_drag_for_device gdk_window_begin_move_drag_for_device;
-alias c_gdk_window_begin_paint_rect gdk_window_begin_paint_rect;
-alias c_gdk_window_begin_paint_region gdk_window_begin_paint_region;
-alias c_gdk_window_begin_resize_drag gdk_window_begin_resize_drag;
-alias c_gdk_window_begin_resize_drag_for_device gdk_window_begin_resize_drag_for_device;
-alias c_gdk_window_configure_finished gdk_window_configure_finished;
-alias c_gdk_window_coords_from_parent gdk_window_coords_from_parent;
-alias c_gdk_window_coords_to_parent gdk_window_coords_to_parent;
-alias c_gdk_window_create_gl_context gdk_window_create_gl_context;
-alias c_gdk_window_create_similar_image_surface gdk_window_create_similar_image_surface;
-alias c_gdk_window_create_similar_surface gdk_window_create_similar_surface;
-alias c_gdk_window_deiconify gdk_window_deiconify;
-alias c_gdk_window_destroy gdk_window_destroy;
-alias c_gdk_window_destroy_notify gdk_window_destroy_notify;
-alias c_gdk_window_enable_synchronized_configure gdk_window_enable_synchronized_configure;
-alias c_gdk_window_end_draw_frame gdk_window_end_draw_frame;
-alias c_gdk_window_end_paint gdk_window_end_paint;
-alias c_gdk_window_ensure_native gdk_window_ensure_native;
-alias c_gdk_window_flush gdk_window_flush;
-alias c_gdk_window_focus gdk_window_focus;
-alias c_gdk_window_freeze_toplevel_updates_libgtk_only gdk_window_freeze_toplevel_updates_libgtk_only;
-alias c_gdk_window_freeze_updates gdk_window_freeze_updates;
-alias c_gdk_window_fullscreen gdk_window_fullscreen;
-alias c_gdk_window_fullscreen_on_monitor gdk_window_fullscreen_on_monitor;
-alias c_gdk_window_geometry_changed gdk_window_geometry_changed;
-alias c_gdk_window_get_accept_focus gdk_window_get_accept_focus;
-alias c_gdk_window_get_background_pattern gdk_window_get_background_pattern;
-alias c_gdk_window_get_children gdk_window_get_children;
-alias c_gdk_window_get_children_with_user_data gdk_window_get_children_with_user_data;
-alias c_gdk_window_get_clip_region gdk_window_get_clip_region;
-alias c_gdk_window_get_composited gdk_window_get_composited;
-alias c_gdk_window_get_cursor gdk_window_get_cursor;
-alias c_gdk_window_get_decorations gdk_window_get_decorations;
-alias c_gdk_window_get_device_cursor gdk_window_get_device_cursor;
-alias c_gdk_window_get_device_events gdk_window_get_device_events;
-alias c_gdk_window_get_device_position gdk_window_get_device_position;
-alias c_gdk_window_get_device_position_double gdk_window_get_device_position_double;
-alias c_gdk_window_get_display gdk_window_get_display;
-alias c_gdk_window_get_drag_protocol gdk_window_get_drag_protocol;
-alias c_gdk_window_get_effective_parent gdk_window_get_effective_parent;
-alias c_gdk_window_get_effective_toplevel gdk_window_get_effective_toplevel;
-alias c_gdk_window_get_event_compression gdk_window_get_event_compression;
-alias c_gdk_window_get_events gdk_window_get_events;
-alias c_gdk_window_get_focus_on_map gdk_window_get_focus_on_map;
-alias c_gdk_window_get_frame_clock gdk_window_get_frame_clock;
-alias c_gdk_window_get_frame_extents gdk_window_get_frame_extents;
-alias c_gdk_window_get_fullscreen_mode gdk_window_get_fullscreen_mode;
-alias c_gdk_window_get_geometry gdk_window_get_geometry;
-alias c_gdk_window_get_group gdk_window_get_group;
-alias c_gdk_window_get_height gdk_window_get_height;
-alias c_gdk_window_get_modal_hint gdk_window_get_modal_hint;
-alias c_gdk_window_get_origin gdk_window_get_origin;
-alias c_gdk_window_get_parent gdk_window_get_parent;
-alias c_gdk_window_get_pass_through gdk_window_get_pass_through;
-alias c_gdk_window_get_pointer gdk_window_get_pointer;
-alias c_gdk_window_get_position gdk_window_get_position;
-alias c_gdk_window_get_root_coords gdk_window_get_root_coords;
-alias c_gdk_window_get_root_origin gdk_window_get_root_origin;
-alias c_gdk_window_get_scale_factor gdk_window_get_scale_factor;
-alias c_gdk_window_get_screen gdk_window_get_screen;
-alias c_gdk_window_get_source_events gdk_window_get_source_events;
-alias c_gdk_window_get_state gdk_window_get_state;
-alias c_gdk_window_get_support_multidevice gdk_window_get_support_multidevice;
-alias c_gdk_window_get_toplevel gdk_window_get_toplevel;
-alias c_gdk_window_get_type_hint gdk_window_get_type_hint;
-alias c_gdk_window_get_update_area gdk_window_get_update_area;
-alias c_gdk_window_get_user_data gdk_window_get_user_data;
-alias c_gdk_window_get_visible_region gdk_window_get_visible_region;
-alias c_gdk_window_get_visual gdk_window_get_visual;
-alias c_gdk_window_get_width gdk_window_get_width;
-alias c_gdk_window_get_window_type gdk_window_get_window_type;
-alias c_gdk_window_has_native gdk_window_has_native;
-alias c_gdk_window_hide gdk_window_hide;
-alias c_gdk_window_iconify gdk_window_iconify;
-alias c_gdk_window_input_shape_combine_region gdk_window_input_shape_combine_region;
-alias c_gdk_window_invalidate_maybe_recurse gdk_window_invalidate_maybe_recurse;
-alias c_gdk_window_invalidate_rect gdk_window_invalidate_rect;
-alias c_gdk_window_invalidate_region gdk_window_invalidate_region;
-alias c_gdk_window_is_destroyed gdk_window_is_destroyed;
-alias c_gdk_window_is_input_only gdk_window_is_input_only;
-alias c_gdk_window_is_shaped gdk_window_is_shaped;
-alias c_gdk_window_is_viewable gdk_window_is_viewable;
-alias c_gdk_window_is_visible gdk_window_is_visible;
-alias c_gdk_window_lower gdk_window_lower;
-alias c_gdk_window_mark_paint_from_clip gdk_window_mark_paint_from_clip;
-alias c_gdk_window_maximize gdk_window_maximize;
-alias c_gdk_window_merge_child_input_shapes gdk_window_merge_child_input_shapes;
-alias c_gdk_window_merge_child_shapes gdk_window_merge_child_shapes;
-alias c_gdk_window_move gdk_window_move;
-alias c_gdk_window_move_region gdk_window_move_region;
-alias c_gdk_window_move_resize gdk_window_move_resize;
-alias c_gdk_window_move_to_rect gdk_window_move_to_rect;
-alias c_gdk_window_peek_children gdk_window_peek_children;
-alias c_gdk_window_process_updates gdk_window_process_updates;
-alias c_gdk_window_raise gdk_window_raise;
-alias c_gdk_window_register_dnd gdk_window_register_dnd;
-alias c_gdk_window_remove_filter gdk_window_remove_filter;
-alias c_gdk_window_reparent gdk_window_reparent;
-alias c_gdk_window_resize gdk_window_resize;
-alias c_gdk_window_restack gdk_window_restack;
-alias c_gdk_window_scroll gdk_window_scroll;
-alias c_gdk_window_set_accept_focus gdk_window_set_accept_focus;
-alias c_gdk_window_set_background gdk_window_set_background;
-alias c_gdk_window_set_background_pattern gdk_window_set_background_pattern;
-alias c_gdk_window_set_background_rgba gdk_window_set_background_rgba;
-alias c_gdk_window_set_child_input_shapes gdk_window_set_child_input_shapes;
-alias c_gdk_window_set_child_shapes gdk_window_set_child_shapes;
-alias c_gdk_window_set_composited gdk_window_set_composited;
-alias c_gdk_window_set_cursor gdk_window_set_cursor;
-alias c_gdk_window_set_decorations gdk_window_set_decorations;
-alias c_gdk_window_set_device_cursor gdk_window_set_device_cursor;
-alias c_gdk_window_set_device_events gdk_window_set_device_events;
-alias c_gdk_window_set_event_compression gdk_window_set_event_compression;
-alias c_gdk_window_set_events gdk_window_set_events;
-alias c_gdk_window_set_focus_on_map gdk_window_set_focus_on_map;
-alias c_gdk_window_set_fullscreen_mode gdk_window_set_fullscreen_mode;
-alias c_gdk_window_set_functions gdk_window_set_functions;
-alias c_gdk_window_set_geometry_hints gdk_window_set_geometry_hints;
-alias c_gdk_window_set_group gdk_window_set_group;
-alias c_gdk_window_set_icon_list gdk_window_set_icon_list;
-alias c_gdk_window_set_icon_name gdk_window_set_icon_name;
-alias c_gdk_window_set_invalidate_handler gdk_window_set_invalidate_handler;
-alias c_gdk_window_set_keep_above gdk_window_set_keep_above;
-alias c_gdk_window_set_keep_below gdk_window_set_keep_below;
-alias c_gdk_window_set_modal_hint gdk_window_set_modal_hint;
-alias c_gdk_window_set_opacity gdk_window_set_opacity;
-alias c_gdk_window_set_opaque_region gdk_window_set_opaque_region;
-alias c_gdk_window_set_override_redirect gdk_window_set_override_redirect;
-alias c_gdk_window_set_pass_through gdk_window_set_pass_through;
-alias c_gdk_window_set_role gdk_window_set_role;
-alias c_gdk_window_set_shadow_width gdk_window_set_shadow_width;
-alias c_gdk_window_set_skip_pager_hint gdk_window_set_skip_pager_hint;
-alias c_gdk_window_set_skip_taskbar_hint gdk_window_set_skip_taskbar_hint;
-alias c_gdk_window_set_source_events gdk_window_set_source_events;
-alias c_gdk_window_set_startup_id gdk_window_set_startup_id;
-alias c_gdk_window_set_static_gravities gdk_window_set_static_gravities;
-alias c_gdk_window_set_support_multidevice gdk_window_set_support_multidevice;
-alias c_gdk_window_set_title gdk_window_set_title;
-alias c_gdk_window_set_transient_for gdk_window_set_transient_for;
-alias c_gdk_window_set_type_hint gdk_window_set_type_hint;
-alias c_gdk_window_set_urgency_hint gdk_window_set_urgency_hint;
-alias c_gdk_window_set_user_data gdk_window_set_user_data;
-alias c_gdk_window_shape_combine_region gdk_window_shape_combine_region;
-alias c_gdk_window_show gdk_window_show;
-alias c_gdk_window_show_unraised gdk_window_show_unraised;
-alias c_gdk_window_show_window_menu gdk_window_show_window_menu;
-alias c_gdk_window_stick gdk_window_stick;
-alias c_gdk_window_thaw_toplevel_updates_libgtk_only gdk_window_thaw_toplevel_updates_libgtk_only;
-alias c_gdk_window_thaw_updates gdk_window_thaw_updates;
-alias c_gdk_window_unfullscreen gdk_window_unfullscreen;
-alias c_gdk_window_unmaximize gdk_window_unmaximize;
-alias c_gdk_window_unstick gdk_window_unstick;
-alias c_gdk_window_withdraw gdk_window_withdraw;
-alias c_gdk_get_default_root_window gdk_get_default_root_window;
-alias c_gdk_offscreen_window_get_embedder gdk_offscreen_window_get_embedder;
-alias c_gdk_offscreen_window_get_surface gdk_offscreen_window_get_surface;
-alias c_gdk_offscreen_window_set_embedder gdk_offscreen_window_set_embedder;
-alias c_gdk_synthesize_window_state gdk_synthesize_window_state;
+alias c_gdk_surface_get_type gdk_surface_get_type;
+alias c_gdk_surface_new_popup gdk_surface_new_popup;
+alias c_gdk_surface_new_toplevel gdk_surface_new_toplevel;
+alias c_gdk_surface_beep gdk_surface_beep;
+alias c_gdk_surface_create_cairo_context gdk_surface_create_cairo_context;
+alias c_gdk_surface_create_gl_context gdk_surface_create_gl_context;
+alias c_gdk_surface_create_similar_surface gdk_surface_create_similar_surface;
+alias c_gdk_surface_create_vulkan_context gdk_surface_create_vulkan_context;
+alias c_gdk_surface_destroy gdk_surface_destroy;
+alias c_gdk_surface_get_cursor gdk_surface_get_cursor;
+alias c_gdk_surface_get_device_cursor gdk_surface_get_device_cursor;
+alias c_gdk_surface_get_device_position gdk_surface_get_device_position;
+alias c_gdk_surface_get_display gdk_surface_get_display;
+alias c_gdk_surface_get_frame_clock gdk_surface_get_frame_clock;
+alias c_gdk_surface_get_height gdk_surface_get_height;
+alias c_gdk_surface_get_mapped gdk_surface_get_mapped;
+alias c_gdk_surface_get_scale_factor gdk_surface_get_scale_factor;
+alias c_gdk_surface_get_width gdk_surface_get_width;
+alias c_gdk_surface_hide gdk_surface_hide;
+alias c_gdk_surface_is_destroyed gdk_surface_is_destroyed;
+alias c_gdk_surface_queue_render gdk_surface_queue_render;
+alias c_gdk_surface_request_layout gdk_surface_request_layout;
+alias c_gdk_surface_set_cursor gdk_surface_set_cursor;
+alias c_gdk_surface_set_device_cursor gdk_surface_set_device_cursor;
+alias c_gdk_surface_set_input_region gdk_surface_set_input_region;
+alias c_gdk_surface_set_opaque_region gdk_surface_set_opaque_region;
+alias c_gdk_surface_translate_coordinates gdk_surface_translate_coordinates;
 
-// gdk.X11
+// gdk.Texture
 
-alias c_gdk_x11_window_get_type gdk_x11_window_get_type;
-alias c_gdk_x11_window_foreign_new_for_display gdk_x11_window_foreign_new_for_display;
-alias c_gdk_x11_window_lookup_for_display gdk_x11_window_lookup_for_display;
-alias c_gdk_x11_window_get_desktop gdk_x11_window_get_desktop;
-alias c_gdk_x11_window_get_xid gdk_x11_window_get_xid;
-alias c_gdk_x11_window_move_to_current_desktop gdk_x11_window_move_to_current_desktop;
-alias c_gdk_x11_window_move_to_desktop gdk_x11_window_move_to_desktop;
-alias c_gdk_x11_window_set_frame_extents gdk_x11_window_set_frame_extents;
-alias c_gdk_x11_window_set_frame_sync_enabled gdk_x11_window_set_frame_sync_enabled;
-alias c_gdk_x11_window_set_hide_titlebar_when_maximized gdk_x11_window_set_hide_titlebar_when_maximized;
-alias c_gdk_x11_window_set_theme_variant gdk_x11_window_set_theme_variant;
-alias c_gdk_x11_window_set_user_time gdk_x11_window_set_user_time;
-alias c_gdk_x11_window_set_utf8_property gdk_x11_window_set_utf8_property;
+alias c_gdk_texture_get_type gdk_texture_get_type;
+alias c_gdk_texture_new_for_pixbuf gdk_texture_new_for_pixbuf;
+alias c_gdk_texture_new_from_file gdk_texture_new_from_file;
+alias c_gdk_texture_new_from_resource gdk_texture_new_from_resource;
+alias c_gdk_texture_download gdk_texture_download;
+alias c_gdk_texture_get_height gdk_texture_get_height;
+alias c_gdk_texture_get_width gdk_texture_get_width;
+alias c_gdk_texture_save_to_png gdk_texture_save_to_png;
 
-// gdk.Cairo
+// gdk.Toplevel
 
-alias c_gdk_cairo_create gdk_cairo_create;
-alias c_gdk_cairo_draw_from_gl gdk_cairo_draw_from_gl;
-alias c_gdk_cairo_get_clip_rectangle gdk_cairo_get_clip_rectangle;
-alias c_gdk_cairo_rectangle gdk_cairo_rectangle;
-alias c_gdk_cairo_region gdk_cairo_region;
-alias c_gdk_cairo_region_create_from_surface gdk_cairo_region_create_from_surface;
-alias c_gdk_cairo_set_source_color gdk_cairo_set_source_color;
-alias c_gdk_cairo_set_source_pixbuf gdk_cairo_set_source_pixbuf;
-alias c_gdk_cairo_set_source_rgba gdk_cairo_set_source_rgba;
-alias c_gdk_cairo_set_source_window gdk_cairo_set_source_window;
-alias c_gdk_cairo_surface_create_from_pixbuf gdk_cairo_surface_create_from_pixbuf;
-alias c_gdk_cairo_get_drawing_context gdk_cairo_get_drawing_context;
+alias c_gdk_toplevel_get_type gdk_toplevel_get_type;
+alias c_gdk_toplevel_begin_move gdk_toplevel_begin_move;
+alias c_gdk_toplevel_begin_resize gdk_toplevel_begin_resize;
+alias c_gdk_toplevel_focus gdk_toplevel_focus;
+alias c_gdk_toplevel_get_state gdk_toplevel_get_state;
+alias c_gdk_toplevel_inhibit_system_shortcuts gdk_toplevel_inhibit_system_shortcuts;
+alias c_gdk_toplevel_lower gdk_toplevel_lower;
+alias c_gdk_toplevel_minimize gdk_toplevel_minimize;
+alias c_gdk_toplevel_present gdk_toplevel_present;
+alias c_gdk_toplevel_restore_system_shortcuts gdk_toplevel_restore_system_shortcuts;
+alias c_gdk_toplevel_set_decorated gdk_toplevel_set_decorated;
+alias c_gdk_toplevel_set_deletable gdk_toplevel_set_deletable;
+alias c_gdk_toplevel_set_icon_list gdk_toplevel_set_icon_list;
+alias c_gdk_toplevel_set_modal gdk_toplevel_set_modal;
+alias c_gdk_toplevel_set_startup_id gdk_toplevel_set_startup_id;
+alias c_gdk_toplevel_set_title gdk_toplevel_set_title;
+alias c_gdk_toplevel_set_transient_for gdk_toplevel_set_transient_for;
+alias c_gdk_toplevel_show_window_menu gdk_toplevel_show_window_menu;
+alias c_gdk_toplevel_supports_edge_constraints gdk_toplevel_supports_edge_constraints;
 
-// gdk.Pango
+// gdk.ToplevelLayout
 
-alias c_gdk_pango_context_get gdk_pango_context_get;
-alias c_gdk_pango_context_get_for_screen gdk_pango_context_get_for_screen;
-alias c_gdk_pango_layout_get_clip_region gdk_pango_layout_get_clip_region;
-alias c_gdk_pango_layout_line_get_clip_region gdk_pango_layout_line_get_clip_region;
-alias c_gdk_pango_context_get_for_display gdk_pango_context_get_for_display;
+alias c_gdk_toplevel_layout_get_type gdk_toplevel_layout_get_type;
+alias c_gdk_toplevel_layout_new gdk_toplevel_layout_new;
+alias c_gdk_toplevel_layout_copy gdk_toplevel_layout_copy;
+alias c_gdk_toplevel_layout_equal gdk_toplevel_layout_equal;
+alias c_gdk_toplevel_layout_get_fullscreen gdk_toplevel_layout_get_fullscreen;
+alias c_gdk_toplevel_layout_get_fullscreen_monitor gdk_toplevel_layout_get_fullscreen_monitor;
+alias c_gdk_toplevel_layout_get_maximized gdk_toplevel_layout_get_maximized;
+alias c_gdk_toplevel_layout_get_resizable gdk_toplevel_layout_get_resizable;
+alias c_gdk_toplevel_layout_ref gdk_toplevel_layout_ref;
+alias c_gdk_toplevel_layout_set_fullscreen gdk_toplevel_layout_set_fullscreen;
+alias c_gdk_toplevel_layout_set_maximized gdk_toplevel_layout_set_maximized;
+alias c_gdk_toplevel_layout_set_resizable gdk_toplevel_layout_set_resizable;
+alias c_gdk_toplevel_layout_unref gdk_toplevel_layout_unref;
 
-// gdk.Pixbuf
+// gdk.ToplevelSize
 
-alias c_gdk_pixbuf_get_from_surface gdk_pixbuf_get_from_surface;
-alias c_gdk_pixbuf_get_from_window gdk_pixbuf_get_from_window;
+alias c_gdk_toplevel_size_get_bounds gdk_toplevel_size_get_bounds;
+alias c_gdk_toplevel_size_set_min_size gdk_toplevel_size_set_min_size;
+alias c_gdk_toplevel_size_set_shadow_width gdk_toplevel_size_set_shadow_width;
+alias c_gdk_toplevel_size_set_size gdk_toplevel_size_set_size;
 
-// gdk.Threads
+// gdk.TouchEvent
 
-alias c_gdk_threads_add_idle gdk_threads_add_idle;
-alias c_gdk_threads_add_idle_full gdk_threads_add_idle_full;
-alias c_gdk_threads_add_timeout gdk_threads_add_timeout;
-alias c_gdk_threads_add_timeout_full gdk_threads_add_timeout_full;
-alias c_gdk_threads_add_timeout_seconds gdk_threads_add_timeout_seconds;
-alias c_gdk_threads_add_timeout_seconds_full gdk_threads_add_timeout_seconds_full;
-alias c_gdk_threads_enter gdk_threads_enter;
-alias c_gdk_threads_init gdk_threads_init;
-alias c_gdk_threads_leave gdk_threads_leave;
-alias c_gdk_threads_set_lock_functions gdk_threads_set_lock_functions;
+alias c_gdk_touch_event_get_type gdk_touch_event_get_type;
+alias c_gdk_touch_event_get_emulating_pointer gdk_touch_event_get_emulating_pointer;
 
-// gdk.Gdk
+// gdk.TouchpadEvent
 
-alias c_gdk_beep gdk_beep;
-alias c_gdk_error_trap_pop gdk_error_trap_pop;
-alias c_gdk_error_trap_pop_ignored gdk_error_trap_pop_ignored;
-alias c_gdk_error_trap_push gdk_error_trap_push;
-alias c_gdk_flush gdk_flush;
-alias c_gdk_get_display gdk_get_display;
-alias c_gdk_get_display_arg_name gdk_get_display_arg_name;
-alias c_gdk_get_program_class gdk_get_program_class;
-alias c_gdk_init gdk_init;
-alias c_gdk_init_check gdk_init_check;
-alias c_gdk_keyboard_grab gdk_keyboard_grab;
-alias c_gdk_keyboard_ungrab gdk_keyboard_ungrab;
-alias c_gdk_notify_startup_complete gdk_notify_startup_complete;
-alias c_gdk_notify_startup_complete_with_id gdk_notify_startup_complete_with_id;
-alias c_gdk_parse_args gdk_parse_args;
-alias c_gdk_pointer_grab gdk_pointer_grab;
-alias c_gdk_pointer_is_grabbed gdk_pointer_is_grabbed;
-alias c_gdk_pointer_ungrab gdk_pointer_ungrab;
-alias c_gdk_set_allowed_backends gdk_set_allowed_backends;
-alias c_gdk_set_double_click_time gdk_set_double_click_time;
-alias c_gdk_set_program_class gdk_set_program_class;
+alias c_gdk_touchpad_event_get_type gdk_touchpad_event_get_type;
+alias c_gdk_touchpad_event_get_deltas gdk_touchpad_event_get_deltas;
+alias c_gdk_touchpad_event_get_gesture_phase gdk_touchpad_event_get_gesture_phase;
+alias c_gdk_touchpad_event_get_n_fingers gdk_touchpad_event_get_n_fingers;
+alias c_gdk_touchpad_event_get_pinch_angle_delta gdk_touchpad_event_get_pinch_angle_delta;
+alias c_gdk_touchpad_event_get_pinch_scale gdk_touchpad_event_get_pinch_scale;
 
-// gdk.Selection
+// gdk.VulkanContext
 
-alias c_gdk_selection_convert gdk_selection_convert;
-alias c_gdk_selection_owner_get gdk_selection_owner_get;
-alias c_gdk_selection_owner_get_for_display gdk_selection_owner_get_for_display;
-alias c_gdk_selection_owner_set gdk_selection_owner_set;
-alias c_gdk_selection_owner_set_for_display gdk_selection_owner_set_for_display;
-alias c_gdk_selection_property_get gdk_selection_property_get;
-alias c_gdk_selection_send_notify gdk_selection_send_notify;
-alias c_gdk_selection_send_notify_for_display gdk_selection_send_notify_for_display;
-
-// gdk.Testing
-
-alias c_gdk_test_render_sync gdk_test_render_sync;
-alias c_gdk_test_simulate_button gdk_test_simulate_button;
-alias c_gdk_test_simulate_key gdk_test_simulate_key;
+alias c_gdk_vulkan_context_get_type gdk_vulkan_context_get_type;

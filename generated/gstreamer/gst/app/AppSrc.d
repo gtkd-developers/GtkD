@@ -90,7 +90,7 @@ private import std.algorithm;
  * 
  * The pull mode, in which the need-data signal triggers the next push-buffer call.
  * This mode is typically used in the "random-access" stream-type. Use this
- * mode for file access or other randomly accessable sources. In this mode, a
+ * mode for file access or other randomly accessible sources. In this mode, a
  * buffer of exactly the amount of bytes given by the need-data signal should be
  * pushed into appsrc.
  * 
@@ -146,7 +146,7 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 * Indicates to the appsrc element that the last buffer queued in the
 	 * element is the last buffer of the stream.
 	 *
-	 * Returns: #GST_FLOW_OK when the EOS was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the EOS was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
 	 */
 	public GstFlowReturn endOfStream()
@@ -161,14 +161,14 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_app_src_get_caps(gstAppSrc);
+		auto __p = gst_app_src_get_caps(gstAppSrc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -261,13 +261,13 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 * Params:
 	 *     buffer = a #GstBuffer to push
 	 *
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	public GstFlowReturn pushBuffer(Buffer buffer)
 	{
-		return gst_app_src_push_buffer(gstAppSrc, (buffer is null) ? null : buffer.getBufferStruct());
+		return gst_app_src_push_buffer(gstAppSrc, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
@@ -281,15 +281,15 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 * Params:
 	 *     bufferList = a #GstBufferList to push
 	 *
-	 * Returns: #GST_FLOW_OK when the buffer list was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer list was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 *
 	 * Since: 1.14
 	 */
 	public GstFlowReturn pushBufferList(BufferList bufferList)
 	{
-		return gst_app_src_push_buffer_list(gstAppSrc, (bufferList is null) ? null : bufferList.getBufferListStruct());
+		return gst_app_src_push_buffer_list(gstAppSrc, (bufferList is null) ? null : bufferList.getBufferListStruct(true));
 	}
 
 	/**
@@ -308,9 +308,9 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 *     sample = a #GstSample from which buffer and caps may be
 	 *         extracted
 	 *
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 *
 	 * Since: 1.6
 	 */
@@ -327,6 +327,9 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 *
 	 * If callbacks are installed, no signals will be emitted for performance
 	 * reasons.
+	 *
+	 * Before 1.16.3 it was not possible to change the callbacks in a thread-safe
+	 * way.
 	 *
 	 * Params:
 	 *     callbacks = the callbacks
@@ -417,110 +420,43 @@ public class AppSrc : BaseSrc, URIHandlerIF
 		gst_app_src_set_stream_type(gstAppSrc, type);
 	}
 
-	/**
-	 * Notify @appsrc that no more buffer are available.
-	 */
+	/** */
 	gulong addOnEndOfStream(GstFlowReturn delegate(AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "end-of-stream", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/**
-	 * Signal that the source has enough data. It is recommended that the
-	 * application stops calling push-buffer until the need-data signal is
-	 * emitted again to avoid excessive buffer queueing.
-	 */
+	/** */
 	gulong addOnEnoughData(void delegate(AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "enough-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/**
-	 * Signal that the source needs more data. In the callback or from another
-	 * thread you should call push-buffer or end-of-stream.
-	 *
-	 * @length is just a hint and when it is set to -1, any number of bytes can be
-	 * pushed into @appsrc.
-	 *
-	 * You can call push-buffer multiple times until the enough-data signal is
-	 * fired.
-	 *
-	 * Params:
-	 *     length = the amount of bytes needed.
-	 */
+	/** */
 	gulong addOnNeedData(void delegate(uint, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "need-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/**
-	 * Adds a buffer to the queue of buffers that the appsrc element will
-	 * push to its source pad. This function does not take ownership of the
-	 * buffer so the buffer needs to be unreffed after calling this function.
-	 *
-	 * When the block property is TRUE, this function can block until free space
-	 * becomes available in the queue.
-	 *
-	 * Params:
-	 *     buffer = a buffer to push
-	 */
+	/** */
 	gulong addOnPushBuffer(GstFlowReturn delegate(Buffer, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "push-buffer", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/**
-	 * Adds a buffer list to the queue of buffers and buffer lists that the
-	 * appsrc element will push to its source pad. This function does not take
-	 * ownership of the buffer list so the buffer list needs to be unreffed
-	 * after calling this function.
-	 *
-	 * When the block property is TRUE, this function can block until free space
-	 * becomes available in the queue.
-	 *
-	 * Params:
-	 *     bufferList = a buffer list to push
-	 *
-	 * Since: 1.14
-	 */
+	/** */
 	gulong addOnPushBufferList(GstFlowReturn delegate(BufferList, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "push-buffer-list", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/**
-	 * Extract a buffer from the provided sample and adds the extracted buffer
-	 * to the queue of buffers that the appsrc element will
-	 * push to its source pad. This function set the appsrc caps based on the caps
-	 * in the sample and reset the caps if they change.
-	 * Only the caps and the buffer of the provided sample are used and not
-	 * for example the segment in the sample.
-	 * This function does not take ownership of the
-	 * sample so the sample needs to be unreffed after calling this function.
-	 *
-	 * When the block property is TRUE, this function can block until free space
-	 * becomes available in the queue.
-	 *
-	 * Params:
-	 *     sample = a sample from which extract buffer to push
-	 *
-	 * Since: 1.6
-	 */
+	/** */
 	gulong addOnPushSample(GstFlowReturn delegate(Sample, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "push-sample", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/**
-	 * Seek to the given offset. The next push-buffer should produce buffers from
-	 * the new @offset.
-	 * This callback is only called for seekable stream types.
-	 *
-	 * Params:
-	 *     offset = the offset to seek to
-	 *
-	 * Returns: %TRUE if the seek succeeded.
-	 */
+	/** */
 	gulong addOnSeekData(bool delegate(ulong, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "seek-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);

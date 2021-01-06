@@ -28,10 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.EventController;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -54,7 +52,7 @@ private import std.algorithm;
  * 
  * The controller can be set up to emit motion for either/both vertical
  * and horizontal scroll events through #GTK_EVENT_CONTROLLER_SCROLL_VERTICAL,
- * #GTK_EVENT_CONTROLLER_SCROLL_HORIZONTAL and #GTK_EVENT_CONTROLLER_SCROLL_BOTH.
+ * #GTK_EVENT_CONTROLLER_SCROLL_HORIZONTAL and #GTK_EVENT_CONTROLLER_SCROLL_BOTH_AXES.
  * If any axis is disabled, the respective #GtkEventControllerScroll::scroll
  * delta will be 0. Vertical scroll events will be translated to horizontal
  * motion for the devices incapable of horizontal scrolling.
@@ -68,8 +66,6 @@ private import std.algorithm;
  * #GtkEventControllerScroll::decelerate signal, emitted at the end of scrolling
  * with two X/Y velocity arguments that are consistent with the motion that
  * was received.
- * 
- * This object was added in 3.24.
  */
 public class EventControllerScroll : EventController
 {
@@ -107,37 +103,31 @@ public class EventControllerScroll : EventController
 	}
 
 	/**
-	 * Creates a new event controller that will handle scroll events
-	 * for the given @widget.
+	 * Creates a new event controller that will handle scroll events.
 	 *
 	 * Params:
-	 *     widget = a #GtkWidget
 	 *     flags = behavior flags
 	 *
 	 * Returns: a new #GtkEventControllerScroll
 	 *
-	 * Since: 3.24
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget, GtkEventControllerScrollFlags flags)
+	public this(GtkEventControllerScrollFlags flags)
 	{
-		auto p = gtk_event_controller_scroll_new((widget is null) ? null : widget.getWidgetStruct(), flags);
+		auto __p = gtk_event_controller_scroll_new(flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEventControllerScroll*) p, true);
+		this(cast(GtkEventControllerScroll*) __p, true);
 	}
 
 	/**
 	 * Gets the flags conditioning the scroll controller behavior.
 	 *
 	 * Returns: the controller flags.
-	 *
-	 * Since: 3.24
 	 */
 	public GtkEventControllerScrollFlags getFlags()
 	{
@@ -149,8 +139,6 @@ public class EventControllerScroll : EventController
 	 *
 	 * Params:
 	 *     flags = behavior flags
-	 *
-	 * Since: 3.24
 	 */
 	public void setFlags(GtkEventControllerScrollFlags flags)
 	{
@@ -179,8 +167,10 @@ public class EventControllerScroll : EventController
 	 * Params:
 	 *     dx = X delta
 	 *     dy = Y delta
+	 *
+	 * Returns: %TRUE if the scroll event was handled, %FALSE otherwise.
 	 */
-	gulong addOnScroll(void delegate(double, double, EventControllerScroll) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnScroll(bool delegate(double, double, EventControllerScroll) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "scroll", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

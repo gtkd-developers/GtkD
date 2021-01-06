@@ -24,22 +24,21 @@
 
 module gtk.Notebook;
 
+private import gio.ListModelIF;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Container;
-private import gtk.Label;
+private import gtk.NotebookPage;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
- * The #GtkNotebook widget is a #GtkContainer whose children are pages that
- * can be switched between using tab labels along one edge.
+ * The #GtkNotebook widget is a layout container whose children are
+ * pages that can be switched between using tab labels along one edge.
  * 
  * There are many configuration options for GtkNotebook. Among other
  * things, you can choose on which edge the tabs appear
@@ -100,26 +99,35 @@ private import std.algorithm;
  * ╰── <child>
  * ]|
  * 
- * GtkNotebook has a main CSS node with name notebook, a subnode
- * with name header and below that a subnode with name tabs which
- * contains one subnode per tab with name tab.
+ * GtkNotebook has a main CSS node with name `notebook`, a subnode
+ * with name `header` and below that a subnode with name `tabs` which
+ * contains one subnode per tab with name `tab`.
  * 
  * If action widgets are present, their CSS nodes are placed next
- * to the tabs node. If the notebook is scrollable, CSS nodes with
- * name arrow are placed as first and last child of the tabs node.
+ * to the `tabs` node. If the notebook is scrollable, CSS nodes with
+ * name `arrow` are placed as first and last child of the `tabs` node.
  * 
- * The main node gets the .frame style class when the notebook
+ * The main node gets the `.frame` style class when the notebook
  * has a border (see gtk_notebook_set_show_border()).
  * 
- * The header node gets one of the style class .top, .bottom,
- * .left or .right, depending on where the tabs are placed. For
- * reorderable pages, the tab node gets the .reorderable-page class.
+ * The header node gets one of the style class `.top`, `.bottom`,
+ * `.left` or `.right`, depending on where the tabs are placed. For
+ * reorderable pages, the tab node gets the `.reorderable-page` class.
  * 
- * A tab node gets the .dnd style class while it is moved with drag-and-drop.
+ * A `tab` node gets the `.dnd` style class while it is moved with drag-and-drop.
  * 
- * The nodes are always arranged from left-to-right, regarldess of text direction.
+ * The nodes are always arranged from left-to-right, regardless of text direction.
+ * 
+ * # Accessibility
+ * 
+ * GtkNotebook uses the following roles:
+ * 
+ * - %GTK_ACCESSIBLE_ROLE_GROUP for the notebook widget
+ * - %GTK_ACCESSIBLE_ROLE_TAB_LIST for the list of tabs
+ * - %GTK_ACCESSIBLE_ROLE_TAB role for each tab
+ * - %GTK_ACCESSIBLE_ROLE_TAB_PANEL for each page
  */
-public class Notebook : Container
+public class Notebook : Widget
 {
 	/** the main Gtk struct */
 	protected GtkNotebook* gtkNotebook;
@@ -144,25 +152,9 @@ public class Notebook : Container
 	public this (GtkNotebook* gtkNotebook, bool ownedRef = false)
 	{
 		this.gtkNotebook = gtkNotebook;
-		super(cast(GtkContainer*)gtkNotebook, ownedRef);
+		super(cast(GtkWidget*)gtkNotebook, ownedRef);
 	}
 
-	/**
-	 * Append a page with a widget and a text for a label
-	 */
-	public int appendPage(Widget child, string tabLabel)
-	{
-		return appendPage(child, new Label(tabLabel));
-	}
-
-	/** */
-	void setCurrentPage(Widget child)
-	{
-		gtk_notebook_set_current_page(gtkNotebook,gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct()));
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -179,14 +171,14 @@ public class Notebook : Container
 	 */
 	public this()
 	{
-		auto p = gtk_notebook_new();
+		auto __p = gtk_notebook_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkNotebook*) p);
+		this(cast(GtkNotebook*) __p);
 	}
 
 	/**
@@ -231,15 +223,13 @@ public class Notebook : Container
 	/**
 	 * Removes the child from the notebook.
 	 *
-	 * This function is very similar to gtk_container_remove(),
+	 * This function is very similar to gtk_notebook_remove_page(),
 	 * but additionally informs the notebook that the removal
 	 * is happening as part of a tab DND operation, which should
 	 * not be cancelled.
 	 *
 	 * Params:
 	 *     child = a child
-	 *
-	 * Since: 3.16
 	 */
 	public void detachTab(Widget child)
 	{
@@ -254,19 +244,17 @@ public class Notebook : Container
 	 *
 	 * Returns: The action widget with the given
 	 *     @pack_type or %NULL when this action widget has not been set
-	 *
-	 * Since: 2.20
 	 */
 	public Widget getActionWidget(GtkPackType packType)
 	{
-		auto p = gtk_notebook_get_action_widget(gtkNotebook, packType);
+		auto __p = gtk_notebook_get_action_widget(gtkNotebook, packType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -285,8 +273,6 @@ public class Notebook : Container
 	 * Gets the current group name for @notebook.
 	 *
 	 * Returns: the group name, or %NULL if none is set
-	 *
-	 * Since: 2.24
 	 */
 	public string getGroupName()
 	{
@@ -305,14 +291,14 @@ public class Notebook : Container
 	 */
 	public Widget getMenuLabel(Widget child)
 	{
-		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -336,8 +322,6 @@ public class Notebook : Container
 	 * Gets the number of pages in a notebook.
 	 *
 	 * Returns: the number of pages in the notebook
-	 *
-	 * Since: 2.2
 	 */
 	public int getNPages()
 	{
@@ -356,14 +340,53 @@ public class Notebook : Container
 	 */
 	public Widget getNthPage(int pageNum)
 	{
-		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
+		auto __p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Returns the #GtkNotebookPage for @child.
+	 *
+	 * Params:
+	 *     child = a child of @notebook
+	 *
+	 * Returns: the #GtkNotebookPage for @child
+	 */
+	public NotebookPage getPage(Widget child)
+	{
+		auto __p = gtk_notebook_get_page(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(NotebookPage)(cast(GtkNotebookPage*) __p);
+	}
+
+	/**
+	 * Returns a #GListModel that contains the pages of the notebook,
+	 * and can be used to keep an up-to-date view.
+	 *
+	 * Returns: a
+	 *     #GListModel for the notebook's children
+	 */
+	public ListModelIF getPages()
+	{
+		auto __p = gtk_notebook_get_pages(gtkNotebook);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ListModelIF)(cast(GListModel*) __p, true);
 	}
 
 	/**
@@ -406,26 +429,10 @@ public class Notebook : Container
 	 *     child = a child #GtkWidget
 	 *
 	 * Returns: %TRUE if the tab is detachable.
-	 *
-	 * Since: 2.10
 	 */
 	public bool getTabDetachable(Widget child)
 	{
 		return gtk_notebook_get_tab_detachable(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) != 0;
-	}
-
-	/**
-	 * Returns the horizontal width of a tab border.
-	 *
-	 * Deprecated: this function returns zero
-	 *
-	 * Returns: horizontal width of a tab border
-	 *
-	 * Since: 2.22
-	 */
-	public ushort getTabHborder()
-	{
-		return gtk_notebook_get_tab_hborder(gtkNotebook);
 	}
 
 	/**
@@ -440,14 +447,14 @@ public class Notebook : Container
 	 */
 	public Widget getTabLabel(Widget child)
 	{
-		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -484,26 +491,10 @@ public class Notebook : Container
 	 *     child = a child #GtkWidget
 	 *
 	 * Returns: %TRUE if the tab is reorderable.
-	 *
-	 * Since: 2.10
 	 */
 	public bool getTabReorderable(Widget child)
 	{
 		return gtk_notebook_get_tab_reorderable(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) != 0;
-	}
-
-	/**
-	 * Returns the vertical width of a tab border.
-	 *
-	 * Deprecated: this function returns zero
-	 *
-	 * Returns: vertical width of a tab border
-	 *
-	 * Since: 2.22
-	 */
-	public ushort getTabVborder()
-	{
-		return gtk_notebook_get_tab_vborder(gtkNotebook);
 	}
 
 	/**
@@ -672,14 +663,9 @@ public class Notebook : Container
 	 * the widget will be placed before or after the tabs. You can use
 	 * a #GtkBox if you need to pack more than one widget on the same side.
 	 *
-	 * Note that action widgets are “internal” children of the notebook and thus
-	 * not included in the list returned from gtk_container_foreach().
-	 *
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *     packType = pack type of the action widget
-	 *
-	 * Since: 2.20
 	 */
 	public void setActionWidget(Widget widget, GtkPackType packType)
 	{
@@ -715,8 +701,6 @@ public class Notebook : Container
 	 * Params:
 	 *     groupName = the name of the notebook group,
 	 *         or %NULL to unset it
-	 *
-	 * Since: 2.24
 	 */
 	public void setGroupName(string groupName)
 	{
@@ -797,8 +781,8 @@ public class Notebook : Container
 	 * will fill the selection with a GtkWidget** pointing to the child
 	 * widget that corresponds to the dropped tab.
 	 *
-	 * Note that you should use gtk_notebook_detach_tab() instead
-	 * of gtk_container_remove() if you want to remove the tab from
+	 * Note that you should use gtk_notebook_detach_tab() instead of
+	 * gtk_notebook_remove_page() if you want to remove the tab from
 	 * the source notebook as part of accepting a drop. Otherwise,
 	 * the source notebook will think that the dragged tab was
 	 * removed from underneath the ongoing drag operation, and
@@ -807,18 +791,17 @@ public class Notebook : Container
 	 * |[<!-- language="C" -->
 	 * static void
 	 * on_drag_data_received (GtkWidget        *widget,
-	 * GdkDragContext   *context,
-	 * gint              x,
-	 * gint              y,
+	 * GdkDrop          *drop,
 	 * GtkSelectionData *data,
-	 * guint             info,
 	 * guint             time,
 	 * gpointer          user_data)
 	 * {
+	 * GtkDrag *drag;
 	 * GtkWidget *notebook;
 	 * GtkWidget **child;
 	 *
-	 * notebook = gtk_drag_get_source_widget (context);
+	 * drag = gtk_drop_get_drag (drop);
+	 * notebook = g_object_get_data (drag, "gtk-notebook-drag-origin");
 	 * child = (void*) gtk_selection_data_get_data (data);
 	 *
 	 * // process_widget (*child);
@@ -833,8 +816,6 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a child #GtkWidget
 	 *     detachable = whether the tab is detachable or not
-	 *
-	 * Since: 2.10
 	 */
 	public void setTabDetachable(Widget child, bool detachable)
 	{
@@ -888,8 +869,6 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a child #GtkWidget
 	 *     reorderable = whether the tab is reorderable or not
-	 *
-	 * Since: 2.10
 	 */
 	public void setTabReorderable(Widget child, bool reorderable)
 	{
@@ -914,15 +893,11 @@ public class Notebook : Container
 	 *
 	 * Params:
 	 *     page = the tab of @notebook that is being detached
-	 *     x = the X coordinate where the drop happens
-	 *     y = the Y coordinate where the drop happens
 	 *
 	 * Returns: a #GtkNotebook that @page should be
 	 *     added to, or %NULL.
-	 *
-	 * Since: 2.12
 	 */
-	gulong addOnCreateWindow(Notebook delegate(Widget, int, int, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCreateWindow(Notebook delegate(Widget, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "create-window", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -946,8 +921,6 @@ public class Notebook : Container
 	 * Params:
 	 *     child = the child #GtkWidget affected
 	 *     pageNum = the new page number for @child
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnPageAdded(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -961,8 +934,6 @@ public class Notebook : Container
 	 * Params:
 	 *     child = the child #GtkWidget affected
 	 *     pageNum = the @child page number
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnPageRemoved(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -976,8 +947,6 @@ public class Notebook : Container
 	 * Params:
 	 *     child = the child #GtkWidget affected
 	 *     pageNum = the new page number for @child
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnPageReordered(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

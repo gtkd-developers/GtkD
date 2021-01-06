@@ -32,7 +32,6 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -91,6 +90,7 @@ public  import gtkc.giotypes;
  * GTask *task;
  * 
  * task = g_task_new (initable, cancellable, callback, user_data);
+ * g_task_set_name (task, G_STRFUNC);
  * 
  * switch (self->priv->state)
  * {

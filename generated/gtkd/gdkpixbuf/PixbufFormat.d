@@ -28,7 +28,6 @@ private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.gdkpixbuftypes;
 private import gtkd.Loader;
 
 
@@ -85,14 +84,14 @@ public class PixbufFormat
 	 */
 	public PixbufFormat copy()
 	{
-		auto p = gdk_pixbuf_format_copy(gdkPixbufFormat);
+		auto __p = gdk_pixbuf_format_copy(gdkPixbufFormat);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p, true);
+		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) __p, true);
 	}
 
 	/**

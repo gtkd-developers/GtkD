@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
 
 
@@ -413,7 +412,7 @@ public class Closure
 	 * g_source_set_closure (source, g_cclosure_new (cb_func, cb_data));
 	 * ]|
 	 *
-	 * Generally, this function is used together with g_closure_ref(). Ane example
+	 * Generally, this function is used together with g_closure_ref(). An example
 	 * of storing a closure for later notification looks like:
 	 * |[<!-- language="C" -->
 	 * static GClosure *notify_closure = NULL;

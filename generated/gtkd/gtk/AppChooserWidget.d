@@ -31,12 +31,9 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AppChooserIF;
 private import gtk.AppChooserT;
-private import gtk.Box;
-private import gtk.Menu;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -63,7 +60,7 @@ private import std.algorithm;
  * 
  * GtkAppChooserWidget has a single CSS node with name appchooser.
  */
-public class AppChooserWidget : Box, AppChooserIF
+public class AppChooserWidget : Widget, AppChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkAppChooserWidget* gtkAppChooserWidget;
@@ -88,7 +85,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	public this (GtkAppChooserWidget* gtkAppChooserWidget, bool ownedRef = false)
 	{
 		this.gtkAppChooserWidget = gtkAppChooserWidget;
-		super(cast(GtkBox*)gtkAppChooserWidget, ownedRef);
+		super(cast(GtkWidget*)gtkAppChooserWidget, ownedRef);
 	}
 
 	// add the AppChooser capabilities
@@ -110,20 +107,18 @@ public class AppChooserWidget : Box, AppChooserIF
 	 *
 	 * Returns: a newly created #GtkAppChooserWidget
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string contentType)
 	{
-		auto p = gtk_app_chooser_widget_new(Str.toStringz(contentType));
+		auto __p = gtk_app_chooser_widget_new(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAppChooserWidget*) p);
+		this(cast(GtkAppChooserWidget*) __p);
 	}
 
 	/**
@@ -131,8 +126,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * that can handle the content type.
 	 *
 	 * Returns: the value of #GtkAppChooserWidget:default-text
-	 *
-	 * Since: 3.0
 	 */
 	public string getDefaultText()
 	{
@@ -144,8 +137,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * property.
 	 *
 	 * Returns: the value of #GtkAppChooserWidget:show-all
-	 *
-	 * Since: 3.0
 	 */
 	public bool getShowAll()
 	{
@@ -157,8 +148,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * property.
 	 *
 	 * Returns: the value of #GtkAppChooserWidget:show-default
-	 *
-	 * Since: 3.0
 	 */
 	public bool getShowDefault()
 	{
@@ -170,8 +159,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * property.
 	 *
 	 * Returns: the value of #GtkAppChooserWidget:show-fallback
-	 *
-	 * Since: 3.0
 	 */
 	public bool getShowFallback()
 	{
@@ -183,8 +170,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * property.
 	 *
 	 * Returns: the value of #GtkAppChooserWidget:show-other
-	 *
-	 * Since: 3.0
 	 */
 	public bool getShowOther()
 	{
@@ -196,8 +181,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * property.
 	 *
 	 * Returns: the value of #GtkAppChooserWidget:show-recommended
-	 *
-	 * Since: 3.0
 	 */
 	public bool getShowRecommended()
 	{
@@ -222,8 +205,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 *
 	 * Params:
 	 *     setting = the new value for #GtkAppChooserWidget:show-all
-	 *
-	 * Since: 3.0
 	 */
 	public void setShowAll(bool setting)
 	{
@@ -236,8 +217,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 *
 	 * Params:
 	 *     setting = the new value for #GtkAppChooserWidget:show-default
-	 *
-	 * Since: 3.0
 	 */
 	public void setShowDefault(bool setting)
 	{
@@ -250,8 +229,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 *
 	 * Params:
 	 *     setting = the new value for #GtkAppChooserWidget:show-fallback
-	 *
-	 * Since: 3.0
 	 */
 	public void setShowFallback(bool setting)
 	{
@@ -264,8 +241,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 *
 	 * Params:
 	 *     setting = the new value for #GtkAppChooserWidget:show-other
-	 *
-	 * Since: 3.0
 	 */
 	public void setShowOther(bool setting)
 	{
@@ -278,8 +253,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 *
 	 * Params:
 	 *     setting = the new value for #GtkAppChooserWidget:show-recommended
-	 *
-	 * Since: 3.0
 	 */
 	public void setShowRecommended(bool setting)
 	{
@@ -310,20 +283,5 @@ public class AppChooserWidget : Box, AppChooserIF
 	gulong addOnApplicationSelected(void delegate(AppInfoIF, AppChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "application-selected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * Emitted when a context menu is about to popup over an application item.
-	 * Clients can insert menu items into the provided #GtkMenu object in the
-	 * callback of this signal; the context menu will be shown over the item
-	 * if at least one item has been added to the menu.
-	 *
-	 * Params:
-	 *     menu = the #GtkMenu to populate
-	 *     application = the current #GAppInfo
-	 */
-	gulong addOnPopulatePopup(void delegate(Menu, AppInfoIF, AppChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

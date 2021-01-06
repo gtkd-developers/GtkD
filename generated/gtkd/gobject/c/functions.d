@@ -186,6 +186,7 @@ shared static this()
 	// gobject.ParamSpec
 
 	Linker.link(g_param_spec_internal, "g_param_spec_internal", LIBRARY_GOBJECT);
+	Linker.link(g_param_spec_is_valid_name, "g_param_spec_is_valid_name", LIBRARY_GOBJECT);
 	Linker.link(g_param_spec_get_blurb, "g_param_spec_get_blurb", LIBRARY_GOBJECT);
 	Linker.link(g_param_spec_get_default_value, "g_param_spec_get_default_value", LIBRARY_GOBJECT);
 	Linker.link(g_param_spec_get_name, "g_param_spec_get_name", LIBRARY_GOBJECT);
@@ -311,6 +312,7 @@ shared static this()
 	Linker.link(g_value_set_instance, "g_value_set_instance", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_int, "g_value_set_int", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_int64, "g_value_set_int64", LIBRARY_GOBJECT);
+	Linker.link(g_value_set_interned_string, "g_value_set_interned_string", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_long, "g_value_set_long", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_object, "g_value_set_object", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_object_take_ownership, "g_value_set_object_take_ownership", LIBRARY_GOBJECT);
@@ -657,6 +659,7 @@ __gshared extern(C)
 	// gobject.ParamSpec
 
 	void* function(GType paramType, const(char)* name, const(char)* nick, const(char)* blurb, GParamFlags flags) c_g_param_spec_internal;
+	int function(const(char)* name) c_g_param_spec_is_valid_name;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_blurb;
 	GValue* function(GParamSpec* pspec) c_g_param_spec_get_default_value;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_name;
@@ -782,6 +785,7 @@ __gshared extern(C)
 	void function(GValue* value, void* instance_) c_g_value_set_instance;
 	void function(GValue* value, int vInt) c_g_value_set_int;
 	void function(GValue* value, long vInt64) c_g_value_set_int64;
+	void function(GValue* value, const(char)* vString) c_g_value_set_interned_string;
 	void function(GValue* value, glong vLong) c_g_value_set_long;
 	void function(GValue* value, void* vObject) c_g_value_set_object;
 	void function(GValue* value, void* vObject) c_g_value_set_object_take_ownership;
@@ -1126,6 +1130,7 @@ alias c_g_object_class_override_property g_object_class_override_property;
 // gobject.ParamSpec
 
 alias c_g_param_spec_internal g_param_spec_internal;
+alias c_g_param_spec_is_valid_name g_param_spec_is_valid_name;
 alias c_g_param_spec_get_blurb g_param_spec_get_blurb;
 alias c_g_param_spec_get_default_value g_param_spec_get_default_value;
 alias c_g_param_spec_get_name g_param_spec_get_name;
@@ -1251,6 +1256,7 @@ alias c_g_value_set_gtype g_value_set_gtype;
 alias c_g_value_set_instance g_value_set_instance;
 alias c_g_value_set_int g_value_set_int;
 alias c_g_value_set_int64 g_value_set_int64;
+alias c_g_value_set_interned_string g_value_set_interned_string;
 alias c_g_value_set_long g_value_set_long;
 alias c_g_value_set_object g_value_set_object;
 alias c_g_value_set_object_take_ownership g_value_set_object_take_ownership;

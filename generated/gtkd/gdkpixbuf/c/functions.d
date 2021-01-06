@@ -58,6 +58,7 @@ shared static this()
 	Linker.link(gdk_pixbuf_get_file_info_async, "gdk_pixbuf_get_file_info_async", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_file_info_finish, "gdk_pixbuf_get_file_info_finish", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_formats, "gdk_pixbuf_get_formats", LIBRARY_GDKPIXBUF);
+	Linker.link(gdk_pixbuf_init_modules, "gdk_pixbuf_init_modules", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_stream_async, "gdk_pixbuf_new_from_stream_async", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_stream_at_scale_async, "gdk_pixbuf_new_from_stream_at_scale_async", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_save_to_stream_finish, "gdk_pixbuf_save_to_stream_finish", LIBRARY_GDKPIXBUF);
@@ -204,6 +205,7 @@ __gshared extern(C)
 	void function(char* filename, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_get_file_info_async;
 	GdkPixbufFormat* function(GAsyncResult* asyncResult, int* width, int* height, GError** err) c_gdk_pixbuf_get_file_info_finish;
 	GSList* function() c_gdk_pixbuf_get_formats;
+	int function(const(char)* path, GError** err) c_gdk_pixbuf_init_modules;
 	void function(GInputStream* stream, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_new_from_stream_async;
 	void function(GInputStream* stream, int width, int height, int preserveAspectRatio, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_new_from_stream_at_scale_async;
 	int function(GAsyncResult* asyncResult, GError** err) c_gdk_pixbuf_save_to_stream_finish;
@@ -348,6 +350,7 @@ alias c_gdk_pixbuf_get_file_info gdk_pixbuf_get_file_info;
 alias c_gdk_pixbuf_get_file_info_async gdk_pixbuf_get_file_info_async;
 alias c_gdk_pixbuf_get_file_info_finish gdk_pixbuf_get_file_info_finish;
 alias c_gdk_pixbuf_get_formats gdk_pixbuf_get_formats;
+alias c_gdk_pixbuf_init_modules gdk_pixbuf_init_modules;
 alias c_gdk_pixbuf_new_from_stream_async gdk_pixbuf_new_from_stream_async;
 alias c_gdk_pixbuf_new_from_stream_at_scale_async gdk_pixbuf_new_from_stream_at_scale_async;
 alias c_gdk_pixbuf_save_to_stream_finish gdk_pixbuf_save_to_stream_finish;

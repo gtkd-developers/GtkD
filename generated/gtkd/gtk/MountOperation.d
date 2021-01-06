@@ -24,23 +24,19 @@
 
 module gtk.MountOperation;
 
-private import gdk.Screen;
-private import gio.MountOperation : GioMountOperation = MountOperation;
+private import gdk.Display;
+private import gio.MountOperation : DGioMountOperation = MountOperation;
 private import glib.ConstructionException;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * This should not be accessed directly. Use the accessor functions below.
  */
-public class MountOperation : GioMountOperation
+public class MountOperation : DGioMountOperation
 {
 	/** the main Gtk struct */
 	protected GtkMountOperation* gtkMountOperation;
@@ -83,59 +79,53 @@ public class MountOperation : GioMountOperation
 	 *
 	 * Returns: a new #GtkMountOperation
 	 *
-	 * Since: 2.14
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Window parent)
 	{
-		auto p = gtk_mount_operation_new((parent is null) ? null : parent.getWindowStruct());
+		auto __p = gtk_mount_operation_new((parent is null) ? null : parent.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMountOperation*) p, true);
+		this(cast(GtkMountOperation*) __p, true);
+	}
+
+	/**
+	 * Gets the display on which windows of the #GtkMountOperation
+	 * will be shown.
+	 *
+	 * Returns: the display on which windows of @op are shown
+	 */
+	public Display getDisplay()
+	{
+		auto __p = gtk_mount_operation_get_display(gtkMountOperation);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
 	 * Gets the transient parent used by the #GtkMountOperation
 	 *
 	 * Returns: the transient parent for windows shown by @op
-	 *
-	 * Since: 2.14
 	 */
 	public Window getParent()
 	{
-		auto p = gtk_mount_operation_get_parent(gtkMountOperation);
+		auto __p = gtk_mount_operation_get_parent(gtkMountOperation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
-	}
-
-	/**
-	 * Gets the screen on which windows of the #GtkMountOperation
-	 * will be shown.
-	 *
-	 * Returns: the screen on which windows of @op are shown
-	 *
-	 * Since: 2.14
-	 */
-	public Screen getScreen()
-	{
-		auto p = gtk_mount_operation_get_screen(gtkMountOperation);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -143,12 +133,21 @@ public class MountOperation : GioMountOperation
 	 * a window.
 	 *
 	 * Returns: %TRUE if @op is currently displaying a window
-	 *
-	 * Since: 2.14
 	 */
 	public bool isShowing()
 	{
 		return gtk_mount_operation_is_showing(gtkMountOperation) != 0;
+	}
+
+	/**
+	 * Sets the display to show windows of the #GtkMountOperation on.
+	 *
+	 * Params:
+	 *     display = a #GdkDisplay
+	 */
+	public void setDisplay(Display display)
+	{
+		gtk_mount_operation_set_display(gtkMountOperation, (display is null) ? null : display.getDisplayStruct());
 	}
 
 	/**
@@ -157,59 +156,9 @@ public class MountOperation : GioMountOperation
 	 *
 	 * Params:
 	 *     parent = transient parent of the window, or %NULL
-	 *
-	 * Since: 2.14
 	 */
 	public void setParent(Window parent)
 	{
 		gtk_mount_operation_set_parent(gtkMountOperation, (parent is null) ? null : parent.getWindowStruct());
-	}
-
-	/**
-	 * Sets the screen to show windows of the #GtkMountOperation on.
-	 *
-	 * Params:
-	 *     screen = a #GdkScreen
-	 *
-	 * Since: 2.14
-	 */
-	public void setScreen(Screen screen)
-	{
-		gtk_mount_operation_set_screen(gtkMountOperation, (screen is null) ? null : screen.getScreenStruct());
-	}
-
-	/**
-	 * A convenience function for launching the default application
-	 * to show the uri. Like gtk_show_uri_on_window(), but takes a screen
-	 * as transient parent instead of a window.
-	 *
-	 * Note that this function is deprecated as it does not pass the necessary
-	 * information for helpers to parent their dialog properly, when run from
-	 * sandboxed applications for example.
-	 *
-	 * Params:
-	 *     screen = screen to show the uri on
-	 *         or %NULL for the default screen
-	 *     uri = the uri to show
-	 *     timestamp = a timestamp to prevent focus stealing
-	 *
-	 * Returns: %TRUE on success, %FALSE on error
-	 *
-	 * Since: 2.14
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static bool showUri(Screen screen, string uri, uint timestamp)
-	{
-		GError* err = null;
-
-		auto p = gtk_show_uri((screen is null) ? null : screen.getScreenStruct(), Str.toStringz(uri), timestamp, &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
 	}
 }

@@ -26,13 +26,11 @@ module gtk.FontChooserWidget;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtk.Box;
 private import gtk.FontChooserIF;
 private import gtk.FontChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -53,10 +51,8 @@ public  import gtkc.gtktypes;
  * # CSS nodes
  * 
  * GtkFontChooserWidget has a single CSS node with name fontchooser.
- *
- * Since: 3.2
  */
-public class FontChooserWidget : Box, FontChooserIF
+public class FontChooserWidget : Widget, FontChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkFontChooserWidget* gtkFontChooserWidget;
@@ -81,7 +77,7 @@ public class FontChooserWidget : Box, FontChooserIF
 	public this (GtkFontChooserWidget* gtkFontChooserWidget, bool ownedRef = false)
 	{
 		this.gtkFontChooserWidget = gtkFontChooserWidget;
-		super(cast(GtkBox*)gtkFontChooserWidget, ownedRef);
+		super(cast(GtkWidget*)gtkFontChooserWidget, ownedRef);
 	}
 
 	// add the FontChooser capabilities
@@ -99,19 +95,17 @@ public class FontChooserWidget : Box, FontChooserIF
 	 *
 	 * Returns: a new #GtkFontChooserWidget
 	 *
-	 * Since: 3.2
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_font_chooser_widget_new();
+		auto __p = gtk_font_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFontChooserWidget*) p);
+		this(cast(GtkFontChooserWidget*) __p);
 	}
 }

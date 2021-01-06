@@ -30,16 +30,15 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
  * #GtkGestureStylus is a #GtkGesture implementation specific to stylus
- * input. The provided signals just provide the basic information
+ * input. The provided signals just relay the basic information of the
+ * stylus events.
  */
 public class GestureStylus : GestureSingle
 {
@@ -79,69 +78,91 @@ public class GestureStylus : GestureSingle
 	/**
 	 * Creates a new #GtkGestureStylus.
 	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *
 	 * Returns: a newly created stylus gesture
-	 *
-	 * Since: 3.24
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget)
+	public this()
 	{
-		auto p = gtk_gesture_stylus_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_stylus_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureStylus*) p, true);
+		this(cast(GtkGestureStylus*) __p, true);
 	}
 
 	/**
 	 * Returns the current values for the requested @axes. This function
-	 * must be called from either the #GtkGestureStylus:down,
-	 * #GtkGestureStylus:motion, #GtkGestureStylus:up or #GtkGestureStylus:proximity
+	 * must be called from either the #GtkGestureStylus::down,
+	 * #GtkGestureStylus::motion, #GtkGestureStylus::up or #GtkGestureStylus::proximity
 	 * signals.
 	 *
 	 * Params:
 	 *     axes = array of requested axes, terminated with #GDK_AXIS_IGNORE
 	 *     values = return location for the axis values
 	 *
-	 * Returns: #TRUE if there is a current value for the axes
-	 *
-	 * Since: 3.24
+	 * Returns: %TRUE if there is a current value for the axes
 	 */
 	public bool getAxes(GdkAxisUse[] axes, out double[] values)
 	{
 		double* outvalues = null;
 
-		auto p = gtk_gesture_stylus_get_axes(gtkGestureStylus, axes.ptr, &outvalues) != 0;
+		auto __p = gtk_gesture_stylus_get_axes(gtkGestureStylus, axes.ptr, &outvalues) != 0;
 
 		values = outvalues[0 .. getArrayLength(outvalues)];
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Returns the current value for the requested @axis. This function
-	 * must be called from either the #GtkGestureStylus:down,
-	 * #GtkGestureStylus:motion, #GtkGestureStylus:up or #GtkGestureStylus:proximity
-	 * signals.
+	 * Returns the current value for the requested @axis.
+	 *
+	 * This function must be called from the handler of one of the
+	 * #GtkGestureStylus::down, #GtkGestureStylus::motion,
+	 * #GtkGestureStylus::up or #GtkGestureStylus::proximity signals.
 	 *
 	 * Params:
 	 *     axis = requested device axis
 	 *     value = return location for the axis value
 	 *
-	 * Returns: #TRUE if there is a current value for the axis
-	 *
-	 * Since: 3.24
+	 * Returns: %TRUE if there is a current value for the axis
 	 */
 	public bool getAxis(GdkAxisUse axis, out double value)
 	{
 		return gtk_gesture_stylus_get_axis(gtkGestureStylus, axis, &value) != 0;
+	}
+
+	/**
+	 * By default, GTK will limit rate of input events. On stylus input where
+	 * accuracy of strokes is paramount, this function returns the accumulated
+	 * coordinate/timing state before the emission of the current
+	 * #GtkGestureStylus::motion signal.
+	 *
+	 * This function may only be called within a #GtkGestureStylus::motion
+	 * signal handler, the state given in this signal and obtainable through
+	 * gtk_gesture_stylus_get_axis() call express the latest (most up-to-date)
+	 * state in motion history.
+	 *
+	 * The @backlog is provided in chronological order.
+	 *
+	 * Params:
+	 *     backlog = coordinates and times for the backlog events
+	 *
+	 * Returns: %TRUE if there is a backlog to unfold in the current state.
+	 */
+	public bool getBacklog(out GdkTimeCoord[] backlog)
+	{
+		GdkTimeCoord* outbacklog = null;
+		uint nElems;
+
+		auto __p = gtk_gesture_stylus_get_backlog(gtkGestureStylus, &outbacklog, &nElems) != 0;
+
+		backlog = outbacklog[0 .. nElems];
+
+		return __p;
 	}
 
 	/**
@@ -151,40 +172,62 @@ public class GestureStylus : GestureSingle
 	 * signal handlers.
 	 *
 	 * Returns: The current stylus tool
-	 *
-	 * Since: 3.24
 	 */
 	public DeviceTool getDeviceTool()
 	{
-		auto p = gtk_gesture_stylus_get_device_tool(gtkGestureStylus);
+		auto __p = gtk_gesture_stylus_get_device_tool(gtkGestureStylus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) p);
+		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) __p);
 	}
 
-	/** */
+	/**
+	 * A signal emitted when the stylus touches the device.
+	 *
+	 * Params:
+	 *     x = the X coordinate of the stylus event
+	 *     y = the Y coordinate of the stylus event
+	 */
 	gulong addOnDown(void delegate(double, double, GestureStylus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "down", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/** */
+	/**
+	 * A signal emitted when the stylus moves while touching the device.
+	 *
+	 * Params:
+	 *     x = the X coordinate of the stylus event
+	 *     y = the Y coordinate of the stylus event
+	 */
 	gulong addOnMotion(void delegate(double, double, GestureStylus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "motion", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/** */
+	/**
+	 * A signal emitted when the stylus is in proximity of the device.
+	 *
+	 * Params:
+	 *     x = the X coordinate of the stylus event
+	 *     y = the Y coordinate of the stylus event
+	 */
 	gulong addOnProximity(void delegate(double, double, GestureStylus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "proximity", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/** */
+	/**
+	 * A signal emitted when the stylus no longer touches the device.
+	 *
+	 * Params:
+	 *     x = the X coordinate of the stylus event
+	 *     y = the Y coordinate of the stylus event
+	 */
 	gulong addOnUp(void delegate(double, double, GestureStylus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "up", dlg, connectFlags ^ ConnectFlags.SWAPPED);

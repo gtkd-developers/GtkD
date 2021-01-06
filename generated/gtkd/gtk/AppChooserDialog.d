@@ -35,7 +35,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -98,20 +97,18 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	 *
 	 * Returns: a newly created #GtkAppChooserDialog
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Window parent, GtkDialogFlags flags, FileIF file)
 	{
-		auto p = gtk_app_chooser_dialog_new((parent is null) ? null : parent.getWindowStruct(), flags, (file is null) ? null : file.getFileStruct());
+		auto __p = gtk_app_chooser_dialog_new((parent is null) ? null : parent.getWindowStruct(), flags, (file is null) ? null : file.getFileStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAppChooserDialog*) p);
+		this(cast(GtkAppChooserDialog*) __p);
 	}
 
 	/**
@@ -125,20 +122,18 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	 *
 	 * Returns: a newly created #GtkAppChooserDialog
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Window parent, GtkDialogFlags flags, string contentType)
 	{
-		auto p = gtk_app_chooser_dialog_new_for_content_type((parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(contentType));
+		auto __p = gtk_app_chooser_dialog_new_for_content_type((parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_content_type");
 		}
 
-		this(cast(GtkAppChooserDialog*) p);
+		this(cast(GtkAppChooserDialog*) __p);
 	}
 
 	/**
@@ -156,19 +151,17 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	 * Returns the #GtkAppChooserWidget of this dialog.
 	 *
 	 * Returns: the #GtkAppChooserWidget of @self
-	 *
-	 * Since: 3.0
 	 */
 	public Widget getWidget()
 	{
-		auto p = gtk_app_chooser_dialog_get_widget(gtkAppChooserDialog);
+		auto __p = gtk_app_chooser_dialog_get_widget(gtkAppChooserDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

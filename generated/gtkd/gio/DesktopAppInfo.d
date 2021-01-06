@@ -36,7 +36,6 @@ private import glib.KeyFile;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -201,6 +200,13 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * best-matching applications, and so on.
 	 * The algorithm for determining matches is undefined and may change at
 	 * any time.
+	 *
+	 * None of the search results are subjected to the normal validation
+	 * checks performed by g_desktop_app_info_new() (for example, checking that
+	 * the executable referenced by a result exists), and so it is possible for
+	 * g_desktop_app_info_new() to return %NULL when passed an app ID returned by
+	 * this function. It is expected that calling code will do this when
+	 * subsequently creating a #GDesktopAppInfo for each result.
 	 *
 	 * Params:
 	 *     searchString = the search string to use

@@ -32,7 +32,6 @@ private import gtk.CellRenderer;
 private import gtk.CellRendererText;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -40,8 +39,6 @@ private import std.algorithm;
  * #GtkCellRendererAccel displays a keyboard accelerator (i.e. a key
  * combination like `Control + a`). If the cell renderer is editable,
  * the accelerator can be changed by simply typing the new combination.
- * 
- * The #GtkCellRendererAccel cell renderer was added in GTK+ 2.10.
  */
 public class CellRendererAccel : CellRendererText
 {
@@ -83,20 +80,18 @@ public class CellRendererAccel : CellRendererText
 	 *
 	 * Returns: the new cell renderer
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_accel_new();
+		auto __p = gtk_cell_renderer_accel_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererAccel*) p);
+		this(cast(GtkCellRendererAccel*) __p);
 	}
 
 	/**
@@ -104,8 +99,6 @@ public class CellRendererAccel : CellRendererText
 	 *
 	 * Params:
 	 *     pathString = the path identifying the row of the edited cell
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnAccelCleared(void delegate(string, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -120,8 +113,6 @@ public class CellRendererAccel : CellRendererText
 	 *     accelKey = the new accelerator keyval
 	 *     accelMods = the new acclerator modifier mask
 	 *     hardwareKeycode = the keycode of the new accelerator
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnAccelEdited(void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

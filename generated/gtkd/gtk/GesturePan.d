@@ -29,10 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureDrag;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -91,33 +89,28 @@ public class GesturePan : GestureDrag
 	 * Returns a newly created #GtkGesture that recognizes pan gestures.
 	 *
 	 * Params:
-	 *     widget = a #GtkWidget
 	 *     orientation = expected orientation
 	 *
 	 * Returns: a newly created #GtkGesturePan
 	 *
-	 * Since: 3.14
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget, GtkOrientation orientation)
+	public this(GtkOrientation orientation)
 	{
-		auto p = gtk_gesture_pan_new((widget is null) ? null : widget.getWidgetStruct(), orientation);
+		auto __p = gtk_gesture_pan_new(orientation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGesturePan*) p, true);
+		this(cast(GtkGesturePan*) __p, true);
 	}
 
 	/**
 	 * Returns the orientation of the pan gestures that this @gesture expects.
 	 *
 	 * Returns: the expected orientation for pan gestures
-	 *
-	 * Since: 3.14
 	 */
 	public GtkOrientation getOrientation()
 	{
@@ -129,8 +122,6 @@ public class GesturePan : GestureDrag
 	 *
 	 * Params:
 	 *     orientation = expected orientation
-	 *
-	 * Since: 3.14
 	 */
 	public void setOrientation(GtkOrientation orientation)
 	{
@@ -144,8 +135,6 @@ public class GesturePan : GestureDrag
 	 * Params:
 	 *     direction = current direction of the pan gesture
 	 *     offset = Offset along the gesture orientation
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnPan(void delegate(GtkPanDirection, double, GesturePan) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

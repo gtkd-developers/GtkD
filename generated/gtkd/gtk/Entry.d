@@ -24,28 +24,26 @@
 
 module gtk.Entry;
 
-private import gdk.Event;
-private import gdkpixbuf.Pixbuf;
+private import gdk.ContentProvider;
+private import gdk.PaintableIF;
+private import gdk.Rectangle;
 private import gio.IconIF;
+private import gio.MenuModel;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Adjustment;
-private import gtk.Border;
 private import gtk.CellEditableIF;
 private import gtk.CellEditableT;
 private import gtk.EditableIF;
 private import gtk.EditableT;
 private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;
-private import gtk.TargetList;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgAttributeList;
-private import pango.PgLayout;
 private import pango.PgTabArray;
 private import std.algorithm;
 
@@ -60,22 +58,19 @@ private import std.algorithm;
  * When using an entry for passwords and other sensitive information,
  * it can be put into “password mode” using gtk_entry_set_visibility().
  * In this mode, entered text is displayed using a “invisible” character.
- * By default, GTK+ picks the best invisible character that is available
+ * By default, GTK picks the best invisible character that is available
  * in the current font, but it can be changed with
- * gtk_entry_set_invisible_char(). Since 2.16, GTK+ displays a warning
- * when Caps Lock or input methods might interfere with entering text in
- * a password entry. The warning can be turned off with the
- * #GtkEntry:caps-lock-warning property.
+ * gtk_entry_set_invisible_char().
  * 
- * Since 2.16, GtkEntry has the ability to display progress or activity
+ * GtkEntry has the ability to display progress or activity
  * information behind the text. To make an entry display such information,
  * use gtk_entry_set_progress_fraction() or gtk_entry_set_progress_pulse_step().
  * 
  * Additionally, GtkEntry can show icons at either side of the entry. These
  * icons can be activatable by clicking, can be set up as drag source and
  * can have tooltips. To add an icon, use gtk_entry_set_icon_from_gicon() or
- * one of the various other functions that set an icon from a stock id, an
- * icon name or a pixbuf. To trigger an action when the user clicks an icon,
+ * one of the various other functions that set an icon from an icon name or a
+ * paintable. To trigger an action when the user clicks an icon,
  * connect to the #GtkEntry::icon-press signal. To allow DND operations
  * from an icon, use gtk_entry_set_icon_drag_source(). To set a tooltip on
  * an icon, use gtk_entry_set_icon_tooltip_text() or the corresponding function
@@ -90,14 +85,11 @@ private import std.algorithm;
  * # CSS nodes
  * 
  * |[<!-- language="plain" -->
- * entry[.read-only][.flat][.warning][.error]
+ * entry[.flat][.warning][.error]
+ * ├── text[.readonly]
  * ├── image.left
  * ├── image.right
- * ├── undershoot.left
- * ├── undershoot.right
- * ├── [selection]
- * ├── [progress[.pulse]]
- * ╰── [window.popup]
+ * ╰── [progress[.pulse]]
  * ]|
  * 
  * GtkEntry has a main node with the name entry. Depending on the properties
@@ -107,22 +99,39 @@ private import std.algorithm;
  * When the entry shows icons, it adds subnodes with the name image and the
  * style class .left or .right, depending on where the icon appears.
  * 
- * When the entry has a selection, it adds a subnode with the name selection.
- * 
  * When the entry shows progress, it adds a subnode with the name progress.
  * The node has the style class .pulse when the shown progress is pulsing.
  * 
- * The CSS node for a context menu is added as a subnode below entry as well.
+ * For all the subnodes added to the text node in various situations,
+ * see #GtkText.
  * 
- * The undershoot nodes are used to draw the underflow indication when content
- * is scrolled out of view. These nodes get the .left and .right style classes
- * added depending on where the indication is drawn.
+ * # GtkEntry as GtkBuildable
  * 
- * When touch is used and touch selection handles are shown, they are using
- * CSS nodes with name cursor-handle. They get the .top or .bottom style class
- * depending on where they are shown in relation to the selection. If there is
- * just a single handle for the text cursor, it gets the style class
- * .insertion-cursor.
+ * The GtkEntry implementation of the GtkBuildable interface supports a
+ * custom <attributes> element, which supports any number of <attribute>
+ * elements. The <attribute> element has attributes named “name“, “value“,
+ * “start“ and “end“ and allows you to specify #PangoAttribute values for
+ * this label.
+ * 
+ * An example of a UI definition fragment specifying Pango attributes:
+ * |[
+ * <object class="GtkEnry">
+ * <attributes>
+ * <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+ * <attribute name="background" value="red" start="5" end="10"/>
+ * </attributes>
+ * </object>
+ * ]|
+ * 
+ * The start and end attributes specify the range of characters to which the
+ * Pango attribute applies. If start and end are not specified, the attribute is
+ * applied to the whole text. Note that specifying ranges does not make much
+ * sense with translatable attributes. Use markup embedded in the translatable
+ * content instead.
+ * 
+ * # Accessibility
+ * 
+ * GtkEntry uses the #GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
  */
 public class Entry : Widget, CellEditableIF, EditableIF
 {
@@ -158,44 +167,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	// add the Editable capabilities
 	mixin EditableT!(GtkEntry);
 
-	/** */
-	public this (string text)
-	{
-		this();
-		setText(text);
-	}
-
-	/** */
-	public this (string text, int max)
-	{
-		this(text);
-		setMaxLength(max);
-	}
-
-	/**
-	 * Gets the stock id of action.
-	 * Since 2.16
-	 * Returns: the stock id
-	 */
-	public StockID getStockId(GtkEntryIconPosition iconPos)
-	{
-		return cast(StockID)Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
-	}
-
-	/**
-	 * Sets the stock id on action
-	 * Since 2.16
-	 * Params:
-	 * stockId =  the stock id
-	 */
-	public void setStockId(GtkEntryIconPosition iconPos, StockID stockId)
-	{
-		// void gtk_entry_set_icon_from_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos, const gchar *stock_id);
-		gtk_entry_set_icon_from_stock(gtkEntry, iconPos, Str.toStringz(stockId));
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -212,14 +183,14 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 */
 	public this()
 	{
-		auto p = gtk_entry_new();
+		auto __p = gtk_entry_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEntry*) p);
+		this(cast(GtkEntry*) __p);
 	}
 
 	/**
@@ -230,20 +201,18 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Returns: a new #GtkEntry
 	 *
-	 * Since: 2.18
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(EntryBuffer buffer)
 	{
-		auto p = gtk_entry_new_with_buffer((buffer is null) ? null : buffer.getEntryBufferStruct());
+		auto __p = gtk_entry_new_with_buffer((buffer is null) ? null : buffer.getEntryBufferStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_buffer");
 		}
 
-		this(cast(GtkEntry*) p);
+		this(cast(GtkEntry*) __p);
 	}
 
 	/**
@@ -260,8 +229,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Gets the value set by gtk_entry_set_alignment().
 	 *
 	 * Returns: the alignment
-	 *
-	 * Since: 2.4
 	 */
 	public float getAlignment()
 	{
@@ -274,19 +241,17 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Returns: the attribute list, or %NULL
 	 *     if none was set.
-	 *
-	 * Since: 3.6
 	 */
 	public PgAttributeList getAttributes()
 	{
-		auto p = gtk_entry_get_attributes(gtkEntry);
+		auto __p = gtk_entry_get_attributes(gtkEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p);
 	}
 
 	/**
@@ -294,19 +259,17 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * this widget.
 	 *
 	 * Returns: A #GtkEntryBuffer object.
-	 *
-	 * Since: 2.18
 	 */
 	public EntryBuffer getBuffer()
 	{
-		auto p = gtk_entry_get_buffer(gtkEntry);
+		auto __p = gtk_entry_get_buffer(gtkEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(EntryBuffer)(cast(GtkEntryBuffer*) p);
+		return ObjectG.getDObject!(EntryBuffer)(cast(GtkEntryBuffer*) __p);
 	}
 
 	/**
@@ -314,32 +277,25 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Returns: The auxiliary completion object currently
 	 *     in use by @entry.
-	 *
-	 * Since: 2.4
 	 */
 	public EntryCompletion getCompletion()
 	{
-		auto p = gtk_entry_get_completion(gtkEntry);
+		auto __p = gtk_entry_get_completion(gtkEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(EntryCompletion)(cast(GtkEntryCompletion*) p);
+		return ObjectG.getDObject!(EntryCompletion)(cast(GtkEntryCompletion*) __p);
 	}
 
 	/**
 	 * Returns the index of the icon which is the source of the current
 	 * DND operation, or -1.
 	 *
-	 * This function is meant to be used in a #GtkWidget::drag-data-get
-	 * callback.
-	 *
 	 * Returns: index of the icon which is the source of the current
 	 *     DND operation, or -1.
-	 *
-	 * Since: 2.16
 	 */
 	public int getCurrentIconDragSource()
 	{
@@ -347,24 +303,20 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Retrieves the horizontal cursor adjustment for the entry.
-	 * See gtk_entry_set_cursor_hadjustment().
+	 * Gets the menu model set with gtk_entry_set_extra_menu().
 	 *
-	 * Returns: the horizontal cursor adjustment, or %NULL
-	 *     if none has been set.
-	 *
-	 * Since: 2.12
+	 * Returns: the menu model
 	 */
-	public Adjustment getCursorHadjustment()
+	public MenuModel getExtraMenu()
 	{
-		auto p = gtk_entry_get_cursor_hadjustment(gtkEntry);
+		auto __p = gtk_entry_get_extra_menu(gtkEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
 	}
 
 	/**
@@ -384,8 +336,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     iconPos = Icon position
 	 *
 	 * Returns: %TRUE if the icon is activatable.
-	 *
-	 * Since: 2.16
 	 */
 	public bool getIconActivatable(GtkEntryIconPosition iconPos)
 	{
@@ -399,19 +349,19 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * If the entry is not realized or has no icon at the given position,
 	 * @icon_area is filled with zeros. Otherwise, @icon_area will be filled
-	 * with the icon’s allocation, relative to @entry’s allocation.
-	 *
-	 * See also gtk_entry_get_text_area()
+	 * with the icon's allocation, relative to @entry's allocation.
 	 *
 	 * Params:
 	 *     iconPos = Icon position
 	 *     iconArea = Return location for the icon’s area
-	 *
-	 * Since: 3.0
 	 */
-	public void getIconArea(GtkEntryIconPosition iconPos, out GdkRectangle iconArea)
+	public void getIconArea(GtkEntryIconPosition iconPos, out Rectangle iconArea)
 	{
-		gtk_entry_get_icon_area(gtkEntry, iconPos, &iconArea);
+		GdkRectangle* outiconArea = sliceNew!GdkRectangle();
+
+		gtk_entry_get_icon_area(gtkEntry, iconPos, outiconArea);
+
+		iconArea = ObjectG.getDObject!(Rectangle)(outiconArea, true);
 	}
 
 	/**
@@ -422,12 +372,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * signal handler.
 	 *
 	 * Params:
-	 *     x = the x coordinate of the position to find
-	 *     y = the y coordinate of the position to find
+	 *     x = the x coordinate of the position to find, relative to @entry
+	 *     y = the y coordinate of the position to find, relative to @entry
 	 *
 	 * Returns: the index of the icon at the given position, or -1
-	 *
-	 * Since: 2.16
 	 */
 	public int getIconAtPos(int x, int y)
 	{
@@ -437,40 +385,36 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Retrieves the #GIcon used for the icon, or %NULL if there is
 	 * no icon or if the icon was set by some other method (e.g., by
-	 * stock, pixbuf, or icon name).
+	 * paintable or icon name).
 	 *
 	 * Params:
 	 *     iconPos = Icon position
 	 *
 	 * Returns: A #GIcon, or %NULL if no icon is set
 	 *     or if the icon is not a #GIcon
-	 *
-	 * Since: 2.16
 	 */
 	public IconIF getIconGicon(GtkEntryIconPosition iconPos)
 	{
-		auto p = gtk_entry_get_icon_gicon(gtkEntry, iconPos);
+		auto __p = gtk_entry_get_icon_gicon(gtkEntry, iconPos);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
 	 * Retrieves the icon name used for the icon, or %NULL if there is
 	 * no icon or if the icon was set by some other method (e.g., by
-	 * pixbuf, stock or gicon).
+	 * paintable or gicon).
 	 *
 	 * Params:
 	 *     iconPos = Icon position
 	 *
 	 * Returns: An icon name, or %NULL if no icon is set or if the icon
 	 *     wasn’t set from an icon name
-	 *
-	 * Since: 2.16
 	 */
 	public string getIconName(GtkEntryIconPosition iconPos)
 	{
@@ -478,30 +422,26 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Retrieves the image used for the icon.
+	 * Retrieves the #GdkPaintable used for the icon.
 	 *
-	 * Unlike the other methods of setting and getting icon data, this
-	 * method will work regardless of whether the icon was set using a
-	 * #GdkPixbuf, a #GIcon, a stock item, or an icon name.
+	 * If no #GdkPaintable was used for the icon, %NULL is returned.
 	 *
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Returns: A #GdkPixbuf, or %NULL if no icon is
-	 *     set for this position.
-	 *
-	 * Since: 2.16
+	 * Returns: A #GdkPaintable, or %NULL if no icon is
+	 *     set for this position or the icon set is not a #GdkPaintable.
 	 */
-	public Pixbuf getIconPixbuf(GtkEntryIconPosition iconPos)
+	public PaintableIF getIconPaintable(GtkEntryIconPosition iconPos)
 	{
-		auto p = gtk_entry_get_icon_pixbuf(gtkEntry, iconPos);
+		auto __p = gtk_entry_get_icon_paintable(gtkEntry, iconPos);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(PaintableIF)(cast(GdkPaintable*) __p);
 	}
 
 	/**
@@ -511,32 +451,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     iconPos = Icon position
 	 *
 	 * Returns: %TRUE if the icon is sensitive.
-	 *
-	 * Since: 2.16
 	 */
 	public bool getIconSensitive(GtkEntryIconPosition iconPos)
 	{
 		return gtk_entry_get_icon_sensitive(gtkEntry, iconPos) != 0;
-	}
-
-	/**
-	 * Retrieves the stock id used for the icon, or %NULL if there is
-	 * no icon or if the icon was set by some other method (e.g., by
-	 * pixbuf, icon name or gicon).
-	 *
-	 * Deprecated: Use gtk_entry_get_icon_name() instead.
-	 *
-	 * Params:
-	 *     iconPos = Icon position
-	 *
-	 * Returns: A stock id, or %NULL if no icon is set or if the icon
-	 *     wasn’t set from a stock id
-	 *
-	 * Since: 2.16
-	 */
-	public string getIconStock(GtkEntryIconPosition iconPos)
-	{
-		return Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
 	}
 
 	/**
@@ -548,8 +466,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     iconPos = Icon position
 	 *
 	 * Returns: image representation being used
-	 *
-	 * Since: 2.16
 	 */
 	public GtkImageType getIconStorageType(GtkEntryIconPosition iconPos)
 	{
@@ -565,8 +481,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Returns: the tooltip text, or %NULL. Free the returned
 	 *     string with g_free() when done.
-	 *
-	 * Since: 2.16
 	 */
 	public string getIconTooltipMarkup(GtkEntryIconPosition iconPos)
 	{
@@ -585,8 +499,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Returns: the tooltip text, or %NULL. Free the returned
 	 *     string with g_free() when done.
-	 *
-	 * Since: 2.16
 	 */
 	public string getIconTooltipText(GtkEntryIconPosition iconPos)
 	{
@@ -597,34 +509,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * This function returns the entry’s #GtkEntry:inner-border property. See
-	 * gtk_entry_set_inner_border() for more information.
-	 *
-	 * Deprecated: Use the standard border and padding CSS properties (through
-	 * objects like #GtkStyleContext and #GtkCssProvider); the value returned by
-	 * this function is ignored by #GtkEntry.
-	 *
-	 * Returns: the entry’s #GtkBorder, or
-	 *     %NULL if none was set.
-	 *
-	 * Since: 2.10
-	 */
-	public Border getInnerBorder()
-	{
-		auto p = gtk_entry_get_inner_border(gtkEntry);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Border)(cast(GtkBorder*) p);
-	}
-
-	/**
 	 * Gets the value of the #GtkEntry:input-hints property.
-	 *
-	 * Since: 3.6
 	 */
 	public GtkInputHints getInputHints()
 	{
@@ -633,8 +518,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	/**
 	 * Gets the value of the #GtkEntry:input-purpose property.
-	 *
-	 * Since: 3.6
 	 */
 	public GtkInputPurpose getInputPurpose()
 	{
@@ -654,62 +537,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Gets the #PangoLayout used to display the entry.
-	 * The layout is useful to e.g. convert text positions to
-	 * pixel positions, in combination with gtk_entry_get_layout_offsets().
-	 * The returned layout is owned by the entry and must not be
-	 * modified or freed by the caller.
-	 *
-	 * Keep in mind that the layout text may contain a preedit string, so
-	 * gtk_entry_layout_index_to_text_index() and
-	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
-	 * indices in the layout to byte indices in the entry contents.
-	 *
-	 * Returns: the #PangoLayout for this entry
-	 */
-	public PgLayout getLayout()
-	{
-		auto p = gtk_entry_get_layout(gtkEntry);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
-	}
-
-	/**
-	 * Obtains the position of the #PangoLayout used to render text
-	 * in the entry, in widget coordinates. Useful if you want to line
-	 * up the text in an entry with some other text, e.g. when using the
-	 * entry to implement editable cells in a sheet widget.
-	 *
-	 * Also useful to convert mouse events into coordinates inside the
-	 * #PangoLayout, e.g. to take some action if some part of the entry text
-	 * is clicked.
-	 *
-	 * Note that as the user scrolls around in the entry the offsets will
-	 * change; you’ll need to connect to the “notify::scroll-offset”
-	 * signal to track this. Remember when using the #PangoLayout
-	 * functions you need to convert to and from pixels using
-	 * PANGO_PIXELS() or #PANGO_SCALE.
-	 *
-	 * Keep in mind that the layout text may contain a preedit string, so
-	 * gtk_entry_layout_index_to_text_index() and
-	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
-	 * indices in the layout to byte indices in the entry contents.
-	 *
-	 * Params:
-	 *     x = location to store X offset of layout, or %NULL
-	 *     y = location to store Y offset of layout, or %NULL
-	 */
-	public void getLayoutOffsets(out int x, out int y)
-	{
-		gtk_entry_get_layout_offsets(gtkEntry, &x, &y);
-	}
-
-	/**
 	 * Retrieves the maximum allowed length of the text in
 	 * @entry. See gtk_entry_set_max_length().
 	 *
@@ -725,24 +552,9 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Retrieves the desired maximum width of @entry, in characters.
-	 * See gtk_entry_set_max_width_chars().
-	 *
-	 * Returns: the maximum width of the entry, in characters
-	 *
-	 * Since: 3.12
-	 */
-	public int getMaxWidthChars()
-	{
-		return gtk_entry_get_max_width_chars(gtkEntry);
-	}
-
-	/**
 	 * Gets the value set by gtk_entry_set_overwrite_mode().
 	 *
 	 * Returns: whether the text is overwritten when typing.
-	 *
-	 * Since: 2.14
 	 */
 	public bool getOverwriteMode()
 	{
@@ -752,10 +564,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Retrieves the text that will be displayed when @entry is empty and unfocused
 	 *
-	 * Returns: a pointer to the placeholder text as a string. This string points to internally allocated
-	 *     storage in the widget and must not be freed, modified or stored.
-	 *
-	 * Since: 3.2
+	 * Returns: a pointer to the placeholder text as a string.
+	 *     This string points to internally allocated storage in the widget and must
+	 *     not be freed, modified or stored. If no placeholder text has been set,
+	 *     %NULL will be returned.
 	 */
 	public string getPlaceholderText()
 	{
@@ -767,8 +579,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * See gtk_entry_set_progress_fraction().
 	 *
 	 * Returns: a fraction from 0.0 to 1.0
-	 *
-	 * Since: 2.16
 	 */
 	public double getProgressFraction()
 	{
@@ -779,8 +589,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Retrieves the pulse step set with gtk_entry_set_progress_pulse_step().
 	 *
 	 * Returns: a fraction from 0.0 to 1.0
-	 *
-	 * Since: 2.16
 	 */
 	public double getProgressPulseStep()
 	{
@@ -792,54 +600,17 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * any.
 	 *
 	 * Returns: the tabstops, or %NULL if none was set.
-	 *
-	 * Since: 3.10
 	 */
 	public PgTabArray getTabs()
 	{
-		auto p = gtk_entry_get_tabs(gtkEntry);
+		auto __p = gtk_entry_get_tabs(gtkEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
-	}
-
-	/**
-	 * Retrieves the contents of the entry widget.
-	 * See also gtk_editable_get_chars().
-	 *
-	 * This is equivalent to getting @entry's #GtkEntryBuffer and calling
-	 * gtk_entry_buffer_get_text() on it.
-	 *
-	 * Returns: a pointer to the contents of the widget as a
-	 *     string. This string points to internally allocated
-	 *     storage in the widget and must not be freed, modified or
-	 *     stored.
-	 */
-	public string getText()
-	{
-		return Str.toString(gtk_entry_get_text(gtkEntry));
-	}
-
-	/**
-	 * Gets the area where the entry’s text is drawn. This function is
-	 * useful when drawing something to the entry in a draw callback.
-	 *
-	 * If the entry is not realized, @text_area is filled with zeros.
-	 *
-	 * See also gtk_entry_get_icon_area().
-	 *
-	 * Params:
-	 *     textArea = Return location for the text area.
-	 *
-	 * Since: 3.0
-	 */
-	public void getTextArea(out GdkRectangle textArea)
-	{
-		gtk_entry_get_text_area(gtkEntry, &textArea);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) __p);
 	}
 
 	/**
@@ -851,8 +622,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Returns: the current number of characters
 	 *     in #GtkEntry, or 0 if there are none.
-	 *
-	 * Since: 2.14
 	 */
 	public ushort getTextLength()
 	{
@@ -871,16 +640,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Gets the value set by gtk_entry_set_width_chars().
-	 *
-	 * Returns: number of chars to request space for, or negative if unset
-	 */
-	public int getWidthChars()
-	{
-		return gtk_entry_get_width_chars(gtkEntry);
-	}
-
-	/**
 	 * Causes @entry to have keyboard focus.
 	 *
 	 * It behaves like gtk_widget_grab_focus(),
@@ -889,50 +648,11 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * which the user usually doesn't want to replace all text in,
 	 * such as search-as-you-type entries.
 	 *
-	 * Since: 3.16
+	 * Returns: %TRUE if focus is now inside @self
 	 */
-	public void grabFocusWithoutSelecting()
+	public bool grabFocusWithoutSelecting()
 	{
-		gtk_entry_grab_focus_without_selecting(gtkEntry);
-	}
-
-	/**
-	 * Allow the #GtkEntry input method to internally handle key press
-	 * and release events. If this function returns %TRUE, then no further
-	 * processing should be done for this key event. See
-	 * gtk_im_context_filter_keypress().
-	 *
-	 * Note that you are expected to call this function from your handler
-	 * when overriding key event handling. This is needed in the case when
-	 * you need to insert your own key handling between the input method
-	 * and the default key event handling of the #GtkEntry.
-	 * See gtk_text_view_reset_im_context() for an example of use.
-	 *
-	 * Params:
-	 *     event = the key event
-	 *
-	 * Returns: %TRUE if the input method handled the key event.
-	 *
-	 * Since: 2.22
-	 */
-	public bool imContextFilterKeypress(GdkEventKey* event)
-	{
-		return gtk_entry_im_context_filter_keypress(gtkEntry, event) != 0;
-	}
-
-	/**
-	 * Converts from a position in the entry’s #PangoLayout (returned by
-	 * gtk_entry_get_layout()) to a position in the entry contents
-	 * (returned by gtk_entry_get_text()).
-	 *
-	 * Params:
-	 *     layoutIndex = byte index into the entry layout text
-	 *
-	 * Returns: byte index into the entry contents
-	 */
-	public int layoutIndexToTextIndex(int layoutIndex)
-	{
-		return gtk_entry_layout_index_to_text_index(gtkEntry, layoutIndex);
+		return gtk_entry_grab_focus_without_selecting(gtkEntry) != 0;
 	}
 
 	/**
@@ -942,8 +662,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * gtk_entry_progress_pulse() causes the block to move by a little bit
 	 * (the amount of movement per pulse is determined by
 	 * gtk_entry_set_progress_pulse_step()).
-	 *
-	 * Since: 2.16
 	 */
 	public void progressPulse()
 	{
@@ -955,8 +673,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * This can be necessary in the case where modifying the buffer
 	 * would confuse on-going input method behavior.
-	 *
-	 * Since: 2.22
 	 */
 	public void resetImContext()
 	{
@@ -968,10 +684,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * widget for the window containing the entry. This usually means that
 	 * the dialog box containing the entry will be closed, since the default
 	 * widget is usually one of the dialog buttons.
-	 *
-	 * (For experts: if @setting is %TRUE, the entry calls
-	 * gtk_window_activate_default() on the window containing the entry, in
-	 * the default handler for the #GtkEntry::activate signal.)
 	 *
 	 * Params:
 	 *     setting = %TRUE to activate window’s default widget on Enter keypress
@@ -989,8 +701,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     xalign = The horizontal alignment, from 0 (left) to 1 (right).
 	 *         Reversed for RTL layouts
-	 *
-	 * Since: 2.4
 	 */
 	public void setAlignment(float xalign)
 	{
@@ -1003,8 +713,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     attrs = a #PangoAttrList
-	 *
-	 * Since: 3.6
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{
@@ -1017,8 +725,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     buffer = a #GtkEntryBuffer
-	 *
-	 * Since: 2.18
 	 */
 	public void setBuffer(EntryBuffer buffer)
 	{
@@ -1033,8 +739,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     completion = The #GtkEntryCompletion or %NULL
-	 *
-	 * Since: 2.4
 	 */
 	public void setCompletion(EntryCompletion completion)
 	{
@@ -1042,23 +746,15 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Hooks up an adjustment to the cursor position in an entry, so that when
-	 * the cursor is moved, the adjustment is scrolled to show that position.
-	 * See gtk_scrolled_window_get_hadjustment() for a typical way of obtaining
-	 * the adjustment.
-	 *
-	 * The adjustment has to be in pixel units and in the same coordinate system
-	 * as the entry.
+	 * Sets a menu model to add when constructing
+	 * the context menu for @entry.
 	 *
 	 * Params:
-	 *     adjustment = an adjustment which should be adjusted when the cursor
-	 *         is moved, or %NULL
-	 *
-	 * Since: 2.12
+	 *     model = a #GMenuModel
 	 */
-	public void setCursorHadjustment(Adjustment adjustment)
+	public void setExtraMenu(MenuModel model)
 	{
-		gtk_entry_set_cursor_hadjustment(gtkEntry, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		gtk_entry_set_extra_menu(gtkEntry, (model is null) ? null : model.getMenuModelStruct());
 	}
 
 	/**
@@ -1078,8 +774,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *     activatable = %TRUE if the icon should be activatable
-	 *
-	 * Since: 2.16
 	 */
 	public void setIconActivatable(GtkEntryIconPosition iconPos, bool activatable)
 	{
@@ -1087,30 +781,17 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Sets up the icon at the given position so that GTK+ will start a drag
+	 * Sets up the icon at the given position so that GTK will start a drag
 	 * operation when the user clicks and drags the icon.
-	 *
-	 * To handle the drag operation, you need to connect to the usual
-	 * #GtkWidget::drag-data-get (or possibly #GtkWidget::drag-data-delete)
-	 * signal, and use gtk_entry_get_current_icon_drag_source() in
-	 * your signal handler to find out if the drag was started from
-	 * an icon.
-	 *
-	 * By default, GTK+ uses the icon as the drag icon. You can use the
-	 * #GtkWidget::drag-begin signal to set a different icon. Note that you
-	 * have to use g_signal_connect_after() to ensure that your signal handler
-	 * gets executed after the default handler.
 	 *
 	 * Params:
 	 *     iconPos = icon position
-	 *     targetList = the targets (data formats) in which the data can be provided
+	 *     provider = a #GdkContentProvider
 	 *     actions = a bitmask of the allowed drag actions
-	 *
-	 * Since: 2.16
 	 */
-	public void setIconDragSource(GtkEntryIconPosition iconPos, TargetList targetList, GdkDragAction actions)
+	public void setIconDragSource(GtkEntryIconPosition iconPos, ContentProvider provider, GdkDragAction actions)
 	{
-		gtk_entry_set_icon_drag_source(gtkEntry, iconPos, (targetList is null) ? null : targetList.getTargetListStruct(), actions);
+		gtk_entry_set_icon_drag_source(gtkEntry, iconPos, (provider is null) ? null : provider.getContentProviderStruct(), actions);
 	}
 
 	/**
@@ -1124,8 +805,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = The position at which to set the icon
 	 *     icon = The icon to set, or %NULL
-	 *
-	 * Since: 2.16
 	 */
 	public void setIconFromGicon(GtkEntryIconPosition iconPos, IconIF icon)
 	{
@@ -1144,8 +823,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = The position at which to set the icon
 	 *     iconName = An icon name, or %NULL
-	 *
-	 * Since: 2.16
 	 */
 	public void setIconFromIconName(GtkEntryIconPosition iconPos, string iconName)
 	{
@@ -1153,38 +830,17 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Sets the icon shown in the specified position using a pixbuf.
+	 * Sets the icon shown in the specified position using a #GdkPaintable
 	 *
-	 * If @pixbuf is %NULL, no icon will be shown in the specified position.
-	 *
-	 * Params:
-	 *     iconPos = Icon position
-	 *     pixbuf = A #GdkPixbuf, or %NULL
-	 *
-	 * Since: 2.16
-	 */
-	public void setIconFromPixbuf(GtkEntryIconPosition iconPos, Pixbuf pixbuf)
-	{
-		gtk_entry_set_icon_from_pixbuf(gtkEntry, iconPos, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
-	}
-
-	/**
-	 * Sets the icon shown in the entry at the specified position from
-	 * a stock image.
-	 *
-	 * If @stock_id is %NULL, no icon will be shown in the specified position.
-	 *
-	 * Deprecated: Use gtk_entry_set_icon_from_icon_name() instead.
+	 * If @paintable is %NULL, no icon will be shown in the specified position.
 	 *
 	 * Params:
 	 *     iconPos = Icon position
-	 *     stockId = The name of the stock item, or %NULL
-	 *
-	 * Since: 2.16
+	 *     paintable = A #GdkPaintable, or %NULL
 	 */
-	public void setIconFromStock(GtkEntryIconPosition iconPos, string stockId)
+	public void setIconFromPaintable(GtkEntryIconPosition iconPos, PaintableIF paintable)
 	{
-		gtk_entry_set_icon_from_stock(gtkEntry, iconPos, Str.toStringz(stockId));
+		gtk_entry_set_icon_from_paintable(gtkEntry, iconPos, (paintable is null) ? null : paintable.getPaintableStruct());
 	}
 
 	/**
@@ -1194,8 +850,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     iconPos = Icon position
 	 *     sensitive = Specifies whether the icon should appear
 	 *         sensitive or insensitive
-	 *
-	 * Since: 2.16
 	 */
 	public void setIconSensitive(GtkEntryIconPosition iconPos, bool sensitive)
 	{
@@ -1215,8 +869,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = the icon position
 	 *     tooltip = the contents of the tooltip for the icon, or %NULL
-	 *
-	 * Since: 2.16
 	 */
 	public void setIconTooltipMarkup(GtkEntryIconPosition iconPos, string tooltip)
 	{
@@ -1241,36 +893,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = the icon position
 	 *     tooltip = the contents of the tooltip for the icon, or %NULL
-	 *
-	 * Since: 2.16
 	 */
 	public void setIconTooltipText(GtkEntryIconPosition iconPos, string tooltip)
 	{
 		gtk_entry_set_icon_tooltip_text(gtkEntry, iconPos, Str.toStringz(tooltip));
-	}
-
-	/**
-	 * Sets %entry’s inner-border property to @border, or clears it if %NULL
-	 * is passed. The inner-border is the area around the entry’s text, but
-	 * inside its frame.
-	 *
-	 * If set, this property overrides the inner-border style property.
-	 * Overriding the style-provided border is useful when you want to do
-	 * in-place editing of some text in a canvas or list widget, where
-	 * pixel-exact positioning of the entry is important.
-	 *
-	 * Deprecated: Use the standard border and padding CSS properties (through
-	 * objects like #GtkStyleContext and #GtkCssProvider); the value set with
-	 * this function is ignored by #GtkEntry.
-	 *
-	 * Params:
-	 *     border = a #GtkBorder, or %NULL
-	 *
-	 * Since: 2.10
-	 */
-	public void setInnerBorder(Border border)
-	{
-		gtk_entry_set_inner_border(gtkEntry, (border is null) ? null : border.getBorderStruct());
 	}
 
 	/**
@@ -1279,8 +905,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     hints = the hints
-	 *
-	 * Since: 3.6
 	 */
 	public void setInputHints(GtkInputHints hints)
 	{
@@ -1294,8 +918,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     purpose = the purpose
-	 *
-	 * Since: 3.6
 	 */
 	public void setInputPurpose(GtkInputPurpose purpose)
 	{
@@ -1306,7 +928,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Sets the character to use in place of the actual text when
 	 * gtk_entry_set_visibility() has been called to set text visibility
 	 * to %FALSE. i.e. this is the character used in “password mode” to
-	 * show the user how many characters have been typed. By default, GTK+
+	 * show the user how many characters have been typed. By default, GTK
 	 * picks the best invisible char available in the current font. If you
 	 * set the invisible char to 0, then the user will get no feedback
 	 * at all; there will be no text on the screen as they type.
@@ -1339,25 +961,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Sets the desired maximum width in characters of @entry.
-	 *
-	 * Params:
-	 *     nChars = the new desired maximum width, in characters
-	 *
-	 * Since: 3.12
-	 */
-	public void setMaxWidthChars(int nChars)
-	{
-		gtk_entry_set_max_width_chars(gtkEntry, nChars);
-	}
-
-	/**
 	 * Sets whether the text is overwritten when typing in the #GtkEntry.
 	 *
 	 * Params:
 	 *     overwrite = new value
-	 *
-	 * Since: 2.14
 	 */
 	public void setOverwriteMode(bool overwrite)
 	{
@@ -1365,20 +972,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Sets text to be displayed in @entry when it is empty and unfocused.
+	 * Sets text to be displayed in @entry when it is empty.
 	 * This can be used to give a visual hint of the expected contents of
 	 * the #GtkEntry.
 	 *
-	 * Note that since the placeholder text gets removed when the entry
-	 * received focus, using this feature is a bit problematic if the entry
-	 * is given the initial focus in a window. Sometimes this can be
-	 * worked around by delaying the initial focus setting until the
-	 * first key event arrives.
-	 *
 	 * Params:
 	 *     text = a string to be displayed when @entry is empty and unfocused, or %NULL
-	 *
-	 * Since: 3.2
 	 */
 	public void setPlaceholderText(string text)
 	{
@@ -1392,8 +991,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     fraction = fraction of the task that’s been completed
-	 *
-	 * Since: 2.16
 	 */
 	public void setProgressFraction(double fraction)
 	{
@@ -1406,8 +1003,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     fraction = fraction between 0.0 and 1.0
-	 *
-	 * Since: 2.16
 	 */
 	public void setProgressPulseStep(double fraction)
 	{
@@ -1420,26 +1015,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     tabs = a #PangoTabArray
-	 *
-	 * Since: 3.10
 	 */
 	public void setTabs(PgTabArray tabs)
 	{
 		gtk_entry_set_tabs(gtkEntry, (tabs is null) ? null : tabs.getPgTabArrayStruct());
-	}
-
-	/**
-	 * Sets the text in the widget to the given
-	 * value, replacing the current contents.
-	 *
-	 * See gtk_entry_buffer_set_text().
-	 *
-	 * Params:
-	 *     text = the new text
-	 */
-	public void setText(string text)
-	{
-		gtk_entry_set_text(gtkEntry, Str.toStringz(text));
 	}
 
 	/**
@@ -1448,7 +1027,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * as the invisible char, and will also appear that way when
 	 * the text in the entry widget is copied elsewhere.
 	 *
-	 * By default, GTK+ picks the best invisible character available
+	 * By default, GTK picks the best invisible character available
 	 * in the current font, but it can be changed with
 	 * gtk_entry_set_invisible_char().
 	 *
@@ -1467,42 +1046,9 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Changes the size request of the entry to be about the right size
-	 * for @n_chars characters. Note that it changes the size
-	 * request, the size can still be affected by
-	 * how you pack the widget into containers. If @n_chars is -1, the
-	 * size reverts to the default entry size.
-	 *
-	 * Params:
-	 *     nChars = width in chars
-	 */
-	public void setWidthChars(int nChars)
-	{
-		gtk_entry_set_width_chars(gtkEntry, nChars);
-	}
-
-	/**
-	 * Converts from a position in the entry contents (returned
-	 * by gtk_entry_get_text()) to a position in the
-	 * entry’s #PangoLayout (returned by gtk_entry_get_layout(),
-	 * with text retrieved via pango_layout_get_text()).
-	 *
-	 * Params:
-	 *     textIndex = byte index into the entry contents
-	 *
-	 * Returns: byte index into the entry layout text
-	 */
-	public int textIndexToLayoutIndex(int textIndex)
-	{
-		return gtk_entry_text_index_to_layout_index(gtkEntry, textIndex);
-	}
-
-	/**
 	 * Unsets the invisible char previously set with
 	 * gtk_entry_set_invisible_char(). So that the
 	 * default invisible char is used again.
-	 *
-	 * Since: 2.16
 	 */
 	public void unsetInvisibleChar()
 	{
@@ -1510,15 +1056,9 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * The ::activate signal is emitted when the user hits
-	 * the Enter key.
-	 *
-	 * While this signal is used as a
-	 * [keybinding signal][GtkBindingSignal],
-	 * it is also commonly used by applications to intercept
-	 * activation of entries.
-	 *
-	 * The default bindings for this signal are all forms of the Enter key.
+	 * The ::activate signal is forwarded from the
+	 * #GtkText::activated signal, which is a keybinding
+	 * signal for all forms of the Enter key.
 	 */
 	gulong addOnActivate(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1526,92 +1066,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * The ::backspace signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted when the user asks for it.
-	 *
-	 * The default bindings for this signal are
-	 * Backspace and Shift-Backspace.
-	 */
-	gulong addOnBackspace(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "backspace", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::copy-clipboard signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to copy the selection to the clipboard.
-	 *
-	 * The default bindings for this signal are
-	 * Ctrl-c and Ctrl-Insert.
-	 */
-	gulong addOnCopyClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "copy-clipboard", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::cut-clipboard signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to cut the selection to the clipboard.
-	 *
-	 * The default bindings for this signal are
-	 * Ctrl-x and Shift-Delete.
-	 */
-	gulong addOnCutClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "cut-clipboard", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::delete-from-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted when the user initiates a text deletion.
-	 *
-	 * If the @type is %GTK_DELETE_CHARS, GTK+ deletes the selection
-	 * if there is one, otherwise it deletes the requested number
-	 * of characters.
-	 *
-	 * The default bindings for this signal are
-	 * Delete for deleting a character and Ctrl-Delete for
-	 * deleting a word.
-	 *
-	 * Params:
-	 *     type = the granularity of the deletion, as a #GtkDeleteType
-	 *     count = the number of @type units to delete
-	 */
-	gulong addOnDeleteFromCursor(void delegate(GtkDeleteType, int, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "delete-from-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
 	 * The ::icon-press signal is emitted when an activatable icon
 	 * is clicked.
 	 *
 	 * Params:
 	 *     iconPos = The position of the clicked icon
-	 *     event = the button press event
-	 *
-	 * Since: 2.16
 	 */
-	gulong addOnIconPress(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "icon-press", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::icon-press signal is emitted when an activatable icon
-	 * is clicked.
-	 *
-	 * Params:
-	 *     iconPos = The position of the clicked icon
-	 *     event = the button press event
-	 *
-	 * Since: 2.16
-	 */
-	gulong addOnIconPress(void delegate(GtkEntryIconPosition, Event, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconPress(void delegate(GtkEntryIconPosition, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "icon-press", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -1622,149 +1083,9 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Params:
 	 *     iconPos = The position of the clicked icon
-	 *     event = the button release event
-	 *
-	 * Since: 2.16
 	 */
-	gulong addOnIconRelease(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconRelease(void delegate(GtkEntryIconPosition, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "icon-release", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::icon-release signal is emitted on the button release from a
-	 * mouse click over an activatable icon.
-	 *
-	 * Params:
-	 *     iconPos = The position of the clicked icon
-	 *     event = the button release event
-	 *
-	 * Since: 2.16
-	 */
-	gulong addOnIconRelease(void delegate(GtkEntryIconPosition, Event, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "icon-release", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::insert-at-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted when the user initiates the insertion of a
-	 * fixed string at the cursor.
-	 *
-	 * This signal has no default bindings.
-	 *
-	 * Params:
-	 *     string_ = the string to insert
-	 */
-	gulong addOnInsertAtCursor(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "insert-at-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::insert-emoji signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to present the Emoji chooser for the @entry.
-	 *
-	 * The default bindings for this signal are Ctrl-. and Ctrl-;
-	 *
-	 * Since: 3.22.27
-	 */
-	gulong addOnInsertEmoji(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "insert-emoji", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::move-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted when the user initiates a cursor movement.
-	 * If the cursor is not visible in @entry, this signal causes
-	 * the viewport to be moved instead.
-	 *
-	 * Applications should not connect to it, but may emit it with
-	 * g_signal_emit_by_name() if they need to control the cursor
-	 * programmatically.
-	 *
-	 * The default bindings for this signal come in two variants,
-	 * the variant with the Shift modifier extends the selection,
-	 * the variant without the Shift modifer does not.
-	 * There are too many key combinations to list them all here.
-	 * - Arrow keys move by individual characters/lines
-	 * - Ctrl-arrow key combinations move by words/paragraphs
-	 * - Home/End keys move to the ends of the buffer
-	 *
-	 * Params:
-	 *     step = the granularity of the move, as a #GtkMovementStep
-	 *     count = the number of @step units to move
-	 *     extendSelection = %TRUE if the move should extend the selection
-	 */
-	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, bool, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "move-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::paste-clipboard signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to paste the contents of the clipboard
-	 * into the text view.
-	 *
-	 * The default bindings for this signal are
-	 * Ctrl-v and Shift-Insert.
-	 */
-	gulong addOnPasteClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "paste-clipboard", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::populate-popup signal gets emitted before showing the
-	 * context menu of the entry.
-	 *
-	 * If you need to add items to the context menu, connect
-	 * to this signal and append your items to the @widget, which
-	 * will be a #GtkMenu in this case.
-	 *
-	 * If #GtkEntry:populate-all is %TRUE, this signal will
-	 * also be emitted to populate touch popups. In this case,
-	 * @widget will be a different container, e.g. a #GtkToolbar.
-	 * The signal handler should not make assumptions about the
-	 * type of @widget.
-	 *
-	 * Params:
-	 *     widget = the container that is being populated
-	 */
-	gulong addOnPopulatePopup(void delegate(Widget, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * If an input method is used, the typed text will not immediately
-	 * be committed to the buffer. So if you are interested in the text,
-	 * connect to this signal.
-	 *
-	 * Params:
-	 *     preedit = the current preedit string
-	 *
-	 * Since: 2.20
-	 */
-	gulong addOnPreeditChanged(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "preedit-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::toggle-overwrite signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to toggle the overwrite mode of the entry.
-	 *
-	 * The default bindings for this signal is Insert.
-	 */
-	gulong addOnToggleOverwrite(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "toggle-overwrite", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

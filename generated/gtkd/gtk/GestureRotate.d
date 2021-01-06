@@ -28,10 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -79,25 +77,20 @@ public class GestureRotate : Gesture
 	 * Returns a newly created #GtkGesture that recognizes 2-touch
 	 * rotation gestures.
 	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *
 	 * Returns: a newly created #GtkGestureRotate
-	 *
-	 * Since: 3.14
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget)
+	public this()
 	{
-		auto p = gtk_gesture_rotate_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_rotate_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureRotate*) p, true);
+		this(cast(GtkGestureRotate*) __p, true);
 	}
 
 	/**
@@ -106,8 +99,6 @@ public class GestureRotate : Gesture
 	 * not active, 0 is returned.
 	 *
 	 * Returns: the angle delta in radians
-	 *
-	 * Since: 3.14
 	 */
 	public double getAngleDelta()
 	{
@@ -121,8 +112,6 @@ public class GestureRotate : Gesture
 	 * Params:
 	 *     angle = Current angle in radians
 	 *     angleDelta = Difference with the starting angle, in radians
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnAngleChanged(void delegate(double, double, GestureRotate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

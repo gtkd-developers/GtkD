@@ -144,13 +144,13 @@ public final class PMT
 	 */
 	public this()
 	{
-		auto p = gst_mpegts_pmt_new();
+		auto __p = gst_mpegts_pmt_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsPMT*) p);
+		this(cast(GstMpegtsPMT*) __p);
 	}
 }

@@ -28,13 +28,11 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Box;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -48,7 +46,7 @@ private import std.algorithm;
  * 
  * GtkFileChooserWidget has a single CSS node with name filechooser.
  */
-public class FileChooserWidget : Box, FileChooserIF
+public class FileChooserWidget : Widget, FileChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkFileChooserWidget* gtkFileChooserWidget;
@@ -73,7 +71,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	public this (GtkFileChooserWidget* gtkFileChooserWidget, bool ownedRef = false)
 	{
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
-		super(cast(GtkBox*)gtkFileChooserWidget, ownedRef);
+		super(cast(GtkWidget*)gtkFileChooserWidget, ownedRef);
 	}
 
 	// add the FileChooser capabilities
@@ -96,24 +94,22 @@ public class FileChooserWidget : Box, FileChooserIF
 	 *
 	 * Returns: a new #GtkFileChooserWidget
 	 *
-	 * Since: 2.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(GtkFileChooserAction action)
 	{
-		auto p = gtk_file_chooser_widget_new(action);
+		auto __p = gtk_file_chooser_widget_new(action);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFileChooserWidget*) p);
+		this(cast(GtkFileChooserWidget*) __p);
 	}
 
 	/**
-	 * The ::desktop-folder signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::desktop-folder signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the user's Desktop
@@ -127,7 +123,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::down-folder signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::down-folder signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser go to a child of the current folder
@@ -144,7 +140,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::home-folder signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::home-folder signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the user's home
@@ -158,7 +154,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::location-popup signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::location-popup signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show a "Location" prompt which
@@ -179,7 +175,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::location-popup-on-paste signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::location-popup-on-paste signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show a "Location" prompt when the user
@@ -193,7 +189,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::location-toggle-popup signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::location-toggle-popup signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to toggle the visibility of a "Location" prompt which the user
@@ -207,7 +203,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::places-shortcut signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::places-shortcut signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to move the focus to the places sidebar.
@@ -220,7 +216,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::quick-bookmark signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::quick-bookmark signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser switch to the bookmark specified
@@ -242,7 +238,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::recent-shortcut signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::recent-shortcut signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the Recent location.
@@ -255,7 +251,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::search-shortcut signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::search-shortcut signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the search entry.
@@ -268,7 +264,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::show-hidden signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::show-hidden signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser display hidden files.
@@ -281,7 +277,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * The ::up-folder signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::up-folder signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser go to the parent of the current folder

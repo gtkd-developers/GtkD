@@ -26,50 +26,18 @@ module gdk.Event;
 
 private import gdk.Device;
 private import gdk.DeviceTool;
-private import gdk.Screen;
+private import gdk.Display;
 private import gdk.Seat;
-private import gdk.Window;
+private import gdk.Surface;
 private import gdk.c.functions;
 public  import gdk.c.types;
-private import glib.ConstructionException;
-private import glib.Str;
 private import gobject.ObjectG;
-private import gobject.Value;
-public  import gtkc.gdktypes;
 private import gtkd.Loader;
 
 
 /**
- * A #GdkEvent contains a union of all of the event types,
- * and allows access to the data fields in a number of ways.
- * 
- * The event type is always the first field in all of the event types, and
- * can always be accessed with the following code, no matter what type of
- * event it is:
- * |[<!-- language="C" -->
- * GdkEvent *event;
- * GdkEventType type;
- * 
- * type = event->type;
- * ]|
- * 
- * To access other fields of the event, the pointer to the event
- * can be cast to the appropriate event type, or the union member
- * name can be used. For example if the event type is %GDK_BUTTON_PRESS
- * then the x coordinate of the button press can be accessed with:
- * |[<!-- language="C" -->
- * GdkEvent *event;
- * gdouble x;
- * 
- * x = ((GdkEventButton*)event)->x;
- * ]|
- * or:
- * |[<!-- language="C" -->
- * GdkEvent *event;
- * gdouble x;
- * 
- * x = event->button.x;
- * ]|
+ * The GdkEvent struct contains only private fields and
+ * should not be accessed directly.
  */
 public class Event
 {
@@ -103,171 +71,14 @@ public class Event
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
-			gdk_event_free(gdkEvent);
+			gdk_event_unref(gdkEvent);
 	}
 
-	/**
-	 * Specifies the type of the event.
-	 */
-	public EventType type()
-	{
-		return gdkEvent.type;
-	}
-
-	/** Get a specific event. */
-	public GdkEventAny* any()
-	{
-		return cast(GdkEventAny*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventExpose* expose()
-	{
-		return cast(GdkEventExpose*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventVisibility* visibility()
-	{
-		return cast(GdkEventVisibility*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventMotion* motion()
-	{
-		return cast(GdkEventMotion*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventButton* button()
-	{
-		return cast(GdkEventButton*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventScroll* scroll()
-	{
-		return cast(GdkEventScroll*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventKey* key()
-	{
-		return cast(GdkEventKey*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventCrossing* crossing()
-	{
-		return cast(GdkEventCrossing*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventFocus* focus()
-	{
-		return cast(GdkEventFocus*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventConfigure* configure()
-	{
-		return cast(GdkEventConfigure*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventProperty* property()
-	{
-		return cast(GdkEventProperty*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventSelection* selection()
-	{
-		return cast(GdkEventSelection*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventOwnerChange* ownerChange()
-	{
-		return cast(GdkEventOwnerChange*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventProximity* proximity()
-	{
-		return cast(GdkEventProximity*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventDND* dnd()
-	{
-		return cast(GdkEventDND*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventWindowState* windowState()
-	{
-		return cast(GdkEventWindowState*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventSetting* setting()
-	{
-		return cast(GdkEventSetting*)gdkEvent;
-	}
-
-	/** ditto */
-	public GdkEventGrabBroken* grabBroken()
-	{
-		return cast(GdkEventGrabBroken*)gdkEvent;
-	}
-
-	/** */
-	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
-	{
-		return eventButton.button==buttonNumber
-			&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
-	}
-
-	/** */
-	public static bool isTripleClick(GdkEventButton* eventButton, int buttonNumber=1)
-	{
-		return eventButton.button==buttonNumber
-			&& eventButton.type == EventType.TRIPLE_BUTTON_PRESS;
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gdk_event_get_type();
-	}
-
-	/**
-	 * Creates a new event of the given type. All fields are set to 0.
-	 *
-	 * Params:
-	 *     type = a #GdkEventType
-	 *
-	 * Returns: a newly-allocated #GdkEvent. The returned #GdkEvent
-	 *     should be freed with gdk_event_free().
-	 *
-	 * Since: 2.2
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(GdkEventType type)
-	{
-		auto p = gdk_event_new(type);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GdkEvent*) p);
 	}
 
 	/**
@@ -277,17 +88,14 @@ public class Event
 	 * Y axis.
 	 *
 	 * Params:
-	 *     event1 = first #GdkEvent
 	 *     event2 = second #GdkEvent
 	 *     angle = return location for the relative angle between both events
 	 *
 	 * Returns: %TRUE if the angle could be calculated.
-	 *
-	 * Since: 3.0
 	 */
-	public static bool getAngle(Event event1, Event event2, out double angle)
+	public bool GetAngle(Event event2, out double angle)
 	{
-		return gdk_events_get_angle((event1 is null) ? null : event1.getEventStruct(), (event2 is null) ? null : event2.getEventStruct(), &angle) != 0;
+		return gdk_events_get_angle(gdkEvent, (event2 is null) ? null : event2.getEventStruct(), &angle) != 0;
 	}
 
 	/**
@@ -295,18 +103,15 @@ public class Event
 	 * will be returned in @x and @y.
 	 *
 	 * Params:
-	 *     event1 = first #GdkEvent
 	 *     event2 = second #GdkEvent
 	 *     x = return location for the X coordinate of the center
 	 *     y = return location for the Y coordinate of the center
 	 *
 	 * Returns: %TRUE if the center could be calculated.
-	 *
-	 * Since: 3.0
 	 */
-	public static bool getCenter(Event event1, Event event2, out double x, out double y)
+	public bool GetCenter(Event event2, out double x, out double y)
 	{
-		return gdk_events_get_center((event1 is null) ? null : event1.getEventStruct(), (event2 is null) ? null : event2.getEventStruct(), &x, &y) != 0;
+		return gdk_events_get_center(gdkEvent, (event2 is null) ? null : event2.getEventStruct(), &x, &y) != 0;
 	}
 
 	/**
@@ -314,48 +119,34 @@ public class Event
 	 * (as in a straight line going from @event1 to @event2) will be returned.
 	 *
 	 * Params:
-	 *     event1 = first #GdkEvent
 	 *     event2 = second #GdkEvent
 	 *     distance = return location for the distance
 	 *
 	 * Returns: %TRUE if the distance could be calculated.
-	 *
-	 * Since: 3.0
 	 */
-	public static bool getDistance(Event event1, Event event2, out double distance)
+	public bool GetDistance(Event event2, out double distance)
 	{
-		return gdk_events_get_distance((event1 is null) ? null : event1.getEventStruct(), (event2 is null) ? null : event2.getEventStruct(), &distance) != 0;
+		return gdk_events_get_distance(gdkEvent, (event2 is null) ? null : event2.getEventStruct(), &distance) != 0;
 	}
 
 	/**
-	 * Copies a #GdkEvent, copying or incrementing the reference count of the
-	 * resources associated with it (e.g. #GdkWindow’s and strings).
+	 * Extracts all axis values from an event.
 	 *
-	 * Returns: a copy of @event. The returned #GdkEvent should be freed with
-	 *     gdk_event_free().
+	 * Params:
+	 *     axes = the array of values for all axes
+	 *
+	 * Returns: %TRUE on success, otherwise %FALSE
 	 */
-	public Event copy()
+	public bool getAxes(out double[] axes)
 	{
-		auto p = gdk_event_copy(gdkEvent);
+		double* outaxes = null;
+		uint nAxes;
 
-		if(p is null)
-		{
-			return null;
-		}
+		auto __p = gdk_event_get_axes(gdkEvent, &outaxes, &nAxes) != 0;
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
-	}
+		axes = outaxes[0 .. nAxes];
 
-	/**
-	 * Frees a #GdkEvent, freeing or decrementing any resources associated with it.
-	 * Note that this function should only be called with events returned from
-	 * functions such as gdk_event_peek(), gdk_event_get(), gdk_event_copy()
-	 * and gdk_event_new().
-	 */
-	public void free()
-	{
-		gdk_event_free(gdkEvent);
-		ownedRef = false;
+		return __p;
 	}
 
 	/**
@@ -374,67 +165,20 @@ public class Event
 	}
 
 	/**
-	 * Extract the button number from an event.
+	 * Returns the device of an event.
 	 *
-	 * Params:
-	 *     button = location to store mouse button number
-	 *
-	 * Returns: %TRUE if the event delivered a button number
-	 *
-	 * Since: 3.2
-	 */
-	public bool getButton(out uint button)
-	{
-		return gdk_event_get_button(gdkEvent, &button) != 0;
-	}
-
-	/**
-	 * Extracts the click count from an event.
-	 *
-	 * Params:
-	 *     clickCount = location to store click count
-	 *
-	 * Returns: %TRUE if the event delivered a click count
-	 *
-	 * Since: 3.2
-	 */
-	public bool getClickCount(out uint clickCount)
-	{
-		return gdk_event_get_click_count(gdkEvent, &clickCount) != 0;
-	}
-
-	/**
-	 * Extract the event window relative x/y coordinates from an event.
-	 *
-	 * Params:
-	 *     xWin = location to put event window x coordinate
-	 *     yWin = location to put event window y coordinate
-	 *
-	 * Returns: %TRUE if the event delivered event window coordinates
-	 */
-	public bool getCoords(out double xWin, out double yWin)
-	{
-		return gdk_event_get_coords(gdkEvent, &xWin, &yWin) != 0;
-	}
-
-	/**
-	 * If the event contains a “device” field, this function will return
-	 * it, else it will return %NULL.
-	 *
-	 * Returns: a #GdkDevice, or %NULL.
-	 *
-	 * Since: 3.0
+	 * Returns: a #GdkDevice.
 	 */
 	public Device getDevice()
 	{
-		auto p = gdk_event_get_device(gdkEvent);
+		auto __p = gdk_event_get_device(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -443,34 +187,46 @@ public class Event
 	 * return a #GdkDeviceTool representing the tool that
 	 * caused the event. Otherwise, %NULL will be returned.
 	 *
-	 * Note: the #GdkDeviceTool<!-- -->s will be constant during
+	 * Note: the #GdkDeviceTools will be constant during
 	 * the application lifetime, if settings must be stored
 	 * persistently across runs, see gdk_device_tool_get_serial()
 	 *
 	 * Returns: The current device tool, or %NULL
-	 *
-	 * Since: 3.22
 	 */
 	public DeviceTool getDeviceTool()
 	{
-		auto p = gdk_event_get_device_tool(gdkEvent);
+		auto __p = gdk_event_get_device_tool(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) p);
+		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) __p);
 	}
 
 	/**
-	 * If @event if of type %GDK_TOUCH_BEGIN, %GDK_TOUCH_UPDATE,
-	 * %GDK_TOUCH_END or %GDK_TOUCH_CANCEL, returns the #GdkEventSequence
+	 * Retrieves the #GdkDisplay associated to the @event.
+	 *
+	 * Returns: a #GdkDisplay
+	 */
+	public Display getDisplay()
+	{
+		auto __p = gdk_event_get_display(gdkEvent);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
+	}
+
+	/**
+	 * If @event is a touch event, returns the #GdkEventSequence
 	 * to which the event belongs. Otherwise, return %NULL.
 	 *
 	 * Returns: the event sequence that the event belongs to
-	 *
-	 * Since: 3.4
 	 */
 	public GdkEventSequence* getEventSequence()
 	{
@@ -481,8 +237,6 @@ public class Event
 	 * Retrieves the type of the event.
 	 *
 	 * Returns: a #GdkEventType
-	 *
-	 * Since: 3.10
 	 */
 	public GdkEventType getEventType()
 	{
@@ -490,45 +244,41 @@ public class Event
 	}
 
 	/**
-	 * Extracts the hardware keycode from an event.
+	 * Retrieves the history of the @event, as a list of time and coordinates.
 	 *
-	 * Also see gdk_event_get_scancode().
+	 * The history includes events that are not delivered to the application
+	 * because they occurred in the same frame as @event.
 	 *
-	 * Params:
-	 *     keycode = location to store the keycode
+	 * Note that only motion and scroll events record history, and motion
+	 * events only if one of the mouse buttons is down.
 	 *
-	 * Returns: %TRUE if the event delivered a hardware keycode
-	 *
-	 * Since: 3.2
+	 * Returns: an
+	 *     array of time and coordinates
 	 */
-	public bool getKeycode(out ushort keycode)
+	public GdkTimeCoord[] getHistory()
 	{
-		return gdk_event_get_keycode(gdkEvent, &keycode) != 0;
+		uint outNCoords;
+
+		auto __p = gdk_event_get_history(gdkEvent, &outNCoords);
+
+		return __p[0 .. outNCoords];
 	}
 
 	/**
-	 * Extracts the keyval from an event.
+	 * Returns the modifier state field of an event.
 	 *
-	 * Params:
-	 *     keyval = location to store the keyval
-	 *
-	 * Returns: %TRUE if the event delivered a key symbol
-	 *
-	 * Since: 3.2
+	 * Returns: the modifier state of @event
 	 */
-	public bool getKeyval(out uint keyval)
+	public GdkModifierType getModifierState()
 	{
-		return gdk_event_get_keyval(gdkEvent, &keyval) != 0;
+		return gdk_event_get_modifier_state(gdkEvent);
 	}
 
 	/**
-	 * #event: a #GdkEvent
 	 * Returns whether this event is an 'emulated' pointer event (typically
 	 * from a touch event), as opposed to a real one.
 	 *
 	 * Returns: %TRUE if this event is emulated
-	 *
-	 * Since: 3.22
 	 */
 	public bool getPointerEmulated()
 	{
@@ -536,156 +286,54 @@ public class Event
 	}
 
 	/**
-	 * Extract the root window relative x/y coordinates from an event.
+	 * Extract the event surface relative x/y coordinates from an event.
 	 *
 	 * Params:
-	 *     xRoot = location to put root window x coordinate
-	 *     yRoot = location to put root window y coordinate
-	 *
-	 * Returns: %TRUE if the event delivered root window coordinates
+	 *     x = location to put event surface x coordinate
+	 *     y = location to put event surface y coordinate
 	 */
-	public bool getRootCoords(out double xRoot, out double yRoot)
+	public bool getPosition(out double x, out double y)
 	{
-		return gdk_event_get_root_coords(gdkEvent, &xRoot, &yRoot) != 0;
+		return gdk_event_get_position(gdkEvent, &x, &y) != 0;
 	}
 
 	/**
-	 * Gets the keyboard low-level scancode of a key event.
+	 * Returns the seat that originated the event.
 	 *
-	 * This is usually hardware_keycode. On Windows this is the high
-	 * word of WM_KEY{DOWN,UP} lParam which contains the scancode and
-	 * some extended flags.
-	 *
-	 * Returns: The associated keyboard scancode or 0
-	 *
-	 * Since: 3.22
-	 */
-	public int getScancode()
-	{
-		return gdk_event_get_scancode(gdkEvent);
-	}
-
-	/**
-	 * Returns the screen for the event. The screen is
-	 * typically the screen for `event->any.window`, but
-	 * for events such as mouse events, it is the screen
-	 * where the pointer was when the event occurs -
-	 * that is, the screen which has the root window
-	 * to which `event->motion.x_root` and
-	 * `event->motion.y_root` are relative.
-	 *
-	 * Returns: the screen for the event
-	 *
-	 * Since: 2.2
-	 */
-	public Screen getScreen()
-	{
-		auto p = gdk_event_get_screen(gdkEvent);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
-	}
-
-	/**
-	 * Retrieves the scroll deltas from a #GdkEvent
-	 *
-	 * Params:
-	 *     deltaX = return location for X delta
-	 *     deltaY = return location for Y delta
-	 *
-	 * Returns: %TRUE if the event contains smooth scroll information
-	 *
-	 * Since: 3.4
-	 */
-	public bool getScrollDeltas(out double deltaX, out double deltaY)
-	{
-		return gdk_event_get_scroll_deltas(gdkEvent, &deltaX, &deltaY) != 0;
-	}
-
-	/**
-	 * Extracts the scroll direction from an event.
-	 *
-	 * Params:
-	 *     direction = location to store the scroll direction
-	 *
-	 * Returns: %TRUE if the event delivered a scroll direction
-	 *
-	 * Since: 3.2
-	 */
-	public bool getScrollDirection(out GdkScrollDirection direction)
-	{
-		return gdk_event_get_scroll_direction(gdkEvent, &direction) != 0;
-	}
-
-	/**
-	 * Returns the #GdkSeat this event was generated for.
-	 *
-	 * Returns: The #GdkSeat of this event
-	 *
-	 * Since: 3.20
+	 * Returns: a #GdkSeat.
 	 */
 	public Seat getSeat()
 	{
-		auto p = gdk_event_get_seat(gdkEvent);
+		auto __p = gdk_event_get_seat(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) __p);
 	}
 
 	/**
-	 * This function returns the hardware (slave) #GdkDevice that has
-	 * triggered the event, falling back to the virtual (master) device
-	 * (as in gdk_event_get_device()) if the event wasn’t caused by
-	 * interaction with a hardware device. This may happen for example
-	 * in synthesized crossing events after a #GdkWindow updates its
-	 * geometry or a grab is acquired/released.
+	 * Extracts the #GdkSurface associated with an event.
 	 *
-	 * If the event does not contain a device field, this function will
-	 * return %NULL.
-	 *
-	 * Returns: a #GdkDevice, or %NULL.
-	 *
-	 * Since: 3.0
+	 * Returns: The #GdkSurface associated with the event
 	 */
-	public Device getSourceDevice()
+	public Surface getSurface()
 	{
-		auto p = gdk_event_get_source_device(gdkEvent);
+		auto __p = gdk_event_get_surface(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
-	}
-
-	/**
-	 * If the event contains a “state” field, puts that field in @state. Otherwise
-	 * stores an empty state (0). Returns %TRUE if there was a state field
-	 * in the event. @event may be %NULL, in which case it’s treated
-	 * as if the event had no state field.
-	 *
-	 * Params:
-	 *     state = return location for state
-	 *
-	 * Returns: %TRUE if there was a state field in the event
-	 */
-	public bool getState(out GdkModifierType state)
-	{
-		return gdk_event_get_state(gdkEvent, &state) != 0;
+		return ObjectG.getDObject!(Surface)(cast(GdkSurface*) __p);
 	}
 
 	/**
 	 * Returns the time stamp from @event, if there is one; otherwise
-	 * returns #GDK_CURRENT_TIME. If @event is %NULL, returns #GDK_CURRENT_TIME.
+	 * returns #GDK_CURRENT_TIME.
 	 *
 	 * Returns: time stamp field from @event
 	 */
@@ -694,126 +342,33 @@ public class Event
 		return gdk_event_get_time(gdkEvent);
 	}
 
+	alias doref = ref_;
 	/**
-	 * Extracts the #GdkWindow associated with an event.
+	 * Increase the ref count of @event.
 	 *
-	 * Returns: The #GdkWindow associated with the event
-	 *
-	 * Since: 3.10
+	 * Returns: @event
 	 */
-	public Window getWindow()
+	public Event ref_()
 	{
-		auto p = gdk_event_get_window(gdkEvent);
+		auto __p = gdk_event_ref(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**
-	 * Check whether a scroll event is a stop scroll event. Scroll sequences
-	 * with smooth scroll information may provide a stop scroll event once the
-	 * interaction with the device finishes, e.g. by lifting a finger. This
-	 * stop scroll event is the signal that a widget may trigger kinetic
-	 * scrolling based on the current velocity.
-	 *
-	 * Stop scroll events always have a a delta of 0/0.
-	 *
-	 * Returns: %TRUE if the event is a scroll stop event
-	 *
-	 * Since: 3.20
-	 */
-	public bool isScrollStopEvent()
-	{
-		return gdk_event_is_scroll_stop_event(gdkEvent) != 0;
-	}
-
-	/**
-	 * Appends a copy of the given event onto the front of the event
-	 * queue for event->any.window’s display, or the default event
-	 * queue if event->any.window is %NULL. See gdk_display_put_event().
-	 */
-	public void put()
-	{
-		gdk_event_put(gdkEvent);
-	}
-
-	/**
-	 * Sets the device for @event to @device. The event must
-	 * have been allocated by GTK+, for instance, by
-	 * gdk_event_copy().
-	 *
-	 * Params:
-	 *     device = a #GdkDevice
-	 *
-	 * Since: 3.0
-	 */
-	public void setDevice(Device device)
-	{
-		gdk_event_set_device(gdkEvent, (device is null) ? null : device.getDeviceStruct());
-	}
-
-	/**
-	 * Sets the device tool for this event, should be rarely used.
-	 *
-	 * Params:
-	 *     tool = tool to set on the event, or %NULL
-	 *
-	 * Since: 3.22
-	 */
-	public void setDeviceTool(DeviceTool tool)
-	{
-		gdk_event_set_device_tool(gdkEvent, (tool is null) ? null : tool.getDeviceToolStruct());
-	}
-
-	/**
-	 * Sets the screen for @event to @screen. The event must
-	 * have been allocated by GTK+, for instance, by
-	 * gdk_event_copy().
-	 *
-	 * Params:
-	 *     screen = a #GdkScreen
-	 *
-	 * Since: 2.2
-	 */
-	public void setScreen(Screen screen)
-	{
-		gdk_event_set_screen(gdkEvent, (screen is null) ? null : screen.getScreenStruct());
-	}
-
-	/**
-	 * Sets the slave device for @event to @device.
-	 *
-	 * The event must have been allocated by GTK+,
-	 * for instance by gdk_event_copy().
-	 *
-	 * Params:
-	 *     device = a #GdkDevice
-	 *
-	 * Since: 3.0
-	 */
-	public void setSourceDevice(Device device)
-	{
-		gdk_event_set_source_device(gdkEvent, (device is null) ? null : device.getDeviceStruct());
-	}
-
-	/**
-	 * This function returns whether a #GdkEventButton should trigger a
-	 * context menu, according to platform conventions. The right mouse
-	 * button always triggers context menus. Additionally, if
-	 * gdk_keymap_get_modifier_mask() returns a non-0 mask for
-	 * %GDK_MODIFIER_INTENT_CONTEXT_MENU, then the left mouse button will
-	 * also trigger a context menu if this modifier is pressed.
+	 * This function returns whether a #GdkEvent should trigger a
+	 * context menu, according to platform conventions. The right
+	 * mouse button always triggers context menus.
 	 *
 	 * This function should always be used instead of simply checking for
 	 * event->button == %GDK_BUTTON_SECONDARY.
 	 *
 	 * Returns: %TRUE if the event should trigger a context menu.
-	 *
-	 * Since: 3.4
 	 */
 	public bool triggersContextMenu()
 	{
@@ -821,141 +376,11 @@ public class Event
 	}
 
 	/**
-	 * Checks all open displays for a #GdkEvent to process,to be processed
-	 * on, fetching events from the windowing system if necessary.
-	 * See gdk_display_get_event().
-	 *
-	 * Returns: the next #GdkEvent to be processed, or %NULL
-	 *     if no events are pending. The returned #GdkEvent should be freed
-	 *     with gdk_event_free().
+	 * Decrease the ref count of @event, and free it
+	 * if the last reference is dropped.
 	 */
-	public static Event get()
+	public void unref()
 	{
-		auto p = gdk_event_get();
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
-	}
-
-	/**
-	 * Sets the function to call to handle all events from GDK.
-	 *
-	 * Note that GTK+ uses this to install its own event handler, so it is
-	 * usually not useful for GTK+ applications. (Although an application
-	 * can call this function then call gtk_main_do_event() to pass
-	 * events to GTK+.)
-	 *
-	 * Params:
-	 *     func = the function to call to handle events from GDK.
-	 *     data = user data to pass to the function.
-	 *     notify = the function to call when the handler function is removed, i.e. when
-	 *         gdk_event_handler_set() is called with another event handler.
-	 */
-	public static void handlerSet(GdkEventFunc func, void* data, GDestroyNotify notify)
-	{
-		gdk_event_handler_set(func, data, notify);
-	}
-
-	/**
-	 * If there is an event waiting in the event queue of some open
-	 * display, returns a copy of it. See gdk_display_peek_event().
-	 *
-	 * Returns: a copy of the first #GdkEvent on some event
-	 *     queue, or %NULL if no events are in any queues. The returned
-	 *     #GdkEvent should be freed with gdk_event_free().
-	 */
-	public static Event peek()
-	{
-		auto p = gdk_event_peek();
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
-	}
-
-	/**
-	 * Request more motion notifies if @event is a motion notify hint event.
-	 *
-	 * This function should be used instead of gdk_window_get_pointer() to
-	 * request further motion notifies, because it also works for extension
-	 * events where motion notifies are provided for devices other than the
-	 * core pointer. Coordinate extraction, processing and requesting more
-	 * motion events from a %GDK_MOTION_NOTIFY event usually works like this:
-	 *
-	 * |[<!-- language="C" -->
-	 * {
-	 * // motion_event handler
-	 * x = motion_event->x;
-	 * y = motion_event->y;
-	 * // handle (x,y) motion
-	 * gdk_event_request_motions (motion_event); // handles is_hint events
-	 * }
-	 * ]|
-	 *
-	 * Params:
-	 *     event = a valid #GdkEvent
-	 *
-	 * Since: 2.12
-	 */
-	public static void requestMotions(GdkEventMotion* event)
-	{
-		gdk_event_request_motions(event);
-	}
-
-	/**
-	 * Checks if any events are ready to be processed for any display.
-	 *
-	 * Returns: %TRUE if any events are pending.
-	 */
-	public static bool pending()
-	{
-		return gdk_events_pending() != 0;
-	}
-
-	/**
-	 * Gets whether event debugging output is enabled.
-	 *
-	 * Returns: %TRUE if event debugging output is enabled.
-	 */
-	public static bool getShowEvents()
-	{
-		return gdk_get_show_events() != 0;
-	}
-
-	/**
-	 * Sets whether a trace of received events is output.
-	 * Note that GTK+ must be compiled with debugging (that is,
-	 * configured using the `--enable-debug` option)
-	 * to use this option.
-	 *
-	 * Params:
-	 *     showEvents = %TRUE to output event debugging information.
-	 */
-	public static void setShowEvents(bool showEvents)
-	{
-		gdk_set_show_events(showEvents);
-	}
-
-	/**
-	 * Obtains a desktop-wide setting, such as the double-click time,
-	 * for the default screen. See gdk_screen_get_setting().
-	 *
-	 * Params:
-	 *     name = the name of the setting.
-	 *     value = location to store the value of the setting.
-	 *
-	 * Returns: %TRUE if the setting existed and a value was stored
-	 *     in @value, %FALSE otherwise.
-	 */
-	public static bool settingGet(string name, Value value)
-	{
-		return gdk_setting_get(Str.toStringz(name), (value is null) ? null : value.getValueStruct()) != 0;
+		gdk_event_unref(gdkEvent);
 	}
 }

@@ -30,7 +30,6 @@ private import gobject.Signals;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -46,10 +45,6 @@ private import std.algorithm;
  * various common properties on the dialog, as well as show and hide
  * it and get a #GtkNativeDialog::response signal when the user finished
  * with the dialog.
- * 
- * There is also a gtk_native_dialog_run() helper that makes it easy
- * to run any native dialog in a modal way with a recursive mainloop,
- * similar to gtk_dialog_run().
  */
 public class NativeDialog : ObjectG
 {
@@ -96,8 +91,6 @@ public class NativeDialog : ObjectG
 	 * Note that this does not release any reference to the object (as opposed to
 	 * destroying a GtkWindow) because there is no reference from the windowing
 	 * system to the #GtkNativeDialog.
-	 *
-	 * Since: 3.20
 	 */
 	public void destroy()
 	{
@@ -108,8 +101,6 @@ public class NativeDialog : ObjectG
 	 * Returns whether the dialog is modal. See gtk_native_dialog_set_modal().
 	 *
 	 * Returns: %TRUE if the dialog is set to be modal
-	 *
-	 * Since: 3.20
 	 */
 	public bool getModal()
 	{
@@ -122,8 +113,6 @@ public class NativeDialog : ObjectG
 	 * Returns: the title of the dialog, or %NULL if none has
 	 *     been set explicitly. The returned string is owned by the widget
 	 *     and must not be modified or freed.
-	 *
-	 * Since: 3.20
 	 */
 	public string getTitle()
 	{
@@ -136,27 +125,23 @@ public class NativeDialog : ObjectG
 	 *
 	 * Returns: the transient parent for this window,
 	 *     or %NULL if no transient parent has been set.
-	 *
-	 * Since: 3.20
 	 */
 	public Window getTransientFor()
 	{
-		auto p = gtk_native_dialog_get_transient_for(gtkNativeDialog);
+		auto __p = gtk_native_dialog_get_transient_for(gtkNativeDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
 	 * Determines whether the dialog is visible.
 	 *
 	 * Returns: %TRUE if the dialog is visible
-	 *
-	 * Since: 3.20
 	 */
 	public bool getVisible()
 	{
@@ -169,52 +154,10 @@ public class NativeDialog : ObjectG
 	 * until after the next call to gtk_native_dialog_show().
 	 *
 	 * If the dialog is not visible this does nothing.
-	 *
-	 * Since: 3.20
 	 */
 	public void hide()
 	{
 		gtk_native_dialog_hide(gtkNativeDialog);
-	}
-
-	/**
-	 * Blocks in a recursive main loop until @self emits the
-	 * #GtkNativeDialog::response signal. It then returns the response ID
-	 * from the ::response signal emission.
-	 *
-	 * Before entering the recursive main loop, gtk_native_dialog_run()
-	 * calls gtk_native_dialog_show() on the dialog for you.
-	 *
-	 * After gtk_native_dialog_run() returns, then dialog will be hidden.
-	 *
-	 * Typical usage of this function might be:
-	 * |[<!-- language="C" -->
-	 * gint result = gtk_native_dialog_run (GTK_NATIVE_DIALOG (dialog));
-	 * switch (result)
-	 * {
-	 * case GTK_RESPONSE_ACCEPT:
-	 * do_application_specific_something ();
-	 * break;
-	 * default:
-	 * do_nothing_since_dialog_was_cancelled ();
-	 * break;
-	 * }
-	 * g_object_unref (dialog);
-	 * ]|
-	 *
-	 * Note that even though the recursive main loop gives the effect of a
-	 * modal dialog (it prevents the user from interacting with other
-	 * windows in the same window group while the dialog is run), callbacks
-	 * such as timeouts, IO channel watches, DND drops, etc, will
-	 * be triggered during a gtk_nautilus_dialog_run() call.
-	 *
-	 * Returns: response ID
-	 *
-	 * Since: 3.20
-	 */
-	public int run()
-	{
-		return gtk_native_dialog_run(gtkNativeDialog);
 	}
 
 	/**
@@ -227,8 +170,6 @@ public class NativeDialog : ObjectG
 	 *
 	 * Params:
 	 *     modal = whether the window is modal
-	 *
-	 * Since: 3.20
 	 */
 	public void setModal(bool modal)
 	{
@@ -240,8 +181,6 @@ public class NativeDialog : ObjectG
 	 *
 	 * Params:
 	 *     title = title of the dialog
-	 *
-	 * Since: 3.20
 	 */
 	public void setTitle(string title)
 	{
@@ -259,8 +198,6 @@ public class NativeDialog : ObjectG
 	 *
 	 * Params:
 	 *     parent = parent window, or %NULL
-	 *
-	 * Since: 3.20
 	 */
 	public void setTransientFor(Window parent)
 	{
@@ -274,8 +211,6 @@ public class NativeDialog : ObjectG
 	 * will be emitted.
 	 *
 	 * Multiple calls while the dialog is visible will be ignored.
-	 *
-	 * Since: 3.20
 	 */
 	public void show()
 	{
@@ -292,8 +227,6 @@ public class NativeDialog : ObjectG
 	 *
 	 * Params:
 	 *     responseId = the response ID
-	 *
-	 * Since: 3.20
 	 */
 	gulong addOnResponse(void delegate(int, NativeDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

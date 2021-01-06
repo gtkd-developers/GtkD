@@ -30,7 +30,6 @@ public  import gobject.Value;
 public  import gstreamer.TagList;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -138,14 +137,14 @@ public template TagSetterT(TStruct)
 	 */
 	public TagList getTagList()
 	{
-		auto p = gst_tag_setter_get_tag_list(getTagSetterStruct());
+		auto __p = gst_tag_setter_get_tag_list(getTagSetterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p);
 	}
 
 	/**

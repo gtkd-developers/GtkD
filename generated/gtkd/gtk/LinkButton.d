@@ -32,7 +32,6 @@ private import gtk.Button;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -48,7 +47,7 @@ private import std.algorithm;
  * The URI bound to a GtkLinkButton can be set specifically using
  * gtk_link_button_set_uri(), and retrieved using gtk_link_button_get_uri().
  * 
- * By default, GtkLinkButton calls gtk_show_uri_on_window() when the button is
+ * By default, GtkLinkButton calls gtk_show_uri() when the button is
  * clicked. This behaviour can be overridden by connecting to the
  * #GtkLinkButton::activate-link signal and returning %TRUE from the
  * signal handler.
@@ -57,6 +56,10 @@ private import std.algorithm;
  * 
  * GtkLinkButton has a single CSS node with name button. To differentiate
  * it from a plain #GtkButton, it gets the .link style class.
+ * 
+ * # Accessibility
+ * 
+ * GtkLinkButton uses the #GTK_ACCESSIBLE_ROLE_LINK role.
  */
 public class LinkButton : Button
 {
@@ -101,20 +104,18 @@ public class LinkButton : Button
 	 *
 	 * Returns: a new link button widget.
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string uri)
 	{
-		auto p = gtk_link_button_new(Str.toStringz(uri));
+		auto __p = gtk_link_button_new(Str.toStringz(uri));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLinkButton*) p);
+		this(cast(GtkLinkButton*) __p);
 	}
 
 	/**
@@ -126,20 +127,18 @@ public class LinkButton : Button
 	 *
 	 * Returns: a new link button widget.
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string uri, string label)
 	{
-		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
+		auto __p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_label");
 		}
 
-		this(cast(GtkLinkButton*) p);
+		this(cast(GtkLinkButton*) __p);
 	}
 
 	/**
@@ -147,8 +146,6 @@ public class LinkButton : Button
 	 *
 	 * Returns: a valid URI.  The returned string is owned by the link button
 	 *     and should not be modified or freed.
-	 *
-	 * Since: 2.10
 	 */
 	public string getUri()
 	{
@@ -163,8 +160,6 @@ public class LinkButton : Button
 	 * The state may also be changed using gtk_link_button_set_visited().
 	 *
 	 * Returns: %TRUE if the link has been visited, %FALSE otherwise
-	 *
-	 * Since: 2.14
 	 */
 	public bool getVisited()
 	{
@@ -177,8 +172,6 @@ public class LinkButton : Button
 	 *
 	 * Params:
 	 *     uri = a valid URI
-	 *
-	 * Since: 2.10
 	 */
 	public void setUri(string uri)
 	{
@@ -191,8 +184,6 @@ public class LinkButton : Button
 	 *
 	 * Params:
 	 *     visited = the new “visited” state
-	 *
-	 * Since: 2.14
 	 */
 	public void setVisited(bool visited)
 	{
@@ -203,7 +194,7 @@ public class LinkButton : Button
 	 * The ::activate-link signal is emitted each time the #GtkLinkButton
 	 * has been clicked.
 	 *
-	 * The default handler will call gtk_show_uri_on_window() with the URI stored inside
+	 * The default handler will call gtk_show_uri() with the URI stored inside
 	 * the #GtkLinkButton:uri property.
 	 *
 	 * To override the default behavior, you can connect to the ::activate-link

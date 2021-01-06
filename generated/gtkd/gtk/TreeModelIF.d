@@ -30,10 +30,10 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
 private import gtk.TreeIter;
+private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -166,7 +166,7 @@ private import std.algorithm;
  * GtkTreeModel *list_store;
  * GtkTreeIter iter;
  * gboolean valid;
- * gint row_count = 0;
+ * int row_count = 0;
  * 
  * // make a new list_store
  * list_store = gtk_list_store_new (N_COLUMNS,
@@ -183,8 +183,8 @@ private import std.algorithm;
  * &iter);
  * while (valid)
  * {
- * gchar *str_data;
- * gint   int_data;
+ * char *str_data;
+ * int    int_data;
  * 
  * // Make sure you terminate calls to gtk_tree_model_get() with a “-1” value
  * gtk_tree_model_get (list_store, &iter,
@@ -240,47 +240,23 @@ public interface TreeModelIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 * Get the value of a column as a char array.
-	 * this is the same calling getValue and get the string from the value object
-	 */
-	string getValueString(TreeIter iter, int column);
-
-	/**
-	 * Get the value of a column as a char array.
-	 * this is the same calling getValue and get the int from the value object
-	 */
-	int getValueInt(TreeIter iter, int column);
-
-	/**
-	 * Sets iter to a valid iterator pointing to path.
-	 * Params:
-	 *  iter = The uninitialized GtkTreeIter.
-	 *  path = The GtkTreePath.
-	 * Returns:
-	 *  TRUE, if iter was set.
-	 */
-	public int getIter(TreeIter iter, TreePath path);
-
-	/**
-	 * Initializes and sets value to that at column.
-	 * When done with value, g_value_unset() needs to be called
-	 * to free any allocated memory.
-	 * Params:
-	 * iter = The GtkTreeIter.
-	 * column = The column to lookup the value at.
-	 * value = (inout) (transfer none) An empty GValue to set.
-	 */
-	public Value getValue(TreeIter iter, int column, Value value = null);
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gtk_tree_model_get_type();
 	}
+
+	/**
+	 * Creates a new #GtkTreeModel, with @child_model as the child_model
+	 * and @root as the virtual root.
+	 *
+	 * Params:
+	 *     root = A #GtkTreePath or %NULL.
+	 *
+	 * Returns: A new #GtkTreeModel.
+	 */
+	public TreeModelIF filterNew(TreePath root);
 
 	alias foreac = foreach_;
 	/**
@@ -315,6 +291,18 @@ public interface TreeModelIF{
 	 * Returns: the flags supported by this interface
 	 */
 	public GtkTreeModelFlags getFlags();
+
+	/**
+	 * Sets @iter to a valid iterator pointing to @path.  If @path does
+	 * not exist, @iter is set to an invalid iterator and %FALSE is returned.
+	 *
+	 * Params:
+	 *     iter = the uninitialized #GtkTreeIter-struct
+	 *     path = the #GtkTreePath-struct
+	 *
+	 * Returns: %TRUE, if @iter was set
+	 */
+	public bool getIter(out TreeIter iter, TreePath path);
 
 	/**
 	 * Initializes @iter with the first iterator in the tree
@@ -371,8 +359,6 @@ public interface TreeModelIF{
 	 *
 	 * Returns: a newly-allocated string.
 	 *     Must be freed with g_free().
-	 *
-	 * Since: 2.2
 	 */
 	public string getStringFromIter(TreeIter iter);
 
@@ -385,6 +371,19 @@ public interface TreeModelIF{
 	 *     varArgs = va_list of column/return location pairs
 	 */
 	public void getValist(TreeIter iter, void* varArgs);
+
+	/**
+	 * Initializes and sets @value to that at @column.
+	 *
+	 * When done with @value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 *
+	 * Params:
+	 *     iter = the #GtkTreeIter-struct
+	 *     column = the column to lookup the value at
+	 *     value = an empty #GValue to set
+	 */
+	public void getValue(TreeIter iter, int column, out Value value);
 
 	/**
 	 * Sets @iter to point to the first child of @parent.
@@ -487,8 +486,6 @@ public interface TreeModelIF{
 	 *     iter = the #GtkTreeIter-struct
 	 *
 	 * Returns: %TRUE if @iter has been changed to the previous node
-	 *
-	 * Since: 3.0
 	 */
 	public bool iterPrevious(TreeIter iter);
 
@@ -594,8 +591,6 @@ public interface TreeModelIF{
 	 *         mapping the current position of each child to its old
 	 *         position before the re-ordering,
 	 *         i.e. @new_order`[newpos] = oldpos`
-	 *
-	 * Since: 3.10
 	 */
 	public void rowsReorderedWithLength(TreePath path, TreeIter iter, int[] newOrder);
 

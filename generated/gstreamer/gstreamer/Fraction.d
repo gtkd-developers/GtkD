@@ -26,10 +26,12 @@ module gstreamer.Fraction;
 
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes a fraction of an integer numerator
+ * over an integer denominator
+ */
 public class Fraction
 {
 	/** the main Gtk struct */

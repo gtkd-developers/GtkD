@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gsv.SourceGutterRenderer;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 
 
 /** */
@@ -78,14 +77,14 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	 */
 	public this()
 	{
-		auto p = gtk_source_gutter_renderer_text_new();
+		auto __p = gtk_source_gutter_renderer_text_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceGutterRendererText*) p, true);
+		this(cast(GtkSourceGutterRendererText*) __p, true);
 	}
 
 	/**

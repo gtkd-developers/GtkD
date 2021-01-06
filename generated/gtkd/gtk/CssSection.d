@@ -25,10 +25,12 @@
 module gtk.CssSection;
 
 private import gio.FileIF;
+private import glib.ConstructionException;
+private import glib.Str;
+private import glib.StringG;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import gtkd.Loader;
 
 
@@ -36,8 +38,6 @@ private import gtkd.Loader;
  * Defines a part of a CSS document. Because sections are nested into
  * one another, you can use gtk_css_section_get_parent() to get the
  * containing region.
- *
- * Since: 3.2
  */
 public class CssSection
 {
@@ -82,42 +82,40 @@ public class CssSection
 	}
 
 	/**
-	 * Returns the line in the CSS document where this section end.
-	 * The line number is 0-indexed, so the first line of the document
-	 * will return 0.
-	 * This value may change in future invocations of this function if
-	 * @section is not yet parsed completely. This will for example
-	 * happen in the GtkCssProvider::parsing-error signal.
-	 * The end position and line may be identical to the start
-	 * position and line for sections which failed to parse anything
-	 * successfully.
+	 * Creates a new #GtkCssSection referring to the section
+	 * in the given @file from the @start location to the
+	 * @end location.
 	 *
-	 * Returns: the line number
+	 * Params:
+	 *     file = The file this section refers to
+	 *     start = The start location
+	 *     end = The end location
 	 *
-	 * Since: 3.2
+	 * Returns: a new #GtkCssSection
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public uint getEndLine()
+	public this(FileIF file, GtkCssLocation* start, GtkCssLocation* end)
 	{
-		return gtk_css_section_get_end_line(gtkCssSection);
+		auto __p = gtk_css_section_new((file is null) ? null : file.getFileStruct(), start, end);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GtkCssSection*) __p);
 	}
 
 	/**
-	 * Returns the offset in bytes from the start of the current line
-	 * returned via gtk_css_section_get_end_line().
-	 * This value may change in future invocations of this function if
-	 * @section is not yet parsed completely. This will for example
-	 * happen in the GtkCssProvider::parsing-error signal.
-	 * The end position and line may be identical to the start
-	 * position and line for sections which failed to parse anything
-	 * successfully.
+	 * Returns the location in the CSS document where this section ends.
 	 *
-	 * Returns: the offset in bytes from the start of the line.
-	 *
-	 * Since: 3.2
+	 * Returns: The end location of
+	 *     this section
 	 */
-	public uint getEndPosition()
+	public GtkCssLocation* getEndLocation()
 	{
-		return gtk_css_section_get_end_position(gtkCssSection);
+		return gtk_css_section_get_end_location(gtkCssSection);
 	}
 
 	/**
@@ -127,19 +125,17 @@ public class CssSection
 	 *
 	 * Returns: the #GFile that @section was parsed from
 	 *     or %NULL if @section was parsed from other data
-	 *
-	 * Since: 3.2
 	 */
 	public FileIF getFile()
 	{
-		auto p = gtk_css_section_get_file(gtkCssSection);
+		auto __p = gtk_css_section_get_file(gtkCssSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p);
 	}
 
 	/**
@@ -152,58 +148,41 @@ public class CssSection
 	 * a different file.
 	 *
 	 * Returns: the parent section or %NULL if none
-	 *
-	 * Since: 3.2
 	 */
 	public CssSection getParent()
 	{
-		auto p = gtk_css_section_get_parent(gtkCssSection);
+		auto __p = gtk_css_section_get_parent(gtkCssSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) __p);
 	}
 
 	/**
-	 * Gets the type of information that @section describes.
+	 * Returns the location in the CSS document where this section starts.
 	 *
-	 * Returns: the type of @section
-	 *
-	 * Since: 3.2
+	 * Returns: The start location of
+	 *     this section
 	 */
-	public GtkCssSectionType getSectionType()
+	public GtkCssLocation* getStartLocation()
 	{
-		return gtk_css_section_get_section_type(gtkCssSection);
+		return gtk_css_section_get_start_location(gtkCssSection);
 	}
 
 	/**
-	 * Returns the line in the CSS document where this section starts.
-	 * The line number is 0-indexed, so the first line of the document
-	 * will return 0.
+	 * Prints the @section into @string in a human-readable form. This
+	 * is a form like `gtk.css:32:1-23` to denote line 32, characters
+	 * 1 to 23 in the file gtk.css.
 	 *
-	 * Returns: the line number
-	 *
-	 * Since: 3.2
+	 * Params:
+	 *     string_ = a #GString to print to
 	 */
-	public uint getStartLine()
+	public void print(StringG string_)
 	{
-		return gtk_css_section_get_start_line(gtkCssSection);
-	}
-
-	/**
-	 * Returns the offset in bytes from the start of the current line
-	 * returned via gtk_css_section_get_start_line().
-	 *
-	 * Returns: the offset in bytes from the start of the line.
-	 *
-	 * Since: 3.2
-	 */
-	public uint getStartPosition()
-	{
-		return gtk_css_section_get_start_position(gtkCssSection);
+		gtk_css_section_print(gtkCssSection, (string_ is null) ? null : string_.getStringGStruct());
 	}
 
 	alias doref = ref_;
@@ -211,26 +190,36 @@ public class CssSection
 	 * Increments the reference count on @section.
 	 *
 	 * Returns: @section itself.
-	 *
-	 * Since: 3.2
 	 */
 	public CssSection ref_()
 	{
-		auto p = gtk_css_section_ref(gtkCssSection);
+		auto __p = gtk_css_section_ref(gtkCssSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p, true);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) __p, true);
+	}
+
+	/**
+	 * Prints the section into a human-readable text form using
+	 * gtk_css_section_print().
+	 *
+	 * Returns: A new string.
+	 */
+	public override string toString()
+	{
+		auto retStr = gtk_css_section_to_string(gtkCssSection);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
 	 * Decrements the reference count on @section, freeing the
 	 * structure if the reference count reaches 0.
-	 *
-	 * Since: 3.2
 	 */
 	public void unref()
 	{

@@ -30,12 +30,10 @@ private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Adjustment;
-private import gtk.Container;
 private import gtk.ListBoxRow;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -52,7 +50,8 @@ private import std.algorithm;
  * button in it).
  * 
  * Although a #GtkListBox must have only #GtkListBoxRow children you can
- * add any kind of widget to it via gtk_container_add(), and a #GtkListBoxRow
+ * add any kind of widget to it via gtk_list_box_prepend(),
+ * gtk_list_box_append() and gtk_list_box_insert() and a #GtkListBoxRow
  * widget will automatically be inserted between the list and the widget.
  * 
  * #GtkListBoxRows can be marked as activatable or selectable. If a row
@@ -60,20 +59,34 @@ private import std.algorithm;
  * the user tries to activate it. If it is selectable, the row will be marked
  * as selected when the user tries to select it.
  * 
- * The GtkListBox widget was added in GTK+ 3.10.
+ * # GtkListBox as GtkBuildable
+ * 
+ * The GtkListBox implementation of the #GtkBuildable interface supports
+ * setting a child as the placeholder by specifying “placeholder” as the “type”
+ * attribute of a <child> element. See gtk_list_box_set_placeholder() for info.
  * 
  * # CSS nodes
  * 
  * |[<!-- language="plain" -->
- * list
+ * list[.separators][.rich-list][.navigation-sidebar]
  * ╰── row[.activatable]
  * ]|
  * 
- * GtkListBox uses a single CSS node named list. Each GtkListBoxRow uses
- * a single CSS node named row. The row nodes get the .activatable
- * style class added when appropriate.
+ * GtkListBox uses a single CSS node named list. It may carry the .separators
+ * style class, when the #GtkListBox:show-separators property is set. Each
+ * GtkListBoxRow uses a single CSS node named row. The row nodes get the
+ * .activatable style class added when appropriate.
+ * 
+ * The main list node may also carry style classes to select
+ * the style of [list presentation](ListContainers.html#list-styles):
+ * .rich-list, .navigation-sidebar or .data-table.
+ * 
+ * # Accessibility
+ * 
+ * GtkListBox uses the #GTK_ACCESSIBLE_ROLE_LIST role and GtkListBoxRow uses
+ * the #GTK_ACCESSIBLE_ROLE_LIST_ITEM role.
  */
-public class ListBox : Container
+public class ListBox : Widget
 {
 	/** the main Gtk struct */
 	protected GtkListBox* gtkListBox;
@@ -98,7 +111,7 @@ public class ListBox : Container
 	public this (GtkListBox* gtkListBox, bool ownedRef = false)
 	{
 		this.gtkListBox = gtkListBox;
-		super(cast(GtkContainer*)gtkListBox, ownedRef);
+		super(cast(GtkWidget*)gtkListBox, ownedRef);
 	}
 
 
@@ -113,20 +126,30 @@ public class ListBox : Container
 	 *
 	 * Returns: a new #GtkListBox
 	 *
-	 * Since: 3.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_list_box_new();
+		auto __p = gtk_list_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkListBox*) p);
+		this(cast(GtkListBox*) __p);
+	}
+
+	/**
+	 * Append a widget to the list. If a sort function is set, the widget will
+	 * actually be inserted at the calculated position.
+	 *
+	 * Params:
+	 *     child = the #GtkWidget to add
+	 */
+	public void append(Widget child)
+	{
+		gtk_list_box_append(gtkListBox, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -140,7 +163,7 @@ public class ListBox : Container
 	 * If @model is %NULL, @box is left empty.
 	 *
 	 * It is undefined to add or remove widgets directly (for example, with
-	 * gtk_list_box_insert() or gtk_container_add()) while @box is bound to a
+	 * gtk_list_box_insert()) while @box is bound to a
 	 * model.
 	 *
 	 * Note that using a model is incompatible with the filtering and sorting
@@ -153,8 +176,6 @@ public class ListBox : Container
 	 *         or %NULL in case you also passed %NULL as @model
 	 *     userData = user data passed to @create_widget_func
 	 *     userDataFreeFunc = function for freeing @user_data
-	 *
-	 * Since: 3.16
 	 */
 	public void bindModel(ListModelIF model, GtkListBoxCreateWidgetFunc createWidgetFunc, void* userData, GDestroyNotify userDataFreeFunc)
 	{
@@ -163,16 +184,15 @@ public class ListBox : Container
 
 	/**
 	 * This is a helper function for implementing DnD onto a #GtkListBox.
-	 * The passed in @row will be highlighted via gtk_drag_highlight(),
-	 * and any previously highlighted row will be unhighlighted.
+	 * The passed in @row will be highlighted by setting the
+	 * #GTK_STATE_FLAG_DROP_ACTIVE state and any previously highlighted
+	 * row will be unhighlighted.
 	 *
 	 * The row will also be unhighlighted when the widget gets
 	 * a drag leave event.
 	 *
 	 * Params:
 	 *     row = a #GtkListBoxRow
-	 *
-	 * Since: 3.10
 	 */
 	public void dragHighlightRow(ListBoxRow row)
 	{
@@ -182,8 +202,6 @@ public class ListBox : Container
 	/**
 	 * If a row has previously been highlighted via gtk_list_box_drag_highlight_row()
 	 * it will have the highlight removed.
-	 *
-	 * Since: 3.10
 	 */
 	public void dragUnhighlightRow()
 	{
@@ -194,8 +212,6 @@ public class ListBox : Container
 	 * Returns whether rows activate on single clicks.
 	 *
 	 * Returns: %TRUE if rows are activated on single click, %FALSE otherwise
-	 *
-	 * Since: 3.10
 	 */
 	public bool getActivateOnSingleClick()
 	{
@@ -207,19 +223,17 @@ public class ListBox : Container
 	 * for vertical scrolling.
 	 *
 	 * Returns: the adjustment
-	 *
-	 * Since: 3.10
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_list_box_get_adjustment(gtkListBox);
+		auto __p = gtk_list_box_get_adjustment(gtkListBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -231,19 +245,17 @@ public class ListBox : Container
 	 *     index = the index of the row
 	 *
 	 * Returns: the child #GtkWidget or %NULL
-	 *
-	 * Since: 3.10
 	 */
 	public ListBoxRow getRowAtIndex(int index)
 	{
-		auto p = gtk_list_box_get_row_at_index(gtkListBox, index);
+		auto __p = gtk_list_box_get_row_at_index(gtkListBox, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
+		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -254,19 +266,17 @@ public class ListBox : Container
 	 *
 	 * Returns: the row or %NULL
 	 *     in case no row exists for the given y coordinate.
-	 *
-	 * Since: 3.10
 	 */
 	public ListBoxRow getRowAtY(int y)
 	{
-		auto p = gtk_list_box_get_row_at_y(gtkListBox, y);
+		auto __p = gtk_list_box_get_row_at_y(gtkListBox, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
+		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -277,19 +287,17 @@ public class ListBox : Container
 	 * find all selected rows.
 	 *
 	 * Returns: the selected row
-	 *
-	 * Since: 3.10
 	 */
 	public ListBoxRow getSelectedRow()
 	{
-		auto p = gtk_list_box_get_selected_row(gtkListBox);
+		auto __p = gtk_list_box_get_selected_row(gtkListBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
+		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -297,27 +305,23 @@ public class ListBox : Container
 	 *
 	 * Returns: A #GList containing the #GtkWidget for each selected child.
 	 *     Free with g_list_free() when done.
-	 *
-	 * Since: 3.14
 	 */
 	public ListG getSelectedRows()
 	{
-		auto p = gtk_list_box_get_selected_rows(gtkListBox);
+		auto __p = gtk_list_box_get_selected_rows(gtkListBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
 	 * Gets the selection mode of the listbox.
 	 *
 	 * Returns: a #GtkSelectionMode
-	 *
-	 * Since: 3.10
 	 */
 	public GtkSelectionMode getSelectionMode()
 	{
@@ -325,9 +329,19 @@ public class ListBox : Container
 	}
 
 	/**
+	 * Returns whether the list box should show separators
+	 * between rows.
+	 *
+	 * Returns: %TRUE if the list box shows separators
+	 */
+	public bool getShowSeparators()
+	{
+		return gtk_list_box_get_show_separators(gtkListBox) != 0;
+	}
+
+	/**
 	 * Insert the @child into the @box at @position. If a sort function is
-	 * set, the widget will actually be inserted at the calculated position and
-	 * this function has the same effect of gtk_container_add().
+	 * set, the widget will actually be inserted at the calculated position.
 	 *
 	 * If @position is -1, or larger than the total number of items in the
 	 * @box, then the @child will be appended to the end.
@@ -335,8 +349,6 @@ public class ListBox : Container
 	 * Params:
 	 *     child = the #GtkWidget to add
 	 *     position = the position to insert @child in
-	 *
-	 * Since: 3.10
 	 */
 	public void insert(Widget child, int position)
 	{
@@ -349,8 +361,6 @@ public class ListBox : Container
 	 * to an external factor. For instance, this would be used
 	 * if the filter function just looked for a specific search
 	 * string and the entry with the search string has changed.
-	 *
-	 * Since: 3.10
 	 */
 	public void invalidateFilter()
 	{
@@ -361,8 +371,6 @@ public class ListBox : Container
 	 * Update the separators for all rows. Call this when result
 	 * of the header function on the @box is changed due
 	 * to an external factor.
-	 *
-	 * Since: 3.10
 	 */
 	public void invalidateHeaders()
 	{
@@ -373,8 +381,6 @@ public class ListBox : Container
 	 * Update the sorting for all rows. Call this when result
 	 * of the sort function on the @box is changed due
 	 * to an external factor.
-	 *
-	 * Since: 3.10
 	 */
 	public void invalidateSort()
 	{
@@ -383,13 +389,10 @@ public class ListBox : Container
 
 	/**
 	 * Prepend a widget to the list. If a sort function is set, the widget will
-	 * actually be inserted at the calculated position and this function has the
-	 * same effect of gtk_container_add().
+	 * actually be inserted at the calculated position.
 	 *
 	 * Params:
 	 *     child = the #GtkWidget to add
-	 *
-	 * Since: 3.10
 	 */
 	public void prepend(Widget child)
 	{
@@ -397,9 +400,18 @@ public class ListBox : Container
 	}
 
 	/**
-	 * Select all children of @box, if the selection mode allows it.
+	 * Removes a child from @box.
 	 *
-	 * Since: 3.14
+	 * Params:
+	 *     child = the child to remove
+	 */
+	public void remove(Widget child)
+	{
+		gtk_list_box_remove(gtkListBox, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
+	 * Select all children of @box, if the selection mode allows it.
 	 */
 	public void selectAll()
 	{
@@ -411,8 +423,6 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     row = The row to select or %NULL
-	 *
-	 * Since: 3.10
 	 */
 	public void selectRow(ListBoxRow row)
 	{
@@ -427,8 +437,6 @@ public class ListBox : Container
 	 * Params:
 	 *     func = the function to call for each selected child
 	 *     data = user data to pass to the function
-	 *
-	 * Since: 3.14
 	 */
 	public void selectedForeach(GtkListBoxForeachFunc func, void* data)
 	{
@@ -441,8 +449,6 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     single = a boolean
-	 *
-	 * Since: 3.10
 	 */
 	public void setActivateOnSingleClick(bool single)
 	{
@@ -461,8 +467,6 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     adjustment = the adjustment, or %NULL
-	 *
-	 * Since: 3.10
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -485,8 +489,6 @@ public class ListBox : Container
 	 *     filterFunc = callback that lets you filter which rows to show
 	 *     userData = user data passed to @filter_func
 	 *     destroy = destroy notifier for @user_data
-	 *
-	 * Since: 3.10
 	 */
 	public void setFilterFunc(GtkListBoxFilterFunc filterFunc, void* userData, GDestroyNotify destroy)
 	{
@@ -517,8 +519,6 @@ public class ListBox : Container
 	 *     updateHeader = callback that lets you add row headers
 	 *     userData = user data passed to @update_header
 	 *     destroy = destroy notifier for @user_data
-	 *
-	 * Since: 3.10
 	 */
 	public void setHeaderFunc(GtkListBoxUpdateHeaderFunc updateHeader, void* userData, GDestroyNotify destroy)
 	{
@@ -531,8 +531,6 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     placeholder = a #GtkWidget or %NULL
-	 *
-	 * Since: 3.10
 	 */
 	public void setPlaceholder(Widget placeholder)
 	{
@@ -545,12 +543,22 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     mode = The #GtkSelectionMode
-	 *
-	 * Since: 3.10
 	 */
 	public void setSelectionMode(GtkSelectionMode mode)
 	{
 		gtk_list_box_set_selection_mode(gtkListBox, mode);
+	}
+
+	/**
+	 * Sets whether the list box should show separators
+	 * between rows.
+	 *
+	 * Params:
+	 *     showSeparators = %TRUE to show separators
+	 */
+	public void setShowSeparators(bool showSeparators)
+	{
+		gtk_list_box_set_show_separators(gtkListBox, showSeparators);
 	}
 
 	/**
@@ -568,8 +576,6 @@ public class ListBox : Container
 	 *     sortFunc = the sort function
 	 *     userData = user data passed to @sort_func
 	 *     destroy = destroy notifier for @user_data
-	 *
-	 * Since: 3.10
 	 */
 	public void setSortFunc(GtkListBoxSortFunc sortFunc, void* userData, GDestroyNotify destroy)
 	{
@@ -578,8 +584,6 @@ public class ListBox : Container
 
 	/**
 	 * Unselect all children of @box, if the selection mode allows it.
-	 *
-	 * Since: 3.14
 	 */
 	public void unselectAll()
 	{
@@ -591,8 +595,6 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     row = the row to unselected
-	 *
-	 * Since: 3.14
 	 */
 	public void unselectRow(ListBoxRow row)
 	{
@@ -606,7 +608,7 @@ public class ListBox : Container
 	}
 
 	/** */
-	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, bool, bool, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "move-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -616,8 +618,6 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     row = the activated row
-	 *
-	 * Since: 3.10
 	 */
 	gulong addOnRowActivated(void delegate(ListBoxRow, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -634,8 +634,6 @@ public class ListBox : Container
 	 *
 	 * Params:
 	 *     row = the selected row
-	 *
-	 * Since: 3.10
 	 */
 	gulong addOnRowSelected(void delegate(ListBoxRow, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -643,13 +641,11 @@ public class ListBox : Container
 	}
 
 	/**
-	 * The ::select-all signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::select-all signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted to select all children of the box, if the selection
 	 * mode permits it.
 	 *
 	 * The default bindings for this signal is Ctrl-a.
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnSelectAll(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -659,8 +655,6 @@ public class ListBox : Container
 	/**
 	 * The ::selected-rows-changed signal is emitted when the
 	 * set of selected rows changes.
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnSelectedRowsChanged(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -674,13 +668,11 @@ public class ListBox : Container
 	}
 
 	/**
-	 * The ::unselect-all signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::unselect-all signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted to unselect all children of the box, if the selection
 	 * mode permits it.
 	 *
 	 * The default bindings for this signal is Ctrl-Shift-a.
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnUnselectAll(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

@@ -27,7 +27,6 @@ module pango.PgColor;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -133,14 +132,14 @@ public final class PgColor
 	 */
 	public PgColor copy()
 	{
-		auto p = pango_color_copy(pangoColor);
+		auto __p = pango_color_copy(pangoColor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p, true);
+		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) __p, true);
 	}
 
 	/**
@@ -171,6 +170,36 @@ public final class PgColor
 	public bool parse(string spec)
 	{
 		return pango_color_parse(pangoColor, Str.toStringz(spec)) != 0;
+	}
+
+	/**
+	 * Fill in the fields of a color from a string specification. The
+	 * string can either one of a large set of standard names. (Taken
+	 * from the CSS <ulink url="http://dev.w3.org/csswg/css-color/#named-colors">specification</ulink>), or it can be a hexadecimal
+	 * value in the
+	 * form '&num;rgb' '&num;rrggbb' '&num;rrrgggbbb' or '&num;rrrrggggbbbb' where
+	 * 'r', 'g' and 'b' are hex digits of the red, green, and blue
+	 * components of the color, respectively. (White in the four
+	 * forms is '&num;fff' '&num;ffffff' '&num;fffffffff' and '&num;ffffffffffff')
+	 *
+	 * Additionally, parse strings of the form
+	 * '&num;rgba', '&num;rrggbbaa', '&num;rrrrggggbbbbaaaa',
+	 * if @alpha is not %NULL, and set @alpha to the value specified
+	 * by the hex digits for 'a'. If no alpha component is found
+	 * in @spec, @alpha is set to 0xffff (for a solid color).
+	 *
+	 * Params:
+	 *     alpha = return location for alpha, or %NULL
+	 *     spec = a string specifying the new color
+	 *
+	 * Returns: %TRUE if parsing of the specifier succeeded,
+	 *     otherwise false.
+	 *
+	 * Since: 1.46
+	 */
+	public bool parseWithAlpha(out ushort alpha, string spec)
+	{
+		return pango_color_parse_with_alpha(pangoColor, &alpha, Str.toStringz(spec)) != 0;
 	}
 
 	/**

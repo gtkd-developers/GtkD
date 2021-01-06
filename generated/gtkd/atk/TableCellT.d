@@ -29,7 +29,6 @@ public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.PtrArray;
 public  import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /**

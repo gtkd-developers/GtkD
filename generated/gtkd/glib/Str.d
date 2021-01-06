@@ -32,7 +32,6 @@ private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gobject.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -527,7 +526,7 @@ public struct Str
 	}
 
 	/**
-	 * Determines the numeric value of a character as a hexidecimal
+	 * Determines the numeric value of a character as a hexadecimal
 	 * digit. Differs from g_unichar_xdigit_value() because it takes
 	 * a char, so there's no worry about sign extension if characters
 	 * are signed.
@@ -1358,7 +1357,8 @@ public struct Str
 	 * Params:
 	 *     string_ = The string to be tokenized
 	 *     delimiters = A nul-terminated string containing bytes that are used
-	 *         to split the string.
+	 *         to split the string (it can accept an empty string, which will result
+	 *         in no string splitting).
 	 *     maxTokens = The maximum number of tokens to split @string into.
 	 *         If this is less than 1, the string is split completely
 	 *

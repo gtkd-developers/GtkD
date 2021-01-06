@@ -26,10 +26,11 @@ module gstreamer.Int64Range;
 
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes a #gint64 range
+ */
 public class Int64Range
 {
 	/** the main Gtk struct */

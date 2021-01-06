@@ -29,7 +29,6 @@ public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -67,27 +66,23 @@ public template AppChooserT(TStruct)
 	 *
 	 * Returns: a #GAppInfo for the currently selected
 	 *     application, or %NULL if none is selected. Free with g_object_unref()
-	 *
-	 * Since: 3.0
 	 */
 	public AppInfoIF getAppInfo()
 	{
-		auto p = gtk_app_chooser_get_app_info(getAppChooserStruct());
+		auto __p = gtk_app_chooser_get_app_info(getAppChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
 	 * Returns the current value of the #GtkAppChooser:content-type property.
 	 *
 	 * Returns: the content type of @self. Free with g_free()
-	 *
-	 * Since: 3.0
 	 */
 	public string getContentType()
 	{
@@ -99,8 +94,6 @@ public template AppChooserT(TStruct)
 
 	/**
 	 * Reloads the list of applications.
-	 *
-	 * Since: 3.0
 	 */
 	public void refresh()
 	{

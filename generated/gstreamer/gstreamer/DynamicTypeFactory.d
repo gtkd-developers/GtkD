@@ -28,7 +28,6 @@ private import glib.Str;
 private import gstreamer.PluginFeature;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -51,6 +50,8 @@ public  import gstreamerc.gstreamertypes;
  * return gst_dynamic_type_register (plugin, GST_TYPE_CUSTOM_CAPS_FIELD);
  * }
  * ]|
+ *
+ * Since: 1.12
  */
 public class DynamicTypeFactory : PluginFeature
 {

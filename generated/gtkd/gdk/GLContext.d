@@ -25,25 +25,25 @@
 module gdk.GLContext;
 
 private import gdk.Display;
-private import gdk.Window;
+private import gdk.DrawContext;
+private import gdk.Surface;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 
 
 /**
  * #GdkGLContext is an object representing the platform-specific
- * OpenGL drawing context.
+ * OpenGL draw context.
  * 
- * #GdkGLContexts are created for a #GdkWindow using
- * gdk_window_create_gl_context(), and the context will match
- * the #GdkVisual of the window.
+ * #GdkGLContexts are created for a #GdkSurface using
+ * gdk_surface_create_gl_context(), and the context will match the
+ * the characteristics of the surface.
  * 
  * A #GdkGLContext is not tied to any particular normal framebuffer.
- * For instance, it cannot draw to the #GdkWindow back buffer. The GDK
+ * For instance, it cannot draw to the #GdkSurface back buffer. The GDK
  * repaint system is in full control of the painting to that. Instead,
  * you can create render buffers or textures and use gdk_cairo_draw_from_gl()
  * in the draw function of your widget to draw them. Then GDK will handle
@@ -58,14 +58,14 @@ public  import gtkc.gdktypes;
  * ## Creating a new OpenGL context ##
  * 
  * In order to create a new #GdkGLContext instance you need a
- * #GdkWindow, which you typically get during the realize call
+ * #GdkSurface, which you typically get during the realize call
  * of a widget.
  * 
  * A #GdkGLContext is not realized until either gdk_gl_context_make_current(),
  * or until it is realized using gdk_gl_context_realize(). It is possible to
  * specify details of the GL context like the OpenGL version to be used, or
  * whether the GL context should have extra state validation enabled after
- * calling gdk_window_create_gl_context() by calling gdk_gl_context_realize().
+ * calling gdk_surface_create_gl_context() by calling gdk_gl_context_realize().
  * If the realization fails you have the option to change the settings of the
  * #GdkGLContext and try again.
  * 
@@ -87,7 +87,7 @@ public  import gtkc.gdktypes;
  * gdk_gl_context_get_current(); you can also unset any #GdkGLContext
  * that is currently set by calling gdk_gl_context_clear_current().
  */
-public class GLContext : ObjectG
+public class GLContext : DrawContext
 {
 	/** the main Gtk struct */
 	protected GdkGLContext* gdkGLContext;
@@ -112,7 +112,7 @@ public class GLContext : ObjectG
 	public this (GdkGLContext* gdkGLContext, bool ownedRef = false)
 	{
 		this.gdkGLContext = gdkGLContext;
-		super(cast(GObject*)gdkGLContext, ownedRef);
+		super(cast(GdkDrawContext*)gdkGLContext, ownedRef);
 	}
 
 
@@ -127,8 +127,6 @@ public class GLContext : ObjectG
 	 *
 	 * Any OpenGL call after this function returns will be ignored
 	 * until gdk_gl_context_make_current() is called.
-	 *
-	 * Since: 3.16
 	 */
 	public static void clearCurrent()
 	{
@@ -139,27 +137,23 @@ public class GLContext : ObjectG
 	 * Retrieves the current #GdkGLContext.
 	 *
 	 * Returns: the current #GdkGLContext, or %NULL
-	 *
-	 * Since: 3.16
 	 */
 	public static GLContext getCurrent()
 	{
-		auto p = gdk_gl_context_get_current();
+		auto __p = gdk_gl_context_get_current();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) __p);
 	}
 
 	/**
 	 * Retrieves the value set using gdk_gl_context_set_debug_enabled().
 	 *
 	 * Returns: %TRUE if debugging is enabled
-	 *
-	 * Since: 3.16
 	 */
 	public bool getDebugEnabled()
 	{
@@ -170,27 +164,23 @@ public class GLContext : ObjectG
 	 * Retrieves the #GdkDisplay the @context is created for
 	 *
 	 * Returns: a #GdkDisplay or %NULL
-	 *
-	 * Since: 3.16
 	 */
-	public Display getDisplay()
+	public override Display getDisplay()
 	{
-		auto p = gdk_gl_context_get_display(gdkGLContext);
+		auto __p = gdk_gl_context_get_display(gdkGLContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
 	 * Retrieves the value set using gdk_gl_context_set_forward_compatible().
 	 *
 	 * Returns: %TRUE if the context should be forward compatible
-	 *
-	 * Since: 3.16
 	 */
 	public bool getForwardCompatible()
 	{
@@ -204,8 +194,6 @@ public class GLContext : ObjectG
 	 * Params:
 	 *     major = return location for the major version to request
 	 *     minor = return location for the minor version to request
-	 *
-	 * Since: 3.16
 	 */
 	public void getRequiredVersion(out int major, out int minor)
 	{
@@ -216,27 +204,40 @@ public class GLContext : ObjectG
 	 * Retrieves the #GdkGLContext that this @context share data with.
 	 *
 	 * Returns: a #GdkGLContext or %NULL
-	 *
-	 * Since: 3.16
 	 */
 	public GLContext getSharedContext()
 	{
-		auto p = gdk_gl_context_get_shared_context(gdkGLContext);
+		auto __p = gdk_gl_context_get_shared_context(gdkGLContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) __p);
+	}
+
+	/**
+	 * Retrieves the #GdkSurface used by the @context.
+	 *
+	 * Returns: a #GdkSurface or %NULL
+	 */
+	public override Surface getSurface()
+	{
+		auto __p = gdk_gl_context_get_surface(gdkGLContext);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Surface)(cast(GdkSurface*) __p);
 	}
 
 	/**
 	 * Checks whether the @context is using an OpenGL or OpenGL ES profile.
 	 *
 	 * Returns: %TRUE if the #GdkGLContext is using an OpenGL ES profile
-	 *
-	 * Since: 3.22
 	 */
 	public bool getUseEs()
 	{
@@ -251,31 +252,10 @@ public class GLContext : ObjectG
 	 * Params:
 	 *     major = return location for the major version
 	 *     minor = return location for the minor version
-	 *
-	 * Since: 3.16
 	 */
 	public void getVersion(out int major, out int minor)
 	{
 		gdk_gl_context_get_version(gdkGLContext, &major, &minor);
-	}
-
-	/**
-	 * Retrieves the #GdkWindow used by the @context.
-	 *
-	 * Returns: a #GdkWindow or %NULL
-	 *
-	 * Since: 3.16
-	 */
-	public Window getWindow()
-	{
-		auto p = gdk_gl_context_get_window(gdkGLContext);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
 	/**
@@ -297,8 +277,6 @@ public class GLContext : ObjectG
 	 * kind of shader programs to load.
 	 *
 	 * Returns: %TRUE if the GL context is in legacy mode
-	 *
-	 * Since: 3.20
 	 */
 	public bool isLegacy()
 	{
@@ -307,8 +285,6 @@ public class GLContext : ObjectG
 
 	/**
 	 * Makes the @context the current one.
-	 *
-	 * Since: 3.16
 	 */
 	public void makeCurrent()
 	{
@@ -322,22 +298,20 @@ public class GLContext : ObjectG
 	 *
 	 * Returns: %TRUE if the context is realized
 	 *
-	 * Since: 3.16
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool realize()
 	{
 		GError* err = null;
 
-		auto p = gdk_gl_context_realize(gdkGLContext, &err) != 0;
+		auto __p = gdk_gl_context_realize(gdkGLContext, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -350,8 +324,6 @@ public class GLContext : ObjectG
 	 *
 	 * Params:
 	 *     enabled = whether to enable debugging in the context
-	 *
-	 * Since: 3.16
 	 */
 	public void setDebugEnabled(bool enabled)
 	{
@@ -361,7 +333,7 @@ public class GLContext : ObjectG
 	/**
 	 * Sets whether the #GdkGLContext should be forward compatible.
 	 *
-	 * Forward compatibile contexts must not support OpenGL functionality that
+	 * Forward compatible contexts must not support OpenGL functionality that
 	 * has been marked as deprecated in the requested version; non-forward
 	 * compatible contexts, on the other hand, must support both deprecated and
 	 * non deprecated functionality.
@@ -371,8 +343,6 @@ public class GLContext : ObjectG
 	 *
 	 * Params:
 	 *     compatible = whether the context should be forward compatible
-	 *
-	 * Since: 3.16
 	 */
 	public void setForwardCompatible(bool compatible)
 	{
@@ -390,8 +360,6 @@ public class GLContext : ObjectG
 	 * Params:
 	 *     major = the major version to request
 	 *     minor = the minor version to request
-	 *
-	 * Since: 3.16
 	 */
 	public void setRequiredVersion(int major, int minor)
 	{
@@ -399,7 +367,7 @@ public class GLContext : ObjectG
 	}
 
 	/**
-	 * Requests that GDK create a OpenGL ES context instead of an OpenGL one,
+	 * Requests that GDK create an OpenGL ES context instead of an OpenGL one,
 	 * if the platform and windowing system allows it.
 	 *
 	 * The @context must not have been realized.
@@ -415,8 +383,6 @@ public class GLContext : ObjectG
 	 * Params:
 	 *     useEs = whether the context should use OpenGL ES instead of OpenGL,
 	 *         or -1 to allow auto-detection
-	 *
-	 * Since: 3.22
 	 */
 	public void setUseEs(int useEs)
 	{

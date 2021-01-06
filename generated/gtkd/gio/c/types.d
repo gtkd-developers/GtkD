@@ -297,25 +297,29 @@ public enum GCredentialsType
 	 */
 	INVALID = 0,
 	/**
-	 * The native credentials type is a struct ucred.
+	 * The native credentials type is a `struct ucred`.
 	 */
 	LINUX_UCRED = 1,
 	/**
-	 * The native credentials type is a struct cmsgcred.
+	 * The native credentials type is a `struct cmsgcred`.
 	 */
 	FREEBSD_CMSGCRED = 2,
 	/**
-	 * The native credentials type is a struct sockpeercred. Added in 2.30.
+	 * The native credentials type is a `struct sockpeercred`. Added in 2.30.
 	 */
 	OPENBSD_SOCKPEERCRED = 3,
 	/**
-	 * The native credentials type is a ucred_t. Added in 2.40.
+	 * The native credentials type is a `ucred_t`. Added in 2.40.
 	 */
 	SOLARIS_UCRED = 4,
 	/**
-	 * The native credentials type is a struct unpcbid.
+	 * The native credentials type is a `struct unpcbid`. Added in 2.42.
 	 */
 	NETBSD_UNPCBID = 5,
+	/**
+	 * The native credentials type is a `struct xucred`. Added in 2.66.
+	 */
+	APPLE_XUCRED = 6,
 }
 alias GCredentialsType CredentialsType;
 
@@ -1097,7 +1101,7 @@ alias GFileAttributeStatus FileAttributeStatus;
 public enum GFileAttributeType
 {
 	/**
-	 * indicates an invalid or uninitalized type.
+	 * indicates an invalid or uninitialized type.
 	 */
 	INVALID = 0,
 	/**
@@ -1197,7 +1201,9 @@ public enum GFileCreateFlags
 	 * rather than a "save new version of" replace operation.
 	 * You can think of it as "unlink destination" before
 	 * writing to it, although the implementation may not
-	 * be exactly like that. Since 2.20
+	 * be exactly like that. This flag can only be used with
+	 * g_file_replace() and its variants, including g_file_replace_contents().
+	 * Since 2.20
 	 */
 	REPLACE_DESTINATION = 2,
 }
@@ -2505,6 +2511,71 @@ public enum GTlsCertificateRequestFlags
 	NONE = 0,
 }
 alias GTlsCertificateRequestFlags TlsCertificateRequestFlags;
+
+/**
+ * An error code used with %G_TLS_CHANNEL_BINDING_ERROR in a #GError to
+ * indicate a TLS channel binding retrieval error.
+ *
+ * Since: 2.66
+ */
+public enum GTlsChannelBindingError
+{
+	/**
+	 * Either entire binding
+	 * retrieval facility or specific binding type is not implemented in the
+	 * TLS backend.
+	 */
+	NOT_IMPLEMENTED = 0,
+	/**
+	 * The handshake is not yet
+	 * complete on the connection which is a strong requirement for any existing
+	 * binding type.
+	 */
+	INVALID_STATE = 1,
+	/**
+	 * Handshake is complete but
+	 * binding data is not available. That normally indicates the TLS
+	 * implementation failed to provide the binding data. For example, some
+	 * implementations do not provide a peer certificate for resumed connections.
+	 */
+	NOT_AVAILABLE = 2,
+	/**
+	 * Binding type is not supported
+	 * on the current connection. This error could be triggered when requesting
+	 * `tls-server-end-point` binding data for a certificate which has no hash
+	 * function or uses multiple hash functions.
+	 */
+	NOT_SUPPORTED = 3,
+	/**
+	 * Any other backend error
+	 * preventing binding data retrieval.
+	 */
+	GENERAL_ERROR = 4,
+}
+alias GTlsChannelBindingError TlsChannelBindingError;
+
+/**
+ * The type of TLS channel binding data to retrieve from #GTlsConnection
+ * or #GDtlsConnection, as documented by RFC 5929. The
+ * [`tls-unique-for-telnet`](https://tools.ietf.org/html/rfc5929#section-5)
+ * binding type is not currently implemented.
+ *
+ * Since: 2.66
+ */
+public enum GTlsChannelBindingType
+{
+	/**
+	 * [`tls-unique`](https://tools.ietf.org/html/rfc5929#section-3) binding
+	 * type
+	 */
+	UNIQUE = 0,
+	/**
+	 * [`tls-server-end-point`](https://tools.ietf.org/html/rfc5929#section-4)
+	 * binding type
+	 */
+	SERVER_END_POINT = 1,
+}
+alias GTlsChannelBindingType TlsChannelBindingType;
 
 /**
  * Flags for g_tls_database_lookup_certificate_for_handle(),
@@ -4286,7 +4357,8 @@ struct GDesktopAppInfoLookupIface
 	 * Params:
 	 *     lookup = a #GDesktopAppInfoLookup
 	 *     uriScheme = a string containing a URI scheme.
-	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or
+	 *     %NULL on error.
 	 */
 	extern(C) GAppInfo* function(GDesktopAppInfoLookup* lookup, const(char)* uriScheme) getDefaultForUriScheme;
 }
@@ -4356,7 +4428,7 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Returns: %TRUE if the @drive is capabable of automatically detecting
+	 * Returns: %TRUE if the @drive is capable of automatically detecting
 	 *     media changes, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) isMediaCheckAutomatic;
@@ -4599,6 +4671,8 @@ struct GDtlsConnectionInterface
 	 * Returns: the negotiated protocol, or %NULL
 	 */
 	extern(C) const(char)* function(GDtlsConnection* conn) getNegotiatedProtocol;
+	/** */
+	extern(C) int function(GDtlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) getBindingData;
 }
 
 struct GDtlsServerConnection;
@@ -5986,7 +6060,7 @@ struct GIconIface
 	 *
 	 * Params:
 	 *     icon = a #GIcon
-	 * Returns: a #GVariant, or %NULL when serialization fails.
+	 * Returns: a #GVariant, or %NULL when serialization fails. The #GVariant will not be floating.
 	 */
 	extern(C) GVariant* function(GIcon* icon) serialize;
 }
@@ -8214,7 +8288,9 @@ struct GTlsConnectionClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GTlsConnection* conn, GAsyncResult* result, GError** err) handshakeFinish;
-	void*[8] padding;
+	/** */
+	extern(C) int function(GTlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) getBindingData;
+	void*[7] padding;
 }
 
 struct GTlsConnectionPrivate;
@@ -9243,7 +9319,8 @@ public alias extern(C) GType function(GDBusObjectManagerClient* manager, const(c
  *
  * Params:
  *     connection = A #GDBusConnection.
- *     senderName = The unique bus name of the sender of the signal.
+ *     senderName = The unique bus name of the sender of the signal,
+ *         or %NULL on a peer-to-peer D-Bus connection.
  *     objectPath = The object path that the signal was emitted on.
  *     interfaceName = The name of the interface.
  *     signalName = The name of the signal.
@@ -9961,7 +10038,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_COPY_NAME = FILE_ATTRIBUTE_STANDARD_COPY_NAME;
 /**
  * A key in the "standard" namespace for getting the description of the file.
  * The description is a utf8 string that describes the file, generally containing
- * the filename, but can also contain furter information. Example descriptions
+ * the filename, but can also contain further information. Example descriptions
  * could be "filename (on hostname)" for a remote file or "filename (in trash)"
  * for a file in the trash. This is useful for instance as the window title
  * when displaying a directory or for a bookmarks menu.
@@ -9973,8 +10050,8 @@ alias G_FILE_ATTRIBUTE_STANDARD_DESCRIPTION = FILE_ATTRIBUTE_STANDARD_DESCRIPTIO
 
 /**
  * A key in the "standard" namespace for getting the display name of the file.
- * A display name is guaranteed to be in UTF8 and can thus be displayed in
- * the UI.
+ * A display name is guaranteed to be in UTF-8 and can thus be displayed in
+ * the UI. It is guaranteed to be set on every file.
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME = "standard::display-name";
@@ -10055,7 +10132,8 @@ alias G_FILE_ATTRIBUTE_STANDARD_IS_VOLATILE = FILE_ATTRIBUTE_STANDARD_IS_VOLATIL
 /**
  * A key in the "standard" namespace for getting the name of the file.
  * The name is the on-disk filename which may not be in any known encoding,
- * and can thus not be generally displayed as is.
+ * and can thus not be generally displayed as is. It is guaranteed to be set on
+ * every file.
  * Use #G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME if you need to display the
  * name in a user interface.
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
@@ -10186,7 +10264,8 @@ alias G_FILE_ATTRIBUTE_TIME_CHANGED_USEC = FILE_ATTRIBUTE_TIME_CHANGED_USEC;
  * and contains the time since the file was created, in seconds since the UNIX
  * epoch.
  *
- * This corresponds to the NTFS ctime.
+ * This may correspond to Linux stx_btime, FreeBSD st_birthtim, NetBSD
+ * st_birthtime or NTFS ctime.
  */
 enum FILE_ATTRIBUTE_TIME_CREATED = "time::created";
 alias G_FILE_ATTRIBUTE_TIME_CREATED = FILE_ATTRIBUTE_TIME_CREATED;

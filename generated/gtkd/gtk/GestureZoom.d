@@ -28,10 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -80,25 +78,20 @@ public class GestureZoom : Gesture
 	 * Returns a newly created #GtkGesture that recognizes zoom
 	 * in/out gestures (usually known as pinch/zoom).
 	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *
 	 * Returns: a newly created #GtkGestureZoom
-	 *
-	 * Since: 3.14
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget)
+	public this()
 	{
-		auto p = gtk_gesture_zoom_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_zoom_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureZoom*) p, true);
+		this(cast(GtkGestureZoom*) __p, true);
 	}
 
 	/**
@@ -107,8 +100,6 @@ public class GestureZoom : Gesture
 	 * considered 1:1). If @gesture is not active, 1 is returned.
 	 *
 	 * Returns: the scale delta
-	 *
-	 * Since: 3.14
 	 */
 	public double getScaleDelta()
 	{
@@ -121,8 +112,6 @@ public class GestureZoom : Gesture
 	 *
 	 * Params:
 	 *     scale = Scale delta, taking the initial state as 1:1
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnScaleChanged(void delegate(double, GestureZoom) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

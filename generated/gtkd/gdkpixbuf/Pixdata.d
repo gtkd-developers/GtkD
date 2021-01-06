@@ -32,7 +32,6 @@ private import glib.GException;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
-public  import gtkc.gdkpixbuftypes;
 private import gtkd.Loader;
 
 
@@ -188,14 +187,14 @@ public final class Pixdata
 	{
 		GError* err = null;
 
-		auto p = gdk_pixdata_deserialize(gdkPixdata, cast(uint)stream.length, stream.ptr, &err) != 0;
+		auto __p = gdk_pixdata_deserialize(gdkPixdata, cast(uint)stream.length, stream.ptr, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -234,9 +233,9 @@ public final class Pixdata
 	{
 		uint streamLengthP;
 
-		auto p = gdk_pixdata_serialize(gdkPixdata, &streamLengthP);
+		auto __p = gdk_pixdata_serialize(gdkPixdata, &streamLengthP);
 
-		return p[0 .. streamLengthP];
+		return __p[0 .. streamLengthP];
 	}
 
 	/**
@@ -259,13 +258,13 @@ public final class Pixdata
 	 */
 	public StringG toCsource(string name, GdkPixdataDumpType dumpType)
 	{
-		auto p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);
+		auto __p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) __p, true);
 	}
 }

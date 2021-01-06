@@ -24,18 +24,16 @@
 
 module gtk.TextIter;
 
-private import gdkpixbuf.Pixbuf;
+private import gdk.PaintableIF;
 private import glib.ListSG;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtk.TextAttributes;
 private import gtk.TextBuffer;
 private import gtk.TextChildAnchor;
 private import gtk.TextTag;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import gtkd.Loader;
 private import pango.PgLanguage;
 
@@ -81,14 +79,6 @@ public class TextIter
 			gtk_text_iter_free(gtkTextIter);
 	}
 
-	/** */
-	public this()
-	{
-		this(new GtkTextIter);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -104,8 +94,6 @@ public class TextIter
 	 *
 	 * Params:
 	 *     other = another #GtkTextIter
-	 *
-	 * Since: 3.2
 	 */
 	public void assign(TextIter other)
 	{
@@ -237,12 +225,12 @@ public class TextIter
 		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
 		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
+		auto __p = gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -298,8 +286,6 @@ public class TextIter
 	 * gtk_text_iter_backward_cursor_position() for details.
 	 *
 	 * Returns: %TRUE if we moved and the new position is dereferenceable
-	 *
-	 * Since: 2.4
 	 */
 	public bool backwardVisibleCursorPosition()
 	{
@@ -314,8 +300,6 @@ public class TextIter
 	 *     count = number of positions to move
 	 *
 	 * Returns: %TRUE if we moved and the new position is dereferenceable
-	 *
-	 * Since: 2.4
 	 */
 	public bool backwardVisibleCursorPositions(int count)
 	{
@@ -332,8 +316,6 @@ public class TextIter
 	 * every iteration, if your first iteration is on line 0.)
 	 *
 	 * Returns: whether @iter moved
-	 *
-	 * Since: 2.8
 	 */
 	public bool backwardVisibleLine()
 	{
@@ -353,8 +335,6 @@ public class TextIter
 	 *     count = number of lines to move backward
 	 *
 	 * Returns: whether @iter moved and is dereferenceable
-	 *
-	 * Since: 2.8
 	 */
 	public bool backwardVisibleLines(int count)
 	{
@@ -369,8 +349,6 @@ public class TextIter
 	 * algorithms).
 	 *
 	 * Returns: %TRUE if @iter moved and is not the end iterator
-	 *
-	 * Since: 2.4
 	 */
 	public bool backwardVisibleWordStart()
 	{
@@ -384,8 +362,6 @@ public class TextIter
 	 *     count = number of times to move
 	 *
 	 * Returns: %TRUE if @iter moved and is not the end iterator
-	 *
-	 * Since: 2.4
 	 */
 	public bool backwardVisibleWordStarts(int count)
 	{
@@ -417,29 +393,6 @@ public class TextIter
 	public bool backwardWordStarts(int count)
 	{
 		return gtk_text_iter_backward_word_starts(gtkTextIter, count) != 0;
-	}
-
-	/**
-	 * Returns %TRUE if @tag is toggled on at exactly this point. If @tag
-	 * is %NULL, returns %TRUE if any tag is toggled on at this point.
-	 *
-	 * Note that if gtk_text_iter_begins_tag() returns %TRUE, it means that @iter is
-	 * at the beginning of the tagged range, and that the
-	 * character at @iter is inside the tagged range. In other
-	 * words, unlike gtk_text_iter_ends_tag(), if gtk_text_iter_begins_tag() returns
-	 * %TRUE, gtk_text_iter_has_tag() will also return %TRUE for the same
-	 * parameters.
-	 *
-	 * Deprecated: Use gtk_text_iter_starts_tag() instead.
-	 *
-	 * Params:
-	 *     tag = a #GtkTextTag, or %NULL
-	 *
-	 * Returns: whether @iter is the start of a range tagged with @tag
-	 */
-	public bool beginsTag(TextTag tag)
-	{
-		return gtk_text_iter_begins_tag(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct()) != 0;
 	}
 
 	/**
@@ -486,22 +439,23 @@ public class TextIter
 	 */
 	public TextIter copy()
 	{
-		auto p = gtk_text_iter_copy(gtkTextIter);
+		auto __p = gtk_text_iter_copy(gtkTextIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextIter)(cast(GtkTextIter*) p, true);
+		return ObjectG.getDObject!(TextIter)(cast(GtkTextIter*) __p, true);
 	}
 
 	/**
 	 * Returns whether the character at @iter is within an editable region
-	 * of text.  Non-editable text is “locked” and can’t be changed by the
-	 * user via #GtkTextView. This function is simply a convenience
-	 * wrapper around gtk_text_iter_get_attributes(). If no tags applied
-	 * to this text affect editability, @default_setting will be returned.
+	 * of text.
+	 *
+	 * Non-editable text is “locked” and can’t be changed by the
+	 * user via #GtkTextView. If no tags applied to this text affect
+	 * editability, @default_setting will be returned.
 	 *
 	 * You don’t want to use this function to decide whether text can be
 	 * inserted at @iter, because for insertion you don’t want to know
@@ -689,7 +643,7 @@ public class TextIter
 	 * Moves @iter to the start of the next line. If the iter is already on the
 	 * last line of the buffer, moves the iter to the end of the current line.
 	 * If after the operation, the iter is at the end of the buffer and not
-	 * dereferencable, returns %FALSE. Otherwise, returns %TRUE.
+	 * dereferenceable, returns %FALSE. Otherwise, returns %TRUE.
 	 *
 	 * Returns: whether @iter can be dereferenced
 	 */
@@ -742,12 +696,12 @@ public class TextIter
 		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
 		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
+		auto __p = gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -830,8 +784,6 @@ public class TextIter
 	 * gtk_text_iter_forward_cursor_position() for details.
 	 *
 	 * Returns: %TRUE if we moved and the new position is dereferenceable
-	 *
-	 * Since: 2.4
 	 */
 	public bool forwardVisibleCursorPosition()
 	{
@@ -846,8 +798,6 @@ public class TextIter
 	 *     count = number of positions to move
 	 *
 	 * Returns: %TRUE if we moved and the new position is dereferenceable
-	 *
-	 * Since: 2.4
 	 */
 	public bool forwardVisibleCursorPositions(int count)
 	{
@@ -861,8 +811,6 @@ public class TextIter
 	 * already at the end of the buffer.
 	 *
 	 * Returns: whether @iter can be dereferenced
-	 *
-	 * Since: 2.8
 	 */
 	public bool forwardVisibleLine()
 	{
@@ -882,8 +830,6 @@ public class TextIter
 	 *     count = number of lines to move forward
 	 *
 	 * Returns: whether @iter moved and is dereferenceable
-	 *
-	 * Since: 2.8
 	 */
 	public bool forwardVisibleLines(int count)
 	{
@@ -898,8 +844,6 @@ public class TextIter
 	 * algorithms).
 	 *
 	 * Returns: %TRUE if @iter moved and is not the end iterator
-	 *
-	 * Since: 2.4
 	 */
 	public bool forwardVisibleWordEnd()
 	{
@@ -913,8 +857,6 @@ public class TextIter
 	 *     count = number of times to move
 	 *
 	 * Returns: %TRUE if @iter moved and is not the end iterator
-	 *
-	 * Since: 2.4
 	 */
 	public bool forwardVisibleWordEnds(int count)
 	{
@@ -961,46 +903,20 @@ public class TextIter
 	}
 
 	/**
-	 * Computes the effect of any tags applied to this spot in the
-	 * text. The @values parameter should be initialized to the default
-	 * settings you wish to use if no tags are in effect. You’d typically
-	 * obtain the defaults from gtk_text_view_get_default_attributes().
-	 *
-	 * gtk_text_iter_get_attributes() will modify @values, applying the
-	 * effects of any tags present at @iter. If any tags affected @values,
-	 * the function returns %TRUE.
-	 *
-	 * Params:
-	 *     values = a #GtkTextAttributes to be filled in
-	 *
-	 * Returns: %TRUE if @values was modified
-	 */
-	public bool getAttributes(out TextAttributes values)
-	{
-		GtkTextAttributes* outvalues = sliceNew!GtkTextAttributes();
-
-		auto p = gtk_text_iter_get_attributes(gtkTextIter, outvalues) != 0;
-
-		values = ObjectG.getDObject!(TextAttributes)(outvalues, true);
-
-		return p;
-	}
-
-	/**
 	 * Returns the #GtkTextBuffer this iterator is associated with.
 	 *
 	 * Returns: the buffer
 	 */
 	public TextBuffer getBuffer()
 	{
-		auto p = gtk_text_iter_get_buffer(gtkTextIter);
+		auto __p = gtk_text_iter_get_buffer(gtkTextIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) __p);
 	}
 
 	/**
@@ -1050,34 +966,34 @@ public class TextIter
 	 */
 	public TextChildAnchor getChildAnchor()
 	{
-		auto p = gtk_text_iter_get_child_anchor(gtkTextIter);
+		auto __p = gtk_text_iter_get_child_anchor(gtkTextIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) p);
+		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) __p);
 	}
 
 	/**
-	 * A convenience wrapper around gtk_text_iter_get_attributes(),
-	 * which returns the language in effect at @iter. If no tags affecting
-	 * language apply to @iter, the return value is identical to that of
-	 * gtk_get_default_language().
+	 * Returns the language in effect at @iter.
+	 *
+	 * If no tags affecting language apply to @iter, the return
+	 * value is identical to that of gtk_get_default_language().
 	 *
 	 * Returns: language in effect at @iter
 	 */
 	public PgLanguage getLanguage()
 	{
-		auto p = gtk_text_iter_get_language(gtkTextIter);
+		auto __p = gtk_text_iter_get_language(gtkTextIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p, true);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) __p, true);
 	}
 
 	/**
@@ -1129,14 +1045,14 @@ public class TextIter
 	 */
 	public ListSG getMarks()
 	{
-		auto p = gtk_text_iter_get_marks(gtkTextIter);
+		auto __p = gtk_text_iter_get_marks(gtkTextIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -1154,22 +1070,21 @@ public class TextIter
 	}
 
 	/**
-	 * If the element at @iter is a pixbuf, the pixbuf is returned
-	 * (with no new reference count added). Otherwise,
-	 * %NULL is returned.
+	 * If the element at @iter is a paintable, the paintable is returned
+	 * (with no new reference count added). Otherwise, %NULL is returned.
 	 *
-	 * Returns: the pixbuf at @iter
+	 * Returns: the paintable at @iter
 	 */
-	public Pixbuf getPixbuf()
+	public PaintableIF getPaintable()
 	{
-		auto p = gtk_text_iter_get_pixbuf(gtkTextIter);
+		auto __p = gtk_text_iter_get_paintable(gtkTextIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(PaintableIF)(cast(GdkPaintable*) __p);
 	}
 
 	/**
@@ -1179,7 +1094,7 @@ public class TextIter
 	 * such as images.  Because images are encoded in the slice, byte and
 	 * character offsets in the returned array will correspond to byte
 	 * offsets in the text buffer. Note that 0xFFFC can occur in normal
-	 * text as well, so it is not a reliable indicator that a pixbuf or
+	 * text as well, so it is not a reliable indicator that a paintable or
 	 * widget is in the buffer.
 	 *
 	 * Params:
@@ -1205,14 +1120,14 @@ public class TextIter
 	 */
 	public ListSG getTags()
 	{
-		auto p = gtk_text_iter_get_tags(gtkTextIter);
+		auto __p = gtk_text_iter_get_tags(gtkTextIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -1250,14 +1165,14 @@ public class TextIter
 	 */
 	public ListSG getToggledTags(bool toggledOn)
 	{
-		auto p = gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn);
+		auto __p = gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -1556,8 +1471,6 @@ public class TextIter
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
 	 * Returns: whether @iter is the start of a range tagged with @tag
-	 *
-	 * Since: 3.20
 	 */
 	public bool startsTag(TextTag tag)
 	{

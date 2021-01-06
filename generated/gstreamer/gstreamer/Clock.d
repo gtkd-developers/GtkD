@@ -29,7 +29,6 @@ private import gobject.Signals;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -174,14 +173,14 @@ public class Clock : ObjectGst
 	 */
 	public static Clock idGetClock(GstClockID id)
 	{
-		auto p = gst_clock_id_get_clock(id);
+		auto __p = gst_clock_id_get_clock(id);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**
@@ -463,14 +462,14 @@ public class Clock : ObjectGst
 	 */
 	public Clock getMaster()
 	{
-		auto p = gst_clock_get_master(gstClock);
+		auto __p = gst_clock_get_master(gstClock);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**

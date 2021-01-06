@@ -26,7 +26,6 @@ module pango.PgTabArray;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -94,14 +93,14 @@ public class PgTabArray
 	 */
 	public this(int initialSize, bool positionsInPixels)
 	{
-		auto p = pango_tab_array_new(initialSize, positionsInPixels);
+		auto __p = pango_tab_array_new(initialSize, positionsInPixels);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoTabArray*) p);
+		this(cast(PangoTabArray*) __p);
 	}
 
 	/**
@@ -112,14 +111,14 @@ public class PgTabArray
 	 */
 	public PgTabArray copy()
 	{
-		auto p = pango_tab_array_copy(pangoTabArray);
+		auto __p = pango_tab_array_copy(pangoTabArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) __p, true);
 	}
 
 	/**

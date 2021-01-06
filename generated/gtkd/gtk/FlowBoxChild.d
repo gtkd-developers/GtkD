@@ -27,16 +27,14 @@ module gtk.FlowBoxChild;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /** */
-public class FlowBoxChild : Bin
+public class FlowBoxChild : Widget
 {
 	/** the main Gtk struct */
 	protected GtkFlowBoxChild* gtkFlowBoxChild;
@@ -61,7 +59,7 @@ public class FlowBoxChild : Bin
 	public this (GtkFlowBoxChild* gtkFlowBoxChild, bool ownedRef = false)
 	{
 		this.gtkFlowBoxChild = gtkFlowBoxChild;
-		super(cast(GtkBin*)gtkFlowBoxChild, ownedRef);
+		super(cast(GtkWidget*)gtkFlowBoxChild, ownedRef);
 	}
 
 
@@ -77,20 +75,18 @@ public class FlowBoxChild : Bin
 	 *
 	 * Returns: a new #GtkFlowBoxChild
 	 *
-	 * Since: 3.12
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_flow_box_child_new();
+		auto __p = gtk_flow_box_child_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFlowBoxChild*) p);
+		this(cast(GtkFlowBoxChild*) __p);
 	}
 
 	/**
@@ -110,8 +106,6 @@ public class FlowBoxChild : Bin
 	 * and filtering functions into the widgets themselves. Another
 	 * alternative is to call gtk_flow_box_invalidate_sort() on any
 	 * model change, but that is more expensive.
-	 *
-	 * Since: 3.12
 	 */
 	public void changed()
 	{
@@ -119,12 +113,27 @@ public class FlowBoxChild : Bin
 	}
 
 	/**
+	 * Gets the child widget of @self.
+	 *
+	 * Returns: the child widget of @self
+	 */
+	public Widget getChild()
+	{
+		auto __p = gtk_flow_box_child_get_child(gtkFlowBoxChild);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
 	 * Gets the current index of the @child in its #GtkFlowBox container.
 	 *
 	 * Returns: the index of the @child, or -1 if the @child is not
 	 *     in a flow box.
-	 *
-	 * Since: 3.12
 	 */
 	public int getIndex()
 	{
@@ -136,12 +145,21 @@ public class FlowBoxChild : Bin
 	 * #GtkFlowBox container.
 	 *
 	 * Returns: %TRUE if @child is selected
-	 *
-	 * Since: 3.12
 	 */
 	public bool isSelected()
 	{
 		return gtk_flow_box_child_is_selected(gtkFlowBoxChild) != 0;
+	}
+
+	/**
+	 * Sets the child widget of @self.
+	 *
+	 * Params:
+	 *     child = the child widget
+	 */
+	public void setChild(Widget child)
+	{
+		gtk_flow_box_child_set_child(gtkFlowBoxChild, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -150,7 +168,7 @@ public class FlowBoxChild : Bin
 	 * double-clicking, or by using the Space or Enter key.
 	 *
 	 * While this signal is used as a
-	 * [keybinding signal][GtkBindingSignal],
+	 * [keybinding signal][GtkSignalAction],
 	 * it can be used by applications for their own purposes.
 	 */
 	gulong addOnActivate(void delegate(FlowBoxChild) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

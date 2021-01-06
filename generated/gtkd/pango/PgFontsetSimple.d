@@ -26,7 +26,6 @@ module pango.PgFontsetSimple;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgFont;
 private import pango.PgFontset;
 private import pango.PgLanguage;
@@ -88,14 +87,14 @@ public class PgFontsetSimple : PgFontset
 	 */
 	public this(PgLanguage language)
 	{
-		auto p = pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoFontsetSimple*) p, true);
+		this(cast(PangoFontsetSimple*) __p, true);
 	}
 
 	/**

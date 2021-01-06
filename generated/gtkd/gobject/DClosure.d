@@ -32,7 +32,6 @@ private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import std.algorithm;
 private import std.conv;
 private import std.traits;

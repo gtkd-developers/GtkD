@@ -32,7 +32,6 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Pad;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /** */
@@ -84,7 +83,7 @@ public class ProxyPad : Pad
 	 */
 	public static GstFlowReturn chainDefault(Pad pad, ObjectGst parent, Buffer buffer)
 	{
-		return gst_proxy_pad_chain_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (buffer is null) ? null : buffer.getBufferStruct());
+		return gst_proxy_pad_chain_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class ProxyPad : Pad
 	 */
 	public static GstFlowReturn chainListDefault(Pad pad, ObjectGst parent, BufferList list)
 	{
-		return gst_proxy_pad_chain_list_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (list is null) ? null : list.getBufferListStruct());
+		return gst_proxy_pad_chain_list_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (list is null) ? null : list.getBufferListStruct(true));
 	}
 
 	/**
@@ -120,11 +119,11 @@ public class ProxyPad : Pad
 	{
 		GstBuffer* outbuffer = null;
 
-		auto p = gst_proxy_pad_getrange_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), offset, size, &outbuffer);
+		auto __p = gst_proxy_pad_getrange_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), offset, size, &outbuffer);
 
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -139,14 +138,14 @@ public class ProxyPad : Pad
 	 */
 	public static Iterator iterateInternalLinksDefault(Pad pad, ObjectGst parent)
 	{
-		auto p = gst_proxy_pad_iterate_internal_links_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct());
+		auto __p = gst_proxy_pad_iterate_internal_links_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -160,13 +159,13 @@ public class ProxyPad : Pad
 	 */
 	public ProxyPad getInternal()
 	{
-		auto p = gst_proxy_pad_get_internal(gstProxyPad);
+		auto __p = gst_proxy_pad_get_internal(gstProxyPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProxyPad)(cast(GstProxyPad*) p, true);
+		return ObjectG.getDObject!(ProxyPad)(cast(GstProxyPad*) __p, true);
 	}
 }

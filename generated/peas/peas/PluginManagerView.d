@@ -24,12 +24,13 @@
 
 module peas.PluginManagerView;
 
+private import atk.ImplementorIF;
+private import atk.ImplementorT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-private import gtk.Menu;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
 private import gtk.TreeView;
@@ -45,7 +46,7 @@ private import std.algorithm;
  * The #PeasGtkPluginManagerView structure contains only private data
  * and should only be accessed using the provided API.
  */
-public class PluginManagerView : TreeView
+public class PluginManagerView : TreeView, ImplementorIF
 {
 	/** the main Gtk struct */
 	protected PeasGtkPluginManagerView* peasGtkPluginManagerView;
@@ -73,6 +74,9 @@ public class PluginManagerView : TreeView
 		super(cast(GtkTreeView*)peasGtkPluginManagerView, ownedRef);
 	}
 
+	// add the Implementor capabilities
+	mixin ImplementorT!(PeasGtkPluginManagerView);
+
 
 	/** */
 	public static GType getType()
@@ -94,14 +98,14 @@ public class PluginManagerView : TreeView
 	 */
 	public this(Engine engine)
 	{
-		auto p = peas_gtk_plugin_manager_view_new((engine is null) ? null : engine.getEngineStruct());
+		auto __p = peas_gtk_plugin_manager_view_new((engine is null) ? null : engine.getEngineStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PeasGtkPluginManagerView*) p);
+		this(cast(PeasGtkPluginManagerView*) __p);
 	}
 
 	/**
@@ -111,14 +115,14 @@ public class PluginManagerView : TreeView
 	 */
 	public PluginInfo getSelectedPlugin()
 	{
-		auto p = peas_gtk_plugin_manager_view_get_selected_plugin(peasGtkPluginManagerView);
+		auto __p = peas_gtk_plugin_manager_view_get_selected_plugin(peasGtkPluginManagerView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
+		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) __p);
 	}
 
 	/**
@@ -165,7 +169,7 @@ public class PluginManagerView : TreeView
 	 * Params:
 	 *     menu = A #GtkMenu.
 	 */
-	gulong addOnPopulatePopup(void delegate(Menu, PluginManagerView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopulatePopup(void delegate(Gtk.Menu, PluginManagerView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

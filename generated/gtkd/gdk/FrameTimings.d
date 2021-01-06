@@ -27,7 +27,6 @@ module gdk.FrameTimings;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 private import gtkd.Loader;
 
 
@@ -94,8 +93,6 @@ public class FrameTimings
 	 *
 	 * Returns: %TRUE if all information that will be available
 	 *     for the frame has been filled in.
-	 *
-	 * Since: 3.8
 	 */
 	public bool getComplete()
 	{
@@ -107,8 +104,6 @@ public class FrameTimings
 	 * this frame was drawn.
 	 *
 	 * Returns: the frame counter value for this frame
-	 *
-	 * Since: 3.8
 	 */
 	public long getFrameCounter()
 	{
@@ -142,8 +137,6 @@ public class FrameTimings
 	 * Returns: The predicted time at which the frame will be presented,
 	 *     in the timescale of g_get_monotonic_time(), or 0 if no predicted
 	 *     presentation time is available.
-	 *
-	 * Since: 3.8
 	 */
 	public long getPredictedPresentationTime()
 	{
@@ -157,8 +150,6 @@ public class FrameTimings
 	 * Returns: the time the frame was displayed to the user, in the
 	 *     timescale of g_get_monotonic_time(), or 0 if no presentation
 	 *     time is available. See gdk_frame_timings_get_complete()
-	 *
-	 * Since: 3.8
 	 */
 	public long getPresentationTime()
 	{
@@ -173,8 +164,6 @@ public class FrameTimings
 	 * Returns: the refresh interval of the display, in microseconds,
 	 *     or 0 if the refresh interval is not available.
 	 *     See gdk_frame_timings_get_complete().
-	 *
-	 * Since: 3.8
 	 */
 	public long getRefreshInterval()
 	{
@@ -186,26 +175,22 @@ public class FrameTimings
 	 * Increases the reference count of @timings.
 	 *
 	 * Returns: @timings
-	 *
-	 * Since: 3.8
 	 */
 	public FrameTimings ref_()
 	{
-		auto p = gdk_frame_timings_ref(gdkFrameTimings);
+		auto __p = gdk_frame_timings_ref(gdkFrameTimings);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) __p, true);
 	}
 
 	/**
 	 * Decreases the reference count of @timings. If @timings
 	 * is no longer referenced, it will be freed.
-	 *
-	 * Since: 3.8
 	 */
 	public void unref()
 	{

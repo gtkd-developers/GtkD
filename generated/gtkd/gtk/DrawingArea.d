@@ -26,10 +26,11 @@ module gtk.DrawingArea;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gobject.Signals;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -37,45 +38,34 @@ public  import gtkc.gtktypes;
  * elements. It’s essentially a blank widget; you can draw on it. After
  * creating a drawing area, the application may want to connect to:
  * 
- * - Mouse and button press signals to respond to input from
- * the user. (Use gtk_widget_add_events() to enable events
- * you wish to receive.)
- * 
  * - The #GtkWidget::realize signal to take any necessary actions
  * when the widget is instantiated on a particular display.
  * (Create GDK resources in response to this signal.)
  * 
- * - The #GtkWidget::size-allocate signal to take any necessary
+ * - The #GtkDrawingArea::resize signal to take any necessary
  * actions when the widget changes size.
  * 
- * - The #GtkWidget::draw signal to handle redrawing the
+ * - Call gtk_drawing_area_set_draw_func() to handle redrawing the
  * contents of the widget.
  * 
  * The following code portion demonstrates using a drawing
  * area to display a circle in the normal widget foreground
  * color.
  * 
- * Note that GDK automatically clears the exposed area before sending
- * the expose event, and that drawing is implicitly clipped to the exposed
- * area. If you want to have a theme-provided background, you need
- * to call gtk_render_background() in your ::draw method.
- * 
  * ## Simple GtkDrawingArea usage
  * 
  * |[<!-- language="C" -->
- * gboolean
- * draw_callback (GtkWidget *widget, cairo_t *cr, gpointer data)
+ * static void
+ * draw_function (GtkDrawingArea *area,
+ * cairo_t        *cr,
+ * int             width,
+ * int             height,
+ * gpointer        data)
  * {
- * guint width, height;
  * GdkRGBA color;
  * GtkStyleContext *context;
  * 
- * context = gtk_widget_get_style_context (widget);
- * 
- * width = gtk_widget_get_allocated_width (widget);
- * height = gtk_widget_get_allocated_height (widget);
- * 
- * gtk_render_background (context, cr, 0, 0, width, height);
+ * context = gtk_widget_get_style_context (GTK_WIDGET (area));
  * 
  * cairo_arc (cr,
  * width / 2.0, height / 2.0,
@@ -83,39 +73,44 @@ public  import gtkc.gtktypes;
  * 0, 2 * G_PI);
  * 
  * gtk_style_context_get_color (context,
- * gtk_style_context_get_state (context),
  * &color);
  * gdk_cairo_set_source_rgba (cr, &color);
  * 
  * cairo_fill (cr);
- * 
- * return FALSE;
  * }
- * [...]
- * GtkWidget *drawing_area = gtk_drawing_area_new ();
- * gtk_widget_set_size_request (drawing_area, 100, 100);
- * g_signal_connect (G_OBJECT (drawing_area), "draw",
- * G_CALLBACK (draw_callback), NULL);
+ * 
+ * int
+ * main (int argc, char **argv)
+ * {
+ * gtk_init ();
+ * 
+ * GtkWidget *area = gtk_drawing_area_new ();
+ * gtk_drawing_area_set_content_width (GTK_DRAWING_AREA (area), 100);
+ * gtk_drawing_area_set_content_height (GTK_DRAWING_AREA (area), 100);
+ * gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (area),
+ * draw_function,
+ * NULL, NULL);
+ * return 0;
+ * }
  * ]|
  * 
- * Draw signals are normally delivered when a drawing area first comes
+ * The draw function is normally called when a drawing area first comes
  * onscreen, or when it’s covered by another window and then uncovered.
- * You can also force an expose event by adding to the “damage region”
- * of the drawing area’s window; gtk_widget_queue_draw_area() and
- * gdk_window_invalidate_rect() are equally good ways to do this.
- * You’ll then get a draw signal for the invalid region.
+ * You can also force a redraw by adding to the “damage region” of the
+ * drawing area’s window using gtk_widget_queue_draw().
+ * This will cause the drawing area to call the draw function again.
  * 
  * The available routines for drawing are documented on the
- * [GDK Drawing Primitives][gdk3-Cairo-Interaction] page
+ * [GDK Drawing Primitives][gdk4-Cairo-Interaction] page
  * and the cairo documentation.
  * 
- * To receive mouse events on a drawing area, you will need to enable
- * them with gtk_widget_add_events(). To receive keyboard events, you
- * will need to set the “can-focus” property on the drawing area, and you
- * should probably draw some user-visible indication that the drawing
- * area is focused. Use gtk_widget_has_focus() in your expose event
- * handler to decide whether to draw the focus indicator. See
- * gtk_render_focus() for one way to draw focus.
+ * To receive mouse events on a drawing area, you will need to use
+ * event controllers. To receive keyboard events, you will need to set
+ * the “can-focus” property on the drawing area, and you should probably
+ * draw some user-visible indication that the drawing area is focused.
+ * 
+ * If you need more complex control over your widget, you should consider
+ * creating your own #GtkWidget subclass.
  */
 public class DrawingArea : Widget
 {
@@ -145,20 +140,6 @@ public class DrawingArea : Widget
 		super(cast(GtkWidget*)gtkDrawingArea, ownedRef);
 	}
 
-	/**
-	 * Create a new DrawingArea and sets the SizeRequest
-	 * Params:
-	 *    	width =
-	 *    	height =
-	 */
-	this(int width, int height)
-	{
-		this();
-		setSizeRequest(width, height);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -175,13 +156,107 @@ public class DrawingArea : Widget
 	 */
 	public this()
 	{
-		auto p = gtk_drawing_area_new();
+		auto __p = gtk_drawing_area_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkDrawingArea*) p);
+		this(cast(GtkDrawingArea*) __p);
+	}
+
+	/**
+	 * Retrieves the value previously set via gtk_drawing_area_set_content_height().
+	 *
+	 * Returns: The height requested for content of the drawing area
+	 */
+	public int getContentHeight()
+	{
+		return gtk_drawing_area_get_content_height(gtkDrawingArea);
+	}
+
+	/**
+	 * Retrieves the value previously set via gtk_drawing_area_set_content_width().
+	 *
+	 * Returns: The width requested for content of the drawing area
+	 */
+	public int getContentWidth()
+	{
+		return gtk_drawing_area_get_content_width(gtkDrawingArea);
+	}
+
+	/**
+	 * Sets the desired height of the contents of the drawing area. Note that
+	 * because widgets may be allocated larger sizes than they requested, it is
+	 * possible that the actual height passed to your draw function is larger
+	 * than the height set here. You can use gtk_widget_set_valign() to avoid
+	 * that.
+	 *
+	 * If the height is set to 0 (the default), the drawing area may disappear.
+	 *
+	 * Params:
+	 *     height = the height of contents
+	 */
+	public void setContentHeight(int height)
+	{
+		gtk_drawing_area_set_content_height(gtkDrawingArea, height);
+	}
+
+	/**
+	 * Sets the desired width of the contents of the drawing area. Note that
+	 * because widgets may be allocated larger sizes than they requested, it is
+	 * possible that the actual width passed to your draw function is larger
+	 * than the width set here. You can use gtk_widget_set_halign() to avoid
+	 * that.
+	 *
+	 * If the width is set to 0 (the default), the drawing area may disappear.
+	 *
+	 * Params:
+	 *     width = the width of contents
+	 */
+	public void setContentWidth(int width)
+	{
+		gtk_drawing_area_set_content_width(gtkDrawingArea, width);
+	}
+
+	/**
+	 * Setting a draw function is the main thing you want to do when using a drawing
+	 * area. It is called whenever GTK needs to draw the contents of the drawing area
+	 * to the screen.
+	 *
+	 * The draw function will be called during the drawing stage of GTK. In the
+	 * drawing stage it is not allowed to change properties of any GTK widgets or call
+	 * any functions that would cause any properties to be changed.
+	 * You should restrict yourself exclusively to drawing your contents in the draw
+	 * function.
+	 *
+	 * If what you are drawing does change, call gtk_widget_queue_draw() on the
+	 * drawing area. This will cause a redraw and will call @draw_func again.
+	 *
+	 * Params:
+	 *     drawFunc = callback that lets you draw
+	 *         the drawing area's contents
+	 *     userData = user data passed to @draw_func
+	 *     destroy = destroy notifier for @user_data
+	 */
+	public void setDrawFunc(GtkDrawingAreaDrawFunc drawFunc, void* userData, GDestroyNotify destroy)
+	{
+		gtk_drawing_area_set_draw_func(gtkDrawingArea, drawFunc, userData, destroy);
+	}
+
+	/**
+	 * The ::resize signal is emitted once when the widget is realized, and
+	 * then each time the widget is changed while realized. This is useful
+	 * in order to keep state up to date with the widget size, like for
+	 * instance a backing surface.
+	 *
+	 * Params:
+	 *     width = the width of the viewport
+	 *     height = the height of the viewport
+	 */
+	gulong addOnResize(void delegate(int, int, DrawingArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "resize", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

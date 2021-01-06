@@ -25,8 +25,8 @@
 module pango.PgAttributeList;
 
 private import glib.ConstructionException;
+private import glib.ListSG;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgAttribute;
 private import pango.PgAttributeIterator;
@@ -98,14 +98,14 @@ public class PgAttributeList
 	 */
 	public this()
 	{
-		auto p = pango_attr_list_new();
+		auto __p = pango_attr_list_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoAttrList*) p);
+		this(cast(PangoAttrList*) __p);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class PgAttributeList
 	 * and be merged with any adjoining attributes that are identical.
 	 *
 	 * This function is slower than pango_attr_list_insert() for
-	 * creating a attribute list in order (potentially much slower
+	 * creating an attribute list in order (potentially much slower
 	 * for large lists). However, pango_attr_list_insert() is not
 	 * suitable for continually changing a set of attributes
 	 * since it never removes or combines existing attributes.
@@ -138,14 +138,31 @@ public class PgAttributeList
 	 */
 	public PgAttributeList copy()
 	{
-		auto p = pango_attr_list_copy(pangoAttrList);
+		auto __p = pango_attr_list_copy(pangoAttrList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p, true);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p, true);
+	}
+
+	/**
+	 * Checks whether @list and @other_list contain the same attributes and
+	 * whether those attributes apply to the same ranges. Beware that this
+	 * will return wrong values if any list contains duplicates.
+	 *
+	 * Params:
+	 *     otherList = the other #PangoAttrList
+	 *
+	 * Returns: %TRUE if the lists are equal, %FALSE if they aren't.
+	 *
+	 * Since: 1.46
+	 */
+	public bool equal(PgAttributeList otherList)
+	{
+		return pango_attr_list_equal(pangoAttrList, (otherList is null) ? null : otherList.getPgAttributeListStruct()) != 0;
 	}
 
 	/**
@@ -165,14 +182,35 @@ public class PgAttributeList
 	 */
 	public PgAttributeList filter(PangoAttrFilterFunc func, void* data)
 	{
-		auto p = pango_attr_list_filter(pangoAttrList, func, data);
+		auto __p = pango_attr_list_filter(pangoAttrList, func, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p, true);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p, true);
+	}
+
+	/**
+	 * Gets a list of all attributes in @list.
+	 *
+	 * Returns: a list of all attributes in @list. To free this value, call
+	 *     pango_attribute_destroy() on each value and g_slist_free()
+	 *     on the list.
+	 *
+	 * Since: 1.44
+	 */
+	public ListSG getAttributes()
+	{
+		auto __p = pango_attr_list_get_attributes(pangoAttrList);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -184,14 +222,14 @@ public class PgAttributeList
 	 */
 	public PgAttributeIterator getIterator()
 	{
-		auto p = pango_attr_list_get_iterator(pangoAttrList);
+		auto __p = pango_attr_list_get_iterator(pangoAttrList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) p, true);
+		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) __p, true);
 	}
 
 	/**
@@ -232,14 +270,14 @@ public class PgAttributeList
 	 */
 	public PgAttributeList ref_()
 	{
-		auto p = pango_attr_list_ref(pangoAttrList);
+		auto __p = pango_attr_list_ref(pangoAttrList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p, true);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p, true);
 	}
 
 	/**
@@ -274,5 +312,35 @@ public class PgAttributeList
 	public void unref()
 	{
 		pango_attr_list_unref(pangoAttrList);
+	}
+
+	/**
+	 * Update indices of attributes in @list for
+	 * a change in the text they refer to.
+	 *
+	 * The change that this function applies is
+	 * removing @remove bytes at position @pos
+	 * and inserting @add bytes instead.
+	 *
+	 * Attributes that fall entirely in the
+	 * (@pos, @pos + @remove) range are removed.
+	 *
+	 * Attributes that start or end inside the
+	 * (@pos, @pos + @remove) range are shortened to
+	 * reflect the removal.
+	 *
+	 * Attributes start and end positions are updated
+	 * if they are behind @pos + @remove.
+	 *
+	 * Params:
+	 *     pos = the position of the change
+	 *     remove = the number of removed bytes
+	 *     add = the number of added bytes
+	 *
+	 * Since: 1.44
+	 */
+	public void update(int pos, int remove, int add)
+	{
+		pango_attr_list_update(pangoAttrList, pos, remove, add);
 	}
 }

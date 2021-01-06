@@ -33,7 +33,6 @@ public  import glib.GException;
 public  import glib.Str;
 public  import glib.Variant;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -97,7 +96,7 @@ public template IconT(TStruct)
 	 * makes sense to transfer the #GVariant between processes on the same machine,
 	 * (as opposed to over the network), and within the same file system namespace.
 	 *
-	 * Returns: a #GVariant, or %NULL when serialization fails.
+	 * Returns: a #GVariant, or %NULL when serialization fails. The #GVariant will not be floating.
 	 *
 	 * Since: 2.38
 	 */

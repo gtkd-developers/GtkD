@@ -29,10 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -86,25 +84,20 @@ public class GestureSwipe : GestureSingle
 	/**
 	 * Returns a newly created #GtkGesture that recognizes swipes.
 	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *
 	 * Returns: a newly created #GtkGestureSwipe
-	 *
-	 * Since: 3.14
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget)
+	public this()
 	{
-		auto p = gtk_gesture_swipe_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_swipe_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureSwipe*) p, true);
+		this(cast(GtkGestureSwipe*) __p, true);
 	}
 
 	/**
@@ -117,8 +110,6 @@ public class GestureSwipe : GestureSingle
 	 *     velocityY = return value for the velocity in the Y axis, in pixels/sec
 	 *
 	 * Returns: whether velocity could be calculated
-	 *
-	 * Since: 3.14
 	 */
 	public bool getVelocity(out double velocityX, out double velocityY)
 	{
@@ -132,8 +123,6 @@ public class GestureSwipe : GestureSingle
 	 * Params:
 	 *     velocityX = velocity in the X axis, in pixels/sec
 	 *     velocityY = velocity in the Y axis, in pixels/sec
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnSwipe(void delegate(double, double, GestureSwipe) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

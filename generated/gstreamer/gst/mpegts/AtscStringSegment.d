@@ -137,4 +137,10 @@ public final class AtscStringSegment
 	{
 		return Str.toString(gst_mpegts_atsc_string_segment_get_string(gstMpegtsAtscStringSegment));
 	}
+
+	/** */
+	public bool setString(string string_, ubyte compressionType, ubyte mode)
+	{
+		return gst_mpegts_atsc_string_segment_set_string(gstMpegtsAtscStringSegment, Str.toStringz(string_), compressionType, mode) != 0;
+	}
 }

@@ -32,7 +32,6 @@ private import gtk.BuildableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -62,7 +61,7 @@ public  import gtkc.gtktypes;
  * group; when all widgets have been removed, the size group will be
  * freed.
  * 
- * Widgets can be part of multiple size groups; GTK+ will compute the
+ * Widgets can be part of multiple size groups; GTK will compute the
  * horizontal size of a widget from the horizontal requisition of all
  * widgets that can be reached from the widget by a chain of size groups
  * of type %GTK_SIZE_GROUP_HORIZONTAL or %GTK_SIZE_GROUP_BOTH, and the
@@ -94,7 +93,7 @@ public  import gtkc.gtktypes;
  * An example of a UI definition fragment with GtkSizeGroup:
  * |[
  * <object class="GtkSizeGroup">
- * <property name="mode">GTK_SIZE_GROUP_HORIZONTAL</property>
+ * <property name="mode">horizontal</property>
  * <widgets>
  * <widget name="radio1"/>
  * <widget name="radio2"/>
@@ -152,14 +151,14 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public this(GtkSizeGroupMode mode)
 	{
-		auto p = gtk_size_group_new(mode);
+		auto __p = gtk_size_group_new(mode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSizeGroup*) p, true);
+		this(cast(GtkSizeGroup*) __p, true);
 	}
 
 	/**
@@ -181,25 +180,6 @@ public class SizeGroup : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Returns if invisible widgets are ignored when calculating the size.
-	 *
-	 * Deprecated: Measuring the size of hidden widgets has not worked
-	 * reliably for a long time. In most cases, they will report a size
-	 * of 0 nowadays, and thus, their size will not affect the other
-	 * size group members. In effect, size groups will always operate
-	 * as if this property was %TRUE. Use a #GtkStack instead to hide
-	 * widgets while still having their size taken into account.
-	 *
-	 * Returns: %TRUE if invisible widgets are ignored.
-	 *
-	 * Since: 2.8
-	 */
-	public bool getIgnoreHidden()
-	{
-		return gtk_size_group_get_ignore_hidden(gtkSizeGroup) != 0;
-	}
-
-	/**
 	 * Gets the current mode of the size group. See gtk_size_group_set_mode().
 	 *
 	 * Returns: the current mode of the size group.
@@ -213,20 +193,18 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * Returns the list of widgets associated with @size_group.
 	 *
 	 * Returns: a #GSList of
-	 *     widgets. The list is owned by GTK+ and should not be modified.
-	 *
-	 * Since: 2.10
+	 *     widgets. The list is owned by GTK and should not be modified.
 	 */
 	public ListSG getWidgets()
 	{
-		auto p = gtk_size_group_get_widgets(gtkSizeGroup);
+		auto __p = gtk_size_group_get_widgets(gtkSizeGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -238,28 +216,6 @@ public class SizeGroup : ObjectG, BuildableIF
 	public void removeWidget(Widget widget)
 	{
 		gtk_size_group_remove_widget(gtkSizeGroup, (widget is null) ? null : widget.getWidgetStruct());
-	}
-
-	/**
-	 * Sets whether unmapped widgets should be ignored when
-	 * calculating the size.
-	 *
-	 * Deprecated: Measuring the size of hidden widgets has not worked
-	 * reliably for a long time. In most cases, they will report a size
-	 * of 0 nowadays, and thus, their size will not affect the other
-	 * size group members. In effect, size groups will always operate
-	 * as if this property was %TRUE. Use a #GtkStack instead to hide
-	 * widgets while still having their size taken into account.
-	 *
-	 * Params:
-	 *     ignoreHidden = whether unmapped widgets should be ignored
-	 *         when calculating the size
-	 *
-	 * Since: 2.8
-	 */
-	public void setIgnoreHidden(bool ignoreHidden)
-	{
-		gtk_size_group_set_ignore_hidden(gtkSizeGroup, ignoreHidden);
 	}
 
 	/**

@@ -28,7 +28,6 @@ public  import glib.Str;
 public  import glib.Variant;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -44,8 +43,6 @@ public  import gtkc.gtktypes;
  * the “win.” or “app.” prefix that are associated with the #GtkApplicationWindow
  * or #GtkApplication, but other action groups that are added with
  * gtk_widget_insert_action_group() will be consulted as well.
- *
- * Since: 3.4
  */
 public template ActionableT(TStruct)
 {
@@ -64,8 +61,6 @@ public template ActionableT(TStruct)
 	 * See gtk_actionable_set_action_name() for more information.
 	 *
 	 * Returns: the action name, or %NULL if none is set
-	 *
-	 * Since: 3.4
 	 */
 	public string getActionName()
 	{
@@ -78,19 +73,17 @@ public template ActionableT(TStruct)
 	 * See gtk_actionable_set_action_target_value() for more information.
 	 *
 	 * Returns: the current target value
-	 *
-	 * Since: 3.4
 	 */
 	public Variant getActionTargetValue()
 	{
-		auto p = gtk_actionable_get_action_target_value(getActionableStruct());
+		auto __p = gtk_actionable_get_action_target_value(getActionableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -108,8 +101,6 @@ public template ActionableT(TStruct)
 	 *
 	 * Params:
 	 *     actionName = an action name, or %NULL
-	 *
-	 * Since: 3.4
 	 */
 	public void setActionName(string actionName)
 	{
@@ -132,15 +123,13 @@ public template ActionableT(TStruct)
 	 * will be associated with the same action, but with a different target
 	 * value for that action.  Clicking on a particular button will activate
 	 * the action with the target of that button, which will typically cause
-	 * the action’s state to change to that value.  Since the action’s state
+	 * the action’s state to change to that value. Since the action’s state
 	 * is now equal to the target value of the button, the button will now
 	 * be rendered as active (and the other buttons, with different targets,
 	 * rendered inactive).
 	 *
 	 * Params:
 	 *     targetValue = a #GVariant to set as the target value, or %NULL
-	 *
-	 * Since: 3.4
 	 */
 	public void setActionTargetValue(Variant targetValue)
 	{
@@ -162,8 +151,6 @@ public template ActionableT(TStruct)
 	 *
 	 * Params:
 	 *     detailedActionName = the detailed action name
-	 *
-	 * Since: 3.4
 	 */
 	public void setDetailedActionName(string detailedActionName)
 	{

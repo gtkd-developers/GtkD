@@ -24,16 +24,16 @@
 
 module gtk.TextView;
 
-private import gdk.Window;
+private import gdk.Event;
+private import gdk.Rectangle;
+private import gio.MenuModel;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Container;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
-private import gtk.TextAttributes;
 private import gtk.TextBuffer;
 private import gtk.TextChildAnchor;
 private import gtk.TextIter;
@@ -41,7 +41,6 @@ private import gtk.TextMark;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgTabArray;
 private import std.algorithm;
 
@@ -74,8 +73,12 @@ private import std.algorithm;
  * 
  * If a context menu is opened, the window node will appear as a subnode
  * of the main node.
+ * 
+ * # Accessibility
+ * 
+ * GtkTextView uses the #GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
  */
-public class TextView : Container, ScrollableIF
+public class TextView : Widget, ScrollableIF
 {
 	/** the main Gtk struct */
 	protected GtkTextView* gtkTextView;
@@ -100,65 +103,12 @@ public class TextView : Container, ScrollableIF
 	public this (GtkTextView* gtkTextView, bool ownedRef = false)
 	{
 		this.gtkTextView = gtkTextView;
-		super(cast(GtkContainer*)gtkTextView, ownedRef);
+		super(cast(GtkWidget*)gtkTextView, ownedRef);
 	}
 
 	// add the Scrollable capabilities
 	mixin ScrollableT!(GtkTextView);
 
-	/**
-	 * Get the text line at the pixel y
-	 */
-	string getLineTextAt(int y)
-	{
-
-		TextIter iter = new TextIter();
-		int windowX;
-		int windowY;
-		bufferToWindowCoords(TextWindowType.TEXT, 0, y, windowX, windowY);
-
-		gtk_text_view_get_line_at_y(gtkTextView, iter.getTextIterStruct(), y+y-windowY, null);
-
-		TextIter iterEnd = new TextIter();
-		TextBuffer buffer = getBuffer();
-		buffer.getIterAtOffset(iterEnd, iter.getOffset()+iter.getCharsInLine());
-		return buffer.getText(iter, iterEnd, false);
-	}
-
-	/**
-	 * Simply appends some on the cursor position
-	 * Params:
-	 *  text = the text to append
-	 */
-	void insertText(string text)
-	{
-		TextBuffer buf = getBuffer();
-		buf.insertAtCursor(text);
-	}
-
-	/**
-	 * Simply appends some text to this view
-	 * Params:
-	 *  text = the text to append
-	 */
-	void appendText(string text, bool ensureVisible=true)
-	{
-		TextBuffer buf = getBuffer();
-		TextIter iter = new TextIter();
-		buf.getEndIter(iter);
-		buf.insert(iter, text);
-		if ( ensureVisible )
-		{
-			double within_margin = 0.0;
-			bool use_align = false;
-			double xalign = 0.0;
-			double yalign = 0.0;
-			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
-		}
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -178,14 +128,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public this()
 	{
-		auto p = gtk_text_view_new();
+		auto __p = gtk_text_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextView*) p);
+		this(cast(GtkTextView*) __p);
 	}
 
 	/**
@@ -205,14 +155,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public this(TextBuffer buffer)
 	{
-		auto p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
+		auto __p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_buffer");
 		}
 
-		this(cast(GtkTextView*) p);
+		this(cast(GtkTextView*) __p);
 	}
 
 	/**
@@ -228,26 +178,23 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
-	 * Adds a child at fixed coordinates in one of the text widget's
-	 * windows.
+	 * Adds @child at a fixed coordinate in the #GtkTextView's text window. The
+	 * @xpos and @ypos must be in buffer coordinates (see
+	 * gtk_text_view_get_iter_location() to convert to buffer coordinates).
 	 *
-	 * The window must have nonzero size (see
-	 * gtk_text_view_set_border_window_size()). Note that the child
-	 * coordinates are given relative to scrolling. When
-	 * placing a child in #GTK_TEXT_WINDOW_WIDGET, scrolling is
-	 * irrelevant, the child floats above all scrollable areas. But when
-	 * placing a child in one of the scrollable windows (border windows or
-	 * text window) it will move with the scrolling as needed.
+	 * @child will scroll with the text view.
+	 *
+	 * If instead you want a widget that will not move with the #GtkTextView
+	 * contents see #GtkOverlay.
 	 *
 	 * Params:
 	 *     child = a #GtkWidget
-	 *     whichWindow = which window the child should appear in
 	 *     xpos = X position of child in window coordinates
 	 *     ypos = Y position of child in window coordinates
 	 */
-	public void addChildInWindow(Widget child, GtkTextWindowType whichWindow, int xpos, int ypos)
+	public void addOverlay(Widget child, int xpos, int ypos)
 	{
-		gtk_text_view_add_child_in_window(gtkTextView, (child is null) ? null : child.getWidgetStruct(), whichWindow, xpos, ypos);
+		gtk_text_view_add_overlay(gtkTextView, (child is null) ? null : child.getWidgetStruct(), xpos, ypos);
 	}
 
 	/**
@@ -294,11 +241,8 @@ public class TextView : Container, ScrollableIF
 	 * Converts coordinate (@buffer_x, @buffer_y) to coordinates for the window
 	 * @win, and stores the result in (@window_x, @window_y).
 	 *
-	 * Note that you can’t convert coordinates for a nonexisting window (see
-	 * gtk_text_view_set_border_window_size()).
-	 *
 	 * Params:
-	 *     win = a #GtkTextWindowType, except %GTK_TEXT_WINDOW_PRIVATE
+	 *     win = a #GtkTextWindowType
 	 *     bufferX = buffer x coordinate
 	 *     bufferY = buffer y coordinate
 	 *     windowX = window x coordinate return location or %NULL
@@ -355,8 +299,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Returns: %TRUE if pressing the Tab key inserts a tab character,
 	 *     %FALSE if pressing the Tab key moves the keyboard focus.
-	 *
-	 * Since: 2.4
 	 */
 	public bool getAcceptsTab()
 	{
@@ -364,25 +306,9 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
-	 * Gets the width of the specified border window. See
-	 * gtk_text_view_set_border_window_size().
-	 *
-	 * Params:
-	 *     type = window to return size from
-	 *
-	 * Returns: width of window
-	 */
-	public int getBorderWindowSize(GtkTextWindowType type)
-	{
-		return gtk_text_view_get_border_window_size(gtkTextView, type);
-	}
-
-	/**
 	 * Gets the bottom margin for text in the @text_view.
 	 *
 	 * Returns: bottom margin in pixels
-	 *
-	 * Since: 3.18
 	 */
 	public int getBottomMargin()
 	{
@@ -398,14 +324,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public TextBuffer getBuffer()
 	{
-		auto p = gtk_text_view_get_buffer(gtkTextView);
+		auto __p = gtk_text_view_get_buffer(gtkTextView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) __p);
 	}
 
 	/**
@@ -435,12 +361,16 @@ public class TextView : Container, ScrollableIF
 	 *         cursor position (may be %NULL)
 	 *     weak = location to store the weak
 	 *         cursor position (may be %NULL)
-	 *
-	 * Since: 3.0
 	 */
-	public void getCursorLocations(TextIter iter, out GdkRectangle strong, out GdkRectangle weak)
+	public void getCursorLocations(TextIter iter, out Rectangle strong, out Rectangle weak)
 	{
-		gtk_text_view_get_cursor_locations(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &strong, &weak);
+		GdkRectangle* outstrong = sliceNew!GdkRectangle();
+		GdkRectangle* outweak = sliceNew!GdkRectangle();
+
+		gtk_text_view_get_cursor_locations(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), outstrong, outweak);
+
+		strong = ObjectG.getDObject!(Rectangle)(outstrong, true);
+		weak = ObjectG.getDObject!(Rectangle)(outweak, true);
 	}
 
 	/**
@@ -454,30 +384,6 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
-	 * Obtains a copy of the default text attributes. These are the
-	 * attributes used for text unless a tag overrides them.
-	 * You’d typically pass the default attributes in to
-	 * gtk_text_iter_get_attributes() in order to get the
-	 * attributes in effect at a given text position.
-	 *
-	 * The return value is a copy owned by the caller of this function,
-	 * and should be freed with gtk_text_attributes_unref().
-	 *
-	 * Returns: a new #GtkTextAttributes
-	 */
-	public TextAttributes getDefaultAttributes()
-	{
-		auto p = gtk_text_view_get_default_attributes(gtkTextView);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p, true);
-	}
-
-	/**
 	 * Returns the default editability of the #GtkTextView. Tags in the
 	 * buffer may override this setting for some ranges of text.
 	 *
@@ -486,6 +392,48 @@ public class TextView : Container, ScrollableIF
 	public bool getEditable()
 	{
 		return gtk_text_view_get_editable(gtkTextView) != 0;
+	}
+
+	/**
+	 * Gets the menu model set with gtk_text_view_set_extra_menu()
+	 * or %NULL if none has been set.
+	 *
+	 * Returns: the menu model
+	 */
+	public MenuModel getExtraMenu()
+	{
+		auto __p = gtk_text_view_get_extra_menu(gtkTextView);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
+	}
+
+	/**
+	 * Gets a #GtkWidget that has previously been set with
+	 * gtk_text_view_set_gutter().
+	 *
+	 * @win must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
+	 * %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
+	 *
+	 * Params:
+	 *     win = a #GtkTextWindowType
+	 *
+	 * Returns: a #GtkWidget or %NULL
+	 */
+	public Widget getGutter(GtkTextWindowType win)
+	{
+		auto __p = gtk_text_view_get_gutter(gtkTextView, win);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -502,8 +450,6 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * Gets the value of the #GtkTextView:input-hints property.
-	 *
-	 * Since: 3.6
 	 */
 	public GtkInputHints getInputHints()
 	{
@@ -512,8 +458,6 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * Gets the value of the #GtkTextView:input-purpose property.
-	 *
-	 * Since: 3.6
 	 */
 	public GtkInputPurpose getInputPurpose()
 	{
@@ -538,11 +482,11 @@ public class TextView : Container, ScrollableIF
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y) != 0;
+		auto __p = gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -567,18 +511,16 @@ public class TextView : Container, ScrollableIF
 	 *     y = y position, in buffer coordinates
 	 *
 	 * Returns: %TRUE if the position is over text
-	 *
-	 * Since: 2.6
 	 */
 	public bool getIterAtPosition(out TextIter iter, out int trailing, int x, int y)
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y) != 0;
+		auto __p = gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -591,9 +533,13 @@ public class TextView : Container, ScrollableIF
 	 *     iter = a #GtkTextIter
 	 *     location = bounds of the character at @iter
 	 */
-	public void getIterLocation(TextIter iter, out GdkRectangle location)
+	public void getIterLocation(TextIter iter, out Rectangle location)
 	{
-		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &location);
+		GdkRectangle* outlocation = sliceNew!GdkRectangle();
+
+		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), outlocation);
+
+		location = ObjectG.getDObject!(Rectangle)(outlocation, true);
 	}
 
 	/**
@@ -658,8 +604,6 @@ public class TextView : Container, ScrollableIF
 	 * Gets the value of the #GtkTextView:monospace property.
 	 *
 	 * Returns: %TRUE if monospace fonts are desired
-	 *
-	 * Since: 3.16
 	 */
 	public bool getMonospace()
 	{
@@ -670,8 +614,6 @@ public class TextView : Container, ScrollableIF
 	 * Returns whether the #GtkTextView is in overwrite mode or not.
 	 *
 	 * Returns: whether @text_view is in overwrite mode or not.
-	 *
-	 * Since: 2.4
 	 */
 	public bool getOverwrite()
 	{
@@ -735,22 +677,20 @@ public class TextView : Container, ScrollableIF
 	 */
 	public PgTabArray getTabs()
 	{
-		auto p = gtk_text_view_get_tabs(gtkTextView);
+		auto __p = gtk_text_view_get_tabs(gtkTextView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) __p, true);
 	}
 
 	/**
 	 * Gets the top margin for text in the @text_view.
 	 *
 	 * Returns: top margin in pixels
-	 *
-	 * Since: 3.18
 	 */
 	public int getTopMargin()
 	{
@@ -765,50 +705,13 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     visibleRect = rectangle to fill
 	 */
-	public void getVisibleRect(out GdkRectangle visibleRect)
+	public void getVisibleRect(out Rectangle visibleRect)
 	{
-		gtk_text_view_get_visible_rect(gtkTextView, &visibleRect);
-	}
+		GdkRectangle* outvisibleRect = sliceNew!GdkRectangle();
 
-	/**
-	 * Retrieves the #GdkWindow corresponding to an area of the text view;
-	 * possible windows include the overall widget window, child windows
-	 * on the left, right, top, bottom, and the window that displays the
-	 * text buffer. Windows are %NULL and nonexistent if their width or
-	 * height is 0, and are nonexistent before the widget has been
-	 * realized.
-	 *
-	 * Params:
-	 *     win = window to get
-	 *
-	 * Returns: a #GdkWindow, or %NULL
-	 */
-	public Window getWindow(GtkTextWindowType win)
-	{
-		auto p = gtk_text_view_get_window(gtkTextView, win);
+		gtk_text_view_get_visible_rect(gtkTextView, outvisibleRect);
 
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
-	}
-
-	/**
-	 * Usually used to find out which window an event corresponds to.
-	 *
-	 * If you connect to an event signal on @text_view, this function
-	 * should be called on `event->window` to see which window it was.
-	 *
-	 * Params:
-	 *     window = a window type
-	 *
-	 * Returns: the window type.
-	 */
-	public GtkTextWindowType getWindowType(Window window)
-	{
-		return gtk_text_view_get_window_type(gtkTextView, (window is null) ? null : window.getWindowStruct());
+		visibleRect = ObjectG.getDObject!(Rectangle)(outvisibleRect, true);
 	}
 
 	/**
@@ -834,8 +737,8 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * |[<!-- language="C" -->
 	 * static gboolean
-	 * gtk_foo_bar_key_press_event (GtkWidget   *widget,
-	 * GdkEventKey *event)
+	 * gtk_foo_bar_key_press_event (GtkWidget *widget,
+	 * GdkEvent  *event)
 	 * {
 	 * guint keyval;
 	 *
@@ -857,25 +760,10 @@ public class TextView : Container, ScrollableIF
 	 *     event = the key event
 	 *
 	 * Returns: %TRUE if the input method handled the key event.
-	 *
-	 * Since: 2.22
 	 */
-	public bool imContextFilterKeypress(GdkEventKey* event)
+	public bool imContextFilterKeypress(Event event)
 	{
-		return gtk_text_view_im_context_filter_keypress(gtkTextView, event) != 0;
-	}
-
-	/**
-	 * Updates the position of a child, as for gtk_text_view_add_child_in_window().
-	 *
-	 * Params:
-	 *     child = child widget already added to the text view
-	 *     xpos = new X position in window coordinates
-	 *     ypos = new Y position in window coordinates
-	 */
-	public void moveChild(Widget child, int xpos, int ypos)
-	{
-		gtk_text_view_move_child(gtkTextView, (child is null) ? null : child.getWidgetStruct(), xpos, ypos);
+		return gtk_text_view_im_context_filter_keypress(gtkTextView, (event is null) ? null : event.getEventStruct()) != 0;
 	}
 
 	/**
@@ -890,6 +778,19 @@ public class TextView : Container, ScrollableIF
 	public bool moveMarkOnscreen(TextMark mark)
 	{
 		return gtk_text_view_move_mark_onscreen(gtkTextView, (mark is null) ? null : mark.getTextMarkStruct()) != 0;
+	}
+
+	/**
+	 * Updates the position of a child, as for gtk_text_view_add_overlay().
+	 *
+	 * Params:
+	 *     child = a widget already added with gtk_text_view_add_overlay()
+	 *     xpos = new X position in buffer coordinates
+	 *     ypos = new Y position in buffer coordinates
+	 */
+	public void moveOverlay(Widget child, int xpos, int ypos)
+	{
+		gtk_text_view_move_overlay(gtkTextView, (child is null) ? null : child.getWidgetStruct(), xpos, ypos);
 	}
 
 	/**
@@ -919,7 +820,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * Moves the cursor to the currently visible region of the
-	 * buffer, it it isn’t there already.
+	 * buffer, if it isn’t there already.
 	 *
 	 * Returns: %TRUE if the cursor had to be moved.
 	 */
@@ -929,15 +830,24 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
+	 * Removes a child widget from @text_view.
+	 *
+	 * Params:
+	 *     child = the child to remove
+	 */
+	public void remove(Widget child)
+	{
+		gtk_text_view_remove(gtkTextView, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
 	 * Ensures that the cursor is shown (i.e. not in an 'off' blink
 	 * interval) and resets the time that it will stay blinking (or
 	 * visible, in case blinking is disabled).
 	 *
 	 * This function should be called in response to user input
 	 * (e.g. from derived classes that override the textview's
-	 * #GtkWidget::key-press-event handler).
-	 *
-	 * Since: 3.20
+	 * event handlers).
 	 */
 	public void resetCursorBlink()
 	{
@@ -949,8 +859,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * This can be necessary in the case where modifying the buffer
 	 * would confuse on-going input method behavior.
-	 *
-	 * Since: 2.22
 	 */
 	public void resetImContext()
 	{
@@ -1032,30 +940,10 @@ public class TextView : Container, ScrollableIF
 	 *     acceptsTab = %TRUE if pressing the Tab key should insert a tab
 	 *         character, %FALSE, if pressing the Tab key should move the
 	 *         keyboard focus.
-	 *
-	 * Since: 2.4
 	 */
 	public void setAcceptsTab(bool acceptsTab)
 	{
 		gtk_text_view_set_accepts_tab(gtkTextView, acceptsTab);
-	}
-
-	/**
-	 * Sets the width of %GTK_TEXT_WINDOW_LEFT or %GTK_TEXT_WINDOW_RIGHT,
-	 * or the height of %GTK_TEXT_WINDOW_TOP or %GTK_TEXT_WINDOW_BOTTOM.
-	 * Automatically destroys the corresponding window if the size is set
-	 * to 0, and creates the window if the size is set to non-zero.  This
-	 * function can only be used for the “border windows”, and it won’t
-	 * work with %GTK_TEXT_WINDOW_WIDGET, %GTK_TEXT_WINDOW_TEXT, or
-	 * %GTK_TEXT_WINDOW_PRIVATE.
-	 *
-	 * Params:
-	 *     type = window to affect
-	 *     size = width or height of the window
-	 */
-	public void setBorderWindowSize(GtkTextWindowType type, int size)
-	{
-		gtk_text_view_set_border_window_size(gtkTextView, type, size);
 	}
 
 	/**
@@ -1066,8 +954,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     bottomMargin = bottom margin in pixels
-	 *
-	 * Since: 3.18
 	 */
 	public void setBottomMargin(int bottomMargin)
 	{
@@ -1095,7 +981,7 @@ public class TextView : Container, ScrollableIF
 	 * want to turn the cursor off.
 	 *
 	 * Note that this property may be overridden by the
-	 * #GtkSettings:gtk-keynave-use-caret settings.
+	 * #GtkSettings:gtk-keynav-use-caret settings.
 	 *
 	 * Params:
 	 *     setting = whether to show the insertion cursor
@@ -1119,6 +1005,34 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
+	 * Sets a menu model to add when constructing
+	 * the context menu for @text_view. You can pass
+	 * %NULL to remove a previously set extra menu.
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 */
+	public void setExtraMenu(MenuModel model)
+	{
+		gtk_text_view_set_extra_menu(gtkTextView, (model is null) ? null : model.getMenuModelStruct());
+	}
+
+	/**
+	 * Places @widget into the gutter specified by @win.
+	 *
+	 * @win must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
+	 * %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
+	 *
+	 * Params:
+	 *     win = a #GtkTextWindowType
+	 *     widget = a #GtkWidget or %NULL
+	 */
+	public void setGutter(GtkTextWindowType win, Widget widget)
+	{
+		gtk_text_view_set_gutter(gtkTextView, win, (widget is null) ? null : widget.getWidgetStruct());
+	}
+
+	/**
 	 * Sets the default indentation for paragraphs in @text_view.
 	 * Tags in the buffer may override the default.
 	 *
@@ -1136,8 +1050,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     hints = the hints
-	 *
-	 * Since: 3.6
 	 */
 	public void setInputHints(GtkInputHints hints)
 	{
@@ -1151,8 +1063,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     purpose = the purpose
-	 *
-	 * Since: 3.6
 	 */
 	public void setInputPurpose(GtkInputPurpose purpose)
 	{
@@ -1193,8 +1103,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     monospace = %TRUE to request monospace styling
-	 *
-	 * Since: 3.16
 	 */
 	public void setMonospace(bool monospace)
 	{
@@ -1206,8 +1114,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     overwrite = %TRUE to turn on overwrite mode, %FALSE to turn it off
-	 *
-	 * Since: 2.4
 	 */
 	public void setOverwrite(bool overwrite)
 	{
@@ -1287,8 +1193,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     topMargin = top margin in pixels
-	 *
-	 * Since: 3.18
 	 */
 	public void setTopMargin(int topMargin)
 	{
@@ -1325,11 +1229,8 @@ public class TextView : Container, ScrollableIF
 	 * Converts coordinates on the window identified by @win to buffer
 	 * coordinates, storing the result in (@buffer_x,@buffer_y).
 	 *
-	 * Note that you can’t convert coordinates for a nonexisting window (see
-	 * gtk_text_view_set_border_window_size()).
-	 *
 	 * Params:
-	 *     win = a #GtkTextWindowType except %GTK_TEXT_WINDOW_PRIVATE
+	 *     win = a #GtkTextWindowType
 	 *     windowX = window x coordinate
 	 *     windowY = window y coordinate
 	 *     bufferX = buffer x coordinate return location or %NULL
@@ -1342,7 +1243,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::backspace signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * The default bindings for this signal are
@@ -1355,7 +1256,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::copy-clipboard signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to copy the selection to the clipboard.
 	 *
 	 * The default bindings for this signal are
@@ -1368,7 +1269,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::cut-clipboard signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to cut the selection to the clipboard.
 	 *
 	 * The default bindings for this signal are
@@ -1381,7 +1282,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::delete-from-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates a text deletion.
 	 *
 	 * If the @type is %GTK_DELETE_CHARS, GTK+ deletes the selection
@@ -1391,7 +1292,7 @@ public class TextView : Container, ScrollableIF
 	 * The default bindings for this signal are
 	 * Delete for deleting a character, Ctrl-Delete for
 	 * deleting a word and Ctrl-Backspace for deleting a word
-	 * backwords.
+	 * backwards.
 	 *
 	 * Params:
 	 *     type = the granularity of the deletion, as a #GtkDeleteType
@@ -1414,8 +1315,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Returns: %GDK_EVENT_STOP to stop other handlers from being invoked for the
 	 *     event. %GDK_EVENT_PROPAGATE to propagate the event further.
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnExtendSelection(bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1424,7 +1323,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::insert-at-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates the insertion of a
 	 * fixed string at the cursor.
 	 *
@@ -1440,12 +1339,10 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::insert-emoji signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to present the Emoji chooser for the @text_view.
 	 *
 	 * The default bindings for this signal are Ctrl-. and Ctrl-;
-	 *
-	 * Since: 3.22.27
 	 */
 	gulong addOnInsertEmoji(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1454,7 +1351,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::move-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates a cursor movement.
 	 * If the cursor is not visible in @text_view, this signal causes
 	 * the viewport to be moved instead.
@@ -1465,7 +1362,7 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * The default bindings for this signal come in two variants,
 	 * the variant with the Shift modifier extends the selection,
-	 * the variant without the Shift modifer does not.
+	 * the variant without the Shift modifier does not.
 	 * There are too many key combinations to list them all here.
 	 * - Arrow keys move by individual characters/lines
 	 * - Ctrl-arrow key combinations move by words/paragraphs
@@ -1485,7 +1382,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::move-viewport signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which can be bound to key combinations to allow the user
 	 * to move the viewport, i.e. change what part of the text view
 	 * is visible in a containing scrolled window.
@@ -1503,7 +1400,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::paste-clipboard signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to paste the contents of the clipboard
 	 * into the text view.
 	 *
@@ -1516,30 +1413,6 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
-	 * The ::populate-popup signal gets emitted before showing the
-	 * context menu of the text view.
-	 *
-	 * If you need to add items to the context menu, connect
-	 * to this signal and append your items to the @popup, which
-	 * will be a #GtkMenu in this case.
-	 *
-	 * If #GtkTextView:populate-all is %TRUE, this signal will
-	 * also be emitted to populate touch popups. In this case,
-	 * @popup will be a different container, e.g. a #GtkToolbar.
-	 *
-	 * The signal handler should not make assumptions about the
-	 * type of @widget, but check whether @popup is a #GtkMenu
-	 * or #GtkToolbar or another kind of container.
-	 *
-	 * Params:
-	 *     popup = the container that is being populated
-	 */
-	gulong addOnPopulatePopup(void delegate(Widget, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
 	 * If an input method is used, the typed text will not immediately
 	 * be committed to the buffer. So if you are interested in the text,
 	 * connect to this signal.
@@ -1549,8 +1422,6 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     preedit = the current preedit string
-	 *
-	 * Since: 2.20
 	 */
 	gulong addOnPreeditChanged(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1559,7 +1430,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::select-all signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to select or unselect the complete
 	 * contents of the text view.
 	 *
@@ -1576,7 +1447,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::set-anchor signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates setting the "anchor"
 	 * mark. The "anchor" mark gets placed at the same position as the
 	 * "insert" mark.
@@ -1590,7 +1461,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::toggle-cursor-visible signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to toggle the #GtkTextView:cursor-visible
 	 * property.
 	 *
@@ -1603,7 +1474,7 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * The ::toggle-overwrite signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to toggle the overwrite mode of the text view.
 	 *
 	 * The default bindings for this signal is Insert.

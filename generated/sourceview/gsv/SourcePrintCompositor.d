@@ -31,7 +31,6 @@ private import gsv.SourceBuffer;
 private import gsv.SourceView;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.PrintContext;
 
 
@@ -85,14 +84,14 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public this(SourceBuffer buffer)
 	{
-		auto p = gtk_source_print_compositor_new((buffer is null) ? null : buffer.getSourceBufferStruct());
+		auto __p = gtk_source_print_compositor_new((buffer is null) ? null : buffer.getSourceBufferStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourcePrintCompositor*) p, true);
+		this(cast(GtkSourcePrintCompositor*) __p, true);
 	}
 
 	/**
@@ -115,14 +114,14 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public this(SourceView view)
 	{
-		auto p = gtk_source_print_compositor_new_from_view((view is null) ? null : view.getSourceViewStruct());
+		auto __p = gtk_source_print_compositor_new_from_view((view is null) ? null : view.getSourceViewStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_view");
 		}
 
-		this(cast(GtkSourcePrintCompositor*) p, true);
+		this(cast(GtkSourcePrintCompositor*) __p, true);
 	}
 
 	/**
@@ -203,14 +202,14 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public SourceBuffer getBuffer()
 	{
-		auto p = gtk_source_print_compositor_get_buffer(gtkSourcePrintCompositor);
+		auto __p = gtk_source_print_compositor_get_buffer(gtkSourcePrintCompositor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
+		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) __p);
 	}
 
 	/**

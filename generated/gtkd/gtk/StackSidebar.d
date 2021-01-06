@@ -26,12 +26,10 @@ module gtk.StackSidebar;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtk.Bin;
 private import gtk.Stack;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -51,10 +49,8 @@ public  import gtkc.gtktypes;
  * When circumstances require it, GtkStackSidebar adds the
  * .needs-attention style class to the widgets representing the stack
  * pages.
- *
- * Since: 3.16
  */
-public class StackSidebar : Bin
+public class StackSidebar : Widget
 {
 	/** the main Gtk struct */
 	protected GtkStackSidebar* gtkStackSidebar;
@@ -79,7 +75,7 @@ public class StackSidebar : Bin
 	public this (GtkStackSidebar* gtkStackSidebar, bool ownedRef = false)
 	{
 		this.gtkStackSidebar = gtkStackSidebar;
-		super(cast(GtkBin*)gtkStackSidebar, ownedRef);
+		super(cast(GtkWidget*)gtkStackSidebar, ownedRef);
 	}
 
 
@@ -94,20 +90,18 @@ public class StackSidebar : Bin
 	 *
 	 * Returns: the new #GtkStackSidebar
 	 *
-	 * Since: 3.16
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_stack_sidebar_new();
+		auto __p = gtk_stack_sidebar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStackSidebar*) p);
+		this(cast(GtkStackSidebar*) __p);
 	}
 
 	/**
@@ -116,19 +110,17 @@ public class StackSidebar : Bin
 	 *
 	 * Returns: the associated #GtkStack or
 	 *     %NULL if none has been set explicitly
-	 *
-	 * Since: 3.16
 	 */
 	public Stack getStack()
 	{
-		auto p = gtk_stack_sidebar_get_stack(gtkStackSidebar);
+		auto __p = gtk_stack_sidebar_get_stack(gtkStackSidebar);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Stack)(cast(GtkStack*) p);
+		return ObjectG.getDObject!(Stack)(cast(GtkStack*) __p);
 	}
 
 	/**
@@ -139,8 +131,6 @@ public class StackSidebar : Bin
 	 *
 	 * Params:
 	 *     stack = a #GtkStack
-	 *
-	 * Since: 3.16
 	 */
 	public void setStack(Stack stack)
 	{

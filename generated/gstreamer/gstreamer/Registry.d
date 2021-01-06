@@ -33,7 +33,6 @@ private import gstreamer.Plugin;
 private import gstreamer.PluginFeature;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -170,14 +169,14 @@ public class Registry : ObjectGst
 	 */
 	public static Registry get()
 	{
-		auto p = gst_registry_get();
+		auto __p = gst_registry_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Registry)(cast(GstRegistry*) p);
+		return ObjectG.getDObject!(Registry)(cast(GstRegistry*) __p);
 	}
 
 	/**
@@ -253,14 +252,14 @@ public class Registry : ObjectGst
 	 */
 	public ListG featureFilter(GstPluginFeatureFilter filter, bool first, void* userData)
 	{
-		auto p = gst_registry_feature_filter(gstRegistry, filter, first, userData);
+		auto __p = gst_registry_feature_filter(gstRegistry, filter, first, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -278,14 +277,14 @@ public class Registry : ObjectGst
 	 */
 	public PluginFeature findFeature(string name, GType type)
 	{
-		auto p = gst_registry_find_feature(gstRegistry, Str.toStringz(name), type);
+		auto __p = gst_registry_find_feature(gstRegistry, Str.toStringz(name), type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p, true);
+		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) __p, true);
 	}
 
 	/**
@@ -303,14 +302,14 @@ public class Registry : ObjectGst
 	 */
 	public Plugin findPlugin(string name)
 	{
-		auto p = gst_registry_find_plugin(gstRegistry, Str.toStringz(name));
+		auto __p = gst_registry_find_plugin(gstRegistry, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) __p, true);
 	}
 
 	/**
@@ -326,14 +325,14 @@ public class Registry : ObjectGst
 	 */
 	public ListG getFeatureList(GType type)
 	{
-		auto p = gst_registry_get_feature_list(gstRegistry, type);
+		auto __p = gst_registry_get_feature_list(gstRegistry, type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -347,14 +346,14 @@ public class Registry : ObjectGst
 	 */
 	public ListG getFeatureListByPlugin(string name)
 	{
-		auto p = gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name));
+		auto __p = gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -379,14 +378,14 @@ public class Registry : ObjectGst
 	 */
 	public ListG getPluginList()
 	{
-		auto p = gst_registry_get_plugin_list(gstRegistry);
+		auto __p = gst_registry_get_plugin_list(gstRegistry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -401,14 +400,14 @@ public class Registry : ObjectGst
 	 */
 	public Plugin lookup(string filename)
 	{
-		auto p = gst_registry_lookup(gstRegistry, Str.toStringz(filename));
+		auto __p = gst_registry_lookup(gstRegistry, Str.toStringz(filename));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) __p, true);
 	}
 
 	/**
@@ -424,14 +423,14 @@ public class Registry : ObjectGst
 	 */
 	public PluginFeature lookupFeature(string name)
 	{
-		auto p = gst_registry_lookup_feature(gstRegistry, Str.toStringz(name));
+		auto __p = gst_registry_lookup_feature(gstRegistry, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p, true);
+		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) __p, true);
 	}
 
 	/**
@@ -453,14 +452,14 @@ public class Registry : ObjectGst
 	 */
 	public ListG pluginFilter(GstPluginFilter filter, bool first, void* userData)
 	{
-		auto p = gst_registry_plugin_filter(gstRegistry, filter, first, userData);
+		auto __p = gst_registry_plugin_filter(gstRegistry, filter, first, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

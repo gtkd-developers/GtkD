@@ -35,7 +35,6 @@ private import gstreamer.Iterator;
 private import gstreamer.Pad;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -85,12 +84,15 @@ private import std.algorithm;
  * a SEGMENT_START have posted a SEGMENT_DONE.
  * 
  * * GST_MESSAGE_DURATION_CHANGED: Is posted by an element that detected a change
- * in the stream duration. The default bin behaviour is to clear any
- * cached duration values so that the next duration query will perform
- * a full duration recalculation. The duration change is posted to the
+ * in the stream duration. The duration change is posted to the
  * application so that it can refetch the new duration with a duration
  * query. Note that these messages can be posted before the bin is
- * prerolled, in which case the duration query might fail.
+ * prerolled, in which case the duration query might fail. Note also that
+ * there might be a discrepancy (due to internal buffering/queueing) between the
+ * stream being currently displayed and the returned duration query.
+ * Applications might want to also query for duration (and changes) by
+ * listening to the GST_MESSAGE_STREAM_START message, signaling the active start
+ * of a (new) stream.
  * 
  * * GST_MESSAGE_CLOCK_LOST: This message is posted by an element when it
  * can no longer provide a clock. The default bin behaviour is to
@@ -115,11 +117,8 @@ private import std.algorithm;
  * A #GstBin implements the following default behaviour for answering to a
  * #GstQuery:
  * 
- * * GST_QUERY_DURATION:If the query has been asked before with the same format
- * and the bin is a toplevel bin (ie. has no parent),
- * use the cached previous value. If no previous value was cached, the
- * query is sent to all sink elements in the bin and the MAXIMUM of all
- * values is returned. If the bin is a toplevel bin the value is cached.
+ * * GST_QUERY_DURATION: The bin will forward the query to all sink
+ * elements contained within and will return the maximum value.
  * If no sinks are available in the bin, the query fails.
  * 
  * * GST_QUERY_POSITION:The query is sent to all sink elements in the bin and the
@@ -215,14 +214,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public this(string name)
 	{
-		auto p = gst_bin_new(Str.toStringz(name));
+		auto __p = gst_bin_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBin*) p);
+		this(cast(GstBin*) __p);
 	}
 
 	/**
@@ -266,14 +265,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Pad findUnlinkedPad(GstPadDirection direction)
 	{
-		auto p = gst_bin_find_unlinked_pad(gstBin, direction);
+		auto __p = gst_bin_find_unlinked_pad(gstBin, direction);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -293,14 +292,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Element getByInterface(GType iface)
 	{
-		auto p = gst_bin_get_by_interface(gstBin, iface);
+		auto __p = gst_bin_get_by_interface(gstBin, iface);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p, true);
 	}
 
 	/**
@@ -319,14 +318,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Element getByName(string name)
 	{
-		auto p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
+		auto __p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p, true);
 	}
 
 	/**
@@ -346,14 +345,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Element getByNameRecurseUp(string name)
 	{
-		auto p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
+		auto __p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p, true);
 	}
 
 	/**
@@ -368,6 +367,34 @@ public class Bin : Element, ChildProxyIF
 	public GstElementFlags getSuppressedFlags()
 	{
 		return gst_bin_get_suppressed_flags(gstBin);
+	}
+
+	/**
+	 * Looks for all elements inside the bin with the given element factory name.
+	 * The function recurses inside child bins. The iterator will yield a series of
+	 * #GstElement that should be unreffed after use.
+	 *
+	 * MT safe. Caller owns returned value.
+	 *
+	 * Params:
+	 *     factoryName = the name of the #GstElementFactory
+	 *
+	 * Returns: a #GstIterator of #GstElement
+	 *     for all elements in the bin with the given element factory name,
+	 *     or %NULL.
+	 *
+	 * Since: 1.18
+	 */
+	public Iterator iterateAllByElementFactoryName(string factoryName)
+	{
+		auto __p = gst_bin_iterate_all_by_element_factory_name(gstBin, Str.toStringz(factoryName));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -387,14 +414,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Iterator iterateAllByInterface(GType iface)
 	{
-		auto p = gst_bin_iterate_all_by_interface(gstBin, iface);
+		auto __p = gst_bin_iterate_all_by_interface(gstBin, iface);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -407,14 +434,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Iterator iterateElements()
 	{
-		auto p = gst_bin_iterate_elements(gstBin);
+		auto __p = gst_bin_iterate_elements(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -428,14 +455,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Iterator iterateRecurse()
 	{
-		auto p = gst_bin_iterate_recurse(gstBin);
+		auto __p = gst_bin_iterate_recurse(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -449,14 +476,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Iterator iterateSinks()
 	{
-		auto p = gst_bin_iterate_sinks(gstBin);
+		auto __p = gst_bin_iterate_sinks(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -474,14 +501,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Iterator iterateSorted()
 	{
-		auto p = gst_bin_iterate_sorted(gstBin);
+		auto __p = gst_bin_iterate_sorted(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -495,14 +522,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Iterator iterateSources()
 	{
-		auto p = gst_bin_iterate_sources(gstBin);
+		auto __p = gst_bin_iterate_sources(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**

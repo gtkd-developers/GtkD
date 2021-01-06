@@ -24,13 +24,11 @@
 
 module gtk.TreeDragSourceIF;
 
+private import gdk.ContentProvider;
 private import gobject.ObjectG;
-private import gtk.SelectionData;
-private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -63,19 +61,17 @@ public interface TreeDragSourceIF{
 	public bool dragDataDelete(TreePath path);
 
 	/**
-	 * Asks the #GtkTreeDragSource to fill in @selection_data with a
-	 * representation of the row at @path. @selection_data->target gives
-	 * the required type of the data.  Should robustly handle a @path no
+	 * Asks the #GtkTreeDragSource to return a #GdkContentProvider representing
+	 * the row at @path. Should robustly handle a @path no
 	 * longer found in the model!
 	 *
 	 * Params:
 	 *     path = row that was dragged
-	 *     selectionData = a #GtkSelectionData to fill with data
-	 *         from the dragged row
 	 *
-	 * Returns: %TRUE if data of the required type was provided
+	 * Returns: a #GdkContentProvider for the
+	 *     given @path or %NULL if none exists
 	 */
-	public bool dragDataGet(TreePath path, SelectionData selectionData);
+	public ContentProvider dragDataGet(TreePath path);
 
 	/**
 	 * Asks the #GtkTreeDragSource whether a particular row can be used as
@@ -88,52 +84,4 @@ public interface TreeDragSourceIF{
 	 * Returns: %TRUE if the row can be dragged
 	 */
 	public bool rowDraggable(TreePath path);
-
-	/**
-	 * Obtains a @tree_model and @path from selection data of target type
-	 * %GTK_TREE_MODEL_ROW. Normally called from a drag_data_received handler.
-	 * This function can only be used if @selection_data originates from the same
-	 * process that’s calling this function, because a pointer to the tree model
-	 * is being passed around. If you aren’t in the same process, then you'll
-	 * get memory corruption. In the #GtkTreeDragDest drag_data_received handler,
-	 * you can assume that selection data of type %GTK_TREE_MODEL_ROW is
-	 * in from the current process. The returned path must be freed with
-	 * gtk_tree_path_free().
-	 *
-	 * Params:
-	 *     selectionData = a #GtkSelectionData
-	 *     treeModel = a #GtkTreeModel
-	 *     path = row in @tree_model
-	 *
-	 * Returns: %TRUE if @selection_data had target type %GTK_TREE_MODEL_ROW and
-	 *     is otherwise valid
-	 */
-	public static bool getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path)
-	{
-		GtkTreeModel* outtreeModel = null;
-		GtkTreePath* outpath = null;
-
-		auto p = gtk_tree_get_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), &outtreeModel, &outpath) != 0;
-
-		treeModel = ObjectG.getDObject!(TreeModelIF)(outtreeModel);
-		path = ObjectG.getDObject!(TreePath)(outpath);
-
-		return p;
-	}
-
-	/**
-	 * Sets selection data of target type %GTK_TREE_MODEL_ROW. Normally used
-	 * in a drag_data_get handler.
-	 *
-	 * Params:
-	 *     selectionData = some #GtkSelectionData
-	 *     treeModel = a #GtkTreeModel
-	 *     path = a row in @tree_model
-	 *
-	 * Returns: %TRUE if the #GtkSelectionData had the proper target type to allow us to set a tree row
-	 */
-	public static bool setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path)
-	{
-		return gtk_tree_set_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), (treeModel is null) ? null : treeModel.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct()) != 0;
-	}
 }

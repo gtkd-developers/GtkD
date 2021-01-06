@@ -106,7 +106,34 @@ public enum VteEraseBinding
 alias VteEraseBinding EraseBinding;
 
 /**
- * An enumeratio type that can be used to specify the format the selection
+ * An enumeration type for features.
+ *
+ * Since: 0.62
+ */
+public enum VteFeatureFlags
+{
+	/**
+	 * whether VTE was built with bidirectional text support
+	 */
+	FLAG_BIDI = 1,
+	/**
+	 * whether VTE was built with ICU support
+	 */
+	FLAG_ICU = 2,
+	/**
+	 * whether VTE was built with systemd support
+	 */
+	FLAG_SYSTEMD = 4,
+	/**
+	 * whether VTE was built with SIXEL support
+	 */
+	FLAG_SIXEL = 8,
+	FLAGS_MASK = -1,
+}
+alias VteFeatureFlags FeatureFlags;
+
+/**
+ * An enumeration type that can be used to specify the format the selection
  * should be copied to the clipboard in.
  *
  * Since: 0.50
@@ -159,6 +186,16 @@ public enum VtePtyFlags
 	 * Unused. Deprecated: 0.38
 	 */
 	NO_FALLBACK = 16,
+	/**
+	 * Do not start a new session for the child in
+	 * vte_pty_child_setup(). See man:setsid(2) for more information. Since: 0.58
+	 */
+	NO_SESSION = 32,
+	/**
+	 * Do not set the PTY as the controlling TTY for the child
+	 * in vte_pty_child_setup(). See man:tty_ioctl(4) for more information. Since: 0.58
+	 */
+	NO_CTTY = 64,
 	/**
 	 * the default flags
 	 */
@@ -364,21 +401,51 @@ alias VTE_MAJOR_VERSION = MAJOR_VERSION;
  * The micro version number of the VTE library
  * (e.g. in version 3.1.4 this is 4).
  */
-enum MICRO_VERSION = 3;
+enum MICRO_VERSION = 1;
 alias VTE_MICRO_VERSION = MICRO_VERSION;
 
 /**
  * The minor version number of the VTE library
  * (e.g. in version 3.1.4 this is 1).
  */
-enum MINOR_VERSION = 56;
+enum MINOR_VERSION = 62;
 alias VTE_MINOR_VERSION = MINOR_VERSION;
 
 enum REGEX_FLAGS_DEFAULT = 1075314688;
 alias VTE_REGEX_FLAGS_DEFAULT = REGEX_FLAGS_DEFAULT;
 
+/**
+ * Use this as a spawn flag (together with flags from #GSpawnFlags) in
+ * vte_pty_spawn_async().
+ *
+ * Normally, the spawned process inherits the environment from the parent
+ * process; when this flag is used, only the environment variables passed
+ * to vte_pty_spawn_async() etc. are passed to the child process.
+ */
 enum SPAWN_NO_PARENT_ENVV = 33554432;
 alias VTE_SPAWN_NO_PARENT_ENVV = SPAWN_NO_PARENT_ENVV;
+
+/**
+ * Use this as a spawn flag (together with flags from #GSpawnFlags) in
+ * vte_pty_spawn_async().
+ *
+ * Prevents vte_pty_spawn_async() etc. from moving the newly created child
+ * process to a systemd user scope.
+ */
+enum SPAWN_NO_SYSTEMD_SCOPE = 67108864;
+alias VTE_SPAWN_NO_SYSTEMD_SCOPE = SPAWN_NO_SYSTEMD_SCOPE;
+
+/**
+ * Use this as a spawn flag (together with flags from #GSpawnFlags) in
+ * vte_pty_spawn_async().
+ *
+ * Requires vte_pty_spawn_async() etc. to move the newly created child
+ * process to a systemd user scope; if that fails, the whole spawn fails.
+ *
+ * This is supported on Linux only.
+ */
+enum SPAWN_REQUIRE_SYSTEMD_SCOPE = 134217728;
+alias VTE_SPAWN_REQUIRE_SYSTEMD_SCOPE = SPAWN_REQUIRE_SYSTEMD_SCOPE;
 
 enum TEST_FLAGS_ALL = 18446744073709551615UL;
 alias VTE_TEST_FLAGS_ALL = TEST_FLAGS_ALL;

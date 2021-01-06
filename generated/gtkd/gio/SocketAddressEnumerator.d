@@ -32,7 +32,6 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -47,7 +46,7 @@ public  import gtkc.giotypes;
  * g_socket_address_enumerator_next_finish() should be used where possible.
  * 
  * Each #GSocketAddressEnumerator can only be enumerated once. Once
- * g_socket_address_enumerator_next() has returned %NULL (and no error), further
+ * g_socket_address_enumerator_next() has returned %NULL, further
  * enumeration with that #GSocketAddressEnumerator is not possible, and it can
  * be unreffed.
  */

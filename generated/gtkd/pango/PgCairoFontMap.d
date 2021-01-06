@@ -27,7 +27,6 @@ module pango.PgCairoFontMap;
 private import cairo.ScaledFont;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgFontMap;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -99,14 +98,14 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public static PgFontMap getDefault()
 	{
-		auto p = pango_cairo_font_map_get_default();
+		auto __p = pango_cairo_font_map_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) __p);
 	}
 
 	/**
@@ -137,14 +136,14 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public this()
 	{
-		auto p = pango_cairo_font_map_new();
+		auto __p = pango_cairo_font_map_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoCairoFontMap*) p, true);
+		this(cast(PangoCairoFontMap*) __p, true);
 	}
 
 	/**
@@ -169,14 +168,14 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public this(cairo_font_type_t fonttype)
 	{
-		auto p = pango_cairo_font_map_new_for_font_type(fonttype);
+		auto __p = pango_cairo_font_map_new_for_font_type(fonttype);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_font_type");
 		}
 
-		this(cast(PangoCairoFontMap*) p, true);
+		this(cast(PangoCairoFontMap*) __p, true);
 	}
 
 	/**
@@ -212,8 +211,8 @@ public class PgCairoFontMap : PgFontMap
 	 *
 	 * Note that since Pango 1.32.6, the default fontmap is per-thread.
 	 * This function only changes the default fontmap for
-	 * the current thread.   Default fontmaps of exisiting threads
-	 * are not changed.  Default fontmaps of any new threads will
+	 * the current thread.  Default fontmaps of existing threads
+	 * are not changed. Default fontmaps of any new threads will
 	 * still be created using pango_cairo_font_map_new().
 	 *
 	 * A value of %NULL for @fontmap will cause the current default
@@ -256,13 +255,13 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public ScaledFont getScaledFont()
 	{
-		auto p = pango_cairo_font_get_scaled_font(cast(PangoCairoFont*)pangoCairoFontMap);
+		auto __p = pango_cairo_font_get_scaled_font(cast(PangoCairoFont*)pangoCairoFontMap);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ScaledFont(cast(cairo_scaled_font_t*) p);
+		return new ScaledFont(cast(cairo_scaled_font_t*) __p);
 	}
 }

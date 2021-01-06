@@ -1493,6 +1493,9 @@ noCode: new_utc
 struct: Tree
 class: BBTree
 
+struct: Uri
+class: URI
+
 struct: Util
 move: build_filenamev Util
 move: build_pathv Util
@@ -2083,11 +2086,11 @@ version: end
 
 move: filename_from_uri URI
 move: filename_to_uri URI
-move: uri_escape_string URI
-move: uri_list_extract_uris URI
-move: uri_parse_scheme URI
-move: uri_unescape_segment URI
-move: uri_unescape_string URI
+#move: uri_escape_string Uri
+#move: uri_list_extract_uris Uri
+#move: uri_parse_scheme Uri
+#move: uri_unescape_segment Uri
+#move: uri_unescape_string Uri
 
 version 2.52: start
 	move: uuid_string_is_valid Uuid string_is_valid

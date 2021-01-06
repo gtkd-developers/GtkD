@@ -29,13 +29,12 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
 /**
- * A #GdkFrameClock tells the application when to update and repaint a
- * window. This may be synced to the vertical refresh rate of the
+ * A #GdkFrameClock tells the application when to update and repaint
+ * a surface. This may be synced to the vertical refresh rate of the
  * monitor, for example. Even when the frame clock uses a simple timer
  * rather than a hardware-based vertical sync, the frame clock helps
  * because it ensures everything paints at the same time (reducing the
@@ -110,8 +109,6 @@ public class FrameClock : ObjectG
 	 * This function may be called multiple times and frames will be
 	 * requested until gdk_frame_clock_end_updating() is called the same
 	 * number of times.
-	 *
-	 * Since: 3.8
 	 */
 	public void beginUpdating()
 	{
@@ -121,8 +118,6 @@ public class FrameClock : ObjectG
 	/**
 	 * Stops updates for an animation. See the documentation for
 	 * gdk_frame_clock_begin_updating().
-	 *
-	 * Since: 3.8
 	 */
 	public void endUpdating()
 	{
@@ -136,19 +131,28 @@ public class FrameClock : ObjectG
 	 *     frame currently being processed, or even no frame is being
 	 *     processed, for the previous frame. Before any frames have been
 	 *     processed, returns %NULL.
-	 *
-	 * Since: 3.8
 	 */
 	public FrameTimings getCurrentTimings()
 	{
-		auto p = gdk_frame_clock_get_current_timings(gdkFrameClock);
+		auto __p = gdk_frame_clock_get_current_timings(gdkFrameClock);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) __p);
+	}
+
+	/**
+	 * Calculates the current frames-per-second, based on the
+	 * frame timings of @frame_clock.
+	 *
+	 * Returns: the current fps, as a double
+	 */
+	public double getFps()
+	{
+		return gdk_frame_clock_get_fps(gdkFrameClock);
 	}
 
 	/**
@@ -158,8 +162,6 @@ public class FrameClock : ObjectG
 	 * Returns: inside frame processing, the value of the frame counter
 	 *     for the current frame. Outside of frame processing, the frame
 	 *     counter for the last frame.
-	 *
-	 * Since: 3.8
 	 */
 	public long getFrameCounter()
 	{
@@ -176,8 +178,6 @@ public class FrameClock : ObjectG
 	 *
 	 * Returns: a timestamp in microseconds, in the timescale of
 	 *     of g_get_monotonic_time().
-	 *
-	 * Since: 3.8
 	 */
 	public long getFrameTime()
 	{
@@ -195,8 +195,6 @@ public class FrameClock : ObjectG
 	 * Returns: the frame counter value for the oldest frame
 	 *     that is available in the internal frame history of the
 	 *     #GdkFrameClock.
-	 *
-	 * Since: 3.8
 	 */
 	public long getHistoryStart()
 	{
@@ -218,8 +216,6 @@ public class FrameClock : ObjectG
 	 *     presentationTimeReturn = a location to store the next
 	 *         candidate presentation time after the given base time.
 	 *         0 will be will be stored if no history is present.
-	 *
-	 * Since: 3.8
 	 */
 	public void getRefreshInfo(long baseTime, out long refreshIntervalReturn, out long presentationTimeReturn)
 	{
@@ -238,19 +234,17 @@ public class FrameClock : ObjectG
 	 * Returns: the #GdkFrameTimings object for
 	 *     the specified frame, or %NULL if it is not available. See
 	 *     gdk_frame_clock_get_history_start().
-	 *
-	 * Since: 3.8
 	 */
 	public FrameTimings getTimings(long frameCounter)
 	{
-		auto p = gdk_frame_clock_get_timings(gdkFrameClock, frameCounter);
+		auto __p = gdk_frame_clock_get_timings(gdkFrameClock, frameCounter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) __p);
 	}
 
 	/**
@@ -262,13 +256,11 @@ public class FrameClock : ObjectG
 	 * content and want to continually request the
 	 * %GDK_FRAME_CLOCK_PHASE_UPDATE phase for a period of time,
 	 * you should use gdk_frame_clock_begin_updating() instead, since
-	 * this allows GTK+ to adjust system parameters to get maximally
+	 * this allows GTK to adjust system parameters to get maximally
 	 * smooth animations.
 	 *
 	 * Params:
 	 *     phase = the phase that is requested
-	 *
-	 * Since: 3.8
 	 */
 	public void requestPhase(GdkFrameClockPhase phase)
 	{
@@ -307,7 +299,7 @@ public class FrameClock : ObjectG
 	 * This signal is emitted as the second step of toolkit and
 	 * application processing of the frame. Any work to update
 	 * sizes and positions of application elements should be
-	 * performed. GTK+ normally handles this internally.
+	 * performed. GTK normally handles this internally.
 	 */
 	gulong addOnLayout(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -318,8 +310,8 @@ public class FrameClock : ObjectG
 	 * This signal is emitted as the third step of toolkit and
 	 * application processing of the frame. The frame is
 	 * repainted. GDK normally handles this internally and
-	 * produces expose events, which are turned into GTK+
-	 * #GtkWidget::draw signals.
+	 * emits #GdkSurface::render which are turned into
+	 * #GtkWidget::snapshot signals by GTK.
 	 */
 	gulong addOnPaint(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -328,7 +320,7 @@ public class FrameClock : ObjectG
 
 	/**
 	 * This signal is emitted after processing of the frame is
-	 * finished, and is handled internally by GTK+ to resume normal
+	 * finished, and is handled internally by GTK to resume normal
 	 * event processing. Applications should not handle this signal.
 	 */
 	gulong addOnResumeEvents(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

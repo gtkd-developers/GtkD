@@ -28,7 +28,6 @@ private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -84,13 +83,13 @@ public class StaticCaps
 	 */
 	public Caps get()
 	{
-		auto p = gst_static_caps_get(gstStaticCaps);
+		auto __p = gst_static_caps_get(gstStaticCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 }

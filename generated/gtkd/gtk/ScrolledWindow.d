@@ -28,11 +28,9 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Adjustment;
-private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -44,33 +42,34 @@ private import std.algorithm;
  * Widgets with native scrolling support, i.e. those whose classes implement the
  * #GtkScrollable interface, are added directly. For other types of widget, the
  * class #GtkViewport acts as an adaptor, giving scrollability to other widgets.
- * GtkScrolledWindow’s implementation of gtk_container_add() intelligently
+ * gtk_scrolled_window_set_child() intelligently
  * accounts for whether or not the added child is a #GtkScrollable. If it isn’t,
  * #GtkScrolledWindow wraps the child in a #GtkViewport and adds that for you.
  * Therefore, you can just add any child widget and not worry about the details.
  * 
- * If gtk_container_add() has added a #GtkViewport for you, you can remove
+ * If gtk_scrolled_window_set_child() has added a #GtkViewport for you, you can remove
  * both your added child widget from the #GtkViewport, and the #GtkViewport
  * from the GtkScrolledWindow, like this:
  * 
  * |[<!-- language="C" -->
- * GtkWidget *scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+ * GtkWidget *scrolled_window = gtk_scrolled_window_new ();
  * GtkWidget *child_widget = gtk_button_new ();
  * 
  * // GtkButton is not a GtkScrollable, so GtkScrolledWindow will automatically
  * // add a GtkViewport.
- * gtk_container_add (GTK_CONTAINER (scrolled_window),
+ * gtk_box_append (GTK_BOX (scrolled_window),
  * child_widget);
  * 
  * // Either of these will result in child_widget being unparented:
- * gtk_container_remove (GTK_CONTAINER (scrolled_window),
+ * gtk_box_remove (GTK_BOX (scrolled_window),
  * child_widget);
  * // or
- * gtk_container_remove (GTK_CONTAINER (scrolled_window),
+ * gtk_box_remove (GTK_BOX (scrolled_window),
  * gtk_bin_get_child (GTK_BIN (scrolled_window)));
  * ]|
  * 
- * Unless #GtkScrolledWindow:policy is GTK_POLICY_NEVER or GTK_POLICY_EXTERNAL,
+ * Unless #GtkScrolledWindow:hscrollbar-policy and #GtkScrolledWindow:vscrollbar-policy
+ * are GTK_POLICY_NEVER or GTK_POLICY_EXTERNAL,
  * GtkScrolledWindow adds internal #GtkScrollbar widgets around its child. The
  * scroll position of the child, and if applicable the scrollbars, is controlled
  * by the #GtkScrolledWindow:hadjustment and #GtkScrolledWindow:vadjustment
@@ -93,7 +92,7 @@ private import std.algorithm;
  * the content is pulled beyond the end, and this situation can be
  * captured with the #GtkScrolledWindow::edge-overshot signal.
  * 
- * If no mouse device is present, the scrollbars will overlayed as
+ * If no mouse device is present, the scrollbars will overlaid as
  * narrow, auto-hiding indicators over the content. If traditional
  * scrollbars are desired although no mouse is present, this behaviour
  * can be turned off with the #GtkScrolledWindow:overlay-scrolling
@@ -102,6 +101,8 @@ private import std.algorithm;
  * # CSS nodes
  * 
  * GtkScrolledWindow has a main CSS node with name scrolledwindow.
+ * It gets a .frame style class added when #GtkScrolledWindow:has-frame
+ * is %TRUE.
  * 
  * It uses subnodes with names overshoot and undershoot to
  * draw the overflow and underflow indications. These nodes get
@@ -114,8 +115,12 @@ private import std.algorithm;
  * 
  * If both scrollbars are visible, the area where they meet is drawn
  * with a subnode named junction.
+ * 
+ * # Accessibility
+ * 
+ * GtkScrolledWindow uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
-public class ScrolledWindow : Bin
+public class ScrolledWindow : Widget
 {
 	/** the main Gtk struct */
 	protected GtkScrolledWindow* gtkScrolledWindow;
@@ -140,36 +145,9 @@ public class ScrolledWindow : Bin
 	public this (GtkScrolledWindow* gtkScrolledWindow, bool ownedRef = false)
 	{
 		this.gtkScrolledWindow = gtkScrolledWindow;
-		super(cast(GtkBin*)gtkScrolledWindow, ownedRef);
+		super(cast(GtkWidget*)gtkScrolledWindow, ownedRef);
 	}
 
-	/** */
-	public this()
-	{
-		this(null, null);
-	}
-
-	/** */
-	public this(Widget widget)
-	{
-		this();
-		add(widget);
-	}
-
-	/**
-	 * Creates a new Scrolled window and set the policy type
-	 * Params:
-	 *  hPolicy = the horizontal policy
-	 *  vPolicy = the vertical policy
-	 */
-	this(PolicyType hPolicy, PolicyType vPolicy)
-	{
-		this();
-		setPolicy(hPolicy, vPolicy);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -180,71 +158,37 @@ public class ScrolledWindow : Bin
 	/**
 	 * Creates a new scrolled window.
 	 *
-	 * The two arguments are the scrolled window’s adjustments; these will be
-	 * shared with the scrollbars and the child widget to keep the bars in sync
-	 * with the child. Usually you want to pass %NULL for the adjustments, which
-	 * will cause the scrolled window to create them for you.
-	 *
-	 * Params:
-	 *     hadjustment = horizontal adjustment
-	 *     vadjustment = vertical adjustment
-	 *
 	 * Returns: a new scrolled window
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Adjustment hadjustment, Adjustment vadjustment)
+	public this()
 	{
-		auto p = gtk_scrolled_window_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		auto __p = gtk_scrolled_window_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScrolledWindow*) p);
+		this(cast(GtkScrolledWindow*) __p);
 	}
 
 	/**
-	 * Used to add children without native scrolling capabilities. This
-	 * is simply a convenience function; it is equivalent to adding the
-	 * unscrollable child to a viewport, then adding the viewport to the
-	 * scrolled window. If a child has native scrolling, use
-	 * gtk_container_add() instead of this function.
+	 * Gets the child widget of @scrolled_window.
 	 *
-	 * The viewport scrolls the child by moving its #GdkWindow, and takes
-	 * the size of the child to be the size of its toplevel #GdkWindow.
-	 * This will be very wrong for most widgets that support native scrolling;
-	 * for example, if you add a widget such as #GtkTreeView with a viewport,
-	 * the whole widget will scroll, including the column headings. Thus,
-	 * widgets with native scrolling support should not be used with the
-	 * #GtkViewport proxy.
-	 *
-	 * A widget supports scrolling natively if it implements the
-	 * #GtkScrollable interface.
-	 *
-	 * Deprecated: gtk_container_add() will automatically add
-	 * a #GtkViewport if the child doesn’t implement #GtkScrollable.
-	 *
-	 * Params:
-	 *     child = the widget you want to scroll
+	 * Returns: the child widget of @scrolled_window
 	 */
-	public void addWithViewport(Widget child)
+	public Widget getChild()
 	{
-		gtk_scrolled_window_add_with_viewport(gtkScrolledWindow, (child is null) ? null : child.getWidgetStruct());
-	}
+		auto __p = gtk_scrolled_window_get_child(gtkScrolledWindow);
 
-	/**
-	 * Return whether button presses are captured during kinetic
-	 * scrolling. See gtk_scrolled_window_set_capture_button_press().
-	 *
-	 * Returns: %TRUE if button presses are captured during kinetic scrolling
-	 *
-	 * Since: 3.4
-	 */
-	public bool getCaptureButtonPress()
-	{
-		return gtk_scrolled_window_get_capture_button_press(gtkScrolledWindow) != 0;
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -256,41 +200,48 @@ public class ScrolledWindow : Bin
 	 */
 	public Adjustment getHadjustment()
 	{
-		auto p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
+	}
+
+	/**
+	 * Gets whether the scrolled window draws a frame.
+	 * See  gtk_scrolled_window_set_has_frame().
+	 *
+	 * Returns: %TRUE if the @scrolled_window has a frame
+	 */
+	public bool getHasFrame()
+	{
+		return gtk_scrolled_window_get_has_frame(gtkScrolledWindow) != 0;
 	}
 
 	/**
 	 * Returns the horizontal scrollbar of @scrolled_window.
 	 *
 	 * Returns: the horizontal scrollbar of the scrolled window.
-	 *
-	 * Since: 2.8
 	 */
 	public Widget getHscrollbar()
 	{
-		auto p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
 	 * Returns the specified kinetic scrolling behavior.
 	 *
 	 * Returns: the scrolling behavior flags.
-	 *
-	 * Since: 3.4
 	 */
 	public bool getKineticScrolling()
 	{
@@ -301,8 +252,6 @@ public class ScrolledWindow : Bin
 	 * Returns the maximum content height set.
 	 *
 	 * Returns: the maximum content height, or -1
-	 *
-	 * Since: 3.22
 	 */
 	public int getMaxContentHeight()
 	{
@@ -313,8 +262,6 @@ public class ScrolledWindow : Bin
 	 * Returns the maximum content width set.
 	 *
 	 * Returns: the maximum content width, or -1
-	 *
-	 * Since: 3.22
 	 */
 	public int getMaxContentWidth()
 	{
@@ -325,8 +272,6 @@ public class ScrolledWindow : Bin
 	 * Gets the minimal content height of @scrolled_window, or -1 if not set.
 	 *
 	 * Returns: the minimal content height
-	 *
-	 * Since: 3.0
 	 */
 	public int getMinContentHeight()
 	{
@@ -337,8 +282,6 @@ public class ScrolledWindow : Bin
 	 * Gets the minimum content width of @scrolled_window, or -1 if not set.
 	 *
 	 * Returns: the minimum content width
-	 *
-	 * Since: 3.0
 	 */
 	public int getMinContentWidth()
 	{
@@ -349,8 +292,6 @@ public class ScrolledWindow : Bin
 	 * Returns whether overlay scrolling is enabled for this scrolled window.
 	 *
 	 * Returns: %TRUE if overlay scrolling is enabled
-	 *
-	 * Since: 3.16
 	 */
 	public bool getOverlayScrolling()
 	{
@@ -391,8 +332,6 @@ public class ScrolledWindow : Bin
 	 * through the scrolled window’s requested natural height.
 	 *
 	 * Returns: whether natural height propagation is enabled.
-	 *
-	 * Since: 3.22
 	 */
 	public bool getPropagateNaturalHeight()
 	{
@@ -404,23 +343,10 @@ public class ScrolledWindow : Bin
 	 * through the scrolled window’s requested natural width.
 	 *
 	 * Returns: whether natural width propagation is enabled.
-	 *
-	 * Since: 3.22
 	 */
 	public bool getPropagateNaturalWidth()
 	{
 		return gtk_scrolled_window_get_propagate_natural_width(gtkScrolledWindow) != 0;
-	}
-
-	/**
-	 * Gets the shadow type of the scrolled window. See
-	 * gtk_scrolled_window_set_shadow_type().
-	 *
-	 * Returns: the current shadow type
-	 */
-	public GtkShadowType getShadowType()
-	{
-		return gtk_scrolled_window_get_shadow_type(gtkScrolledWindow);
 	}
 
 	/**
@@ -431,67 +357,64 @@ public class ScrolledWindow : Bin
 	 */
 	public Adjustment getVadjustment()
 	{
-		auto p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
 	 * Returns the vertical scrollbar of @scrolled_window.
 	 *
 	 * Returns: the vertical scrollbar of the scrolled window.
-	 *
-	 * Since: 2.8
 	 */
 	public Widget getVscrollbar()
 	{
-		auto p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
-	 * Changes the behaviour of @scrolled_window with regard to the initial
-	 * event that possibly starts kinetic scrolling. When @capture_button_press
-	 * is set to %TRUE, the event is captured by the scrolled window, and
-	 * then later replayed if it is meant to go to the child widget.
-	 *
-	 * This should be enabled if any child widgets perform non-reversible
-	 * actions on #GtkWidget::button-press-event. If they don't, and handle
-	 * additionally handle #GtkWidget::grab-broken-event, it might be better
-	 * to set @capture_button_press to %FALSE.
-	 *
-	 * This setting only has an effect if kinetic scrolling is enabled.
+	 * Sets the child widget of @scrolled_window.
 	 *
 	 * Params:
-	 *     captureButtonPress = %TRUE to capture button presses
-	 *
-	 * Since: 3.4
+	 *     child = the child widget
 	 */
-	public void setCaptureButtonPress(bool captureButtonPress)
+	public void setChild(Widget child)
 	{
-		gtk_scrolled_window_set_capture_button_press(gtkScrolledWindow, captureButtonPress);
+		gtk_scrolled_window_set_child(gtkScrolledWindow, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
 	 * Sets the #GtkAdjustment for the horizontal scrollbar.
 	 *
 	 * Params:
-	 *     hadjustment = horizontal scroll adjustment
+	 *     hadjustment = the #GtkAdjustment to use, or %NULL to create a new one
 	 */
 	public void setHadjustment(Adjustment hadjustment)
 	{
 		gtk_scrolled_window_set_hadjustment(gtkScrolledWindow, (hadjustment is null) ? null : hadjustment.getAdjustmentStruct());
+	}
+
+	/**
+	 * Changes the frame drawn around the contents of @scrolled_window.
+	 *
+	 * Params:
+	 *     hasFrame = whether to draw a frame around scrolled window contents
+	 */
+	public void setHasFrame(bool hasFrame)
+	{
+		gtk_scrolled_window_set_has_frame(gtkScrolledWindow, hasFrame);
 	}
 
 	/**
@@ -501,8 +424,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     kineticScrolling = %TRUE to enable kinetic scrolling
-	 *
-	 * Since: 3.4
 	 */
 	public void setKineticScrolling(bool kineticScrolling)
 	{
@@ -519,8 +440,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     height = the maximum content height
-	 *
-	 * Since: 3.22
 	 */
 	public void setMaxContentHeight(int height)
 	{
@@ -537,8 +456,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     width = the maximum content width
-	 *
-	 * Since: 3.22
 	 */
 	public void setMaxContentWidth(int width)
 	{
@@ -555,8 +472,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     height = the minimal content height
-	 *
-	 * Since: 3.0
 	 */
 	public void setMinContentHeight(int height)
 	{
@@ -573,8 +488,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     width = the minimal content width
-	 *
-	 * Since: 3.0
 	 */
 	public void setMinContentWidth(int width)
 	{
@@ -586,8 +499,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     overlayScrolling = whether to enable overlay scrolling
-	 *
-	 * Since: 3.16
 	 */
 	public void setOverlayScrolling(bool overlayScrolling)
 	{
@@ -639,8 +550,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     propagate = whether to propagate natural height
-	 *
-	 * Since: 3.22
 	 */
 	public void setPropagateNaturalHeight(bool propagate)
 	{
@@ -653,8 +562,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     propagate = whether to propagate natural width
-	 *
-	 * Since: 3.22
 	 */
 	public void setPropagateNaturalWidth(bool propagate)
 	{
@@ -662,22 +569,10 @@ public class ScrolledWindow : Bin
 	}
 
 	/**
-	 * Changes the type of shadow drawn around the contents of
-	 * @scrolled_window.
-	 *
-	 * Params:
-	 *     type = kind of shadow to draw around scrolled window contents
-	 */
-	public void setShadowType(GtkShadowType type)
-	{
-		gtk_scrolled_window_set_shadow_type(gtkScrolledWindow, type);
-	}
-
-	/**
 	 * Sets the #GtkAdjustment for the vertical scrollbar.
 	 *
 	 * Params:
-	 *     vadjustment = vertical scroll adjustment
+	 *     vadjustment = the #GtkAdjustment to use, or %NULL to create a new one
 	 */
 	public void setVadjustment(Adjustment vadjustment)
 	{
@@ -691,8 +586,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * See also gtk_scrolled_window_set_placement() and
 	 * gtk_scrolled_window_get_placement().
-	 *
-	 * Since: 2.10
 	 */
 	public void unsetPlacement()
 	{
@@ -712,8 +605,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     pos = edge side that was hit
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnEdgeOvershot(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -733,8 +624,6 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     pos = edge side that was reached
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnEdgeReached(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -743,7 +632,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * The ::move-focus-out signal is a
-	 * [keybinding signal][GtkBindingSignal] which gets
+	 * [keybinding signal][GtkSignalAction] which gets
 	 * emitted when focus is moved away from the scrolled window by a
 	 * keybinding. The #GtkWidget::move-focus signal is emitted with
 	 * @direction_type on this scrolled window’s toplevel parent in the
@@ -761,7 +650,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * The ::scroll-child signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when a keybinding that scrolls is pressed.
 	 * The horizontal or vertical adjustment is updated which triggers a
 	 * signal that the scrolled window’s child may listen to and scroll itself.

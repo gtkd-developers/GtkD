@@ -33,7 +33,7 @@ private import gstreamer.Segment;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -69,6 +69,12 @@ public class Sample
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_sample_unref(gstSample);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -94,14 +100,34 @@ public class Sample
 	 */
 	public this(Buffer buffer, Caps caps, Segment segment, Structure info)
 	{
-		auto p = gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct(true));
+		auto __p = gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstSample*) p);
+		this(cast(GstSample*) __p);
+	}
+
+	/**
+	 * Create a copy of the given sample. This will also make a newly allocated
+	 * copy of the data the source sample contains.
+	 *
+	 * Returns: a new copy of @buf.
+	 *
+	 * Since: 1.2
+	 */
+	public Sample copy()
+	{
+		auto __p = gst_sample_copy(gstSample);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -114,14 +140,14 @@ public class Sample
 	 */
 	public Buffer getBuffer()
 	{
-		auto p = gst_sample_get_buffer(gstSample);
+		auto __p = gst_sample_get_buffer(gstSample);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -136,14 +162,14 @@ public class Sample
 	 */
 	public BufferList getBufferList()
 	{
-		auto p = gst_sample_get_buffer_list(gstSample);
+		auto __p = gst_sample_get_buffer_list(gstSample);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p);
 	}
 
 	/**
@@ -156,14 +182,14 @@ public class Sample
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_sample_get_caps(gstSample);
+		auto __p = gst_sample_get_caps(gstSample);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p);
 	}
 
 	/**
@@ -174,14 +200,14 @@ public class Sample
 	 */
 	public Structure getInfo()
 	{
-		auto p = gst_sample_get_info(gstSample);
+		auto __p = gst_sample_get_info(gstSample);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -192,14 +218,32 @@ public class Sample
 	 */
 	public Segment getSegment()
 	{
-		auto p = gst_sample_get_segment(gstSample);
+		auto __p = gst_sample_get_segment(gstSample);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p);
+		return ObjectG.getDObject!(Segment)(cast(GstSegment*) __p);
+	}
+
+	alias doref = ref_;
+	/**
+	 * Increases the refcount of the given sample by one.
+	 *
+	 * Returns: @sample
+	 */
+	public Sample ref_()
+	{
+		auto __p = gst_sample_ref(gstSample);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -266,5 +310,14 @@ public class Sample
 	public void setSegment(Segment segment)
 	{
 		gst_sample_set_segment(gstSample, (segment is null) ? null : segment.getSegmentStruct());
+	}
+
+	/**
+	 * Decreases the refcount of the sample. If the refcount reaches 0, the
+	 * sample will be freed.
+	 */
+	public void unref()
+	{
+		gst_sample_unref(gstSample);
 	}
 }

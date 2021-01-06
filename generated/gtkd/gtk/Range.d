@@ -24,6 +24,8 @@
 
 module gtk.Range;
 
+private import gdk.Rectangle;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Adjustment;
@@ -32,7 +34,6 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -41,8 +42,7 @@ private import std.algorithm;
  * adjustment, e.g #GtkScale or #GtkScrollbar.
  * 
  * Apart from signals for monitoring the parameters of the adjustment,
- * #GtkRange provides properties and methods for influencing the sensitivity
- * of the “steppers”. It also provides properties and methods for setting a
+ * #GtkRange provides properties and methods for setting a
  * “fill level” on range widgets. See gtk_range_set_fill_level().
  */
 public class Range : Widget, OrientableIF
@@ -93,22 +93,20 @@ public class Range : Widget, OrientableIF
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_range_get_adjustment(gtkRange);
+		auto __p = gtk_range_get_adjustment(gtkRange);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
 	 * Gets the current position of the fill level indicator.
 	 *
 	 * Returns: The current fill level
-	 *
-	 * Since: 2.12
 	 */
 	public double getFillLevel()
 	{
@@ -119,8 +117,6 @@ public class Range : Widget, OrientableIF
 	 * Gets the value set by gtk_range_set_flippable().
 	 *
 	 * Returns: %TRUE if the range is flippable
-	 *
-	 * Since: 2.18
 	 */
 	public bool getFlippable()
 	{
@@ -138,57 +134,27 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Gets the sensitivity policy for the stepper that points to the
-	 * 'lower' end of the GtkRange’s adjustment.
-	 *
-	 * Returns: The lower stepper’s sensitivity policy.
-	 *
-	 * Since: 2.10
-	 */
-	public GtkSensitivityType getLowerStepperSensitivity()
-	{
-		return gtk_range_get_lower_stepper_sensitivity(gtkRange);
-	}
-
-	/**
-	 * This function is useful mainly for #GtkRange subclasses.
-	 *
-	 * See gtk_range_set_min_slider_size().
-	 *
-	 * Deprecated: Use the min-height/min-width CSS properties on the slider
-	 * node.
-	 *
-	 * Returns: The minimum size of the range’s slider.
-	 *
-	 * Since: 2.20
-	 */
-	public int getMinSliderSize()
-	{
-		return gtk_range_get_min_slider_size(gtkRange);
-	}
-
-	/**
-	 * This function returns the area that contains the range’s trough
-	 * and its steppers, in widget->window coordinates.
+	 * This function returns the area that contains the range’s trough,
+	 * in coordinates relative to @range's origin.
 	 *
 	 * This function is useful mainly for #GtkRange subclasses.
 	 *
 	 * Params:
 	 *     rangeRect = return location for the range rectangle
-	 *
-	 * Since: 2.20
 	 */
-	public void getRangeRect(out GdkRectangle rangeRect)
+	public void getRangeRect(out Rectangle rangeRect)
 	{
-		gtk_range_get_range_rect(gtkRange, &rangeRect);
+		GdkRectangle* outrangeRect = sliceNew!GdkRectangle();
+
+		gtk_range_get_range_rect(gtkRange, outrangeRect);
+
+		rangeRect = ObjectG.getDObject!(Rectangle)(outrangeRect, true);
 	}
 
 	/**
 	 * Gets whether the range is restricted to the fill level.
 	 *
 	 * Returns: %TRUE if @range is restricted to the fill level.
-	 *
-	 * Since: 2.12
 	 */
 	public bool getRestrictToFillLevel()
 	{
@@ -200,8 +166,6 @@ public class Range : Widget, OrientableIF
 	 * it changes. See #GtkRange::change-value.
 	 *
 	 * Returns: the number of digits to round to
-	 *
-	 * Since: 2.24
 	 */
 	public int getRoundDigits()
 	{
@@ -212,8 +176,6 @@ public class Range : Widget, OrientableIF
 	 * Gets whether the range displays the fill level graphically.
 	 *
 	 * Returns: %TRUE if @range shows the fill level.
-	 *
-	 * Since: 2.12
 	 */
 	public bool getShowFillLevel()
 	{
@@ -231,8 +193,6 @@ public class Range : Widget, OrientableIF
 	 *         start, or %NULL
 	 *     sliderEnd = return location for the slider's
 	 *         end, or %NULL
-	 *
-	 * Since: 2.20
 	 */
 	public void getSliderRange(out int sliderStart, out int sliderEnd)
 	{
@@ -245,25 +205,10 @@ public class Range : Widget, OrientableIF
 	 * See gtk_range_set_slider_size_fixed().
 	 *
 	 * Returns: whether the range’s slider has a fixed size.
-	 *
-	 * Since: 2.20
 	 */
 	public bool getSliderSizeFixed()
 	{
 		return gtk_range_get_slider_size_fixed(gtkRange) != 0;
-	}
-
-	/**
-	 * Gets the sensitivity policy for the stepper that points to the
-	 * 'upper' end of the GtkRange’s adjustment.
-	 *
-	 * Returns: The upper stepper’s sensitivity policy.
-	 *
-	 * Since: 2.10
-	 */
-	public GtkSensitivityType getUpperStepperSensitivity()
-	{
-		return gtk_range_get_upper_stepper_sensitivity(gtkRange);
 	}
 
 	/**
@@ -314,8 +259,6 @@ public class Range : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     fillLevel = the new position of the fill level indicator
-	 *
-	 * Since: 2.12
 	 */
 	public void setFillLevel(double fillLevel)
 	{
@@ -330,8 +273,6 @@ public class Range : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     flippable = %TRUE to make the range flippable
-	 *
-	 * Since: 2.18
 	 */
 	public void setFlippable(bool flippable)
 	{
@@ -368,38 +309,6 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the sensitivity policy for the stepper that points to the
-	 * 'lower' end of the GtkRange’s adjustment.
-	 *
-	 * Params:
-	 *     sensitivity = the lower stepper’s sensitivity policy.
-	 *
-	 * Since: 2.10
-	 */
-	public void setLowerStepperSensitivity(GtkSensitivityType sensitivity)
-	{
-		gtk_range_set_lower_stepper_sensitivity(gtkRange, sensitivity);
-	}
-
-	/**
-	 * Sets the minimum size of the range’s slider.
-	 *
-	 * This function is useful mainly for #GtkRange subclasses.
-	 *
-	 * Deprecated: Use the min-height/min-width CSS properties on the slider
-	 * node.
-	 *
-	 * Params:
-	 *     minSize = The slider’s minimum size
-	 *
-	 * Since: 2.20
-	 */
-	public void setMinSliderSize(int minSize)
-	{
-		gtk_range_set_min_slider_size(gtkRange, minSize);
-	}
-
-	/**
 	 * Sets the allowable values in the #GtkRange, and clamps the range
 	 * value to be between @min and @max. (If the range has a non-zero
 	 * page size, it is clamped between @min and @max - page-size.)
@@ -420,8 +329,6 @@ public class Range : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     restrictToFillLevel = Whether the fill level restricts slider movement.
-	 *
-	 * Since: 2.12
 	 */
 	public void setRestrictToFillLevel(bool restrictToFillLevel)
 	{
@@ -434,8 +341,6 @@ public class Range : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     roundDigits = the precision in digits, or -1
-	 *
-	 * Since: 2.24
 	 */
 	public void setRoundDigits(int roundDigits)
 	{
@@ -449,8 +354,6 @@ public class Range : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     showFillLevel = Whether a fill level indicator graphics is shown.
-	 *
-	 * Since: 2.12
 	 */
 	public void setShowFillLevel(bool showFillLevel)
 	{
@@ -465,26 +368,10 @@ public class Range : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     sizeFixed = %TRUE to make the slider size constant
-	 *
-	 * Since: 2.20
 	 */
 	public void setSliderSizeFixed(bool sizeFixed)
 	{
 		gtk_range_set_slider_size_fixed(gtkRange, sizeFixed);
-	}
-
-	/**
-	 * Sets the sensitivity policy for the stepper that points to the
-	 * 'upper' end of the GtkRange’s adjustment.
-	 *
-	 * Params:
-	 *     sensitivity = the upper stepper’s sensitivity policy.
-	 *
-	 * Since: 2.10
-	 */
-	public void setUpperStepperSensitivity(GtkSensitivityType sensitivity)
-	{
-		gtk_range_set_upper_stepper_sensitivity(gtkRange, sensitivity);
 	}
 
 	/**
@@ -519,12 +406,12 @@ public class Range : Widget, OrientableIF
 	 * type of scroll event that occurred and the resultant new value.
 	 * The application can handle the event itself and return %TRUE to
 	 * prevent further processing.  Or, by returning %FALSE, it can pass
-	 * the event to other handlers until the default GTK+ handler is
+	 * the event to other handlers until the default GTK handler is
 	 * reached.
 	 *
 	 * The value parameter is unrounded.  An application that overrides
 	 * the GtkRange::change-value signal is responsible for clamping the
-	 * value to the desired number of decimal digits; the default GTK+
+	 * value to the desired number of decimal digits; the default GTK
 	 * handler clamps the value based on #GtkRange:round-digits.
 	 *
 	 * Params:
@@ -533,8 +420,6 @@ public class Range : Widget, OrientableIF
 	 *
 	 * Returns: %TRUE to prevent other handlers from being invoked for
 	 *     the signal, %FALSE to propagate the signal further
-	 *
-	 * Since: 2.6
 	 */
 	gulong addOnChangeValue(bool delegate(GtkScrollType, double, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

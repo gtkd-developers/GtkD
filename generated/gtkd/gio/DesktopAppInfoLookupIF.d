@@ -29,7 +29,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -69,7 +68,8 @@ public interface DesktopAppInfoLookupIF{
 	 * Params:
 	 *     uriScheme = a string containing a URI scheme.
 	 *
-	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or
+	 *     %NULL on error.
 	 */
 	public AppInfoIF getDefaultForUriScheme(string uriScheme);
 }

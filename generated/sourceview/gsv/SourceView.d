@@ -24,6 +24,8 @@
 
 module gsv.SourceView;
 
+private import atk.ImplementorIF;
+private import atk.ImplementorT;
 private import gdk.Event;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -36,7 +38,6 @@ private import gsv.SourceMarkAttributes;
 private import gsv.SpaceDrawer;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.ScrollableIF;
@@ -48,7 +49,7 @@ private import std.algorithm;
 
 
 /** */
-public class SourceView : TextView
+public class SourceView : TextView, ImplementorIF
 {
 	/** the main Gtk struct */
 	protected GtkSourceView* gtkSourceView;
@@ -75,6 +76,9 @@ public class SourceView : TextView
 		this.gtkSourceView = gtkSourceView;
 		super(cast(GtkTextView*)gtkSourceView, ownedRef);
 	}
+
+	// add the Implementor capabilities
+	mixin ImplementorT!(GtkSourceView);
 
 	/**
 	 * Returns the GtkSourceBuffer being displayed by this source view.
@@ -116,14 +120,14 @@ public class SourceView : TextView
 	 */
 	public this()
 	{
-		auto p = gtk_source_view_new();
+		auto __p = gtk_source_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceView*) p);
+		this(cast(GtkSourceView*) __p);
 	}
 
 	/**
@@ -139,14 +143,14 @@ public class SourceView : TextView
 	 */
 	public this(SourceBuffer buffer)
 	{
-		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
+		auto __p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_buffer");
 		}
 
-		this(cast(GtkSourceView*) p);
+		this(cast(GtkSourceView*) __p);
 	}
 
 	/**
@@ -181,14 +185,14 @@ public class SourceView : TextView
 	 */
 	public SourceCompletion getCompletion()
 	{
-		auto p = gtk_source_view_get_completion(gtkSourceView);
+		auto __p = gtk_source_view_get_completion(gtkSourceView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceCompletion)(cast(GtkSourceCompletion*) p);
+		return ObjectG.getDObject!(SourceCompletion)(cast(GtkSourceCompletion*) __p);
 	}
 
 	/**
@@ -204,16 +208,16 @@ public class SourceView : TextView
 	 *
 	 * Since: 2.8
 	 */
-	public SourceGutter getGutter(GtkTextWindowType windowType)
+	public override SourceGutter getGutter(GtkTextWindowType windowType)
 	{
-		auto p = gtk_source_view_get_gutter(gtkSourceView, windowType);
+		auto __p = gtk_source_view_get_gutter(gtkSourceView, windowType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceGutter)(cast(GtkSourceGutter*) p);
+		return ObjectG.getDObject!(SourceGutter)(cast(GtkSourceGutter*) __p);
 	}
 
 	/**
@@ -271,14 +275,14 @@ public class SourceView : TextView
 	 */
 	public SourceMarkAttributes getMarkAttributes(string category, int* priority)
 	{
-		auto p = gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
+		auto __p = gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceMarkAttributes)(cast(GtkSourceMarkAttributes*) p);
+		return ObjectG.getDObject!(SourceMarkAttributes)(cast(GtkSourceMarkAttributes*) __p);
 	}
 
 	/**
@@ -358,14 +362,14 @@ public class SourceView : TextView
 	 */
 	public SpaceDrawer getSpaceDrawer()
 	{
-		auto p = gtk_source_view_get_space_drawer(gtkSourceView);
+		auto __p = gtk_source_view_get_space_drawer(gtkSourceView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SpaceDrawer)(cast(GtkSourceSpaceDrawer*) p);
+		return ObjectG.getDObject!(SpaceDrawer)(cast(GtkSourceSpaceDrawer*) __p);
 	}
 
 	/**

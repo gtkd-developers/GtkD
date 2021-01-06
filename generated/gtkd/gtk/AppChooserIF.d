@@ -29,7 +29,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -70,8 +69,6 @@ public interface AppChooserIF{
 	 *
 	 * Returns: a #GAppInfo for the currently selected
 	 *     application, or %NULL if none is selected. Free with g_object_unref()
-	 *
-	 * Since: 3.0
 	 */
 	public AppInfoIF getAppInfo();
 
@@ -79,15 +76,11 @@ public interface AppChooserIF{
 	 * Returns the current value of the #GtkAppChooser:content-type property.
 	 *
 	 * Returns: the content type of @self. Free with g_free()
-	 *
-	 * Since: 3.0
 	 */
 	public string getContentType();
 
 	/**
 	 * Reloads the list of applications.
-	 *
-	 * Since: 3.0
 	 */
 	public void refresh();
 }

@@ -29,7 +29,6 @@ private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
 private import glib.TimeVal;
 private import gobject.ObjectG;
-public  import gtkc.gdkpixbuftypes;
 
 
 /**
@@ -136,14 +135,14 @@ public class PixbufAnimationIter : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = gdk_pixbuf_animation_iter_get_pixbuf(gdkPixbufAnimationIter);
+		auto __p = gdk_pixbuf_animation_iter_get_pixbuf(gdkPixbufAnimationIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**

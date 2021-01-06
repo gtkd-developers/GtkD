@@ -140,7 +140,7 @@ public final class TerrestrialDeliverySystemDescriptor
 	}
 
 	/**
-	 * the constallation
+	 * the constellation
 	 */
 	public @property GstMpegtsModulationType constellation()
 	{

@@ -28,7 +28,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -71,7 +70,7 @@ public  import std.algorithm;
  * it are gone.
  * 
  * On the other side, a consumer is expected only to hold references on
- * objects that are currently "user visible", in order to faciliate the
+ * objects that are currently "user visible", in order to facilitate the
  * maximum level of laziness in the implementation of the list and to
  * reduce the required number of signal connections at a given time.
  * 

@@ -32,7 +32,6 @@ private import glib.GException;
 private import glib.Source;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 

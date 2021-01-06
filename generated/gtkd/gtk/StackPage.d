@@ -1,0 +1,230 @@
+/*
+ * This file is part of gtkD.
+ *
+ * gtkD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version, with
+ * some exceptions, please read the COPYING file.
+ *
+ * gtkD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with gtkD; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+ */
+
+// generated automatically - do not change
+// find conversion definition on APILookup.txt
+// implement new conversion functionalities on the wrap.utils pakage
+
+
+module gtk.StackPage;
+
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtk.AccessibleIF;
+private import gtk.AccessibleT;
+private import gtk.Widget;
+private import gtk.c.functions;
+public  import gtk.c.types;
+
+
+/** */
+public class StackPage : ObjectG, AccessibleIF
+{
+	/** the main Gtk struct */
+	protected GtkStackPage* gtkStackPage;
+
+	/** Get the main Gtk struct */
+	public GtkStackPage* getStackPageStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gtkStackPage;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkStackPage;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkStackPage* gtkStackPage, bool ownedRef = false)
+	{
+		this.gtkStackPage = gtkStackPage;
+		super(cast(GObject*)gtkStackPage, ownedRef);
+	}
+
+	// add the Accessible capabilities
+	mixin AccessibleT!(GtkStackPage);
+
+
+	/** */
+	public static GType getType()
+	{
+		return gtk_stack_page_get_type();
+	}
+
+	/**
+	 * Returns the stack child to which @self belongs.
+	 *
+	 * Returns: the child to which @self belongs
+	 */
+	public Widget getChild()
+	{
+		auto __p = gtk_stack_page_get_child(gtkStackPage);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Returns the current value of the #GtkStackPage:icon-name property.
+	 *
+	 * Returns: The value of the #GtkStackPage:icon-name property.
+	 *     See gtk_stack_page_set_icon_name() for details on how to set a new value.
+	 */
+	public string getIconName()
+	{
+		return Str.toString(gtk_stack_page_get_icon_name(gtkStackPage));
+	}
+
+	/**
+	 * Returns the current value of the #GtkStackPage:name property.
+	 *
+	 * Returns: The value of the #GtkStackPage:name property.
+	 *     See gtk_stack_page_set_name() for details on how to set a new value.
+	 */
+	public string getName()
+	{
+		return Str.toString(gtk_stack_page_get_name(gtkStackPage));
+	}
+
+	/**
+	 * Returns the current value of the #GtkStackPage:needs-attention property.
+	 *
+	 * Returns: The value of the #GtkStackPage:needs-attention property.
+	 *     See gtk_stack_page_set_needs_attention() for details on how to set a new value.
+	 */
+	public bool getNeedsAttention()
+	{
+		return gtk_stack_page_get_needs_attention(gtkStackPage) != 0;
+	}
+
+	/**
+	 * Returns the current value of the #GtkStackPage:title property.
+	 *
+	 * Returns: The value of the #GtkStackPage:title property.
+	 *     See gtk_stack_page_set_title() for details on how to set a new value.
+	 */
+	public string getTitle()
+	{
+		return Str.toString(gtk_stack_page_get_title(gtkStackPage));
+	}
+
+	/**
+	 * Returns the current value of the #GtkStackPage:use-underline property.
+	 *
+	 * Returns: The value of the #GtkStackPage:use-underline property.
+	 *     See gtk_stack_page_set_use_underline() for details on how to set a new value.
+	 */
+	public bool getUseUnderline()
+	{
+		return gtk_stack_page_get_use_underline(gtkStackPage) != 0;
+	}
+
+	/**
+	 * Returns whether @page is visible in its #GtkStack.
+	 * This is independent from the #GtkWidget:visible value of its
+	 * #GtkWidget.
+	 *
+	 * Returns: %TRUE if @page is visible
+	 */
+	public bool getVisible()
+	{
+		return gtk_stack_page_get_visible(gtkStackPage) != 0;
+	}
+
+	/**
+	 * Sets the new value of the #GtkStackPage:icon-name property.
+	 * See also gtk_stack_page_get_icon_name()
+	 *
+	 * Params:
+	 *     setting = the new value to set
+	 */
+	public void setIconName(string setting)
+	{
+		gtk_stack_page_set_icon_name(gtkStackPage, Str.toStringz(setting));
+	}
+
+	/**
+	 * Sets the new value of the #GtkStackPage:name property.
+	 * See also gtk_stack_page_get_name()
+	 *
+	 * Params:
+	 *     setting = the new value to set
+	 */
+	public void setName(string setting)
+	{
+		gtk_stack_page_set_name(gtkStackPage, Str.toStringz(setting));
+	}
+
+	/**
+	 * Sets the new value of the #GtkStackPage:needs-attention property.
+	 * See also gtk_stack_page_get_needs_attention()
+	 *
+	 * Params:
+	 *     setting = the new value to set
+	 */
+	public void setNeedsAttention(bool setting)
+	{
+		gtk_stack_page_set_needs_attention(gtkStackPage, setting);
+	}
+
+	/**
+	 * Sets the new value of the #GtkStackPage:title property.
+	 * See also gtk_stack_page_get_title()
+	 *
+	 * Params:
+	 *     setting = the new value to set
+	 */
+	public void setTitle(string setting)
+	{
+		gtk_stack_page_set_title(gtkStackPage, Str.toStringz(setting));
+	}
+
+	/**
+	 * Sets the new value of the #GtkStackPage:use-underline property.
+	 * See also gtk_stack_page_get_use_underline()
+	 *
+	 * Params:
+	 *     setting = the new value to set
+	 */
+	public void setUseUnderline(bool setting)
+	{
+		gtk_stack_page_set_use_underline(gtkStackPage, setting);
+	}
+
+	/**
+	 * Sets the new value of the #GtkStackPage:visible property
+	 * to @visible.
+	 *
+	 * Params:
+	 *     visible = The new property value
+	 */
+	public void setVisible(bool visible)
+	{
+		gtk_stack_page_set_visible(gtkStackPage, visible);
+	}
+}

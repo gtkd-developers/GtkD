@@ -29,16 +29,14 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
-private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /** */
-public class ListBoxRow : Bin, ActionableIF
+public class ListBoxRow : Widget, ActionableIF
 {
 	/** the main Gtk struct */
 	protected GtkListBoxRow* gtkListBoxRow;
@@ -63,7 +61,7 @@ public class ListBoxRow : Bin, ActionableIF
 	public this (GtkListBoxRow* gtkListBoxRow, bool ownedRef = false)
 	{
 		this.gtkListBoxRow = gtkListBoxRow;
-		super(cast(GtkBin*)gtkListBoxRow, ownedRef);
+		super(cast(GtkWidget*)gtkListBoxRow, ownedRef);
 	}
 
 	// add the Actionable capabilities
@@ -81,20 +79,18 @@ public class ListBoxRow : Bin, ActionableIF
 	 *
 	 * Returns: a new #GtkListBoxRow
 	 *
-	 * Since: 3.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_list_box_row_new();
+		auto __p = gtk_list_box_row_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkListBoxRow*) p);
+		this(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -114,8 +110,6 @@ public class ListBoxRow : Bin, ActionableIF
 	 * row functions into the row widgets themselves. Another alternative
 	 * is to call gtk_list_box_invalidate_sort() on any model change,
 	 * but that is more expensive.
-	 *
-	 * Since: 3.10
 	 */
 	public void changed()
 	{
@@ -127,12 +121,27 @@ public class ListBoxRow : Bin, ActionableIF
 	 * for this row.
 	 *
 	 * Returns: %TRUE if the row is activatable
-	 *
-	 * Since: 3.14
 	 */
 	public bool getActivatable()
 	{
 		return gtk_list_box_row_get_activatable(gtkListBoxRow) != 0;
+	}
+
+	/**
+	 * Gets the child widget of @row.
+	 *
+	 * Returns: the child widget of @row
+	 */
+	public Widget getChild()
+	{
+		auto __p = gtk_list_box_row_get_child(gtkListBoxRow);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -141,27 +150,23 @@ public class ListBoxRow : Bin, ActionableIF
 	 * set already, and if so to update the state of it.
 	 *
 	 * Returns: the current header, or %NULL if none
-	 *
-	 * Since: 3.10
 	 */
 	public Widget getHeader()
 	{
-		auto p = gtk_list_box_row_get_header(gtkListBoxRow);
+		auto __p = gtk_list_box_row_get_header(gtkListBoxRow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
 	 * Gets the current index of the @row in its #GtkListBox container.
 	 *
 	 * Returns: the index of the @row, or -1 if the @row is not in a listbox
-	 *
-	 * Since: 3.10
 	 */
 	public int getIndex()
 	{
@@ -173,8 +178,6 @@ public class ListBoxRow : Bin, ActionableIF
 	 * for this row.
 	 *
 	 * Returns: %TRUE if the row is selectable
-	 *
-	 * Since: 3.14
 	 */
 	public bool getSelectable()
 	{
@@ -186,8 +189,6 @@ public class ListBoxRow : Bin, ActionableIF
 	 * #GtkListBox container.
 	 *
 	 * Returns: %TRUE if @row is selected
-	 *
-	 * Since: 3.14
 	 */
 	public bool isSelected()
 	{
@@ -199,12 +200,21 @@ public class ListBoxRow : Bin, ActionableIF
 	 *
 	 * Params:
 	 *     activatable = %TRUE to mark the row as activatable
-	 *
-	 * Since: 3.14
 	 */
 	public void setActivatable(bool activatable)
 	{
 		gtk_list_box_row_set_activatable(gtkListBoxRow, activatable);
+	}
+
+	/**
+	 * Sets the child widget of @self.
+	 *
+	 * Params:
+	 *     child = the child widget
+	 */
+	public void setChild(Widget child)
+	{
+		gtk_list_box_row_set_child(gtkListBoxRow, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -214,8 +224,6 @@ public class ListBoxRow : Bin, ActionableIF
 	 *
 	 * Params:
 	 *     header = the header, or %NULL
-	 *
-	 * Since: 3.10
 	 */
 	public void setHeader(Widget header)
 	{
@@ -227,8 +235,6 @@ public class ListBoxRow : Bin, ActionableIF
 	 *
 	 * Params:
 	 *     selectable = %TRUE to mark the row as selectable
-	 *
-	 * Since: 3.14
 	 */
 	public void setSelectable(bool selectable)
 	{
@@ -240,8 +246,6 @@ public class ListBoxRow : Bin, ActionableIF
 	 *
 	 * If you want to be notified when the user activates a row (by key or not),
 	 * use the #GtkListBox::row-activated signal on the row’s parent #GtkListBox.
-	 *
-	 * Since: 3.10
 	 */
 	gulong addOnActivate(void delegate(ListBoxRow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

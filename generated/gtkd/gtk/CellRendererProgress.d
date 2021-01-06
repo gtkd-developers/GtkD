@@ -31,14 +31,11 @@ private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * #GtkCellRendererProgress renders a numeric value as a progress par in a cell.
  * Additionally, it can display a text on top of the progress bar.
- * 
- * The #GtkCellRendererProgress cell renderer was added in GTK+ 2.6.
  */
 public class CellRendererProgress : CellRenderer, OrientableIF
 {
@@ -83,19 +80,17 @@ public class CellRendererProgress : CellRenderer, OrientableIF
 	 *
 	 * Returns: the new cell renderer
 	 *
-	 * Since: 2.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_progress_new();
+		auto __p = gtk_cell_renderer_progress_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererProgress*) p);
+		this(cast(GtkCellRendererProgress*) __p);
 	}
 }

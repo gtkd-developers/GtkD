@@ -27,7 +27,6 @@ module gio.TcpConnection;
 private import gio.SocketConnection;
 private import gio.c.functions;
 public  import gio.c.types;
-public  import gtkc.giotypes;
 
 
 /**

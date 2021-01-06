@@ -27,7 +27,6 @@ module gtk.CssProvider;
 private import gio.FileIF;
 private import glib.ConstructionException;
 private import glib.ErrorG;
-private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -36,7 +35,6 @@ private import gtk.StyleProviderIF;
 private import gtk.StyleProviderT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -44,26 +42,25 @@ private import std.algorithm;
  * GtkCssProvider is an object implementing the #GtkStyleProvider interface.
  * It is able to parse [CSS-like][css-overview] input in order to style widgets.
  * 
- * An application can make GTK+ parse a specific CSS style sheet by calling
+ * An application can make GTK parse a specific CSS style sheet by calling
  * gtk_css_provider_load_from_file() or gtk_css_provider_load_from_resource()
  * and adding the provider with gtk_style_context_add_provider() or
- * gtk_style_context_add_provider_for_screen().
+ * gtk_style_context_add_provider_for_display().
  * 
- * In addition, certain files will be read when GTK+ is initialized. First, the
- * file `$XDG_CONFIG_HOME/gtk-3.0/gtk.css` is loaded if it exists. Then, GTK+
+ * In addition, certain files will be read when GTK is initialized. First, the
+ * file `$XDG_CONFIG_HOME/gtk-4.0/gtk.css` is loaded if it exists. Then, GTK
  * loads the first existing file among
- * `XDG_DATA_HOME/themes/THEME/gtk-VERSION/gtk.css`,
- * `$HOME/.themes/THEME/gtk-VERSION/gtk.css`,
- * `$XDG_DATA_DIRS/themes/THEME/gtk-VERSION/gtk.css` and
- * `DATADIR/share/themes/THEME/gtk-VERSION/gtk.css`, where `THEME` is the name of
- * the current theme (see the #GtkSettings:gtk-theme-name setting), `DATADIR`
- * is the prefix configured when GTK+ was compiled (unless overridden by the
- * `GTK_DATA_PREFIX` environment variable), and `VERSION` is the GTK+ version number.
- * If no file is found for the current version, GTK+ tries older versions all the
- * way back to 3.0.
- * 
- * In the same way, GTK+ tries to load a gtk-keys.css file for the current
- * key theme, as defined by #GtkSettings:gtk-key-theme-name.
+ * `XDG_DATA_HOME/themes/THEME/gtk-VERSION/gtk-VARIANT.css`,
+ * `$HOME/.themes/THEME/gtk-VERSION/gtk-VARIANT.css`,
+ * `$XDG_DATA_DIRS/themes/THEME/gtk-VERSION/gtk-VARIANT.css` and
+ * `DATADIR/share/themes/THEME/gtk-VERSION/gtk-VARIANT.css`,
+ * where `THEME` is the name of the current theme (see the #GtkSettings:gtk-theme-name
+ * setting), VARIANT is the variant to load (see the
+ * #GtkSettings:gtk-application-prefer-dark-theme setting), `DATADIR`
+ * is the prefix configured when GTK was compiled (unless overridden by the
+ * `GTK_DATA_PREFIX` environment variable), and `VERSION` is the GTK version number.
+ * If no file is found for the current version, GTK tries older versions all the
+ * way back to 4.0.
  */
 public class CssProvider : ObjectG, StyleProviderIF
 {
@@ -112,58 +109,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 */
 	public this()
 	{
-		auto p = gtk_css_provider_new();
+		auto __p = gtk_css_provider_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCssProvider*) p, true);
-	}
-
-	/**
-	 * Returns the provider containing the style settings used as a
-	 * fallback for all widgets.
-	 *
-	 * Deprecated: Use gtk_css_provider_new() instead.
-	 *
-	 * Returns: The provider used for fallback styling.
-	 *     This memory is owned by GTK+, and you must not free it.
-	 */
-	public static CssProvider getDefault()
-	{
-		auto p = gtk_css_provider_get_default();
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
-	}
-
-	/**
-	 * Loads a theme from the usual theme paths
-	 *
-	 * Params:
-	 *     name = A theme name
-	 *     variant = variant to load, for example, "dark", or
-	 *         %NULL for the default
-	 *
-	 * Returns: a #GtkCssProvider with the theme loaded.
-	 *     This memory is owned by GTK+, and you must not free it.
-	 */
-	public static CssProvider getNamed(string name, string variant)
-	{
-		auto p = gtk_css_provider_get_named(Str.toStringz(name), Str.toStringz(variant));
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
+		this(cast(GtkCssProvider*) __p, true);
 	}
 
 	/**
@@ -172,26 +125,10 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Params:
 	 *     data = CSS data loaded in memory
-	 *
-	 * Returns: %TRUE. The return value is deprecated and %FALSE will only be
-	 *     returned for backwards compatibility reasons if an @error is not
-	 *     %NULL and a loading error occurred. To track errors while loading
-	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
-	 *
-	 * Throws: GException on failure.
 	 */
-	public bool loadFromData(string data)
+	public void loadFromData(string data)
 	{
-		GError* err = null;
-
-		auto p = gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), cast(ptrdiff_t)data.length, &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
+		gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), cast(ptrdiff_t)data.length);
 	}
 
 	/**
@@ -200,26 +137,10 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Params:
 	 *     file = #GFile pointing to a file to load
-	 *
-	 * Returns: %TRUE. The return value is deprecated and %FALSE will only be
-	 *     returned for backwards compatibility reasons if an @error is not
-	 *     %NULL and a loading error occurred. To track errors while loading
-	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
-	 *
-	 * Throws: GException on failure.
 	 */
-	public bool loadFromFile(FileIF file)
+	public void loadFromFile(FileIF file)
 	{
-		GError* err = null;
-
-		auto p = gtk_css_provider_load_from_file(gtkCssProvider, (file is null) ? null : file.getFileStruct(), &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
+		gtk_css_provider_load_from_file(gtkCssProvider, (file is null) ? null : file.getFileStruct());
 	}
 
 	/**
@@ -228,26 +149,10 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Params:
 	 *     path = the path of a filename to load, in the GLib filename encoding
-	 *
-	 * Returns: %TRUE. The return value is deprecated and %FALSE will only be
-	 *     returned for backwards compatibility reasons if an @error is not
-	 *     %NULL and a loading error occurred. To track errors while loading
-	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
-	 *
-	 * Throws: GException on failure.
 	 */
-	public bool loadFromPath(string path)
+	public void loadFromPath(string path)
 	{
-		GError* err = null;
-
-		auto p = gtk_css_provider_load_from_path(gtkCssProvider, Str.toStringz(path), &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
+		gtk_css_provider_load_from_path(gtkCssProvider, Str.toStringz(path));
 	}
 
 	/**
@@ -259,12 +164,26 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Params:
 	 *     resourcePath = a #GResource resource path
-	 *
-	 * Since: 3.16
 	 */
 	public void loadFromResource(string resourcePath)
 	{
 		gtk_css_provider_load_from_resource(gtkCssProvider, Str.toStringz(resourcePath));
+	}
+
+	/**
+	 * Loads a theme from the usual theme paths. The actual process of
+	 * finding the theme might change between releases, but it is
+	 * guaranteed that this function uses the same mechanism to load the
+	 * theme that GTK uses for loading its own theme.
+	 *
+	 * Params:
+	 *     name = A theme name
+	 *     variant = variant to load, for example, "dark", or
+	 *         %NULL for the default
+	 */
+	public void loadNamed(string name, string variant)
+	{
+		gtk_css_provider_load_named(gtkCssProvider, Str.toStringz(name), Str.toStringz(variant));
 	}
 
 	/**
@@ -277,8 +196,6 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * this @provider.
 	 *
 	 * Returns: a new string representing the @provider.
-	 *
-	 * Since: 3.2
 	 */
 	public override string toString()
 	{

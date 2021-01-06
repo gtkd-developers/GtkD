@@ -24,15 +24,13 @@
 
 module gtk.Settings;
 
-private import gdk.Screen;
+private import gdk.Display;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gobject.ParamSpec;
 private import gtk.StyleProviderIF;
 private import gtk.StyleProviderT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -42,36 +40,26 @@ public  import gtkc.gtktypes;
  * On the X window system, this sharing is realized by an
  * [XSettings](http://www.freedesktop.org/wiki/Specifications/xsettings-spec)
  * manager that is usually part of the desktop environment, along with
- * utilities that let the user change these settings. In the absence of
- * an Xsettings manager, GTK+ reads default values for settings from
- * `settings.ini` files in
- * `/etc/gtk-3.0`, `$XDG_CONFIG_DIRS/gtk-3.0`
- * and `$XDG_CONFIG_HOME/gtk-3.0`.
- * These files must be valid key files (see #GKeyFile), and have
- * a section called Settings. Themes can also provide default values
- * for settings by installing a `settings.ini` file
+ * utilities that let the user change these settings.
+ * 
+ * On Wayland, the settings are obtained either via a settings portal,
+ * or by reading desktop settings from DConf.
+ * 
+ * In the absence of these sharing mechanisms, GTK reads default values for
+ * settings from `settings.ini` files in `/etc/gtk-4.0`, `$XDG_CONFIG_DIRS/gtk-4.0`
+ * and `$XDG_CONFIG_HOME/gtk-4.0`. These files must be valid key files (see
+ * #GKeyFile), and have a section called Settings. Themes can also provide
+ * default values for settings by installing a `settings.ini` file
  * next to their `gtk.css` file.
  * 
  * Applications can override system-wide settings by setting the property
  * of the GtkSettings object with g_object_set(). This should be restricted
  * to special cases though; GtkSettings are not meant as an application
- * configuration facility. When doing so, you need to be aware that settings
- * that are specific to individual widgets may not be available before the
- * widget type has been realized at least once. The following example
- * demonstrates a way to do this:
- * |[<!-- language="C" -->
- * gtk_init (&argc, &argv);
+ * configuration facility.
  * 
- * // make sure the type is realized
- * g_type_class_unref (g_type_class_ref (GTK_TYPE_IMAGE_MENU_ITEM));
- * 
- * g_object_set (gtk_settings_get_default (), "gtk-enable-animations", FALSE, NULL);
- * ]|
- * 
- * There is one GtkSettings instance per screen. It can be obtained with
- * gtk_settings_get_for_screen(), but in many cases, it is more convenient
- * to use gtk_widget_get_settings(). gtk_settings_get_default() returns the
- * GtkSettings instance for the default screen.
+ * There is one GtkSettings instance per display. It can be obtained with
+ * gtk_settings_get_for_display(), but in many cases, it is more convenient
+ * to use gtk_widget_get_settings().
  */
 public class Settings : ObjectG, StyleProviderIF
 {
@@ -112,64 +100,42 @@ public class Settings : ObjectG, StyleProviderIF
 	}
 
 	/**
-	 * Gets the #GtkSettings object for the default GDK screen, creating
-	 * it if necessary. See gtk_settings_get_for_screen().
+	 * Gets the #GtkSettings object for the default display, creating
+	 * it if necessary. See gtk_settings_get_for_display().
 	 *
 	 * Returns: a #GtkSettings object. If there is
-	 *     no default screen, then returns %NULL.
+	 *     no default display, then returns %NULL.
 	 */
 	public static Settings getDefault()
 	{
-		auto p = gtk_settings_get_default();
+		auto __p = gtk_settings_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
+		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) __p);
 	}
 
 	/**
-	 * Gets the #GtkSettings object for @screen, creating it if necessary.
+	 * Gets the #GtkSettings object for @display, creating it if necessary.
 	 *
 	 * Params:
-	 *     screen = a #GdkScreen.
+	 *     display = a #GdkDisplay.
 	 *
 	 * Returns: a #GtkSettings object.
-	 *
-	 * Since: 2.2
 	 */
-	public static Settings getForScreen(Screen screen)
+	public static Settings getForDisplay(Display display)
 	{
-		auto p = gtk_settings_get_for_screen((screen is null) ? null : screen.getScreenStruct());
+		auto __p = gtk_settings_get_for_display((display is null) ? null : display.getDisplayStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: This function is not useful outside GTK+.
-	 */
-	public static void installProperty(ParamSpec pspec)
-	{
-		gtk_settings_install_property((pspec is null) ? null : pspec.getParamSpecStruct());
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: This function is not useful outside GTK+.
-	 */
-	public static void installPropertyParser(ParamSpec pspec, GtkRcPropertyParser parser)
-	{
-		gtk_settings_install_property_parser((pspec is null) ? null : pspec.getParamSpecStruct(), parser);
+		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) __p);
 	}
 
 	/**
@@ -180,51 +146,9 @@ public class Settings : ObjectG, StyleProviderIF
 	 *
 	 * Params:
 	 *     name = the name of the setting to reset
-	 *
-	 * Since: 3.20
 	 */
 	public void resetProperty(string name)
 	{
 		gtk_settings_reset_property(gtkSettings, Str.toStringz(name));
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: Use g_object_set() instead.
-	 */
-	public void setDoubleProperty(string name, double vDouble, string origin)
-	{
-		gtk_settings_set_double_property(gtkSettings, Str.toStringz(name), vDouble, Str.toStringz(origin));
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: Use g_object_set() instead.
-	 */
-	public void setLongProperty(string name, glong vLong, string origin)
-	{
-		gtk_settings_set_long_property(gtkSettings, Str.toStringz(name), vLong, Str.toStringz(origin));
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: Use g_object_set() instead.
-	 */
-	public void setPropertyValue(string name, GtkSettingsValue* svalue)
-	{
-		gtk_settings_set_property_value(gtkSettings, Str.toStringz(name), svalue);
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: Use g_object_set() instead.
-	 */
-	public void setStringProperty(string name, string vString, string origin)
-	{
-		gtk_settings_set_string_property(gtkSettings, Str.toStringz(name), Str.toStringz(vString), Str.toStringz(origin));
 	}
 }

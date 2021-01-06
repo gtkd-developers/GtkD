@@ -24,12 +24,13 @@
 
 module gtk.EventController;
 
+private import gdk.Device;
 private import gdk.Event;
+private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -73,11 +74,85 @@ public class EventController : ObjectG
 	}
 
 	/**
+	 * Returns the event that is currently being handled by the
+	 * controller, and %NULL at other times.
+	 *
+	 * Returns: the event is current handled by @controller
+	 */
+	public Event getCurrentEvent()
+	{
+		auto __p = gtk_event_controller_get_current_event(gtkEventController);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p);
+	}
+
+	/**
+	 * Returns the device of the event that is currently being
+	 * handled by the controller, and %NULL otherwise.
+	 *
+	 * Returns: device of the event is current handled by @controller
+	 */
+	public Device getCurrentEventDevice()
+	{
+		auto __p = gtk_event_controller_get_current_event_device(gtkEventController);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
+	}
+
+	/**
+	 * Returns the modifier state of the event that is currently being
+	 * handled by the controller, and 0 otherwise.
+	 *
+	 * Returns: modifier state of the event is current handled by @controller
+	 */
+	public GdkModifierType getCurrentEventState()
+	{
+		return gtk_event_controller_get_current_event_state(gtkEventController);
+	}
+
+	/**
+	 * Returns the timestamp of the event that is currently being
+	 * handled by the controller, and 0 otherwise.
+	 *
+	 * Returns: timestamp of the event is current handled by @controller
+	 */
+	public uint getCurrentEventTime()
+	{
+		return gtk_event_controller_get_current_event_time(gtkEventController);
+	}
+
+	/**
+	 * Gets the name of @controller.
+	 */
+	public string getName()
+	{
+		return Str.toString(gtk_event_controller_get_name(gtkEventController));
+	}
+
+	/**
+	 * Gets the propagation limit of the event controller.
+	 *
+	 * Returns: the propagation limit
+	 */
+	public GtkPropagationLimit getPropagationLimit()
+	{
+		return gtk_event_controller_get_propagation_limit(gtkEventController);
+	}
+
+	/**
 	 * Gets the propagation phase at which @controller handles events.
 	 *
 	 * Returns: the propagation phase
-	 *
-	 * Since: 3.14
 	 */
 	public GtkPropagationPhase getPropagationPhase()
 	{
@@ -88,48 +163,54 @@ public class EventController : ObjectG
 	 * Returns the #GtkWidget this controller relates to.
 	 *
 	 * Returns: a #GtkWidget
-	 *
-	 * Since: 3.14
 	 */
 	public Widget getWidget()
 	{
-		auto p = gtk_event_controller_get_widget(gtkEventController);
+		auto __p = gtk_event_controller_get_widget(gtkEventController);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-	}
-
-	/**
-	 * Feeds an events into @controller, so it can be interpreted
-	 * and the controller actions triggered.
-	 *
-	 * Params:
-	 *     event = a #GdkEvent
-	 *
-	 * Returns: %TRUE if the event was potentially useful to trigger the
-	 *     controller action
-	 *
-	 * Since: 3.14
-	 */
-	public bool handleEvent(Event event)
-	{
-		return gtk_event_controller_handle_event(gtkEventController, (event is null) ? null : event.getEventStruct()) != 0;
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
 	 * Resets the @controller to a clean state. Every interaction
-	 * the controller did through #GtkEventController::handle-event
+	 * the controller did through gtk_event_controller_handle_event()
 	 * will be dropped at this point.
-	 *
-	 * Since: 3.14
 	 */
 	public void reset()
 	{
 		gtk_event_controller_reset(gtkEventController);
+	}
+
+	/**
+	 * Sets a name on the controller that can be used for
+	 * debugging.
+	 *
+	 * Params:
+	 *     name = a name for @controller
+	 */
+	public void setName(string name)
+	{
+		gtk_event_controller_set_name(gtkEventController, Str.toStringz(name));
+	}
+
+	/**
+	 * Sets the event propagation limit on the event controller.
+	 *
+	 * If the limit is set to %GTK_LIMIT_SAME_NATIVE, the controller
+	 * won't handle events that are targeted at widgets on a different
+	 * surface, such as popovers.
+	 *
+	 * Params:
+	 *     limit = the propagation limit
+	 */
+	public void setPropagationLimit(GtkPropagationLimit limit)
+	{
+		gtk_event_controller_set_propagation_limit(gtkEventController, limit);
 	}
 
 	/**
@@ -141,8 +222,6 @@ public class EventController : ObjectG
 	 *
 	 * Params:
 	 *     phase = a propagation phase
-	 *
-	 * Since: 3.14
 	 */
 	public void setPropagationPhase(GtkPropagationPhase phase)
 	{

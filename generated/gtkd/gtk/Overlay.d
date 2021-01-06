@@ -24,14 +24,13 @@
 
 module gtk.Overlay;
 
+private import gdk.Rectangle;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -49,6 +48,9 @@ private import std.algorithm;
  * More complicated placement of overlays is possible by connecting
  * to the #GtkOverlay::get-child-position signal.
  * 
+ * An overlay’s minimum and natural sizes are those of its main child. The sizes
+ * of overlay children are not considered when measuring these preferred sizes.
+ * 
  * # GtkOverlay as GtkBuildable
  * 
  * The GtkOverlay implementation of the GtkBuildable interface
@@ -61,7 +63,7 @@ private import std.algorithm;
  * whose alignments cause them to be positioned at an edge get the style classes
  * “.left”, “.right”, “.top”, and/or “.bottom” according to their position.
  */
-public class Overlay : Bin
+public class Overlay : Widget
 {
 	/** the main Gtk struct */
 	protected GtkOverlay* gtkOverlay;
@@ -86,7 +88,7 @@ public class Overlay : Bin
 	public this (GtkOverlay* gtkOverlay, bool ownedRef = false)
 	{
 		this.gtkOverlay = gtkOverlay;
-		super(cast(GtkBin*)gtkOverlay, ownedRef);
+		super(cast(GtkWidget*)gtkOverlay, ownedRef);
 	}
 
 
@@ -101,35 +103,31 @@ public class Overlay : Bin
 	 *
 	 * Returns: a new #GtkOverlay object.
 	 *
-	 * Since: 3.2
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_overlay_new();
+		auto __p = gtk_overlay_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkOverlay*) p);
+		this(cast(GtkOverlay*) __p);
 	}
 
 	/**
 	 * Adds @widget to @overlay.
 	 *
 	 * The widget will be stacked on top of the main widget
-	 * added with gtk_container_add().
+	 * added with gtk_overlay_set_child().
 	 *
 	 * The position at which @widget is placed is determined
 	 * from its #GtkWidget:halign and #GtkWidget:valign properties.
 	 *
 	 * Params:
 	 *     widget = a #GtkWidget to be added to the container
-	 *
-	 * Since: 3.2
 	 */
 	public void addOverlay(Widget widget)
 	{
@@ -137,56 +135,97 @@ public class Overlay : Bin
 	}
 
 	/**
-	 * Convenience function to get the value of the #GtkOverlay:pass-through
-	 * child property for @widget.
+	 * Gets the child widget of @overlay.
+	 *
+	 * Returns: the child widget of @overlay
+	 */
+	public Widget getChild()
+	{
+		auto __p = gtk_overlay_get_child(gtkOverlay);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Gets whether @widget should be clipped within the parent.
 	 *
 	 * Params:
 	 *     widget = an overlay child of #GtkOverlay
 	 *
-	 * Returns: whether the widget is a pass through child.
-	 *
-	 * Since: 3.18
+	 * Returns: whether the widget is clipped within the parent.
 	 */
-	public bool getOverlayPassThrough(Widget widget)
+	public bool getClipOverlay(Widget widget)
 	{
-		return gtk_overlay_get_overlay_pass_through(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct()) != 0;
+		return gtk_overlay_get_clip_overlay(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct()) != 0;
 	}
 
 	/**
-	 * Moves @child to a new @index in the list of @overlay children.
-	 * The list contains overlays in the order that these were
-	 * added to @overlay.
-	 *
-	 * A widget’s index in the @overlay children list determines which order
-	 * the children are drawn if they overlap. The first child is drawn at
-	 * the bottom. It also affects the default focus chain order.
-	 *
-	 * Params:
-	 *     child = the overlaid #GtkWidget to move
-	 *     position = the new index for @child in the list of overlay children
-	 *         of @overlay, starting from 0. If negative, indicates the end of
-	 *         the list
-	 *
-	 * Since: 3.18
-	 */
-	public void reorderOverlay(Widget child, int position)
-	{
-		gtk_overlay_reorder_overlay(gtkOverlay, (child is null) ? null : child.getWidgetStruct(), position);
-	}
-
-	/**
-	 * Convenience function to set the value of the #GtkOverlay:pass-through
-	 * child property for @widget.
+	 * Gets whether @widget's size is included in the measurement of
+	 * @overlay.
 	 *
 	 * Params:
 	 *     widget = an overlay child of #GtkOverlay
-	 *     passThrough = whether the child should pass the input through
 	 *
-	 * Since: 3.18
+	 * Returns: whether the widget is measured
 	 */
-	public void setOverlayPassThrough(Widget widget, bool passThrough)
+	public bool getMeasureOverlay(Widget widget)
 	{
-		gtk_overlay_set_overlay_pass_through(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct(), passThrough);
+		return gtk_overlay_get_measure_overlay(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct()) != 0;
+	}
+
+	/**
+	 * Removes an overlay that was added with gtk_overlay_add_overlay().
+	 *
+	 * Params:
+	 *     widget = a #GtkWidget to be removed
+	 */
+	public void removeOverlay(Widget widget)
+	{
+		gtk_overlay_remove_overlay(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct());
+	}
+
+	/**
+	 * Sets the child widget of @overlay.
+	 *
+	 * Params:
+	 *     child = the child widget
+	 */
+	public void setChild(Widget child)
+	{
+		gtk_overlay_set_child(gtkOverlay, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
+	 * Sets whether @widget should be clipped within the parent.
+	 *
+	 * Params:
+	 *     widget = an overlay child of #GtkOverlay
+	 *     clipOverlay = whether the child should be clipped
+	 */
+	public void setClipOverlay(Widget widget, bool clipOverlay)
+	{
+		gtk_overlay_set_clip_overlay(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct(), clipOverlay);
+	}
+
+	/**
+	 * Sets whether @widget is included in the measured size of @overlay.
+	 *
+	 * The overlay will request the size of the largest child that has
+	 * this property set to %TRUE. Children who are not included may
+	 * be drawn outside of @overlay's allocation if they are too large.
+	 *
+	 * Params:
+	 *     widget = an overlay child of #GtkOverlay
+	 *     measure = whether the child should be measured
+	 */
+	public void setMeasureOverlay(Widget widget, bool measure)
+	{
+		gtk_overlay_set_measure_overlay(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct(), measure);
 	}
 
 	/**
@@ -211,7 +250,7 @@ public class Overlay : Bin
 	 *
 	 * Returns: %TRUE if the @allocation has been filled
 	 */
-	gulong addOnGetChildPosition(bool delegate(Widget, GdkRectangle*, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGetChildPosition(bool delegate(Widget, Rectangle, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "get-child-position", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

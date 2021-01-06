@@ -33,7 +33,6 @@ private import gtk.CellRendererText;
 private import gtk.TreeIter;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -48,8 +47,6 @@ private import std.algorithm;
  * box and sets it to display the column specified by its
  * #GtkCellRendererCombo:text-column property. Further properties of the combo box
  * can be set in a handler for the #GtkCellRenderer::editing-started signal.
- * 
- * The #GtkCellRendererCombo cell renderer was added in GTK+ 2.6.
  */
 public class CellRendererCombo : CellRendererText
 {
@@ -97,20 +94,18 @@ public class CellRendererCombo : CellRendererText
 	 *
 	 * Returns: the new cell renderer
 	 *
-	 * Since: 2.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_combo_new();
+		auto __p = gtk_cell_renderer_combo_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererCombo*) p);
+		this(cast(GtkCellRendererCombo*) __p);
 	}
 
 	/**
@@ -131,8 +126,6 @@ public class CellRendererCombo : CellRendererText
 	 *         (relative to the tree view model)
 	 *     newIter = the new iter selected in the combo box
 	 *         (relative to the combo box model)
-	 *
-	 * Since: 2.14
 	 */
 	gulong addOnChanged(void delegate(string, TreeIter, CellRendererCombo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

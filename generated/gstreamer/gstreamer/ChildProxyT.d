@@ -32,7 +32,6 @@ public  import gobject.Signals;
 public  import gobject.Value;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 public  import std.algorithm;
 
 
@@ -99,14 +98,14 @@ public template ChildProxyT(TStruct)
 	 */
 	public ObjectG getChildByIndex(uint index)
 	{
-		auto p = gst_child_proxy_get_child_by_index(getChildProxyStruct(), index);
+		auto __p = gst_child_proxy_get_child_by_index(getChildProxyStruct(), index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -126,14 +125,14 @@ public template ChildProxyT(TStruct)
 	 */
 	public ObjectG getChildByName(string name)
 	{
-		auto p = gst_child_proxy_get_child_by_name(getChildProxyStruct(), Str.toStringz(name));
+		auto __p = gst_child_proxy_get_child_by_name(getChildProxyStruct(), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -198,12 +197,12 @@ public template ChildProxyT(TStruct)
 		GObject* outtarget = null;
 		GParamSpec* outpspec = null;
 
-		auto p = gst_child_proxy_lookup(getChildProxyStruct(), Str.toStringz(name), &outtarget, &outpspec) != 0;
+		auto __p = gst_child_proxy_lookup(getChildProxyStruct(), Str.toStringz(name), &outtarget, &outpspec) != 0;
 
 		target = ObjectG.getDObject!(ObjectG)(outtarget);
 		pspec = ObjectG.getDObject!(ParamSpec)(outpspec);
 
-		return p;
+		return __p;
 	}
 
 	/**

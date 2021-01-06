@@ -33,7 +33,6 @@ private import gstreamer.Caps;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -147,14 +146,14 @@ public class DeviceMonitor : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_device_monitor_new();
+		auto __p = gst_device_monitor_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstDeviceMonitor*) p, true);
+		this(cast(GstDeviceMonitor*) __p, true);
 	}
 
 	/**
@@ -193,14 +192,14 @@ public class DeviceMonitor : ObjectGst
 	 */
 	public Bus getBus()
 	{
-		auto p = gst_device_monitor_get_bus(gstDeviceMonitor);
+		auto __p = gst_device_monitor_get_bus(gstDeviceMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
+		return ObjectG.getDObject!(Bus)(cast(GstBus*) __p, true);
 	}
 
 	/**
@@ -214,14 +213,14 @@ public class DeviceMonitor : ObjectGst
 	 */
 	public ListG getDevices()
 	{
-		auto p = gst_device_monitor_get_devices(gstDeviceMonitor);
+		auto __p = gst_device_monitor_get_devices(gstDeviceMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -243,7 +242,7 @@ public class DeviceMonitor : ObjectGst
 	}
 
 	/**
-	 * Get if @monitor is curretly showing all devices, even those from hidden
+	 * Get if @monitor is currently showing all devices, even those from hidden
 	 * providers.
 	 *
 	 * Returns: %TRUE when all devices will be shown.

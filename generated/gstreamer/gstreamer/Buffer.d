@@ -36,7 +36,7 @@ private import gstreamer.ProtectionMeta;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -127,7 +127,7 @@ public  import gstreamerc.gstreamertypes;
  * Typically, #GstParentBufferMeta is used when the child buffer is directly
  * using the #GstMemory of the parent buffer, and wants to prevent the parent
  * buffer from being returned to a buffer pool until the #GstMemory is available
- * for re-use. (Since 1.6)
+ * for re-use. (Since: 1.6)
  */
 public class Buffer
 {
@@ -158,6 +158,12 @@ public class Buffer
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_buffer_unref(gstBuffer);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -176,14 +182,14 @@ public class Buffer
 	 */
 	public this()
 	{
-		auto p = gst_buffer_new();
+		auto __p = gst_buffer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -210,14 +216,14 @@ public class Buffer
 	 */
 	public this(Allocator allocator, size_t size, AllocationParams params)
 	{
-		auto p = gst_buffer_new_allocate((allocator is null) ? null : allocator.getAllocatorStruct(), size, (params is null) ? null : params.getAllocationParamsStruct());
+		auto __p = gst_buffer_new_allocate((allocator is null) ? null : allocator.getAllocatorStruct(), size, (params is null) ? null : params.getAllocationParamsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_allocate");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -235,14 +241,14 @@ public class Buffer
 	 */
 	public this(ubyte[] data)
 	{
-		auto p = gst_buffer_new_wrapped(data.ptr, cast(size_t)data.length);
+		auto __p = gst_buffer_new_wrapped(data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -262,14 +268,14 @@ public class Buffer
 	 */
 	public this(Bytes bytes)
 	{
-		auto p = gst_buffer_new_wrapped_bytes((bytes is null) ? null : bytes.getBytesStruct());
+		auto __p = gst_buffer_new_wrapped_bytes((bytes is null) ? null : bytes.getBytesStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped_bytes");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -296,14 +302,14 @@ public class Buffer
 	 */
 	public this(GstMemoryFlags flags, ubyte[] data, size_t maxsize, size_t offset, void* userData, GDestroyNotify notify)
 	{
-		auto p = gst_buffer_new_wrapped_full(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
+		auto __p = gst_buffer_new_wrapped_full(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped_full");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -317,14 +323,14 @@ public class Buffer
 	 */
 	public Meta addMeta(GstMetaInfo* info, void* params)
 	{
-		auto p = gst_buffer_add_meta(gstBuffer, info, params);
+		auto __p = gst_buffer_add_meta(gstBuffer, info, params);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
@@ -358,14 +364,14 @@ public class Buffer
 	 */
 	public ProtectionMeta addProtectionMeta(Structure info)
 	{
-		auto p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct(true));
+		auto __p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProtectionMeta)(cast(GstProtectionMeta*) p);
+		return ObjectG.getDObject!(ProtectionMeta)(cast(GstProtectionMeta*) __p);
 	}
 
 	/**
@@ -399,14 +405,14 @@ public class Buffer
 	 */
 	public Buffer append(Buffer buf2)
 	{
-		auto p = gst_buffer_append(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct());
+		auto __p = gst_buffer_append(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -421,7 +427,7 @@ public class Buffer
 	 */
 	public void appendMemory(Memory mem)
 	{
-		gst_buffer_append_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_append_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
@@ -439,14 +445,35 @@ public class Buffer
 	 */
 	public Buffer appendRegion(Buffer buf2, ptrdiff_t offset, ptrdiff_t size)
 	{
-		auto p = gst_buffer_append_region(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(), offset, size);
+		auto __p = gst_buffer_append_region(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(true), offset, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
+	}
+
+	/**
+	 * Create a copy of the given buffer. This will only copy the buffer's
+	 * data to a newly allocated memory if needed (if the type of memory
+	 * requires it), otherwise the underlying data is just referenced.
+	 * Check gst_buffer_copy_deep() if you want to force the data
+	 * to be copied to newly allocated memory.
+	 *
+	 * Returns: a new copy of @buf.
+	 */
+	public Buffer copy()
+	{
+		auto __p = gst_buffer_copy(gstBuffer);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -459,14 +486,14 @@ public class Buffer
 	 */
 	public Buffer copyDeep()
 	{
-		auto p = gst_buffer_copy_deep(gstBuffer);
+		auto __p = gst_buffer_copy_deep(gstBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -514,14 +541,14 @@ public class Buffer
 	 */
 	public Buffer copyRegion(GstBufferCopyFlags flags, size_t offset, size_t size)
 	{
-		auto p = gst_buffer_copy_region(gstBuffer, flags, offset, size);
+		auto __p = gst_buffer_copy_region(gstBuffer, flags, offset, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -630,14 +657,14 @@ public class Buffer
 	 */
 	public Memory getAllMemory()
 	{
-		auto p = gst_buffer_get_all_memory(gstBuffer);
+		auto __p = gst_buffer_get_all_memory(gstBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -663,14 +690,14 @@ public class Buffer
 	 */
 	public Memory getMemory(uint idx)
 	{
-		auto p = gst_buffer_get_memory(gstBuffer, idx);
+		auto __p = gst_buffer_get_memory(gstBuffer, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -688,14 +715,14 @@ public class Buffer
 	 */
 	public Memory getMemoryRange(uint idx, int length)
 	{
-		auto p = gst_buffer_get_memory_range(gstBuffer, idx, length);
+		auto __p = gst_buffer_get_memory_range(gstBuffer, idx, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -713,14 +740,14 @@ public class Buffer
 	 */
 	public Meta getMeta(GType api)
 	{
-		auto p = gst_buffer_get_meta(gstBuffer, api);
+		auto __p = gst_buffer_get_meta(gstBuffer, api);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
@@ -809,7 +836,16 @@ public class Buffer
 		return gst_buffer_get_sizes_range(gstBuffer, idx, length, &offset, &maxsize);
 	}
 
-	/** */
+	/**
+	 * Gives the status of a specific flag on a buffer.
+	 *
+	 * Params:
+	 *     flags = the #GstBufferFlags flag to check.
+	 *
+	 * Returns: %TRUE if all flags in @flags are found on @buffer.
+	 *
+	 * Since: 1.10
+	 */
 	public bool hasFlags(GstBufferFlags flags)
 	{
 		return gst_buffer_has_flags(gstBuffer, flags) != 0;
@@ -829,7 +865,7 @@ public class Buffer
 	 */
 	public void insertMemory(int idx, Memory mem)
 	{
-		gst_buffer_insert_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_insert_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
@@ -882,14 +918,14 @@ public class Buffer
 	 */
 	public Meta iterateMeta(out void* state)
 	{
-		auto p = gst_buffer_iterate_meta(gstBuffer, &state);
+		auto __p = gst_buffer_iterate_meta(gstBuffer, &state);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
@@ -910,14 +946,14 @@ public class Buffer
 	 */
 	public Meta iterateMetaFiltered(out void* state, GType metaApiType)
 	{
-		auto p = gst_buffer_iterate_meta_filtered(gstBuffer, &state, metaApiType);
+		auto __p = gst_buffer_iterate_meta_filtered(gstBuffer, &state, metaApiType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
@@ -1028,14 +1064,14 @@ public class Buffer
 	 */
 	public Memory peekMemory(uint idx)
 	{
-		auto p = gst_buffer_peek_memory(gstBuffer, idx);
+		auto __p = gst_buffer_peek_memory(gstBuffer, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p);
 	}
 
 	/**
@@ -1050,7 +1086,31 @@ public class Buffer
 	 */
 	public void prependMemory(Memory mem)
 	{
-		gst_buffer_prepend_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_prepend_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
+	}
+
+	alias doref = ref_;
+	/**
+	 * Increases the refcount of the given buffer by one.
+	 *
+	 * Note that the refcount affects the writability
+	 * of @buf and its metadata, see gst_buffer_is_writable().
+	 * It is important to note that keeping additional references to
+	 * GstBuffer instances can potentially increase the number
+	 * of memcpy operations in a pipeline.
+	 *
+	 * Returns: @buf
+	 */
+	public Buffer ref_()
+	{
+		auto __p = gst_buffer_ref(gstBuffer);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -1108,7 +1168,7 @@ public class Buffer
 	 */
 	public void replaceAllMemory(Memory mem)
 	{
-		gst_buffer_replace_all_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_replace_all_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
@@ -1120,7 +1180,7 @@ public class Buffer
 	 */
 	public void replaceMemory(uint idx, Memory mem)
 	{
-		gst_buffer_replace_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_replace_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
@@ -1138,7 +1198,7 @@ public class Buffer
 	 */
 	public void replaceMemoryRange(uint idx, int length, Memory mem)
 	{
-		gst_buffer_replace_memory_range(gstBuffer, idx, length, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_replace_memory_range(gstBuffer, idx, length, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
@@ -1208,6 +1268,15 @@ public class Buffer
 	}
 
 	/**
+	 * Decreases the refcount of the buffer. If the refcount reaches 0, the buffer
+	 * with the associated metadata and memory will be freed.
+	 */
+	public void unref()
+	{
+		gst_buffer_unref(gstBuffer);
+	}
+
+	/**
 	 * Clears one or more buffer flags.
 	 *
 	 * Params:
@@ -1236,5 +1305,32 @@ public class Buffer
 	public static uint getMaxMemory()
 	{
 		return gst_buffer_get_max_memory();
+	}
+
+	/**
+	 * Modifies a pointer to a #GstBuffer to point to a different #GstBuffer. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * buffer is unreffed, the new is reffed).
+	 *
+	 * Either @nbuf or the #GstBuffer pointed to by @obuf may be %NULL.
+	 *
+	 * Params:
+	 *     obuf = pointer to a pointer to
+	 *         a #GstBuffer to be replaced.
+	 *     nbuf = pointer to a #GstBuffer that will
+	 *         replace the buffer pointed to by @obuf.
+	 *
+	 * Returns: %TRUE when @obuf was different from @nbuf.
+	 */
+	public static bool replace(ref Buffer obuf, Buffer nbuf)
+	{
+		GstBuffer* outobuf = obuf.getBufferStruct();
+
+		auto __p = gst_buffer_replace(&outobuf, (nbuf is null) ? null : nbuf.getBufferStruct()) != 0;
+
+		obuf = ObjectG.getDObject!(Buffer)(outobuf);
+
+		return __p;
 	}
 }

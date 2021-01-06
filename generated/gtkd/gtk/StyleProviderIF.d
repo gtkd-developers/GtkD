@@ -24,21 +24,15 @@
 
 module gtk.StyleProviderIF;
 
-private import glib.MemorySlice;
-private import gobject.ObjectG;
-private import gobject.ParamSpec;
-private import gobject.Value;
-private import gtk.IconFactory;
-private import gtk.StyleProperties;
-private import gtk.WidgetPath;
+private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
  * GtkStyleProvider is an interface used to provide style information to a #GtkStyleContext.
- * See gtk_style_context_add_provider() and gtk_style_context_add_provider_for_screen().
+ * See gtk_style_context_add_provider() and gtk_style_context_add_provider_for_display().
  */
 public interface StyleProviderIF{
 	/** Get the main Gtk struct */
@@ -54,51 +48,6 @@ public interface StyleProviderIF{
 		return gtk_style_provider_get_type();
 	}
 
-	/**
-	 * Returns the #GtkIconFactory defined to be in use for @path, or %NULL if none
-	 * is defined.
-	 *
-	 * Deprecated: Will always return %NULL for all GTK-provided style providers.
-	 *
-	 * Params:
-	 *     path = #GtkWidgetPath to query
-	 *
-	 * Returns: The icon factory to use for @path, or %NULL
-	 *
-	 * Since: 3.0
-	 */
-	public IconFactory getIconFactory(WidgetPath path);
-
-	/**
-	 * Returns the style settings affecting a widget defined by @path, or %NULL if
-	 * @provider doesn’t contemplate styling @path.
-	 *
-	 * Deprecated: Will always return %NULL for all GTK-provided style providers
-	 * as the interface cannot correctly work the way CSS is specified.
-	 *
-	 * Params:
-	 *     path = #GtkWidgetPath to query
-	 *
-	 * Returns: a #GtkStyleProperties containing the
-	 *     style settings affecting @path
-	 *
-	 * Since: 3.0
-	 */
-	public StyleProperties getStyle(WidgetPath path);
-
-	/**
-	 * Looks up a widget style property as defined by @provider for
-	 * the widget represented by @path.
-	 *
-	 * Params:
-	 *     path = #GtkWidgetPath to query
-	 *     state = state to query the style property for
-	 *     pspec = The #GParamSpec to query
-	 *     value = return location for the property value
-	 *
-	 * Returns: %TRUE if the property was found and has a value, %FALSE otherwise
-	 *
-	 * Since: 3.0
-	 */
-	public bool getStyleProperty(WidgetPath path, GtkStateFlags state, ParamSpec pspec, out Value value);
+	/** */
+	gulong addOnGtkPrivateChanged(void delegate(StyleProviderIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

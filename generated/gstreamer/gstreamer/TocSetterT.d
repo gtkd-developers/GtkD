@@ -28,7 +28,6 @@ public  import gobject.ObjectG;
 public  import gstreamer.Toc;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -67,14 +66,14 @@ public template TocSetterT(TStruct)
 	 */
 	public Toc getToc()
 	{
-		auto p = gst_toc_setter_get_toc(getTocSetterStruct());
+		auto __p = gst_toc_setter_get_toc(getTocSetterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Toc)(cast(GstToc*) p, true);
+		return ObjectG.getDObject!(Toc)(cast(GstToc*) __p, true);
 	}
 
 	/**

@@ -32,7 +32,6 @@ private import gstreamer.PadTemplate;
 private import gstreamer.StaticCaps;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import gtkd.Loader;
 
 
@@ -138,14 +137,14 @@ public final class StaticPadTemplate
 	 */
 	public PadTemplate get()
 	{
-		auto p = gst_static_pad_template_get(gstStaticPadTemplate);
+		auto __p = gst_static_pad_template_get(gstStaticPadTemplate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) __p);
 	}
 
 	/**
@@ -158,13 +157,13 @@ public final class StaticPadTemplate
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_static_pad_template_get_caps(gstStaticPadTemplate);
+		auto __p = gst_static_pad_template_get_caps(gstStaticPadTemplate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 }

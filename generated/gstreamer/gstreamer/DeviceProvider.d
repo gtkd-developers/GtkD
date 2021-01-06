@@ -35,7 +35,6 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Plugin;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -141,7 +140,7 @@ public class DeviceProvider : ObjectGst
 	 *
 	 * Params:
 	 *     device = the new version of @changed_device
-	 *     changedDevice = the old version of the device that has been udpated
+	 *     changedDevice = the old version of the device that has been updated
 	 *
 	 * Since: 1.16
 	 */
@@ -175,19 +174,22 @@ public class DeviceProvider : ObjectGst
 	 */
 	public Bus getBus()
 	{
-		auto p = gst_device_provider_get_bus(gstDeviceProvider);
+		auto __p = gst_device_provider_get_bus(gstDeviceProvider);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
+		return ObjectG.getDObject!(Bus)(cast(GstBus*) __p, true);
 	}
 
 	/**
 	 * Gets a list of devices that this provider understands. This may actually
 	 * probe the hardware if the provider is not currently started.
+	 *
+	 * If the provider has been started, this will returned the same #GstDevice
+	 * objedcts that have been returned by the #GST_MESSAGE_DEVICE_ADDED messages.
 	 *
 	 * Returns: a #GList of
 	 *     #GstDevice
@@ -196,14 +198,14 @@ public class DeviceProvider : ObjectGst
 	 */
 	public ListG getDevices()
 	{
-		auto p = gst_device_provider_get_devices(gstDeviceProvider);
+		auto __p = gst_device_provider_get_devices(gstDeviceProvider);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -216,14 +218,14 @@ public class DeviceProvider : ObjectGst
 	 */
 	public DeviceProviderFactory getFactory()
 	{
-		auto p = gst_device_provider_get_factory(gstDeviceProvider);
+		auto __p = gst_device_provider_get_factory(gstDeviceProvider);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceProviderFactory)(cast(GstDeviceProviderFactory*) p);
+		return ObjectG.getDObject!(DeviceProviderFactory)(cast(GstDeviceProviderFactory*) __p);
 	}
 
 	/**
@@ -284,6 +286,10 @@ public class DeviceProvider : ObjectGst
 	 * gst_device_provider_start() may already have been called by another
 	 * user of the object, gst_device_provider_stop() needs to be called the same
 	 * number of times.
+	 *
+	 * After this function has been called, gst_device_provider_get_devices() will
+	 * return the same objects that have been received from the
+	 * #GST_MESSAGE_DEVICE_ADDED messages and will no longer probe.
 	 *
 	 * Returns: %TRUE if the device providering could be started
 	 *

@@ -26,11 +26,9 @@ module gtk.Revealer;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -46,10 +44,18 @@ public  import gtkc.gtktypes;
  * # CSS nodes
  * 
  * GtkRevealer has a single CSS node with name revealer.
+ * When styling #GtkRevealer using CSS, remember that it only hides its contents,
+ * not itself. That means applied margin, padding and borders will be
+ * visible even when the #GtkRevealer:reveal-child property is set to %FALSE.
  * 
- * The GtkRevealer widget was added in GTK+ 3.10.
+ * # Accessibility
+ * 
+ * GtkRevealer uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+ * 
+ * The child of GtkRevealer, if set, is always available in the accessibility
+ * tree, regardless of the state of the revealer widget.
  */
-public class Revealer : Bin
+public class Revealer : Widget
 {
 	/** the main Gtk struct */
 	protected GtkRevealer* gtkRevealer;
@@ -74,7 +80,7 @@ public class Revealer : Bin
 	public this (GtkRevealer* gtkRevealer, bool ownedRef = false)
 	{
 		this.gtkRevealer = gtkRevealer;
-		super(cast(GtkBin*)gtkRevealer, ownedRef);
+		super(cast(GtkWidget*)gtkRevealer, ownedRef);
 	}
 
 
@@ -89,20 +95,35 @@ public class Revealer : Bin
 	 *
 	 * Returns: a newly created #GtkRevealer
 	 *
-	 * Since: 3.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_revealer_new();
+		auto __p = gtk_revealer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRevealer*) p);
+		this(cast(GtkRevealer*) __p);
+	}
+
+	/**
+	 * Gets the child widget of @revealer.
+	 *
+	 * Returns: the child widget of @revealer
+	 */
+	public Widget getChild()
+	{
+		auto __p = gtk_revealer_get_child(gtkRevealer);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -110,8 +131,6 @@ public class Revealer : Bin
 	 * the transition to the revealed state is completed.
 	 *
 	 * Returns: %TRUE if the child is fully revealed
-	 *
-	 * Since: 3.10
 	 */
 	public bool getChildRevealed()
 	{
@@ -128,8 +147,6 @@ public class Revealer : Bin
 	 * use gtk_revealer_get_child_revealed().
 	 *
 	 * Returns: %TRUE if the child is revealed.
-	 *
-	 * Since: 3.10
 	 */
 	public bool getRevealChild()
 	{
@@ -141,8 +158,6 @@ public class Revealer : Bin
 	 * transitions will take.
 	 *
 	 * Returns: the transition duration
-	 *
-	 * Since: 3.10
 	 */
 	public uint getTransitionDuration()
 	{
@@ -154,12 +169,21 @@ public class Revealer : Bin
 	 * for transitions in @revealer.
 	 *
 	 * Returns: the current transition type of @revealer
-	 *
-	 * Since: 3.10
 	 */
 	public GtkRevealerTransitionType getTransitionType()
 	{
 		return gtk_revealer_get_transition_type(gtkRevealer);
+	}
+
+	/**
+	 * Sets the child widget of @revealer.
+	 *
+	 * Params:
+	 *     child = the child widget
+	 */
+	public void setChild(Widget child)
+	{
+		gtk_revealer_set_child(gtkRevealer, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -170,8 +194,6 @@ public class Revealer : Bin
 	 *
 	 * Params:
 	 *     revealChild = %TRUE to reveal the child
-	 *
-	 * Since: 3.10
 	 */
 	public void setRevealChild(bool revealChild)
 	{
@@ -183,8 +205,6 @@ public class Revealer : Bin
 	 *
 	 * Params:
 	 *     duration = the new duration, in milliseconds
-	 *
-	 * Since: 3.10
 	 */
 	public void setTransitionDuration(uint duration)
 	{
@@ -198,8 +218,6 @@ public class Revealer : Bin
 	 *
 	 * Params:
 	 *     transition = the new transition type
-	 *
-	 * Since: 3.10
 	 */
 	public void setTransitionType(GtkRevealerTransitionType transition)
 	{

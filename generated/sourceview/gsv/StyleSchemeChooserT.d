@@ -28,7 +28,6 @@ public  import gobject.ObjectG;
 public  import gsv.SourceStyleScheme;
 public  import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 
 
 /** */
@@ -52,14 +51,14 @@ public template StyleSchemeChooserT(TStruct)
 	 */
 	public SourceStyleScheme getStyleScheme()
 	{
-		auto p = gtk_source_style_scheme_chooser_get_style_scheme(getStyleSchemeChooserStruct());
+		auto __p = gtk_source_style_scheme_chooser_get_style_scheme(getStyleSchemeChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) p);
+		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) __p);
 	}
 
 	/**

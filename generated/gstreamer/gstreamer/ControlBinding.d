@@ -29,7 +29,6 @@ private import gobject.Value;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -110,14 +109,14 @@ public class ControlBinding : ObjectGst
 	 */
 	public Value getValue(GstClockTime timestamp)
 	{
-		auto p = gst_control_binding_get_value(gstControlBinding, timestamp);
+		auto __p = gst_control_binding_get_value(gstControlBinding, timestamp);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p, true);
 	}
 
 	/**

@@ -33,7 +33,6 @@ private import gobject.Type;
 private import gobject.TypeInstance;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import std.traits;
 
 
@@ -802,6 +801,21 @@ public class Value
 	}
 
 	/**
+	 * Set the contents of a %G_TYPE_STRING #GValue to @v_string.  The string is
+	 * assumed to be static and interned (canonical, for example from
+	 * g_intern_string()), and is thus not duplicated when setting the #GValue.
+	 *
+	 * Params:
+	 *     vString = static string to be set
+	 *
+	 * Since: 2.66
+	 */
+	public void setInternedString(string vString)
+	{
+		g_value_set_interned_string(gValue, Str.toStringz(vString));
+	}
+
+	/**
 	 * Set the contents of a %G_TYPE_LONG #GValue to @v_long.
 	 *
 	 * Params:
@@ -911,6 +925,9 @@ public class Value
 	 * Set the contents of a %G_TYPE_STRING #GValue to @v_string.
 	 * The string is assumed to be static, and is thus not duplicated
 	 * when setting the #GValue.
+	 *
+	 * If the the string is a canonical string, using g_value_set_interned_string()
+	 * is more appropriate.
 	 *
 	 * Params:
 	 *     vString = static string to be set

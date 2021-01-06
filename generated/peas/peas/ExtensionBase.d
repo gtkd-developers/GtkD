@@ -92,13 +92,13 @@ public class ExtensionBase : ObjectG
 	 */
 	public PluginInfo getPluginInfo()
 	{
-		auto p = peas_extension_base_get_plugin_info(peasExtensionBase);
+		auto __p = peas_extension_base_get_plugin_info(peasExtensionBase);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
+		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) __p);
 	}
 }

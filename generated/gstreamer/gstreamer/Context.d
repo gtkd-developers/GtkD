@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -116,14 +115,14 @@ public class Context
 	 */
 	public this(string contextType, bool persistent)
 	{
-		auto p = gst_context_new(Str.toStringz(contextType), persistent);
+		auto __p = gst_context_new(Str.toStringz(contextType), persistent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstContext*) p);
+		this(cast(GstContext*) __p);
 	}
 
 	/**
@@ -149,14 +148,14 @@ public class Context
 	 */
 	public Structure getStructure()
 	{
-		auto p = gst_context_get_structure(gstContext);
+		auto __p = gst_context_get_structure(gstContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -198,13 +197,13 @@ public class Context
 	 */
 	public Structure writableStructure()
 	{
-		auto p = gst_context_writable_structure(gstContext);
+		auto __p = gst_context_writable_structure(gstContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 }

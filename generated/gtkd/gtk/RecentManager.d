@@ -34,7 +34,6 @@ private import gobject.Signals;
 private import gtk.RecentInfo;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -52,7 +51,7 @@ private import std.algorithm;
  * 
  * The #GtkRecentManager acts like a database of all the recently
  * used files. You can create new #GtkRecentManager objects, but
- * it is more efficient to use the default manager created by GTK+.
+ * it is more efficient to use the default manager created by GTK
  * 
  * Adding a new recently used file is as simple as:
  * 
@@ -89,7 +88,7 @@ private import std.algorithm;
  * ]|
  * 
  * In order to retrieve the list of recently used files, you can use
- * gtk_recent_manager_get_items(), which returns a list of #GtkRecentInfo-structs.
+ * gtk_recent_manager_get_items(), which returns a list of #GtkRecentInfo.
  * 
  * A #GtkRecentManager is the model used to populate the contents of
  * one, or more #GtkRecentChooser implementations.
@@ -97,10 +96,6 @@ private import std.algorithm;
  * Note that the maximum age of the recently used files list is
  * controllable through the #GtkSettings:gtk-recent-files-max-age
  * property.
- * 
- * Recently used files are supported since GTK+ 2.10.
- *
- * Since: 2.10
  */
 public class RecentManager : ObjectG
 {
@@ -148,20 +143,18 @@ public class RecentManager : ObjectG
 	 *
 	 * Returns: A newly created #GtkRecentManager object
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_recent_manager_new();
+		auto __p = gtk_recent_manager_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRecentManager*) p, true);
+		this(cast(GtkRecentManager*) __p, true);
 	}
 
 	/**
@@ -170,37 +163,35 @@ public class RecentManager : ObjectG
 	 *
 	 * Returns: A unique #GtkRecentManager. Do not ref or
 	 *     unref it.
-	 *
-	 * Since: 2.10
 	 */
 	public static RecentManager getDefault()
 	{
-		auto p = gtk_recent_manager_get_default();
+		auto __p = gtk_recent_manager_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentManager)(cast(GtkRecentManager*) p);
+		return ObjectG.getDObject!(RecentManager)(cast(GtkRecentManager*) __p);
 	}
 
 	/**
 	 * Adds a new resource, pointed by @uri, into the recently used
 	 * resources list, using the metadata specified inside the
-	 * #GtkRecentData-struct passed in @recent_data.
+	 * #GtkRecentData passed in @recent_data.
 	 *
 	 * The passed URI will be used to identify this resource inside the
 	 * list.
 	 *
 	 * In order to register the new recently used resource, metadata about
 	 * the resource must be passed as well as the URI; the metadata is
-	 * stored in a #GtkRecentData-struct, which must contain the MIME
+	 * stored in a #GtkRecentData, which must contain the MIME
 	 * type of the resource pointed by the URI; the name of the application
 	 * that is registering the item, and a command line to be used when
 	 * launching the item.
 	 *
-	 * Optionally, a #GtkRecentData-struct might contain a UTF-8 string
+	 * Optionally, a #GtkRecentData might contain a UTF-8 string
 	 * to be used when viewing the item instead of the last component of
 	 * the URI; a short description of the item; whether the item should
 	 * be considered private - that is, should be displayed only by the
@@ -212,8 +203,6 @@ public class RecentManager : ObjectG
 	 *
 	 * Returns: %TRUE if the new item was successfully added to the
 	 *     recently used resources list, %FALSE otherwise
-	 *
-	 * Since: 2.10
 	 */
 	public bool addFull(string uri, GtkRecentData* recentData)
 	{
@@ -236,8 +225,6 @@ public class RecentManager : ObjectG
 	 *
 	 * Returns: %TRUE if the new item was successfully added
 	 *     to the recently used resources list
-	 *
-	 * Since: 2.10
 	 */
 	public bool addItem(string uri)
 	{
@@ -251,19 +238,17 @@ public class RecentManager : ObjectG
 	 *     newly allocated #GtkRecentInfo objects. Use
 	 *     gtk_recent_info_unref() on each item inside the list, and then
 	 *     free the list itself using g_list_free().
-	 *
-	 * Since: 2.10
 	 */
 	public ListG getItems()
 	{
-		auto p = gtk_recent_manager_get_items(gtkRecentManager);
+		auto __p = gtk_recent_manager_get_items(gtkRecentManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -274,8 +259,6 @@ public class RecentManager : ObjectG
 	 *     uri = a URI
 	 *
 	 * Returns: %TRUE if the resource was found, %FALSE otherwise
-	 *
-	 * Since: 2.10
 	 */
 	public bool hasItem(string uri)
 	{
@@ -284,18 +267,16 @@ public class RecentManager : ObjectG
 
 	/**
 	 * Searches for a URI inside the recently used resources list, and
-	 * returns a #GtkRecentInfo-struct containing informations about the resource
+	 * returns a #GtkRecentInfo containing information about the resource
 	 * like its MIME type, or its display name.
 	 *
 	 * Params:
 	 *     uri = a URI
 	 *
-	 * Returns: a #GtkRecentInfo-struct containing information
+	 * Returns: a #GtkRecentInfo containing information
 	 *     about the resource pointed by @uri, or %NULL if the URI was
 	 *     not registered in the recently used resources list. Free with
 	 *     gtk_recent_info_unref().
-	 *
-	 * Since: 2.10
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -303,19 +284,19 @@ public class RecentManager : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), &err);
+		auto __p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) __p, true);
 	}
 
 	/**
@@ -331,22 +312,20 @@ public class RecentManager : ObjectG
 	 *
 	 * Returns: %TRUE on success
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool moveItem(string uri, string newUri)
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), &err) != 0;
+		auto __p = gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -355,22 +334,20 @@ public class RecentManager : ObjectG
 	 * Returns: the number of items that have been removed from the
 	 *     recently used resources list
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: GException on failure.
 	 */
 	public int purgeItems()
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_purge_items(gtkRecentManager, &err);
+		auto __p = gtk_recent_manager_purge_items(gtkRecentManager, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -383,30 +360,26 @@ public class RecentManager : ObjectG
 	 * Returns: %TRUE if the item pointed by @uri has been successfully
 	 *     removed by the recently used resources list, and %FALSE otherwise
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool removeItem(string uri)
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), &err) != 0;
+		auto __p = gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Emitted when the current recently used resources manager changes
 	 * its contents, either by calling gtk_recent_manager_add_item() or
 	 * by another application.
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnChanged(void delegate(RecentManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

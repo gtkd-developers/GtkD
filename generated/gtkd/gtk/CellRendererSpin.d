@@ -30,7 +30,6 @@ private import gtk.CellRenderer;
 private import gtk.CellRendererText;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -46,7 +45,7 @@ public  import gtkc.gtktypes;
  * of #GtkCellRendererSpin:digits to display. Other #GtkSpinButton properties
  * can be set in a handler for the #GtkCellRenderer::editing-started signal.
  * 
- * The #GtkCellRendererSpin cell renderer was added in GTK+ 2.10.
+ * The #GtkCellRendererSpin cell renderer was added in GTK 2.10.
  */
 public class CellRendererSpin : CellRendererText
 {
@@ -88,19 +87,17 @@ public class CellRendererSpin : CellRendererText
 	 *
 	 * Returns: a new #GtkCellRendererSpin
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_spin_new();
+		auto __p = gtk_cell_renderer_spin_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererSpin*) p);
+		this(cast(GtkCellRendererSpin*) __p);
 	}
 }

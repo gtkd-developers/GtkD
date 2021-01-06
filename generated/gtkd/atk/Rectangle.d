@@ -27,7 +27,6 @@ module atk.Rectangle;
 private import atk.c.functions;
 public  import atk.c.types;
 private import glib.MemorySlice;
-public  import gtkc.atktypes;
 private import gtkd.Loader;
 
 

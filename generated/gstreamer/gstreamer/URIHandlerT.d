@@ -29,7 +29,6 @@ public  import glib.GException;
 public  import glib.Str;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -108,13 +107,13 @@ public template URIHandlerT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gst_uri_handler_set_uri(getURIHandlerStruct(), Str.toStringz(uri), &err) != 0;
+		auto __p = gst_uri_handler_set_uri(getURIHandlerStruct(), Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

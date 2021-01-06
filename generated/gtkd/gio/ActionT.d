@@ -31,7 +31,6 @@ public  import glib.GException;
 public  import glib.Str;
 public  import glib.Variant;
 public  import glib.VariantType;
-public  import gtkc.giotypes;
 
 
 /**

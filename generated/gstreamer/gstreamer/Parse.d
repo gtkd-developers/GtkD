@@ -33,7 +33,6 @@ private import gstreamer.Element;
 private import gstreamer.ParseContext;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /** */
@@ -65,19 +64,19 @@ public struct Parse
 	{
 		GError* err = null;
 
-		auto p = gst_parse_bin_from_description(Str.toStringz(binDescription), ghostUnlinkedPads, &err);
+		auto __p = gst_parse_bin_from_description(Str.toStringz(binDescription), ghostUnlinkedPads, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Bin)(cast(GstBin*) p);
+		return ObjectG.getDObject!(Bin)(cast(GstBin*) __p);
 	}
 
 	/**
@@ -101,7 +100,7 @@ public struct Parse
 	 *
 	 * Returns: a newly-created
 	 *     element, which is guaranteed to be a bin unless
-	 *     GST_FLAG_NO_SINGLE_ELEMENT_BINS was passed, or %NULL if an error
+	 *     #GST_PARSE_FLAG_NO_SINGLE_ELEMENT_BINS was passed, or %NULL if an error
 	 *     occurred.
 	 *
 	 * Throws: GException on failure.
@@ -110,19 +109,19 @@ public struct Parse
 	{
 		GError* err = null;
 
-		auto p = gst_parse_bin_from_description_full(Str.toStringz(binDescription), ghostUnlinkedPads, (context is null) ? null : context.getParseContextStruct(), flags, &err);
+		auto __p = gst_parse_bin_from_description_full(Str.toStringz(binDescription), ghostUnlinkedPads, (context is null) ? null : context.getParseContextStruct(), flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -141,6 +140,9 @@ public struct Parse
 	 * the @error is set. In this case there was a recoverable parsing error and you
 	 * can try to play the pipeline.
 	 *
+	 * To create a sub-pipeline (bin) for embedding into an existing pipeline
+	 * use gst_parse_bin_from_description().
+	 *
 	 * Params:
 	 *     pipelineDescription = the command line describing the pipeline
 	 *
@@ -155,19 +157,19 @@ public struct Parse
 	{
 		GError* err = null;
 
-		auto p = gst_parse_launch(Str.toStringz(pipelineDescription), &err);
+		auto __p = gst_parse_launch(Str.toStringz(pipelineDescription), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -175,6 +177,9 @@ public struct Parse
 	 * Please note that you might get a return value that is not %NULL even though
 	 * the @error is set. In this case there was a recoverable parsing error and you
 	 * can try to play the pipeline.
+	 *
+	 * To create a sub-pipeline (bin) for embedding into an existing pipeline
+	 * use gst_parse_bin_from_description_full().
 	 *
 	 * Params:
 	 *     pipelineDescription = the command line describing the pipeline
@@ -194,19 +199,19 @@ public struct Parse
 	{
 		GError* err = null;
 
-		auto p = gst_parse_launch_full(Str.toStringz(pipelineDescription), (context is null) ? null : context.getParseContextStruct(), flags, &err);
+		auto __p = gst_parse_launch_full(Str.toStringz(pipelineDescription), (context is null) ? null : context.getParseContextStruct(), flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -226,19 +231,19 @@ public struct Parse
 	{
 		GError* err = null;
 
-		auto p = gst_parse_launchv(Str.toStringzArray(argv), &err);
+		auto __p = gst_parse_launchv(Str.toStringzArray(argv), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -264,18 +269,18 @@ public struct Parse
 	{
 		GError* err = null;
 
-		auto p = gst_parse_launchv_full(Str.toStringzArray(argv), (context is null) ? null : context.getParseContextStruct(), flags, &err);
+		auto __p = gst_parse_launchv_full(Str.toStringzArray(argv), (context is null) ? null : context.getParseContextStruct(), flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 }

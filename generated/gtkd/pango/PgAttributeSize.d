@@ -25,7 +25,6 @@
 module pango.PgAttributeSize;
 
 private import glib.ConstructionException;
-public  import gtkc.pangotypes;
 private import pango.PgAttribute;
 private import pango.c.functions;
 public  import pango.c.types;

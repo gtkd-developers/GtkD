@@ -59,13 +59,13 @@ public template ConfigurableT(TStruct)
 	 */
 	public Widget createConfigureWidget()
 	{
-		auto p = peas_gtk_configurable_create_configure_widget(getConfigurableStruct());
+		auto __p = peas_gtk_configurable_create_configure_widget(getConfigurableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p, true);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p, true);
 	}
 }

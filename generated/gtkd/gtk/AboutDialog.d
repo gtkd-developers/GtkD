@@ -24,17 +24,15 @@
 
 module gtk.AboutDialog;
 
-private import gdkpixbuf.Pixbuf;
+private import gdk.PaintableIF;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Dialog;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -47,37 +45,36 @@ private import std.algorithm;
  * All parts of the dialog are optional.
  * 
  * About dialogs often contain links and email addresses. GtkAboutDialog
- * displays these as clickable links. By default, it calls gtk_show_uri_on_window()
+ * displays these as clickable links. By default, it calls gtk_show_uri()
  * when a user clicks one. The behaviour can be overridden with the
  * #GtkAboutDialog::activate-link signal.
  * 
  * To specify a person with an email address, use a string like
  * "Edgar Allan Poe <edgar\@poe.com>". To specify a website with a title,
- * use a string like "GTK+ team http://www.gtk.org".
+ * use a string like "GTK team http://www.gtk.org".
  * 
  * To make constructing a GtkAboutDialog as convenient as possible, you can
  * use the function gtk_show_about_dialog() which constructs and shows a dialog
  * and keeps it around so that it can be shown again.
  * 
- * Note that GTK+ sets a default title of `_("About %s")` on the dialog
+ * Note that GTK sets a default title of `_("About %s")` on the dialog
  * window (where \%s is replaced by the name of the application, but in
  * order to ensure proper translation of the title, applications should
  * set the title property explicitly when constructing a GtkAboutDialog,
  * as shown in the following example:
  * |[<!-- language="C" -->
- * GdkPixbuf *example_logo = gdk_pixbuf_new_from_file ("./logo.png", NULL);
+ * GFile *logo_file = g_file_new_for_path ("./logo.png");
+ * GdkTexture *example_logo = gdk_texture_new_from_file (logo_file, NULL);
+ * g_object_unref (logo_file);
+ * 
  * gtk_show_about_dialog (NULL,
  * "program-name", "ExampleCode",
  * "logo", example_logo,
  * "title", _("About ExampleCode"),
  * NULL);
  * ]|
- * 
- * It is also possible to show a #GtkAboutDialog like any other #GtkDialog,
- * e.g. using gtk_dialog_run(). In this case, you might need to know that
- * the “Close” button returns the #GTK_RESPONSE_CANCEL response id.
  */
-public class AboutDialog : Dialog
+public class AboutDialog : Window
 {
 	/** the main Gtk struct */
 	protected GtkAboutDialog* gtkAboutDialog;
@@ -102,7 +99,7 @@ public class AboutDialog : Dialog
 	public this (GtkAboutDialog* gtkAboutDialog, bool ownedRef = false)
 	{
 		this.gtkAboutDialog = gtkAboutDialog;
-		super(cast(GtkDialog*)gtkAboutDialog, ownedRef);
+		super(cast(GtkWindow*)gtkAboutDialog, ownedRef);
 	}
 
 
@@ -117,20 +114,18 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: a newly created #GtkAboutDialog
 	 *
-	 * Since: 2.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_about_dialog_new();
+		auto __p = gtk_about_dialog_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAboutDialog*) p);
+		this(cast(GtkAboutDialog*) __p);
 	}
 
 	/**
@@ -139,8 +134,6 @@ public class AboutDialog : Dialog
 	 * Params:
 	 *     sectionName = The name of the section
 	 *     people = The people who belong to that section
-	 *
-	 * Since: 3.4
 	 */
 	public void addCreditSection(string sectionName, string[] people)
 	{
@@ -154,8 +147,6 @@ public class AboutDialog : Dialog
 	 * Returns: A
 	 *     %NULL-terminated string array containing the artists. The array is
 	 *     owned by the about dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string[] getArtists()
 	{
@@ -169,8 +160,6 @@ public class AboutDialog : Dialog
 	 * Returns: A
 	 *     %NULL-terminated string array containing the authors. The array is
 	 *     owned by the about dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string[] getAuthors()
 	{
@@ -182,8 +171,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The comments. The string is owned by the about
 	 *     dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string getComments()
 	{
@@ -195,8 +182,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The copyright string. The string is owned by the about
 	 *     dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string getCopyright()
 	{
@@ -210,8 +195,6 @@ public class AboutDialog : Dialog
 	 * Returns: A
 	 *     %NULL-terminated string array containing the documenters. The
 	 *     array is owned by the about dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string[] getDocumenters()
 	{
@@ -223,8 +206,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The license information. The string is owned by the about
 	 *     dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string getLicense()
 	{
@@ -235,8 +216,6 @@ public class AboutDialog : Dialog
 	 * Retrieves the license set using gtk_about_dialog_set_license_type()
 	 *
 	 * Returns: a #GtkLicense value
-	 *
-	 * Since: 3.0
 	 */
 	public GtkLicense getLicenseType()
 	{
@@ -244,34 +223,33 @@ public class AboutDialog : Dialog
 	}
 
 	/**
-	 * Returns the pixbuf displayed as logo in the about dialog.
+	 * Returns the paintable displayed as logo in the about dialog.
 	 *
-	 * Returns: the pixbuf displayed as logo. The
-	 *     pixbuf is owned by the about dialog. If you want to keep a
+	 * Returns: the paintable displayed as
+	 *     logo or %NULL if the logo is unset or has been set via
+	 *     gtk_about_dialog_set_logo_icon_name(). The
+	 *     paintable is owned by the about dialog. If you want to keep a
 	 *     reference to it, you have to call g_object_ref() on it.
-	 *
-	 * Since: 2.6
 	 */
-	public Pixbuf getLogo()
+	public PaintableIF getLogo()
 	{
-		auto p = gtk_about_dialog_get_logo(gtkAboutDialog);
+		auto __p = gtk_about_dialog_get_logo(gtkAboutDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(PaintableIF)(cast(GdkPaintable*) __p);
 	}
 
 	/**
 	 * Returns the icon name displayed as logo in the about dialog.
 	 *
-	 * Returns: the icon name displayed as logo. The string is
-	 *     owned by the dialog. If you want to keep a reference
+	 * Returns: the icon name displayed as logo or %NULL
+	 *     if the logo has been set via gtk_about_dialog_set_logo().
+	 *     The string is owned by the dialog. If you want to keep a reference
 	 *     to it, you have to call g_strdup() on it.
-	 *
-	 * Since: 2.6
 	 */
 	public string getLogoIconName()
 	{
@@ -283,12 +261,20 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The program name. The string is owned by the about
 	 *     dialog and must not be modified.
-	 *
-	 * Since: 2.12
 	 */
 	public string getProgramName()
 	{
 		return Str.toString(gtk_about_dialog_get_program_name(gtkAboutDialog));
+	}
+
+	/**
+	 * Returns the system information that is shown in the about dialog.
+	 *
+	 * Returns: the system information
+	 */
+	public string getSystemInformation()
+	{
+		return Str.toString(gtk_about_dialog_get_system_information(gtkAboutDialog));
 	}
 
 	/**
@@ -297,8 +283,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The translator credits string. The string is
 	 *     owned by the about dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string getTranslatorCredits()
 	{
@@ -310,8 +294,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The version string. The string is owned by the about
 	 *     dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string getVersion()
 	{
@@ -323,8 +305,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The website URL. The string is owned by the about
 	 *     dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string getWebsite()
 	{
@@ -336,8 +316,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Returns: The label used for the website link. The string is
 	 *     owned by the about dialog and must not be modified.
-	 *
-	 * Since: 2.6
 	 */
 	public string getWebsiteLabel()
 	{
@@ -349,8 +327,6 @@ public class AboutDialog : Dialog
 	 * automatically wrapped.
 	 *
 	 * Returns: %TRUE if the license text is wrapped
-	 *
-	 * Since: 2.8
 	 */
 	public bool getWrapLicense()
 	{
@@ -363,8 +339,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     artists = a %NULL-terminated array of strings
-	 *
-	 * Since: 2.6
 	 */
 	public void setArtists(string[] artists)
 	{
@@ -377,8 +351,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     authors = a %NULL-terminated array of strings
-	 *
-	 * Since: 2.6
 	 */
 	public void setAuthors(string[] authors)
 	{
@@ -391,8 +363,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     comments = a comments string
-	 *
-	 * Since: 2.6
 	 */
 	public void setComments(string comments)
 	{
@@ -405,8 +375,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     copyright = the copyright string
-	 *
-	 * Since: 2.6
 	 */
 	public void setCopyright(string copyright)
 	{
@@ -415,12 +383,10 @@ public class AboutDialog : Dialog
 
 	/**
 	 * Sets the strings which are displayed in the documenters tab
-	 * of the secondary credits dialog.
+	 * of the credits dialog.
 	 *
 	 * Params:
 	 *     documenters = a %NULL-terminated array of strings
-	 *
-	 * Since: 2.6
 	 */
 	public void setDocumenters(string[] documenters)
 	{
@@ -434,8 +400,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     license = the license information or %NULL
-	 *
-	 * Since: 2.6
 	 */
 	public void setLicense(string license)
 	{
@@ -451,8 +415,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     licenseType = the type of license
-	 *
-	 * Since: 3.0
 	 */
 	public void setLicenseType(GtkLicense licenseType)
 	{
@@ -460,29 +422,21 @@ public class AboutDialog : Dialog
 	}
 
 	/**
-	 * Sets the pixbuf to be displayed as logo in the about dialog.
-	 * If it is %NULL, the default window icon set with
-	 * gtk_window_set_default_icon() will be used.
+	 * Sets the logo in the about dialog.
 	 *
 	 * Params:
-	 *     logo = a #GdkPixbuf, or %NULL
-	 *
-	 * Since: 2.6
+	 *     logo = a #GdkPaintable, or %NULL
 	 */
-	public void setLogo(Pixbuf logo)
+	public void setLogo(PaintableIF logo)
 	{
-		gtk_about_dialog_set_logo(gtkAboutDialog, (logo is null) ? null : logo.getPixbufStruct());
+		gtk_about_dialog_set_logo(gtkAboutDialog, (logo is null) ? null : logo.getPaintableStruct());
 	}
 
 	/**
-	 * Sets the pixbuf to be displayed as logo in the about dialog.
-	 * If it is %NULL, the default window icon set with
-	 * gtk_window_set_default_icon() will be used.
+	 * Sets the icon name to be displayed as logo in the about dialog.
 	 *
 	 * Params:
 	 *     iconName = an icon name, or %NULL
-	 *
-	 * Since: 2.6
 	 */
 	public void setLogoIconName(string iconName)
 	{
@@ -495,12 +449,25 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     name = the program name
-	 *
-	 * Since: 2.12
 	 */
 	public void setProgramName(string name)
 	{
 		gtk_about_dialog_set_program_name(gtkAboutDialog, Str.toStringz(name));
+	}
+
+	/**
+	 * Sets the system information to be displayed in the about
+	 * dialog. If @system_information is %NULL, the system information
+	 * tab is hidden.
+	 *
+	 * See #GtkAboutDialog:system-information.
+	 *
+	 * Params:
+	 *     systemInformation = system information or %NULL
+	 */
+	public void setSystemInformation(string systemInformation)
+	{
+		gtk_about_dialog_set_system_information(gtkAboutDialog, Str.toStringz(systemInformation));
 	}
 
 	/**
@@ -523,8 +490,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     translatorCredits = the translator credits
-	 *
-	 * Since: 2.6
 	 */
 	public void setTranslatorCredits(string translatorCredits)
 	{
@@ -536,8 +501,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     version_ = the version string
-	 *
-	 * Since: 2.6
 	 */
 	public void setVersion(string version_)
 	{
@@ -549,8 +512,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     website = a URL string starting with "http://"
-	 *
-	 * Since: 2.6
 	 */
 	public void setWebsite(string website)
 	{
@@ -562,8 +523,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     websiteLabel = the label used for the website link
-	 *
-	 * Since: 2.6
 	 */
 	public void setWebsiteLabel(string websiteLabel)
 	{
@@ -576,8 +535,6 @@ public class AboutDialog : Dialog
 	 *
 	 * Params:
 	 *     wrapLicense = whether to wrap the license
-	 *
-	 * Since: 2.8
 	 */
 	public void setWrapLicense(bool wrapLicense)
 	{
@@ -587,14 +544,12 @@ public class AboutDialog : Dialog
 	/**
 	 * The signal which gets emitted to activate a URI.
 	 * Applications may connect to it to override the default behaviour,
-	 * which is to call gtk_show_uri_on_window().
+	 * which is to call gtk_show_uri().
 	 *
 	 * Params:
 	 *     uri = the URI that is activated
 	 *
 	 * Returns: %TRUE if the link has been activated
-	 *
-	 * Since: 2.24
 	 */
 	gulong addOnActivateLink(bool delegate(string, AboutDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

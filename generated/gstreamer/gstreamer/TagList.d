@@ -34,7 +34,7 @@ private import gstreamer.DateTime;
 private import gstreamer.Sample;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -72,6 +72,12 @@ public class TagList
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_tag_list_unref(gstTagList);
+	}
+
 
 	/**
 	 * Gets the #GType used for this tag.
@@ -97,14 +103,14 @@ public class TagList
 	 */
 	public this()
 	{
-		auto p = gst_tag_list_new_empty();
+		auto __p = gst_tag_list_new_empty();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
 
-		this(cast(GstTagList*) p);
+		this(cast(GstTagList*) __p);
 	}
 
 	/**
@@ -120,14 +126,14 @@ public class TagList
 	 */
 	public this(string str)
 	{
-		auto p = gst_tag_list_new_from_string(Str.toStringz(str));
+		auto __p = gst_tag_list_new_from_string(Str.toStringz(str));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
 
-		this(cast(GstTagList*) p);
+		this(cast(GstTagList*) __p);
 	}
 
 	/**
@@ -146,14 +152,14 @@ public class TagList
 	 */
 	public this(void* varArgs)
 	{
-		auto p = gst_tag_list_new_valist(varArgs);
+		auto __p = gst_tag_list_new_valist(varArgs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(GstTagList*) p);
+		this(cast(GstTagList*) __p);
 	}
 
 	/**
@@ -195,6 +201,31 @@ public class TagList
 		gst_tag_list_add_value(gstTagList, mode, Str.toStringz(tag), (value is null) ? null : value.getValueStruct());
 	}
 
+	/**
+	 * Creates a new #GstTagList as a copy of the old @taglist. The new taglist
+	 * will have a refcount of 1, owned by the caller, and will be writable as
+	 * a result.
+	 *
+	 * Note that this function is the semantic equivalent of a gst_tag_list_ref()
+	 * followed by a gst_tag_list_make_writable(). If you only want to hold on to a
+	 * reference to the data, you should use gst_tag_list_ref().
+	 *
+	 * When you are finished with the taglist, call gst_tag_list_unref() on it.
+	 *
+	 * Returns: the new #GstTagList
+	 */
+	public TagList copy()
+	{
+		auto __p = gst_tag_list_copy(gstTagList);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p, true);
+	}
+
 	alias foreac = foreach_;
 	/**
 	 * Calls the given function for each tag inside the tag list. Note that if there
@@ -224,11 +255,11 @@ public class TagList
 	{
 		int outvalue;
 
-		auto p = gst_tag_list_get_boolean(gstTagList, Str.toStringz(tag), &outvalue) != 0;
+		auto __p = gst_tag_list_get_boolean(gstTagList, Str.toStringz(tag), &outvalue) != 0;
 
 		value = (outvalue == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -247,11 +278,11 @@ public class TagList
 	{
 		int outvalue;
 
-		auto p = gst_tag_list_get_boolean_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
+		auto __p = gst_tag_list_get_boolean_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
 
 		value = (outvalue == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -273,11 +304,11 @@ public class TagList
 	{
 		GDate* outvalue = null;
 
-		auto p = gst_tag_list_get_date(gstTagList, Str.toStringz(tag), &outvalue) != 0;
+		auto __p = gst_tag_list_get_date(gstTagList, Str.toStringz(tag), &outvalue) != 0;
 
 		value = new Date(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -299,11 +330,11 @@ public class TagList
 	{
 		GDate* outvalue = null;
 
-		auto p = gst_tag_list_get_date_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
+		auto __p = gst_tag_list_get_date_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
 
 		value = new Date(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -325,11 +356,11 @@ public class TagList
 	{
 		GstDateTime* outvalue = null;
 
-		auto p = gst_tag_list_get_date_time(gstTagList, Str.toStringz(tag), &outvalue) != 0;
+		auto __p = gst_tag_list_get_date_time(gstTagList, Str.toStringz(tag), &outvalue) != 0;
 
 		value = ObjectG.getDObject!(DateTime)(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -351,11 +382,11 @@ public class TagList
 	{
 		GstDateTime* outvalue = null;
 
-		auto p = gst_tag_list_get_date_time_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
+		auto __p = gst_tag_list_get_date_time_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
 
 		value = ObjectG.getDObject!(DateTime)(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -544,11 +575,11 @@ public class TagList
 	{
 		GstSample* outsample = null;
 
-		auto p = gst_tag_list_get_sample(gstTagList, Str.toStringz(tag), &outsample) != 0;
+		auto __p = gst_tag_list_get_sample(gstTagList, Str.toStringz(tag), &outsample) != 0;
 
 		sample = ObjectG.getDObject!(Sample)(outsample);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -573,11 +604,11 @@ public class TagList
 	{
 		GstSample* outsample = null;
 
-		auto p = gst_tag_list_get_sample_index(gstTagList, Str.toStringz(tag), index, &outsample) != 0;
+		auto __p = gst_tag_list_get_sample_index(gstTagList, Str.toStringz(tag), index, &outsample) != 0;
 
 		sample = ObjectG.getDObject!(Sample)(outsample);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -614,11 +645,11 @@ public class TagList
 	{
 		char* outvalue = null;
 
-		auto p = gst_tag_list_get_string(gstTagList, Str.toStringz(tag), &outvalue) != 0;
+		auto __p = gst_tag_list_get_string(gstTagList, Str.toStringz(tag), &outvalue) != 0;
 
 		value = Str.toString(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -643,11 +674,11 @@ public class TagList
 	{
 		char* outvalue = null;
 
-		auto p = gst_tag_list_get_string_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
+		auto __p = gst_tag_list_get_string_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
 
 		value = Str.toString(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -743,14 +774,14 @@ public class TagList
 	 */
 	public Value getValueIndex(string tag, uint index)
 	{
-		auto p = gst_tag_list_get_value_index(gstTagList, Str.toStringz(tag), index);
+		auto __p = gst_tag_list_get_value_index(gstTagList, Str.toStringz(tag), index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -802,14 +833,14 @@ public class TagList
 	 */
 	public TagList merge(TagList list2, GstTagMergeMode mode)
 	{
-		auto p = gst_tag_list_merge(gstTagList, (list2 is null) ? null : list2.getTagListStruct(), mode);
+		auto __p = gst_tag_list_merge(gstTagList, (list2 is null) ? null : list2.getTagListStruct(), mode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p, true);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p, true);
 	}
 
 	/**
@@ -855,11 +886,35 @@ public class TagList
 	{
 		char* outvalue = null;
 
-		auto p = gst_tag_list_peek_string_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
+		auto __p = gst_tag_list_peek_string_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
 
 		value = Str.toString(outvalue);
 
-		return p;
+		return __p;
+	}
+
+	alias doref = ref_;
+	/**
+	 * Add a reference to a #GstTagList mini object.
+	 *
+	 * From this point on, until the caller calls gst_tag_list_unref() or
+	 * gst_tag_list_make_writable(), it is guaranteed that the taglist object will
+	 * not change. To use a #GstTagList object, you must always have a refcount on
+	 * it -- either the one made implicitly by e.g. gst_tag_list_new(), or via
+	 * taking one explicitly with this function.
+	 *
+	 * Returns: the same #GstTagList mini object.
+	 */
+	public TagList ref_()
+	{
+		auto __p = gst_tag_list_ref(gstTagList);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p, true);
 	}
 
 	/**
@@ -901,6 +956,14 @@ public class TagList
 	}
 
 	/**
+	 * Unref a #GstTagList, and and free all its memory when the refcount reaches 0.
+	 */
+	public void unref()
+	{
+		gst_tag_list_unref(gstTagList);
+	}
+
+	/**
 	 * Copies the contents for the given tag into the value,
 	 * merging multiple values into one if multiple values are associated
 	 * with the tag.
@@ -918,11 +981,11 @@ public class TagList
 	{
 		GValue* outdest = sliceNew!GValue();
 
-		auto p = gst_tag_list_copy_value(outdest, (list is null) ? null : list.getTagListStruct(), Str.toStringz(tag)) != 0;
+		auto __p = gst_tag_list_copy_value(outdest, (list is null) ? null : list.getTagListStruct(), Str.toStringz(tag)) != 0;
 
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

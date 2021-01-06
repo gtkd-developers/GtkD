@@ -31,7 +31,6 @@ private import glib.MatchInfo;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 private import gtkd.Loader;
 
 
@@ -149,7 +148,7 @@ public class Regex
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options for the regular expression, or 0
 	 *
-	 * Returns: a #GRegex structure or %NULL if an error occured. Call
+	 * Returns: a #GRegex structure or %NULL if an error occurred. Call
 	 *     g_regex_unref() when you are done with it
 	 *
 	 * Since: 2.14
@@ -579,7 +578,7 @@ public class Regex
 	 * If you do not need to use backreferences use g_regex_replace_literal().
 	 *
 	 * The @replacement string must be UTF-8 encoded even if #G_REGEX_RAW was
-	 * passed to g_regex_new(). If you want to use not UTF-8 encoded stings
+	 * passed to g_regex_new(). If you want to use not UTF-8 encoded strings
 	 * you can use g_regex_replace_literal().
 	 *
 	 * Setting @start_position differs from just passing over a shortened

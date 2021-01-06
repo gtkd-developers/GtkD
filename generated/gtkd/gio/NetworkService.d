@@ -31,7 +31,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -137,7 +136,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	}
 
 	/**
-	 * Get's the URI scheme used to resolve proxies. By default, the service name
+	 * Gets the URI scheme used to resolve proxies. By default, the service name
 	 * is used as scheme.
 	 *
 	 * Returns: @srv's scheme name

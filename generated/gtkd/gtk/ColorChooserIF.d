@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -39,10 +38,8 @@ private import std.algorithm;
  * for choosing colors. Depending on the situation, colors may be
  * allowed to have alpha (translucency).
  * 
- * In GTK+, the main widgets that implement this interface are
+ * In GTK, the main widgets that implement this interface are
  * #GtkColorChooserWidget, #GtkColorChooserDialog and #GtkColorButton.
- *
- * Since: 3.4
  */
 public interface ColorChooserIF{
 	/** Get the main Gtk struct */
@@ -51,22 +48,6 @@ public interface ColorChooserIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 * Gets the currently-selected color.
-	 *
-	 * Returns: a gdk.RGBA to fill in with the current color.
-	 *
-	 * Since: 3.4
-	 */
-	public final RGBA getRgba()
-	{
-		RGBA color;
-		getRgba(color);
-		return color;
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -98,8 +79,6 @@ public interface ColorChooserIF{
 	 *         be displayed in rows, %GTK_ORIENTATION_VERTICAL for columns
 	 *     colorsPerLine = the number of colors to show in each row/column
 	 *     colors = the colors of the palette, or %NULL
-	 *
-	 * Since: 3.4
 	 */
 	public void addPalette(GtkOrientation orientation, int colorsPerLine, RGBA[] colors);
 
@@ -108,8 +87,6 @@ public interface ColorChooserIF{
 	 *
 	 * Params:
 	 *     color = a #GdkRGBA to fill in with the current color
-	 *
-	 * Since: 3.4
 	 */
 	public void getRgba(out RGBA color);
 
@@ -118,8 +95,6 @@ public interface ColorChooserIF{
 	 *
 	 * Returns: %TRUE if the color chooser uses the alpha channel,
 	 *     %FALSE if not
-	 *
-	 * Since: 3.4
 	 */
 	public bool getUseAlpha();
 
@@ -128,8 +103,6 @@ public interface ColorChooserIF{
 	 *
 	 * Params:
 	 *     color = the new color
-	 *
-	 * Since: 3.4
 	 */
 	public void setRgba(RGBA color);
 
@@ -138,8 +111,6 @@ public interface ColorChooserIF{
 	 *
 	 * Params:
 	 *     useAlpha = %TRUE if color chooser should use alpha channel, %FALSE if not
-	 *
-	 * Since: 3.4
 	 */
 	public void setUseAlpha(bool useAlpha);
 
@@ -151,8 +122,6 @@ public interface ColorChooserIF{
 	 *
 	 * Params:
 	 *     color = the color
-	 *
-	 * Since: 3.4
 	 */
 	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

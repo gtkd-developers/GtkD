@@ -27,7 +27,6 @@ module glib.Hostname;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -60,6 +59,8 @@ public struct Hostname
 	/**
 	 * Tests if @hostname is the string form of an IPv4 or IPv6 address.
 	 * (Eg, "192.168.0.1".)
+	 *
+	 * Since 2.66, IPv6 addresses with a zone-id are accepted (RFC6874).
 	 *
 	 * Params:
 	 *     hostname = a hostname (or IP address in string form)

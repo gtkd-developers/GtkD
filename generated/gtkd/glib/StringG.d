@@ -28,7 +28,6 @@ private import glib.Bytes;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -157,7 +156,7 @@ public class StringG
 	}
 
 	/**
-	 * Appends @unescaped to @string, escaped any characters that
+	 * Appends @unescaped to @string, escaping any characters that
 	 * are reserved in URIs using URI-style escape sequences.
 	 *
 	 * Params:

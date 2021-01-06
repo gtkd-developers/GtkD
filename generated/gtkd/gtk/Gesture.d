@@ -26,14 +26,14 @@ module gtk.Gesture;
 
 private import gdk.Device;
 private import gdk.Event;
-private import gdk.Window;
+private import gdk.Rectangle;
 private import glib.ListG;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.EventController;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -45,13 +45,12 @@ private import std.algorithm;
  * 
  * The number of touches that a #GtkGesture need to be recognized is controlled
  * by the #GtkGesture:n-points property, if a gesture is keeping track of less
- * or more than that number of sequences, it won't check wether the gesture
+ * or more than that number of sequences, it won't check whether the gesture
  * is recognized.
  * 
- * As soon as the gesture has the expected number of touches, the gesture will
- * run the #GtkGesture::check signal regularly on input events until the gesture
- * is recognized, the criteria to consider a gesture as "recognized" is left to
- * #GtkGesture subclasses.
+ * As soon as the gesture has the expected number of touches, it will check
+ * regularly if it is recognized, the criteria to consider a gesture as
+ * "recognized" is left to #GtkGesture subclasses.
  * 
  * A recognized gesture will then emit the following signals:
  * - #GtkGesture::begin when the gesture is recognized.
@@ -60,18 +59,12 @@ private import std.algorithm;
  * 
  * ## Event propagation
  * 
- * In order to receive events, a gesture needs to either set a propagation phase
- * through gtk_event_controller_set_propagation_phase(), or feed those manually
- * through gtk_event_controller_handle_event().
+ * In order to receive events, a gesture needs to set a propagation phase
+ * through gtk_event_controller_set_propagation_phase().
  * 
  * In the capture phase, events are propagated from the toplevel down to the
  * target widget, and gestures that are attached to containers above the widget
  * get a chance to interact with the event before it reaches the target.
- * 
- * After the capture phase, GTK+ emits the traditional #GtkWidget::button-press-event,
- * #GtkWidget::button-release-event, #GtkWidget::touch-event, etc signals. Gestures
- * with the %GTK_PHASE_TARGET phase are fed events from the default #GtkWidget::event
- * handlers.
  * 
  * In the bubble phase, events are propagated up from the target widget to the
  * toplevel, and gestures that are attached to containers above the widget get
@@ -124,7 +117,7 @@ private import std.algorithm;
  * On the platforms that support it, #GtkGesture will handle transparently
  * touchpad gesture events. The only precautions users of #GtkGesture should do
  * to enable this support are:
- * - Enabling %GDK_TOUCHPAD_GESTURE_MASK on their #GdkWindows
+ * - Enabling %GDK_TOUCHPAD_GESTURE_MASK on their #GdkSurfaces
  * - If the gesture has %GTK_PHASE_NONE, ensuring events of type
  * %GDK_TOUCHPAD_SWIPE and %GDK_TOUCHPAD_PINCH are handled by the #GtkGesture
  */
@@ -179,12 +172,16 @@ public class Gesture : EventController
 	 *     rect = bounding box containing all active touches.
 	 *
 	 * Returns: %TRUE if there are active touches, %FALSE otherwise
-	 *
-	 * Since: 3.14
 	 */
-	public bool getBoundingBox(out GdkRectangle rect)
+	public bool getBoundingBox(out Rectangle rect)
 	{
-		return gtk_gesture_get_bounding_box(gtkGesture, &rect) != 0;
+		GdkRectangle* outrect = sliceNew!GdkRectangle();
+
+		auto __p = gtk_gesture_get_bounding_box(gtkGesture, outrect) != 0;
+
+		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
+
+		return __p;
 	}
 
 	/**
@@ -198,8 +195,6 @@ public class Gesture : EventController
 	 *     y = Y coordinate for the bounding box center
 	 *
 	 * Returns: %FALSE if no active touches are present, %TRUE otherwise
-	 *
-	 * Since: 3.14
 	 */
 	public bool getBoundingBoxCenter(out double x, out double y)
 	{
@@ -207,23 +202,21 @@ public class Gesture : EventController
 	}
 
 	/**
-	 * Returns the master #GdkDevice that is currently operating
+	 * Returns the logical #GdkDevice that is currently operating
 	 * on @gesture, or %NULL if the gesture is not being interacted.
 	 *
 	 * Returns: a #GdkDevice, or %NULL
-	 *
-	 * Since: 3.14
 	 */
 	public Device getDevice()
 	{
-		auto p = gtk_gesture_get_device(gtkGesture);
+		auto __p = gtk_gesture_get_device(gtkGesture);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -231,19 +224,17 @@ public class Gesture : EventController
 	 *
 	 * Returns: The list
 	 *     of #GtkGestures, free with g_list_free()
-	 *
-	 * Since: 3.14
 	 */
 	public ListG getGroup()
 	{
-		auto p = gtk_gesture_get_group(gtkGesture);
+		auto __p = gtk_gesture_get_group(gtkGesture);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -260,22 +251,20 @@ public class Gesture : EventController
 	 */
 	public Event getLastEvent(GdkEventSequence* sequence)
 	{
-		auto p = gtk_gesture_get_last_event(gtkGesture, sequence);
+		auto __p = gtk_gesture_get_last_event(gtkGesture, sequence);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p);
 	}
 
 	/**
 	 * Returns the #GdkEventSequence that was last updated on @gesture.
 	 *
 	 * Returns: The last updated sequence
-	 *
-	 * Since: 3.14
 	 */
 	public GdkEventSequence* getLastUpdatedSequence()
 	{
@@ -294,8 +283,6 @@ public class Gesture : EventController
 	 *     y = return location for Y axis of the sequence coordinates
 	 *
 	 * Returns: %TRUE if @sequence is currently interpreted
-	 *
-	 * Since: 3.14
 	 */
 	public bool getPoint(GdkEventSequence* sequence, out double x, out double y)
 	{
@@ -309,8 +296,6 @@ public class Gesture : EventController
 	 *     sequence = a #GdkEventSequence
 	 *
 	 * Returns: The sequence state in @gesture
-	 *
-	 * Since: 3.14
 	 */
 	public GtkEventSequenceState getSequenceState(GdkEventSequence* sequence)
 	{
@@ -322,48 +307,28 @@ public class Gesture : EventController
 	 * by @gesture.
 	 *
 	 * Returns: A list
-	 *     of #GdkEventSequences, the list elements are owned by GTK+
+	 *     of #GdkEventSequences, the list elements are owned by GTK
 	 *     and must not be freed or modified, the list itself must be deleted
 	 *     through g_list_free()
-	 *
-	 * Since: 3.14
 	 */
 	public ListG getSequences()
 	{
-		auto p = gtk_gesture_get_sequences(gtkGesture);
+		auto __p = gtk_gesture_get_sequences(gtkGesture);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
-	}
-
-	/**
-	 * Returns the user-defined window that receives the events
-	 * handled by @gesture. See gtk_gesture_set_window() for more
-	 * information.
-	 *
-	 * Returns: the user defined window, or %NULL if none
-	 *
-	 * Since: 3.14
-	 */
-	public Window getWindow()
-	{
-		auto p = gtk_gesture_get_window(gtkGesture);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
 	 * Adds @gesture to the same group than @group_gesture. Gestures
 	 * are by default isolated in their own groups.
+	 *
+	 * Both gestures must have been added to the same widget before they
+	 * can be grouped.
 	 *
 	 * When gestures are grouped, the state of #GdkEventSequences
 	 * is kept in sync for all of those, so calling gtk_gesture_set_sequence_state(),
@@ -376,8 +341,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     gesture = a #GtkGesture
-	 *
-	 * Since: 3.14
 	 */
 	public void group(Gesture gesture)
 	{
@@ -392,8 +355,6 @@ public class Gesture : EventController
 	 *     sequence = a #GdkEventSequence or %NULL
 	 *
 	 * Returns: %TRUE if @gesture is handling @sequence, %FALSE otherwise
-	 *
-	 * Since: 3.14
 	 */
 	public bool handlesSequence(GdkEventSequence* sequence)
 	{
@@ -406,8 +367,6 @@ public class Gesture : EventController
 	 * interacting with it.
 	 *
 	 * Returns: %TRUE if gesture is active
-	 *
-	 * Since: 3.14
 	 */
 	public bool isActive()
 	{
@@ -421,8 +380,6 @@ public class Gesture : EventController
 	 *     other = another #GtkGesture
 	 *
 	 * Returns: whether the gestures are grouped
-	 *
-	 * Since: 3.14
 	 */
 	public bool isGroupedWith(Gesture other)
 	{
@@ -432,12 +389,9 @@ public class Gesture : EventController
 	/**
 	 * Returns %TRUE if the gesture is currently recognized.
 	 * A gesture is recognized if there are as many interacting
-	 * touch sequences as required by @gesture, and #GtkGesture::check
-	 * returned %TRUE for the sequences being currently interpreted.
+	 * touch sequences as required by @gesture.
 	 *
 	 * Returns: %TRUE if gesture is recognized
-	 *
-	 * Since: 3.14
 	 */
 	public bool isRecognized()
 	{
@@ -494,8 +448,6 @@ public class Gesture : EventController
 	 *
 	 * Returns: %TRUE if @sequence is handled by @gesture,
 	 *     and the state is changed successfully
-	 *
-	 * Since: 3.14
 	 */
 	public bool setSequenceState(GdkEventSequence* sequence, GtkEventSequenceState state)
 	{
@@ -512,8 +464,6 @@ public class Gesture : EventController
 	 *
 	 * Returns: %TRUE if the state of at least one sequence
 	 *     was changed successfully
-	 *
-	 * Since: 3.14
 	 */
 	public bool setState(GtkEventSequenceState state)
 	{
@@ -521,24 +471,7 @@ public class Gesture : EventController
 	}
 
 	/**
-	 * Sets a specific window to receive events about, so @gesture
-	 * will effectively handle only events targeting @window, or
-	 * a child of it. @window must pertain to gtk_event_controller_get_widget().
-	 *
-	 * Params:
-	 *     window = a #GdkWindow, or %NULL
-	 *
-	 * Since: 3.14
-	 */
-	public void setWindow(Window window)
-	{
-		gtk_gesture_set_window(gtkGesture, (window is null) ? null : window.getWindowStruct());
-	}
-
-	/**
 	 * Separates @gesture into an isolated group.
-	 *
-	 * Since: 3.14
 	 */
 	public void ungroup()
 	{
@@ -547,8 +480,7 @@ public class Gesture : EventController
 
 	/**
 	 * This signal is emitted when the gesture is recognized. This means the
-	 * number of touch sequences matches #GtkGesture:n-points, and the #GtkGesture::check
-	 * handler(s) returned #TRUE.
+	 * number of touch sequences matches #GtkGesture:n-points.
 	 *
 	 * Note: These conditions may also happen when an extra touch (eg. a third touch
 	 * on a 2-touches gesture) is lifted, in that situation @sequence won't pertain
@@ -556,8 +488,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that made the gesture to be recognized
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnBegin(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -566,8 +496,7 @@ public class Gesture : EventController
 
 	/**
 	 * This signal is emitted when the gesture is recognized. This means the
-	 * number of touch sequences matches #GtkGesture:n-points, and the #GtkGesture::check
-	 * handler(s) returned #TRUE.
+	 * number of touch sequences matches #GtkGesture:n-points.
 	 *
 	 * Note: These conditions may also happen when an extra touch (eg. a third touch
 	 * on a 2-touches gesture) is lifted, in that situation @sequence won't pertain
@@ -575,8 +504,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that made the gesture to be recognized
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnBegin(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -593,8 +520,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that was cancelled
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnCancel(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -611,8 +536,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that was cancelled
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnCancel(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -621,9 +544,8 @@ public class Gesture : EventController
 
 	/**
 	 * This signal is emitted when @gesture either stopped recognizing the event
-	 * sequences as something to be handled (the #GtkGesture::check handler returned
-	 * %FALSE), or the number of touch sequences became higher or lower than
-	 * #GtkGesture:n-points.
+	 * sequences as something to be handled, or the number of touch sequences became
+	 * higher or lower than #GtkGesture:n-points.
 	 *
 	 * Note: @sequence might not pertain to the group of sequences that were
 	 * previously triggering recognition on @gesture (ie. a just pressed touch
@@ -632,8 +554,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that made gesture recognition to finish
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnEnd(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -642,9 +562,8 @@ public class Gesture : EventController
 
 	/**
 	 * This signal is emitted when @gesture either stopped recognizing the event
-	 * sequences as something to be handled (the #GtkGesture::check handler returned
-	 * %FALSE), or the number of touch sequences became higher or lower than
-	 * #GtkGesture:n-points.
+	 * sequences as something to be handled, or the number of touch sequences became
+	 * higher or lower than #GtkGesture:n-points.
 	 *
 	 * Note: @sequence might not pertain to the group of sequences that were
 	 * previously triggering recognition on @gesture (ie. a just pressed touch
@@ -653,8 +572,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that made gesture recognition to finish
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnEnd(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -669,8 +586,6 @@ public class Gesture : EventController
 	 * Params:
 	 *     sequence = the #GdkEventSequence that was cancelled
 	 *     state = the new sequence state
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnSequenceStateChanged(void delegate(GdkEventSequence*, GtkEventSequenceState, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -685,8 +600,6 @@ public class Gesture : EventController
 	 * Params:
 	 *     sequence = the #GdkEventSequence that was cancelled
 	 *     state = the new sequence state
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnSequenceStateChanged(void delegate(Event, GtkEventSequenceState, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -699,8 +612,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that was updated
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnUpdate(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -713,8 +624,6 @@ public class Gesture : EventController
 	 *
 	 * Params:
 	 *     sequence = the #GdkEventSequence that was updated
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnUpdate(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

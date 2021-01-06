@@ -32,7 +32,6 @@ private import gstreamer.TagList;
 private import gstreamer.Toc;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /** */
@@ -85,14 +84,14 @@ public class TocEntry
 	 */
 	public this(GstTocEntryType type, string uid)
 	{
-		auto p = gst_toc_entry_new(type, Str.toStringz(uid));
+		auto __p = gst_toc_entry_new(type, Str.toStringz(uid));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstTocEntry*) p);
+		this(cast(GstTocEntry*) __p);
 	}
 
 	/**
@@ -143,14 +142,14 @@ public class TocEntry
 	 */
 	public TocEntry getParent()
 	{
-		auto p = gst_toc_entry_get_parent(gstTocEntry);
+		auto __p = gst_toc_entry_get_parent(gstTocEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) p);
+		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) __p);
 	}
 
 	/**
@@ -178,14 +177,14 @@ public class TocEntry
 	 */
 	public ListG getSubEntries()
 	{
-		auto p = gst_toc_entry_get_sub_entries(gstTocEntry);
+		auto __p = gst_toc_entry_get_sub_entries(gstTocEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -195,14 +194,14 @@ public class TocEntry
 	 */
 	public TagList getTags()
 	{
-		auto p = gst_toc_entry_get_tags(gstTocEntry);
+		auto __p = gst_toc_entry_get_tags(gstTocEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p);
 	}
 
 	/**
@@ -212,14 +211,14 @@ public class TocEntry
 	 */
 	public Toc getToc()
 	{
-		auto p = gst_toc_entry_get_toc(gstTocEntry);
+		auto __p = gst_toc_entry_get_toc(gstTocEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Toc)(cast(GstToc*) p);
+		return ObjectG.getDObject!(Toc)(cast(GstToc*) __p);
 	}
 
 	/**
@@ -294,6 +293,6 @@ public class TocEntry
 	 */
 	public void setTags(TagList tags)
 	{
-		gst_toc_entry_set_tags(gstTocEntry, (tags is null) ? null : tags.getTagListStruct());
+		gst_toc_entry_set_tags(gstTocEntry, (tags is null) ? null : tags.getTagListStruct(true));
 	}
 }

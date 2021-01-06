@@ -29,7 +29,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -556,7 +555,7 @@ public struct Unicode
 	}
 
 	/**
-	 * Determines if a character is a hexidecimal digit.
+	 * Determines if a character is a hexadecimal digit.
 	 *
 	 * Params:
 	 *     c = a Unicode character.
@@ -681,7 +680,7 @@ public struct Unicode
 	}
 
 	/**
-	 * Determines the numeric value of a character as a hexidecimal
+	 * Determines the numeric value of a character as a hexadecimal
 	 * digit.
 	 *
 	 * Params:
@@ -821,13 +820,13 @@ public struct Unicode
 	 * Note that the input is expected to be already in native endianness,
 	 * an initial byte-order-mark character is not handled specially.
 	 * g_convert() can be used to convert a byte buffer of UTF-16 data of
-	 * ambiguous endianess.
+	 * ambiguous endianness.
 	 *
 	 * Further note that this function does not validate the result
 	 * string; it may e.g. include embedded NUL characters. The only
 	 * validation done by this function is to ensure that the input can
 	 * be correctly interpreted as UTF-16, i.e. it doesn't contain
-	 * things unpaired surrogates.
+	 * unpaired surrogates or partial character sequences.
 	 *
 	 * Params:
 	 *     str = a UTF-16 encoded string

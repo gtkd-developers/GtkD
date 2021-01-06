@@ -37,7 +37,6 @@ private import gsv.SourceSearchSettings;
 private import gsv.SourceStyle;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.TextIter;
 
 
@@ -95,14 +94,14 @@ public class SourceSearchContext : ObjectG
 	 */
 	public this(SourceBuffer buffer, SourceSearchSettings settings)
 	{
-		auto p = gtk_source_search_context_new((buffer is null) ? null : buffer.getSourceBufferStruct(), (settings is null) ? null : settings.getSourceSearchSettingsStruct());
+		auto __p = gtk_source_search_context_new((buffer is null) ? null : buffer.getSourceBufferStruct(), (settings is null) ? null : settings.getSourceSearchSettingsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceSearchContext*) p, true);
+		this(cast(GtkSourceSearchContext*) __p, true);
 	}
 
 	/**
@@ -134,13 +133,13 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		int outhasWrappedAround;
 
-		auto p = gtk_source_search_context_backward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
+		auto __p = gtk_source_search_context_backward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
 
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -195,7 +194,7 @@ public class SourceSearchContext : ObjectG
 		int outhasWrappedAround;
 		GError* err = null;
 
-		auto p = gtk_source_search_context_backward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
+		auto __p = gtk_source_search_context_backward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
 
 		if (err !is null)
 		{
@@ -206,7 +205,7 @@ public class SourceSearchContext : ObjectG
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -238,13 +237,13 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		int outhasWrappedAround;
 
-		auto p = gtk_source_search_context_forward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
+		auto __p = gtk_source_search_context_forward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
 
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -299,7 +298,7 @@ public class SourceSearchContext : ObjectG
 		int outhasWrappedAround;
 		GError* err = null;
 
-		auto p = gtk_source_search_context_forward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
+		auto __p = gtk_source_search_context_forward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
 
 		if (err !is null)
 		{
@@ -310,7 +309,7 @@ public class SourceSearchContext : ObjectG
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -320,14 +319,14 @@ public class SourceSearchContext : ObjectG
 	 */
 	public SourceBuffer getBuffer()
 	{
-		auto p = gtk_source_search_context_get_buffer(gtkSourceSearchContext);
+		auto __p = gtk_source_search_context_get_buffer(gtkSourceSearchContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
+		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) __p);
 	}
 
 	/**
@@ -347,14 +346,14 @@ public class SourceSearchContext : ObjectG
 	 */
 	public SourceStyle getMatchStyle()
 	{
-		auto p = gtk_source_search_context_get_match_style(gtkSourceSearchContext);
+		auto __p = gtk_source_search_context_get_match_style(gtkSourceSearchContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) p);
+		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) __p);
 	}
 
 	/**
@@ -405,14 +404,14 @@ public class SourceSearchContext : ObjectG
 	 */
 	public ErrorG getRegexError()
 	{
-		auto p = gtk_source_search_context_get_regex_error(gtkSourceSearchContext);
+		auto __p = gtk_source_search_context_get_regex_error(gtkSourceSearchContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ErrorG(cast(GError*) p, true);
+		return new ErrorG(cast(GError*) __p, true);
 	}
 
 	/**
@@ -422,14 +421,14 @@ public class SourceSearchContext : ObjectG
 	 */
 	public SourceSearchSettings getSettings()
 	{
-		auto p = gtk_source_search_context_get_settings(gtkSourceSearchContext);
+		auto __p = gtk_source_search_context_get_settings(gtkSourceSearchContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceSearchSettings)(cast(GtkSourceSearchSettings*) p);
+		return ObjectG.getDObject!(SourceSearchSettings)(cast(GtkSourceSearchSettings*) __p);
 	}
 
 	/**
@@ -459,14 +458,14 @@ public class SourceSearchContext : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_source_search_context_replace(gtkSourceSearchContext, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), Str.toStringz(replace), replaceLength, &err) != 0;
+		auto __p = gtk_source_search_context_replace(gtkSourceSearchContext, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), Str.toStringz(replace), replaceLength, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -491,14 +490,14 @@ public class SourceSearchContext : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_source_search_context_replace_all(gtkSourceSearchContext, Str.toStringz(replace), replaceLength, &err);
+		auto __p = gtk_source_search_context_replace_all(gtkSourceSearchContext, Str.toStringz(replace), replaceLength, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

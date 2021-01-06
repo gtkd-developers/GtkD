@@ -24,8 +24,10 @@
 
 module gst.mpegts.AtscMGT;
 
+private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.PtrArray;
+private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
@@ -130,5 +132,18 @@ public final class AtscMGT
 	public static GType getType()
 	{
 		return gst_mpegts_atsc_mgt_get_type();
+	}
+
+	/** */
+	public this()
+	{
+		auto __p = gst_mpegts_atsc_mgt_new();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GstMpegtsAtscMGT*) __p);
 	}
 }

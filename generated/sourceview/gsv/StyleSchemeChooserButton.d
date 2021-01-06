@@ -24,17 +24,16 @@
 
 module gsv.StyleSchemeChooserButton;
 
+private import atk.ImplementorIF;
+private import atk.ImplementorT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gsv.StyleSchemeChooserIF;
 private import gsv.StyleSchemeChooserT;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
-private import gtk.ActivatableIF;
-private import gtk.ActivatableT;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.Button;
@@ -42,7 +41,7 @@ private import gtk.Widget;
 
 
 /** */
-public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
+public class StyleSchemeChooserButton : Button, ImplementorIF, StyleSchemeChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkSourceStyleSchemeChooserButton* gtkSourceStyleSchemeChooserButton;
@@ -70,6 +69,9 @@ public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 		super(cast(GtkButton*)gtkSourceStyleSchemeChooserButton, ownedRef);
 	}
 
+	// add the Implementor capabilities
+	mixin ImplementorT!(GtkSourceStyleSchemeChooserButton);
+
 	// add the StyleSchemeChooser capabilities
 	mixin StyleSchemeChooserT!(GtkSourceStyleSchemeChooserButton);
 
@@ -91,13 +93,13 @@ public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_source_style_scheme_chooser_button_new();
+		auto __p = gtk_source_style_scheme_chooser_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceStyleSchemeChooserButton*) p);
+		this(cast(GtkSourceStyleSchemeChooserButton*) __p);
 	}
 }

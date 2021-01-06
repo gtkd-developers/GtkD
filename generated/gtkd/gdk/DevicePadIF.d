@@ -26,7 +26,6 @@ module gdk.DevicePadIF;
 
 private import gdk.c.functions;
 public  import gdk.c.types;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -40,13 +39,12 @@ public  import gtkc.gdktypes;
  * and gdk_device_pad_get_feature_group() can be combined to find out the
  * number of buttons/rings/strips the device has, and how are they grouped.
  * 
- * Each of those groups have different modes, which may be used to map
- * each individual pad feature to multiple actions. Only one mode is
- * effective (current) for each given group, different groups may have
- * different current modes. The number of available modes in a group can
- * be found out through gdk_device_pad_get_group_n_modes(), and the current
- * mode for a given group will be notified through the #GdkEventPadGroupMode
- * event.
+ * Each of those groups have different modes, which may be used to map each
+ * individual pad feature to multiple actions. Only one mode is effective
+ * (current) for each given group, different groups may have different
+ * current modes. The number of available modes in a group can be found
+ * out through gdk_device_pad_get_group_n_modes(), and the current mode for
+ * a given group will be notified through events of type #GDK_PAD_GROUP_MODE.
  */
 public interface DevicePadIF{
 	/** Get the main Gtk struct */
@@ -71,8 +69,6 @@ public interface DevicePadIF{
 	 *     featureIdx = the index of the feature to get the group from
 	 *
 	 * Returns: The group number of the queried pad feature.
-	 *
-	 * Since: 3.22
 	 */
 	public int getFeatureGroup(GdkDevicePadFeature feature, int featureIdx);
 
@@ -83,8 +79,6 @@ public interface DevicePadIF{
 	 *     groupIdx = group to get the number of available modes from
 	 *
 	 * Returns: The number of modes available in @group.
-	 *
-	 * Since: 3.22
 	 */
 	public int getGroupNModes(int groupIdx);
 
@@ -95,8 +89,6 @@ public interface DevicePadIF{
 	 *     feature = a pad feature
 	 *
 	 * Returns: The amount of elements of type @feature that this pad has.
-	 *
-	 * Since: 3.22
 	 */
 	public int getNFeatures(GdkDevicePadFeature feature);
 
@@ -107,8 +99,6 @@ public interface DevicePadIF{
 	 * current mode.
 	 *
 	 * Returns: The number of button/ring/strip groups in the pad.
-	 *
-	 * Since: 3.22
 	 */
 	public int getNGroups();
 }

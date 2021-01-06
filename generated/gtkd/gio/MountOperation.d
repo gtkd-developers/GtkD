@@ -31,7 +31,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -434,7 +433,7 @@ public class MountOperation : ObjectG
 	 * primary text in a #GtkMessageDialog.
 	 *
 	 * Params:
-	 *     message = string containing a mesage to display to the user
+	 *     message = string containing a message to display to the user
 	 *     timeLeft = the estimated time left before the operation completes,
 	 *         in microseconds, or -1
 	 *     bytesLeft = the amount of bytes to be written before the operation

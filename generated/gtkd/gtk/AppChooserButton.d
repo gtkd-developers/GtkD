@@ -31,11 +31,9 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AppChooserIF;
 private import gtk.AppChooserT;
-private import gtk.ComboBox;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -61,9 +59,13 @@ private import std.algorithm;
  * emitted when they are selected.
  * 
  * To track changes in the selected application, use the
- * #GtkComboBox::changed signal.
+ * #GtkAppChooserButton::changed signal.
+ * 
+ * # CSS nodes
+ * 
+ * GtkAppChooserButton has a single CSS node with the name “appchooserbutton”.
  */
-public class AppChooserButton : ComboBox, AppChooserIF
+public class AppChooserButton : Widget, AppChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkAppChooserButton* gtkAppChooserButton;
@@ -88,7 +90,7 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	public this (GtkAppChooserButton* gtkAppChooserButton, bool ownedRef = false)
 	{
 		this.gtkAppChooserButton = gtkAppChooserButton;
-		super(cast(GtkComboBox*)gtkAppChooserButton, ownedRef);
+		super(cast(GtkWidget*)gtkAppChooserButton, ownedRef);
 	}
 
 	// add the AppChooser capabilities
@@ -110,20 +112,18 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 *
 	 * Returns: a newly created #GtkAppChooserButton
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string contentType)
 	{
-		auto p = gtk_app_chooser_button_new(Str.toStringz(contentType));
+		auto __p = gtk_app_chooser_button_new(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAppChooserButton*) p);
+		this(cast(GtkAppChooserButton*) __p);
 	}
 
 	/**
@@ -138,8 +138,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 *     name = the name of the custom item
 	 *     label = the label for the custom item
 	 *     icon = the icon for the custom item
-	 *
-	 * Since: 3.0
 	 */
 	public void appendCustomItem(string name, string label, IconIF icon)
 	{
@@ -149,8 +147,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	/**
 	 * Appends a separator to the list of applications that is shown
 	 * in the popup.
-	 *
-	 * Since: 3.0
 	 */
 	public void appendSeparator()
 	{
@@ -169,12 +165,20 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	}
 
 	/**
+	 * Gets whether the dialog is modal.
+	 *
+	 * Returns: %TRUE if the dialog is modal
+	 */
+	public bool getModal()
+	{
+		return gtk_app_chooser_button_get_modal(gtkAppChooserButton) != 0;
+	}
+
+	/**
 	 * Returns the current value of the #GtkAppChooserButton:show-default-item
 	 * property.
 	 *
 	 * Returns: the value of #GtkAppChooserButton:show-default-item
-	 *
-	 * Since: 3.2
 	 */
 	public bool getShowDefaultItem()
 	{
@@ -186,8 +190,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 * property.
 	 *
 	 * Returns: the value of #GtkAppChooserButton:show-dialog-item
-	 *
-	 * Since: 3.0
 	 */
 	public bool getShowDialogItem()
 	{
@@ -203,8 +205,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 *
 	 * Params:
 	 *     name = the name of the custom item
-	 *
-	 * Since: 3.0
 	 */
 	public void setActiveCustomItem(string name)
 	{
@@ -224,13 +224,22 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	}
 
 	/**
+	 * Sets whether the dialog should be modal.
+	 *
+	 * Params:
+	 *     modal = %TRUE to make the dialog modal
+	 */
+	public void setModal(bool modal)
+	{
+		gtk_app_chooser_button_set_modal(gtkAppChooserButton, modal);
+	}
+
+	/**
 	 * Sets whether the dropdown menu of this button should show the
 	 * default application for the given content type at top.
 	 *
 	 * Params:
 	 *     setting = the new value for #GtkAppChooserButton:show-default-item
-	 *
-	 * Since: 3.2
 	 */
 	public void setShowDefaultItem(bool setting)
 	{
@@ -243,12 +252,19 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 *
 	 * Params:
 	 *     setting = the new value for #GtkAppChooserButton:show-dialog-item
-	 *
-	 * Since: 3.0
 	 */
 	public void setShowDialogItem(bool setting)
 	{
 		gtk_app_chooser_button_set_show_dialog_item(gtkAppChooserButton, setting);
+	}
+
+	/**
+	 * Emitted when the active application on the #GtkAppChooserButton
+	 * changes.
+	 */
+	gulong addOnChanged(void delegate(AppChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

@@ -119,14 +119,14 @@ public class CollectPads : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_collect_pads_new();
+		auto __p = gst_collect_pads_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstCollectPads*) p, true);
+		this(cast(GstCollectPads*) __p, true);
 	}
 
 	/**
@@ -207,11 +207,11 @@ public class CollectPads : ObjectGst
 	{
 		GstBuffer* outoutbuf = null;
 
-		auto p = gst_collect_pads_clip_running_time(gstCollectPads, cdata, (buf is null) ? null : buf.getBufferStruct(), &outoutbuf, userData);
+		auto __p = gst_collect_pads_clip_running_time(gstCollectPads, cdata, (buf is null) ? null : buf.getBufferStruct(), &outoutbuf, userData);
 
 		outbuf = ObjectG.getDObject!(Buffer)(outoutbuf);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -264,14 +264,14 @@ public class CollectPads : ObjectGst
 	 */
 	public Buffer peek(GstCollectData* data)
 	{
-		auto p = gst_collect_pads_peek(gstCollectPads, data);
+		auto __p = gst_collect_pads_peek(gstCollectPads, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -289,14 +289,14 @@ public class CollectPads : ObjectGst
 	 */
 	public Buffer pop(GstCollectData* data)
 	{
-		auto p = gst_collect_pads_pop(gstCollectPads, data);
+		auto __p = gst_collect_pads_pop(gstCollectPads, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -332,14 +332,14 @@ public class CollectPads : ObjectGst
 	 */
 	public Buffer readBuffer(GstCollectData* data, uint size)
 	{
-		auto p = gst_collect_pads_read_buffer(gstCollectPads, data, size);
+		auto __p = gst_collect_pads_read_buffer(gstCollectPads, data, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -574,13 +574,13 @@ public class CollectPads : ObjectGst
 	 */
 	public Buffer takeBuffer(GstCollectData* data, uint size)
 	{
-		auto p = gst_collect_pads_take_buffer(gstCollectPads, data, size);
+		auto __p = gst_collect_pads_take_buffer(gstCollectPads, data, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 }

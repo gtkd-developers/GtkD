@@ -29,7 +29,6 @@ private import glib.GException;
 private import glib.SimpleXML;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgAttributeList;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -73,6 +72,12 @@ public class PgAttribute
 	}
 
 
+	/** */
+	public static GType getType()
+	{
+		return pango_attribute_get_type();
+	}
+
 	/**
 	 * Make a copy of an attribute.
 	 *
@@ -81,14 +86,14 @@ public class PgAttribute
 	 */
 	public PgAttribute copy()
 	{
-		auto p = pango_attribute_copy(pangoAttribute);
+		auto __p = pango_attribute_copy(pangoAttribute);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -144,14 +149,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute backgroundNew(ushort red, ushort green, ushort blue)
 	{
-		auto p = pango_attr_background_new(red, green, blue);
+		auto __p = pango_attr_background_new(red, green, blue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -167,14 +172,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute backgroundAlphaNew(ushort alpha)
 	{
-		auto p = pango_attr_background_alpha_new(alpha);
+		auto __p = pango_attr_background_alpha_new(alpha);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -196,14 +201,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute fallbackNew(bool enableFallback)
 	{
-		auto p = pango_attr_fallback_new(enableFallback);
+		auto __p = pango_attr_fallback_new(enableFallback);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -217,14 +222,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute familyNew(string family)
 	{
-		auto p = pango_attr_family_new(Str.toStringz(family));
+		auto __p = pango_attr_family_new(Str.toStringz(family));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -240,14 +245,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute foregroundNew(ushort red, ushort green, ushort blue)
 	{
-		auto p = pango_attr_foreground_new(red, green, blue);
+		auto __p = pango_attr_foreground_new(red, green, blue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -263,14 +268,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute foregroundAlphaNew(ushort alpha)
 	{
-		auto p = pango_attr_foreground_alpha_new(alpha);
+		auto __p = pango_attr_foreground_alpha_new(alpha);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -286,14 +291,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute gravityHintNew(PangoGravityHint hint)
 	{
-		auto p = pango_attr_gravity_hint_new(hint);
+		auto __p = pango_attr_gravity_hint_new(hint);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -309,14 +314,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute gravityNew(PangoGravity gravity)
 	{
-		auto p = pango_attr_gravity_new(gravity);
+		auto __p = pango_attr_gravity_new(gravity);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -333,14 +338,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute letterSpacingNew(int letterSpacing)
 	{
-		auto p = pango_attr_letter_spacing_new(letterSpacing);
+		auto __p = pango_attr_letter_spacing_new(letterSpacing);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -355,14 +360,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute riseNew(int rise)
 	{
-		auto p = pango_attr_rise_new(rise);
+		auto __p = pango_attr_rise_new(rise);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -377,14 +382,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute scaleNew(double scaleFactor)
 	{
-		auto p = pango_attr_scale_new(scaleFactor);
+		auto __p = pango_attr_scale_new(scaleFactor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -398,14 +403,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute stretchNew(PangoStretch stretch)
 	{
-		auto p = pango_attr_stretch_new(stretch);
+		auto __p = pango_attr_stretch_new(stretch);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -425,14 +430,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute strikethroughColorNew(ushort red, ushort green, ushort blue)
 	{
-		auto p = pango_attr_strikethrough_color_new(red, green, blue);
+		auto __p = pango_attr_strikethrough_color_new(red, green, blue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -446,14 +451,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute strikethroughNew(bool strikethrough)
 	{
-		auto p = pango_attr_strikethrough_new(strikethrough);
+		auto __p = pango_attr_strikethrough_new(strikethrough);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -467,14 +472,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute styleNew(PangoStyle style)
 	{
-		auto p = pango_attr_style_new(style);
+		auto __p = pango_attr_style_new(style);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -528,14 +533,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute underlineColorNew(ushort red, ushort green, ushort blue)
 	{
-		auto p = pango_attr_underline_color_new(red, green, blue);
+		auto __p = pango_attr_underline_color_new(red, green, blue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -549,14 +554,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute underlineNew(PangoUnderline underline)
 	{
-		auto p = pango_attr_underline_new(underline);
+		auto __p = pango_attr_underline_new(underline);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -570,14 +575,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute variantNew(PangoVariant variant)
 	{
-		auto p = pango_attr_variant_new(variant);
+		auto __p = pango_attr_variant_new(variant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -591,14 +596,14 @@ public class PgAttribute
 	 */
 	public static PgAttribute weightNew(PangoWeight weight)
 	{
-		auto p = pango_attr_weight_new(weight);
+		auto __p = pango_attr_weight_new(weight);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p, true);
 	}
 
 	/**
@@ -625,7 +630,7 @@ public class PgAttribute
 		char* outtext = null;
 		GError* err = null;
 
-		auto p = pango_markup_parser_finish((context is null) ? null : context.getSimpleXMLStruct(), &outattrList, &outtext, &accelChar, &err) != 0;
+		auto __p = pango_markup_parser_finish((context is null) ? null : context.getSimpleXMLStruct(), &outattrList, &outtext, &accelChar, &err) != 0;
 
 		if (err !is null)
 		{
@@ -635,7 +640,7 @@ public class PgAttribute
 		attrList = ObjectG.getDObject!(PgAttributeList)(outattrList);
 		text = Str.toString(outtext);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -670,14 +675,14 @@ public class PgAttribute
 	 */
 	public static SimpleXML markupParserNew(dchar accelMarker)
 	{
-		auto p = pango_markup_parser_new(accelMarker);
+		auto __p = pango_markup_parser_new(accelMarker);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SimpleXML(cast(GMarkupParseContext*) p);
+		return new SimpleXML(cast(GMarkupParseContext*) __p);
 	}
 
 	/**
@@ -716,7 +721,7 @@ public class PgAttribute
 		char* outtext = null;
 		GError* err = null;
 
-		auto p = pango_parse_markup(Str.toStringz(markupText), length, accelMarker, &outattrList, &outtext, &accelChar, &err) != 0;
+		auto __p = pango_parse_markup(Str.toStringz(markupText), length, accelMarker, &outattrList, &outtext, &accelChar, &err) != 0;
 
 		if (err !is null)
 		{
@@ -726,6 +731,6 @@ public class PgAttribute
 		attrList = ObjectG.getDObject!(PgAttributeList)(outattrList);
 		text = Str.toString(outtext);
 
-		return p;
+		return __p;
 	}
 }

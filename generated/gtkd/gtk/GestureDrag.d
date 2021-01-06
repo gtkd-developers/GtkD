@@ -29,16 +29,14 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
  * #GtkGestureDrag is a #GtkGesture implementation that recognizes drag
- * operations. The drag operation itself can be tracked throught the
+ * operations. The drag operation itself can be tracked throughout the
  * #GtkGestureDrag::drag-begin, #GtkGestureDrag::drag-update and
  * #GtkGestureDrag::drag-end signals, or the relevant coordinates be
  * extracted through gtk_gesture_drag_get_offset() and
@@ -82,25 +80,20 @@ public class GestureDrag : GestureSingle
 	/**
 	 * Returns a newly created #GtkGesture that recognizes drags.
 	 *
-	 * Params:
-	 *     widget = a #GtkWidget
-	 *
 	 * Returns: a newly created #GtkGestureDrag
-	 *
-	 * Since: 3.14
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Widget widget)
+	public this()
 	{
-		auto p = gtk_gesture_drag_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_drag_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureDrag*) p, true);
+		this(cast(GtkGestureDrag*) __p, true);
 	}
 
 	/**
@@ -113,8 +106,6 @@ public class GestureDrag : GestureSingle
 	 *     y = Y offset for the current point
 	 *
 	 * Returns: %TRUE if the gesture is active
-	 *
-	 * Since: 3.14
 	 */
 	public bool getOffset(out double x, out double y)
 	{
@@ -131,8 +122,6 @@ public class GestureDrag : GestureSingle
 	 *     y = Y coordinate for the drag start point
 	 *
 	 * Returns: %TRUE if the gesture is active
-	 *
-	 * Since: 3.14
 	 */
 	public bool getStartPoint(out double x, out double y)
 	{
@@ -145,8 +134,6 @@ public class GestureDrag : GestureSingle
 	 * Params:
 	 *     startX = X coordinate, relative to the widget allocation
 	 *     startY = Y coordinate, relative to the widget allocation
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnDragBegin(void delegate(double, double, GestureDrag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -159,8 +146,6 @@ public class GestureDrag : GestureSingle
 	 * Params:
 	 *     offsetX = X offset, relative to the start point
 	 *     offsetY = Y offset, relative to the start point
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnDragEnd(void delegate(double, double, GestureDrag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -173,8 +158,6 @@ public class GestureDrag : GestureSingle
 	 * Params:
 	 *     offsetX = X offset, relative to the start point
 	 *     offsetY = Y offset, relative to the start point
-	 *
-	 * Since: 3.14
 	 */
 	gulong addOnDragUpdate(void delegate(double, double, GestureDrag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

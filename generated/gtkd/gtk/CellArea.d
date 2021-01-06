@@ -24,9 +24,10 @@
 
 module gtk.CellArea;
 
-private import cairo.Context;
 private import gdk.Event;
+private import gdk.Rectangle;
 private import glib.ListG;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -38,12 +39,12 @@ private import gtk.CellEditableIF;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.CellRenderer;
+private import gtk.Snapshot;
 private import gtk.TreeIter;
 private import gtk.TreeModelIF;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -63,7 +64,7 @@ private import std.algorithm;
  * 
  * As outlined in
  * [GtkWidget’s geometry management section][geometry-management],
- * GTK+ uses a height-for-width
+ * GTK uses a height-for-width
  * geometry management system to compute the sizes of widgets and user
  * interfaces. #GtkCellArea uses the same semantics to calculate the
  * size of an area for an arbitrary number of #GtkTreeModel rows.
@@ -99,8 +100,8 @@ private import std.algorithm;
  * 
  * |[<!-- language="C" -->
  * GtkTreeIter iter;
- * gint        minimum_width;
- * gint        natural_width;
+ * int         minimum_width;
+ * int         natural_width;
  * 
  * valid = gtk_tree_model_get_iter_first (model, &iter);
  * while (valid)
@@ -125,7 +126,7 @@ private import std.algorithm;
  * exceedingly large amount of rows. The #GtkCellLayout widget in
  * that case would calculate the required width of the rows in an
  * idle or timeout source (see g_timeout_add()) and when the widget
- * is requested its actual width in #GtkWidgetClass.get_preferred_width()
+ * is requested its actual width in #GtkWidgetClass.measure()
  * it can simply consult the width accumulated so far in the
  * #GtkCellAreaContext object.
  * 
@@ -135,8 +136,8 @@ private import std.algorithm;
  * |[<!-- language="C" -->
  * static void
  * foo_get_preferred_width (GtkWidget       *widget,
- * gint            *minimum_size,
- * gint            *natural_size)
+ * int             *minimum_size,
+ * int             *natural_size)
  * {
  * Foo        *foo  = FOO (widget);
  * FooPrivate *priv = foo->priv;
@@ -165,10 +166,10 @@ private import std.algorithm;
  * 
  * |[<!-- language="C" -->
  * GtkTreeIter iter;
- * gint        minimum_height;
- * gint        natural_height;
- * gint        full_minimum_height = 0;
- * gint        full_natural_height = 0;
+ * int         minimum_height;
+ * int         natural_height;
+ * int         full_minimum_height = 0;
+ * int         full_natural_height = 0;
  * 
  * valid = gtk_tree_model_get_iter_first (model, &iter);
  * while (valid)
@@ -201,7 +202,7 @@ private import std.algorithm;
  * synchronously. The reasoning here is that any layouting widget is
  * at least capable of synchronously calculating enough height to fill
  * the screen height (or scrolled window height) in response to a single
- * call to #GtkWidgetClass.get_preferred_height_for_width(). Returning
+ * call to #GtkWidgetClass.measure(). Returning
  * a perfect height for width that is larger than the screen area is
  * inconsequential since after the layouting receives an allocation
  * from a scrolled window it simply continues to drive the scrollbar
@@ -210,9 +211,9 @@ private import std.algorithm;
  * 
  * # Rendering Areas
  * 
- * Once area sizes have been aquired at least for the rows in the
+ * Once area sizes have been acquired at least for the rows in the
  * visible area of the layouting widget they can be rendered at
- * #GtkWidgetClass.draw() time.
+ * #GtkWidgetClass.snapshot() time.
  * 
  * A crude example of how to render all the rows at the root level
  * runs as follows:
@@ -221,8 +222,8 @@ private import std.algorithm;
  * GtkAllocation allocation;
  * GdkRectangle  cell_area = { 0, };
  * GtkTreeIter   iter;
- * gint          minimum_width;
- * gint          natural_width;
+ * int           minimum_width;
+ * int           natural_width;
  * 
  * gtk_widget_get_allocation (widget, &allocation);
  * cell_area.width = allocation.width;
@@ -247,7 +248,7 @@ private import std.algorithm;
  * give every row its minimum or natural height or, if the model content
  * is expected to fit inside the layouting widget without scrolling, it
  * would make sense to calculate the allocation for each row at
- * #GtkWidget::size-allocate time using gtk_distribute_natural_allocation().
+ * the time the widget is allocated using gtk_distribute_natural_allocation().
  * 
  * # Handling Events and Driving Keyboard Focus
  * 
@@ -286,7 +287,7 @@ private import std.algorithm;
  * {
  * Foo        *foo  = FOO (widget);
  * FooPrivate *priv = foo->priv;
- * gint        focus_row;
+ * int         focus_row;
  * gboolean    have_focus = FALSE;
  * 
  * focus_row = priv->focus_row;
@@ -342,15 +343,13 @@ private import std.algorithm;
  * 
  * # Cell Properties
  * 
- * The #GtkCellArea introduces cell properties for #GtkCellRenderers
- * in very much the same way that #GtkContainer introduces
- * [child properties][child-properties]
- * for #GtkWidgets. This provides some general interfaces for defining
- * the relationship cell areas have with their cells. For instance in a
- * #GtkCellAreaBox a cell might “expand” and receive extra space when
- * the area is allocated more than its full natural request, or a cell
- * might be configured to “align” with adjacent rows which were requested
- * and rendered with the same #GtkCellAreaContext.
+ * The #GtkCellArea introduces cell properties for #GtkCellRenderers.
+ * This provides some general interfaces for defining the relationship
+ * cell areas have with their cells. For instance in a #GtkCellAreaBox
+ * a cell might “expand” and receive extra space when the area is allocated
+ * more than its full natural request, or a cell might be configured to “align”
+ * with adjacent rows which were requested and rendered with the same
+ * #GtkCellAreaContext.
  * 
  * Use gtk_cell_area_class_install_cell_property() to install cell
  * properties for a cell area class and gtk_cell_area_class_find_cell_property()
@@ -417,12 +416,10 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *         will be activated.
 	 *
 	 * Returns: Whether @area was successfully activated.
-	 *
-	 * Since: 3.0
 	 */
-	public bool activate(CellAreaContext context, Widget widget, GdkRectangle* cellArea, GtkCellRendererState flags, bool editOnly)
+	public bool activate(CellAreaContext context, Widget widget, Rectangle cellArea, GtkCellRendererState flags, bool editOnly)
 	{
-		return gtk_cell_area_activate(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, flags, editOnly) != 0;
+		return gtk_cell_area_activate(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags, editOnly) != 0;
 	}
 
 	/**
@@ -440,12 +437,10 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     flags = the #GtkCellRendererState for @renderer
 	 *
 	 * Returns: whether cell activation was successful
-	 *
-	 * Since: 3.0
 	 */
-	public bool activateCell(Widget widget, CellRenderer renderer, Event event, GdkRectangle* cellArea, GtkCellRendererState flags)
+	public bool activateCell(Widget widget, CellRenderer renderer, Event event, Rectangle cellArea, GtkCellRendererState flags)
 	{
-		return gtk_cell_area_activate_cell(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), (event is null) ? null : event.getEventStruct(), cellArea, flags) != 0;
+		return gtk_cell_area_activate_cell(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), (event is null) ? null : event.getEventStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags) != 0;
 	}
 
 	/**
@@ -453,8 +448,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     renderer = the #GtkCellRenderer to add to @area
-	 *
-	 * Since: 3.0
 	 */
 	public void add(CellRenderer renderer)
 	{
@@ -472,8 +465,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer expected to have focus
 	 *     sibling = the #GtkCellRenderer to add to @renderer’s focus area
-	 *
-	 * Since: 3.0
 	 */
 	public void addFocusSibling(CellRenderer renderer, CellRenderer sibling)
 	{
@@ -490,8 +481,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     isExpander = whether @iter has children
 	 *     isExpanded = whether @iter is expanded in the view and
 	 *         children are visible
-	 *
-	 * Since: 3.0
 	 */
 	public void applyAttributes(TreeModelIF treeModel, TreeIter iter, bool isExpander, bool isExpanded)
 	{
@@ -506,8 +495,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     renderer = the #GtkCellRenderer to connect an attribute for
 	 *     attribute = the attribute name
 	 *     column = the #GtkTreeModel column to fetch attribute values from
-	 *
-	 * Since: 3.0
 	 */
 	public void attributeConnect(CellRenderer renderer, string attribute, int column)
 	{
@@ -522,8 +509,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer to disconnect an attribute for
 	 *     attribute = the attribute name
-	 *
-	 * Since: 3.0
 	 */
 	public void attributeDisconnect(CellRenderer renderer, string attribute)
 	{
@@ -539,8 +524,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     attribute = an attribute on the renderer
 	 *
 	 * Returns: the model column, or -1
-	 *
-	 * Since: 3.14
 	 */
 	public int attributeGetColumn(CellRenderer renderer, string attribute)
 	{
@@ -554,8 +537,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     renderer = a #GtkCellRenderer inside @area
 	 *     propertyName = the name of the property to get
 	 *     value = a location to return the value
-	 *
-	 * Since: 3.0
 	 */
 	public void cellGetProperty(CellRenderer renderer, string propertyName, Value value)
 	{
@@ -570,8 +551,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     firstPropertyName = the name of the first property to get
 	 *     varArgs = return location for the first property, followed
 	 *         optionally by more name/return location pairs, followed by %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void cellGetValist(CellRenderer renderer, string firstPropertyName, void* varArgs)
 	{
@@ -585,8 +564,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     renderer = a #GtkCellRenderer inside @area
 	 *     propertyName = the name of the cell property to set
 	 *     value = the value to set the cell property to
-	 *
-	 * Since: 3.0
 	 */
 	public void cellSetProperty(CellRenderer renderer, string propertyName, Value value)
 	{
@@ -601,8 +578,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     firstPropertyName = the name of the first cell property to set
 	 *     varArgs = a %NULL-terminated list of property names and values, starting
 	 *         with @first_prop_name
-	 *
-	 * Since: 3.0
 	 */
 	public void cellSetValist(CellRenderer renderer, string firstPropertyName, void* varArgs)
 	{
@@ -626,19 +601,17 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     context = the #GtkCellAreaContext to copy
 	 *
 	 * Returns: a newly created #GtkCellAreaContext copy of @context.
-	 *
-	 * Since: 3.0
 	 */
 	public CellAreaContext copyContext(CellAreaContext context)
 	{
-		auto p = gtk_cell_area_copy_context(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct());
+		auto __p = gtk_cell_area_copy_context(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p, true);
+		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) __p, true);
 	}
 
 	/**
@@ -650,19 +623,17 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * which was used to request the size of those rows of data).
 	 *
 	 * Returns: a newly created #GtkCellAreaContext which can be used with @area.
-	 *
-	 * Since: 3.0
 	 */
 	public CellAreaContext createContext()
 	{
-		auto p = gtk_cell_area_create_context(gtkCellArea);
+		auto __p = gtk_cell_area_create_context(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p, true);
+		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) __p, true);
 	}
 
 	/**
@@ -676,12 +647,10 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     flags = the #GtkCellRendererState for @area in this row.
 	 *
 	 * Returns: %TRUE if the event was handled by @area.
-	 *
-	 * Since: 3.0
 	 */
-	public int event(CellAreaContext context, Widget widget, Event event, GdkRectangle* cellArea, GtkCellRendererState flags)
+	public int event(CellAreaContext context, Widget widget, Event event, Rectangle cellArea, GtkCellRendererState flags)
 	{
-		return gtk_cell_area_event(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (event is null) ? null : event.getEventStruct(), cellArea, flags);
+		return gtk_cell_area_event(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (event is null) ? null : event.getEventStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
 	}
 
 	/**
@@ -697,8 +666,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     direction = the #GtkDirectionType
 	 *
 	 * Returns: %TRUE if focus remains inside @area as a result of this call.
-	 *
-	 * Since: 3.0
 	 */
 	public bool focus(GtkDirectionType direction)
 	{
@@ -712,8 +679,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     callback = the #GtkCellCallback to call
 	 *     callbackData = user provided data pointer
-	 *
-	 * Since: 3.0
 	 */
 	public void foreach_(GtkCellCallback callback, void* callbackData)
 	{
@@ -731,12 +696,10 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     backgroundArea = the @widget relative coordinates of the background area
 	 *     callback = the #GtkCellAllocCallback to call
 	 *     callbackData = user provided data pointer
-	 *
-	 * Since: 3.0
 	 */
-	public void foreachAlloc(CellAreaContext context, Widget widget, GdkRectangle* cellArea, GdkRectangle* backgroundArea, GtkCellAllocCallback callback, void* callbackData)
+	public void foreachAlloc(CellAreaContext context, Widget widget, Rectangle cellArea, Rectangle backgroundArea, GtkCellAllocCallback callback, void* callbackData)
 	{
-		gtk_cell_area_foreach_alloc(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, backgroundArea, callback, callbackData);
+		gtk_cell_area_foreach_alloc(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), callback, callbackData);
 	}
 
 	/**
@@ -750,12 +713,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     cellArea = the whole allocated area for @area in @widget
 	 *         for this row
 	 *     allocation = where to store the allocation for @renderer
-	 *
-	 * Since: 3.0
 	 */
-	public void getCellAllocation(CellAreaContext context, Widget widget, CellRenderer renderer, GdkRectangle* cellArea, out GdkRectangle allocation)
+	public void getCellAllocation(CellAreaContext context, Widget widget, CellRenderer renderer, Rectangle cellArea, out Rectangle allocation)
 	{
-		gtk_cell_area_get_cell_allocation(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), cellArea, &allocation);
+		GdkRectangle* outallocation = sliceNew!GdkRectangle();
+
+		gtk_cell_area_get_cell_allocation(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), outallocation);
+
+		allocation = ObjectG.getDObject!(Rectangle)(outallocation, true);
 	}
 
 	/**
@@ -773,19 +738,21 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *         returned cell renderer, or %NULL.
 	 *
 	 * Returns: the #GtkCellRenderer at @x and @y.
-	 *
-	 * Since: 3.0
 	 */
-	public CellRenderer getCellAtPosition(CellAreaContext context, Widget widget, GdkRectangle* cellArea, int x, int y, out GdkRectangle allocArea)
+	public CellRenderer getCellAtPosition(CellAreaContext context, Widget widget, Rectangle cellArea, int x, int y, out Rectangle allocArea)
 	{
-		auto p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, x, y, &allocArea);
+		GdkRectangle* outallocArea = sliceNew!GdkRectangle();
 
-		if(p is null)
+		auto __p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), x, y, outallocArea);
+
+		allocArea = ObjectG.getDObject!(Rectangle)(outallocArea, true);
+
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
@@ -798,8 +765,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns: The current #GtkTreePath string for the current
 	 *     attributes applied to @area. This string belongs to the area and
 	 *     should not be freed.
-	 *
-	 * Since: 3.0
 	 */
 	public string getCurrentPathString()
 	{
@@ -811,19 +776,17 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * to edit the currently edited cell.
 	 *
 	 * Returns: The currently active #GtkCellEditable widget
-	 *
-	 * Since: 3.0
 	 */
 	public CellEditableIF getEditWidget()
 	{
-		auto p = gtk_cell_area_get_edit_widget(gtkCellArea);
+		auto __p = gtk_cell_area_get_edit_widget(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) __p);
 	}
 
 	/**
@@ -831,38 +794,34 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * being edited.
 	 *
 	 * Returns: The currently edited #GtkCellRenderer
-	 *
-	 * Since: 3.0
 	 */
 	public CellRenderer getEditedCell()
 	{
-		auto p = gtk_cell_area_get_edited_cell(gtkCellArea);
+		auto __p = gtk_cell_area_get_edited_cell(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
 	 * Retrieves the currently focused cell for @area
 	 *
 	 * Returns: the currently focused cell in @area.
-	 *
-	 * Since: 3.0
 	 */
 	public CellRenderer getFocusCell()
 	{
-		auto p = gtk_cell_area_get_focus_cell(gtkCellArea);
+		auto __p = gtk_cell_area_get_focus_cell(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
@@ -879,19 +838,17 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: the #GtkCellRenderer for which @renderer
 	 *     is a sibling, or %NULL.
-	 *
-	 * Since: 3.0
 	 */
 	public CellRenderer getFocusFromSibling(CellRenderer renderer)
 	{
-		auto p = gtk_cell_area_get_focus_from_sibling(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
+		auto __p = gtk_cell_area_get_focus_from_sibling(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
@@ -902,19 +859,17 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: A #GList of #GtkCellRenderers.
 	 *     The returned list is internal and should not be freed.
-	 *
-	 * Since: 3.0
 	 */
 	public ListG getFocusSiblings(CellRenderer renderer)
 	{
-		auto p = gtk_cell_area_get_focus_siblings(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
+		auto __p = gtk_cell_area_get_focus_siblings(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -931,8 +886,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     widget = the #GtkWidget where @area will be rendering
 	 *     minimumHeight = location to store the minimum height, or %NULL
 	 *     naturalHeight = location to store the natural height, or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredHeight(CellAreaContext context, Widget widget, out int minimumHeight, out int naturalHeight)
 	{
@@ -961,8 +914,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     width = the width for which to check the height of this area
 	 *     minimumHeight = location to store the minimum height, or %NULL
 	 *     naturalHeight = location to store the natural height, or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredHeightForWidth(CellAreaContext context, Widget widget, int width, out int minimumHeight, out int naturalHeight)
 	{
@@ -983,8 +934,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     widget = the #GtkWidget where @area will be rendering
 	 *     minimumWidth = location to store the minimum width, or %NULL
 	 *     naturalWidth = location to store the natural width, or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredWidth(CellAreaContext context, Widget widget, out int minimumWidth, out int naturalWidth)
 	{
@@ -1013,8 +962,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     height = the height for which to check the width of this area
 	 *     minimumWidth = location to store the minimum width, or %NULL
 	 *     naturalWidth = location to store the natural width, or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredWidthForHeight(CellAreaContext context, Widget widget, int height, out int minimumWidth, out int naturalWidth)
 	{
@@ -1026,8 +973,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * or a width-for-height layout.
 	 *
 	 * Returns: The #GtkSizeRequestMode preferred by @area.
-	 *
-	 * Since: 3.0
 	 */
 	public GtkSizeRequestMode getRequestMode()
 	{
@@ -1041,8 +986,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     renderer = the #GtkCellRenderer to check
 	 *
 	 * Returns: %TRUE if @renderer is in the @area.
-	 *
-	 * Since: 3.0
 	 */
 	public bool hasRenderer(CellRenderer renderer)
 	{
@@ -1059,12 +1002,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     cellArea = the @widget relative coordinates where one of @area’s cells
 	 *         is to be placed
 	 *     innerArea = the return location for the inner cell area
-	 *
-	 * Since: 3.0
 	 */
-	public void innerCellArea(Widget widget, GdkRectangle* cellArea, out GdkRectangle innerArea)
+	public void innerCellArea(Widget widget, Rectangle cellArea, out Rectangle innerArea)
 	{
-		gtk_cell_area_inner_cell_area(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), cellArea, &innerArea);
+		GdkRectangle* outinnerArea = sliceNew!GdkRectangle();
+
+		gtk_cell_area_inner_cell_area(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), outinnerArea);
+
+		innerArea = ObjectG.getDObject!(Rectangle)(outinnerArea, true);
 	}
 
 	/**
@@ -1072,8 +1017,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * after applying new attributes to @area.
 	 *
 	 * Returns: whether @area can do anything when activated.
-	 *
-	 * Since: 3.0
 	 */
 	public bool isActivatable()
 	{
@@ -1089,8 +1032,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     sibling = the #GtkCellRenderer to check against @renderer’s sibling list
 	 *
 	 * Returns: %TRUE if @sibling is a focus sibling of @renderer
-	 *
-	 * Since: 3.0
 	 */
 	public bool isFocusSibling(CellRenderer renderer, CellRenderer sibling)
 	{
@@ -1102,8 +1043,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     renderer = the #GtkCellRenderer to remove from @area
-	 *
-	 * Since: 3.0
 	 */
 	public void remove(CellRenderer renderer)
 	{
@@ -1117,32 +1056,10 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer expected to have focus
 	 *     sibling = the #GtkCellRenderer to remove from @renderer’s focus area
-	 *
-	 * Since: 3.0
 	 */
 	public void removeFocusSibling(CellRenderer renderer, CellRenderer sibling)
 	{
 		gtk_cell_area_remove_focus_sibling(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct(), (sibling is null) ? null : sibling.getCellRendererStruct());
-	}
-
-	/**
-	 * Renders @area’s cells according to @area’s layout onto @widget at
-	 * the given coordinates.
-	 *
-	 * Params:
-	 *     context = the #GtkCellAreaContext for this row of data.
-	 *     widget = the #GtkWidget that @area is rendering to
-	 *     cr = the #cairo_t to render with
-	 *     backgroundArea = the @widget relative coordinates for @area’s background
-	 *     cellArea = the @widget relative coordinates for @area
-	 *     flags = the #GtkCellRendererState for @area in this row.
-	 *     paintFocus = whether @area should paint focus on focused cells for focused rows or not.
-	 *
-	 * Since: 3.0
-	 */
-	public void render(CellAreaContext context, Widget widget, Context cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags, bool paintFocus)
-	{
-		gtk_cell_area_render(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (cr is null) ? null : cr.getContextStruct(), backgroundArea, cellArea, flags, paintFocus);
 	}
 
 	/**
@@ -1160,8 +1077,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *         the base request for the orientation is to be returned.
 	 *     minimumSize = location to store the minimum size, or %NULL
 	 *     naturalSize = location to store the natural size, or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void requestRenderer(CellRenderer renderer, GtkOrientation orientation, Widget widget, int forSize, out int minimumSize, out int naturalSize)
 	{
@@ -1178,12 +1093,28 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     renderer = the #GtkCellRenderer to give focus to
-	 *
-	 * Since: 3.0
 	 */
 	public void setFocusCell(CellRenderer renderer)
 	{
 		gtk_cell_area_set_focus_cell(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
+	}
+
+	/**
+	 * Snapshots @area’s cells according to @area’s layout onto at
+	 * the given coordinates.
+	 *
+	 * Params:
+	 *     context = the #GtkCellAreaContext for this row of data.
+	 *     widget = the #GtkWidget that @area is rendering to
+	 *     snapshot = the #GtkSnapshot to draw to
+	 *     backgroundArea = the @widget relative coordinates for @area’s background
+	 *     cellArea = the @widget relative coordinates for @area
+	 *     flags = the #GtkCellRendererState for @area in this row.
+	 *     paintFocus = whether @area should paint focus on focused cells for focused rows or not.
+	 */
+	public void snapshot(CellAreaContext context, Widget widget, Snapshot snapshot, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags, bool paintFocus)
+	{
+		gtk_cell_area_snapshot(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (snapshot is null) ? null : snapshot.getGtkSnapshotStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags, paintFocus);
 	}
 
 	/**
@@ -1198,8 +1129,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Params:
 	 *     canceled = whether editing was canceled.
-	 *
-	 * Since: 3.0
 	 */
 	public void stopEditing(bool canceled)
 	{
@@ -1216,10 +1145,8 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     cellArea = the #GtkWidget relative #GdkRectangle coordinates
 	 *         where @editable should be added
 	 *     path = the #GtkTreePath string this edit was initiated for
-	 *
-	 * Since: 3.0
 	 */
-	gulong addOnAddEditable(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAddEditable(void delegate(CellRenderer, CellEditableIF, Rectangle, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "add-editable", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -1232,8 +1159,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     iter = the #GtkTreeIter indicating which row to apply the attributes of
 	 *     isExpander = whether the view shows children for this row
 	 *     isExpanded = whether the view is currently showing the children of this row
-	 *
-	 * Since: 3.0
 	 */
 	gulong addOnApplyAttributes(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1253,8 +1178,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer that has focus
 	 *     path = the current #GtkTreePath string set for @area
-	 *
-	 * Since: 3.0
 	 */
 	gulong addOnFocusChanged(void delegate(CellRenderer, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1268,8 +1191,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer that finished editeding
 	 *     editable = the #GtkCellEditable widget to remove
-	 *
-	 * Since: 3.0
 	 */
 	gulong addOnRemoveEditable(void delegate(CellRenderer, CellEditableIF, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

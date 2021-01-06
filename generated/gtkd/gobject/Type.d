@@ -33,7 +33,6 @@ private import gobject.TypePluginIF;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 
 
 /** */
@@ -260,7 +259,7 @@ public struct Type
 	 * and structure setups for instances: actual instance creation should
 	 * happen through functions supplied by the type's fundamental type
 	 * implementation.  So use of g_type_create_instance() is reserved for
-	 * implementators of fundamental types only. E.g. instances of the
+	 * implementers of fundamental types only. E.g. instances of the
 	 * #GObject hierarchy should be created via g_object_new() and never
 	 * directly through g_type_create_instance() which doesn't handle things
 	 * like singleton objects or object construction.
@@ -320,7 +319,7 @@ public struct Type
 	 * and returns the default interface vtable for the type.
 	 *
 	 * If the type is not currently in use, then the default vtable
-	 * for the type will be created and initalized by calling
+	 * for the type will be created and initialized by calling
 	 * the base interface init and default vtable init functions for
 	 * the type (the @base_init and @class_init members of #GTypeInfo).
 	 * Calling g_type_default_interface_ref() is useful when you

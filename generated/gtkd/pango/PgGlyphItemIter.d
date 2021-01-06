@@ -27,7 +27,6 @@ module pango.PgGlyphItemIter;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgGlyphItem;
 private import pango.c.functions;
@@ -224,14 +223,14 @@ public final class PgGlyphItemIter
 	 */
 	public PgGlyphItemIter copy()
 	{
-		auto p = pango_glyph_item_iter_copy(pangoGlyphItemIter);
+		auto __p = pango_glyph_item_iter_copy(pangoGlyphItemIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgGlyphItemIter)(cast(PangoGlyphItemIter*) p, true);
+		return ObjectG.getDObject!(PgGlyphItemIter)(cast(PangoGlyphItemIter*) __p, true);
 	}
 
 	/**

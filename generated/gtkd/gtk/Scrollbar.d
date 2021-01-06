@@ -27,11 +27,11 @@ module gtk.Scrollbar;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Adjustment;
-private import gtk.Range;
+private import gtk.OrientableIF;
+private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -45,37 +45,34 @@ public  import gtkc.gtktypes;
  * #GtkAdjustment:page-size represents the size of the visible scrollable area.
  * The fields #GtkAdjustment:step-increment and #GtkAdjustment:page-increment
  * fields are added to or subtracted from the #GtkAdjustment:value when the user
- * asks to move by a step (using e.g. the cursor arrow keys or, if present, the
- * stepper buttons) or by a page (using e.g. the Page Down/Up keys).
+ * asks to move by a step (using e.g. the cursor arrow keys) or by a page (using
+ * e.g. the Page Down/Up keys).
  * 
  * # CSS nodes
  * 
  * |[<!-- language="plain" -->
- * scrollbar[.fine-tune]
- * ╰── contents
- * ├── [button.up]
- * ├── [button.down]
- * ├── trough
- * │   ╰── slider
- * ├── [button.up]
- * ╰── [button.down]
+ * scrollbar
+ * ╰── range[.fine-tune]
+ * ╰── trough
+ * ╰── slider
  * ]|
  * 
  * GtkScrollbar has a main CSS node with name scrollbar and a subnode for its
- * contents, with subnodes named trough and slider.
+ * contents. The main node gets the .horizontal or .vertical
+ * style classes applied, depending on the scrollbar's orientation.
  * 
- * The main node gets the style class .fine-tune added when the scrollbar is
+ * The range node gets the style class .fine-tune added when the scrollbar is
  * in 'fine-tuning' mode.
- * 
- * If steppers are enabled, they are represented by up to four additional
- * subnodes with name button. These get the style classes .up and .down to
- * indicate in which direction they are moving.
  * 
  * Other style classes that may be added to scrollbars inside #GtkScrolledWindow
  * include the positional classes (.left, .right, .top, .bottom) and style
  * classes related to overlay scrolling (.overlay-indicator, .dragging, .hovering).
+ * 
+ * # Accessibility
+ * 
+ * GtkScrollbar uses the #GTK_ACCESSIBLE_ROLE_SCROLLBAR role.
  */
-public class Scrollbar : Range
+public class Scrollbar : Widget, OrientableIF
 {
 	/** the main Gtk struct */
 	protected GtkScrollbar* gtkScrollbar;
@@ -100,8 +97,11 @@ public class Scrollbar : Range
 	public this (GtkScrollbar* gtkScrollbar, bool ownedRef = false)
 	{
 		this.gtkScrollbar = gtkScrollbar;
-		super(cast(GtkRange*)gtkScrollbar, ownedRef);
+		super(cast(GtkWidget*)gtkScrollbar, ownedRef);
 	}
+
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkScrollbar);
 
 
 	/** */
@@ -119,19 +119,45 @@ public class Scrollbar : Range
 	 *
 	 * Returns: the new #GtkScrollbar.
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(GtkOrientation orientation, Adjustment adjustment)
 	{
-		auto p = gtk_scrollbar_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_scrollbar_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScrollbar*) p);
+		this(cast(GtkScrollbar*) __p);
+	}
+
+	/**
+	 * Returns the scrollbar's adjustment.
+	 *
+	 * Returns: the scrollbar's adjustment
+	 */
+	public Adjustment getAdjustment()
+	{
+		auto __p = gtk_scrollbar_get_adjustment(gtkScrollbar);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
+	}
+
+	/**
+	 * Makes the scrollbar use the given adjustment.
+	 *
+	 * Params:
+	 *     adjustment = the adjustment to set
+	 */
+	public void setAdjustment(Adjustment adjustment)
+	{
+		gtk_scrollbar_set_adjustment(gtkScrollbar, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 }

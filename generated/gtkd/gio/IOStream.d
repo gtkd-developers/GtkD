@@ -33,7 +33,6 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -358,7 +357,7 @@ public class IOStream : ObjectG
 	}
 
 	/**
-	 * Asyncronously splice the output stream of @stream1 to the input stream of
+	 * Asynchronously splice the output stream of @stream1 to the input stream of
 	 * @stream2, and splice the output stream of @stream2 to the input stream of
 	 * @stream1.
 	 *

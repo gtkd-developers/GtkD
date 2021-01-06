@@ -24,19 +24,19 @@
 
 module gdk.Cursor;
 
-private import cairo.Surface;
-private import gdk.Display;
+private import gdk.Texture;
 private import gdk.c.functions;
 public  import gdk.c.types;
-private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 
 
 /**
  * A #GdkCursor represents a cursor. Its contents are private.
+ * 
+ * Cursors are immutable objects, so they can not change after
+ * they have been constructed.
  */
 public class Cursor : ObjectG
 {
@@ -71,58 +71,6 @@ public class Cursor : ObjectG
 	public static GType getType()
 	{
 		return gdk_cursor_get_type();
-	}
-
-	/**
-	 * Creates a new cursor from the set of builtin cursors for the default display.
-	 * See gdk_cursor_new_for_display().
-	 *
-	 * To make the cursor invisible, use %GDK_BLANK_CURSOR.
-	 *
-	 * Deprecated: Use gdk_cursor_new_for_display() instead.
-	 *
-	 * Params:
-	 *     cursorType = cursor to create
-	 *
-	 * Returns: a new #GdkCursor
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(GdkCursorType cursorType)
-	{
-		auto p = gdk_cursor_new(cursorType);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GdkCursor*) p, true);
-	}
-
-	/**
-	 * Creates a new cursor from the set of builtin cursors.
-	 *
-	 * Params:
-	 *     display = the #GdkDisplay for which the cursor will be created
-	 *     cursorType = cursor to create
-	 *
-	 * Returns: a new #GdkCursor
-	 *
-	 * Since: 2.2
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(Display display, GdkCursorType cursorType)
-	{
-		auto p = gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_for_display");
-		}
-
-		this(cast(GdkCursor*) p, true);
 	}
 
 	/**
@@ -168,224 +116,135 @@ public class Cursor : ObjectG
 	 * - ![](zoom_out_cursor.png) "zoom-out"
 	 *
 	 * Params:
-	 *     display = the #GdkDisplay for which the cursor will be created
 	 *     name = the name of the cursor
+	 *     fallback = %NULL or the #GdkCursor to fall back to when
+	 *         this one cannot be supported
 	 *
 	 * Returns: a new #GdkCursor, or %NULL if there is no
 	 *     cursor with the given name
 	 *
-	 * Since: 2.8
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Display display, string name)
+	public this(string name, Cursor fallback)
 	{
-		auto p = gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name));
+		auto __p = gdk_cursor_new_from_name(Str.toStringz(name), (fallback is null) ? null : fallback.getCursorStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_name");
 		}
 
-		this(cast(GdkCursor*) p, true);
+		this(cast(GdkCursor*) __p, true);
 	}
 
 	/**
-	 * Creates a new cursor from a pixbuf.
-	 *
-	 * Not all GDK backends support RGBA cursors. If they are not
-	 * supported, a monochrome approximation will be displayed.
-	 * The functions gdk_display_supports_cursor_alpha() and
-	 * gdk_display_supports_cursor_color() can be used to determine
-	 * whether RGBA cursors are supported;
-	 * gdk_display_get_default_cursor_size() and
-	 * gdk_display_get_maximal_cursor_size() give information about
-	 * cursor sizes.
-	 *
-	 * If @x or @y are `-1`, the pixbuf must have
-	 * options named “x_hot” and “y_hot”, resp., containing
-	 * integer values between `0` and the width resp. height of
-	 * the pixbuf. (Since: 3.0)
-	 *
-	 * On the X backend, support for RGBA cursors requires a
-	 * sufficently new version of the X Render extension.
+	 * Creates a new cursor from a #GdkTexture.
 	 *
 	 * Params:
-	 *     display = the #GdkDisplay for which the cursor will be created
-	 *     pixbuf = the #GdkPixbuf containing the cursor image
-	 *     x = the horizontal offset of the “hotspot” of the cursor.
-	 *     y = the vertical offset of the “hotspot” of the cursor.
+	 *     texture = the texture providing the pixel data
+	 *     hotspotX = the horizontal offset of the “hotspot” of the cursor
+	 *     hotspotY = the vertical offset of the “hotspot” of the cursor
+	 *     fallback = %NULL or the #GdkCursor to fall back to when
+	 *         this one cannot be supported
 	 *
 	 * Returns: a new #GdkCursor.
 	 *
-	 * Since: 2.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Display display, Pixbuf pixbuf, int x, int y)
+	public this(Texture texture, int hotspotX, int hotspotY, Cursor fallback)
 	{
-		auto p = gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y);
+		auto __p = gdk_cursor_new_from_texture((texture is null) ? null : texture.getTextureStruct(), hotspotX, hotspotY, (fallback is null) ? null : fallback.getCursorStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
-			throw new ConstructionException("null returned by new_from_pixbuf");
+			throw new ConstructionException("null returned by new_from_texture");
 		}
 
-		this(cast(GdkCursor*) p, true);
+		this(cast(GdkCursor*) __p, true);
 	}
 
 	/**
-	 * Creates a new cursor from a cairo image surface.
+	 * Returns the fallback for this @cursor. The fallback will be used if this
+	 * cursor is not available on a given #GdkDisplay.
 	 *
-	 * Not all GDK backends support RGBA cursors. If they are not
-	 * supported, a monochrome approximation will be displayed.
-	 * The functions gdk_display_supports_cursor_alpha() and
-	 * gdk_display_supports_cursor_color() can be used to determine
-	 * whether RGBA cursors are supported;
-	 * gdk_display_get_default_cursor_size() and
-	 * gdk_display_get_maximal_cursor_size() give information about
-	 * cursor sizes.
+	 * For named cursors, this can happen when using nonstandard names or when
+	 * using an incomplete cursor theme.
+	 * For textured cursors, this can happen when the texture is too large or
+	 * when the #GdkDisplay it is used on does not support textured cursors.
 	 *
-	 * On the X backend, support for RGBA cursors requires a
-	 * sufficently new version of the X Render extension.
-	 *
-	 * Params:
-	 *     display = the #GdkDisplay for which the cursor will be created
-	 *     surface = the cairo image surface containing the cursor pixel data
-	 *     x = the horizontal offset of the “hotspot” of the cursor
-	 *     y = the vertical offset of the “hotspot” of the cursor
-	 *
-	 * Returns: a new #GdkCursor.
-	 *
-	 * Since: 3.10
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * Returns: the fallback of the cursor or %NULL to use
+	 *     the default cursor as fallback.
 	 */
-	public this(Display display, Surface surface, double x, double y)
+	public Cursor getFallback()
 	{
-		auto p = gdk_cursor_new_from_surface((display is null) ? null : display.getDisplayStruct(), (surface is null) ? null : surface.getSurfaceStruct(), x, y);
+		auto __p = gdk_cursor_get_fallback(gdkCursor);
 
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_surface");
-		}
-
-		this(cast(GdkCursor*) p, true);
-	}
-
-	/**
-	 * Returns the cursor type for this cursor.
-	 *
-	 * Returns: a #GdkCursorType
-	 *
-	 * Since: 2.22
-	 */
-	public GdkCursorType getCursorType()
-	{
-		return gdk_cursor_get_cursor_type(gdkCursor);
-	}
-
-	/**
-	 * Returns the display on which the #GdkCursor is defined.
-	 *
-	 * Returns: the #GdkDisplay associated to @cursor
-	 *
-	 * Since: 2.2
-	 */
-	public Display getDisplay()
-	{
-		auto p = gdk_cursor_get_display(gdkCursor);
-
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) __p);
 	}
 
 	/**
-	 * Returns a #GdkPixbuf with the image used to display the cursor.
+	 * Returns the horizontal offset of the hotspot. The hotspot indicates the
+	 * pixel that will be directly above the cursor.
 	 *
-	 * Note that depending on the capabilities of the windowing system and
-	 * on the cursor, GDK may not be able to obtain the image data. In this
-	 * case, %NULL is returned.
+	 * Note that named cursors may have a nonzero hotspot, but this function
+	 * will only return the hotspot position for cursors created with
+	 * gdk_cursor_new_from_texture().
 	 *
-	 * Returns: a #GdkPixbuf representing
-	 *     @cursor, or %NULL
-	 *
-	 * Since: 2.8
+	 * Returns: the horizontal offset of the hotspot or 0 for named cursors
 	 */
-	public Pixbuf getImage()
+	public int getHotspotX()
 	{
-		auto p = gdk_cursor_get_image(gdkCursor);
+		return gdk_cursor_get_hotspot_x(gdkCursor);
+	}
 
-		if(p is null)
+	/**
+	 * Returns the vertical offset of the hotspot. The hotspot indicates the
+	 * pixel that will be directly above the cursor.
+	 *
+	 * Note that named cursors may have a nonzero hotspot, but this function
+	 * will only return the hotspot position for cursors created with
+	 * gdk_cursor_new_from_texture().
+	 *
+	 * Returns: the vertical offset of the hotspot or 0 for named cursors
+	 */
+	public int getHotspotY()
+	{
+		return gdk_cursor_get_hotspot_y(gdkCursor);
+	}
+
+	/**
+	 * Returns the name of the cursor. If the cursor is not a named cursor, %NULL
+	 * will be returned.
+	 *
+	 * Returns: the name of the cursor or %NULL if it is not
+	 *     a named cursor
+	 */
+	public string getName()
+	{
+		return Str.toString(gdk_cursor_get_name(gdkCursor));
+	}
+
+	/**
+	 * Returns the texture for the cursor. If the cursor is a named cursor, %NULL
+	 * will be returned.
+	 *
+	 * Returns: the texture for cursor or %NULL if it is a
+	 *     named cursor
+	 */
+	public Texture getTexture()
+	{
+		auto __p = gdk_cursor_get_texture(gdkCursor);
+
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
-	}
-
-	/**
-	 * Returns a cairo image surface with the image used to display the cursor.
-	 *
-	 * Note that depending on the capabilities of the windowing system and
-	 * on the cursor, GDK may not be able to obtain the image data. In this
-	 * case, %NULL is returned.
-	 *
-	 * Params:
-	 *     xHot = Location to store the hotspot x position,
-	 *         or %NULL
-	 *     yHot = Location to store the hotspot y position,
-	 *         or %NULL
-	 *
-	 * Returns: a #cairo_surface_t
-	 *     representing @cursor, or %NULL
-	 *
-	 * Since: 3.10
-	 */
-	public Surface getSurface(out double xHot, out double yHot)
-	{
-		auto p = gdk_cursor_get_surface(gdkCursor, &xHot, &yHot);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return new Surface(cast(cairo_surface_t*) p);
-	}
-
-	alias doref = ref_;
-	/**
-	 * Adds a reference to @cursor.
-	 *
-	 * Deprecated: Use g_object_ref() instead
-	 *
-	 * Returns: Same @cursor that was passed in
-	 */
-	public override Cursor ref_()
-	{
-		auto p = gdk_cursor_ref(gdkCursor);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p, true);
-	}
-
-	/**
-	 * Removes a reference from @cursor, deallocating the cursor
-	 * if no references remain.
-	 *
-	 * Deprecated: Use g_object_unref() instead
-	 */
-	public override void unref()
-	{
-		gdk_cursor_unref(gdkCursor);
+		return ObjectG.getDObject!(Texture)(cast(GdkTexture*) __p);
 	}
 }

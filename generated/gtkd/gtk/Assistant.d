@@ -24,34 +24,38 @@
 
 module gtk.Assistant;
 
-private import gdkpixbuf.Pixbuf;
+private import gio.ListModelIF;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gtk.AssistantPage;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
 /**
  * A #GtkAssistant is a widget used to represent a generally complex
- * operation splitted in several steps, guiding the user through its
- * pages and controlling the page flow to collect the necessary data.
+ * operation split up into several steps. Each step consists of one or more
+ * pages. GtkAssistant guides the user through the pages, and controls
+ * the page flow to collect the data needed for the operation.
  * 
- * The design of GtkAssistant is that it controls what buttons to show
- * and to make sensitive, based on what it knows about the page sequence
- * and the [type][GtkAssistantPageType] of each page,
- * in addition to state information like the page
+ * GtkAssistant handles which buttons to show and to make sensitive based
+ * on page sequence knowledge and the [type][GtkAssistantPageType]
+ * of each page in addition to state information like the
  * [completion][gtk-assistant-set-page-complete]
- * and [committed][gtk-assistant-commit] status.
+ * and [committed][gtk-assistant-commit] page statuses.
  * 
  * If you have a case that doesn’t quite fit in #GtkAssistants way of
  * handling buttons, you can use the #GTK_ASSISTANT_PAGE_CUSTOM page
  * type and handle buttons yourself.
+ * 
+ * GtkAssistant maintains a #GtkAssistantPage object for each added
+ * child, which holds additional per-child properties. You
+ * obtain the #GtkAssistantPage for a child with gtk_assistant_get_page().
  * 
  * # GtkAssistant as GtkBuildable
  * 
@@ -60,12 +64,14 @@ private import std.algorithm;
  * “action_area”.
  * 
  * To add pages to an assistant in #GtkBuilder, simply add it as a
- * child to the GtkAssistant object, and set its child properties
- * as necessary.
+ * child to the GtkAssistant object. If you need to set per-object
+ * properties, create a #GtkAssistantPage object explicitly, and
+ * set the child widget as a property on it.
  * 
  * # CSS nodes
  * 
- * GtkAssistant has a single CSS node with the name assistant.
+ * GtkAssistant has a single CSS node with the name window and style
+ * class .assistant.
  */
 public class Assistant : Window
 {
@@ -107,20 +113,18 @@ public class Assistant : Window
 	 *
 	 * Returns: a newly created #GtkAssistant
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_assistant_new();
+		auto __p = gtk_assistant_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAssistant*) p);
+		this(cast(GtkAssistant*) __p);
 	}
 
 	/**
@@ -128,8 +132,6 @@ public class Assistant : Window
 	 *
 	 * Params:
 	 *     child = a #GtkWidget
-	 *
-	 * Since: 2.10
 	 */
 	public void addActionWidget(Widget child)
 	{
@@ -143,8 +145,6 @@ public class Assistant : Window
 	 *     page = a #GtkWidget
 	 *
 	 * Returns: the index (starting at 0) of the inserted page
-	 *
-	 * Since: 2.10
 	 */
 	public int appendPage(Widget page)
 	{
@@ -161,8 +161,6 @@ public class Assistant : Window
 	 * or undone. For example, showing a progress page to track
 	 * a long-running, unreversible operation after the user has
 	 * clicked apply on a confirmation page.
-	 *
-	 * Since: 2.22
 	 */
 	public void commit()
 	{
@@ -175,8 +173,6 @@ public class Assistant : Window
 	 * Returns: The index (starting from 0) of the current
 	 *     page in the @assistant, or -1 if the @assistant has no pages,
 	 *     or no current page.
-	 *
-	 * Since: 2.10
 	 */
 	public int getCurrentPage()
 	{
@@ -187,8 +183,6 @@ public class Assistant : Window
 	 * Returns the number of pages in the @assistant
 	 *
 	 * Returns: the number of pages in the @assistant
-	 *
-	 * Since: 2.10
 	 */
 	public int getNPages()
 	{
@@ -204,19 +198,37 @@ public class Assistant : Window
 	 *
 	 * Returns: the child widget, or %NULL
 	 *     if @page_num is out of bounds
-	 *
-	 * Since: 2.10
 	 */
 	public Widget getNthPage(int pageNum)
 	{
-		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
+		auto __p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Returns the #GtkAssistantPage object for @child.
+	 *
+	 * Params:
+	 *     child = a child of @assistant
+	 *
+	 * Returns: the #GtkAssistantPage for @child
+	 */
+	public AssistantPage getPage(Widget child)
+	{
+		auto __p = gtk_assistant_get_page(gtkAssistant, (child is null) ? null : child.getWidgetStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(AssistantPage)(cast(GtkAssistantPage*) __p);
 	}
 
 	/**
@@ -226,79 +238,10 @@ public class Assistant : Window
 	 *     page = a page of @assistant
 	 *
 	 * Returns: %TRUE if @page is complete.
-	 *
-	 * Since: 2.10
 	 */
 	public bool getPageComplete(Widget page)
 	{
 		return gtk_assistant_get_page_complete(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) != 0;
-	}
-
-	/**
-	 * Gets whether page has padding.
-	 *
-	 * Params:
-	 *     page = a page of @assistant
-	 *
-	 * Returns: %TRUE if @page has padding
-	 *
-	 * Since: 3.18
-	 */
-	public bool getPageHasPadding(Widget page)
-	{
-		return gtk_assistant_get_page_has_padding(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) != 0;
-	}
-
-	/**
-	 * Gets the header image for @page.
-	 *
-	 * Deprecated: Since GTK+ 3.2, a header is no longer shown;
-	 * add your header decoration to the page content instead.
-	 *
-	 * Params:
-	 *     page = a page of @assistant
-	 *
-	 * Returns: the header image for @page,
-	 *     or %NULL if there’s no header image for the page
-	 *
-	 * Since: 2.10
-	 */
-	public Pixbuf getPageHeaderImage(Widget page)
-	{
-		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
-	}
-
-	/**
-	 * Gets the side image for @page.
-	 *
-	 * Deprecated: Since GTK+ 3.2, sidebar images are not
-	 * shown anymore.
-	 *
-	 * Params:
-	 *     page = a page of @assistant
-	 *
-	 * Returns: the side image for @page,
-	 *     or %NULL if there’s no side image for the page
-	 *
-	 * Since: 2.10
-	 */
-	public Pixbuf getPageSideImage(Widget page)
-	{
-		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
 	/**
@@ -308,8 +251,6 @@ public class Assistant : Window
 	 *     page = a page of @assistant
 	 *
 	 * Returns: the title for @page
-	 *
-	 * Since: 2.10
 	 */
 	public string getPageTitle(Widget page)
 	{
@@ -323,12 +264,27 @@ public class Assistant : Window
 	 *     page = a page of @assistant
 	 *
 	 * Returns: the page type of @page
-	 *
-	 * Since: 2.10
 	 */
 	public GtkAssistantPageType getPageType(Widget page)
 	{
 		return gtk_assistant_get_page_type(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+	}
+
+	/**
+	 * Gets a list model of the assistant pages.
+	 *
+	 * Returns: A list model of the pages.
+	 */
+	public ListModelIF getPages()
+	{
+		auto __p = gtk_assistant_get_pages(gtkAssistant);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ListModelIF)(cast(GListModel*) __p, true);
 	}
 
 	/**
@@ -340,8 +296,6 @@ public class Assistant : Window
 	 *         or -1 to append the page to the @assistant
 	 *
 	 * Returns: the index (starting from 0) of the inserted page
-	 *
-	 * Since: 2.10
 	 */
 	public int insertPage(Widget page, int position)
 	{
@@ -356,8 +310,6 @@ public class Assistant : Window
 	 *
 	 * This function is for use when creating pages of the
 	 * #GTK_ASSISTANT_PAGE_CUSTOM type.
-	 *
-	 * Since: 3.0
 	 */
 	public void nextPage()
 	{
@@ -371,8 +323,6 @@ public class Assistant : Window
 	 *     page = a #GtkWidget
 	 *
 	 * Returns: the index (starting at 0) of the inserted page
-	 *
-	 * Since: 2.10
 	 */
 	public int prependPage(Widget page)
 	{
@@ -387,8 +337,6 @@ public class Assistant : Window
 	 *
 	 * This function is for use when creating pages of the
 	 * #GTK_ASSISTANT_PAGE_CUSTOM type.
-	 *
-	 * Since: 3.0
 	 */
 	public void previousPage()
 	{
@@ -400,8 +348,6 @@ public class Assistant : Window
 	 *
 	 * Params:
 	 *     child = a #GtkWidget
-	 *
-	 * Since: 2.10
 	 */
 	public void removeActionWidget(Widget child)
 	{
@@ -414,8 +360,6 @@ public class Assistant : Window
 	 * Params:
 	 *     pageNum = the index of a page in the @assistant,
 	 *         or -1 to remove the last page
-	 *
-	 * Since: 3.2
 	 */
 	public void removePage(int pageNum)
 	{
@@ -434,8 +378,6 @@ public class Assistant : Window
 	 *         If negative, the last page will be used. If greater
 	 *         than the number of pages in the @assistant, nothing
 	 *         will be done.
-	 *
-	 * Since: 2.10
 	 */
 	public void setCurrentPage(int pageNum)
 	{
@@ -456,8 +398,6 @@ public class Assistant : Window
 	 *         to use the default one
 	 *     data = user data for @page_func
 	 *     destroy = destroy notifier for @data
-	 *
-	 * Since: 2.10
 	 */
 	public void setForwardPageFunc(GtkAssistantPageFunc pageFunc, void* data, GDestroyNotify destroy)
 	{
@@ -473,64 +413,10 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *     complete = the completeness status of the page
-	 *
-	 * Since: 2.10
 	 */
 	public void setPageComplete(Widget page, bool complete)
 	{
 		gtk_assistant_set_page_complete(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), complete);
-	}
-
-	/**
-	 * Sets whether the assistant is adding padding around
-	 * the page.
-	 *
-	 * Params:
-	 *     page = a page of @assistant
-	 *     hasPadding = whether this page has padding
-	 *
-	 * Since: 3.18
-	 */
-	public void setPageHasPadding(Widget page, bool hasPadding)
-	{
-		gtk_assistant_set_page_has_padding(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), hasPadding);
-	}
-
-	/**
-	 * Sets a header image for @page.
-	 *
-	 * Deprecated: Since GTK+ 3.2, a header is no longer shown;
-	 * add your header decoration to the page content instead.
-	 *
-	 * Params:
-	 *     page = a page of @assistant
-	 *     pixbuf = the new header image @page
-	 *
-	 * Since: 2.10
-	 */
-	public void setPageHeaderImage(Widget page, Pixbuf pixbuf)
-	{
-		gtk_assistant_set_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
-	}
-
-	/**
-	 * Sets a side image for @page.
-	 *
-	 * This image used to be displayed in the side area of the assistant
-	 * when @page is the current page.
-	 *
-	 * Deprecated: Since GTK+ 3.2, sidebar images are not
-	 * shown anymore.
-	 *
-	 * Params:
-	 *     page = a page of @assistant
-	 *     pixbuf = the new side image @page
-	 *
-	 * Since: 2.10
-	 */
-	public void setPageSideImage(Widget page, Pixbuf pixbuf)
-	{
-		gtk_assistant_set_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 
 	/**
@@ -542,8 +428,6 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *     title = the new title for @page
-	 *
-	 * Since: 2.10
 	 */
 	public void setPageTitle(Widget page, string title)
 	{
@@ -558,8 +442,6 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *     type = the new type for @page
-	 *
-	 * Since: 2.10
 	 */
 	public void setPageType(Widget page, GtkAssistantPageType type)
 	{
@@ -569,15 +451,13 @@ public class Assistant : Window
 	/**
 	 * Forces @assistant to recompute the buttons state.
 	 *
-	 * GTK+ automatically takes care of this in most situations,
+	 * GTK automatically takes care of this in most situations,
 	 * e.g. when the user goes to a different page, or when the
 	 * visibility or completeness of a page changes.
 	 *
 	 * One situation where it can be necessary to call this
 	 * function is when changing a value on the current page
 	 * affects the future page flow of the assistant.
-	 *
-	 * Since: 2.10
 	 */
 	public void updateButtonsState()
 	{
@@ -596,8 +476,6 @@ public class Assistant : Window
 	 * %GTK_ASSISTANT_PAGE_PROGRESS after the confirmation page and handle
 	 * this operation within the #GtkAssistant::prepare signal of the progress
 	 * page.
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnApply(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -606,8 +484,6 @@ public class Assistant : Window
 
 	/**
 	 * The ::cancel signal is emitted when then the cancel button is clicked.
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnCancel(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -618,15 +494,15 @@ public class Assistant : Window
 	 * The ::close signal is emitted either when the close button of
 	 * a summary page is clicked, or when the apply button in the last
 	 * page in the flow (of type %GTK_ASSISTANT_PAGE_CONFIRM) is clicked.
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnClose(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "close", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	/** */
+	/**
+	 * The action signal for the Escape binding.
+	 */
 	gulong addOnEscape(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "escape", dlg, connectFlags ^ ConnectFlags.SWAPPED);
@@ -641,8 +517,6 @@ public class Assistant : Window
 	 *
 	 * Params:
 	 *     page = the current page
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnPrepare(void delegate(Widget, Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

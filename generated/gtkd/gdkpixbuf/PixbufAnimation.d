@@ -37,7 +37,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.TimeVal;
 private import gobject.ObjectG;
-public  import gtkc.gdkpixbuftypes;
 
 
 /**
@@ -100,19 +99,19 @@ public class PixbufAnimation : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err);
+		auto __p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
 
-		this(cast(GdkPixbufAnimation*) p, true);
+		this(cast(GdkPixbufAnimation*) __p, true);
 	}
 
 	/**
@@ -144,19 +143,19 @@ public class PixbufAnimation : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gdk_pixbuf_animation_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = gdk_pixbuf_animation_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream");
 		}
 
-		this(cast(GdkPixbufAnimation*) p, true);
+		this(cast(GdkPixbufAnimation*) __p, true);
 	}
 
 	/**
@@ -178,19 +177,19 @@ public class PixbufAnimation : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gdk_pixbuf_animation_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultStruct(), &err);
+		auto __p = gdk_pixbuf_animation_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream_finish");
 		}
 
-		this(cast(GdkPixbufAnimation*) p, true);
+		this(cast(GdkPixbufAnimation*) __p, true);
 	}
 
 	/**
@@ -268,14 +267,14 @@ public class PixbufAnimation : ObjectG
 	 */
 	public PixbufAnimationIter getIter(TimeVal startTime)
 	{
-		auto p = gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, (startTime is null) ? null : startTime.getTimeValStruct());
+		auto __p = gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, (startTime is null) ? null : startTime.getTimeValStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PixbufAnimationIter)(cast(GdkPixbufAnimationIter*) p, true);
+		return ObjectG.getDObject!(PixbufAnimationIter)(cast(GdkPixbufAnimationIter*) __p, true);
 	}
 
 	/**
@@ -290,14 +289,14 @@ public class PixbufAnimation : ObjectG
 	 */
 	public Pixbuf getStaticImage()
 	{
-		auto p = gdk_pixbuf_animation_get_static_image(gdkPixbufAnimation);
+		auto __p = gdk_pixbuf_animation_get_static_image(gdkPixbufAnimation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -333,14 +332,14 @@ public class PixbufAnimation : ObjectG
 	 */
 	public override PixbufAnimation ref_()
 	{
-		auto p = gdk_pixbuf_animation_ref(gdkPixbufAnimation);
+		auto __p = gdk_pixbuf_animation_ref(gdkPixbufAnimation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PixbufAnimation)(cast(GdkPixbufAnimation*) p);
+		return ObjectG.getDObject!(PixbufAnimation)(cast(GdkPixbufAnimation*) __p);
 	}
 
 	/**

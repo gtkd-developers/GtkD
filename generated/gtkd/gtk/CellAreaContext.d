@@ -28,7 +28,6 @@ private import gobject.ObjectG;
 private import gtk.CellArea;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -90,8 +89,6 @@ public class CellAreaContext : ObjectG
 	 * rows. This is generally the case for #GtkTreeView when
 	 * #GtkTreeView:fixed-height-mode is enabled.
 	 *
-	 * Since 3.0
-	 *
 	 * Params:
 	 *     width = the allocated width for all #GtkTreeModel rows rendered
 	 *         with @context, or -1.
@@ -113,8 +110,6 @@ public class CellAreaContext : ObjectG
 	 * Params:
 	 *     width = location to store the allocated width, or %NULL
 	 *     height = location to store the allocated height, or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getAllocation(out int width, out int height)
 	{
@@ -134,19 +129,17 @@ public class CellAreaContext : ObjectG
 	 * compute a proper allocation.
 	 *
 	 * Returns: the #GtkCellArea this context was created by.
-	 *
-	 * Since: 3.0
 	 */
 	public CellArea getArea()
 	{
-		auto p = gtk_cell_area_context_get_area(gtkCellAreaContext);
+		auto __p = gtk_cell_area_context_get_area(gtkCellAreaContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) p);
+		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) __p);
 	}
 
 	/**
@@ -161,8 +154,6 @@ public class CellAreaContext : ObjectG
 	 *         or %NULL
 	 *     naturalHeight = location to store the natural height,
 	 *         or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredHeight(out int minimumHeight, out int naturalHeight)
 	{
@@ -182,8 +173,6 @@ public class CellAreaContext : ObjectG
 	 *         or %NULL
 	 *     naturalHeight = location to store the natural height,
 	 *         or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredHeightForWidth(int width, out int minimumHeight, out int naturalHeight)
 	{
@@ -202,8 +191,6 @@ public class CellAreaContext : ObjectG
 	 *         or %NULL
 	 *     naturalWidth = location to store the natural width,
 	 *         or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredWidth(out int minimumWidth, out int naturalWidth)
 	{
@@ -223,8 +210,6 @@ public class CellAreaContext : ObjectG
 	 *         or %NULL
 	 *     naturalWidth = location to store the natural width,
 	 *         or %NULL
-	 *
-	 * Since: 3.0
 	 */
 	public void getPreferredWidthForHeight(int height, out int minimumWidth, out int naturalWidth)
 	{
@@ -243,8 +228,6 @@ public class CellAreaContext : ObjectG
 	 * Params:
 	 *     minimumHeight = the proposed new minimum height for @context
 	 *     naturalHeight = the proposed new natural height for @context
-	 *
-	 * Since: 3.0
 	 */
 	public void pushPreferredHeight(int minimumHeight, int naturalHeight)
 	{
@@ -263,8 +246,6 @@ public class CellAreaContext : ObjectG
 	 * Params:
 	 *     minimumWidth = the proposed new minimum width for @context
 	 *     naturalWidth = the proposed new natural width for @context
-	 *
-	 * Since: 3.0
 	 */
 	public void pushPreferredWidth(int minimumWidth, int naturalWidth)
 	{
@@ -294,8 +275,6 @@ public class CellAreaContext : ObjectG
 	 * in the allocated width necessitates a recalculation
 	 * of all the displayed row heights using
 	 * gtk_cell_area_get_preferred_height_for_width().
-	 *
-	 * Since 3.0
 	 */
 	public void reset()
 	{

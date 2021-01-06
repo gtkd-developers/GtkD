@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgAttributeList;
 private import pango.PgContext;
 private import pango.PgFontDescription;
@@ -54,8 +53,8 @@ public  import pango.c.types;
  * treat the results of a #PangoLayout as a list of lines.
  * 
  * <figure id="parameters">
- * <title>Adjustable parameters for a PangoLayout</title>
- * <graphic fileref="layout.gif" format="GIF"></graphic>
+ * <title>Adjustable parameters (on the left) and font metrics (on the right) for a PangoLayout</title>
+ * <graphic fileref="layout.png" format="PNG"></graphic>
  * </figure>
  * 
  * The #PangoLayout structure is opaque, and has no user-visible
@@ -111,14 +110,14 @@ public class PgLayout : ObjectG
 	 */
 	public this(PgContext context)
 	{
-		auto p = pango_layout_new((context is null) ? null : context.getPgContextStruct());
+		auto __p = pango_layout_new((context is null) ? null : context.getPgContextStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoLayout*) p, true);
+		this(cast(PangoLayout*) __p, true);
 	}
 
 	/**
@@ -143,14 +142,14 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayout copy()
 	{
-		auto p = pango_layout_copy(pangoLayout);
+		auto __p = pango_layout_copy(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p, true);
 	}
 
 	/**
@@ -167,18 +166,19 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the attribute list for the layout, if any.
 	 *
-	 * Returns: a #PangoAttrList.
+	 * Returns: a #PangoAttrList or %NULL
+	 *     if none was set.
 	 */
 	public PgAttributeList getAttributes()
 	{
-		auto p = pango_layout_get_attributes(pangoLayout);
+		auto __p = pango_layout_get_attributes(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p);
 	}
 
 	/**
@@ -231,14 +231,14 @@ public class PgLayout : ObjectG
 	 */
 	public PgContext getContext()
 	{
-		auto p = pango_layout_get_context(pangoLayout);
+		auto __p = pango_layout_get_context(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) __p);
 	}
 
 	/**
@@ -260,6 +260,22 @@ public class PgLayout : ObjectG
 	public void getCursorPos(int index, out PangoRectangle strongPos, out PangoRectangle weakPos)
 	{
 		pango_layout_get_cursor_pos(pangoLayout, index, &strongPos, &weakPos);
+	}
+
+	/**
+	 * Gets the text direction at the given character
+	 * position in @layout.
+	 *
+	 * Params:
+	 *     index = the byte index of the char
+	 *
+	 * Returns: the text direction at @index
+	 *
+	 * Since: 1.46
+	 */
+	public PangoDirection getDirection(int index)
+	{
+		return pango_layout_get_direction(pangoLayout, index);
 	}
 
 	/**
@@ -314,14 +330,14 @@ public class PgLayout : ObjectG
 	 */
 	public PgFontDescription getFontDescription()
 	{
-		auto p = pango_layout_get_font_description(pangoLayout);
+		auto __p = pango_layout_get_font_description(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p);
 	}
 
 	/**
@@ -357,14 +373,14 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayoutIter getIter()
 	{
-		auto p = pango_layout_get_iter(pangoLayout);
+		auto __p = pango_layout_get_iter(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p, true);
+		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) __p, true);
 	}
 
 	/**
@@ -396,14 +412,14 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayoutLine getLine(int line)
 	{
-		auto p = pango_layout_get_line(pangoLayout, line);
+		auto __p = pango_layout_get_line(pangoLayout, line);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) __p);
 	}
 
 	/**
@@ -437,14 +453,25 @@ public class PgLayout : ObjectG
 	 */
 	public PgLayoutLine getLineReadonly(int line)
 	{
-		auto p = pango_layout_get_line_readonly(pangoLayout, line);
+		auto __p = pango_layout_get_line_readonly(pangoLayout, line);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) __p);
+	}
+
+	/**
+	 * Gets the value that has been
+	 * set with pango_layout_set_line_spacing().
+	 *
+	 * Since: 1.44
+	 */
+	public float getLineSpacing()
+	{
+		return pango_layout_get_line_spacing(pangoLayout);
 	}
 
 	/**
@@ -460,14 +487,14 @@ public class PgLayout : ObjectG
 	 */
 	public ListSG getLines()
 	{
-		auto p = pango_layout_get_lines(pangoLayout);
+		auto __p = pango_layout_get_lines(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -486,14 +513,14 @@ public class PgLayout : ObjectG
 	 */
 	public ListSG getLinesReadonly()
 	{
-		auto p = pango_layout_get_lines_readonly(pangoLayout);
+		auto __p = pango_layout_get_lines_readonly(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -535,9 +562,9 @@ public class PgLayout : ObjectG
 	{
 		int nAttrs;
 
-		auto p = pango_layout_get_log_attrs_readonly(pangoLayout, &nAttrs);
+		auto __p = pango_layout_get_log_attrs_readonly(pangoLayout, &nAttrs);
 
-		return p[0 .. nAttrs];
+		return __p[0 .. nAttrs];
 	}
 
 	/**
@@ -643,14 +670,14 @@ public class PgLayout : ObjectG
 	 */
 	public PgTabArray getTabs()
 	{
-		auto p = pango_layout_get_tabs(pangoLayout);
+		auto __p = pango_layout_get_tabs(pangoLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) __p, true);
 	}
 
 	/**
@@ -986,6 +1013,34 @@ public class PgLayout : ObjectG
 	}
 
 	/**
+	 * Sets a factor for line spacing.
+	 * Typical values are: 0, 1, 1.5, 2.
+	 * The default values is 0.
+	 *
+	 * If @factor is non-zero, lines are placed
+	 * so that
+	 *
+	 * baseline2 = baseline1 + factor * height2
+	 *
+	 * where height2 is the line height of the
+	 * second line (as determined by the font(s)).
+	 * In this case, the spacing set with
+	 * pango_layout_set_spacing() is ignored.
+	 *
+	 * If @factor is zero, spacing is applied as
+	 * before.
+	 *
+	 * Params:
+	 *     factor = the new line spacing factor
+	 *
+	 * Since: 1.44
+	 */
+	public void setLineSpacing(float factor)
+	{
+		pango_layout_set_line_spacing(pangoLayout, factor);
+	}
+
+	/**
 	 * Same as pango_layout_set_markup_with_accel(), but
 	 * the markup text isn't scanned for accelerators.
 	 *
@@ -1041,8 +1096,17 @@ public class PgLayout : ObjectG
 	}
 
 	/**
-	 * Sets the amount of spacing in Pango unit between the lines of the
-	 * layout.
+	 * Sets the amount of spacing in Pango unit between
+	 * the lines of the layout. When placing lines with
+	 * spacing, Pango arranges things so that
+	 *
+	 * line2.top = line1.bottom + spacing
+	 *
+	 * Note: Since 1.44, Pango defaults to using the
+	 * line height (as determined by the font) for placing
+	 * lines. The @spacing set with this function is only
+	 * taken into account when the line-height factor is
+	 * set to zero with pango_layout_set_line_spacing().
 	 *
 	 * Params:
 	 *     spacing = the amount of spacing
@@ -1069,14 +1133,17 @@ public class PgLayout : ObjectG
 	/**
 	 * Sets the text of the layout.
 	 *
-	 * Note that if you have used
-	 * pango_layout_set_markup() or pango_layout_set_markup_with_accel() on
-	 * @layout before, you may want to call pango_layout_set_attributes() to clear
-	 * the attributes set on the layout from the markup as this function does not
-	 * clear attributes.
+	 * This function validates @text and renders invalid UTF-8
+	 * with a placeholder glyph.
+	 *
+	 * Note that if you have used pango_layout_set_markup() or
+	 * pango_layout_set_markup_with_accel() on @layout before, you may
+	 * want to call pango_layout_set_attributes() to clear the attributes
+	 * set on the layout from the markup as this function does not clear
+	 * attributes.
 	 *
 	 * Params:
-	 *     text = a valid UTF-8 string
+	 *     text = the text
 	 */
 	public void setText(string text)
 	{

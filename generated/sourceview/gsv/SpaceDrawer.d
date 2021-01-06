@@ -31,7 +31,6 @@ private import glib.Variant;
 private import gobject.ObjectG;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 
 
 /** */
@@ -82,14 +81,14 @@ public class SpaceDrawer : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_source_space_drawer_new();
+		auto __p = gtk_source_space_drawer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceSpaceDrawer*) p, true);
+		this(cast(GtkSourceSpaceDrawer*) __p, true);
 	}
 
 	/**
@@ -139,14 +138,14 @@ public class SpaceDrawer : ObjectG
 	 */
 	public Variant getMatrix()
 	{
-		auto p = gtk_source_space_drawer_get_matrix(gtkSourceSpaceDrawer);
+		auto __p = gtk_source_space_drawer_get_matrix(gtkSourceSpaceDrawer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**

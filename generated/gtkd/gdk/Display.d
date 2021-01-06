@@ -25,42 +25,36 @@
 module gdk.Display;
 
 private import gdk.AppLaunchContext;
+private import gdk.Clipboard;
 private import gdk.Device;
-private import gdk.DeviceManager;
 private import gdk.Event;
-private import gdk.MonitorG;
-private import gdk.Screen;
+private import gdk.MonitorGdk;
 private import gdk.Seat;
-private import gdk.Window;
+private import gdk.Surface;
 private import gdk.c.functions;
 public  import gdk.c.types;
+private import gio.ListModelIF;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
+private import gobject.Value;
 private import std.algorithm;
 
 
 /**
- * #GdkDisplay objects purpose are two fold:
+ * GdkDisplay objects are the GDK representation of a workstation.
  * 
- * - To manage and provide information about input devices (pointers and keyboards)
+ * Their purpose are two-fold:
+ * - To manage and provide information about input devices (pointers, keyboards, etc)
+ * - To manage and provide information about output devices (monitors, projectors, etc)
  * 
- * - To manage and provide information about the available #GdkScreens
+ * Most of the input device handling has been factored out into separate #GdkSeat
+ * objects. Every display has a one or more seats, which can be accessed with
+ * gdk_display_get_default_seat() and gdk_display_list_seats().
  * 
- * GdkDisplay objects are the GDK representation of an X Display,
- * which can be described as a workstation consisting of
- * a keyboard, a pointing device (such as a mouse) and one or more
- * screens.
- * It is used to open and keep track of various GdkScreen objects
- * currently instantiated by the application. It is also used to
- * access the keyboard(s) and mouse pointer(s) of the display.
- * 
- * Most of the input device handling has been factored out into
- * the separate #GdkDeviceManager object. Every display has a
- * device manager, which you can obtain using
- * gdk_display_get_device_manager().
+ * Output devices are represented by #GdkMonitor objects, which can be accessed
+ * with gdk_display_get_monitor_at_surface() and similar APIs.
  */
 public class Display : ObjectG
 {
@@ -104,19 +98,17 @@ public class Display : ObjectG
 	 *
 	 * Returns: a #GdkDisplay, or %NULL if
 	 *     there is no default display.
-	 *
-	 * Since: 2.2
 	 */
 	public static Display getDefault()
 	{
-		auto p = gdk_display_get_default();
+		auto __p = gdk_display_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -127,50 +119,21 @@ public class Display : ObjectG
 	 *
 	 * Returns: a #GdkDisplay, or %NULL if the
 	 *     display could not be opened
-	 *
-	 * Since: 2.2
 	 */
 	public static Display open(string displayName)
 	{
-		auto p = gdk_display_open(Str.toStringz(displayName));
+		auto __p = gdk_display_open(Str.toStringz(displayName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
-	}
-
-	/**
-	 * Opens the default display specified by command line arguments or
-	 * environment variables, sets it as the default display, and returns
-	 * it. gdk_parse_args() must have been called first. If the default
-	 * display has previously been set, simply returns that. An internal
-	 * function that should not be used by applications.
-	 *
-	 * Deprecated: This symbol was never meant to be used outside
-	 * of GTK+
-	 *
-	 * Returns: the default display, if it
-	 *     could be opened, otherwise %NULL.
-	 */
-	public static Display openDefaultLibgtkOnly()
-	{
-		auto p = gdk_display_open_default_libgtk_only();
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
 	 * Emits a short beep on @display
-	 *
-	 * Since: 2.2
 	 */
 	public void beep()
 	{
@@ -180,8 +143,6 @@ public class Display : ObjectG
 	/**
 	 * Closes the connection to the windowing system for the given display,
 	 * and cleans up associated resources.
-	 *
-	 * Since: 2.2
 	 */
 	public void close()
 	{
@@ -211,8 +172,6 @@ public class Display : ObjectG
 	 *
 	 * This is most useful for X11. On windowing systems where requests are
 	 * handled synchronously, this function will do nothing.
-	 *
-	 * Since: 2.4
 	 */
 	public void flush()
 	{
@@ -225,250 +184,99 @@ public class Display : ObjectG
 	 *
 	 * Returns: a new #GdkAppLaunchContext for @display.
 	 *     Free with g_object_unref() when done
-	 *
-	 * Since: 3.0
 	 */
 	public AppLaunchContext getAppLaunchContext()
 	{
-		auto p = gdk_display_get_app_launch_context(gdkDisplay);
+		auto __p = gdk_display_get_app_launch_context(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppLaunchContext)(cast(GdkAppLaunchContext*) p, true);
+		return ObjectG.getDObject!(AppLaunchContext)(cast(GdkAppLaunchContext*) __p, true);
 	}
 
 	/**
-	 * Returns the default size to use for cursors on @display.
+	 * Gets the clipboard used for copy/paste operations.
 	 *
-	 * Returns: the default cursor size.
-	 *
-	 * Since: 2.4
+	 * Returns: the display's clipboard
 	 */
-	public uint getDefaultCursorSize()
+	public Clipboard getClipboard()
 	{
-		return gdk_display_get_default_cursor_size(gdkDisplay);
-	}
+		auto __p = gdk_display_get_clipboard(gdkDisplay);
 
-	/**
-	 * Returns the default group leader window for all toplevel windows
-	 * on @display. This window is implicitly created by GDK.
-	 * See gdk_window_set_group().
-	 *
-	 * Returns: The default group leader window
-	 *     for @display
-	 *
-	 * Since: 2.4
-	 */
-	public Window getDefaultGroup()
-	{
-		auto p = gdk_display_get_default_group(gdkDisplay);
-
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
-	}
-
-	/**
-	 * Get the default #GdkScreen for @display.
-	 *
-	 * Returns: the default #GdkScreen object for @display
-	 *
-	 * Since: 2.2
-	 */
-	public Screen getDefaultScreen()
-	{
-		auto p = gdk_display_get_default_screen(gdkDisplay);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GdkClipboard*) __p);
 	}
 
 	/**
 	 * Returns the default #GdkSeat for this display.
 	 *
-	 * Returns: the default seat.
+	 * Note that a display may not have a seat. In this case,
+	 * this function will return %NULL.
 	 *
-	 * Since: 3.20
+	 * Returns: the default seat.
 	 */
 	public Seat getDefaultSeat()
 	{
-		auto p = gdk_display_get_default_seat(gdkDisplay);
+		auto __p = gdk_display_get_default_seat(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) __p);
 	}
 
 	/**
-	 * Returns the #GdkDeviceManager associated to @display.
-	 *
-	 * Deprecated: Use gdk_display_get_default_seat() and #GdkSeat operations.
-	 *
-	 * Returns: A #GdkDeviceManager, or
-	 *     %NULL. This memory is owned by GDK and must not be freed
-	 *     or unreferenced.
-	 *
-	 * Since: 3.0
-	 */
-	public DeviceManager getDeviceManager()
-	{
-		auto p = gdk_display_get_device_manager(gdkDisplay);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(DeviceManager)(cast(GdkDeviceManager*) p);
-	}
-
-	/**
-	 * Gets the next #GdkEvent to be processed for @display, fetching events from the
-	 * windowing system if necessary.
-	 *
-	 * Returns: the next #GdkEvent to be processed, or %NULL
-	 *     if no events are pending. The returned #GdkEvent should be freed
-	 *     with gdk_event_free().
-	 *
-	 * Since: 2.2
-	 */
-	public Event getEvent()
-	{
-		auto p = gdk_display_get_event(gdkDisplay);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
-	}
-
-	/**
-	 * Gets the maximal size to use for cursors on @display.
-	 *
-	 * Params:
-	 *     width = the return location for the maximal cursor width
-	 *     height = the return location for the maximal cursor height
-	 *
-	 * Since: 2.4
-	 */
-	public void getMaximalCursorSize(out uint width, out uint height)
-	{
-		gdk_display_get_maximal_cursor_size(gdkDisplay, &width, &height);
-	}
-
-	/**
-	 * Gets a monitor associated with this display.
-	 *
-	 * Params:
-	 *     monitorNum = number of the monitor
-	 *
-	 * Returns: the #GdkMonitor, or %NULL if
-	 *     @monitor_num is not a valid monitor number
-	 *
-	 * Since: 3.22
-	 */
-	public MonitorG getMonitor(int monitorNum)
-	{
-		auto p = gdk_display_get_monitor(gdkDisplay, monitorNum);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
-	}
-
-	/**
-	 * Gets the monitor in which the point (@x, @y) is located,
-	 * or a nearby monitor if the point is not in any monitor.
-	 *
-	 * Params:
-	 *     x = the x coordinate of the point
-	 *     y = the y coordinate of the point
-	 *
-	 * Returns: the monitor containing the point
-	 *
-	 * Since: 3.22
-	 */
-	public MonitorG getMonitorAtPoint(int x, int y)
-	{
-		auto p = gdk_display_get_monitor_at_point(gdkDisplay, x, y);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
-	}
-
-	/**
-	 * Gets the monitor in which the largest area of @window
-	 * resides, or a monitor close to @window if it is outside
+	 * Gets the monitor in which the largest area of @surface
+	 * resides, or a monitor close to @surface if it is outside
 	 * of all monitors.
 	 *
 	 * Params:
-	 *     window = a #GdkWindow
+	 *     surface = a #GdkSurface
 	 *
-	 * Returns: the monitor with the largest overlap with @window
-	 *
-	 * Since: 3.22
+	 * Returns: the monitor with the largest overlap with @surface
 	 */
-	public MonitorG getMonitorAtWindow(Window window)
+	public MonitorGdk getMonitorAtSurface(Surface surface)
 	{
-		auto p = gdk_display_get_monitor_at_window(gdkDisplay, (window is null) ? null : window.getWindowStruct());
+		auto __p = gdk_display_get_monitor_at_surface(gdkDisplay, (surface is null) ? null : surface.getSurfaceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
+		return ObjectG.getDObject!(MonitorGdk)(cast(GdkMonitor*) __p);
 	}
 
 	/**
-	 * Gets the number of monitors that belong to @display.
+	 * Gets the list of monitors associated with this display.
 	 *
-	 * The returned number is valid until the next emission of the
-	 * #GdkDisplay::monitor-added or #GdkDisplay::monitor-removed signal.
+	 * Subsequent calls to this function will always return the same list for the
+	 * same display.
 	 *
-	 * Returns: the number of monitors
+	 * You can listen to the GListModel::items-changed signal on this list
+	 * to monitor changes to the monitor of this display.
 	 *
-	 * Since: 3.22
+	 * Returns: a #GListModel of #GdkMonitor
 	 */
-	public int getNMonitors()
+	public ListModelIF getMonitors()
 	{
-		return gdk_display_get_n_monitors(gdkDisplay);
-	}
+		auto __p = gdk_display_get_monitors(gdkDisplay);
 
-	/**
-	 * Gets the number of screen managed by the @display.
-	 *
-	 * Deprecated: The number of screens is always 1.
-	 *
-	 * Returns: number of screens.
-	 *
-	 * Since: 2.2
-	 */
-	public int getNScreens()
-	{
-		return gdk_display_get_n_screens(gdkDisplay);
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ListModelIF)(cast(GListModel*) __p);
 	}
 
 	/**
@@ -476,8 +284,6 @@ public class Display : ObjectG
 	 *
 	 * Returns: a string representing the display name. This string is owned
 	 *     by GDK and should not be modified or freed.
-	 *
-	 * Since: 2.2
 	 */
 	public string getName()
 	{
@@ -485,128 +291,55 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Gets the current location of the pointer and the current modifier
-	 * mask for a given display.
+	 * Gets the clipboard used for the primary selection. On backends where the
+	 * primary clipboard is not supported natively, GDK emulates this clipboard
+	 * locally.
 	 *
-	 * Deprecated: Use gdk_device_get_position() instead.
-	 *
-	 * Params:
-	 *     screen = location to store the screen that the
-	 *         cursor is on, or %NULL.
-	 *     x = location to store root window X coordinate of pointer, or %NULL.
-	 *     y = location to store root window Y coordinate of pointer, or %NULL.
-	 *     mask = location to store current modifier mask, or %NULL
-	 *
-	 * Since: 2.2
+	 * Returns: the primary clipboard
 	 */
-	public void getPointer(out Screen screen, out int x, out int y, out GdkModifierType mask)
+	public Clipboard getPrimaryClipboard()
 	{
-		GdkScreen* outscreen = null;
+		auto __p = gdk_display_get_primary_clipboard(gdkDisplay);
 
-		gdk_display_get_pointer(gdkDisplay, &outscreen, &x, &y, &mask);
-
-		screen = ObjectG.getDObject!(Screen)(outscreen);
-	}
-
-	/**
-	 * Gets the primary monitor for the display.
-	 *
-	 * The primary monitor is considered the monitor where the “main desktop”
-	 * lives. While normal application windows typically allow the window
-	 * manager to place the windows, specialized desktop applications
-	 * such as panels should place themselves on the primary monitor.
-	 *
-	 * Returns: the primary monitor, or %NULL if no primary
-	 *     monitor is configured by the user
-	 *
-	 * Since: 3.22
-	 */
-	public MonitorG getPrimaryMonitor()
-	{
-		auto p = gdk_display_get_primary_monitor(gdkDisplay);
-
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GdkClipboard*) __p);
 	}
 
 	/**
-	 * Returns a screen object for one of the screens of the display.
-	 *
-	 * Deprecated: There is only one screen; use gdk_display_get_default_screen() to get it.
+	 * Retrieves a desktop-wide setting such as double-click time
+	 * for the @display.
 	 *
 	 * Params:
-	 *     screenNum = the screen number
+	 *     name = the name of the setting
+	 *     value = location to store the value of the setting
 	 *
-	 * Returns: the #GdkScreen object
-	 *
-	 * Since: 2.2
+	 * Returns: %TRUE if the setting existed and a value was stored
+	 *     in @value, %FALSE otherwise
 	 */
-	public Screen getScreen(int screenNum)
+	public bool getSetting(string name, Value value)
 	{
-		auto p = gdk_display_get_screen(gdkDisplay, screenNum);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return gdk_display_get_setting(gdkDisplay, Str.toStringz(name), (value is null) ? null : value.getValueStruct()) != 0;
 	}
 
 	/**
-	 * Obtains the window underneath the mouse pointer, returning the location
-	 * of the pointer in that window in @win_x, @win_y for @screen. Returns %NULL
-	 * if the window under the mouse pointer is not known to GDK (for example,
-	 * belongs to another application).
+	 * Gets the startup notification ID for a Wayland display, or %NULL
+	 * if no ID has been defined.
 	 *
-	 * Deprecated: Use gdk_device_get_window_at_position() instead.
-	 *
-	 * Params:
-	 *     winX = return location for x coordinate of the pointer location relative
-	 *         to the window origin, or %NULL
-	 *     winY = return location for y coordinate of the pointer location relative
-	 *         &    to the window origin, or %NULL
-	 *
-	 * Returns: the window under the mouse
-	 *     pointer, or %NULL
-	 *
-	 * Since: 2.2
+	 * Returns: the startup notification ID for @display, or %NULL
 	 */
-	public Window getWindowAtPointer(out int winX, out int winY)
+	public string getStartupNotificationId()
 	{
-		auto p = gdk_display_get_window_at_pointer(gdkDisplay, &winX, &winY);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
-	}
-
-	/**
-	 * Returns whether the display has events that are waiting
-	 * to be processed.
-	 *
-	 * Returns: %TRUE if there are events ready to be processed.
-	 *
-	 * Since: 3.0
-	 */
-	public bool hasPending()
-	{
-		return gdk_display_has_pending(gdkDisplay) != 0;
+		return Str.toString(gdk_display_get_startup_notification_id(gdkDisplay));
 	}
 
 	/**
 	 * Finds out if the display has been closed.
 	 *
 	 * Returns: %TRUE if the display is closed.
-	 *
-	 * Since: 2.22
 	 */
 	public bool isClosed()
 	{
@@ -614,41 +347,43 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Release any keyboard grab
+	 * Returns whether surfaces can reasonably be expected to have
+	 * their alpha channel drawn correctly on the screen. Check
+	 * gdk_display_is_rgba() for whether the display supports an
+	 * alpha channel.
 	 *
-	 * Deprecated: Use gdk_device_ungrab(), together with gdk_device_grab()
-	 * instead.
+	 * On X11 this function returns whether a compositing manager is
+	 * compositing on @display.
 	 *
-	 * Params:
-	 *     time = a timestap (e.g #GDK_CURRENT_TIME).
+	 * On modern displays, this value is always %TRUE.
 	 *
-	 * Since: 2.2
+	 * Returns: Whether surfaces with RGBA visuals can reasonably be
+	 *     expected to have their alpha channels drawn correctly on the screen.
 	 */
-	public void keyboardUngrab(uint time)
+	public bool isComposited()
 	{
-		gdk_display_keyboard_ungrab(gdkDisplay, time);
+		return gdk_display_is_composited(gdkDisplay) != 0;
 	}
 
 	/**
-	 * Returns the list of available input devices attached to @display.
-	 * The list is statically allocated and should not be freed.
+	 * Returns whether surfaces on this @display are created with an
+	 * alpha channel.
 	 *
-	 * Deprecated: Use gdk_device_manager_list_devices() instead.
+	 * Even if a %TRUE is returned, it is possible that the
+	 * surface’s alpha channel won’t be honored when displaying the
+	 * surface on the screen: in particular, for X an appropriate
+	 * windowing manager and compositing manager must be running to
+	 * provide appropriate display. Use gdk_display_is_composited()
+	 * to check if that is the case.
 	 *
-	 * Returns: a list of #GdkDevice
+	 * On modern displays, this value is always %TRUE.
 	 *
-	 * Since: 2.2
+	 * Returns: %TRUE if surfaces are created with an alpha channel or
+	 *     %FALSE if the display does not support this functionality.
 	 */
-	public ListG listDevices()
+	public bool isRgba()
 	{
-		auto p = gdk_display_list_devices(gdkDisplay);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return new ListG(cast(GList*) p);
+		return gdk_display_is_rgba(gdkDisplay) != 0;
 	}
 
 	/**
@@ -656,26 +391,92 @@ public class Display : ObjectG
 	 *
 	 * Returns: the
 	 *     list of seats known to the #GdkDisplay
-	 *
-	 * Since: 3.20
 	 */
 	public ListG listSeats()
 	{
-		auto p = gdk_display_list_seats(gdkDisplay);
+		auto __p = gdk_display_list_seats(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
+	}
+
+	/**
+	 * Returns the keyvals bound to @keycode. The Nth #GdkKeymapKey
+	 * in @keys is bound to the Nth keyval in @keyvals.
+	 *
+	 * When a keycode is pressed by the user, the keyval from
+	 * this list of entries is selected by considering the effective
+	 * keyboard group and level.
+	 *
+	 * Free the returned arrays with g_free().
+	 *
+	 * Params:
+	 *     keycode = a keycode
+	 *     keys = return
+	 *         location for array of #GdkKeymapKey, or %NULL
+	 *     keyvals = return
+	 *         location for array of keyvals, or %NULL
+	 *
+	 * Returns: %TRUE if there were any entries
+	 */
+	public bool mapKeycode(uint keycode, out GdkKeymapKey[] keys, out uint[] keyvals)
+	{
+		GdkKeymapKey* outkeys = null;
+		uint* outkeyvals = null;
+		int nEntries;
+
+		auto __p = gdk_display_map_keycode(gdkDisplay, keycode, &outkeys, &outkeyvals, &nEntries) != 0;
+
+		keys = outkeys[0 .. nEntries];
+		keyvals = outkeyvals[0 .. nEntries];
+
+		return __p;
+	}
+
+	/**
+	 * Obtains a list of keycode/group/level combinations that will
+	 * generate @keyval. Groups and levels are two kinds of keyboard mode;
+	 * in general, the level determines whether the top or bottom symbol
+	 * on a key is used, and the group determines whether the left or
+	 * right symbol is used.
+	 *
+	 * On US keyboards, the shift key changes the keyboard level, and there
+	 * are no groups. A group switch key might convert a keyboard between
+	 * Hebrew to English modes, for example.
+	 *
+	 * #GdkEventKey contains a %group field that indicates the active
+	 * keyboard group. The level is computed from the modifier mask.
+	 *
+	 * The returned array should be freed with g_free().
+	 *
+	 * Params:
+	 *     keyval = a keyval, such as %GDK_KEY_a, %GDK_KEY_Up, %GDK_KEY_Return, etc.
+	 *     keys = return location
+	 *         for an array of #GdkKeymapKey
+	 *
+	 * Returns: %TRUE if keys were found and returned
+	 */
+	public bool mapKeyval(uint keyval, out GdkKeymapKey[] keys)
+	{
+		GdkKeymapKey* outkeys = null;
+		int nKeys;
+
+		auto __p = gdk_display_map_keyval(gdkDisplay, keyval, &outkeys, &nKeys) != 0;
+
+		keys = outkeys[0 .. nKeys];
+
+		return __p;
 	}
 
 	/**
 	 * Indicates to the GUI environment that the application has
 	 * finished loading, using a given identifier.
 	 *
-	 * GTK+ will call this function automatically for #GtkWindow
+	 * GTK will call this function automatically for #GtkWindow
 	 * with custom startup-notification identifier unless
 	 * gtk_window_set_auto_startup_notification() is called to
 	 * disable that feature.
@@ -683,8 +484,6 @@ public class Display : ObjectG
 	 * Params:
 	 *     startupId = a startup-notification identifier, for which
 	 *         notification process should be completed
-	 *
-	 * Since: 3.0
 	 */
 	public void notifyStartupComplete(string startupId)
 	{
@@ -692,67 +491,14 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Gets a copy of the first #GdkEvent in the @display’s event queue, without
-	 * removing the event from the queue.  (Note that this function will
-	 * not get more events from the windowing system.  It only checks the events
-	 * that have already been moved to the GDK event queue.)
-	 *
-	 * Returns: a copy of the first #GdkEvent on the event
-	 *     queue, or %NULL if no events are in the queue. The returned
-	 *     #GdkEvent should be freed with gdk_event_free().
-	 *
-	 * Since: 2.2
-	 */
-	public Event peekEvent()
-	{
-		auto p = gdk_display_peek_event(gdkDisplay);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
-	}
-
-	/**
-	 * Test if the pointer is grabbed.
-	 *
-	 * Deprecated: Use gdk_display_device_is_grabbed() instead.
-	 *
-	 * Returns: %TRUE if an active X pointer grab is in effect
-	 *
-	 * Since: 2.2
-	 */
-	public bool pointerIsGrabbed()
-	{
-		return gdk_display_pointer_is_grabbed(gdkDisplay) != 0;
-	}
-
-	/**
-	 * Release any pointer grab.
-	 *
-	 * Deprecated: Use gdk_device_ungrab(), together with gdk_device_grab()
-	 * instead.
-	 *
-	 * Params:
-	 *     time = a timestap (e.g. %GDK_CURRENT_TIME).
-	 *
-	 * Since: 2.2
-	 */
-	public void pointerUngrab(uint time)
-	{
-		gdk_display_pointer_ungrab(gdkDisplay, time);
-	}
-
-	/**
-	 * Appends a copy of the given event onto the front of the event
+	 * Appends the given event onto the front of the event
 	 * queue for @display.
 	 *
-	 * Params:
-	 *     event = a #GdkEvent.
+	 * This function is only useful in very special situations
+	 * and should not be used by applications.
 	 *
-	 * Since: 2.2
+	 * Params:
+	 *     event = a #GdkEvent
 	 */
 	public void putEvent(Event event)
 	{
@@ -760,145 +506,12 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Request #GdkEventOwnerChange events for ownership changes
-	 * of the selection named by the given atom.
+	 * Returns %TRUE if gdk_surface_set_input_region() can
+	 * be used to modify the input shape of surfaces on @display.
 	 *
-	 * Params:
-	 *     selection = the #GdkAtom naming the selection for which
-	 *         ownership change notification is requested
+	 * On modern displays, this value is always %TRUE.
 	 *
-	 * Returns: whether #GdkEventOwnerChange events will
-	 *     be sent.
-	 *
-	 * Since: 2.6
-	 */
-	public bool requestSelectionNotification(GdkAtom selection)
-	{
-		return gdk_display_request_selection_notification(gdkDisplay, selection) != 0;
-	}
-
-	/**
-	 * Sets the double click distance (two clicks within this distance
-	 * count as a double click and result in a #GDK_2BUTTON_PRESS event).
-	 * See also gdk_display_set_double_click_time().
-	 * Applications should not set this, it is a global
-	 * user-configured setting.
-	 *
-	 * Params:
-	 *     distance = distance in pixels
-	 *
-	 * Since: 2.4
-	 */
-	public void setDoubleClickDistance(uint distance)
-	{
-		gdk_display_set_double_click_distance(gdkDisplay, distance);
-	}
-
-	/**
-	 * Sets the double click time (two clicks within this time interval
-	 * count as a double click and result in a #GDK_2BUTTON_PRESS event).
-	 * Applications should not set this, it is a global
-	 * user-configured setting.
-	 *
-	 * Params:
-	 *     msec = double click time in milliseconds (thousandths of a second)
-	 *
-	 * Since: 2.2
-	 */
-	public void setDoubleClickTime(uint msec)
-	{
-		gdk_display_set_double_click_time(gdkDisplay, msec);
-	}
-
-	/**
-	 * Issues a request to the clipboard manager to store the
-	 * clipboard data. On X11, this is a special program that works
-	 * according to the
-	 * [FreeDesktop Clipboard Specification](http://www.freedesktop.org/Standards/clipboard-manager-spec).
-	 *
-	 * Params:
-	 *     clipboardWindow = a #GdkWindow belonging to the clipboard owner
-	 *     time = a timestamp
-	 *     targets = an array of targets
-	 *         that should be saved, or %NULL
-	 *         if all available targets should be saved.
-	 *
-	 * Since: 2.6
-	 */
-	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom[] targets)
-	{
-		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets.ptr, cast(int)targets.length);
-	}
-
-	/**
-	 * Returns whether the speicifed display supports clipboard
-	 * persistance; i.e. if it’s possible to store the clipboard data after an
-	 * application has quit. On X11 this checks if a clipboard daemon is
-	 * running.
-	 *
-	 * Returns: %TRUE if the display supports clipboard persistance.
-	 *
-	 * Since: 2.6
-	 */
-	public bool supportsClipboardPersistence()
-	{
-		return gdk_display_supports_clipboard_persistence(gdkDisplay) != 0;
-	}
-
-	/**
-	 * Returns %TRUE if gdk_window_set_composited() can be used
-	 * to redirect drawing on the window using compositing.
-	 *
-	 * Currently this only works on X11 with XComposite and
-	 * XDamage extensions available.
-	 *
-	 * Deprecated: Compositing is an outdated technology that
-	 * only ever worked on X11.
-	 *
-	 * Returns: %TRUE if windows may be composited.
-	 *
-	 * Since: 2.12
-	 */
-	public bool supportsComposite()
-	{
-		return gdk_display_supports_composite(gdkDisplay) != 0;
-	}
-
-	/**
-	 * Returns %TRUE if cursors can use an 8bit alpha channel
-	 * on @display. Otherwise, cursors are restricted to bilevel
-	 * alpha (i.e. a mask).
-	 *
-	 * Returns: whether cursors can have alpha channels.
-	 *
-	 * Since: 2.4
-	 */
-	public bool supportsCursorAlpha()
-	{
-		return gdk_display_supports_cursor_alpha(gdkDisplay) != 0;
-	}
-
-	/**
-	 * Returns %TRUE if multicolored cursors are supported
-	 * on @display. Otherwise, cursors have only a forground
-	 * and a background color.
-	 *
-	 * Returns: whether cursors can have multiple colors.
-	 *
-	 * Since: 2.4
-	 */
-	public bool supportsCursorColor()
-	{
-		return gdk_display_supports_cursor_color(gdkDisplay) != 0;
-	}
-
-	/**
-	 * Returns %TRUE if gdk_window_input_shape_combine_mask() can
-	 * be used to modify the input shape of windows on @display.
-	 *
-	 * Returns: %TRUE if windows with modified input shape are supported
-	 *
-	 * Since: 2.10
+	 * Returns: %TRUE if surfaces with modified input shape are supported
 	 */
 	public bool supportsInputShapes()
 	{
@@ -906,44 +519,15 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Returns whether #GdkEventOwnerChange events will be
-	 * sent when the owner of a selection changes.
-	 *
-	 * Returns: whether #GdkEventOwnerChange events will
-	 *     be sent.
-	 *
-	 * Since: 2.6
-	 */
-	public bool supportsSelectionNotification()
-	{
-		return gdk_display_supports_selection_notification(gdkDisplay) != 0;
-	}
-
-	/**
-	 * Returns %TRUE if gdk_window_shape_combine_mask() can
-	 * be used to create shaped windows on @display.
-	 *
-	 * Returns: %TRUE if shaped windows are supported
-	 *
-	 * Since: 2.10
-	 */
-	public bool supportsShapes()
-	{
-		return gdk_display_supports_shapes(gdkDisplay) != 0;
-	}
-
-	/**
 	 * Flushes any requests queued for the windowing system and waits until all
 	 * requests have been handled. This is often used for making sure that the
 	 * display is synchronized with the current state of the program. Calling
-	 * gdk_display_sync() before gdk_error_trap_pop() makes sure that any errors
-	 * generated from earlier requests are handled before the error trap is
-	 * removed.
+	 * gdk_display_sync() before gdk_x11_display_error_trap_pop() makes sure
+	 * that any errors generated from earlier requests are handled before the
+	 * error trap is removed.
 	 *
 	 * This is most useful for X11. On windowing systems where requests are
 	 * handled synchronously, this function will do nothing.
-	 *
-	 * Since: 2.2
 	 */
 	public void sync()
 	{
@@ -951,30 +535,40 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Warps the pointer of @display to the point @x,@y on
-	 * the screen @screen, unless the pointer is confined
-	 * to a window by a grab, in which case it will be moved
-	 * as far as allowed by the grab. Warping the pointer
-	 * creates events as if the user had moved the mouse
-	 * instantaneously to the destination.
+	 * Translates the contents of a #GdkEventKey (ie @keycode, @state, and @group)
+	 * into a keyval, effective group, and level. Modifiers that affected the
+	 * translation and are thus unavailable for application use are returned in
+	 * @consumed_modifiers.
 	 *
-	 * Note that the pointer should normally be under the
-	 * control of the user. This function was added to cover
-	 * some rare use cases like keyboard navigation support
-	 * for the color picker in the #GtkColorSelectionDialog.
+	 * The @effective_group is the group that was actually used for the translation;
+	 * some keys such as Enter are not affected by the active keyboard group.
+	 * The @level is derived from @state.
 	 *
-	 * Deprecated: Use gdk_device_warp() instead.
+	 * @consumed_modifiers gives modifiers that should be masked outfrom @state
+	 * when comparing this key press to a keyboard shortcut. For instance, on a US
+	 * keyboard, the `plus` symbol is shifted, so when comparing a key press to a
+	 * `<Control>plus` accelerator `<Shift>` should be masked out.
+	 *
+	 * This function should rarely be needed, since #GdkEventKey already contains
+	 * the translated keyval. It is exported for the benefit of virtualized test
+	 * environments.
 	 *
 	 * Params:
-	 *     screen = the screen of @display to warp the pointer to
-	 *     x = the x coordinate of the destination
-	 *     y = the y coordinate of the destination
+	 *     keycode = a keycode
+	 *     state = a modifier state
+	 *     group = active keyboard group
+	 *     keyval = return location for keyval, or %NULL
+	 *     effectiveGroup = return location for effective
+	 *         group, or %NULL
+	 *     level = return location for level, or %NULL
+	 *     consumed = return location for modifiers
+	 *         that were used to determine the group or level, or %NULL
 	 *
-	 * Since: 2.8
+	 * Returns: %TRUE if there was a keyval bound to keycode/state/group.
 	 */
-	public void warpPointer(Screen screen, int x, int y)
+	public bool translateKey(uint keycode, GdkModifierType state, int group, out uint keyval, out int effectiveGroup, out int level, out GdkModifierType consumed)
 	{
-		gdk_display_warp_pointer(gdkDisplay, (screen is null) ? null : screen.getScreenStruct(), x, y);
+		return gdk_display_translate_key(gdkDisplay, keycode, state, group, &keyval, &effectiveGroup, &level, &consumed) != 0;
 	}
 
 	/**
@@ -983,40 +577,10 @@ public class Display : ObjectG
 	 *
 	 * Params:
 	 *     isError = %TRUE if the display was closed due to an error
-	 *
-	 * Since: 2.2
 	 */
 	gulong addOnClosed(void delegate(bool, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "closed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::monitor-added signal is emitted whenever a monitor is
-	 * added.
-	 *
-	 * Params:
-	 *     monitor = the monitor that was just added
-	 *
-	 * Since: 3.22
-	 */
-	gulong addOnMonitorAdded(void delegate(MonitorG, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "monitor-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::monitor-removed signal is emitted whenever a monitor is
-	 * removed.
-	 *
-	 * Params:
-	 *     monitor = the monitor that was just removed
-	 *
-	 * Since: 3.22
-	 */
-	gulong addOnMonitorRemoved(void delegate(MonitorG, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "monitor-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**
@@ -1034,8 +598,6 @@ public class Display : ObjectG
 	 *
 	 * Params:
 	 *     seat = the seat that was just added
-	 *
-	 * Since: 3.20
 	 */
 	gulong addOnSeatAdded(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1048,11 +610,21 @@ public class Display : ObjectG
 	 *
 	 * Params:
 	 *     seat = the seat that was just removed
-	 *
-	 * Since: 3.20
 	 */
 	gulong addOnSeatRemoved(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "seat-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * The ::setting-changed signal is emitted whenever a setting
+	 * changes its value.
+	 *
+	 * Params:
+	 *     setting = the name of the setting that changed
+	 */
+	gulong addOnSettingChanged(void delegate(string, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "setting-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -750,6 +750,7 @@ shared static this()
 	Linker.link(g_dtls_connection_close_finish, "g_dtls_connection_close_finish", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_emit_accept_certificate, "g_dtls_connection_emit_accept_certificate", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_certificate, "g_dtls_connection_get_certificate", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_channel_binding_data, "g_dtls_connection_get_channel_binding_data", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_database, "g_dtls_connection_get_database", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_interaction, "g_dtls_connection_get_interaction", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_negotiated_protocol, "g_dtls_connection_get_negotiated_protocol", LIBRARY_GIO);
@@ -2164,6 +2165,7 @@ shared static this()
 	Linker.link(g_tls_connection_get_type, "g_tls_connection_get_type", LIBRARY_GIO);
 	Linker.link(g_tls_connection_emit_accept_certificate, "g_tls_connection_emit_accept_certificate", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_certificate, "g_tls_connection_get_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_channel_binding_data, "g_tls_connection_get_channel_binding_data", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_database, "g_tls_connection_get_database", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_interaction, "g_tls_connection_get_interaction", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_negotiated_protocol, "g_tls_connection_get_negotiated_protocol", LIBRARY_GIO);
@@ -2334,6 +2336,7 @@ shared static this()
 	Linker.link(g_unix_mount_point_is_loopback, "g_unix_mount_point_is_loopback", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_is_readonly, "g_unix_mount_point_is_readonly", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_is_user_mountable, "g_unix_mount_point_is_user_mountable", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_at, "g_unix_mount_point_at", LIBRARY_GIO);
 
 	// gio.UnixOutputStream
 
@@ -3207,6 +3210,7 @@ __gshared extern(C)
 	int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) c_g_dtls_connection_close_finish;
 	int function(GDtlsConnection* conn, GTlsCertificate* peerCert, GTlsCertificateFlags errors) c_g_dtls_connection_emit_accept_certificate;
 	GTlsCertificate* function(GDtlsConnection* conn) c_g_dtls_connection_get_certificate;
+	int function(GDtlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) c_g_dtls_connection_get_channel_binding_data;
 	GTlsDatabase* function(GDtlsConnection* conn) c_g_dtls_connection_get_database;
 	GTlsInteraction* function(GDtlsConnection* conn) c_g_dtls_connection_get_interaction;
 	const(char)* function(GDtlsConnection* conn) c_g_dtls_connection_get_negotiated_protocol;
@@ -4621,6 +4625,7 @@ __gshared extern(C)
 	GType function() c_g_tls_connection_get_type;
 	int function(GTlsConnection* conn, GTlsCertificate* peerCert, GTlsCertificateFlags errors) c_g_tls_connection_emit_accept_certificate;
 	GTlsCertificate* function(GTlsConnection* conn) c_g_tls_connection_get_certificate;
+	int function(GTlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) c_g_tls_connection_get_channel_binding_data;
 	GTlsDatabase* function(GTlsConnection* conn) c_g_tls_connection_get_database;
 	GTlsInteraction* function(GTlsConnection* conn) c_g_tls_connection_get_interaction;
 	const(char)* function(GTlsConnection* conn) c_g_tls_connection_get_negotiated_protocol;
@@ -4791,6 +4796,7 @@ __gshared extern(C)
 	int function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_loopback;
 	int function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_readonly;
 	int function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_user_mountable;
+	GUnixMountPoint* function(char* mountPath, ulong* timeRead) c_g_unix_mount_point_at;
 
 	// gio.UnixOutputStream
 
@@ -5662,6 +5668,7 @@ alias c_g_dtls_connection_close_async g_dtls_connection_close_async;
 alias c_g_dtls_connection_close_finish g_dtls_connection_close_finish;
 alias c_g_dtls_connection_emit_accept_certificate g_dtls_connection_emit_accept_certificate;
 alias c_g_dtls_connection_get_certificate g_dtls_connection_get_certificate;
+alias c_g_dtls_connection_get_channel_binding_data g_dtls_connection_get_channel_binding_data;
 alias c_g_dtls_connection_get_database g_dtls_connection_get_database;
 alias c_g_dtls_connection_get_interaction g_dtls_connection_get_interaction;
 alias c_g_dtls_connection_get_negotiated_protocol g_dtls_connection_get_negotiated_protocol;
@@ -7076,6 +7083,7 @@ alias c_g_tls_client_connection_set_validation_flags g_tls_client_connection_set
 alias c_g_tls_connection_get_type g_tls_connection_get_type;
 alias c_g_tls_connection_emit_accept_certificate g_tls_connection_emit_accept_certificate;
 alias c_g_tls_connection_get_certificate g_tls_connection_get_certificate;
+alias c_g_tls_connection_get_channel_binding_data g_tls_connection_get_channel_binding_data;
 alias c_g_tls_connection_get_database g_tls_connection_get_database;
 alias c_g_tls_connection_get_interaction g_tls_connection_get_interaction;
 alias c_g_tls_connection_get_negotiated_protocol g_tls_connection_get_negotiated_protocol;
@@ -7246,6 +7254,7 @@ alias c_g_unix_mount_point_guess_symbolic_icon g_unix_mount_point_guess_symbolic
 alias c_g_unix_mount_point_is_loopback g_unix_mount_point_is_loopback;
 alias c_g_unix_mount_point_is_readonly g_unix_mount_point_is_readonly;
 alias c_g_unix_mount_point_is_user_mountable g_unix_mount_point_is_user_mountable;
+alias c_g_unix_mount_point_at g_unix_mount_point_at;
 
 // gio.UnixOutputStream
 

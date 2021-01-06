@@ -257,14 +257,14 @@ public class PluginInfo
 	 */
 	public Settings getSettings(string schemaId)
 	{
-		auto p = peas_plugin_info_get_settings(peasPluginInfo, Str.toStringz(schemaId));
+		auto __p = peas_plugin_info_get_settings(peasPluginInfo, Str.toStringz(schemaId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Settings)(cast(GSettings*) p, true);
+		return ObjectG.getDObject!(Settings)(cast(GSettings*) __p, true);
 	}
 
 	/**
@@ -319,14 +319,14 @@ public class PluginInfo
 	{
 		GError* err = null;
 
-		auto p = peas_plugin_info_is_available(peasPluginInfo, &err) != 0;
+		auto __p = peas_plugin_info_is_available(peasPluginInfo, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

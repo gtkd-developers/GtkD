@@ -32,7 +32,6 @@ private import gstreamer.Message;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 
@@ -177,14 +176,14 @@ public class Bus : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_bus_new();
+		auto __p = gst_bus_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBus*) p, true);
+		this(cast(GstBus*) __p, true);
 	}
 
 	/**
@@ -297,14 +296,14 @@ public class Bus : ObjectGst
 	 */
 	public Source createWatch()
 	{
-		auto p = gst_bus_create_watch(gstBus);
+		auto __p = gst_bus_create_watch(gstBus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -336,9 +335,9 @@ public class Bus : ObjectGst
 	 * as this function is called.
 	 *
 	 * While this function looks similar to gst_bus_add_signal_watch(), it is not
-	 * exactly the same -- this function enables <emphasis>synchronous</emphasis> emission of
+	 * exactly the same -- this function enables *synchronous* emission of
 	 * signals when messages arrive; gst_bus_add_signal_watch() adds an idle callback
-	 * to pop messages off the bus <emphasis>asynchronously</emphasis>. The sync-message signal
+	 * to pop messages off the bus *asynchronously*. The sync-message signal
 	 * comes from the thread of whatever object posted the message; the "message"
 	 * signal is marshalled to the main thread via the main loop.
 	 *
@@ -395,14 +394,14 @@ public class Bus : ObjectGst
 	 */
 	public Message peek()
 	{
-		auto p = gst_bus_peek(gstBus);
+		auto __p = gst_bus_peek(gstBus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -453,14 +452,14 @@ public class Bus : ObjectGst
 	 */
 	public Message poll(GstMessageType events, GstClockTime timeout)
 	{
-		auto p = gst_bus_poll(gstBus, events, timeout);
+		auto __p = gst_bus_poll(gstBus, events, timeout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -475,14 +474,14 @@ public class Bus : ObjectGst
 	 */
 	public Message pop()
 	{
-		auto p = gst_bus_pop(gstBus);
+		auto __p = gst_bus_pop(gstBus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -504,14 +503,14 @@ public class Bus : ObjectGst
 	 */
 	public Message popFiltered(GstMessageType types)
 	{
-		auto p = gst_bus_pop_filtered(gstBus, types);
+		auto __p = gst_bus_pop_filtered(gstBus, types);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -527,7 +526,7 @@ public class Bus : ObjectGst
 	 */
 	public bool post(Message message)
 	{
-		return gst_bus_post(gstBus, (message is null) ? null : message.getMessageStruct()) != 0;
+		return gst_bus_post(gstBus, (message is null) ? null : message.getMessageStruct(true)) != 0;
 	}
 
 	/**
@@ -601,14 +600,14 @@ public class Bus : ObjectGst
 	 */
 	public Message timedPop(GstClockTime timeout)
 	{
-		auto p = gst_bus_timed_pop(gstBus, timeout);
+		auto __p = gst_bus_timed_pop(gstBus, timeout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -634,14 +633,14 @@ public class Bus : ObjectGst
 	 */
 	public Message timedPopFiltered(GstClockTime timeout, GstMessageType types)
 	{
-		auto p = gst_bus_timed_pop_filtered(gstBus, timeout, types);
+		auto __p = gst_bus_timed_pop_filtered(gstBus, timeout, types);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**

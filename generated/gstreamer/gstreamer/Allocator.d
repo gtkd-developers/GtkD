@@ -31,7 +31,6 @@ private import gstreamer.Memory;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -95,14 +94,14 @@ public class Allocator : ObjectGst
 	 */
 	public static Allocator find(string name)
 	{
-		auto p = gst_allocator_find(Str.toStringz(name));
+		auto __p = gst_allocator_find(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Allocator)(cast(GstAllocator*) p, true);
+		return ObjectG.getDObject!(Allocator)(cast(GstAllocator*) __p, true);
 	}
 
 	/**
@@ -143,14 +142,14 @@ public class Allocator : ObjectGst
 	 */
 	public Memory alloc(size_t size, AllocationParams params)
 	{
-		auto p = gst_allocator_alloc(gstAllocator, size, (params is null) ? null : params.getAllocationParamsStruct());
+		auto __p = gst_allocator_alloc(gstAllocator, size, (params is null) ? null : params.getAllocationParamsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -161,7 +160,7 @@ public class Allocator : ObjectGst
 	 */
 	public void free(Memory memory)
 	{
-		gst_allocator_free(gstAllocator, (memory is null) ? null : memory.getMemoryStruct());
+		gst_allocator_free(gstAllocator, (memory is null) ? null : memory.getMemoryStruct(true));
 	}
 
 	/**

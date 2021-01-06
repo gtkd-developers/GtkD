@@ -147,10 +147,10 @@ OBJECTS_DEMO = $(shell echo $(SOURCES_DEMO) | sed -e 's/\.d/\.o/g')
 generate: generate-runtime
 
 generate-runtime: $(GIRTOD)
-	$(GIRTOD) -i src --use-runtime-linker --use-bind-dir
+	$(GIRTOD) -i src --use-runtime-linker
 
 generate-compiletime: $(GIRTOD)
-	$(GIRTOD) -i src --use-bind-dir
+	$(GIRTOD) -i src
 
 $(GIRTOD):
 	$(if $(findstring "./wrap/girtod","$(GIRTOD)"),$(MAKE) -C wrap)

@@ -28,13 +28,15 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Adjustment;
-private import gtk.Entry;
+private import gtk.CellEditableIF;
+private import gtk.CellEditableT;
+private import gtk.EditableIF;
+private import gtk.EditableT;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -48,39 +50,12 @@ private import std.algorithm;
  * 
  * The main properties of a GtkSpinButton are through an adjustment.
  * See the #GtkAdjustment section for more details about an adjustment's
- * properties. Note that GtkSpinButton will by default make its entry
- * large enough to accomodate the lower and upper bounds of the adjustment,
- * which can lead to surprising results. Best practice is to set both
- * the #GtkEntry:width-chars and #GtkEntry:max-width-chars poperties
- * to the desired number of characters to display in the entry.
+ * properties.
  * 
- * # CSS nodes
- * 
- * |[<!-- language="plain" -->
- * spinbutton.horizontal
- * ├── undershoot.left
- * ├── undershoot.right
- * ├── entry
- * │   ╰── ...
- * ├── button.down
- * ╰── button.up
- * ]|
- * 
- * |[<!-- language="plain" -->
- * spinbutton.vertical
- * ├── undershoot.left
- * ├── undershoot.right
- * ├── button.up
- * ├── entry
- * │   ╰── ...
- * ╰── button.down
- * ]|
- * 
- * GtkSpinButtons main CSS node has the name spinbutton. It creates subnodes
- * for the entry and the two buttons, with these names. The button nodes have
- * the style classes .up and .down. The GtkEntry subnodes (if present) are put
- * below the entry node. The orientation of the spin button is reflected in
- * the .vertical or .horizontal style class on the main node.
+ * Note that GtkSpinButton will by default make its entry large enough to
+ * accommodate the lower and upper bounds of the adjustment. If this is
+ * not desired, the automatic sizing can be turned off by explicitly
+ * setting #GtkEditable::width-chars to a value != -1.
  * 
  * ## Using a GtkSpinButton to get an integer
  * 
@@ -88,7 +63,7 @@ private import std.algorithm;
  * // Provides a function to retrieve an integer value from a GtkSpinButton
  * // and creates a spin button to model percentage values.
  * 
- * gint
+ * int
  * grab_int_value (GtkSpinButton *button,
  * gpointer       user_data)
  * {
@@ -104,14 +79,13 @@ private import std.algorithm;
  * 
  * adjustment = gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 5.0, 0.0);
  * 
- * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
- * gtk_container_set_border_width (GTK_CONTAINER (window), 5);
+ * window = gtk_window_new ();
  * 
  * // creates the spinbutton, with no decimal places
  * button = gtk_spin_button_new (adjustment, 1.0, 0);
- * gtk_container_add (GTK_CONTAINER (window), button);
+ * gtk_window_set_child (GTK_WINDOW (window), button);
  * 
- * gtk_widget_show_all (window);
+ * gtk_widget_show (window);
  * }
  * ]|
  * 
@@ -121,7 +95,7 @@ private import std.algorithm;
  * // Provides a function to retrieve a floating point value from a
  * // GtkSpinButton, and creates a high precision spin button.
  * 
- * gfloat
+ * float
  * grab_float_value (GtkSpinButton *button,
  * gpointer       user_data)
  * {
@@ -136,18 +110,47 @@ private import std.algorithm;
  * 
  * adjustment = gtk_adjustment_new (2.500, 0.0, 5.0, 0.001, 0.1, 0.0);
  * 
- * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
- * gtk_container_set_border_width (GTK_CONTAINER (window), 5);
+ * window = gtk_window_new ();
  * 
  * // creates the spinbutton, with three decimal places
  * button = gtk_spin_button_new (adjustment, 0.001, 3);
- * gtk_container_add (GTK_CONTAINER (window), button);
+ * gtk_window_set_child (GTK_WINDOW (window), button);
  * 
- * gtk_widget_show_all (window);
+ * gtk_widget_show (window);
  * }
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * spinbutton.horizontal
+ * ├── text
+ * │    ├── undershoot.left
+ * │    ╰── undershoot.right
+ * ├── button.down
+ * ╰── button.up
+ * ]|
+ * 
+ * |[<!-- language="plain" -->
+ * spinbutton.vertical
+ * ├── button.up
+ * ├── text
+ * │    ├── undershoot.left
+ * │    ╰── undershoot.right
+ * ╰── button.down
+ * ]|
+ * 
+ * GtkSpinButtons main CSS node has the name spinbutton. It creates subnodes
+ * for the entry and the two buttons, with these names. The button nodes have
+ * the style classes .up and .down. The GtkText subnodes (if present) are put
+ * below the text node. The orientation of the spin button is reflected in
+ * the .vertical or .horizontal style class on the main node.
+ * 
+ * # Accessiblity
+ * 
+ * GtkSpinButton uses the #GTK_ACCESSIBLE_ROLE_SPIN_BUTTON role.
  */
-public class SpinButton : Entry, OrientableIF
+public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 {
 	/** the main Gtk struct */
 	protected GtkSpinButton* gtkSpinButton;
@@ -172,8 +175,14 @@ public class SpinButton : Entry, OrientableIF
 	public this (GtkSpinButton* gtkSpinButton, bool ownedRef = false)
 	{
 		this.gtkSpinButton = gtkSpinButton;
-		super(cast(GtkEntry*)gtkSpinButton, ownedRef);
+		super(cast(GtkWidget*)gtkSpinButton, ownedRef);
 	}
+
+	// add the CellEditable capabilities
+	mixin CellEditableT!(GtkSpinButton);
+
+	// add the Editable capabilities
+	mixin EditableT!(GtkSpinButton);
 
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkSpinButton);
@@ -201,14 +210,14 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	public this(Adjustment adjustment, double climbRate, uint digits)
 	{
-		auto p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
+		auto __p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSpinButton*) p);
+		this(cast(GtkSpinButton*) __p);
 	}
 
 	/**
@@ -233,14 +242,14 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	public this(double min, double max, double step)
 	{
-		auto p = gtk_spin_button_new_with_range(min, max, step);
+		auto __p = gtk_spin_button_new_with_range(min, max, step);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
 
-		this(cast(GtkSpinButton*) p);
+		this(cast(GtkSpinButton*) __p);
 	}
 
 	/**
@@ -265,14 +274,24 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_spin_button_get_adjustment(gtkSpinButton);
+		auto __p = gtk_spin_button_get_adjustment(gtkSpinButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
+	}
+
+	/**
+	 * Returns the acceleration rate for repeated changes.
+	 *
+	 * Returns: the acceleration rate
+	 */
+	public double getClimbRate()
+	{
+		return gtk_spin_button_get_climb_rate(gtkSpinButton);
 	}
 
 	/**
@@ -385,6 +404,18 @@ public class SpinButton : Entry, OrientableIF
 	public void setAdjustment(Adjustment adjustment)
 	{
 		gtk_spin_button_set_adjustment(gtkSpinButton, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+	}
+
+	/**
+	 * Sets the acceleration rate for repeated changes when you
+	 * hold down a button or key.
+	 *
+	 * Params:
+	 *     climbRate = the rate of acceleration, must be >= 0
+	 */
+	public void setClimbRate(double climbRate)
+	{
+		gtk_spin_button_set_climb_rate(gtkSpinButton, climbRate);
 	}
 
 	/**
@@ -511,7 +542,7 @@ public class SpinButton : Entry, OrientableIF
 	}
 
 	/**
-	 * The ::change-value signal is a [keybinding signal][GtkBindingSignal]
+	 * The ::change-value signal is a [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates a value change.
 	 *
 	 * Applications should not connect to it, but may emit it with
@@ -531,8 +562,8 @@ public class SpinButton : Entry, OrientableIF
 	/**
 	 * The ::input signal can be used to influence the conversion of
 	 * the users input into a double value. The signal handler is
-	 * expected to use gtk_entry_get_text() to retrieve the text of
-	 * the entry and set @new_value to the new value.
+	 * expected to use gtk_editable_get_text() to retrieve the text of
+	 * the spinbutton and set @new_value to the new value.
 	 *
 	 * The default conversion uses g_strtod().
 	 *
@@ -557,13 +588,13 @@ public class SpinButton : Entry, OrientableIF
 	 * gpointer       data)
 	 * {
 	 * GtkAdjustment *adjustment;
-	 * gchar *text;
+	 * char *text;
 	 * int value;
 	 *
 	 * adjustment = gtk_spin_button_get_adjustment (spin);
 	 * value = (int)gtk_adjustment_get_value (adjustment);
 	 * text = g_strdup_printf ("%02d", value);
-	 * gtk_entry_set_text (GTK_ENTRY (spin), text);
+	 * gtk_spin_button_set_text (spin, text):
 	 * g_free (text);
 	 *
 	 * return TRUE;
@@ -589,8 +620,6 @@ public class SpinButton : Entry, OrientableIF
 	/**
 	 * The ::wrapped signal is emitted right after the spinbutton wraps
 	 * from its maximum to minimum value or vice-versa.
-	 *
-	 * Since: 2.10
 	 */
 	gulong addOnWrapped(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

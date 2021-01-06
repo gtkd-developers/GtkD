@@ -26,10 +26,11 @@ module gstreamer.DoubleRange;
 
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes a #gdouble range
+ */
 public class DoubleRange
 {
 	/** the main Gtk struct */

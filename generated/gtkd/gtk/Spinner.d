@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -42,8 +41,9 @@ public  import gtkc.gtktypes;
  * 
  * # CSS nodes
  * 
- * GtkSpinner has a single CSS node with the name spinner. When the animation is
- * active, the :checked pseudoclass is added to this node.
+ * GtkSpinner has a single CSS node with the name spinner.
+ * When the animation is active, the :checked pseudoclass is
+ * added to this node.
  */
 public class Spinner : Widget
 {
@@ -85,26 +85,43 @@ public class Spinner : Widget
 	 *
 	 * Returns: a new #GtkSpinner
 	 *
-	 * Since: 2.20
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_spinner_new();
+		auto __p = gtk_spinner_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSpinner*) p);
+		this(cast(GtkSpinner*) __p);
+	}
+
+	/**
+	 * Returns whether the spinner is spinning.
+	 *
+	 * Returns: %TRUE if the spinner is active
+	 */
+	public bool getSpinning()
+	{
+		return gtk_spinner_get_spinning(gtkSpinner) != 0;
+	}
+
+	/**
+	 * Sets the activity of the spinner.
+	 *
+	 * Params:
+	 *     spinning = whether the spinner should be spinning
+	 */
+	public void setSpinning(bool spinning)
+	{
+		gtk_spinner_set_spinning(gtkSpinner, spinning);
 	}
 
 	/**
 	 * Starts the animation of the spinner.
-	 *
-	 * Since: 2.20
 	 */
 	public void start()
 	{
@@ -113,8 +130,6 @@ public class Spinner : Widget
 
 	/**
 	 * Stops the animation of the spinner.
-	 *
-	 * Since: 2.20
 	 */
 	public void stop()
 	{

@@ -32,7 +32,6 @@ private import gobject.Signals;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -58,11 +57,7 @@ private import std.algorithm;
  * create a widget instance and connect to the #GtkGLArea::render signal:
  * 
  * |[<!-- language="C" -->
- * // create a GtkGLArea instance
- * GtkWidget *gl_area = gtk_gl_area_new ();
  * 
- * // connect to the "render" signal
- * g_signal_connect (gl_area, "render", G_CALLBACK (render), NULL);
  * ]|
  * 
  * The `render()` function will be called when the #GtkGLArea is ready
@@ -82,12 +77,21 @@ private import std.algorithm;
  * glClear (GL_COLOR_BUFFER_BIT);
  * 
  * // draw your object
- * draw_an_object ();
+ * // draw_an_object ();
  * 
  * // we completed our drawing; the draw commands will be
  * // flushed at the end of the signal emission chain, and
  * // the buffers will be drawn on the window
  * return TRUE;
+ * }
+ * 
+ * void setup_glarea (void)
+ * {
+ * // create a GtkGLArea instance
+ * GtkWidget *gl_area = gtk_gl_area_new ();
+ * 
+ * // connect to the "render" signal
+ * g_signal_connect (gl_area, "render", G_CALLBACK (render), NULL);
  * }
  * ]|
  * 
@@ -136,8 +140,6 @@ private import std.algorithm;
  * 
  * If you need to change the options for creating the #GdkGLContext
  * you should use the #GtkGLArea::create-context signal.
- *
- * Since: 3.16
  */
 public class GLArea : Widget
 {
@@ -179,32 +181,28 @@ public class GLArea : Widget
 	 *
 	 * Returns: a new #GtkGLArea
 	 *
-	 * Since: 3.16
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_gl_area_new();
+		auto __p = gtk_gl_area_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGLArea*) p);
+		this(cast(GtkGLArea*) __p);
 	}
 
 	/**
 	 * Ensures that the @area framebuffer object is made the current draw
 	 * and read target, and that all the required buffers for the @area
-	 * are created and bound to the frambuffer.
+	 * are created and bound to the framebuffer.
 	 *
 	 * This function is automatically called before emitting the
 	 * #GtkGLArea::render signal, and doesn't normally need to be called
 	 * by application code.
-	 *
-	 * Since: 3.16
 	 */
 	public void attachBuffers()
 	{
@@ -215,8 +213,6 @@ public class GLArea : Widget
 	 * Returns whether the area is in auto render mode or not.
 	 *
 	 * Returns: %TRUE if the @area is auto rendering, %FALSE otherwise
-	 *
-	 * Since: 3.16
 	 */
 	public bool getAutoRender()
 	{
@@ -227,58 +223,40 @@ public class GLArea : Widget
 	 * Retrieves the #GdkGLContext used by @area.
 	 *
 	 * Returns: the #GdkGLContext
-	 *
-	 * Since: 3.16
 	 */
 	public GLContext getContext()
 	{
-		auto p = gtk_gl_area_get_context(gtkGLArea);
+		auto __p = gtk_gl_area_get_context(gtkGLArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) __p);
 	}
 
 	/**
 	 * Gets the current error set on the @area.
 	 *
 	 * Returns: the #GError or %NULL
-	 *
-	 * Since: 3.16
 	 */
 	public ErrorG getError()
 	{
-		auto p = gtk_gl_area_get_error(gtkGLArea);
+		auto __p = gtk_gl_area_get_error(gtkGLArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ErrorG(cast(GError*) p);
-	}
-
-	/**
-	 * Returns whether the area has an alpha component.
-	 *
-	 * Returns: %TRUE if the @area has an alpha component, %FALSE otherwise
-	 *
-	 * Since: 3.16
-	 */
-	public bool getHasAlpha()
-	{
-		return gtk_gl_area_get_has_alpha(gtkGLArea) != 0;
+		return new ErrorG(cast(GError*) __p);
 	}
 
 	/**
 	 * Returns whether the area has a depth buffer.
 	 *
 	 * Returns: %TRUE if the @area has a depth buffer, %FALSE otherwise
-	 *
-	 * Since: 3.16
 	 */
 	public bool getHasDepthBuffer()
 	{
@@ -289,8 +267,6 @@ public class GLArea : Widget
 	 * Returns whether the area has a stencil buffer.
 	 *
 	 * Returns: %TRUE if the @area has a stencil buffer, %FALSE otherwise
-	 *
-	 * Since: 3.16
 	 */
 	public bool getHasStencilBuffer()
 	{
@@ -304,8 +280,6 @@ public class GLArea : Widget
 	 * Params:
 	 *     major = return location for the required major version
 	 *     minor = return location for the required minor version
-	 *
-	 * Since: 3.16
 	 */
 	public void getRequiredVersion(out int major, out int minor)
 	{
@@ -317,8 +291,6 @@ public class GLArea : Widget
 	 *
 	 * Returns: %TRUE if the #GtkGLArea should create an OpenGL ES context
 	 *     and %FALSE otherwise
-	 *
-	 * Since: 3.22
 	 */
 	public bool getUseEs()
 	{
@@ -332,8 +304,6 @@ public class GLArea : Widget
 	 * This function is automatically called before emitting the
 	 * #GtkGLArea::render signal, and doesn't normally need to be called
 	 * by application code.
-	 *
-	 * Since: 3.16
 	 */
 	public void makeCurrent()
 	{
@@ -348,8 +318,6 @@ public class GLArea : Widget
 	 * This is only needed when the gtk_gl_area_set_auto_render() has
 	 * been called with a %FALSE value. The default behaviour is to
 	 * emit #GtkGLArea::render on each draw.
-	 *
-	 * Since: 3.16
 	 */
 	public void queueRender()
 	{
@@ -365,12 +333,10 @@ public class GLArea : Widget
 	 * around and will be used for drawing the widget the next time,
 	 * unless the window is resized. In order to force a rendering
 	 * gtk_gl_area_queue_render() must be called. This mode is useful when
-	 * the scene changes seldomly, but takes a long time to redraw.
+	 * the scene changes seldom, but takes a long time to redraw.
 	 *
 	 * Params:
 	 *     autoRender = a boolean
-	 *
-	 * Since: 3.16
 	 */
 	public void setAutoRender(bool autoRender)
 	{
@@ -384,30 +350,10 @@ public class GLArea : Widget
 	 *
 	 * Params:
 	 *     error = a new #GError, or %NULL to unset the error
-	 *
-	 * Since: 3.16
 	 */
 	public void setError(ErrorG error)
 	{
 		gtk_gl_area_set_error(gtkGLArea, (error is null) ? null : error.getErrorGStruct());
-	}
-
-	/**
-	 * If @has_alpha is %TRUE the buffer allocated by the widget will have
-	 * an alpha channel component, and when rendering to the window the
-	 * result will be composited over whatever is below the widget.
-	 *
-	 * If @has_alpha is %FALSE there will be no alpha channel, and the
-	 * buffer will fully replace anything below the widget.
-	 *
-	 * Params:
-	 *     hasAlpha = %TRUE to add an alpha component
-	 *
-	 * Since: 3.16
-	 */
-	public void setHasAlpha(bool hasAlpha)
-	{
-		gtk_gl_area_set_has_alpha(gtkGLArea, hasAlpha);
 	}
 
 	/**
@@ -417,8 +363,6 @@ public class GLArea : Widget
 	 *
 	 * Params:
 	 *     hasDepthBuffer = %TRUE to add a depth buffer
-	 *
-	 * Since: 3.16
 	 */
 	public void setHasDepthBuffer(bool hasDepthBuffer)
 	{
@@ -432,8 +376,6 @@ public class GLArea : Widget
 	 *
 	 * Params:
 	 *     hasStencilBuffer = %TRUE to add a stencil buffer
-	 *
-	 * Since: 3.16
 	 */
 	public void setHasStencilBuffer(bool hasStencilBuffer)
 	{
@@ -449,8 +391,6 @@ public class GLArea : Widget
 	 * Params:
 	 *     major = the major version
 	 *     minor = the minor version
-	 *
-	 * Since: 3.16
 	 */
 	public void setRequiredVersion(int major, int minor)
 	{
@@ -465,8 +405,6 @@ public class GLArea : Widget
 	 *
 	 * Params:
 	 *     useEs = whether to use OpenGL or OpenGL ES
-	 *
-	 * Since: 3.22
 	 */
 	public void setUseEs(bool useEs)
 	{
@@ -486,8 +424,6 @@ public class GLArea : Widget
 	 *
 	 * Returns: a newly created #GdkGLContext;
 	 *     the #GtkGLArea widget will take ownership of the returned value.
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnCreateContext(GLContext delegate(GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -506,8 +442,6 @@ public class GLArea : Widget
 	 *
 	 * Returns: %TRUE to stop other handlers from being invoked for the event.
 	 *     %FALSE to propagate the event further.
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnRender(bool delegate(GLContext, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -528,8 +462,6 @@ public class GLArea : Widget
 	 * Params:
 	 *     width = the width of the viewport
 	 *     height = the height of the viewport
-	 *
-	 * Since: 3.16
 	 */
 	gulong addOnResize(void delegate(int, int, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

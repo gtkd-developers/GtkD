@@ -68,10 +68,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import cairo.Device;
 private import cairo.FontOption;
-private import gdk.Window;
-private import gdk.c.functions;
-
-
 
 /**
  * cairo_surface_t is the abstract type representing all different drawing
@@ -119,11 +115,6 @@ public class Surface
 	public this (cairo_surface_t* cairo_surface)
 	{
 		this.cairo_surface = cairo_surface;
-	}
-	
-	this(Window window, cairo_content_t content, int width,int height)
-	{
-		this(gdk_window_create_similar_surface(window.getWindowStruct(), content, width, height));
 	}
 	
 	/**

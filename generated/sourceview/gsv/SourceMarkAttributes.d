@@ -35,7 +35,6 @@ private import gobject.Signals;
 private import gsv.SourceMark;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.Widget;
 private import std.algorithm;
 
@@ -85,14 +84,14 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_source_mark_attributes_new();
+		auto __p = gtk_source_mark_attributes_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceMarkAttributes*) p, true);
+		this(cast(GtkSourceMarkAttributes*) __p, true);
 	}
 
 	/**
@@ -107,11 +106,11 @@ public class SourceMarkAttributes : ObjectG
 	{
 		GdkRGBA* outbackground = sliceNew!GdkRGBA();
 
-		auto p = gtk_source_mark_attributes_get_background(gtkSourceMarkAttributes, outbackground) != 0;
+		auto __p = gtk_source_mark_attributes_get_background(gtkSourceMarkAttributes, outbackground) != 0;
 
 		background = ObjectG.getDObject!(RGBA)(outbackground, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -123,14 +122,14 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public IconIF getGicon()
 	{
-		auto p = gtk_source_mark_attributes_get_gicon(gtkSourceMarkAttributes);
+		auto __p = gtk_source_mark_attributes_get_gicon(gtkSourceMarkAttributes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -154,14 +153,14 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = gtk_source_mark_attributes_get_pixbuf(gtkSourceMarkAttributes);
+		auto __p = gtk_source_mark_attributes_get_pixbuf(gtkSourceMarkAttributes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -217,14 +216,14 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public Pixbuf renderIcon(Widget widget, int size)
 	{
-		auto p = gtk_source_mark_attributes_render_icon(gtkSourceMarkAttributes, (widget is null) ? null : widget.getWidgetStruct(), size);
+		auto __p = gtk_source_mark_attributes_render_icon(gtkSourceMarkAttributes, (widget is null) ? null : widget.getWidgetStruct(), size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**

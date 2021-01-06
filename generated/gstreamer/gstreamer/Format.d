@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gstreamer.Iterator;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /** */
@@ -88,14 +87,14 @@ public struct Format
 	 */
 	public static Iterator iterateDefinitions()
 	{
-		auto p = gst_format_iterate_definitions();
+		auto __p = gst_format_iterate_definitions();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**

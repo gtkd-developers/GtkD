@@ -32,7 +32,6 @@ private import gobject.TypeInstance;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import std.traits;
 
 
@@ -350,7 +349,7 @@ public struct Signals
 	/**
 	 * Blocks a handler of an instance so it will not be called during any
 	 * signal emissions unless it is unblocked again. Thus "blocking" a
-	 * signal handler means to temporarily deactive it, a signal handler
+	 * signal handler means to temporarily deactivate it, a signal handler
 	 * has to be unblocked exactly the same amount of times it has been
 	 * blocked before to become active again.
 	 *

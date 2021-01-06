@@ -24,10 +24,11 @@
 
 module gstreamer.Tracer;
 
+private import glib.Str;
 private import gstreamer.ObjectGst;
+private import gstreamer.Plugin;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -71,5 +72,21 @@ public class Tracer : ObjectGst
 	public static GType getType()
 	{
 		return gst_tracer_get_type();
+	}
+
+	/**
+	 * Create a new tracer-factory  capable of instantiating objects of the
+	 * @type and add the factory to @plugin.
+	 *
+	 * Params:
+	 *     plugin = A #GstPlugin, or %NULL for a static typefind function
+	 *     name = The name for registering
+	 *     type = GType of tracer to register
+	 *
+	 * Returns: %TRUE, if the registering succeeded, %FALSE on error
+	 */
+	public static bool register(Plugin plugin, string name, GType type)
+	{
+		return gst_tracer_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), type) != 0;
 	}
 }

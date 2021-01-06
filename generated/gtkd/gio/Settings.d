@@ -34,7 +34,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -365,6 +364,12 @@ public class Settings : ObjectG
 	/**
 	 * Creates a new #GSettings object with the schema specified by
 	 * @schema_id.
+	 *
+	 * It is an error for the schema to not exist: schemas are an
+	 * essential part of a program, as they provide type information.
+	 * If schemas need to be dynamically loaded (for example, from an
+	 * optional runtime dependency), g_settings_schema_source_lookup()
+	 * can be used to test for their existence before loading them.
 	 *
 	 * Signals on the newly created #GSettings object will be dispatched
 	 * via the thread-default #GMainContext in effect at the time of the

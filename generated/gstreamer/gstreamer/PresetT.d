@@ -27,7 +27,6 @@ module gstreamer.PresetT;
 public  import glib.Str;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -95,11 +94,11 @@ public template PresetT(TStruct)
 	{
 		char* outvalue = null;
 
-		auto p = gst_preset_get_meta(getPresetStruct(), Str.toStringz(name), Str.toStringz(tag), &outvalue) != 0;
+		auto __p = gst_preset_get_meta(getPresetStruct(), Str.toStringz(name), Str.toStringz(tag), &outvalue) != 0;
 
 		value = Str.toString(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**

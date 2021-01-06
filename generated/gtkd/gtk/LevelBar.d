@@ -33,7 +33,6 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -50,7 +49,7 @@ private import std.algorithm;
  * values 0.25, 0.75 and 1.0 respectively.
  * 
  * Note that it is your responsibility to update preexisting offsets
- * when changing the minimum or maximum value. GTK+ will simply clamp
+ * when changing the minimum or maximum value. GTK will simply clamp
  * them to the new range.
  * 
  * ## Adding a custom offset on the bar
@@ -102,8 +101,6 @@ private import std.algorithm;
  * set the minimum value to 0 and the maximum value to 5 after changing the indicator
  * mode to discrete.
  * 
- * GtkLevelBar was introduced in GTK+ 3.6.
- * 
  * # GtkLevelBar as GtkBuildable
  * 
  * The GtkLevelBar implementation of the GtkBuildable interface supports a
@@ -131,6 +128,10 @@ private import std.algorithm;
  * 
  * In horizontal orientation, the nodes are always arranged from left to right,
  * regardless of text direction.
+ * 
+ * # Accessibility
+ * 
+ * GtkLevelBar uses the #GTK_ACCESSIBLE_ROLE_METER role.
  */
 public class LevelBar : Widget, OrientableIF
 {
@@ -175,20 +176,18 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Returns: a #GtkLevelBar.
 	 *
-	 * Since: 3.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_level_bar_new();
+		auto __p = gtk_level_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLevelBar*) p);
+		this(cast(GtkLevelBar*) __p);
 	}
 
 	/**
@@ -201,20 +200,18 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Returns: a #GtkLevelBar
 	 *
-	 * Since: 3.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(double minValue, double maxValue)
 	{
-		auto p = gtk_level_bar_new_for_interval(minValue, maxValue);
+		auto __p = gtk_level_bar_new_for_interval(minValue, maxValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_interval");
 		}
 
-		this(cast(GtkLevelBar*) p);
+		this(cast(GtkLevelBar*) __p);
 	}
 
 	/**
@@ -229,8 +226,6 @@ public class LevelBar : Widget, OrientableIF
 	 * Params:
 	 *     name = the name of the new offset
 	 *     value = the value for the new offset
-	 *
-	 * Since: 3.6
 	 */
 	public void addOffsetValue(string name, double value)
 	{
@@ -241,8 +236,6 @@ public class LevelBar : Widget, OrientableIF
 	 * Return the value of the #GtkLevelBar:inverted property.
 	 *
 	 * Returns: %TRUE if the level bar is inverted
-	 *
-	 * Since: 3.8
 	 */
 	public bool getInverted()
 	{
@@ -253,8 +246,6 @@ public class LevelBar : Widget, OrientableIF
 	 * Returns the value of the #GtkLevelBar:max-value property.
 	 *
 	 * Returns: a positive value
-	 *
-	 * Since: 3.6
 	 */
 	public double getMaxValue()
 	{
@@ -265,8 +256,6 @@ public class LevelBar : Widget, OrientableIF
 	 * Returns the value of the #GtkLevelBar:min-value property.
 	 *
 	 * Returns: a positive value
-	 *
-	 * Since: 3.6
 	 */
 	public double getMinValue()
 	{
@@ -277,8 +266,6 @@ public class LevelBar : Widget, OrientableIF
 	 * Returns the value of the #GtkLevelBar:mode property.
 	 *
 	 * Returns: a #GtkLevelBarMode
-	 *
-	 * Since: 3.6
 	 */
 	public GtkLevelBarMode getMode()
 	{
@@ -294,8 +281,6 @@ public class LevelBar : Widget, OrientableIF
 	 *     value = location where to store the value
 	 *
 	 * Returns: %TRUE if the specified offset is found
-	 *
-	 * Since: 3.6
 	 */
 	public bool getOffsetValue(string name, out double value)
 	{
@@ -307,8 +292,6 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Returns: a value in the interval between
 	 *     #GtkLevelBar:min-value and #GtkLevelBar:max-value
-	 *
-	 * Since: 3.6
 	 */
 	public double getValue()
 	{
@@ -321,8 +304,6 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     name = the name of an offset in the bar
-	 *
-	 * Since: 3.6
 	 */
 	public void removeOffsetValue(string name)
 	{
@@ -334,8 +315,6 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     inverted = %TRUE to invert the level bar
-	 *
-	 * Since: 3.8
 	 */
 	public void setInverted(bool inverted)
 	{
@@ -350,8 +329,6 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     value = a positive value
-	 *
-	 * Since: 3.6
 	 */
 	public void setMaxValue(double value)
 	{
@@ -366,8 +343,6 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     value = a positive value
-	 *
-	 * Since: 3.6
 	 */
 	public void setMinValue(double value)
 	{
@@ -379,8 +354,6 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     mode = a #GtkLevelBarMode
-	 *
-	 * Since: 3.6
 	 */
 	public void setMode(GtkLevelBarMode mode)
 	{
@@ -393,8 +366,6 @@ public class LevelBar : Widget, OrientableIF
 	 * Params:
 	 *     value = a value in the interval between
 	 *         #GtkLevelBar:min-value and #GtkLevelBar:max-value
-	 *
-	 * Since: 3.6
 	 */
 	public void setValue(double value)
 	{
@@ -411,8 +382,6 @@ public class LevelBar : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     name = the name of the offset that changed value
-	 *
-	 * Since: 3.6
 	 */
 	gulong addOnOffsetChanged(void delegate(string, LevelBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

@@ -24,17 +24,13 @@
 
 module gtk.ComboBoxText;
 
-public  import gdk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
-private import gobject.Signals;
+private import gobject.ObjectG;
 private import gtk.ComboBox;
-private import gtk.TreeIter;
-private import gtk.TreeModelIF;
+private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import std.algorithm;
 
 
 /**
@@ -118,208 +114,51 @@ public class ComboBoxText : ComboBox
 		super(cast(GtkComboBox*)gtkComboBoxText, ownedRef);
 	}
 
-	/**
-	 * Creates a new ComboBoxText, which is a ComboBox just displaying strings.
-	 * Params:
-	 *   entry = If true, create an ComboBox with an entry.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (bool entry=true)
-	{
-		GtkComboBoxText* p;
-		if ( entry )
-		{
-			// GtkWidget* gtk_combo_box_text_new_with_entry (void);
-			p = cast(GtkComboBoxText*)gtk_combo_box_text_new_with_entry();
-		}
-		else
-		{
-			// GtkWidget* gtk_combo_box_text_new (void);
-			p = cast(GtkComboBoxText*)gtk_combo_box_text_new();
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_combo_box_new");
-		}
-
-		this(p);
-	}
-
-	/** */
-	public void setActiveText(string text, bool insert=false)
-	{
-		int active = 0;
-		setActive(0);
-		while ( getActive() >= 0 ) // returns -1 if end of list if reached
-		{
-			if( text == getActiveText() ) return;
-			++active;
-			setActive(active);
-		}
-		// was not found, the combo has now nothing selected
-		if ( insert )
-		{
-			append("", text);
-			setActive(active);
-		}
-	}
-
-	/** */
-	int getIndex(string text)
-	{
-		TreeIter iter;
-		TreeModelIF model = getModel();
-		int index = 0;
-		bool found = false;
-		bool end = false;
-		if ( model.getIterFirst(iter) )
-		{
-			iter.setModel(model);
-			while ( !end && iter !is  null && !found )
-			{
-				found = iter.getValueString(0) == text;
-				if ( !found )
-				{
-					end = !model.iterNext(iter);
-					++index;
-				}
-			}
-		}
-		else
-		{
-			end = true;
-		}
-		return end ? -1 : index;
-	}
-
-	/** */
-	void prependOrReplaceText(string text)
-	{
-		int index = getIndex(text);
-		if ( index > 0 )
-		{
-			remove(index);
-			prepend("", text);
-		}
-		else if ( index == -1 )
-		{
-			prepend("", text);
-		}
-	}
-
-	/**
-	 * The changed signal is emitted when the active
-	 * item is changed. The can be due to the user selecting
-	 * a different item from the list, or due to a
-	 * call to gtk_combo_box_set_active_iter().
-	 * It will also be emitted while typing into the entry of a combo box
-	 * with an entry.
-	 *
-	 * Since: 2.4
-	 */
-	gulong addOnChanged(void delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
-	 *
-	 * A signal which allows you to change how the text displayed in a combo box's
-	 * entry is displayed.
-	 *
-	 * Connect a signal handler which returns an allocated string representing
-	 * @path. That string will then be used to set the text in the combo box's entry.
-	 * The default signal handler uses the text from the GtkComboBox::entry-text-column
-	 * model column.
-	 *
-	 * Here's an example signal handler which fetches data from the model and
-	 * displays it in the entry.
-	 * |[<!-- language="C" -->
-	 * static gchar*
-	 * format_entry_text_callback (GtkComboBox *combo,
-	 * const gchar *path,
-	 * gpointer     user_data)
-	 * {
-	 * GtkTreeIter iter;
-	 * GtkTreeModel model;
-	 * gdouble      value;
-	 *
-	 * model = gtk_combo_box_get_model (combo);
-	 *
-	 * gtk_tree_model_get_iter_from_string (model, &iter, path);
-	 * gtk_tree_model_get (model, &iter,
-	 * THE_DOUBLE_VALUE_COLUMN, &value,
-	 * -1);
-	 *
-	 * return g_strdup_printf ("%g", value);
-	 * }
-	 * ]|
-	 *
-	 * Params:
-	 *     path = the GtkTreePath string from the combo box's current model to format text for
-	 *
-	 * Return: a newly allocated string representing @path
-	 *     for the current GtkComboBox model.
-	 *
-	 * Since: 3.4
-	 */
-	gulong addOnFormatEntryText(string delegate(string, ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "format-entry-text", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::move-active signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to move the active selection.
-	 *
-	 * Params:
-	 *     scrollType = a #GtkScrollType
-	 *
-	 * Since: 2.12
-	 */
-	gulong addOnMoveActive(void delegate(GtkScrollType, ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "move-active", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::popdown signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to popdown the combo box list.
-	 *
-	 * The default bindings for this signal are Alt+Up and Escape.
-	 *
-	 * Since: 2.12
-	 */
-	gulong addOnPopdown(bool delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "popdown", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::popup signal is a
-	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to popup the combo box list.
-	 *
-	 * The default binding for this signal is Alt+Down.
-	 *
-	 * Since: 2.12
-	 */
-	gulong addOnPopup(void delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gtk_combo_box_text_get_type();
+	}
+
+	/**
+	 * Creates a new #GtkComboBoxText, which is a #GtkComboBox just displaying
+	 * strings.
+	 *
+	 * Returns: A new #GtkComboBoxText
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto __p = gtk_combo_box_text_new();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GtkComboBoxText*) __p);
+	}
+
+	/**
+	 * Creates a new #GtkComboBoxText, which is a #GtkComboBox just displaying
+	 * strings. The combo box created by this function has an entry.
+	 *
+	 * Returns: a new #GtkComboBoxText
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto __p = gtk_combo_box_text_new_with_entry();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_with_entry");
+		}
+
+		this(cast(GtkComboBoxText*) __p);
 	}
 
 	/**
@@ -332,8 +171,6 @@ public class ComboBoxText : ComboBox
 	 * Params:
 	 *     id = a string ID for this value, or %NULL
 	 *     text = A string
-	 *
-	 * Since: 2.24
 	 */
 	public void append(string id, string text)
 	{
@@ -348,8 +185,6 @@ public class ComboBoxText : ComboBox
 	 *
 	 * Params:
 	 *     text = A string
-	 *
-	 * Since: 2.24
 	 */
 	public void appendText(string text)
 	{
@@ -364,8 +199,6 @@ public class ComboBoxText : ComboBox
 	 *
 	 * Returns: a newly allocated string containing the
 	 *     currently active text. Must be freed with g_free().
-	 *
-	 * Since: 2.24
 	 */
 	public string getActiveText()
 	{
@@ -386,8 +219,6 @@ public class ComboBoxText : ComboBox
 	 *     position = An index to insert @text
 	 *     id = a string ID for this value, or %NULL
 	 *     text = A string to display
-	 *
-	 * Since: 3.0
 	 */
 	public void insert(int position, string id, string text)
 	{
@@ -405,8 +236,6 @@ public class ComboBoxText : ComboBox
 	 * Params:
 	 *     position = An index to insert @text
 	 *     text = A string
-	 *
-	 * Since: 2.24
 	 */
 	public void insertText(int position, string text)
 	{
@@ -423,8 +252,6 @@ public class ComboBoxText : ComboBox
 	 * Params:
 	 *     id = a string ID for this value, or %NULL
 	 *     text = a string
-	 *
-	 * Since: 2.24
 	 */
 	public void prepend(string id, string text)
 	{
@@ -439,8 +266,6 @@ public class ComboBoxText : ComboBox
 	 *
 	 * Params:
 	 *     text = A string
-	 *
-	 * Since: 2.24
 	 */
 	public void prependText(string text)
 	{
@@ -452,8 +277,6 @@ public class ComboBoxText : ComboBox
 	 *
 	 * Params:
 	 *     position = Index of the item to remove
-	 *
-	 * Since: 2.24
 	 */
 	public void remove(int position)
 	{
@@ -462,10 +285,8 @@ public class ComboBoxText : ComboBox
 
 	/**
 	 * Removes all the text entries from the combo box.
-	 *
-	 * Since: 3.0
 	 */
-	public override void removeAll()
+	public void removeAll()
 	{
 		gtk_combo_box_text_remove_all(gtkComboBoxText);
 	}

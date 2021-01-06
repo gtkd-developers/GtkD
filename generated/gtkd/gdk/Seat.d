@@ -24,18 +24,14 @@
 
 module gdk.Seat;
 
-private import gdk.Cursor;
 private import gdk.Device;
 private import gdk.DeviceTool;
 private import gdk.Display;
-private import gdk.Event;
-private import gdk.Window;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -82,8 +78,6 @@ public class Seat : ObjectG
 	 * Returns the capabilities this #GdkSeat currently has.
 	 *
 	 * Returns: the seat capabilities
-	 *
-	 * Since: 3.20
 	 */
 	public GdkSeatCapabilities getCapabilities()
 	{
@@ -91,150 +85,97 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkDisplay this seat belongs to.
-	 *
-	 * Returns: a #GdkDisplay. This object is owned by GTK+
-	 *     and must not be freed.
-	 */
-	public Display getDisplay()
-	{
-		auto p = gdk_seat_get_display(gdkSeat);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
-	}
-
-	/**
-	 * Returns the master device that routes keyboard events.
-	 *
-	 * Returns: a master #GdkDevice with keyboard
-	 *     capabilities. This object is owned by GTK+ and must not be freed.
-	 *
-	 * Since: 3.20
-	 */
-	public Device getKeyboard()
-	{
-		auto p = gdk_seat_get_keyboard(gdkSeat);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
-	}
-
-	/**
-	 * Returns the master device that routes pointer events.
-	 *
-	 * Returns: a master #GdkDevice with pointer
-	 *     capabilities. This object is owned by GTK+ and must not be freed.
-	 *
-	 * Since: 3.20
-	 */
-	public Device getPointer()
-	{
-		auto p = gdk_seat_get_pointer(gdkSeat);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
-	}
-
-	/**
-	 * Returns the slave devices that match the given capabilities.
+	 * Returns the devices that match the given capabilities.
 	 *
 	 * Params:
 	 *     capabilities = capabilities to get devices for
 	 *
 	 * Returns: A list of #GdkDevices.
 	 *     The list must be freed with g_list_free(), the elements are owned
-	 *     by GDK and must not be freed.
-	 *
-	 * Since: 3.20
+	 *     by GTK and must not be freed.
 	 */
-	public ListG getSlaves(GdkSeatCapabilities capabilities)
+	public ListG getDevices(GdkSeatCapabilities capabilities)
 	{
-		auto p = gdk_seat_get_slaves(gdkSeat, capabilities);
+		auto __p = gdk_seat_get_devices(gdkSeat, capabilities);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
-	 * Grabs the seat so that all events corresponding to the given @capabilities
-	 * are passed to this application until the seat is ungrabbed with gdk_seat_ungrab(),
-	 * or the window becomes hidden. This overrides any previous grab on the
-	 * seat by this client.
+	 * Returns the #GdkDisplay this seat belongs to.
 	 *
-	 * As a rule of thumb, if a grab is desired over %GDK_SEAT_CAPABILITY_POINTER,
-	 * all other "pointing" capabilities (eg. %GDK_SEAT_CAPABILITY_TOUCH) should
-	 * be grabbed too, so the user is able to interact with all of those while
-	 * the grab holds, you should thus use %GDK_SEAT_CAPABILITY_ALL_POINTING most
-	 * commonly.
-	 *
-	 * Grabs are used for operations which need complete control over the
-	 * events corresponding to the given capabilities. For example in GTK+ this
-	 * is used for Drag and Drop operations, popup menus and such.
-	 *
-	 * Note that if the event mask of a #GdkWindow has selected both button press
-	 * and button release events, or touch begin and touch end, then a press event
-	 * will cause an automatic grab until the button is released, equivalent to a
-	 * grab on the window with @owner_events set to %TRUE. This is done because most
-	 * applications expect to receive paired press and release events.
-	 *
-	 * If you set up anything at the time you take the grab that needs to be
-	 * cleaned up when the grab ends, you should handle the #GdkEventGrabBroken
-	 * events that are emitted when the grab ends unvoluntarily.
-	 *
-	 * Params:
-	 *     window = the #GdkWindow which will own the grab
-	 *     capabilities = capabilities that will be grabbed
-	 *     ownerEvents = if %FALSE then all device events are reported with respect to
-	 *         @window and are only reported if selected by @event_mask. If
-	 *         %TRUE then pointer events for this application are reported
-	 *         as normal, but pointer events outside this application are
-	 *         reported with respect to @window and only if selected by
-	 *         @event_mask. In either mode, unreported events are discarded.
-	 *     cursor = the cursor to display while the grab is active. If
-	 *         this is %NULL then the normal cursors are used for
-	 *         @window and its descendants, and the cursor for @window is used
-	 *         elsewhere.
-	 *     event = the event that is triggering the grab, or %NULL if none
-	 *         is available.
-	 *     prepareFunc = function to
-	 *         prepare the window to be grabbed, it can be %NULL if @window is
-	 *         visible before this call.
-	 *     prepareFuncData = user data to pass to @prepare_func
-	 *
-	 * Returns: %GDK_GRAB_SUCCESS if the grab was successful.
-	 *
-	 * Since: 3.20
+	 * Returns: a #GdkDisplay. This object is owned by GTK
+	 *     and must not be freed.
 	 */
-	public GdkGrabStatus grab(Window window, GdkSeatCapabilities capabilities, bool ownerEvents, Cursor cursor, Event event, GdkSeatGrabPrepareFunc prepareFunc, void* prepareFuncData)
+	public Display getDisplay()
 	{
-		return gdk_seat_grab(gdkSeat, (window is null) ? null : window.getWindowStruct(), capabilities, ownerEvents, (cursor is null) ? null : cursor.getCursorStruct(), (event is null) ? null : event.getEventStruct(), prepareFunc, prepareFuncData);
+		auto __p = gdk_seat_get_display(gdkSeat);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
-	 * Releases a grab added through gdk_seat_grab().
+	 * Returns the device that routes keyboard events.
 	 *
-	 * Since: 3.20
+	 * Returns: a #GdkDevice with keyboard
+	 *     capabilities. This object is owned by GTK and must not be freed.
 	 */
-	public void ungrab()
+	public Device getKeyboard()
 	{
-		gdk_seat_ungrab(gdkSeat);
+		auto __p = gdk_seat_get_keyboard(gdkSeat);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
+	}
+
+	/**
+	 * Returns the device that routes pointer events.
+	 *
+	 * Returns: a #GdkDevice with pointer
+	 *     capabilities. This object is owned by GTK and must not be freed.
+	 */
+	public Device getPointer()
+	{
+		auto __p = gdk_seat_get_pointer(gdkSeat);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
+	}
+
+	/**
+	 * Returns all #GdkDeviceTools that are known to the
+	 * application.
+	 *
+	 * Returns: A list of tools. Free with g_list_free().
+	 */
+	public ListG getTools()
+	{
+		auto __p = gdk_seat_get_tools(gdkSeat);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -243,8 +184,6 @@ public class Seat : ObjectG
 	 *
 	 * Params:
 	 *     device = the newly added #GdkDevice.
-	 *
-	 * Since: 3.20
 	 */
 	gulong addOnDeviceAdded(void delegate(Device, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -257,8 +196,6 @@ public class Seat : ObjectG
 	 *
 	 * Params:
 	 *     device = the just removed #GdkDevice.
-	 *
-	 * Since: 3.20
 	 */
 	gulong addOnDeviceRemoved(void delegate(Device, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -275,8 +212,6 @@ public class Seat : ObjectG
 	 *
 	 * Params:
 	 *     tool = the new #GdkDeviceTool known to the seat
-	 *
-	 * Since: 3.22
 	 */
 	gulong addOnToolAdded(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -289,8 +224,6 @@ public class Seat : ObjectG
 	 *
 	 * Params:
 	 *     tool = the just removed #GdkDeviceTool
-	 *
-	 * Since: 3.22
 	 */
 	gulong addOnToolRemoved(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

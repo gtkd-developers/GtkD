@@ -24,11 +24,9 @@
 
 module gtk.CellView;
 
-private import gdk.Color;
-private import gdk.RGBA;
-private import gdkpixbuf.Pixbuf;
+private import gdk.Texture;
 private import glib.ConstructionException;
-private import glib.MemorySlice;
+private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.CellArea;
 private import gtk.CellAreaContext;
@@ -36,13 +34,11 @@ private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
-private import gtk.Requisition;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -50,7 +46,7 @@ public  import gtkc.gtktypes;
  * and #GtkCellAreaContext. A #GtkCellAreaContext can be provided to the
  * #GtkCellView at construction time in order to keep the cellview in context
  * of a group of cell views, this ensures that the renderers displayed will
- * be properly aligned with eachother (like the aligned cells in the menus
+ * be properly aligned with each other (like the aligned cells in the menus
  * of #GtkComboBox).
  * 
  * #GtkCellView is #GtkOrientable in order to decide in which orientation
@@ -98,43 +94,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkCellView);
 
-	/**
-	 * Creates a new GtkCellView widget, adds a GtkCellRendererText
-	 * to it, and makes its show text.
-	 * If markup is true the text can be marked up with the Pango text
-	 * markup language.
-	 * Since: 2.6
-	 * Params:
-	 *  text = the text to display in the cell view
-	 * Returns:
-	 *  A newly created GtkCellView widget.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string text, bool markup=true)
-	{
-		GtkCellView* p;
-
-		if ( markup )
-		{
-			// GtkWidget* gtk_cell_view_new_with_markup (const gchar *markup);
-			p = cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text));
-		}
-		else
-		{
-			// GtkWidget* gtk_cell_view_new_with_text (const gchar *text);
-			p = cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text));
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_cell_view_new_with_");
-		}
-
-		this(p);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -147,27 +106,25 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Returns: A newly created #GtkCellView widget.
 	 *
-	 * Since: 2.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_cell_view_new();
+		auto __p = gtk_cell_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellView*) p);
+		this(cast(GtkCellView*) __p);
 	}
 
 	/**
 	 * Creates a new #GtkCellView widget with a specific #GtkCellArea
 	 * to layout cells and a specific #GtkCellAreaContext.
 	 *
-	 * Specifying the same context for a handfull of cells lets
+	 * Specifying the same context for a handful of cells lets
 	 * the underlying area synchronize the geometry for those cells,
 	 * in this way alignments with cellviews for other rows are
 	 * possible.
@@ -178,45 +135,88 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Returns: A newly created #GtkCellView widget.
 	 *
-	 * Since: 2.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(CellArea area, CellAreaContext context)
 	{
-		auto p = gtk_cell_view_new_with_context((area is null) ? null : area.getCellAreaStruct(), (context is null) ? null : context.getCellAreaContextStruct());
+		auto __p = gtk_cell_view_new_with_context((area is null) ? null : area.getCellAreaStruct(), (context is null) ? null : context.getCellAreaContextStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_context");
 		}
 
-		this(cast(GtkCellView*) p);
+		this(cast(GtkCellView*) __p);
+	}
+
+	/**
+	 * Creates a new #GtkCellView widget, adds a #GtkCellRendererText
+	 * to it, and makes it show @markup. The text can be
+	 * marked up with the [Pango text markup language][PangoMarkupFormat].
+	 *
+	 * Params:
+	 *     markup = the text to display in the cell view
+	 *
+	 * Returns: A newly created #GtkCellView widget.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string markup)
+	{
+		auto __p = gtk_cell_view_new_with_markup(Str.toStringz(markup));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_with_markup");
+		}
+
+		this(cast(GtkCellView*) __p);
+	}
+
+	/**
+	 * Creates a new #GtkCellView widget, adds a #GtkCellRendererText
+	 * to it, and makes it show @text.
+	 *
+	 * Params:
+	 *     text = the text to display in the cell view
+	 *
+	 * Returns: A newly created #GtkCellView widget.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string text)
+	{
+		auto __p = gtk_cell_view_new_with_text(Str.toStringz(text));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_with_text");
+		}
+
+		this(cast(GtkCellView*) __p);
 	}
 
 	/**
 	 * Creates a new #GtkCellView widget, adds a #GtkCellRendererPixbuf
-	 * to it, and makes it show @pixbuf.
+	 * to it, and makes it show @texture.
 	 *
 	 * Params:
-	 *     pixbuf = the image to display in the cell view
+	 *     texture = the image to display in the cell view
 	 *
 	 * Returns: A newly created #GtkCellView widget.
 	 *
-	 * Since: 2.6
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Pixbuf pixbuf)
+	public this(Texture texture)
 	{
-		auto p = gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		auto __p = gtk_cell_view_new_with_texture((texture is null) ? null : texture.getTextureStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
-			throw new ConstructionException("null returned by new_with_pixbuf");
+			throw new ConstructionException("null returned by new_with_texture");
 		}
 
-		this(cast(GtkCellView*) p);
+		this(cast(GtkCellView*) __p);
 	}
 
 	/**
@@ -225,19 +225,17 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 * %NULL is returned.
 	 *
 	 * Returns: the currently displayed row or %NULL
-	 *
-	 * Since: 2.6
 	 */
 	public TreePath getDisplayedRow()
 	{
-		auto p = gtk_cell_view_get_displayed_row(gtkCellView);
+		auto __p = gtk_cell_view_get_displayed_row(gtkCellView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -246,8 +244,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Returns: whether @cell_view draws all of its
 	 *     cells in a sensitive state
-	 *
-	 * Since: 3.0
 	 */
 	public bool getDrawSensitive()
 	{
@@ -260,8 +256,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Returns: whether @cell_view requests space to fit
 	 *     the entire #GtkTreeModel.
-	 *
-	 * Since: 3.0
 	 */
 	public bool getFitModel()
 	{
@@ -273,75 +267,17 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 * returned.
 	 *
 	 * Returns: a #GtkTreeModel used or %NULL
-	 *
-	 * Since: 2.16
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_cell_view_get_model(gtkCellView);
+		auto __p = gtk_cell_view_get_model(gtkCellView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
-	}
-
-	/**
-	 * Sets @requisition to the size needed by @cell_view to display
-	 * the model row pointed to by @path.
-	 *
-	 * Deprecated: Combo box formerly used this to calculate the
-	 * sizes for cellviews, now you can achieve this by either using
-	 * the #GtkCellView:fit-model property or by setting the currently
-	 * displayed row of the #GtkCellView and using gtk_widget_get_preferred_size().
-	 *
-	 * Params:
-	 *     path = a #GtkTreePath
-	 *     requisition = return location for the size
-	 *
-	 * Returns: %TRUE
-	 *
-	 * Since: 2.6
-	 */
-	public bool getSizeOfRow(TreePath path, out Requisition requisition)
-	{
-		GtkRequisition* outrequisition = sliceNew!GtkRequisition();
-
-		auto p = gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), outrequisition) != 0;
-
-		requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
-
-		return p;
-	}
-
-	/**
-	 * Sets the background color of @view.
-	 *
-	 * Deprecated: Use gtk_cell_view_set_background_rgba() instead.
-	 *
-	 * Params:
-	 *     color = the new background color
-	 *
-	 * Since: 2.6
-	 */
-	public void setBackgroundColor(Color color)
-	{
-		gtk_cell_view_set_background_color(gtkCellView, (color is null) ? null : color.getColorStruct());
-	}
-
-	/**
-	 * Sets the background color of @cell_view.
-	 *
-	 * Params:
-	 *     rgba = the new background color
-	 *
-	 * Since: 3.0
-	 */
-	public void setBackgroundRgba(RGBA rgba)
-	{
-		gtk_cell_view_set_background_rgba(gtkCellView, (rgba is null) ? null : rgba.getRGBAStruct());
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
@@ -354,8 +290,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Params:
 	 *     path = a #GtkTreePath or %NULL to unset.
-	 *
-	 * Since: 2.6
 	 */
 	public void setDisplayedRow(TreePath path)
 	{
@@ -370,8 +304,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Params:
 	 *     drawSensitive = whether to draw all cells in a sensitive state.
-	 *
-	 * Since: 3.0
 	 */
 	public void setDrawSensitive(bool drawSensitive)
 	{
@@ -387,8 +319,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Params:
 	 *     fitModel = whether @cell_view should request space for the whole model.
-	 *
-	 * Since: 3.0
 	 */
 	public void setFitModel(bool fitModel)
 	{
@@ -402,8 +332,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *
 	 * Params:
 	 *     model = a #GtkTreeModel
-	 *
-	 * Since: 2.6
 	 */
 	public void setModel(TreeModelIF model)
 	{

@@ -34,7 +34,6 @@ private import gobject.ObjectG;
 private import gtk.PaperSize;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -79,8 +78,6 @@ public  import gtkc.gtktypes;
  * page_setup = new_page_setup;
  * }
  * ]|
- * 
- * Printing support was added in GTK+ 2.10.
  */
 public class PageSetup : ObjectG
 {
@@ -122,20 +119,18 @@ public class PageSetup : ObjectG
 	 *
 	 * Returns: a new #GtkPageSetup.
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_page_setup_new();
+		auto __p = gtk_page_setup_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPageSetup*) p, true);
+		this(cast(GtkPageSetup*) __p, true);
 	}
 
 	/**
@@ -148,8 +143,6 @@ public class PageSetup : ObjectG
 	 *
 	 * Returns: the restored #GtkPageSetup
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -157,19 +150,19 @@ public class PageSetup : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_page_setup_new_from_file(Str.toStringz(fileName), &err);
+		auto __p = gtk_page_setup_new_from_file(Str.toStringz(fileName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
 
-		this(cast(GtkPageSetup*) p, true);
+		this(cast(GtkPageSetup*) __p, true);
 	}
 
 	/**
@@ -181,20 +174,18 @@ public class PageSetup : ObjectG
 	 *
 	 * Returns: a new #GtkPageSetup object
 	 *
-	 * Since: 3.22
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Variant variant)
 	{
-		auto p = gtk_page_setup_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		auto __p = gtk_page_setup_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 
-		this(cast(GtkPageSetup*) p, true);
+		this(cast(GtkPageSetup*) __p, true);
 	}
 
 	/**
@@ -209,8 +200,6 @@ public class PageSetup : ObjectG
 	 *
 	 * Returns: the restored #GtkPageSetup
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -218,38 +207,36 @@ public class PageSetup : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		auto __p = gtk_page_setup_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_key_file");
 		}
 
-		this(cast(GtkPageSetup*) p, true);
+		this(cast(GtkPageSetup*) __p, true);
 	}
 
 	/**
 	 * Copies a #GtkPageSetup.
 	 *
 	 * Returns: a copy of @other
-	 *
-	 * Since: 2.10
 	 */
 	public PageSetup copy()
 	{
-		auto p = gtk_page_setup_copy(gtkPageSetup);
+		auto __p = gtk_page_setup_copy(gtkPageSetup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p, true);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) __p, true);
 	}
 
 	/**
@@ -259,8 +246,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the bottom margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getBottomMargin(GtkUnit unit)
 	{
@@ -274,8 +259,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the left margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getLeftMargin(GtkUnit unit)
 	{
@@ -286,8 +269,6 @@ public class PageSetup : ObjectG
 	 * Gets the page orientation of the #GtkPageSetup.
 	 *
 	 * Returns: the page orientation
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPageOrientation getOrientation()
 	{
@@ -305,8 +286,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the page height.
-	 *
-	 * Since: 2.10
 	 */
 	public double getPageHeight(GtkUnit unit)
 	{
@@ -324,8 +303,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the page width.
-	 *
-	 * Since: 2.10
 	 */
 	public double getPageWidth(GtkUnit unit)
 	{
@@ -343,8 +320,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the paper height.
-	 *
-	 * Since: 2.10
 	 */
 	public double getPaperHeight(GtkUnit unit)
 	{
@@ -355,19 +330,17 @@ public class PageSetup : ObjectG
 	 * Gets the paper size of the #GtkPageSetup.
 	 *
 	 * Returns: the paper size
-	 *
-	 * Since: 2.10
 	 */
 	public PaperSize getPaperSize()
 	{
-		auto p = gtk_page_setup_get_paper_size(gtkPageSetup);
+		auto __p = gtk_page_setup_get_paper_size(gtkPageSetup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -381,8 +354,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the paper width.
-	 *
-	 * Since: 2.10
 	 */
 	public double getPaperWidth(GtkUnit unit)
 	{
@@ -396,8 +367,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the right margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getRightMargin(GtkUnit unit)
 	{
@@ -411,8 +380,6 @@ public class PageSetup : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the top margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getTopMargin(GtkUnit unit)
 	{
@@ -428,22 +395,20 @@ public class PageSetup : ObjectG
 	 *
 	 * Returns: %TRUE on success
 	 *
-	 * Since: 2.14
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool loadFile(string fileName)
 	{
 		GError* err = null;
 
-		auto p = gtk_page_setup_load_file(gtkPageSetup, Str.toStringz(fileName), &err) != 0;
+		auto __p = gtk_page_setup_load_file(gtkPageSetup, Str.toStringz(fileName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -457,22 +422,20 @@ public class PageSetup : ObjectG
 	 *
 	 * Returns: %TRUE on success
 	 *
-	 * Since: 2.14
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool loadKeyFile(KeyFile keyFile, string groupName)
 	{
 		GError* err = null;
 
-		auto p = gtk_page_setup_load_key_file(gtkPageSetup, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err) != 0;
+		auto __p = gtk_page_setup_load_key_file(gtkPageSetup, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -481,8 +444,6 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     margin = the new bottom margin in units of @unit
 	 *     unit = the units for @margin
-	 *
-	 * Since: 2.10
 	 */
 	public void setBottomMargin(double margin, GtkUnit unit)
 	{
@@ -495,8 +456,6 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     margin = the new left margin in units of @unit
 	 *     unit = the units for @margin
-	 *
-	 * Since: 2.10
 	 */
 	public void setLeftMargin(double margin, GtkUnit unit)
 	{
@@ -508,8 +467,6 @@ public class PageSetup : ObjectG
 	 *
 	 * Params:
 	 *     orientation = a #GtkPageOrientation value
-	 *
-	 * Since: 2.10
 	 */
 	public void setOrientation(GtkPageOrientation orientation)
 	{
@@ -523,8 +480,6 @@ public class PageSetup : ObjectG
 	 *
 	 * Params:
 	 *     size = a #GtkPaperSize
-	 *
-	 * Since: 2.10
 	 */
 	public void setPaperSize(PaperSize size)
 	{
@@ -537,8 +492,6 @@ public class PageSetup : ObjectG
 	 *
 	 * Params:
 	 *     size = a #GtkPaperSize
-	 *
-	 * Since: 2.10
 	 */
 	public void setPaperSizeAndDefaultMargins(PaperSize size)
 	{
@@ -551,8 +504,6 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     margin = the new right margin in units of @unit
 	 *     unit = the units for @margin
-	 *
-	 * Since: 2.10
 	 */
 	public void setRightMargin(double margin, GtkUnit unit)
 	{
@@ -565,8 +516,6 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     margin = the new top margin in units of @unit
 	 *     unit = the units for @margin
-	 *
-	 * Since: 2.10
 	 */
 	public void setTopMargin(double margin, GtkUnit unit)
 	{
@@ -581,41 +530,37 @@ public class PageSetup : ObjectG
 	 *
 	 * Returns: %TRUE on success
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool toFile(string fileName)
 	{
 		GError* err = null;
 
-		auto p = gtk_page_setup_to_file(gtkPageSetup, Str.toStringz(fileName), &err) != 0;
+		auto __p = gtk_page_setup_to_file(gtkPageSetup, Str.toStringz(fileName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Serialize page setup to an a{sv} variant.
 	 *
 	 * Returns: a new, floating, #GVariant
-	 *
-	 * Since: 3.22
 	 */
 	public Variant toGvariant()
 	{
-		auto p = gtk_page_setup_to_gvariant(gtkPageSetup);
+		auto __p = gtk_page_setup_to_gvariant(gtkPageSetup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -625,8 +570,6 @@ public class PageSetup : ObjectG
 	 *     keyFile = the #GKeyFile to save the page setup to
 	 *     groupName = the group to add the settings to in @key_file,
 	 *         or %NULL to use the default name “Page Setup”
-	 *
-	 * Since: 2.12
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)
 	{

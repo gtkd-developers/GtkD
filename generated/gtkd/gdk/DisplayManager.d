@@ -31,7 +31,6 @@ private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -42,7 +41,7 @@ private import std.algorithm;
  * 
  * You can use gdk_display_manager_get() to obtain the #GdkDisplayManager
  * singleton, but that should be rarely necessary. Typically, initializing
- * GTK+ opens a display that you can work with without ever accessing the
+ * GTK opens a display that you can work with without ever accessing the
  * #GdkDisplayManager.
  * 
  * The GDK library can be built with support for multiple backends.
@@ -66,8 +65,8 @@ private import std.algorithm;
  * }
  * else
  * #endif
- * #ifdef GDK_WINDOWING_QUARTZ
- * if (GDK_IS_QUARTZ_DISPLAY (display))
+ * #ifdef GDK_WINDOWING_MACOS
+ * if (GDK_IS_MACOS_DISPLAY (display))
  * {
  * // make Quartz-specific calls here
  * }
@@ -120,22 +119,18 @@ public class DisplayManager : ObjectG
 	 * with multiple backends). Applications can use gdk_set_allowed_backends()
 	 * to limit what backends can be used.
 	 *
-	 * Returns: The global #GdkDisplayManager singleton;
-	 *     gdk_parse_args(), gdk_init(), or gdk_init_check() must have
-	 *     been called first.
-	 *
-	 * Since: 2.2
+	 * Returns: The global #GdkDisplayManager singleton
 	 */
 	public static DisplayManager get()
 	{
-		auto p = gdk_display_manager_get();
+		auto __p = gdk_display_manager_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DisplayManager)(cast(GdkDisplayManager*) p);
+		return ObjectG.getDObject!(DisplayManager)(cast(GdkDisplayManager*) __p);
 	}
 
 	/**
@@ -143,19 +138,17 @@ public class DisplayManager : ObjectG
 	 *
 	 * Returns: a #GdkDisplay, or %NULL if
 	 *     there is no default display.
-	 *
-	 * Since: 2.2
 	 */
 	public Display getDefaultDisplay()
 	{
-		auto p = gdk_display_manager_get_default_display(gdkDisplayManager);
+		auto __p = gdk_display_manager_get_default_display(gdkDisplayManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -164,19 +157,17 @@ public class DisplayManager : ObjectG
 	 * Returns: a newly
 	 *     allocated #GSList of #GdkDisplay objects. Free with g_slist_free()
 	 *     when you are done with it.
-	 *
-	 * Since: 2.2
 	 */
 	public ListSG listDisplays()
 	{
-		auto p = gdk_display_manager_list_displays(gdkDisplayManager);
+		auto __p = gdk_display_manager_list_displays(gdkDisplayManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -187,19 +178,17 @@ public class DisplayManager : ObjectG
 	 *
 	 * Returns: a #GdkDisplay, or %NULL if the
 	 *     display could not be opened
-	 *
-	 * Since: 3.0
 	 */
 	public Display openDisplay(string name)
 	{
-		auto p = gdk_display_manager_open_display(gdkDisplayManager, Str.toStringz(name));
+		auto __p = gdk_display_manager_open_display(gdkDisplayManager, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -207,8 +196,6 @@ public class DisplayManager : ObjectG
 	 *
 	 * Params:
 	 *     display = a #GdkDisplay
-	 *
-	 * Since: 2.2
 	 */
 	public void setDefaultDisplay(Display display)
 	{
@@ -220,8 +207,6 @@ public class DisplayManager : ObjectG
 	 *
 	 * Params:
 	 *     display = the opened display
-	 *
-	 * Since: 2.2
 	 */
 	gulong addOnDisplayOpened(void delegate(Display, DisplayManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

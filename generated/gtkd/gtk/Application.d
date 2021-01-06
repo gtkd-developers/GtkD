@@ -28,19 +28,17 @@ private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
 private import gio.ActionMapIF;
 private import gio.ActionMapT;
-private import gio.Application : GioApplication = Application;
+private import gio.Application : DGioApplication = Application;
 private import gio.Menu;
 private import gio.MenuModel;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
-private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -49,7 +47,7 @@ private import std.algorithm;
  * of a GTK+ application in a convenient fashion, without enforcing
  * a one-size-fits-all application model.
  * 
- * Currently, GtkApplication handles GTK+ initialization, application
+ * Currently, GtkApplication handles GTK initialization, application
  * uniqueness, session management, provides some basic scriptability and
  * desktop shell integration by exporting actions and menus and manages a
  * list of toplevel windows whose life-cycle is automatically tied to the
@@ -71,22 +69,14 @@ private import std.algorithm;
  * 
  * #GtkApplication will automatically load menus from the #GtkBuilder
  * resource located at "gtk/menus.ui", relative to the application's
- * resource base path (see g_application_set_resource_base_path()).  The
- * menu with the ID "app-menu" is taken as the application's app menu
- * and the menu with the ID "menubar" is taken as the application's
+ * resource base path (see g_application_set_resource_base_path()).
+ * The menu with the ID "menubar" is taken as the application's
  * menubar.  Additional menus (most interesting submenus) can be named
  * and accessed via gtk_application_get_menu_by_id() which allows for
  * dynamic population of a part of the menu structure.
  * 
- * If the resources "gtk/menus-appmenu.ui" or "gtk/menus-traditional.ui" are
- * present then these files will be used in preference, depending on the value
- * of gtk_application_prefers_app_menu(). If the resource "gtk/menus-common.ui"
- * is present it will be loaded as well. This is useful for storing items that
- * are referenced from both "gtk/menus-appmenu.ui" and
- * "gtk/menus-traditional.ui".
- * 
- * It is also possible to provide the menus manually using
- * gtk_application_set_app_menu() and gtk_application_set_menubar().
+ * It is also possible to provide the menubar manually using
+ * gtk_application_set_menubar().
  * 
  * #GtkApplication will also automatically setup an icon search path for
  * the default icon theme by appending "icons" to the resource base
@@ -97,13 +87,13 @@ private import std.algorithm;
  * If there is a resource located at "gtk/help-overlay.ui" which
  * defines a #GtkShortcutsWindow with ID "help_overlay" then GtkApplication
  * associates an instance of this shortcuts window with each
- * #GtkApplicationWindow and sets up keyboard accelerators (Control-F1
- * and Control-?) to open it. To create a menu item that displays the
+ * #GtkApplicationWindow and sets up the keyboard accelerator Control-?
+ * to open it. To create a menu item that displays the
  * shortcuts window, associate the item with the action win.show-help-overlay.
  * 
  * ## A simple application ## {#gtkapplication}
  * 
- * [A simple example](https://git.gnome.org/browse/gtk+/tree/examples/bp/bloatpad.c)
+ * [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/master/examples/bp/bloatpad.c)
  * 
  * GtkApplication optionally registers with a session manager
  * of the users session (if you set the #GtkApplication:register-session
@@ -120,9 +110,9 @@ private import std.algorithm;
  * 
  * ## See Also ## {#seealso}
  * [HowDoI: Using GtkApplication](https://wiki.gnome.org/HowDoI/GtkApplication),
- * [Getting Started with GTK+: Basics](https://developer.gnome.org/gtk3/stable/gtk-getting-started.html#id-1.2.3.3)
+ * [Getting Started with GTK: Basics](https://developer.gnome.org/gtk3/stable/gtk-getting-started.html#id-1.2.3.3)
  */
-public class Application : GioApplication
+public class Application : DGioApplication
 {
 	/** the main Gtk struct */
 	protected GtkApplication* gtkApplication;
@@ -150,36 +140,6 @@ public class Application : GioApplication
 		super(cast(GApplication*)gtkApplication, ownedRef);
 	}
 
-	/**
-	 * Sets zero or more keyboard accelerators that will trigger the
-	 * given action. The first item in accels will be the primary
-	 * accelerator, which may be displayed in the UI.
-	 *
-	 * To remove all accelerators for an action, use an empty
-	 * array for accels.
-	 *
-	 * Params:
-	 *     detailedActionName = a detailed action name, specifying an action
-	 *         and target to associate accelerators with
-	 *     accels = a list of accelerators in the format
-	 *         understood by gtk_accelerator_parse()
-	 *
-	 * Since: 3.12
-	 */
-	public void setAccelsForAction(string detailedActionName, string[] accels)
-	{
-		char** accel;
-
-		if (accels)
-			accel = Str.toStringzArray(accels);
-		else
-			accel = [cast(char*)null].ptr;
-
-		gtk_application_set_accels_for_action(gtkApplication, Str.toStringz(detailedActionName), accel);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -210,8 +170,7 @@ public class Application : GioApplication
 	 * g_application_id_is_valid().
 	 *
 	 * If no application ID is given then some features (most notably application
-	 * uniqueness) will be disabled. A null application ID is only allowed with
-	 * GTK+ 3.6 or later.
+	 * uniqueness) will be disabled.
 	 *
 	 * Params:
 	 *     applicationId = The application ID.
@@ -219,53 +178,18 @@ public class Application : GioApplication
 	 *
 	 * Returns: a new #GtkApplication instance
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string applicationId, GApplicationFlags flags)
 	{
-		auto p = gtk_application_new(Str.toStringz(applicationId), flags);
+		auto __p = gtk_application_new(Str.toStringz(applicationId), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkApplication*) p, true);
-	}
-
-	/**
-	 * Installs an accelerator that will cause the named action
-	 * to be activated when the key combination specificed by @accelerator
-	 * is pressed.
-	 *
-	 * @accelerator must be a string that can be parsed by gtk_accelerator_parse(),
-	 * e.g. "<Primary>q" or “<Control><Alt>p”.
-	 *
-	 * @action_name must be the name of an action as it would be used
-	 * in the app menu, i.e. actions that have been added to the application
-	 * are referred to with an “app.” prefix, and window-specific actions
-	 * with a “win.” prefix.
-	 *
-	 * GtkApplication also extracts accelerators out of “accel” attributes
-	 * in the #GMenuModels passed to gtk_application_set_app_menu() and
-	 * gtk_application_set_menubar(), which is usually more convenient
-	 * than calling this function for each accelerator.
-	 *
-	 * Deprecated: Use gtk_application_set_accels_for_action() instead
-	 *
-	 * Params:
-	 *     accelerator = accelerator string
-	 *     actionName = the name of the action to activate
-	 *     parameter = parameter to pass when activating the action,
-	 *         or %NULL if the action does not accept an activation parameter
-	 *
-	 * Since: 3.4
-	 */
-	public void addAccelerator(string accelerator, string actionName, Variant parameter)
-	{
-		gtk_application_add_accelerator(gtkApplication, Str.toStringz(accelerator), Str.toStringz(actionName), (parameter is null) ? null : parameter.getVariantStruct());
+		this(cast(GtkApplication*) __p, true);
 	}
 
 	/**
@@ -287,8 +211,6 @@ public class Application : GioApplication
 	 *
 	 * Params:
 	 *     window = a #GtkWindow
-	 *
-	 * Since: 3.0
 	 */
 	public void addWindow(Window window)
 	{
@@ -305,8 +227,6 @@ public class Application : GioApplication
 	 *
 	 * Returns: accelerators for @detailed_action_name, as
 	 *     a %NULL-terminated array. Free with g_strfreev() when no longer needed
-	 *
-	 * Since: 3.12
 	 */
 	public string[] getAccelsForAction(string detailedActionName)
 	{
@@ -337,8 +257,6 @@ public class Application : GioApplication
 	 *     accel = an accelerator that can be parsed by gtk_accelerator_parse()
 	 *
 	 * Returns: a %NULL-terminated array of actions for @accel
-	 *
-	 * Since: 3.14
 	 */
 	public string[] getActionsForAccel(string accel)
 	{
@@ -358,40 +276,17 @@ public class Application : GioApplication
 	 *
 	 * Returns: the active window, or %NULL if
 	 *     there isn't one.
-	 *
-	 * Since: 3.6
 	 */
 	public Window getActiveWindow()
 	{
-		auto p = gtk_application_get_active_window(gtkApplication);
+		auto __p = gtk_application_get_active_window(gtkApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
-	}
-
-	/**
-	 * Returns the menu model that has been set with
-	 * gtk_application_set_app_menu().
-	 *
-	 * Returns: the application menu of @application
-	 *     or %NULL if no application menu has been set.
-	 *
-	 * Since: 3.4
-	 */
-	public MenuModel getAppMenu()
-	{
-		auto p = gtk_application_get_app_menu(gtkApplication);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -404,19 +299,17 @@ public class Application : GioApplication
 	 *
 	 * Returns: Gets the menu with the
 	 *     given id from the automatically loaded resources
-	 *
-	 * Since: 3.14
 	 */
 	public Menu getMenuById(string id)
 	{
-		auto p = gtk_application_get_menu_by_id(gtkApplication, Str.toStringz(id));
+		auto __p = gtk_application_get_menu_by_id(gtkApplication, Str.toStringz(id));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Menu)(cast(GMenu*) p);
+		return ObjectG.getDObject!(Menu)(cast(GMenu*) __p);
 	}
 
 	/**
@@ -424,19 +317,17 @@ public class Application : GioApplication
 	 * gtk_application_set_menubar().
 	 *
 	 * Returns: the menubar for windows of @application
-	 *
-	 * Since: 3.4
 	 */
 	public MenuModel getMenubar()
 	{
-		auto p = gtk_application_get_menubar(gtkApplication);
+		auto __p = gtk_application_get_menubar(gtkApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
 	}
 
 	/**
@@ -450,19 +341,17 @@ public class Application : GioApplication
 	 *
 	 * Returns: the window with ID @id, or
 	 *     %NULL if there is no window with this ID
-	 *
-	 * Since: 3.6
 	 */
 	public Window getWindowById(uint id)
 	{
-		auto p = gtk_application_get_window_by_id(gtkApplication, id);
+		auto __p = gtk_application_get_window_by_id(gtkApplication, id);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -477,19 +366,17 @@ public class Application : GioApplication
 	 * deletion.
 	 *
 	 * Returns: a #GList of #GtkWindow
-	 *
-	 * Since: 3.0
 	 */
 	public ListG getWindows()
 	{
-		auto p = gtk_application_get_windows(gtkApplication);
+		auto __p = gtk_application_get_windows(gtkApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -525,31 +412,10 @@ public class Application : GioApplication
 	 *     request. It should be used as an argument to gtk_application_uninhibit()
 	 *     in order to remove the request. If the platform does not support
 	 *     inhibiting or the request failed for some reason, 0 is returned.
-	 *
-	 * Since: 3.4
 	 */
 	public uint inhibit(Window window, GtkApplicationInhibitFlags flags, string reason)
 	{
 		return gtk_application_inhibit(gtkApplication, (window is null) ? null : window.getWindowStruct(), flags, Str.toStringz(reason));
-	}
-
-	/**
-	 * Determines if any of the actions specified in @flags are
-	 * currently inhibited (possibly by another application).
-	 *
-	 * Note that this information may not be available (for example
-	 * when the application is running in a sandbox).
-	 *
-	 * Params:
-	 *     flags = what types of actions should be queried
-	 *
-	 * Returns: %TRUE if any of the actions specified in @flags are inhibited
-	 *
-	 * Since: 3.4
-	 */
-	public bool isInhibited(GtkApplicationInhibitFlags flags)
-	{
-		return gtk_application_is_inhibited(gtkApplication, flags) != 0;
 	}
 
 	/**
@@ -558,8 +424,6 @@ public class Application : GioApplication
 	 *
 	 * Returns: a %NULL-terminated array of strings,
 	 *     free with g_strfreev() when done
-	 *
-	 * Since: 3.12
 	 */
 	public string[] listActionDescriptions()
 	{
@@ -567,69 +431,6 @@ public class Application : GioApplication
 
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
-	}
-
-	/**
-	 * Determines if the desktop environment in which the application is
-	 * running would prefer an application menu be shown.
-	 *
-	 * If this function returns %TRUE then the application should call
-	 * gtk_application_set_app_menu() with the contents of an application
-	 * menu, which will be shown by the desktop environment.  If it returns
-	 * %FALSE then you should consider using an alternate approach, such as
-	 * a menubar.
-	 *
-	 * The value returned by this function is purely advisory and you are
-	 * free to ignore it.  If you call gtk_application_set_app_menu() even
-	 * if the desktop environment doesn't support app menus, then a fallback
-	 * will be provided.
-	 *
-	 * Applications are similarly free not to set an app menu even if the
-	 * desktop environment wants to show one.  In that case, a fallback will
-	 * also be created by the desktop environment (GNOME, for example, uses
-	 * a menu with only a "Quit" item in it).
-	 *
-	 * The value returned by this function never changes.  Once it returns a
-	 * particular value, it is guaranteed to always return the same value.
-	 *
-	 * You may only call this function after the application has been
-	 * registered and after the base startup handler has run.  You're most
-	 * likely to want to use this from your own startup handler.  It may
-	 * also make sense to consult this function while constructing UI (in
-	 * activate, open or an action activation handler) in order to determine
-	 * if you should show a gear menu or not.
-	 *
-	 * This function will return %FALSE on Mac OS and a default app menu
-	 * will be created automatically with the "usual" contents of that menu
-	 * typical to most Mac OS applications.  If you call
-	 * gtk_application_set_app_menu() anyway, then this menu will be
-	 * replaced with your own.
-	 *
-	 * Returns: %TRUE if you should set an app menu
-	 *
-	 * Since: 3.14
-	 */
-	public bool prefersAppMenu()
-	{
-		return gtk_application_prefers_app_menu(gtkApplication) != 0;
-	}
-
-	/**
-	 * Removes an accelerator that has been previously added
-	 * with gtk_application_add_accelerator().
-	 *
-	 * Deprecated: Use gtk_application_set_accels_for_action() instead
-	 *
-	 * Params:
-	 *     actionName = the name of the action to activate
-	 *     parameter = parameter to pass when activating the action,
-	 *         or %NULL if the action does not accept an activation parameter
-	 *
-	 * Since: 3.4
-	 */
-	public void removeAccelerator(string actionName, Variant parameter)
-	{
-		gtk_application_remove_accelerator(gtkApplication, Str.toStringz(actionName), (parameter is null) ? null : parameter.getVariantStruct());
 	}
 
 	/**
@@ -644,8 +445,6 @@ public class Application : GioApplication
 	 *
 	 * Params:
 	 *     window = a #GtkWindow
-	 *
-	 * Since: 3.0
 	 */
 	public void removeWindow(Window window)
 	{
@@ -653,32 +452,25 @@ public class Application : GioApplication
 	}
 
 	/**
-	 * Sets or unsets the application menu for @application.
+	 * Sets zero or more keyboard accelerators that will trigger the
+	 * given action. The first item in @accels will be the primary
+	 * accelerator, which may be displayed in the UI.
 	 *
-	 * This can only be done in the primary instance of the application,
-	 * after it has been registered.  #GApplication::startup is a good place
-	 * to call this.
+	 * To remove all accelerators for an action, use an empty, zero-terminated
+	 * array for @accels.
 	 *
-	 * The application menu is a single menu containing items that typically
-	 * impact the application as a whole, rather than acting on a specific
-	 * window or document.  For example, you would expect to see
-	 * “Preferences” or “Quit” in an application menu, but not “Save” or
-	 * “Print”.
-	 *
-	 * If supported, the application menu will be rendered by the desktop
-	 * environment.
-	 *
-	 * Use the base #GActionMap interface to add actions, to respond to the user
-	 * selecting these menu items.
+	 * For the @detailed_action_name, see g_action_parse_detailed_name() and
+	 * g_action_print_detailed_name().
 	 *
 	 * Params:
-	 *     appMenu = a #GMenuModel, or %NULL
-	 *
-	 * Since: 3.4
+	 *     detailedActionName = a detailed action name, specifying an action
+	 *         and target to associate accelerators with
+	 *     accels = a list of accelerators in the format
+	 *         understood by gtk_accelerator_parse()
 	 */
-	public void setAppMenu(MenuModel appMenu)
+	public void setAccelsForAction(string detailedActionName, string[] accels)
 	{
-		gtk_application_set_app_menu(gtkApplication, (appMenu is null) ? null : appMenu.getMenuModelStruct());
+		gtk_application_set_accels_for_action(gtkApplication, Str.toStringz(detailedActionName), Str.toStringzArray(accels));
 	}
 
 	/**
@@ -703,8 +495,6 @@ public class Application : GioApplication
 	 *
 	 * Params:
 	 *     menubar = a #GMenuModel, or %NULL
-	 *
-	 * Since: 3.4
 	 */
 	public void setMenubar(MenuModel menubar)
 	{
@@ -717,8 +507,6 @@ public class Application : GioApplication
 	 *
 	 * Params:
 	 *     cookie = a cookie that was returned by gtk_application_inhibit()
-	 *
-	 * Since: 3.4
 	 */
 	public void uninhibit(uint cookie)
 	{
@@ -727,12 +515,10 @@ public class Application : GioApplication
 
 	/**
 	 * Emitted when the session manager is about to end the session, only
-	 * if #GtkApplication::register-session is %TRUE. Applications can
+	 * if #GtkApplication:register-session is %TRUE. Applications can
 	 * connect to this signal and call gtk_application_inhibit() with
 	 * %GTK_APPLICATION_INHIBIT_LOGOUT to delay the end of the session
 	 * until state has been saved.
-	 *
-	 * Since: 3.24.8
 	 */
 	gulong addOnQueryEnd(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -745,8 +531,6 @@ public class Application : GioApplication
 	 *
 	 * Params:
 	 *     window = the newly-added #GtkWindow
-	 *
-	 * Since: 3.2
 	 */
 	gulong addOnWindowAdded(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -760,8 +544,6 @@ public class Application : GioApplication
 	 *
 	 * Params:
 	 *     window = the #GtkWindow that is being removed
-	 *
-	 * Since: 3.2
 	 */
 	gulong addOnWindowRemoved(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

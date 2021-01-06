@@ -26,10 +26,12 @@ module gdk.EventSequence;
 
 private import gdk.c.functions;
 public  import gdk.c.types;
-public  import gtkc.gdktypes;
 
 
-/** */
+/**
+ * GdkEventSequence is an opaque type representing a sequence
+ * of related touch events.
+ */
 public struct EventSequence
 {
 

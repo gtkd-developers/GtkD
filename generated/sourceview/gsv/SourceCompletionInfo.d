@@ -24,11 +24,12 @@
 
 module gsv.SourceCompletionInfo;
 
+private import atk.ImplementorIF;
+private import atk.ImplementorT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextIter;
@@ -37,7 +38,7 @@ private import gtk.Window;
 
 
 /** */
-public class SourceCompletionInfo : Window
+public class SourceCompletionInfo : Window, ImplementorIF
 {
 	/** the main Gtk struct */
 	protected GtkSourceCompletionInfo* gtkSourceCompletionInfo;
@@ -65,6 +66,9 @@ public class SourceCompletionInfo : Window
 		super(cast(GtkWindow*)gtkSourceCompletionInfo, ownedRef);
 	}
 
+	// add the Implementor capabilities
+	mixin ImplementorT!(GtkSourceCompletionInfo);
+
 
 	/** */
 	public static GType getType()
@@ -79,14 +83,14 @@ public class SourceCompletionInfo : Window
 	 */
 	public this()
 	{
-		auto p = gtk_source_completion_info_new();
+		auto __p = gtk_source_completion_info_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceCompletionInfo*) p);
+		this(cast(GtkSourceCompletionInfo*) __p);
 	}
 
 	/**

@@ -29,6 +29,25 @@ public import gobject.c.types;
 public import gstreamer.c.types;
 
 
+public enum GstAggregatorStartTimeSelection
+{
+	/**
+	 * Start at running time 0.
+	 */
+	ZERO = 0,
+	/**
+	 * Start at the running time of
+	 * the first buffer that is received.
+	 */
+	FIRST = 1,
+	/**
+	 * Start at the running time
+	 * selected by the `start-time` property.
+	 */
+	SET = 2,
+}
+alias GstAggregatorStartTimeSelection AggregatorStartTimeSelection;
+
 /**
  * Flags to be used in a #GstBaseParseFrame.
  */
@@ -145,6 +164,8 @@ struct GstAggregator
  *
  * Basically, a simple implementation will override @aggregate, and call
  * _finish_buffer from inside that function.
+ *
+ * Since: 1.14
  */
 struct GstAggregatorClass
 {
@@ -185,7 +206,27 @@ struct GstAggregatorClass
 	extern(C) int function(GstAggregator* self, GstQuery* query) decideAllocation;
 	/** */
 	extern(C) int function(GstAggregator* self, GstAggregatorPad* pad, GstQuery* decideQuery, GstQuery* query) proposeAllocation;
-	void*[20] GstReserved;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GstAggregator
+	 * Returns: %TRUE if the negotiation succeeded, else %FALSE.
+	 */
+	extern(C) int function(GstAggregator* self) negotiate;
+	/** */
+	extern(C) GstFlowReturn function(GstAggregator* aggregator, GstAggregatorPad* aggregatorPad, GstEvent* event) sinkEventPreQueue;
+	/** */
+	extern(C) int function(GstAggregator* aggregator, GstAggregatorPad* aggregatorPad, GstQuery* query) sinkQueryPreQueue;
+	/** */
+	extern(C) GstFlowReturn function(GstAggregator* aggregator, GstBufferList* bufferlist) finishBufferList;
+	/**
+	 * Returns: The sample that is about to be aggregated. It may hold a #GstBuffer
+	 *     or a #GstBufferList. The contents of its info structure is subclass-dependent,
+	 *     and documented on a subclass basis. The buffers held by the sample are
+	 *     not writable.
+	 */
+	extern(C) GstSample* function(GstAggregator* aggregator, GstAggregatorPad* aggregatorPad) peekNextSample;
+	void*[15] GstReserved;
 }
 
 struct GstAggregatorPad
@@ -413,7 +454,12 @@ struct GstBaseSrcClass
 	GstElementClass parentClass;
 	/** */
 	extern(C) GstCaps* function(GstBaseSrc* src, GstCaps* filter) getCaps;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     src = base source instance
+	 * Returns: %TRUE if the negotiation succeeded, else %FALSE.
+	 */
 	extern(C) int function(GstBaseSrc* src) negotiate;
 	/** */
 	extern(C) GstCaps* function(GstBaseSrc* src, GstCaps* caps) fixate;

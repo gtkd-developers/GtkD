@@ -88,14 +88,14 @@ public class ObjectModule : TypeModule
 	 */
 	public this(string moduleName, string path, bool resident)
 	{
-		auto p = peas_object_module_new(Str.toStringz(moduleName), Str.toStringz(path), resident);
+		auto __p = peas_object_module_new(Str.toStringz(moduleName), Str.toStringz(path), resident);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PeasObjectModule*) p, true);
+		this(cast(PeasObjectModule*) __p, true);
 	}
 
 	/**
@@ -112,14 +112,14 @@ public class ObjectModule : TypeModule
 	 */
 	public this(string moduleName, string symbol)
 	{
-		auto p = peas_object_module_new_embedded(Str.toStringz(moduleName), Str.toStringz(symbol));
+		auto __p = peas_object_module_new_embedded(Str.toStringz(moduleName), Str.toStringz(symbol));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_embedded");
 		}
 
-		this(cast(PeasObjectModule*) p, true);
+		this(cast(PeasObjectModule*) __p, true);
 	}
 
 	/**
@@ -139,14 +139,14 @@ public class ObjectModule : TypeModule
 	 */
 	public this(string moduleName, string path, bool resident, bool localLinkage)
 	{
-		auto p = peas_object_module_new_full(Str.toStringz(moduleName), Str.toStringz(path), resident, localLinkage);
+		auto __p = peas_object_module_new_full(Str.toStringz(moduleName), Str.toStringz(path), resident, localLinkage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(PeasObjectModule*) p, true);
+		this(cast(PeasObjectModule*) __p, true);
 	}
 
 	/**
@@ -166,14 +166,14 @@ public class ObjectModule : TypeModule
 	 */
 	public ObjectG createObject(GType extenType, GParameter[] parameters)
 	{
-		auto p = peas_object_module_create_object(peasObjectModule, extenType, cast(uint)parameters.length, parameters.ptr);
+		auto __p = peas_object_module_create_object(peasObjectModule, extenType, cast(uint)parameters.length, parameters.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -183,14 +183,14 @@ public class ObjectModule : TypeModule
 	 */
 	public Module getLibrary()
 	{
-		auto p = peas_object_module_get_library(peasObjectModule);
+		auto __p = peas_object_module_get_library(peasObjectModule);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Module(cast(GModule*) p);
+		return new Module(cast(GModule*) __p);
 	}
 
 	/**

@@ -33,7 +33,6 @@ public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gobject.Value;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 

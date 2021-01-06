@@ -34,6 +34,7 @@ private import gstreamer.BufferList;
 private import gstreamer.BufferPool;
 private import gstreamer.Caps;
 private import gstreamer.Element;
+private import gstreamer.Segment;
 
 
 /**
@@ -194,8 +195,7 @@ public class BaseSrc : Element
 	 * Params:
 	 *     allocator = the #GstAllocator
 	 *         used
-	 *     params = the
-	 *         #GstAllocationParams of @allocator
+	 *     params = the #GstAllocationParams of @allocator
 	 */
 	public void getAllocator(out Allocator allocator, out AllocationParams params)
 	{
@@ -224,14 +224,14 @@ public class BaseSrc : Element
 	 */
 	public BufferPool getBufferPool()
 	{
-		auto p = gst_base_src_get_buffer_pool(gstBaseSrc);
+		auto __p = gst_base_src_get_buffer_pool(gstBaseSrc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) p, true);
+		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) __p, true);
 	}
 
 	/**
@@ -265,12 +265,32 @@ public class BaseSrc : Element
 	}
 
 	/**
+	 * Negotiates src pad caps with downstream elements.
+	 * Unmarks GST_PAD_FLAG_NEED_RECONFIGURE in any case. But marks it again
+	 * if #GstBaseSrcClass.negotiate() fails.
+	 *
+	 * Do not call this in the #GstBaseSrcClass.fill() vmethod. Call this in
+	 * #GstBaseSrcClass.create() or in #GstBaseSrcClass.alloc(), _before_ any
+	 * buffer is allocated.
+	 *
+	 * Returns: %TRUE if the negotiation succeeded, else %FALSE.
+	 *
+	 * Since: 1.18
+	 */
+	public bool negotiate()
+	{
+		return gst_base_src_negotiate(gstBaseSrc) != 0;
+	}
+
+	/**
 	 * Prepare a new seamless segment for emission downstream. This function must
-	 * only be called by derived sub-classes, and only from the create() function,
+	 * only be called by derived sub-classes, and only from the #GstBaseSrcClass::create function,
 	 * as the stream-lock needs to be held.
 	 *
 	 * The format for the new segment will be the current format of the source, as
 	 * configured with gst_base_src_set_format()
+	 *
+	 * Deprecated: Use gst_base_src_new_segment()
 	 *
 	 * Params:
 	 *     start = The new start value for the segment
@@ -282,6 +302,29 @@ public class BaseSrc : Element
 	public bool newSeamlessSegment(long start, long stop, long time)
 	{
 		return gst_base_src_new_seamless_segment(gstBaseSrc, start, stop, time) != 0;
+	}
+
+	/**
+	 * Prepare a new segment for emission downstream. This function must
+	 * only be called by derived sub-classes, and only from the #GstBaseSrcClass::create function,
+	 * as the stream-lock needs to be held.
+	 *
+	 * The format for the @segment must be identical with the current format
+	 * of the source, as configured with gst_base_src_set_format().
+	 *
+	 * The format of @src must not be %GST_FORMAT_UNDEFINED and the format
+	 * should be configured via gst_base_src_set_format() before calling this method.
+	 *
+	 * Params:
+	 *     segment = a pointer to a #GstSegment
+	 *
+	 * Returns: %TRUE if preparation of new segment succeeded.
+	 *
+	 * Since: 1.18
+	 */
+	public bool newSegment(Segment segment)
+	{
+		return gst_base_src_new_segment(gstBaseSrc, (segment is null) ? null : segment.getSegmentStruct()) != 0;
 	}
 
 	/**
@@ -303,11 +346,11 @@ public class BaseSrc : Element
 	{
 		int outlive;
 
-		auto p = gst_base_src_query_latency(gstBaseSrc, &outlive, &minLatency, &maxLatency) != 0;
+		auto __p = gst_base_src_query_latency(gstBaseSrc, &outlive, &minLatency, &maxLatency) != 0;
 
 		live = (outlive == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -333,7 +376,7 @@ public class BaseSrc : Element
 	 * When @src operates in %GST_FORMAT_TIME, #GstBaseSrc will send an EOS
 	 * when a buffer outside of the currently configured segment is pushed if
 	 * @automatic_eos is %TRUE. Since 1.16, if @automatic_eos is %FALSE an
-	 * EOS will be pushed only when the #GstBaseSrc.create implementation
+	 * EOS will be pushed only when the #GstBaseSrcClass.create() implementation
 	 * returns %GST_FLOW_EOS.
 	 *
 	 * Params:
@@ -481,7 +524,7 @@ public class BaseSrc : Element
 	 */
 	public void submitBufferList(BufferList bufferList)
 	{
-		gst_base_src_submit_buffer_list(gstBaseSrc, (bufferList is null) ? null : bufferList.getBufferListStruct());
+		gst_base_src_submit_buffer_list(gstBaseSrc, (bufferList is null) ? null : bufferList.getBufferListStruct(true));
 	}
 
 	/**

@@ -24,11 +24,10 @@
 
 module gtk.TreeDragDestT;
 
-public  import gtk.SelectionData;
+public  import gobject.Value;
 public  import gtk.TreePath;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -45,7 +44,7 @@ public template TreeDragDestT(TStruct)
 
 	/**
 	 * Asks the #GtkTreeDragDest to insert a row before the path @dest,
-	 * deriving the contents of the row from @selection_data. If @dest is
+	 * deriving the contents of the row from @value. If @dest is
 	 * outside the tree so that inserting before it is impossible, %FALSE
 	 * will be returned. Also, %FALSE may be returned if the new row is
 	 * not created for some model-specific reason.  Should robustly handle
@@ -53,30 +52,30 @@ public template TreeDragDestT(TStruct)
 	 *
 	 * Params:
 	 *     dest = row to drop in front of
-	 *     selectionData = data to drop
+	 *     value = data to drop
 	 *
 	 * Returns: whether a new row was created before position @dest
 	 */
-	public bool dragDataReceived(TreePath dest, SelectionData selectionData)
+	public bool dragDataReceived(TreePath dest, Value value)
 	{
-		return gtk_tree_drag_dest_drag_data_received(getTreeDragDestStruct(), (dest is null) ? null : dest.getTreePathStruct(), (selectionData is null) ? null : selectionData.getSelectionDataStruct()) != 0;
+		return gtk_tree_drag_dest_drag_data_received(getTreeDragDestStruct(), (dest is null) ? null : dest.getTreePathStruct(), (value is null) ? null : value.getValueStruct()) != 0;
 	}
 
 	/**
 	 * Determines whether a drop is possible before the given @dest_path,
 	 * at the same depth as @dest_path. i.e., can we drop the data in
-	 * @selection_data at that location. @dest_path does not have to
+	 * @value at that location. @dest_path does not have to
 	 * exist; the return value will almost certainly be %FALSE if the
 	 * parent of @dest_path doesn’t exist, though.
 	 *
 	 * Params:
 	 *     destPath = destination row
-	 *     selectionData = the data being dragged
+	 *     value = the data being dropped
 	 *
 	 * Returns: %TRUE if a drop is possible before @dest_path
 	 */
-	public bool rowDropPossible(TreePath destPath, SelectionData selectionData)
+	public bool rowDropPossible(TreePath destPath, Value value)
 	{
-		return gtk_tree_drag_dest_row_drop_possible(getTreeDragDestStruct(), (destPath is null) ? null : destPath.getTreePathStruct(), (selectionData is null) ? null : selectionData.getSelectionDataStruct()) != 0;
+		return gtk_tree_drag_dest_row_drop_possible(getTreeDragDestStruct(), (destPath is null) ? null : destPath.getTreePathStruct(), (value is null) ? null : value.getValueStruct()) != 0;
 	}
 }

@@ -28,7 +28,6 @@ private import gobject.Signals;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -54,7 +53,7 @@ private import std.algorithm;
  * are arranged in columns, and spread across several pages if there are too
  * many to find on a single page.
  * 
- * The .ui file for this example can be found [here](https://git.gnome.org/browse/gtk+/tree/demos/gtk-demo/shortcuts-gedit.ui).
+ * The .ui file for this example can be found [here](https://gitlab.gnome.org/GNOME/gtk/tree/master/demos/gtk-demo/shortcuts-gedit.ui).
  * 
  * # An example with multiple views:
  * 
@@ -63,7 +62,7 @@ private import std.algorithm;
  * This example shows a #GtkShortcutsWindow that has been configured to show only
  * the shortcuts relevant to the "stopwatch" view.
  * 
- * The .ui file for this example can be found [here](https://git.gnome.org/browse/gtk+/tree/demos/gtk-demo/shortcuts-clocks.ui).
+ * The .ui file for this example can be found [here](https://gitlab.gnome.org/GNOME/gtk/tree/master/demos/gtk-demo/shortcuts-clocks.ui).
  * 
  * # An example with multiple sections:
  * 
@@ -72,7 +71,7 @@ private import std.algorithm;
  * This example shows a #GtkShortcutsWindow with two sections, "Editor Shortcuts"
  * and "Terminal Shortcuts".
  * 
- * The .ui file for this example can be found [here](https://git.gnome.org/browse/gtk+/tree/demos/gtk-demo/shortcuts-builder.ui).
+ * The .ui file for this example can be found [here](https://gitlab.gnome.org/GNOME/gtk/tree/master/demos/gtk-demo/shortcuts-builder.ui).
  */
 public class ShortcutsWindow : Window
 {
@@ -111,7 +110,7 @@ public class ShortcutsWindow : Window
 
 	/**
 	 * The ::close signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user uses a keybinding to close
 	 * the window.
 	 *
@@ -124,7 +123,7 @@ public class ShortcutsWindow : Window
 
 	/**
 	 * The ::search signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user uses a keybinding to start a search.
 	 *
 	 * The default binding for this signal is Control-F.

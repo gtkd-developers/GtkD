@@ -27,12 +27,12 @@ module gsv.SourceGutterRenderer;
 private import cairo.Context;
 private import gdk.Event;
 private import gdk.RGBA;
+private import gdk.Rectangle;
 private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Tooltip;
@@ -84,9 +84,9 @@ public class SourceGutterRenderer : ObjectG
 	 *     area = a #GdkRectangle of the cell area where the renderer is activated
 	 *     event = the event that triggered the activation
 	 */
-	public void activate(TextIter iter, GdkRectangle* area, Event event)
+	public void activate(TextIter iter, Rectangle area, Event event)
 	{
-		gtk_source_gutter_renderer_activate(gtkSourceGutterRenderer, (iter is null) ? null : iter.getTextIterStruct(), area, (event is null) ? null : event.getEventStruct());
+		gtk_source_gutter_renderer_activate(gtkSourceGutterRenderer, (iter is null) ? null : iter.getTextIterStruct(), (area is null) ? null : area.getRectangleStruct(), (event is null) ? null : event.getEventStruct());
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class SourceGutterRenderer : ObjectG
 	 *     start = a #GtkTextIter
 	 *     end = a #GtkTextIter
 	 */
-	public void begin(Context cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, TextIter start, TextIter end)
+	public void begin(Context cr, Rectangle backgroundArea, Rectangle cellArea, TextIter start, TextIter end)
 	{
-		gtk_source_gutter_renderer_begin(gtkSourceGutterRenderer, (cr is null) ? null : cr.getContextStruct(), backgroundArea, cellArea, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
+		gtk_source_gutter_renderer_begin(gtkSourceGutterRenderer, (cr is null) ? null : cr.getContextStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 
 	/**
@@ -129,9 +129,9 @@ public class SourceGutterRenderer : ObjectG
 	 *     end = a #GtkTextIter
 	 *     state = a #GtkSourceGutterRendererState
 	 */
-	public void draw(Context cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, TextIter start, TextIter end, GtkSourceGutterRendererState state)
+	public void draw(Context cr, Rectangle backgroundArea, Rectangle cellArea, TextIter start, TextIter end, GtkSourceGutterRendererState state)
 	{
-		gtk_source_gutter_renderer_draw(gtkSourceGutterRenderer, (cr is null) ? null : cr.getContextStruct(), backgroundArea, cellArea, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), state);
+		gtk_source_gutter_renderer_draw(gtkSourceGutterRenderer, (cr is null) ? null : cr.getContextStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), state);
 	}
 
 	/**
@@ -179,11 +179,11 @@ public class SourceGutterRenderer : ObjectG
 	{
 		GdkRGBA* outcolor = sliceNew!GdkRGBA();
 
-		auto p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
+		auto __p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
 
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -217,14 +217,14 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	public TextView getView()
 	{
-		auto p = gtk_source_gutter_renderer_get_view(gtkSourceGutterRenderer);
+		auto __p = gtk_source_gutter_renderer_get_view(gtkSourceGutterRenderer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextView)(cast(GtkTextView*) p);
+		return ObjectG.getDObject!(TextView)(cast(GtkTextView*) __p);
 	}
 
 	/**
@@ -259,9 +259,9 @@ public class SourceGutterRenderer : ObjectG
 	 *
 	 * Returns: %TRUE if the renderer can be activated, %FALSE otherwise
 	 */
-	public bool queryActivatable(TextIter iter, GdkRectangle* area, Event event)
+	public bool queryActivatable(TextIter iter, Rectangle area, Event event)
 	{
-		return gtk_source_gutter_renderer_query_activatable(gtkSourceGutterRenderer, (iter is null) ? null : iter.getTextIterStruct(), area, (event is null) ? null : event.getEventStruct()) != 0;
+		return gtk_source_gutter_renderer_query_activatable(gtkSourceGutterRenderer, (iter is null) ? null : iter.getTextIterStruct(), (area is null) ? null : area.getRectangleStruct(), (event is null) ? null : event.getEventStruct()) != 0;
 	}
 
 	/**
@@ -295,9 +295,9 @@ public class SourceGutterRenderer : ObjectG
 	 *
 	 * Returns: %TRUE if the tooltip has been set, %FALSE otherwise
 	 */
-	public bool queryTooltip(TextIter iter, GdkRectangle* area, int x, int y, Tooltip tooltip)
+	public bool queryTooltip(TextIter iter, Rectangle area, int x, int y, Tooltip tooltip)
 	{
-		return gtk_source_gutter_renderer_query_tooltip(gtkSourceGutterRenderer, (iter is null) ? null : iter.getTextIterStruct(), area, x, y, (tooltip is null) ? null : tooltip.getTooltipStruct()) != 0;
+		return gtk_source_gutter_renderer_query_tooltip(gtkSourceGutterRenderer, (iter is null) ? null : iter.getTextIterStruct(), (area is null) ? null : area.getRectangleStruct(), x, y, (tooltip is null) ? null : tooltip.getTooltipStruct()) != 0;
 	}
 
 	/**
@@ -400,7 +400,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     area = a #GdkRectangle
 	 *     event = the event that caused the activation
 	 */
-	gulong addOnActivate(void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(TextIter, Rectangle, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -414,7 +414,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     area = a #GdkRectangle
 	 *     event = the #GdkEvent that is causing the activatable query
 	 */
-	gulong addOnQueryActivatable(bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnQueryActivatable(bool delegate(TextIter, Rectangle, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "query-activatable", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -446,7 +446,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     y = the y position (in window coordinates)
 	 *     tooltip = a #GtkTooltip
 	 */
-	gulong addOnQueryTooltip(bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnQueryTooltip(bool delegate(TextIter, Rectangle, int, int, Tooltip, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "query-tooltip", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

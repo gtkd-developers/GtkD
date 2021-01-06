@@ -29,7 +29,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import gtkd.Loader;
 
 
@@ -69,53 +68,74 @@ public class TreePath
 			gtk_tree_path_free(gtkTreePath);
 	}
 
-	/**
-	 * Creates a new GtkTreePath. This structure refers to a row.
-	 * Params:
-	 * firstRow = if true this is the string representation of this path is "0"
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (bool firstRow=false)
-	{
-		GtkTreePath* p;
-
-		if ( firstRow )
-		{
-			// GtkTreePath* gtk_tree_path_new_first (void);
-			p = cast(GtkTreePath*)gtk_tree_path_new_first();
-		}
-		else
-		{
-			// GtkTreePath* gtk_tree_path_new (void);
-			p = cast(GtkTreePath*)gtk_tree_path_new();
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_tree_path_new()");
-		}
-
-		this(p);
-	}
-
-	/**
-	 * Creates a new path with "indices" as indices.
-	 */
-	this (int[] indices ... )
-	{
-		this(false);
-
-		foreach( index; indices )
-		appendIndex(index);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gtk_tree_path_get_type();
+	}
+
+	/**
+	 * Creates a new #GtkTreePath-struct.
+	 * This refers to a row.
+	 *
+	 * Returns: A newly created #GtkTreePath-struct.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto __p = gtk_tree_path_new();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GtkTreePath*) __p);
+	}
+
+	/**
+	 * Creates a new #GtkTreePath-struct.
+	 *
+	 * The string representation of this path is “0”.
+	 *
+	 * Returns: A new #GtkTreePath-struct
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto __p = gtk_tree_path_new_first();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_first");
+		}
+
+		this(cast(GtkTreePath*) __p);
+	}
+
+	/**
+	 * Creates a new path with the given @indices array of @length.
+	 *
+	 * Params:
+	 *     indices = array of indices
+	 *
+	 * Returns: A newly created #GtkTreePath-struct
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(int[] indices)
+	{
+		auto __p = gtk_tree_path_new_from_indicesv(indices.ptr, cast(size_t)indices.length);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_indicesv");
+		}
+
+		this(cast(GtkTreePath*) __p);
 	}
 
 	/**
@@ -136,14 +156,14 @@ public class TreePath
 	 */
 	public this(string path)
 	{
-		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
+		auto __p = gtk_tree_path_new_from_string(Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
 
-		this(cast(GtkTreePath*) p);
+		this(cast(GtkTreePath*) __p);
 	}
 
 	/**
@@ -183,14 +203,14 @@ public class TreePath
 	 */
 	public TreePath copy()
 	{
-		auto p = gtk_tree_path_copy(gtkTreePath);
+		auto __p = gtk_tree_path_copy(gtkTreePath);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -224,21 +244,34 @@ public class TreePath
 	 * Returns the current indices of @path.
 	 *
 	 * This is an array of integers, each representing a node in a tree.
+	 * This value should not be freed.
+	 *
+	 * The length of the array can be obtained with gtk_tree_path_get_depth().
+	 *
+	 * Returns: The current indices, or %NULL
+	 */
+	public int* getIndices()
+	{
+		return gtk_tree_path_get_indices(gtkTreePath);
+	}
+
+	/**
+	 * Returns the current indices of @path.
+	 *
+	 * This is an array of integers, each representing a node in a tree.
 	 * It also returns the number of elements in the array.
 	 * The array should not be freed.
 	 *
 	 * Returns: The current
 	 *     indices, or %NULL
-	 *
-	 * Since: 3.0
 	 */
-	public int[] getIndices()
+	public int[] getIndicesWithDepth()
 	{
 		int depth;
 
-		auto p = gtk_tree_path_get_indices_with_depth(gtkTreePath, &depth);
+		auto __p = gtk_tree_path_get_indices_with_depth(gtkTreePath, &depth);
 
-		return p[0 .. depth];
+		return __p[0 .. depth];
 	}
 
 	/**
@@ -305,7 +338,8 @@ public class TreePath
 	 *
 	 * This string is a “:” separated list of numbers.
 	 * For example, “4:10:0:3” would be an acceptable
-	 * return value for this string.
+	 * return value for this string. If the path has
+	 * depth 0, %NULL is returned.
 	 *
 	 * Returns: A newly-allocated string.
 	 *     Must be freed with g_free().

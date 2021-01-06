@@ -30,14 +30,12 @@ private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Adjustment;
-private import gtk.Container;
 private import gtk.FlowBoxChild;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -62,13 +60,11 @@ private import std.algorithm;
  * The children of a GtkFlowBox can be dynamically sorted and filtered.
  * 
  * Although a GtkFlowBox must have only #GtkFlowBoxChild children,
- * you can add any kind of widget to it via gtk_container_add(), and
+ * you can add any kind of widget to it via gtk_flow_box_insert(), and
  * a GtkFlowBoxChild widget will automatically be inserted between
  * the box and the widget.
  * 
  * Also see #GtkListBox.
- * 
- * GtkFlowBox was added in GTK+ 3.12.
  * 
  * # CSS nodes
  * 
@@ -85,8 +81,13 @@ private import std.algorithm;
  * GtkFlowBox uses a single CSS node with name flowbox. GtkFlowBoxChild
  * uses a single CSS node with name flowboxchild.
  * For rubberband selection, a subnode with name rubberband is used.
+ * 
+ * # Accessibility
+ * 
+ * GtkFlowBox uses the #GTK_ACCESSIBLE_ROLE_GRID role, and GtkFlowBoxChild
+ * uses the #GTK_ACCESSIBLE_ROLE_GRID_CELL role.
  */
-public class FlowBox : Container, OrientableIF
+public class FlowBox : Widget, OrientableIF
 {
 	/** the main Gtk struct */
 	protected GtkFlowBox* gtkFlowBox;
@@ -111,7 +112,7 @@ public class FlowBox : Container, OrientableIF
 	public this (GtkFlowBox* gtkFlowBox, bool ownedRef = false)
 	{
 		this.gtkFlowBox = gtkFlowBox;
-		super(cast(GtkContainer*)gtkFlowBox, ownedRef);
+		super(cast(GtkWidget*)gtkFlowBox, ownedRef);
 	}
 
 	// add the Orientable capabilities
@@ -129,20 +130,18 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Returns: a new #GtkFlowBox container
 	 *
-	 * Since: 3.12
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_flow_box_new();
+		auto __p = gtk_flow_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFlowBox*) p);
+		this(cast(GtkFlowBox*) __p);
 	}
 
 	/**
@@ -156,7 +155,7 @@ public class FlowBox : Container, OrientableIF
 	 * If @model is %NULL, @box is left empty.
 	 *
 	 * It is undefined to add or remove widgets directly (for example, with
-	 * gtk_flow_box_insert() or gtk_container_add()) while @box is bound to a
+	 * gtk_flow_box_insert()) while @box is bound to a
 	 * model.
 	 *
 	 * Note that using a model is incompatible with the filtering and sorting
@@ -168,8 +167,6 @@ public class FlowBox : Container, OrientableIF
 	 *     createWidgetFunc = a function that creates widgets for items
 	 *     userData = user data passed to @create_widget_func
 	 *     userDataFreeFunc = function for freeing @user_data
-	 *
-	 * Since: 3.18
 	 */
 	public void bindModel(ListModelIF model, GtkFlowBoxCreateWidgetFunc createWidgetFunc, void* userData, GDestroyNotify userDataFreeFunc)
 	{
@@ -181,8 +178,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Returns: %TRUE if children are activated on single click,
 	 *     %FALSE otherwise
-	 *
-	 * Since: 3.12
 	 */
 	public bool getActivateOnSingleClick()
 	{
@@ -198,23 +193,22 @@ public class FlowBox : Container, OrientableIF
 	 * Returns: the child widget, which will
 	 *     always be a #GtkFlowBoxChild or %NULL in case no child widget
 	 *     with the given index exists.
-	 *
-	 * Since: 3.12
 	 */
 	public FlowBoxChild getChildAtIndex(int idx)
 	{
-		auto p = gtk_flow_box_get_child_at_index(gtkFlowBox, idx);
+		auto __p = gtk_flow_box_get_child_at_index(gtkFlowBox, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) p);
+		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) __p);
 	}
 
 	/**
-	 * Gets the child in the (@x, @y) position.
+	 * Gets the child in the (@x, @y) position. Both @x and @y are
+	 * assumed to be relative to the origin of @box.
 	 *
 	 * Params:
 	 *     x = the x coordinate of the child
@@ -223,27 +217,23 @@ public class FlowBox : Container, OrientableIF
 	 * Returns: the child widget, which will
 	 *     always be a #GtkFlowBoxChild or %NULL in case no child widget
 	 *     exists for the given x and y coordinates.
-	 *
-	 * Since: 3.22.6
 	 */
 	public FlowBoxChild getChildAtPos(int x, int y)
 	{
-		auto p = gtk_flow_box_get_child_at_pos(gtkFlowBox, x, y);
+		auto __p = gtk_flow_box_get_child_at_pos(gtkFlowBox, x, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) p);
+		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) __p);
 	}
 
 	/**
 	 * Gets the horizontal spacing.
 	 *
 	 * Returns: the horizontal spacing
-	 *
-	 * Since: 3.12
 	 */
 	public uint getColumnSpacing()
 	{
@@ -255,8 +245,6 @@ public class FlowBox : Container, OrientableIF
 	 * same size). See gtk_box_set_homogeneous().
 	 *
 	 * Returns: %TRUE if the box is homogeneous.
-	 *
-	 * Since: 3.12
 	 */
 	public bool getHomogeneous()
 	{
@@ -267,8 +255,6 @@ public class FlowBox : Container, OrientableIF
 	 * Gets the maximum number of children per line.
 	 *
 	 * Returns: the maximum number of children per line
-	 *
-	 * Since: 3.12
 	 */
 	public uint getMaxChildrenPerLine()
 	{
@@ -279,8 +265,6 @@ public class FlowBox : Container, OrientableIF
 	 * Gets the minimum number of children per line.
 	 *
 	 * Returns: the minimum number of children per line
-	 *
-	 * Since: 3.12
 	 */
 	public uint getMinChildrenPerLine()
 	{
@@ -291,8 +275,6 @@ public class FlowBox : Container, OrientableIF
 	 * Gets the vertical spacing.
 	 *
 	 * Returns: the vertical spacing
-	 *
-	 * Since: 3.12
 	 */
 	public uint getRowSpacing()
 	{
@@ -304,27 +286,23 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Returns: A #GList containing the #GtkWidget for each selected child.
 	 *     Free with g_list_free() when done.
-	 *
-	 * Since: 3.12
 	 */
 	public ListG getSelectedChildren()
 	{
-		auto p = gtk_flow_box_get_selected_children(gtkFlowBox);
+		auto __p = gtk_flow_box_get_selected_children(gtkFlowBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
 	 * Gets the selection mode of @box.
 	 *
 	 * Returns: the #GtkSelectionMode
-	 *
-	 * Since: 3.12
 	 */
 	public GtkSelectionMode getSelectionMode()
 	{
@@ -335,8 +313,7 @@ public class FlowBox : Container, OrientableIF
 	 * Inserts the @widget into @box at @position.
 	 *
 	 * If a sort function is set, the widget will actually be inserted
-	 * at the calculated position and this function has the same effect
-	 * as gtk_container_add().
+	 * at the calculated position.
 	 *
 	 * If @position is -1, or larger than the total number of children
 	 * in the @box, then the @widget will be appended to the end.
@@ -344,8 +321,6 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     widget = the #GtkWidget to add
 	 *     position = the position to insert @child in
-	 *
-	 * Since: 3.12
 	 */
 	public void insert(Widget widget, int position)
 	{
@@ -360,8 +335,6 @@ public class FlowBox : Container, OrientableIF
 	 * factor. For instance, this would be used if the
 	 * filter function just looked for a specific search
 	 * term, and the entry with the string has changed.
-	 *
-	 * Since: 3.12
 	 */
 	public void invalidateFilter()
 	{
@@ -373,8 +346,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Call this when the result of the sort function on
 	 * @box is changed due to an external factor.
-	 *
-	 * Since: 3.12
 	 */
 	public void invalidateSort()
 	{
@@ -382,10 +353,19 @@ public class FlowBox : Container, OrientableIF
 	}
 
 	/**
+	 * Removes a child from @box.
+	 *
+	 * Params:
+	 *     widget = the child widget to remove
+	 */
+	public void remove(Widget widget)
+	{
+		gtk_flow_box_remove(gtkFlowBox, (widget is null) ? null : widget.getWidgetStruct());
+	}
+
+	/**
 	 * Select all children of @box, if the selection
 	 * mode allows it.
-	 *
-	 * Since: 3.12
 	 */
 	public void selectAll()
 	{
@@ -398,8 +378,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     child = a child of @box
-	 *
-	 * Since: 3.12
 	 */
 	public void selectChild(FlowBoxChild child)
 	{
@@ -415,8 +393,6 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     func = the function to call for each selected child
 	 *     data = user data to pass to the function
-	 *
-	 * Since: 3.12
 	 */
 	public void selectedForeach(GtkFlowBoxForeachFunc func, void* data)
 	{
@@ -429,8 +405,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     single = %TRUE to emit child-activated on a single click
-	 *
-	 * Since: 3.12
 	 */
 	public void setActivateOnSingleClick(bool single)
 	{
@@ -443,8 +417,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     spacing = the spacing to use
-	 *
-	 * Since: 3.12
 	 */
 	public void setColumnSpacing(uint spacing)
 	{
@@ -469,8 +441,6 @@ public class FlowBox : Container, OrientableIF
 	 *         lets you filter which children to show
 	 *     userData = user data passed to @filter_func
 	 *     destroy = destroy notifier for @user_data
-	 *
-	 * Since: 3.12
 	 */
 	public void setFilterFunc(GtkFlowBoxFilterFunc filterFunc, void* userData, GDestroyNotify destroy)
 	{
@@ -492,8 +462,6 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     adjustment = an adjustment which should be adjusted
 	 *         when the focus is moved among the descendents of @container
-	 *
-	 * Since: 3.12
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -508,8 +476,6 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     homogeneous = %TRUE to create equal allotments,
 	 *         %FALSE for variable allotments
-	 *
-	 * Since: 3.12
 	 */
 	public void setHomogeneous(bool homogeneous)
 	{
@@ -526,8 +492,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     nChildren = the maximum number of children per line
-	 *
-	 * Since: 3.12
 	 */
 	public void setMaxChildrenPerLine(uint nChildren)
 	{
@@ -540,8 +504,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     nChildren = the minimum number of children per line
-	 *
-	 * Since: 3.12
 	 */
 	public void setMinChildrenPerLine(uint nChildren)
 	{
@@ -554,8 +516,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     spacing = the spacing to use
-	 *
-	 * Since: 3.12
 	 */
 	public void setRowSpacing(uint spacing)
 	{
@@ -568,8 +528,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     mode = the new selection mode
-	 *
-	 * Since: 3.12
 	 */
 	public void setSelectionMode(GtkSelectionMode mode)
 	{
@@ -593,8 +551,6 @@ public class FlowBox : Container, OrientableIF
 	 *     sortFunc = the sort function
 	 *     userData = user data passed to @sort_func
 	 *     destroy = destroy notifier for @user_data
-	 *
-	 * Since: 3.12
 	 */
 	public void setSortFunc(GtkFlowBoxSortFunc sortFunc, void* userData, GDestroyNotify destroy)
 	{
@@ -616,8 +572,6 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     adjustment = an adjustment which should be adjusted
 	 *         when the focus is moved among the descendents of @container
-	 *
-	 * Since: 3.12
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{
@@ -627,8 +581,6 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Unselect all children of @box, if the selection
 	 * mode allows it.
-	 *
-	 * Since: 3.12
 	 */
 	public void unselectAll()
 	{
@@ -641,8 +593,6 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * Params:
 	 *     child = a child of @box
-	 *
-	 * Since: 3.12
 	 */
 	public void unselectChild(FlowBoxChild child)
 	{
@@ -651,7 +601,7 @@ public class FlowBox : Container, OrientableIF
 
 	/**
 	 * The ::activate-cursor-child signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user activates the @box.
 	 */
 	gulong addOnActivateCursorChild(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -673,7 +623,7 @@ public class FlowBox : Container, OrientableIF
 
 	/**
 	 * The ::move-cursor signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted when the user initiates a cursor movement.
 	 *
 	 * Applications should not connect to it, but may emit it with
@@ -682,7 +632,7 @@ public class FlowBox : Container, OrientableIF
 	 *
 	 * The default bindings for this signal come in two variants,
 	 * the variant with the Shift modifier extends the selection,
-	 * the variant without the Shift modifer does not.
+	 * the variant without the Shift modifier does not.
 	 * There are too many key combinations to list them all here.
 	 * - Arrow keys move by individual children
 	 * - Home/End keys move to the ends of the box
@@ -691,18 +641,20 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     step = the granularity fo the move, as a #GtkMovementStep
 	 *     count = the number of @step units to move
+	 *     extend = whether to extend the selection
+	 *     modify = whether to modify the selection
 	 *
 	 * Returns: %TRUE to stop other handlers from being invoked for the event.
 	 *     %FALSE to propagate the event further.
 	 */
-	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, bool, bool, FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "move-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**
 	 * The ::select-all signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to select all children of the box, if
 	 * the selection mode permits it.
 	 *
@@ -728,7 +680,7 @@ public class FlowBox : Container, OrientableIF
 
 	/**
 	 * The ::toggle-cursor-child signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which toggles the selection of the child that has the focus.
 	 *
 	 * The default binding for this signal is Ctrl-Space.
@@ -740,7 +692,7 @@ public class FlowBox : Container, OrientableIF
 
 	/**
 	 * The ::unselect-all signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to unselect all children of the box, if
 	 * the selection mode permits it.
 	 *

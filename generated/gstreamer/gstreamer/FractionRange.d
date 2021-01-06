@@ -26,10 +26,11 @@ module gstreamer.FractionRange;
 
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes a #GstFractionRange range
+ */
 public class FractionRange
 {
 	/** the main Gtk struct */

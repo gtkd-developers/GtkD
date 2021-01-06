@@ -131,14 +131,14 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_app_sink_get_caps(gstAppSink);
+		auto __p = gst_app_sink_get_caps(gstAppSink);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class AppSink : BaseSink, URIHandlerIF
 	/**
 	 * Check if appsink will emit the "new-preroll" and "new-sample" signals.
 	 *
-	 * Returns: %TRUE if @appsink is emiting the "new-preroll" and "new-sample"
+	 * Returns: %TRUE if @appsink is emitting the "new-preroll" and "new-sample"
 	 *     signals.
 	 */
 	public bool getEmitSignals()
@@ -225,14 +225,14 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	public Sample pullPreroll()
 	{
-		auto p = gst_app_sink_pull_preroll(gstAppSink);
+		auto __p = gst_app_sink_pull_preroll(gstAppSink);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) p, true);
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -253,14 +253,14 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	public Sample pullSample()
 	{
-		auto p = gst_app_sink_pull_sample(gstAppSink);
+		auto __p = gst_app_sink_pull_sample(gstAppSink);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) p, true);
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -286,6 +286,9 @@ public class AppSink : BaseSink, URIHandlerIF
 	 *
 	 * If callbacks are installed, no signals will be emitted for performance
 	 * reasons.
+	 *
+	 * Before 1.16.3 it was not possible to change the callbacks in a thread-safe
+	 * way.
 	 *
 	 * Params:
 	 *     callbacks = the callbacks
@@ -391,14 +394,14 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	public Sample tryPullPreroll(GstClockTime timeout)
 	{
-		auto p = gst_app_sink_try_pull_preroll(gstAppSink, timeout);
+		auto __p = gst_app_sink_try_pull_preroll(gstAppSink, timeout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) p, true);
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -425,14 +428,14 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	public Sample tryPullSample(GstClockTime timeout)
 	{
-		auto p = gst_app_sink_try_pull_sample(gstAppSink, timeout);
+		auto __p = gst_app_sink_try_pull_sample(gstAppSink, timeout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) p, true);
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**

@@ -28,7 +28,6 @@ private import gobject.ObjectG;
 private import gsv.SourceStyleScheme;
 private import gsv.c.functions;
 public  import gsv.c.types;
-public  import gsvc.gsvtypes;
 
 
 /** */

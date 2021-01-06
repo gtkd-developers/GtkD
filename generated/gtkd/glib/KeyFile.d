@@ -31,7 +31,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 private import gtkd.Loader;
 
 
@@ -836,7 +835,7 @@ public class KeyFile
 	 *         of the file, or %NULL
 	 *     flags = flags from #GKeyFileFlags
 	 *
-	 * Returns: %TRUE if a key file could be loaded, %FALSE othewise
+	 * Returns: %TRUE if a key file could be loaded, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -1040,7 +1039,9 @@ public class KeyFile
 
 	/**
 	 * Writes the contents of @key_file to @filename using
-	 * g_file_set_contents().
+	 * g_file_set_contents(). If you need stricter guarantees about durability of
+	 * the written file than are provided by g_file_set_contents(), use
+	 * g_file_set_contents_full() with the return value of g_key_file_to_data().
 	 *
 	 * This function can fail for any of the reasons that
 	 * g_file_set_contents() may fail.

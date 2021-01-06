@@ -38,7 +38,6 @@ private import gobject.TypeInterface;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
 private import std.traits;
 
@@ -1281,7 +1280,7 @@ public class ObjectG
 
 	/**
 	 * This sets an opaque, named pointer on an object.
-	 * The name is specified through a #GQuark (retrived e.g. via
+	 * The name is specified through a #GQuark (retrieved e.g. via
 	 * g_quark_from_static_string()), and the pointer
 	 * can be gotten back from the @object with g_object_get_qdata()
 	 * until the @object is finalized.
@@ -1381,7 +1380,7 @@ public class ObjectG
 	 * {
 	 * // the quark, naming the object data
 	 * GQuark quark_string_list = g_quark_from_static_string ("my-string-list");
-	 * // retrive the old string list
+	 * // retrieve the old string list
 	 * GList *list = g_object_steal_qdata (object, quark_string_list);
 	 *
 	 * // prepend new string

@@ -31,7 +31,6 @@ private import gtk.CellArea;
 private import gtk.CellRenderer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -73,7 +72,7 @@ public  import gtkc.gtktypes;
  * ]|
  * 
  * Furthermore for implementations of GtkCellLayout that use a #GtkCellArea
- * to lay out cells (all GtkCellLayouts in GTK+ use a GtkCellArea)
+ * to lay out cells (all GtkCellLayouts in GTK use a GtkCellArea)
  * [cell properties][cell-properties] can also be defined in the format by
  * specifying the custom <cell-packing> attribute which can contain multiple
  * <property> elements defined in the normal way.
@@ -165,16 +164,12 @@ public interface CellLayoutIF{
 	 *     cell = a #GtkCellRenderer
 	 *     attribute = an attribute on the renderer
 	 *     column = the column position on the model to get the attribute from
-	 *
-	 * Since: 2.4
 	 */
 	public void addAttribute(CellRenderer cell, string attribute, int column);
 
 	/**
 	 * Unsets all the mappings on all renderers on @cell_layout and
 	 * removes all renderers from @cell_layout.
-	 *
-	 * Since: 2.4
 	 */
 	public void clear();
 
@@ -184,8 +179,6 @@ public interface CellLayoutIF{
 	 *
 	 * Params:
 	 *     cell = a #GtkCellRenderer to clear the attribute mapping on
-	 *
-	 * Since: 2.4
 	 */
 	public void clearAttributes(CellRenderer cell);
 
@@ -196,8 +189,6 @@ public interface CellLayoutIF{
 	 *
 	 * Returns: the cell area used by @cell_layout,
 	 *     or %NULL in case no cell area is used.
-	 *
-	 * Since: 3.0
 	 */
 	public CellArea getArea();
 
@@ -207,8 +198,6 @@ public interface CellLayoutIF{
 	 * Returns: a list of cell renderers. The list, but not the renderers has
 	 *     been newly allocated and should be freed with g_list_free()
 	 *     when no longer needed.
-	 *
-	 * Since: 2.12
 	 */
 	public ListG getCells();
 
@@ -222,8 +211,6 @@ public interface CellLayoutIF{
 	 * Params:
 	 *     cell = a #GtkCellRenderer
 	 *     expand = %TRUE if @cell is to be given extra space allocated to @cell_layout
-	 *
-	 * Since: 2.4
 	 */
 	public void packEnd(CellRenderer cell, bool expand);
 
@@ -237,8 +224,6 @@ public interface CellLayoutIF{
 	 * Params:
 	 *     cell = a #GtkCellRenderer
 	 *     expand = %TRUE if @cell is to be given extra space allocated to @cell_layout
-	 *
-	 * Since: 2.4
 	 */
 	public void packStart(CellRenderer cell, bool expand);
 
@@ -251,8 +236,6 @@ public interface CellLayoutIF{
 	 * Params:
 	 *     cell = a #GtkCellRenderer to reorder
 	 *     position = new position to insert @cell at
-	 *
-	 * Since: 2.4
 	 */
 	public void reorder(CellRenderer cell, int position);
 
@@ -270,8 +253,6 @@ public interface CellLayoutIF{
 	 *     func = the #GtkCellLayoutDataFunc to use, or %NULL
 	 *     funcData = user data for @func
 	 *     destroy = destroy notify for @func_data
-	 *
-	 * Since: 2.4
 	 */
 	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy);
 }

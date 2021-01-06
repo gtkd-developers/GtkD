@@ -27,7 +27,6 @@ module glib.MessageLog;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -48,7 +47,7 @@ public struct MessageLog
 	 *
 	 * - `G_MESSAGES_PREFIXED`: A :-separated list of log levels for which
 	 * messages should be prefixed by the program name and PID of the
-	 * aplication.
+	 * application.
 	 *
 	 * - `G_MESSAGES_DEBUG`: A space-separated list of log domains for
 	 * which debug and informational messages are printed. By default

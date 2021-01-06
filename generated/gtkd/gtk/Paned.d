@@ -24,17 +24,14 @@
 
 module gtk.Paned;
 
-private import gdk.Window;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Container;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -44,9 +41,9 @@ private import std.algorithm;
  * the two panes is adjustable by the user by dragging
  * a handle.
  * 
- * Child widgets are
- * added to the panes of the widget with gtk_paned_pack1() and
- * gtk_paned_pack2(). The division between the two children is set by default
+ * Child widgets are added to the panes of the widget with
+ * gtk_paned_set_start_child() and gtk_paned_set_end_child().
+ * The division between the two children is set by default
  * from the size requests of the children, but it can be adjusted by the
  * user.
  * 
@@ -54,9 +51,8 @@ private import std.algorithm;
  * small handle that the user can drag to adjust the division. It does not
  * draw any relief around the children or around the separator. (The space
  * in which the separator is called the gutter.) Often, it is useful to put
- * each child inside a #GtkFrame with the shadow type set to %GTK_SHADOW_IN
- * so that the gutter appears as a ridge. No separator is drawn if one of
- * the children is missing.
+ * each child inside a #GtkFrame so that the gutter appears as a ridge.
+ * No separator is drawn if one of the children is missing.
  * 
  * Each child has two options that can be set, @resize and @shrink. If
  * @resize is true, then when the #GtkPaned is resized, that child will
@@ -82,9 +78,10 @@ private import std.algorithm;
  * the separator with name separator. The subnode gets a .wide style
  * class when the paned is supposed to be wide.
  * 
- * In horizontal orientation, the nodes of the children are always arranged
- * from left to right. So :first-child will always select the leftmost child,
- * regardless of text direction.
+ * In horizontal orientation, the nodes are arranged based on the text
+ * direction, so in left-to-right mode, :first-child will select the
+ * leftmost child, while it will select the rightmost child in
+ * RTL layouts.
  * 
  * ## Creating a paned widget with minimum sizes.
  * 
@@ -92,19 +89,21 @@ private import std.algorithm;
  * GtkWidget *hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
  * GtkWidget *frame1 = gtk_frame_new (NULL);
  * GtkWidget *frame2 = gtk_frame_new (NULL);
- * gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_IN);
- * gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
  * 
  * gtk_widget_set_size_request (hpaned, 200, -1);
  * 
- * gtk_paned_pack1 (GTK_PANED (hpaned), frame1, TRUE, FALSE);
+ * gtk_paned_set_start_child (GTK_PANED (hpaned), frame1);
+ * gtk_paned_set_start_child_resize (GTK_PANED (hpaned), TRUE);
+ * gtk_paned_set_start_child_shrink (GTK_PANED (hpaned), FALSE);
  * gtk_widget_set_size_request (frame1, 50, -1);
  * 
- * gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
+ * gtk_paned_set_end_child (GTK_PANED (hpaned), frame2);
+ * gtk_paned_set_end_child_resize (GTK_PANED (hpaned), FALSE);
+ * gtk_paned_set_end_child_shrink (GTK_PANED (hpaned), FALSE);
  * gtk_widget_set_size_request (frame2, 50, -1);
  * ]|
  */
-public class Paned : Container, OrientableIF
+public class Paned : Widget, OrientableIF
 {
 	/** the main Gtk struct */
 	protected GtkPaned* gtkPaned;
@@ -129,21 +128,12 @@ public class Paned : Container, OrientableIF
 	public this (GtkPaned* gtkPaned, bool ownedRef = false)
 	{
 		this.gtkPaned = gtkPaned;
-		super(cast(GtkContainer*)gtkPaned, ownedRef);
+		super(cast(GtkWidget*)gtkPaned, ownedRef);
 	}
 
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkPaned);
 
-	/** */
-	public void add(Widget child1, Widget child2)
-	{
-		add1(child1);
-		add2(child2);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -159,106 +149,37 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Returns: a new #GtkPaned.
 	 *
-	 * Since: 3.0
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(GtkOrientation orientation)
 	{
-		auto p = gtk_paned_new(orientation);
+		auto __p = gtk_paned_new(orientation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPaned*) p);
+		this(cast(GtkPaned*) __p);
 	}
 
 	/**
-	 * Adds a child to the top or left pane with default parameters. This is
-	 * equivalent to
-	 * `gtk_paned_pack1 (paned, child, FALSE, TRUE)`.
+	 * Retrieves the end child of the given #GtkPaned.
 	 *
-	 * Params:
-	 *     child = the child to add
+	 * See also: #GtkPaned:end-child
+	 *
+	 * Returns: the end child widget
 	 */
-	public void add1(Widget child)
+	public Widget getEndChild()
 	{
-		gtk_paned_add1(gtkPaned, (child is null) ? null : child.getWidgetStruct());
-	}
+		auto __p = gtk_paned_get_end_child(gtkPaned);
 
-	/**
-	 * Adds a child to the bottom or right pane with default parameters. This
-	 * is equivalent to
-	 * `gtk_paned_pack2 (paned, child, TRUE, TRUE)`.
-	 *
-	 * Params:
-	 *     child = the child to add
-	 */
-	public void add2(Widget child)
-	{
-		gtk_paned_add2(gtkPaned, (child is null) ? null : child.getWidgetStruct());
-	}
-
-	/**
-	 * Obtains the first child of the paned widget.
-	 *
-	 * Returns: first child, or %NULL if it is not set.
-	 *
-	 * Since: 2.4
-	 */
-	public Widget getChild1()
-	{
-		auto p = gtk_paned_get_child1(gtkPaned);
-
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-	}
-
-	/**
-	 * Obtains the second child of the paned widget.
-	 *
-	 * Returns: second child, or %NULL if it is not set.
-	 *
-	 * Since: 2.4
-	 */
-	public Widget getChild2()
-	{
-		auto p = gtk_paned_get_child2(gtkPaned);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-	}
-
-	/**
-	 * Returns the #GdkWindow of the handle. This function is
-	 * useful when handling button or motion events because it
-	 * enables the callback to distinguish between the window
-	 * of the paned, a child and the handle.
-	 *
-	 * Returns: the paned’s handle window.
-	 *
-	 * Since: 2.20
-	 */
-	public Window getHandleWindow()
-	{
-		auto p = gtk_paned_get_handle_window(gtkPaned);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -272,11 +193,68 @@ public class Paned : Container, OrientableIF
 	}
 
 	/**
+	 * Returns whether the end child can be resized.
+	 *
+	 * Returns: %TRUE if the end child is resizable
+	 */
+	public bool getResizeEndChild()
+	{
+		return gtk_paned_get_resize_end_child(gtkPaned) != 0;
+	}
+
+	/**
+	 * Returns whether the start child can be resized.
+	 *
+	 * Returns: %TRUE if the start child is resizable
+	 */
+	public bool getResizeStartChild()
+	{
+		return gtk_paned_get_resize_start_child(gtkPaned) != 0;
+	}
+
+	/**
+	 * Returns whether the end child can be shrunk.
+	 *
+	 * Returns: %TRUE if the end child is shrinkable
+	 */
+	public bool getShrinkEndChild()
+	{
+		return gtk_paned_get_shrink_end_child(gtkPaned) != 0;
+	}
+
+	/**
+	 * Returns whether the start child can be shrunk.
+	 *
+	 * Returns: %TRUE if the start child is shrinkable
+	 */
+	public bool getShrinkStartChild()
+	{
+		return gtk_paned_get_shrink_start_child(gtkPaned) != 0;
+	}
+
+	/**
+	 * Retrieves the start child of the given #GtkPaned.
+	 *
+	 * See also: #GtkPaned:start-child
+	 *
+	 * Returns: the start child widget
+	 */
+	public Widget getStartChild()
+	{
+		auto __p = gtk_paned_get_start_child(gtkPaned);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
 	 * Gets the #GtkPaned:wide-handle property.
 	 *
 	 * Returns: %TRUE if the paned should have a wide handle
-	 *
-	 * Since: 3.16
 	 */
 	public bool getWideHandle()
 	{
@@ -284,29 +262,14 @@ public class Paned : Container, OrientableIF
 	}
 
 	/**
-	 * Adds a child to the top or left pane.
+	 * Sets the end child of @paned to @child.
 	 *
 	 * Params:
-	 *     child = the child to add
-	 *     resize = should this child expand when the paned widget is resized.
-	 *     shrink = can this child be made smaller than its requisition.
+	 *     child = the widget to add
 	 */
-	public void pack1(Widget child, bool resize, bool shrink)
+	public void setEndChild(Widget child)
 	{
-		gtk_paned_pack1(gtkPaned, (child is null) ? null : child.getWidgetStruct(), resize, shrink);
-	}
-
-	/**
-	 * Adds a child to the bottom or right pane.
-	 *
-	 * Params:
-	 *     child = the child to add
-	 *     resize = should this child expand when the paned widget is resized.
-	 *     shrink = can this child be made smaller than its requisition.
-	 */
-	public void pack2(Widget child, bool resize, bool shrink)
-	{
-		gtk_paned_pack2(gtkPaned, (child is null) ? null : child.getWidgetStruct(), resize, shrink);
+		gtk_paned_set_end_child(gtkPaned, (child is null) ? null : child.getWidgetStruct());
 	}
 
 	/**
@@ -322,12 +285,65 @@ public class Paned : Container, OrientableIF
 	}
 
 	/**
+	 * Sets the #GtkPaned:resize-end-child property
+	 *
+	 * Params:
+	 *     resize = %TRUE to let the end child be resized
+	 */
+	public void setResizeEndChild(bool resize)
+	{
+		gtk_paned_set_resize_end_child(gtkPaned, resize);
+	}
+
+	/**
+	 * Sets the #GtkPaned:resize-start-child property
+	 *
+	 * Params:
+	 *     resize = %TRUE to let the start child be resized
+	 */
+	public void setResizeStartChild(bool resize)
+	{
+		gtk_paned_set_resize_start_child(gtkPaned, resize);
+	}
+
+	/**
+	 * Sets the #GtkPaned:shrink-end-child property
+	 *
+	 * Params:
+	 *     resize = %TRUE to let the end child be shrunk
+	 */
+	public void setShrinkEndChild(bool resize)
+	{
+		gtk_paned_set_shrink_end_child(gtkPaned, resize);
+	}
+
+	/**
+	 * Sets the #GtkPaned:shrink-start-child property
+	 *
+	 * Params:
+	 *     resize = %TRUE to let the start child be shrunk
+	 */
+	public void setShrinkStartChild(bool resize)
+	{
+		gtk_paned_set_shrink_start_child(gtkPaned, resize);
+	}
+
+	/**
+	 * Sets the start child of @paned to @child.
+	 *
+	 * Params:
+	 *     child = the widget to add
+	 */
+	public void setStartChild(Widget child)
+	{
+		gtk_paned_set_start_child(gtkPaned, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
 	 * Sets the #GtkPaned:wide-handle property.
 	 *
 	 * Params:
 	 *     wide = the new value for the #GtkPaned:wide-handle property
-	 *
-	 * Since: 3.16
 	 */
 	public void setWideHandle(bool wide)
 	{
@@ -336,13 +352,11 @@ public class Paned : Container, OrientableIF
 
 	/**
 	 * The ::accept-position signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to accept the current position of the handle when
 	 * moving it using key bindings.
 	 *
 	 * The default binding for this signal is Return or Space.
-	 *
-	 * Since: 2.0
 	 */
 	gulong addOnAcceptPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -351,14 +365,12 @@ public class Paned : Container, OrientableIF
 
 	/**
 	 * The ::cancel-position signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to cancel moving the position of the handle using key
 	 * bindings. The position of the handle will be reset to the value prior to
 	 * moving it.
 	 *
 	 * The default binding for this signal is Escape.
-	 *
-	 * Since: 2.0
 	 */
 	gulong addOnCancelPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -367,15 +379,13 @@ public class Paned : Container, OrientableIF
 
 	/**
 	 * The ::cycle-child-focus signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to cycle the focus between the children of the paned.
 	 *
 	 * The default binding is f6.
 	 *
 	 * Params:
 	 *     reversed = whether cycling backward or forward
-	 *
-	 * Since: 2.0
 	 */
 	gulong addOnCycleChildFocus(bool delegate(bool, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -384,7 +394,7 @@ public class Paned : Container, OrientableIF
 
 	/**
 	 * The ::cycle-handle-focus signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to cycle whether the paned should grab focus to allow
 	 * the user to change position of the handle by using key bindings.
 	 *
@@ -392,8 +402,6 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Params:
 	 *     reversed = whether cycling backward or forward
-	 *
-	 * Since: 2.0
 	 */
 	gulong addOnCycleHandleFocus(bool delegate(bool, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -402,14 +410,12 @@ public class Paned : Container, OrientableIF
 
 	/**
 	 * The ::move-handle signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to move the handle when the user is using key bindings
 	 * to move it.
 	 *
 	 * Params:
 	 *     scrollType = a #GtkScrollType
-	 *
-	 * Since: 2.0
 	 */
 	gulong addOnMoveHandle(bool delegate(GtkScrollType, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -418,13 +424,11 @@ public class Paned : Container, OrientableIF
 
 	/**
 	 * The ::toggle-handle-focus is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * [keybinding signal][GtkSignalAction]
 	 * which gets emitted to accept the current position of the handle and then
 	 * move focus to the next widget in the focus chain.
 	 *
 	 * The default binding is Tab.
-	 *
-	 * Since: 2.0
 	 */
 	gulong addOnToggleHandleFocus(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

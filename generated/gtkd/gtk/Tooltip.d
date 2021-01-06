@@ -24,15 +24,14 @@
 
 module gtk.Tooltip;
 
-private import gdk.Display;
-private import gdkpixbuf.Pixbuf;
+private import gdk.PaintableIF;
+private import gdk.Rectangle;
 private import gio.IconIF;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -43,7 +42,7 @@ public  import gtkc.gtktypes;
  * image, or you want the tooltip to have different contents per #GtkTreeView
  * row or cell, you will have to do a little more work:
  * 
- * - Set the #GtkWidget:has-tooltip property to %TRUE, this will make GTK+
+ * - Set the #GtkWidget:has-tooltip property to %TRUE, this will make GTK
  * monitor the widget for motion and related events which are needed to
  * determine when and where to show a tooltip.
  * 
@@ -57,19 +56,6 @@ public  import gtkc.gtktypes;
  * 
  * Return %TRUE from your query-tooltip handler. This causes the tooltip to be
  * show. If you return %FALSE, it will not be shown.
- * 
- * In the probably rare case where you want to have even more control over the
- * tooltip that is about to be shown, you can set your own #GtkWindow which
- * will be used as tooltip window.  This works as follows:
- * 
- * - Set #GtkWidget:has-tooltip and connect to #GtkWidget::query-tooltip as before.
- * Use gtk_widget_set_tooltip_window() to set a #GtkWindow created by you as
- * tooltip window.
- * 
- * - In the #GtkWidget::query-tooltip callback you can access your window using
- * gtk_widget_get_tooltip_window() and manipulate as you wish. The semantics of
- * the return value are exactly as before, return %TRUE to show the window,
- * %FALSE to not show it.
  */
 public class Tooltip : ObjectG
 {
@@ -99,38 +85,11 @@ public class Tooltip : ObjectG
 		super(cast(GObject*)gtkTooltip, ownedRef);
 	}
 
-	/**
-	 * Sets the icon of the tooltip (which is in front of the text) to be
-	 * the stock item indicated by stockID with the size indicated by size.
-	 */
-	void setIcon(StockID stockID, GtkIconSize size)
-	{
-		setIconFromStock(cast(string)stockID, size);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gtk_tooltip_get_type();
-	}
-
-	/**
-	 * Triggers a new tooltip query on @display, in order to update the current
-	 * visible tooltip, or to show/hide the current tooltip.  This function is
-	 * useful to call when, for example, the state of the widget changed by a
-	 * key press.
-	 *
-	 * Params:
-	 *     display = a #GdkDisplay
-	 *
-	 * Since: 2.12
-	 */
-	public static void triggerTooltipQuery(Display display)
-	{
-		gtk_tooltip_trigger_tooltip_query((display is null) ? null : display.getDisplayStruct());
 	}
 
 	/**
@@ -143,8 +102,6 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     customWidget = a #GtkWidget, or %NULL to unset the old custom widget.
-	 *
-	 * Since: 2.12
 	 */
 	public void setCustom(Widget customWidget)
 	{
@@ -153,16 +110,14 @@ public class Tooltip : ObjectG
 
 	/**
 	 * Sets the icon of the tooltip (which is in front of the text) to be
-	 * @pixbuf.  If @pixbuf is %NULL, the image will be hidden.
+	 * @paintable.  If @paintable is %NULL, the image will be hidden.
 	 *
 	 * Params:
-	 *     pixbuf = a #GdkPixbuf, or %NULL
-	 *
-	 * Since: 2.12
+	 *     paintable = a #GdkPaintable, or %NULL
 	 */
-	public void setIcon(Pixbuf pixbuf)
+	public void setIcon(PaintableIF paintable)
 	{
-		gtk_tooltip_set_icon(gtkTooltip, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		gtk_tooltip_set_icon(gtkTooltip, (paintable is null) ? null : paintable.getPaintableStruct());
 	}
 
 	/**
@@ -172,13 +127,10 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     gicon = a #GIcon representing the icon, or %NULL
-	 *     size = a stock icon size (#GtkIconSize)
-	 *
-	 * Since: 2.20
 	 */
-	public void setIconFromGicon(IconIF gicon, GtkIconSize size)
+	public void setIconFromGicon(IconIF gicon)
 	{
-		gtk_tooltip_set_icon_from_gicon(gtkTooltip, (gicon is null) ? null : gicon.getIconStruct(), size);
+		gtk_tooltip_set_icon_from_gicon(gtkTooltip, (gicon is null) ? null : gicon.getIconStruct());
 	}
 
 	/**
@@ -188,31 +140,10 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     iconName = an icon name, or %NULL
-	 *     size = a stock icon size (#GtkIconSize)
-	 *
-	 * Since: 2.14
 	 */
-	public void setIconFromIconName(string iconName, GtkIconSize size)
+	public void setIconFromIconName(string iconName)
 	{
-		gtk_tooltip_set_icon_from_icon_name(gtkTooltip, Str.toStringz(iconName), size);
-	}
-
-	/**
-	 * Sets the icon of the tooltip (which is in front of the text) to be
-	 * the stock item indicated by @stock_id with the size indicated
-	 * by @size.  If @stock_id is %NULL, the image will be hidden.
-	 *
-	 * Deprecated: Use gtk_tooltip_set_icon_from_icon_name() instead.
-	 *
-	 * Params:
-	 *     stockId = a stock id, or %NULL
-	 *     size = a stock icon size (#GtkIconSize)
-	 *
-	 * Since: 2.12
-	 */
-	public void setIconFromStock(string stockId, GtkIconSize size)
-	{
-		gtk_tooltip_set_icon_from_stock(gtkTooltip, Str.toStringz(stockId), size);
+		gtk_tooltip_set_icon_from_icon_name(gtkTooltip, Str.toStringz(iconName));
 	}
 
 	/**
@@ -222,8 +153,6 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     markup = a markup string (see [Pango markup format][PangoMarkupFormat]) or %NULL
-	 *
-	 * Since: 2.12
 	 */
 	public void setMarkup(string markup)
 	{
@@ -236,8 +165,6 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     text = a text string or %NULL
-	 *
-	 * Since: 2.12
 	 */
 	public void setText(string text)
 	{
@@ -256,11 +183,9 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     rect = a #GdkRectangle
-	 *
-	 * Since: 2.12
 	 */
-	public void setTipArea(GdkRectangle* rect)
+	public void setTipArea(Rectangle rect)
 	{
-		gtk_tooltip_set_tip_area(gtkTooltip, rect);
+		gtk_tooltip_set_tip_area(gtkTooltip, (rect is null) ? null : rect.getRectangleStruct());
 	}
 }

@@ -24,8 +24,9 @@
 
 module gtk.TreeView;
 
-private import cairo.Surface;
-private import gdk.Window;
+private import gdk.ContentFormats;
+private import gdk.PaintableIF;
+private import gdk.Rectangle;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.MemorySlice;
@@ -33,11 +34,9 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CellRenderer;
-private import gtk.Container;
-private import gtk.Entry;
+private import gtk.EditableIF;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
-private import gtk.TargetEntry;
 private import gtk.Tooltip;
 private import gtk.TreeIter;
 private import gtk.TreeModelIF;
@@ -47,7 +46,6 @@ private import gtk.TreeViewColumn;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -118,15 +116,19 @@ private import std.algorithm;
  * ┊   ┊
  * │   ╰── <column header>
  * │
- * ╰── [rubberband]
+ * ├── [rubberband]
+ * ╰── [dndtarget]
  * ]|
  * 
  * GtkTreeView has a main CSS node with name treeview and style class .view.
  * It has a subnode with name header, which is the parent for all the column
  * header widgets' CSS nodes.
+ * 
  * For rubberband selection, a subnode with name rubberband is used.
+ * 
+ * For the drop target location during DND, a subnode with name dndtarget is used.
  */
-public class TreeView : Container, ScrollableIF
+public class TreeView : Widget, ScrollableIF
 {
 	/** the main Gtk struct */
 	protected GtkTreeView* gtkTreeView;
@@ -151,90 +153,12 @@ public class TreeView : Container, ScrollableIF
 	public this (GtkTreeView* gtkTreeView, bool ownedRef = false)
 	{
 		this.gtkTreeView = gtkTreeView;
-		super(cast(GtkContainer*)gtkTreeView, ownedRef);
+		super(cast(GtkWidget*)gtkTreeView, ownedRef);
 	}
 
 	// add the Scrollable capabilities
 	mixin ScrollableT!(GtkTreeView);
 
-	/**
-	 * Expands the row of the iter.
-	 * Params:
-	 *  iter =
-	 *  openAll =
-	 *  Returns =
-	 */
-	int expandRow(TreeIter iter, TreeModelIF model, bool openAll)
-	{
-		return expandRow(model.getPath(iter), openAll);
-	}
-
-	/**
-	 * gets the first selected iter or null if no rows are selected
-	 */
-	TreeIter getSelectedIter()
-	{
-		TreeIter iter = null;
-		TreeSelection selection = getSelection();
-		TreeModelIF model = getModel();
-		TreePath[] paths = selection.getSelectedRows(model);
-		if ( paths.length > 0 )
-		{
-			iter = new TreeIter();
-			model.getIter(iter,paths[0]);
-		}
-		return iter;
-	}
-
-	/** */
-	TreeIter[] getSelectedIters()
-	{
-		TreeIter[] iters;
-
-		TreeIter iter = new TreeIter();
-		TreeSelection selection = getSelection();
-		TreeModelIF model = getModel();
-		TreePath[] paths = selection.getSelectedRows(model);
-		foreach ( TreePath p; selection.getSelectedRows(model) )
-		{
-			if ( model.getIter(iter,p) )
-			{
-				iters ~= iter;
-				iter = new TreeIter();
-			}
-		}
-
-		return iters;
-	}
-
-	/**
-	 * Inserts a column and sets it's attributes
-	 * Params:
-	 *  position =
-	 *  title =
-	 *  renderer =
-	 *  editable =
-	 * Returns: number of columns including the new one
-	 */
-	int insertEditableColumn(int position, string title, CellRenderer renderer, bool editable)
-	{
-		// OK, this is a trick because of my ignorance on how to pass variable argument lists
-		if ( position < 0 )
-		{
-			position = getColumns().length();
-		}
-		int tot = gtk_tree_view_insert_column_with_attributes(
-			gtkTreeView,
-			position,
-			Str.toStringz(title),
-			renderer.getCellRendererStruct(),
-			Str.toStringz("text"),position,
-			Str.toStringz("editable"),2,0);
-		return tot;
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -251,14 +175,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public this()
 	{
-		auto p = gtk_tree_view_new();
+		auto __p = gtk_tree_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTreeView*) p);
+		this(cast(GtkTreeView*) __p);
 	}
 
 	/**
@@ -273,14 +197,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public this(TreeModelIF model)
 	{
-		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		auto __p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_model");
 		}
 
-		this(cast(GtkTreeView*) p);
+		this(cast(GtkTreeView*) __p);
 	}
 
 	/**
@@ -337,8 +261,6 @@ public class TreeView : Container, ScrollableIF
 	 *     by = Y coordinate relative to bin_window
 	 *     tx = return location for tree X coordinate
 	 *     ty = return location for tree Y coordinate
-	 *
-	 * Since: 2.12
 	 */
 	public void convertBinWindowToTreeCoords(int bx, int by, out int tx, out int ty)
 	{
@@ -346,16 +268,13 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	/**
-	 * Converts bin_window coordinates (see gtk_tree_view_get_bin_window())
-	 * to widget relative coordinates.
+	 * Converts bin_window coordinates to widget relative coordinates.
 	 *
 	 * Params:
 	 *     bx = bin_window X coordinate
 	 *     by = bin_window Y coordinate
 	 *     wx = return location for widget X coordinate
 	 *     wy = return location for widget Y coordinate
-	 *
-	 * Since: 2.12
 	 */
 	public void convertBinWindowToWidgetCoords(int bx, int by, out int wx, out int wy)
 	{
@@ -371,8 +290,6 @@ public class TreeView : Container, ScrollableIF
 	 *     ty = tree Y coordinate
 	 *     bx = return location for X coordinate relative to bin_window
 	 *     by = return location for Y coordinate relative to bin_window
-	 *
-	 * Since: 2.12
 	 */
 	public void convertTreeToBinWindowCoords(int tx, int ty, out int bx, out int by)
 	{
@@ -388,8 +305,6 @@ public class TreeView : Container, ScrollableIF
 	 *     ty = Y coordinate relative to the tree
 	 *     wx = return location for widget X coordinate
 	 *     wy = return location for widget Y coordinate
-	 *
-	 * Since: 2.12
 	 */
 	public void convertTreeToWidgetCoords(int tx, int ty, out int wx, out int wy)
 	{
@@ -397,16 +312,13 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	/**
-	 * Converts widget coordinates to coordinates for the bin_window
-	 * (see gtk_tree_view_get_bin_window()).
+	 * Converts widget coordinates to coordinates for the bin_window.
 	 *
 	 * Params:
 	 *     wx = X coordinate relative to the widget
 	 *     wy = Y coordinate relative to the widget
 	 *     bx = return location for bin_window X coordinate
 	 *     by = return location for bin_window Y coordinate
-	 *
-	 * Since: 2.12
 	 */
 	public void convertWidgetToBinWindowCoords(int wx, int wy, out int bx, out int by)
 	{
@@ -422,8 +334,6 @@ public class TreeView : Container, ScrollableIF
 	 *     wy = Y coordinate relative to the widget
 	 *     tx = return location for tree X coordinate
 	 *     ty = return location for tree Y coordinate
-	 *
-	 * Since: 2.12
 	 */
 	public void convertWidgetToTreeCoords(int wx, int wy, out int tx, out int ty)
 	{
@@ -439,16 +349,16 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: a newly-allocated surface of the drag icon.
 	 */
-	public Surface createRowDragIcon(TreePath path)
+	public PaintableIF createRowDragIcon(TreePath path)
 	{
-		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
+		auto __p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return ObjectG.getDObject!(PaintableIF)(cast(GdkPaintable*) __p, true);
 	}
 
 	/**
@@ -456,20 +366,13 @@ public class TreeView : Container, ScrollableIF
 	 * this method sets #GtkTreeView:reorderable to %FALSE.
 	 *
 	 * Params:
-	 *     targets = the table of targets that
-	 *         the drag will support
+	 *     formats = the target formats that the drag will support
 	 *     actions = the bitmask of possible actions for a drag from this
 	 *         widget
 	 */
-	public void enableModelDragDest(TargetEntry[] targets, GdkDragAction actions)
+	public void enableModelDragDest(ContentFormats formats, GdkDragAction actions)
 	{
-		GtkTargetEntry[] targetsArray = new GtkTargetEntry[targets.length];
-		for ( int i = 0; i < targets.length; i++ )
-		{
-			targetsArray[i] = *(targets[i].getTargetEntryStruct());
-		}
-
-		gtk_tree_view_enable_model_drag_dest(gtkTreeView, targetsArray.ptr, cast(int)targets.length, actions);
+		gtk_tree_view_enable_model_drag_dest(gtkTreeView, (formats is null) ? null : formats.getContentFormatsStruct(), actions);
 	}
 
 	/**
@@ -478,19 +381,13 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     startButtonMask = Mask of allowed buttons to start drag
-	 *     targets = the table of targets that the drag will support
+	 *     formats = the target formats that the drag will support
 	 *     actions = the bitmask of possible actions for a drag from this
 	 *         widget
 	 */
-	public void enableModelDragSource(GdkModifierType startButtonMask, TargetEntry[] targets, GdkDragAction actions)
+	public void enableModelDragSource(GdkModifierType startButtonMask, ContentFormats formats, GdkDragAction actions)
 	{
-		GtkTargetEntry[] targetsArray = new GtkTargetEntry[targets.length];
-		for ( int i = 0; i < targets.length; i++ )
-		{
-			targetsArray[i] = *(targets[i].getTargetEntryStruct());
-		}
-
-		gtk_tree_view_enable_model_drag_source(gtkTreeView, startButtonMask, targetsArray.ptr, cast(int)targets.length, actions);
+		gtk_tree_view_enable_model_drag_source(gtkTreeView, startButtonMask, (formats is null) ? null : formats.getContentFormatsStruct(), actions);
 	}
 
 	/**
@@ -521,8 +418,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     path = path to a row.
-	 *
-	 * Since: 2.2
 	 */
 	public void expandToPath(TreePath path)
 	{
@@ -533,8 +428,6 @@ public class TreeView : Container, ScrollableIF
 	 * Gets the setting set by gtk_tree_view_set_activate_on_single_click().
 	 *
 	 * Returns: %TRUE if row-activated will be emitted on a single click
-	 *
-	 * Since: 3.8
 	 */
 	public bool getActivateOnSingleClick()
 	{
@@ -554,32 +447,16 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     path = a #GtkTreePath for the row, or %NULL to get only horizontal coordinates
-	 *     column = a #GtkTreeViewColumn for the column, or %NULL to get only vertical coordiantes
+	 *     column = a #GtkTreeViewColumn for the column, or %NULL to get only vertical coordinates
 	 *     rect = rectangle to fill with cell background rect
 	 */
-	public void getBackgroundArea(TreePath path, TreeViewColumn column, out GdkRectangle rect)
+	public void getBackgroundArea(TreePath path, TreeViewColumn column, out Rectangle rect)
 	{
-		gtk_tree_view_get_background_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), &rect);
-	}
+		GdkRectangle* outrect = sliceNew!GdkRectangle();
 
-	/**
-	 * Returns the window that @tree_view renders to.
-	 * This is used primarily to compare to `event->window`
-	 * to confirm that the event on @tree_view is on the right window.
-	 *
-	 * Returns: A #GdkWindow, or %NULL when @tree_view
-	 *     hasn’t been realized yet.
-	 */
-	public Window getBinWindow()
-	{
-		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
+		gtk_tree_view_get_background_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), outrect);
 
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
 	}
 
 	/**
@@ -598,9 +475,13 @@ public class TreeView : Container, ScrollableIF
 	 *     column = a #GtkTreeViewColumn for the column, or %NULL to get only vertical coordinates
 	 *     rect = rectangle to fill with cell rect
 	 */
-	public void getCellArea(TreePath path, TreeViewColumn column, out GdkRectangle rect)
+	public void getCellArea(TreePath path, TreeViewColumn column, out Rectangle rect)
 	{
-		gtk_tree_view_get_cell_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), &rect);
+		GdkRectangle* outrect = sliceNew!GdkRectangle();
+
+		gtk_tree_view_get_cell_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), outrect);
+
+		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
 	}
 
 	/**
@@ -614,14 +495,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public TreeViewColumn getColumn(int n)
 	{
-		auto p = gtk_tree_view_get_column(gtkTreeView, n);
+		auto __p = gtk_tree_view_get_column(gtkTreeView, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
+		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) __p);
 	}
 
 	/**
@@ -632,14 +513,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public ListG getColumns()
 	{
-		auto p = gtk_tree_view_get_columns(gtkTreeView);
+		auto __p = gtk_tree_view_get_columns(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -688,11 +569,11 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 
-		auto p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos) != 0;
+		auto __p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -727,8 +608,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: %TRUE if tree lines are drawn in @tree_view, %FALSE
 	 *     otherwise.
-	 *
-	 * Since: 2.10
 	 */
 	public bool getEnableTreeLines()
 	{
@@ -736,29 +615,28 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	/**
-	 * Returns the column that is the current expander column.
+	 * Returns the column that is the current expander column,
+	 * or %NULL if none has been set.
 	 * This column has the expander arrow drawn next to it.
 	 *
 	 * Returns: The expander column.
 	 */
 	public TreeViewColumn getExpanderColumn()
 	{
-		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
+		auto __p = gtk_tree_view_get_expander_column(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
+		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) __p);
 	}
 
 	/**
 	 * Returns whether fixed height mode is turned on for @tree_view.
 	 *
 	 * Returns: %TRUE if @tree_view is in fixed height mode
-	 *
-	 * Since: 2.6
 	 */
 	public bool getFixedHeightMode()
 	{
@@ -770,8 +648,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: a #GtkTreeViewGridLines value indicating which grid lines
 	 *     are enabled.
-	 *
-	 * Since: 2.10
 	 */
 	public GtkTreeViewGridLines getGridLines()
 	{
@@ -782,8 +658,6 @@ public class TreeView : Container, ScrollableIF
 	 * Returns whether all header columns are clickable.
 	 *
 	 * Returns: %TRUE if all header columns are clickable, otherwise %FALSE
-	 *
-	 * Since: 2.10
 	 */
 	public bool getHeadersClickable()
 	{
@@ -804,8 +678,6 @@ public class TreeView : Container, ScrollableIF
 	 * Returns whether hover expansion mode is turned on for @tree_view.
 	 *
 	 * Returns: %TRUE if @tree_view is in hover expansion mode
-	 *
-	 * Since: 2.6
 	 */
 	public bool getHoverExpand()
 	{
@@ -816,8 +688,6 @@ public class TreeView : Container, ScrollableIF
 	 * Returns whether hover selection mode is turned on for @tree_view.
 	 *
 	 * Returns: %TRUE if @tree_view is in hover selection mode
-	 *
-	 * Since: 2.6
 	 */
 	public bool getHoverSelection()
 	{
@@ -830,8 +700,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: the amount of extra indentation for child levels in
 	 *     @tree_view.  A return value of 0 means that this feature is disabled.
-	 *
-	 * Since: 2.12
 	 */
 	public int getLevelIndentation()
 	{
@@ -847,22 +715,20 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_tree_view_get_model(gtkTreeView);
+		auto __p = gtk_tree_view_get_model(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
 	 * Queries the number of columns in the given @tree_view.
 	 *
 	 * Returns: The number of columns in the @tree_view
-	 *
-	 * Since: 3.4
 	 */
 	public uint getNColumns()
 	{
@@ -870,11 +736,10 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	/**
-	 * Finds the path at the point (@x, @y), relative to bin_window coordinates
-	 * (please see gtk_tree_view_get_bin_window()).
-	 * That is, @x and @y are relative to an events coordinates. @x and @y must
-	 * come from an event on the @tree_view only where `event->window ==
-	 * gtk_tree_view_get_bin_window ()`. It is primarily for
+	 * Finds the path at the point (@x, @y), relative to bin_window coordinates.
+	 * That is, @x and @y are relative to an events coordinates. Widget-relative
+	 * coordinates must be converted using
+	 * gtk_tree_view_convert_widget_to_bin_window_coords(). It is primarily for
 	 * things like popup menus. If @path is non-%NULL, then it will be filled
 	 * with the #GtkTreePath at that point.  This path should be freed with
 	 * gtk_tree_path_free().  If @column is non-%NULL, then it will be filled
@@ -907,12 +772,12 @@ public class TreeView : Container, ScrollableIF
 		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outcolumn = null;
 
-		auto p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
+		auto __p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		column = ObjectG.getDObject!(TreeViewColumn)(outcolumn);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -930,8 +795,6 @@ public class TreeView : Container, ScrollableIF
 	 * Returns the current row separator function.
 	 *
 	 * Returns: the current row separator function.
-	 *
-	 * Since: 2.6
 	 */
 	public GtkTreeViewRowSeparatorFunc getRowSeparatorFunc()
 	{
@@ -944,22 +807,10 @@ public class TreeView : Container, ScrollableIF
 	 * user to select multiple rows by dragging the mouse.
 	 *
 	 * Returns: %TRUE if rubber banding in @tree_view is enabled.
-	 *
-	 * Since: 2.10
 	 */
 	public bool getRubberBanding()
 	{
 		return gtk_tree_view_get_rubber_banding(gtkTreeView) != 0;
-	}
-
-	/**
-	 * Gets the setting set by gtk_tree_view_set_rules_hint().
-	 *
-	 * Returns: %TRUE if the hint is set
-	 */
-	public bool getRulesHint()
-	{
-		return gtk_tree_view_get_rules_hint(gtkTreeView) != 0;
 	}
 
 	/**
@@ -978,19 +829,17 @@ public class TreeView : Container, ScrollableIF
 	 * will be returned.
 	 *
 	 * Returns: the entry currently in use as search entry.
-	 *
-	 * Since: 2.10
 	 */
-	public Entry getSearchEntry()
+	public EditableIF getSearchEntry()
 	{
-		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
+		auto __p = gtk_tree_view_get_search_entry(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Entry)(cast(GtkEntry*) p);
+		return ObjectG.getDObject!(EditableIF)(cast(GtkEditable*) __p);
 	}
 
 	/**
@@ -1004,32 +853,20 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	/**
-	 * Returns the positioning function currently in use.
-	 *
-	 * Returns: the currently used function for positioning the search dialog.
-	 *
-	 * Since: 2.10
-	 */
-	public GtkTreeViewSearchPositionFunc getSearchPositionFunc()
-	{
-		return gtk_tree_view_get_search_position_func(gtkTreeView);
-	}
-
-	/**
 	 * Gets the #GtkTreeSelection associated with @tree_view.
 	 *
 	 * Returns: A #GtkTreeSelection object.
 	 */
 	public TreeSelection getSelection()
 	{
-		auto p = gtk_tree_view_get_selection(gtkTreeView);
+		auto __p = gtk_tree_view_get_selection(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeSelection)(cast(GtkTreeSelection*) p);
+		return ObjectG.getDObject!(TreeSelection)(cast(GtkTreeSelection*) __p);
 	}
 
 	/**
@@ -1037,8 +874,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: %TRUE if expanders are drawn in @tree_view, %FALSE
 	 *     otherwise.
-	 *
-	 * Since: 2.12
 	 */
 	public bool getShowExpanders()
 	{
@@ -1051,8 +886,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: the index of the tooltip column that is currently being
 	 *     used, or -1 if this is disabled.
-	 *
-	 * Since: 2.12
 	 */
 	public int getTooltipColumn()
 	{
@@ -1082,22 +915,20 @@ public class TreeView : Container, ScrollableIF
 	 *     iter = a pointer to receive a #GtkTreeIter or %NULL
 	 *
 	 * Returns: whether or not the given tooltip context points to a row.
-	 *
-	 * Since: 2.12
 	 */
-	public bool getTooltipContext(ref int x, ref int y, bool keyboardTip, out TreeModelIF model, out TreePath path, out TreeIter iter)
+	public bool getTooltipContext(int x, int y, bool keyboardTip, out TreeModelIF model, out TreePath path, out TreeIter iter)
 	{
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
+		auto __p = gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 
 		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1112,20 +943,18 @@ public class TreeView : Container, ScrollableIF
 	 *     endPath = Return location for end of region, or %NULL.
 	 *
 	 * Returns: %TRUE, if valid paths were placed in @start_path and @end_path.
-	 *
-	 * Since: 2.8
 	 */
 	public bool getVisibleRange(out TreePath startPath, out TreePath endPath)
 	{
 		GtkTreePath* outstartPath = null;
 		GtkTreePath* outendPath = null;
 
-		auto p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath) != 0;
+		auto __p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath) != 0;
 
 		startPath = ObjectG.getDObject!(TreePath)(outstartPath);
 		endPath = ObjectG.getDObject!(TreePath)(outendPath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1138,9 +967,13 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     visibleRect = rectangle to fill
 	 */
-	public void getVisibleRect(out GdkRectangle visibleRect)
+	public void getVisibleRect(out Rectangle visibleRect)
 	{
-		gtk_tree_view_get_visible_rect(gtkTreeView, &visibleRect);
+		GdkRectangle* outvisibleRect = sliceNew!GdkRectangle();
+
+		gtk_tree_view_get_visible_rect(gtkTreeView, outvisibleRect);
+
+		visibleRect = ObjectG.getDObject!(Rectangle)(outvisibleRect, true);
 	}
 
 	/**
@@ -1191,8 +1024,8 @@ public class TreeView : Container, ScrollableIF
 	 * selection, having a custom context menu or starting rubber banding.
 	 *
 	 * The @x and @y coordinate that are provided must be relative to bin_window
-	 * coordinates.  That is, @x and @y must come from an event on @tree_view
-	 * where `event->window == gtk_tree_view_get_bin_window ()`.
+	 * coordinates.  Widget-relative coordinates must be converted using
+	 * gtk_tree_view_convert_widget_to_bin_window_coords().
 	 *
 	 * For converting widget coordinates (eg. the ones you get from
 	 * GtkWidget::query-tooltip), please see
@@ -1216,20 +1049,18 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: %TRUE if the area at the given coordinates is blank,
 	 *     %FALSE otherwise.
-	 *
-	 * Since: 3.0
 	 */
 	public bool isBlankAtPos(int x, int y, out TreePath path, out TreeViewColumn column, out int cellX, out int cellY)
 	{
 		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outcolumn = null;
 
-		auto p = gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
+		auto __p = gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		column = ObjectG.getDObject!(TreeViewColumn)(outcolumn);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1238,8 +1069,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Returns: %TRUE if a rubber banding operation is currently being
 	 *     done in @tree_view.
-	 *
-	 * Since: 2.12
 	 */
 	public bool isRubberBandingActive()
 	{
@@ -1363,8 +1192,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     single = %TRUE to emit row-activated on a single click
-	 *
-	 * Since: 3.8
 	 */
 	public void setActivateOnSingleClick(bool single)
 	{
@@ -1436,29 +1263,10 @@ public class TreeView : Container, ScrollableIF
 	 *     focusColumn = A #GtkTreeViewColumn, or %NULL
 	 *     focusCell = A #GtkCellRenderer, or %NULL
 	 *     startEditing = %TRUE if the specified cell should start being edited.
-	 *
-	 * Since: 2.2
 	 */
 	public void setCursorOnCell(TreePath path, TreeViewColumn focusColumn, CellRenderer focusCell, bool startEditing)
 	{
 		gtk_tree_view_set_cursor_on_cell(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (focusColumn is null) ? null : focusColumn.getTreeViewColumnStruct(), (focusCell is null) ? null : focusCell.getCellRendererStruct(), startEditing);
-	}
-
-	/**
-	 * This function should almost never be used.  It is meant for private use by
-	 * ATK for determining the number of visible children that are removed when the
-	 * user collapses a row, or a row is deleted.
-	 *
-	 * Deprecated: Accessibility does not need the function anymore.
-	 *
-	 * Params:
-	 *     func = Function to be called when a view row is destroyed, or %NULL
-	 *     data = User data to be passed to @func, or %NULL
-	 *     destroy = Destroy notifier for @data, or %NULL
-	 */
-	public void setDestroyCountFunc(GtkTreeDestroyCountFunc func, void* data, GDestroyNotify destroy)
-	{
-		gtk_tree_view_set_destroy_count_func(gtkTreeView, func, data, destroy);
 	}
 
 	/**
@@ -1495,8 +1303,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     enabled = %TRUE to enable tree line drawing, %FALSE otherwise.
-	 *
-	 * Since: 2.10
 	 */
 	public void setEnableTreeLines(bool enabled)
 	{
@@ -1528,8 +1334,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     enable = %TRUE to enable fixed height mode
-	 *
-	 * Since: 2.6
 	 */
 	public void setFixedHeightMode(bool enable)
 	{
@@ -1542,8 +1346,6 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     gridLines = a #GtkTreeViewGridLines value indicating which grid lines to
 	 *         enable.
-	 *
-	 * Since: 2.10
 	 */
 	public void setGridLines(GtkTreeViewGridLines gridLines)
 	{
@@ -1579,8 +1381,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     expand = %TRUE to enable hover selection mode
-	 *
-	 * Since: 2.6
 	 */
 	public void setHoverExpand(bool expand)
 	{
@@ -1595,8 +1395,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     hover = %TRUE to enable hover selection mode
-	 *
-	 * Since: 2.6
 	 */
 	public void setHoverSelection(bool hover)
 	{
@@ -1612,8 +1410,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     indentation = the amount, in pixels, of extra indentation in @tree_view.
-	 *
-	 * Since: 2.12
 	 */
 	public void setLevelIndentation(int indentation)
 	{
@@ -1666,8 +1462,6 @@ public class TreeView : Container, ScrollableIF
 	 *     func = a #GtkTreeViewRowSeparatorFunc
 	 *     data = user data to pass to @func, or %NULL
 	 *     destroy = destroy notifier for @data, or %NULL
-	 *
-	 * Since: 2.6
 	 */
 	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -1681,37 +1475,10 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     enable = %TRUE to enable rubber banding
-	 *
-	 * Since: 2.10
 	 */
 	public void setRubberBanding(bool enable)
 	{
 		gtk_tree_view_set_rubber_banding(gtkTreeView, enable);
-	}
-
-	/**
-	 * Sets a hint for the theme to draw even/odd rows in the @tree_view
-	 * with different colors, also known as "zebra striping".
-	 *
-	 * This function tells the GTK+ theme that the user interface for your
-	 * application requires users to read across tree rows and associate
-	 * cells with one another.
-	 *
-	 * Do not use it just because you prefer the appearance of the ruled
-	 * tree; that’s a question for the theme. Some themes will draw tree
-	 * rows in alternating colors even when rules are turned off, and
-	 * users who prefer that appearance all the time can choose those
-	 * themes. You should call this function only as a semantic hint to
-	 * the theme engine that your tree makes alternating colors useful
-	 * from a functional standpoint (since it has lots of columns,
-	 * generally).
-	 *
-	 * Params:
-	 *     setting = %TRUE if the tree requires reading across rows
-	 */
-	public void setRulesHint(bool setting)
-	{
-		gtk_tree_view_set_rules_hint(gtkTreeView, setting);
 	}
 
 	/**
@@ -1742,12 +1509,10 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     entry = the entry the interactive search code of @tree_view should use or %NULL
-	 *
-	 * Since: 2.10
 	 */
-	public void setSearchEntry(Entry entry)
+	public void setSearchEntry(EditableIF entry)
 	{
-		gtk_tree_view_set_search_entry(gtkTreeView, (entry is null) ? null : entry.getEntryStruct());
+		gtk_tree_view_set_search_entry(gtkTreeView, (entry is null) ? null : entry.getEditableStruct());
 	}
 
 	/**
@@ -1766,22 +1531,6 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	/**
-	 * Sets the function to use when positioning the search dialog.
-	 *
-	 * Params:
-	 *     func = the function to use to position the search dialog, or %NULL
-	 *         to use the default search position function
-	 *     data = user data to pass to @func, or %NULL
-	 *     destroy = Destroy notifier for @data, or %NULL
-	 *
-	 * Since: 2.10
-	 */
-	public void setSearchPositionFunc(GtkTreeViewSearchPositionFunc func, void* data, GDestroyNotify destroy)
-	{
-		gtk_tree_view_set_search_position_func(gtkTreeView, func, data, destroy);
-	}
-
-	/**
 	 * Sets whether to draw and enable expanders and indent child rows in
 	 * @tree_view.  When disabled there will be no expanders visible in trees
 	 * and there will be no way to expand and collapse rows by default.  Also
@@ -1792,8 +1541,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     enabled = %TRUE to enable expander drawing, %FALSE otherwise.
-	 *
-	 * Since: 2.12
 	 */
 	public void setShowExpanders(bool enabled)
 	{
@@ -1818,8 +1565,6 @@ public class TreeView : Container, ScrollableIF
 	 *     path = a #GtkTreePath or %NULL
 	 *     column = a #GtkTreeViewColumn or %NULL
 	 *     cell = a #GtkCellRenderer or %NULL
-	 *
-	 * Since: 2.12
 	 */
 	public void setTooltipCell(Tooltip tooltip, TreePath path, TreeViewColumn column, CellRenderer cell)
 	{
@@ -1840,8 +1585,6 @@ public class TreeView : Container, ScrollableIF
 	 *
 	 * Params:
 	 *     column = an integer, which is a valid column number for @tree_view’s model
-	 *
-	 * Since: 2.12
 	 */
 	public void setTooltipColumn(int column)
 	{
@@ -1856,8 +1599,6 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     tooltip = a #GtkTooltip
 	 *     path = a #GtkTreePath
-	 *
-	 * Since: 2.12
 	 */
 	public void setTooltipRow(Tooltip tooltip, TreePath path)
 	{
@@ -1908,7 +1649,7 @@ public class TreeView : Container, ScrollableIF
 
 	/**
 	 * The #GtkTreeView::move-cursor signal is a [keybinding
-	 * signal][GtkBindingSignal] which gets emitted when the user
+	 * signal][GtkSignalAction] which gets emitted when the user
 	 * presses one of the cursor keys.
 	 *
 	 * Applications should not connect to it, but may emit it with
@@ -1918,19 +1659,20 @@ public class TreeView : Container, ScrollableIF
 	 * #GtkTreeView::move-cursor does not reset the current selection.
 	 *
 	 * Params:
-	 *     step = the granularity of the move, as a
-	 *         #GtkMovementStep. %GTK_MOVEMENT_LOGICAL_POSITIONS,
-	 *         %GTK_MOVEMENT_VISUAL_POSITIONS, %GTK_MOVEMENT_DISPLAY_LINES,
-	 *         %GTK_MOVEMENT_PAGES and %GTK_MOVEMENT_BUFFER_ENDS are
-	 *         supported. %GTK_MOVEMENT_LOGICAL_POSITIONS and
-	 *         %GTK_MOVEMENT_VISUAL_POSITIONS are treated identically.
-	 *     direction = the direction to move: +1 to move forwards;
-	 *         -1 to move backwards. The resulting movement is
-	 *         undefined for all other values.
+	 *     step = the granularity of the move, as a #GtkMovementStep.
+	 *         %GTK_MOVEMENT_LOGICAL_POSITIONS, %GTK_MOVEMENT_VISUAL_POSITIONS,
+	 *         %GTK_MOVEMENT_DISPLAY_LINES, %GTK_MOVEMENT_PAGES and
+	 *         %GTK_MOVEMENT_BUFFER_ENDS are supported.
+	 *         %GTK_MOVEMENT_LOGICAL_POSITIONS and %GTK_MOVEMENT_VISUAL_POSITIONS
+	 *         are treated identically.
+	 *     direction = the direction to move: +1 to move forwards; -1 to move
+	 *         backwards. The resulting movement is undefined for all other values.
+	 *     extend = whether to extend the selection
+	 *     modify = whether to modify the selection
 	 *
 	 * Returns: %TRUE if @step is supported, %FALSE otherwise.
 	 */
-	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, bool, bool, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "move-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

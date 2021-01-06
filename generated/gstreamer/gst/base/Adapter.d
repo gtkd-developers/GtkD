@@ -118,8 +118,8 @@ private import gstreamer.BufferList;
  * since then can be queried with gst_adapter_distance_from_discont().
  * 
  * A last thing to note is that while #GstAdapter is pretty optimized,
- * merging buffers still might be an operation that requires a malloc() and
- * memcpy() operation, and these operations are not the fastest. Because of
+ * merging buffers still might be an operation that requires a `malloc()` and
+ * `memcpy()` operation, and these operations are not the fastest. Because of
  * this, some functions like gst_adapter_available_fast() are provided to help
  * speed up such cases should you want to. To avoid repeated memory allocations,
  * gst_adapter_copy() can be used to copy data into a (statically allocated)
@@ -179,14 +179,14 @@ public class Adapter : ObjectG
 	 */
 	public this()
 	{
-		auto p = gst_adapter_new();
+		auto __p = gst_adapter_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstAdapter*) p, true);
+		this(cast(GstAdapter*) __p, true);
 	}
 
 	/**
@@ -255,17 +255,28 @@ public class Adapter : ObjectG
 	 */
 	public Bytes copyBytes(size_t offset, size_t size)
 	{
-		auto p = gst_adapter_copy_bytes(gstAdapter, offset, size);
+		auto __p = gst_adapter_copy_bytes(gstAdapter, offset, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
-	/** */
+	/**
+	 * Get the distance in bytes since the last buffer with the
+	 * %GST_BUFFER_FLAG_DISCONT flag.
+	 *
+	 * The distance will be reset to 0 for all buffers with
+	 * %GST_BUFFER_FLAG_DISCONT on them, and then calculated for all other
+	 * following buffers based on their size.
+	 *
+	 * Returns: The offset. Can be %GST_BUFFER_OFFSET_NONE.
+	 *
+	 * Since: 1.10
+	 */
 	public ulong distanceFromDiscont()
 	{
 		return gst_adapter_distance_from_discont(gstAdapter);
@@ -319,14 +330,14 @@ public class Adapter : ObjectG
 	 */
 	public Buffer getBuffer(size_t nbytes)
 	{
-		auto p = gst_adapter_get_buffer(gstAdapter, nbytes);
+		auto __p = gst_adapter_get_buffer(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -350,14 +361,14 @@ public class Adapter : ObjectG
 	 */
 	public Buffer getBufferFast(size_t nbytes)
 	{
-		auto p = gst_adapter_get_buffer_fast(gstAdapter, nbytes);
+		auto __p = gst_adapter_get_buffer_fast(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -379,14 +390,14 @@ public class Adapter : ObjectG
 	 */
 	public BufferList getBufferList(size_t nbytes)
 	{
-		auto p = gst_adapter_get_buffer_list(gstAdapter, nbytes);
+		auto __p = gst_adapter_get_buffer_list(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p, true);
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
 	}
 
 	/**
@@ -408,14 +419,14 @@ public class Adapter : ObjectG
 	 */
 	public ListG getList(size_t nbytes)
 	{
-		auto p = gst_adapter_get_list(gstAdapter, nbytes);
+		auto __p = gst_adapter_get_list(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -440,9 +451,9 @@ public class Adapter : ObjectG
 	 */
 	public ubyte[] map(size_t size)
 	{
-		auto p = gst_adapter_map(gstAdapter, size);
+		auto __p = gst_adapter_map(gstAdapter, size);
 
-		return cast(ubyte[])p[0 .. size];
+		return cast(ubyte[])__p[0 .. size];
 	}
 
 	/**
@@ -663,7 +674,7 @@ public class Adapter : ObjectG
 	 */
 	public void push(Buffer buf)
 	{
-		gst_adapter_push(gstAdapter, (buf is null) ? null : buf.getBufferStruct());
+		gst_adapter_push(gstAdapter, (buf is null) ? null : buf.getBufferStruct(true));
 	}
 
 	/**
@@ -681,9 +692,9 @@ public class Adapter : ObjectG
 	 */
 	public ubyte[] take(size_t nbytes)
 	{
-		auto p = gst_adapter_take(gstAdapter, nbytes);
+		auto __p = gst_adapter_take(gstAdapter, nbytes);
 
-		return cast(ubyte[])p[0 .. nbytes];
+		return cast(ubyte[])__p[0 .. nbytes];
 	}
 
 	/**
@@ -716,14 +727,14 @@ public class Adapter : ObjectG
 	 */
 	public Buffer takeBuffer(size_t nbytes)
 	{
-		auto p = gst_adapter_take_buffer(gstAdapter, nbytes);
+		auto __p = gst_adapter_take_buffer(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -762,14 +773,14 @@ public class Adapter : ObjectG
 	 */
 	public Buffer takeBufferFast(size_t nbytes)
 	{
-		auto p = gst_adapter_take_buffer_fast(gstAdapter, nbytes);
+		auto __p = gst_adapter_take_buffer_fast(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -792,14 +803,14 @@ public class Adapter : ObjectG
 	 */
 	public BufferList takeBufferList(size_t nbytes)
 	{
-		auto p = gst_adapter_take_buffer_list(gstAdapter, nbytes);
+		auto __p = gst_adapter_take_buffer_list(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p, true);
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
 	}
 
 	/**
@@ -820,14 +831,14 @@ public class Adapter : ObjectG
 	 */
 	public ListG takeList(size_t nbytes)
 	{
-		auto p = gst_adapter_take_list(gstAdapter, nbytes);
+		auto __p = gst_adapter_take_list(gstAdapter, nbytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

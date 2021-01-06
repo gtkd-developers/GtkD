@@ -33,12 +33,11 @@ private import gtk.NativeDialog;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
  * #GtkFileChooserNative is an abstraction of a dialog box suitable
- * for use with “File/Open” or “File/Save as” commands. By default, this
+ * for use with “File Open” or “File Save as” commands. By default, this
  * just uses a #GtkFileChooserDialog to implement the actual dialog.
  * However, on certain platforms, such as Windows and macOS, the native platform
  * file chooser is used instead. When the application is running in a
@@ -46,20 +45,40 @@ public  import gtkc.gtktypes;
  * #GtkFileChooserNative may call the proper APIs (portals) to let the user
  * choose a file and make it available to the application.
  * 
- * While the API of #GtkFileChooserNative closely mirrors #GtkFileChooserDialog, the main
- * difference is that there is no access to any #GtkWindow or #GtkWidget for the dialog.
- * This is required, as there may not be one in the case of a platform native dialog.
- * Showing, hiding and running the dialog is handled by the #GtkNativeDialog functions.
+ * While the API of #GtkFileChooserNative closely mirrors #GtkFileChooserDialog,
+ * the main difference is that there is no access to any #GtkWindow or #GtkWidget
+ * for the dialog. This is required, as there may not be one in the case of a
+ * platform native dialog.
+ * 
+ * Showing, hiding and running the dialog is handled by the #GtkNativeDialog
+ * functions.
  * 
  * ## Typical usage ## {#gtkfilechoosernative-typical-usage}
  * 
  * In the simplest of cases, you can the following code to use
  * #GtkFileChooserDialog to select a file for opening:
  * 
- * |[
+ * |[<!-- language="C" -->
+ * static void
+ * on_response (GtkNativeDialog *native,
+ * int              response)
+ * {
+ * if (response == GTK_RESPONSE_ACCEPT)
+ * {
+ * GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
+ * GFile *file = gtk_file_chooser_get_file (chooser);
+ * 
+ * open_file (file);
+ * 
+ * g_object_unref (file);
+ * }
+ * 
+ * g_object_unref (native);
+ * }
+ * 
+ * // ...
  * GtkFileChooserNative *native;
  * GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
- * gint res;
  * 
  * native = gtk_file_chooser_native_new ("Open File",
  * parent_window,
@@ -67,26 +86,34 @@ public  import gtkc.gtktypes;
  * "_Open",
  * "_Cancel");
  * 
- * res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (native));
- * if (res == GTK_RESPONSE_ACCEPT)
- * {
- * char *filename;
- * GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
- * filename = gtk_file_chooser_get_filename (chooser);
- * open_file (filename);
- * g_free (filename);
- * }
- * 
- * g_object_unref (native);
+ * g_signal_connect (native, "response", G_CALLBACK (on_response), NULL);
+ * gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));
  * ]|
  * 
  * To use a dialog for saving, you can use this:
  * 
- * |[
+ * |[<!-- language="C" -->
+ * static void
+ * on_response (GtkNativeDialog *native,
+ * int              response)
+ * {
+ * if (response == GTK_RESPONSE_ACCEPT)
+ * {
+ * GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
+ * GFile *file = gtk_file_chooser_get_file (chooser);
+ * 
+ * save_to_file (file);
+ * 
+ * g_object_unref (file);
+ * }
+ * 
+ * g_object_unref (native);
+ * }
+ * 
+ * // ...
  * GtkFileChooserNative *native;
  * GtkFileChooser *chooser;
  * GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
- * gint res;
  * 
  * native = gtk_file_chooser_native_new ("Save File",
  * parent_window,
@@ -95,26 +122,13 @@ public  import gtkc.gtktypes;
  * "_Cancel");
  * chooser = GTK_FILE_CHOOSER (native);
  * 
- * gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
- * 
  * if (user_edited_a_new_document)
- * gtk_file_chooser_set_current_name (chooser,
- * _("Untitled document"));
+ * gtk_file_chooser_set_current_name (chooser, _("Untitled document"));
  * else
- * gtk_file_chooser_set_filename (chooser,
- * existing_filename);
+ * gtk_file_chooser_set_file (chooser, existing_file, NULL);
  * 
- * res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (native));
- * if (res == GTK_RESPONSE_ACCEPT)
- * {
- * char *filename;
- * 
- * filename = gtk_file_chooser_get_filename (chooser);
- * save_to_file (filename);
- * g_free (filename);
- * }
- * 
- * g_object_unref (native);
+ * g_signal_connect (native, "response", G_CALLBACK (on_response), NULL);
+ * gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));
  * ]|
  * 
  * For more information on how to best set up a file dialog, see #GtkFileChooserDialog.
@@ -132,22 +146,8 @@ public  import gtkc.gtktypes;
  * possible to use with #GtkFileChooserNative, as such use would
  * prohibit the use of a native dialog.
  * 
- * There is no support for the signals that are emitted when the user
- * navigates in the dialog, including:
- * * #GtkFileChooser::current-folder-changed
- * * #GtkFileChooser::selection-changed
- * * #GtkFileChooser::file-activated
- * * #GtkFileChooser::confirm-overwrite
- * 
- * You can also not use the methods that directly control user navigation:
- * * gtk_file_chooser_unselect_filename()
- * * gtk_file_chooser_select_all()
- * * gtk_file_chooser_unselect_all()
- * 
- * If you need any of the above you will have to use #GtkFileChooserDialog directly.
- * 
- * No operations that change the the dialog work while the dialog is
- * visible. Set all the properties that are required before showing the dialog.
+ * No operations that change the dialog work while the dialog is visible.
+ * Set all the properties that are required before showing the dialog.
  * 
  * ## Win32 details ## {#gtkfilechooserdialognative-win32}
  * 
@@ -155,11 +155,7 @@ public  import gtkc.gtktypes;
  * used. It supports many of the features that #GtkFileChooserDialog
  * does, but there are some things it does not handle:
  * 
- * * Extra widgets added with gtk_file_chooser_set_extra_widget().
- * 
- * * Use of custom previews by connecting to #GtkFileChooser::update-preview.
- * 
- * * Any #GtkFileFilter added using a mimetype or custom filter.
+ * * Any #GtkFileFilter added using a mimetype
  * 
  * If any of these features are used the regular #GtkFileChooserDialog
  * will be used in place of the native one.
@@ -169,28 +165,13 @@ public  import gtkc.gtktypes;
  * When the org.freedesktop.portal.FileChooser portal is available on the
  * session bus, it is used to bring up an out-of-process file chooser. Depending
  * on the kind of session the application is running in, this may or may not
- * be a GTK+ file chooser. In this situation, the following things are not
- * supported and will be silently ignored:
- * 
- * * Extra widgets added with gtk_file_chooser_set_extra_widget().
- * 
- * * Use of custom previews by connecting to #GtkFileChooser::update-preview.
- * 
- * * Any #GtkFileFilter added with a custom filter.
+ * be a GTK file chooser.
  * 
  * ## macOS details ## {#gtkfilechooserdialognative-macos}
  * 
  * On macOS the NSSavePanel and NSOpenPanel classes are used to provide native
  * file chooser dialogs. Some features provided by #GtkFileChooserDialog are
  * not supported:
- * 
- * * Extra widgets added with gtk_file_chooser_set_extra_widget(), unless the
- * widget is an instance of GtkLabel, in which case the label text will be used
- * to set the NSSavePanel message instance property.
- * 
- * * Use of custom previews by connecting to #GtkFileChooser::update-preview.
- * 
- * * Any #GtkFileFilter added with a custom filter.
  * 
  * * Shortcut folders.
  */
@@ -244,20 +225,18 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 *
 	 * Returns: a new #GtkFileChooserNative
 	 *
-	 * Since: 3.20
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string title, Window parent, GtkFileChooserAction action, string acceptLabel, string cancelLabel)
 	{
-		auto p = gtk_file_chooser_native_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), action, Str.toStringz(acceptLabel), Str.toStringz(cancelLabel));
+		auto __p = gtk_file_chooser_native_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), action, Str.toStringz(acceptLabel), Str.toStringz(cancelLabel));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFileChooserNative*) p, true);
+		this(cast(GtkFileChooserNative*) __p, true);
 	}
 
 	/**
@@ -265,8 +244,6 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 *
 	 * Returns: The custom label, or %NULL for the default. This string
 	 *     is owned by GTK+ and should not be modified or freed
-	 *
-	 * Since: 3.20
 	 */
 	public string getAcceptLabel()
 	{
@@ -278,8 +255,6 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 *
 	 * Returns: The custom label, or %NULL for the default. This string
 	 *     is owned by GTK+ and should not be modified or freed
-	 *
-	 * Since: 3.20
 	 */
 	public string getCancelLabel()
 	{
@@ -297,8 +272,6 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 *
 	 * Params:
 	 *     acceptLabel = custom label or %NULL for the default
-	 *
-	 * Since: 3.20
 	 */
 	public void setAcceptLabel(string acceptLabel)
 	{
@@ -316,8 +289,6 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 *
 	 * Params:
 	 *     cancelLabel = custom label or %NULL for the default
-	 *
-	 * Since: 3.20
 	 */
 	public void setCancelLabel(string cancelLabel)
 	{

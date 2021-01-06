@@ -30,7 +30,6 @@ private import glib.Str;
 private import glib.TimeVal;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 private import gtkd.Loader;
 
 
@@ -43,7 +42,7 @@ private import gtkd.Loader;
  * 
  * If it's declared on the stack, it will contain garbage so must be
  * initialized with g_date_clear(). g_date_clear() makes the date invalid
- * but sane. An invalid date doesn't represent a day, it's "empty." A date
+ * but safe. An invalid date doesn't represent a day, it's "empty." A date
  * becomes valid after you set it to a Julian day or you set a day, month,
  * and year.
  */
@@ -171,7 +170,7 @@ public final class Date
 
 	/**
 	 * Allocates a #GDate and initializes
-	 * it to a sane state. The new date will
+	 * it to a safe state. The new date will
 	 * be cleared (as if you'd called g_date_clear()) but invalid (it won't
 	 * represent an existing day). Free the return value with g_date_free().
 	 *
@@ -300,7 +299,7 @@ public final class Date
 	}
 
 	/**
-	 * Initializes one or more #GDate structs to a sane but invalid
+	 * Initializes one or more #GDate structs to a safe but invalid
 	 * state. The cleared dates will not represent an existing date, but will
 	 * not contain garbage. Useful to init a date declared on the stack.
 	 * Validity can be tested with g_date_valid().
@@ -693,7 +692,7 @@ public final class Date
 
 	/**
 	 * Fills in the date-related bits of a struct tm using the @date value.
-	 * Initializes the non-date parts with something sane but meaningless.
+	 * Initializes the non-date parts with something safe but meaningless.
 	 *
 	 * Params:
 	 *     tm = struct tm to fill

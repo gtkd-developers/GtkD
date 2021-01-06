@@ -26,8 +26,8 @@ module pango.PgFontFace;
 
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgFontDescription;
+private import pango.PgFontFamily;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -82,14 +82,14 @@ public class PgFontFace : ObjectG
 	 */
 	public PgFontDescription describe()
 	{
-		auto p = pango_font_face_describe(pangoFontFace);
+		auto __p = pango_font_face_describe(pangoFontFace);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p, true);
 	}
 
 	/**
@@ -104,6 +104,26 @@ public class PgFontFace : ObjectG
 	public string getFaceName()
 	{
 		return Str.toString(pango_font_face_get_face_name(pangoFontFace));
+	}
+
+	/**
+	 * Gets the #PangoFontFamily that @face
+	 * belongs to.
+	 *
+	 * Returns: the #PangoFontFamily
+	 *
+	 * Since: 1.46
+	 */
+	public PgFontFamily getFamily()
+	{
+		auto __p = pango_font_face_get_family(pangoFontFace);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) __p);
 	}
 
 	/**

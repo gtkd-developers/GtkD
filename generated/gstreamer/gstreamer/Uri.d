@@ -33,7 +33,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
 
 
 /**
@@ -102,14 +101,14 @@ public class Uri
 	 */
 	public this(string scheme, string userinfo, string host, uint port, string path, string query, string fragment)
 	{
-		auto p = gst_uri_new(Str.toStringz(scheme), Str.toStringz(userinfo), Str.toStringz(host), port, Str.toStringz(path), Str.toStringz(query), Str.toStringz(fragment));
+		auto __p = gst_uri_new(Str.toStringz(scheme), Str.toStringz(userinfo), Str.toStringz(host), port, Str.toStringz(path), Str.toStringz(query), Str.toStringz(fragment));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstUri*) p);
+		this(cast(GstUri*) __p);
 	}
 
 	/**
@@ -171,14 +170,14 @@ public class Uri
 	 */
 	public Uri fromStringWithBase(string uri)
 	{
-		auto p = gst_uri_from_string_with_base(gstUri, Str.toStringz(uri));
+		auto __p = gst_uri_from_string_with_base(gstUri, Str.toStringz(uri));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) __p, true);
 	}
 
 	/**
@@ -227,14 +226,14 @@ public class Uri
 	 */
 	public HashTable getMediaFragmentTable()
 	{
-		auto p = gst_uri_get_media_fragment_table(gstUri);
+		auto __p = gst_uri_get_media_fragment_table(gstUri);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new HashTable(cast(GHashTable*) p, true);
+		return new HashTable(cast(GHashTable*) __p, true);
 	}
 
 	/**
@@ -264,14 +263,14 @@ public class Uri
 	 */
 	public ListG getPathSegments()
 	{
-		auto p = gst_uri_get_path_segments(gstUri);
+		auto __p = gst_uri_get_path_segments(gstUri);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -313,14 +312,14 @@ public class Uri
 	 */
 	public ListG getQueryKeys()
 	{
-		auto p = gst_uri_get_query_keys(gstUri);
+		auto __p = gst_uri_get_query_keys(gstUri);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -354,14 +353,14 @@ public class Uri
 	 */
 	public HashTable getQueryTable()
 	{
-		auto p = gst_uri_get_query_table(gstUri);
+		auto __p = gst_uri_get_query_table(gstUri);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new HashTable(cast(GHashTable*) p, true);
+		return new HashTable(cast(GHashTable*) __p, true);
 	}
 
 	/**
@@ -454,14 +453,14 @@ public class Uri
 	 */
 	public Uri join(Uri refUri)
 	{
-		auto p = gst_uri_join(gstUri, (refUri is null) ? null : refUri.getUriStruct());
+		auto __p = gst_uri_join(gstUri, (refUri is null) ? null : refUri.getUriStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) __p, true);
 	}
 
 	/**
@@ -478,14 +477,14 @@ public class Uri
 	 */
 	public Uri makeWritable()
 	{
-		auto p = gst_uri_make_writable(gstUri);
+		auto __p = gst_uri_make_writable(gstUri);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) __p, true);
 	}
 
 	/**
@@ -509,14 +508,14 @@ public class Uri
 	 */
 	public Uri newWithBase(string scheme, string userinfo, string host, uint port, string path, string query, string fragment)
 	{
-		auto p = gst_uri_new_with_base(gstUri, Str.toStringz(scheme), Str.toStringz(userinfo), Str.toStringz(host), port, Str.toStringz(path), Str.toStringz(query), Str.toStringz(fragment));
+		auto __p = gst_uri_new_with_base(gstUri, Str.toStringz(scheme), Str.toStringz(userinfo), Str.toStringz(host), port, Str.toStringz(path), Str.toStringz(query), Str.toStringz(fragment));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) __p, true);
 	}
 
 	/**
@@ -796,14 +795,48 @@ public class Uri
 	 */
 	public static Uri fromString(string uri)
 	{
-		auto p = gst_uri_from_string(Str.toStringz(uri));
+		auto __p = gst_uri_from_string(Str.toStringz(uri));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) __p, true);
+	}
+
+	/**
+	 * Parses a URI string into a new #GstUri object. Will return NULL if the URI
+	 * cannot be parsed. This is identical to gst_uri_from_string() except that
+	 * the userinfo and fragment components of the URI will not be unescaped while
+	 * parsing.
+	 *
+	 * Use this when you need to extract a username and password from the userinfo
+	 * such as https://user:password@example.com since either may contain
+	 * a URI-escaped ':' character. gst_uri_from_string() will unescape the entire
+	 * userinfo component, which will make it impossible to know which ':'
+	 * delineates the username and password.
+	 *
+	 * The same applies to the fragment component of the URI, such as
+	 * https://example.com/path#fragment which may contain a URI-escaped '#'.
+	 *
+	 * Params:
+	 *     uri = The URI string to parse.
+	 *
+	 * Returns: A new #GstUri object, or NULL.
+	 *
+	 * Since: 1.18
+	 */
+	public static Uri fromStringEscaped(string uri)
+	{
+		auto __p = gst_uri_from_string_escaped(Str.toStringz(uri));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) __p, true);
 	}
 
 	/**
@@ -932,7 +965,7 @@ public class Uri
 	 * the current working directory if it is a relative path, and then the path
 	 * will be canonicalised so that it doesn't contain any './' or '../' segments.
 	 *
-	 * On Windows #filename should be in UTF-8 encoding.
+	 * On Windows @filename should be in UTF-8 encoding.
 	 *
 	 * Params:
 	 *     filename = absolute or relative file name path

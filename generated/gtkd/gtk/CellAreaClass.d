@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -71,19 +70,17 @@ public class CellAreaClass
 	 *
 	 * Returns: the #GParamSpec of the child property
 	 *     or %NULL if @aclass has no child property with that name.
-	 *
-	 * Since: 3.0
 	 */
 	public ParamSpec findCellProperty(string propertyName)
 	{
-		auto p = gtk_cell_area_class_find_cell_property(gtkCellAreaClass, Str.toStringz(propertyName));
+		auto __p = gtk_cell_area_class_find_cell_property(gtkCellAreaClass, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -92,8 +89,6 @@ public class CellAreaClass
 	 * Params:
 	 *     propertyId = the id for the property
 	 *     pspec = the #GParamSpec for the property
-	 *
-	 * Since: 3.0
 	 */
 	public void installCellProperty(uint propertyId, ParamSpec pspec)
 	{
@@ -106,16 +101,14 @@ public class CellAreaClass
 	 * Returns: a newly
 	 *     allocated %NULL-terminated array of #GParamSpec*.  The array
 	 *     must be freed with g_free().
-	 *
-	 * Since: 3.0
 	 */
 	public ParamSpec[] listCellProperties()
 	{
 		uint nProperties;
 
-		auto p = gtk_cell_area_class_list_cell_properties(gtkCellAreaClass, &nProperties);
+		auto __p = gtk_cell_area_class_list_cell_properties(gtkCellAreaClass, &nProperties);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -123,7 +116,7 @@ public class CellAreaClass
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;

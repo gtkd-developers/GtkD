@@ -26,13 +26,11 @@ module gtk.ColorChooserWidget;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtk.Box;
 private import gtk.ColorChooserIF;
 private import gtk.ColorChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -56,10 +54,8 @@ public  import gtkc.gtktypes;
  * # CSS names
  * 
  * GtkColorChooserWidget has a single CSS node with name colorchooser.
- *
- * Since: 3.4
  */
-public class ColorChooserWidget : Box, ColorChooserIF
+public class ColorChooserWidget : Widget, ColorChooserIF
 {
 	/** the main Gtk struct */
 	protected GtkColorChooserWidget* gtkColorChooserWidget;
@@ -84,7 +80,7 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	public this (GtkColorChooserWidget* gtkColorChooserWidget, bool ownedRef = false)
 	{
 		this.gtkColorChooserWidget = gtkColorChooserWidget;
-		super(cast(GtkBox*)gtkColorChooserWidget, ownedRef);
+		super(cast(GtkWidget*)gtkColorChooserWidget, ownedRef);
 	}
 
 	// add the ColorChooser capabilities
@@ -102,19 +98,17 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	 *
 	 * Returns: a new #GtkColorChooserWidget
 	 *
-	 * Since: 3.4
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_color_chooser_widget_new();
+		auto __p = gtk_color_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkColorChooserWidget*) p);
+		this(cast(GtkColorChooserWidget*) __p);
 	}
 }

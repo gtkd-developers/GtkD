@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gtk.IMContext;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -39,10 +38,12 @@ public  import gtkc.gtktypes;
  * from the X11 Compose files.
  * 
  * GtkIMContextSimple reads additional compose sequences from the first of the
- * following files that is found: ~/.config/gtk-3.0/Compose, ~/.XCompose,
+ * following files that is found: ~/.config/gtk-4.0/Compose, ~/.XCompose,
  * /usr/share/X11/locale/$locale/Compose (for locales that have a nontrivial
  * Compose file). The syntax of these files is described in the Compose(5)
  * manual page.
+ * 
+ * ## Unicode characters
  * 
  * GtkIMContextSimple also supports numeric entry of Unicode characters
  * by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint.
@@ -93,17 +94,22 @@ public class IMContextSimple : IMContext
 	 */
 	public this()
 	{
-		auto p = gtk_im_context_simple_new();
+		auto __p = gtk_im_context_simple_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIMContextSimple*) p, true);
+		this(cast(GtkIMContextSimple*) __p, true);
 	}
 
-	/** */
+	/**
+	 * Adds an additional table from the X11 compose file.
+	 *
+	 * Params:
+	 *     composeFile = The path of compose file
+	 */
 	public void addComposeFile(string composeFile)
 	{
 		gtk_im_context_simple_add_compose_file(gtkIMContextSimple, Str.toStringz(composeFile));

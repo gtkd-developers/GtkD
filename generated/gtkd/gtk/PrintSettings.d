@@ -34,7 +34,6 @@ private import gobject.ObjectG;
 private import gtk.PaperSize;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -48,8 +47,6 @@ public  import gtkc.gtktypes;
  * the settings for the next time your app runs, or even store them in a
  * document. The predefined keys try to use shared values as much as possible
  * so that moving such a document between systems still works.
- * 
- * Printing support was added in GTK+ 2.10.
  */
 public class PrintSettings : ObjectG
 {
@@ -91,20 +88,18 @@ public class PrintSettings : ObjectG
 	 *
 	 * Returns: a new #GtkPrintSettings object
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_print_settings_new();
+		auto __p = gtk_print_settings_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPrintSettings*) p, true);
+		this(cast(GtkPrintSettings*) __p, true);
 	}
 
 	/**
@@ -118,8 +113,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Returns: the restored #GtkPrintSettings
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -127,19 +120,19 @@ public class PrintSettings : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_print_settings_new_from_file(Str.toStringz(fileName), &err);
+		auto __p = gtk_print_settings_new_from_file(Str.toStringz(fileName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
 
-		this(cast(GtkPrintSettings*) p, true);
+		this(cast(GtkPrintSettings*) __p, true);
 	}
 
 	/**
@@ -151,20 +144,18 @@ public class PrintSettings : ObjectG
 	 *
 	 * Returns: a new #GtkPrintSettings object
 	 *
-	 * Since: 3.22
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Variant variant)
 	{
-		auto p = gtk_print_settings_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		auto __p = gtk_print_settings_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 
-		this(cast(GtkPrintSettings*) p, true);
+		this(cast(GtkPrintSettings*) __p, true);
 	}
 
 	/**
@@ -180,8 +171,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Returns: the restored #GtkPrintSettings
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -189,38 +178,36 @@ public class PrintSettings : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		auto __p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_key_file");
 		}
 
-		this(cast(GtkPrintSettings*) p, true);
+		this(cast(GtkPrintSettings*) __p, true);
 	}
 
 	/**
 	 * Copies a #GtkPrintSettings object.
 	 *
 	 * Returns: a newly allocated copy of @other
-	 *
-	 * Since: 2.10
 	 */
 	public PrintSettings copy()
 	{
-		auto p = gtk_print_settings_copy(gtkPrintSettings);
+		auto __p = gtk_print_settings_copy(gtkPrintSettings);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p, true);
+		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) __p, true);
 	}
 
 	alias foreac = foreach_;
@@ -230,8 +217,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     func = the function to call
 	 *     userData = user data for @func
-	 *
-	 * Since: 2.10
 	 */
 	public void foreach_(GtkPrintSettingsFunc func, void* userData)
 	{
@@ -245,8 +230,6 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *
 	 * Returns: the string value for @key
-	 *
-	 * Since: 2.10
 	 */
 	public string get(string key)
 	{
@@ -264,8 +247,6 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *
 	 * Returns: %TRUE, if @key maps to a true value.
-	 *
-	 * Since: 2.10
 	 */
 	public bool getBool(string key)
 	{
@@ -276,8 +257,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_COLLATE.
 	 *
 	 * Returns: whether to collate the printed pages
-	 *
-	 * Since: 2.10
 	 */
 	public bool getCollate()
 	{
@@ -288,8 +267,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_DEFAULT_SOURCE.
 	 *
 	 * Returns: the default source
-	 *
-	 * Since: 2.10
 	 */
 	public string getDefaultSource()
 	{
@@ -300,8 +277,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_DITHER.
 	 *
 	 * Returns: the dithering that is used
-	 *
-	 * Since: 2.10
 	 */
 	public string getDither()
 	{
@@ -315,8 +290,6 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *
 	 * Returns: the double value of @key
-	 *
-	 * Since: 2.10
 	 */
 	public double getDouble(string key)
 	{
@@ -335,8 +308,6 @@ public class PrintSettings : ObjectG
 	 *     def = the default value
 	 *
 	 * Returns: the floating point number associated with @key
-	 *
-	 * Since: 2.10
 	 */
 	public double getDoubleWithDefault(string key, double def)
 	{
@@ -347,8 +318,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_DUPLEX.
 	 *
 	 * Returns: whether to print the output in duplex.
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPrintDuplex getDuplex()
 	{
@@ -359,8 +328,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_FINISHINGS.
 	 *
 	 * Returns: the finishings
-	 *
-	 * Since: 2.10
 	 */
 	public string getFinishings()
 	{
@@ -374,8 +341,6 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *
 	 * Returns: the integer value of @key
-	 *
-	 * Since: 2.10
 	 */
 	public int getInt(string key)
 	{
@@ -391,8 +356,6 @@ public class PrintSettings : ObjectG
 	 *     def = the default value
 	 *
 	 * Returns: the integer value of @key
-	 *
-	 * Since: 2.10
 	 */
 	public int getIntWithDefault(string key, int def)
 	{
@@ -408,8 +371,6 @@ public class PrintSettings : ObjectG
 	 *     unit = the unit of the return value
 	 *
 	 * Returns: the length value of @key, converted to @unit
-	 *
-	 * Since: 2.10
 	 */
 	public double getLength(string key, GtkUnit unit)
 	{
@@ -422,8 +383,6 @@ public class PrintSettings : ObjectG
 	 * The set of media types is defined in PWG 5101.1-2002 PWG.
 	 *
 	 * Returns: the media type
-	 *
-	 * Since: 2.10
 	 */
 	public string getMediaType()
 	{
@@ -434,8 +393,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_N_COPIES.
 	 *
 	 * Returns: the number of copies to print
-	 *
-	 * Since: 2.10
 	 */
 	public int getNCopies()
 	{
@@ -446,8 +403,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_NUMBER_UP.
 	 *
 	 * Returns: the number of pages per sheet
-	 *
-	 * Since: 2.10
 	 */
 	public int getNumberUp()
 	{
@@ -458,8 +413,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT.
 	 *
 	 * Returns: layout of page in number-up mode
-	 *
-	 * Since: 2.14
 	 */
 	public GtkNumberUpLayout getNumberUpLayout()
 	{
@@ -471,8 +424,6 @@ public class PrintSettings : ObjectG
 	 * converted to a #GtkPageOrientation.
 	 *
 	 * Returns: the orientation
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPageOrientation getOrientation()
 	{
@@ -483,8 +434,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_OUTPUT_BIN.
 	 *
 	 * Returns: the output bin
-	 *
-	 * Since: 2.10
 	 */
 	public string getOutputBin()
 	{
@@ -497,24 +446,20 @@ public class PrintSettings : ObjectG
 	 * Returns: an array
 	 *     of #GtkPageRanges.  Use g_free() to free the array when
 	 *     it is no longer needed.
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPageRange[] getPageRanges()
 	{
 		int numRanges;
 
-		auto p = gtk_print_settings_get_page_ranges(gtkPrintSettings, &numRanges);
+		auto __p = gtk_print_settings_get_page_ranges(gtkPrintSettings, &numRanges);
 
-		return p[0 .. numRanges];
+		return __p[0 .. numRanges];
 	}
 
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_PAGE_SET.
 	 *
 	 * Returns: the set of pages to print
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPageSet getPageSet()
 	{
@@ -529,8 +474,6 @@ public class PrintSettings : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the paper height, in units of @unit
-	 *
-	 * Since: 2.10
 	 */
 	public double getPaperHeight(GtkUnit unit)
 	{
@@ -542,19 +485,17 @@ public class PrintSettings : ObjectG
 	 * converted to a #GtkPaperSize.
 	 *
 	 * Returns: the paper size
-	 *
-	 * Since: 2.10
 	 */
 	public PaperSize getPaperSize()
 	{
-		auto p = gtk_print_settings_get_paper_size(gtkPrintSettings);
+		auto __p = gtk_print_settings_get_paper_size(gtkPrintSettings);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p, true);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) __p, true);
 	}
 
 	/**
@@ -565,8 +506,6 @@ public class PrintSettings : ObjectG
 	 *     unit = the unit for the return value
 	 *
 	 * Returns: the paper width, in units of @unit
-	 *
-	 * Since: 2.10
 	 */
 	public double getPaperWidth(GtkUnit unit)
 	{
@@ -577,8 +516,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_PRINT_PAGES.
 	 *
 	 * Returns: which pages to print
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPrintPages getPrintPages()
 	{
@@ -590,8 +527,6 @@ public class PrintSettings : ObjectG
 	 * %GTK_PRINT_SETTINGS_PRINTER.
 	 *
 	 * Returns: the printer name
-	 *
-	 * Since: 2.10
 	 */
 	public string getPrinter()
 	{
@@ -602,8 +537,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_PRINTER_LPI.
 	 *
 	 * Returns: the resolution in lpi (lines per inch)
-	 *
-	 * Since: 2.16
 	 */
 	public double getPrinterLpi()
 	{
@@ -614,8 +547,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_QUALITY.
 	 *
 	 * Returns: the print quality
-	 *
-	 * Since: 2.10
 	 */
 	public GtkPrintQuality getQuality()
 	{
@@ -626,8 +557,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_RESOLUTION.
 	 *
 	 * Returns: the resolution in dpi
-	 *
-	 * Since: 2.10
 	 */
 	public int getResolution()
 	{
@@ -638,8 +567,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_RESOLUTION_X.
 	 *
 	 * Returns: the horizontal resolution in dpi
-	 *
-	 * Since: 2.16
 	 */
 	public int getResolutionX()
 	{
@@ -650,8 +577,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_RESOLUTION_Y.
 	 *
 	 * Returns: the vertical resolution in dpi
-	 *
-	 * Since: 2.16
 	 */
 	public int getResolutionY()
 	{
@@ -662,8 +587,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_REVERSE.
 	 *
 	 * Returns: whether to reverse the order of the printed pages
-	 *
-	 * Since: 2.10
 	 */
 	public bool getReverse()
 	{
@@ -674,8 +597,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_SCALE.
 	 *
 	 * Returns: the scale in percent
-	 *
-	 * Since: 2.10
 	 */
 	public double getScale()
 	{
@@ -686,8 +607,6 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_USE_COLOR.
 	 *
 	 * Returns: whether to use color
-	 *
-	 * Since: 2.10
 	 */
 	public bool getUseColor()
 	{
@@ -701,8 +620,6 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *
 	 * Returns: %TRUE, if @key has a value
-	 *
-	 * Since: 2.10
 	 */
 	public bool hasKey(string key)
 	{
@@ -719,22 +636,20 @@ public class PrintSettings : ObjectG
 	 *
 	 * Returns: %TRUE on success
 	 *
-	 * Since: 2.14
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool loadFile(string fileName)
 	{
 		GError* err = null;
 
-		auto p = gtk_print_settings_load_file(gtkPrintSettings, Str.toStringz(fileName), &err) != 0;
+		auto __p = gtk_print_settings_load_file(gtkPrintSettings, Str.toStringz(fileName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -749,22 +664,20 @@ public class PrintSettings : ObjectG
 	 *
 	 * Returns: %TRUE on success
 	 *
-	 * Since: 2.14
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool loadKeyFile(KeyFile keyFile, string groupName)
 	{
 		GError* err = null;
 
-		auto p = gtk_print_settings_load_key_file(gtkPrintSettings, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err) != 0;
+		auto __p = gtk_print_settings_load_key_file(gtkPrintSettings, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -773,8 +686,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *     value = a string value, or %NULL
-	 *
-	 * Since: 2.10
 	 */
 	public void set(string key, string value)
 	{
@@ -787,8 +698,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *     value = a boolean
-	 *
-	 * Since: 2.10
 	 */
 	public void setBool(string key, bool value)
 	{
@@ -800,8 +709,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     collate = whether to collate the output
-	 *
-	 * Since: 2.10
 	 */
 	public void setCollate(bool collate)
 	{
@@ -813,8 +720,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     defaultSource = the default source
-	 *
-	 * Since: 2.10
 	 */
 	public void setDefaultSource(string defaultSource)
 	{
@@ -826,8 +731,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     dither = the dithering that is used
-	 *
-	 * Since: 2.10
 	 */
 	public void setDither(string dither)
 	{
@@ -840,8 +743,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *     value = a double value
-	 *
-	 * Since: 2.10
 	 */
 	public void setDouble(string key, double value)
 	{
@@ -853,8 +754,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     duplex = a #GtkPrintDuplex value
-	 *
-	 * Since: 2.10
 	 */
 	public void setDuplex(GtkPrintDuplex duplex)
 	{
@@ -866,8 +765,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     finishings = the finishings
-	 *
-	 * Since: 2.10
 	 */
 	public void setFinishings(string finishings)
 	{
@@ -880,8 +777,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *     value = an integer
-	 *
-	 * Since: 2.10
 	 */
 	public void setInt(string key, int value)
 	{
@@ -895,8 +790,6 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *     value = a length
 	 *     unit = the unit of @length
-	 *
-	 * Since: 2.10
 	 */
 	public void setLength(string key, double value, GtkUnit unit)
 	{
@@ -910,8 +803,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     mediaType = the media type
-	 *
-	 * Since: 2.10
 	 */
 	public void setMediaType(string mediaType)
 	{
@@ -923,8 +814,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     numCopies = the number of copies
-	 *
-	 * Since: 2.10
 	 */
 	public void setNCopies(int numCopies)
 	{
@@ -936,8 +825,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     numberUp = the number of pages per sheet
-	 *
-	 * Since: 2.10
 	 */
 	public void setNumberUp(int numberUp)
 	{
@@ -949,8 +836,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     numberUpLayout = a #GtkNumberUpLayout value
-	 *
-	 * Since: 2.14
 	 */
 	public void setNumberUpLayout(GtkNumberUpLayout numberUpLayout)
 	{
@@ -962,8 +847,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     orientation = a page orientation
-	 *
-	 * Since: 2.10
 	 */
 	public void setOrientation(GtkPageOrientation orientation)
 	{
@@ -975,8 +858,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     outputBin = the output bin
-	 *
-	 * Since: 2.10
 	 */
 	public void setOutputBin(string outputBin)
 	{
@@ -988,8 +869,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     pageRanges = an array of #GtkPageRanges
-	 *
-	 * Since: 2.10
 	 */
 	public void setPageRanges(GtkPageRange[] pageRanges)
 	{
@@ -1001,8 +880,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     pageSet = a #GtkPageSet value
-	 *
-	 * Since: 2.10
 	 */
 	public void setPageSet(GtkPageSet pageSet)
 	{
@@ -1015,8 +892,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     height = the paper height
 	 *     unit = the units of @height
-	 *
-	 * Since: 2.10
 	 */
 	public void setPaperHeight(double height, GtkUnit unit)
 	{
@@ -1030,8 +905,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     paperSize = a paper size
-	 *
-	 * Since: 2.10
 	 */
 	public void setPaperSize(PaperSize paperSize)
 	{
@@ -1044,8 +917,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     width = the paper width
 	 *     unit = the units of @width
-	 *
-	 * Since: 2.10
 	 */
 	public void setPaperWidth(double width, GtkUnit unit)
 	{
@@ -1057,8 +928,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     pages = a #GtkPrintPages value
-	 *
-	 * Since: 2.10
 	 */
 	public void setPrintPages(GtkPrintPages pages)
 	{
@@ -1071,8 +940,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     printer = the printer name
-	 *
-	 * Since: 2.10
 	 */
 	public void setPrinter(string printer)
 	{
@@ -1084,8 +951,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     lpi = the resolution in lpi (lines per inch)
-	 *
-	 * Since: 2.16
 	 */
 	public void setPrinterLpi(double lpi)
 	{
@@ -1097,8 +962,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     quality = a #GtkPrintQuality value
-	 *
-	 * Since: 2.10
 	 */
 	public void setQuality(GtkPrintQuality quality)
 	{
@@ -1112,8 +975,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     resolution = the resolution in dpi
-	 *
-	 * Since: 2.10
 	 */
 	public void setResolution(int resolution)
 	{
@@ -1128,8 +989,6 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     resolutionX = the horizontal resolution in dpi
 	 *     resolutionY = the vertical resolution in dpi
-	 *
-	 * Since: 2.16
 	 */
 	public void setResolutionXy(int resolutionX, int resolutionY)
 	{
@@ -1141,8 +1000,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     reverse = whether to reverse the output
-	 *
-	 * Since: 2.10
 	 */
 	public void setReverse(bool reverse)
 	{
@@ -1154,8 +1011,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     scale = the scale in percent
-	 *
-	 * Since: 2.10
 	 */
 	public void setScale(double scale)
 	{
@@ -1167,8 +1022,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     useColor = whether to use color
-	 *
-	 * Since: 2.10
 	 */
 	public void setUseColor(bool useColor)
 	{
@@ -1185,41 +1038,37 @@ public class PrintSettings : ObjectG
 	 *
 	 * Returns: %TRUE on success
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: GException on failure.
 	 */
 	public bool toFile(string fileName)
 	{
 		GError* err = null;
 
-		auto p = gtk_print_settings_to_file(gtkPrintSettings, Str.toStringz(fileName), &err) != 0;
+		auto __p = gtk_print_settings_to_file(gtkPrintSettings, Str.toStringz(fileName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Serialize print settings to an a{sv} variant.
 	 *
 	 * Returns: a new, floating, #GVariant
-	 *
-	 * Since: 3.22
 	 */
 	public Variant toGvariant()
 	{
-		auto p = gtk_print_settings_to_gvariant(gtkPrintSettings);
+		auto __p = gtk_print_settings_to_gvariant(gtkPrintSettings);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -1229,8 +1078,6 @@ public class PrintSettings : ObjectG
 	 *     keyFile = the #GKeyFile to save the print settings to
 	 *     groupName = the group to add the settings to in @key_file, or
 	 *         %NULL to use the default “Print Settings”
-	 *
-	 * Since: 2.12
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)
 	{
@@ -1243,8 +1090,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     key = a key
-	 *
-	 * Since: 2.10
 	 */
 	public void unset(string key)
 	{

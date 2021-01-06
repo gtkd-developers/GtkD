@@ -32,7 +32,7 @@ private import gstreamer.CapsFeatures;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -100,6 +100,12 @@ public class Caps
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_caps_unref(gstCaps);
+	}
+
 	/**
 	 * Creates a new GstCaps that indicates that it is compatible with
 	 * any media format.
@@ -140,14 +146,14 @@ public class Caps
 	 */
 	public this()
 	{
-		auto p = gst_caps_new_empty();
+		auto __p = gst_caps_new_empty();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
 
-		this(cast(GstCaps*) p);
+		this(cast(GstCaps*) __p);
 	}
 
 	/**
@@ -164,14 +170,14 @@ public class Caps
 	 */
 	public this(string mediaType)
 	{
-		auto p = gst_caps_new_empty_simple(Str.toStringz(mediaType));
+		auto __p = gst_caps_new_empty_simple(Str.toStringz(mediaType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_empty_simple");
 		}
 
-		this(cast(GstCaps*) p);
+		this(cast(GstCaps*) __p);
 	}
 
 	/**
@@ -189,14 +195,14 @@ public class Caps
 	 */
 	public this(Structure structure, void* varArgs)
 	{
-		auto p = gst_caps_new_full_valist((structure is null) ? null : structure.getStructureStruct(), varArgs);
+		auto __p = gst_caps_new_full_valist((structure is null) ? null : structure.getStructureStruct(), varArgs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full_valist");
 		}
 
-		this(cast(GstCaps*) p);
+		this(cast(GstCaps*) __p);
 	}
 
 	/**
@@ -209,7 +215,7 @@ public class Caps
 	 */
 	public void append(Caps caps2)
 	{
-		gst_caps_append(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		gst_caps_append(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(true));
 	}
 
 	/**
@@ -267,14 +273,14 @@ public class Caps
 	 */
 	public Caps copy()
 	{
-		auto p = gst_caps_copy(gstCaps);
+		auto __p = gst_caps_copy(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -285,17 +291,19 @@ public class Caps
 	 *     nth = the nth structure to copy
 	 *
 	 * Returns: the new #GstCaps
+	 *
+	 * Since: 1.16
 	 */
 	public Caps copyNth(uint nth)
 	{
-		auto p = gst_caps_copy_nth(gstCaps, nth);
+		auto __p = gst_caps_copy_nth(gstCaps, nth);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -326,18 +334,24 @@ public class Caps
 	 * on it so you must not use @caps afterwards unless you keep an additional
 	 * reference to it with gst_caps_ref().
 	 *
+	 * Note that it is not guaranteed that the returned caps have exactly one
+	 * structure. If @caps are empty caps then then returned caps will be
+	 * the empty too and contain no structure at all.
+	 *
+	 * Calling this function with any caps is not allowed.
+	 *
 	 * Returns: the fixated caps
 	 */
 	public Caps fixate()
 	{
-		auto p = gst_caps_fixate(gstCaps);
+		auto __p = gst_caps_fixate(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	alias foreac = foreach_;
@@ -386,14 +400,14 @@ public class Caps
 	 */
 	public CapsFeatures getFeatures(uint index)
 	{
-		auto p = gst_caps_get_features(gstCaps, index);
+		auto __p = gst_caps_get_features(gstCaps, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) __p);
 	}
 
 	/**
@@ -430,14 +444,14 @@ public class Caps
 	 */
 	public Structure getStructure(uint index)
 	{
-		auto p = gst_caps_get_structure(gstCaps, index);
+		auto __p = gst_caps_get_structure(gstCaps, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -451,14 +465,14 @@ public class Caps
 	 */
 	public Caps intersect(Caps caps2)
 	{
-		auto p = gst_caps_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		auto __p = gst_caps_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -474,14 +488,14 @@ public class Caps
 	 */
 	public Caps intersectFull(Caps caps2, GstCapsIntersectMode mode)
 	{
-		auto p = gst_caps_intersect_full(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(), mode);
+		auto __p = gst_caps_intersect_full(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(), mode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -647,14 +661,14 @@ public class Caps
 	 */
 	public Caps merge(Caps caps2)
 	{
-		auto p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		auto __p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -667,14 +681,14 @@ public class Caps
 	 */
 	public Caps mergeStructure(Structure structure)
 	{
-		auto p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct(true));
+		auto __p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -690,14 +704,14 @@ public class Caps
 	 */
 	public Caps mergeStructureFull(Structure structure, CapsFeatures features)
 	{
-		auto p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(true), (features is null) ? null : features.getCapsFeaturesStruct(true));
+		auto __p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(true), (features is null) ? null : features.getCapsFeaturesStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -713,14 +727,39 @@ public class Caps
 	 */
 	public Caps normalize()
 	{
-		auto p = gst_caps_normalize(gstCaps);
+		auto __p = gst_caps_normalize(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	alias doref = ref_;
+	/**
+	 * Add a reference to a #GstCaps object.
+	 *
+	 * From this point on, until the caller calls gst_caps_unref() or
+	 * gst_caps_make_writable(), it is guaranteed that the caps object will not
+	 * change. This means its structures won't change, etc. To use a #GstCaps
+	 * object, you must always have a refcount on it -- either the one made
+	 * implicitly by e.g. gst_caps_new_simple(), or via taking one explicitly with
+	 * this function.
+	 *
+	 * Returns: the same #GstCaps object.
+	 */
+	public Caps ref_()
+	{
+		auto __p = gst_caps_ref(gstCaps);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -805,14 +844,14 @@ public class Caps
 	 */
 	public Caps simplify()
 	{
-		auto p = gst_caps_simplify(gstCaps);
+		auto __p = gst_caps_simplify(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -827,14 +866,14 @@ public class Caps
 	 */
 	public Structure stealStructure(uint index)
 	{
-		auto p = gst_caps_steal_structure(gstCaps, index);
+		auto __p = gst_caps_steal_structure(gstCaps, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
@@ -849,14 +888,14 @@ public class Caps
 	 */
 	public Caps subtract(Caps subtrahend)
 	{
-		auto p = gst_caps_subtract(gstCaps, (subtrahend is null) ? null : subtrahend.getCapsStruct());
+		auto __p = gst_caps_subtract(gstCaps, (subtrahend is null) ? null : subtrahend.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -890,18 +929,31 @@ public class Caps
 	 * on it if necessary, so you must not use @caps afterwards unless you keep an
 	 * additional reference to it with gst_caps_ref().
 	 *
+	 * Note that it is not guaranteed that the returned caps have exactly one
+	 * structure. If @caps is any or empty caps then then returned caps will be
+	 * the same and contain no structure at all.
+	 *
 	 * Returns: truncated caps
 	 */
 	public Caps truncate()
 	{
-		auto p = gst_caps_truncate(gstCaps);
+		auto __p = gst_caps_truncate(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	/**
+	 * Unref a #GstCaps and and free all its structures and the
+	 * structures' values when the refcount reaches 0.
+	 */
+	public void unref()
+	{
+		gst_caps_unref(gstCaps);
 	}
 
 	/**
@@ -917,13 +969,64 @@ public class Caps
 	 */
 	public static Caps fromString(string string_)
 	{
-		auto p = gst_caps_from_string(Str.toStringz(string_));
+		auto __p = gst_caps_from_string(Str.toStringz(string_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstCaps to point to a different #GstCaps. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * caps is unreffed, the new is reffed).
+	 *
+	 * Either @new_caps or the #GstCaps pointed to by @old_caps may be %NULL.
+	 *
+	 * Params:
+	 *     oldCaps = pointer to a pointer
+	 *         to a #GstCaps to be replaced.
+	 *     newCaps = pointer to a #GstCaps that will
+	 *         replace the caps pointed to by @old_caps.
+	 *
+	 * Returns: %TRUE if @new_caps was different from @old_caps
+	 */
+	public static bool replace(ref Caps oldCaps, Caps newCaps)
+	{
+		GstCaps* outoldCaps = oldCaps.getCapsStruct();
+
+		auto __p = gst_caps_replace(&outoldCaps, (newCaps is null) ? null : newCaps.getCapsStruct()) != 0;
+
+		oldCaps = ObjectG.getDObject!(Caps)(outoldCaps);
+
+		return __p;
+	}
+
+	/**
+	 * Modifies a pointer to a #GstCaps to point to a different #GstCaps. This
+	 * function is similar to gst_caps_replace() except that it takes ownership
+	 * of @new_caps.
+	 *
+	 * Params:
+	 *     oldCaps = pointer to a pointer to a #GstCaps to be
+	 *         replaced.
+	 *     newCaps = pointer to a #GstCaps that will
+	 *         replace the caps pointed to by @old_caps.
+	 *
+	 * Returns: %TRUE if @new_caps was different from @old_caps
+	 */
+	public static bool take(ref Caps oldCaps, Caps newCaps)
+	{
+		GstCaps* outoldCaps = oldCaps.getCapsStruct();
+
+		auto __p = gst_caps_take(&outoldCaps, (newCaps is null) ? null : newCaps.getCapsStruct(true)) != 0;
+
+		oldCaps = ObjectG.getDObject!(Caps)(outoldCaps);
+
+		return __p;
 	}
 }

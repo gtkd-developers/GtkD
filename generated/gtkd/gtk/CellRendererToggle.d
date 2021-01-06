@@ -31,7 +31,6 @@ private import gobject.Signals;
 private import gtk.CellRenderer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -91,14 +90,14 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_toggle_new();
+		auto __p = gtk_cell_renderer_toggle_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererToggle*) p);
+		this(cast(GtkCellRendererToggle*) __p);
 	}
 
 	/**
@@ -106,8 +105,6 @@ public class CellRendererToggle : CellRenderer
 	 * gtk_cell_renderer_toggle_set_activatable().
 	 *
 	 * Returns: %TRUE if the cell renderer is activatable.
-	 *
-	 * Since: 2.18
 	 */
 	public bool getActivatable()
 	{
@@ -140,8 +137,6 @@ public class CellRendererToggle : CellRenderer
 	 *
 	 * Params:
 	 *     setting = the value to set.
-	 *
-	 * Since: 2.18
 	 */
 	public void setActivatable(bool setting)
 	{

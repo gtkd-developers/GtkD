@@ -26,7 +26,6 @@ module pango.PgAttributeIterator;
 
 private import glib.ListSG;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgAttribute;
 private import pango.PgFontDescription;
 private import pango.PgLanguage;
@@ -73,6 +72,12 @@ public class PgAttributeIterator
 	}
 
 
+	/** */
+	public static GType getType()
+	{
+		return pango_attr_iterator_get_type();
+	}
+
 	/**
 	 * Copy a #PangoAttrIterator
 	 *
@@ -82,14 +87,14 @@ public class PgAttributeIterator
 	 */
 	public PgAttributeIterator copy()
 	{
-		auto p = pango_attr_iterator_copy(pangoAttrIterator);
+		auto __p = pango_attr_iterator_copy(pangoAttrIterator);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) p, true);
+		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) __p, true);
 	}
 
 	/**
@@ -115,14 +120,14 @@ public class PgAttributeIterator
 	 */
 	public PgAttribute get(PangoAttrType type)
 	{
-		auto p = pango_attr_iterator_get(pangoAttrIterator, type);
+		auto __p = pango_attr_iterator_get(pangoAttrIterator, type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) __p);
 	}
 
 	/**
@@ -138,14 +143,14 @@ public class PgAttributeIterator
 	 */
 	public ListSG getAttrs()
 	{
-		auto p = pango_attr_iterator_get_attrs(pangoAttrIterator);
+		auto __p = pango_attr_iterator_get_attrs(pangoAttrIterator);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**

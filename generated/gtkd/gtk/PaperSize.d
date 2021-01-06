@@ -34,7 +34,6 @@ private import glib.Variant;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import gtkd.Loader;
 
 
@@ -48,8 +47,6 @@ private import gtkd.Loader;
  * The #GtkPaperSize object stores not only the dimensions (width
  * and height) of a paper size and its name, it also provides
  * default [print margins][print-margins].
- * 
- * Printing support has been added in GTK+ 2.10.
  */
 public class PaperSize
 {
@@ -107,20 +104,18 @@ public class PaperSize
 	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
 	 *     to free it
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string name)
 	{
-		auto p = gtk_paper_size_new(Str.toStringz(name));
+		auto __p = gtk_paper_size_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -137,20 +132,18 @@ public class PaperSize
 	 * Returns: a new #GtkPaperSize object, use gtk_paper_size_free()
 	 *     to free it
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string name, string displayName, double width, double height, GtkUnit unit)
 	{
-		auto p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
+		auto __p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_custom");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -162,20 +155,18 @@ public class PaperSize
 	 *
 	 * Returns: a new #GtkPaperSize object
 	 *
-	 * Since: 3.22
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Variant variant)
 	{
-		auto p = gtk_paper_size_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		auto __p = gtk_paper_size_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -194,20 +185,18 @@ public class PaperSize
 	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
 	 *     to free it
 	 *
-	 * Since: 3.16
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string ippName, double width, double height)
 	{
-		auto p = gtk_paper_size_new_from_ipp(Str.toStringz(ippName), width, height);
+		auto __p = gtk_paper_size_new_from_ipp(Str.toStringz(ippName), width, height);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_ipp");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -222,8 +211,6 @@ public class PaperSize
 	 * Returns: a new #GtkPaperSize object with the restored
 	 *     paper size, or %NULL if an error occurred
 	 *
-	 * Since: 2.12
-	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -231,19 +218,19 @@ public class PaperSize
 	{
 		GError* err = null;
 
-		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		auto __p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_key_file");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -263,45 +250,39 @@ public class PaperSize
 	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
 	 *     to free it
 	 *
-	 * Since: 2.10
-	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string ppdName, string ppdDisplayName, double width, double height)
 	{
-		auto p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
+		auto __p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_ppd");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
 	 * Copies an existing #GtkPaperSize.
 	 *
 	 * Returns: a copy of @other
-	 *
-	 * Since: 2.10
 	 */
 	public PaperSize copy()
 	{
-		auto p = gtk_paper_size_copy(gtkPaperSize);
+		auto __p = gtk_paper_size_copy(gtkPaperSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p, true);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) __p, true);
 	}
 
 	/**
 	 * Free the given #GtkPaperSize object.
-	 *
-	 * Since: 2.10
 	 */
 	public void free()
 	{
@@ -316,8 +297,6 @@ public class PaperSize
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
 	 * Returns: the default bottom margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getDefaultBottomMargin(GtkUnit unit)
 	{
@@ -331,8 +310,6 @@ public class PaperSize
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
 	 * Returns: the default left margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getDefaultLeftMargin(GtkUnit unit)
 	{
@@ -346,8 +323,6 @@ public class PaperSize
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
 	 * Returns: the default right margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getDefaultRightMargin(GtkUnit unit)
 	{
@@ -361,8 +336,6 @@ public class PaperSize
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
 	 * Returns: the default top margin
-	 *
-	 * Since: 2.10
 	 */
 	public double getDefaultTopMargin(GtkUnit unit)
 	{
@@ -373,8 +346,6 @@ public class PaperSize
 	 * Gets the human-readable name of the #GtkPaperSize.
 	 *
 	 * Returns: the human-readable name of @size
-	 *
-	 * Since: 2.10
 	 */
 	public string getDisplayName()
 	{
@@ -389,8 +360,6 @@ public class PaperSize
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
 	 * Returns: the paper height
-	 *
-	 * Since: 2.10
 	 */
 	public double getHeight(GtkUnit unit)
 	{
@@ -401,8 +370,6 @@ public class PaperSize
 	 * Gets the name of the #GtkPaperSize.
 	 *
 	 * Returns: the name of @size
-	 *
-	 * Since: 2.10
 	 */
 	public string getName()
 	{
@@ -414,8 +381,6 @@ public class PaperSize
 	 * may be %NULL.
 	 *
 	 * Returns: the PPD name of @size
-	 *
-	 * Since: 2.10
 	 */
 	public string getPpdName()
 	{
@@ -430,8 +395,6 @@ public class PaperSize
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
 	 * Returns: the paper width
-	 *
-	 * Since: 2.10
 	 */
 	public double getWidth(GtkUnit unit)
 	{
@@ -456,8 +419,6 @@ public class PaperSize
 	 *
 	 * Returns: %TRUE, if @size1 and @size2
 	 *     represent the same paper size
-	 *
-	 * Since: 2.10
 	 */
 	public bool isEqual(PaperSize size2)
 	{
@@ -481,8 +442,6 @@ public class PaperSize
 	 *     width = the new width in units of @unit
 	 *     height = the new height in units of @unit
 	 *     unit = the unit for @width and @height
-	 *
-	 * Since: 2.10
 	 */
 	public void setSize(double width, double height, GtkUnit unit)
 	{
@@ -493,19 +452,17 @@ public class PaperSize
 	 * Serialize a paper size to an a{sv} variant.
 	 *
 	 * Returns: a new, floating, #GVariant
-	 *
-	 * Since: 3.22
 	 */
 	public Variant toGvariant()
 	{
-		auto p = gtk_paper_size_to_gvariant(gtkPaperSize);
+		auto __p = gtk_paper_size_to_gvariant(gtkPaperSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -514,8 +471,6 @@ public class PaperSize
 	 * Params:
 	 *     keyFile = the #GKeyFile to save the paper size to
 	 *     groupName = the group to add the settings to in @key_file
-	 *
-	 * Since: 2.12
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)
 	{
@@ -527,9 +482,7 @@ public class PaperSize
 	 * depends on the current locale.
 	 *
 	 * Returns: the name of the default paper size. The string
-	 *     is owned by GTK+ and should not be modified.
-	 *
-	 * Since: 2.10
+	 *     is owned by GTK and should not be modified.
 	 */
 	public static string getDefault()
 	{
@@ -545,18 +498,16 @@ public class PaperSize
 	 *
 	 * Returns: a newly allocated list of newly
 	 *     allocated #GtkPaperSize objects
-	 *
-	 * Since: 2.12
 	 */
 	public static ListG getPaperSizes(bool includeCustom)
 	{
-		auto p = gtk_paper_size_get_paper_sizes(includeCustom);
+		auto __p = gtk_paper_size_get_paper_sizes(includeCustom);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 }

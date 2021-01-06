@@ -27,7 +27,6 @@ module glib.BBTree;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 private import gtkd.Loader;
 
 
@@ -131,6 +130,9 @@ public class BBTree
 	 *
 	 * The tree is automatically 'balanced' as new key/value pairs are added,
 	 * so that the distance from the root to every leaf is as small as possible.
+	 * The cost of maintaining a balanced tree while inserting new key/value
+	 * result in a O(n log(n)) operation where most of the other operations
+	 * are O(log(n)).
 	 *
 	 * Params:
 	 *     key = the key to insert
@@ -214,6 +216,10 @@ public class BBTree
 	 * are freed using the supplied destroy functions, otherwise you have to
 	 * make sure that any dynamically allocated values are freed yourself.
 	 * If the key does not exist in the #GTree, the function does nothing.
+	 *
+	 * The cost of maintaining a balanced tree while removing a key/value
+	 * result in a O(n log(n)) operation where most of the other operations
+	 * are O(log(n)).
 	 *
 	 * Params:
 	 *     key = the key to remove
