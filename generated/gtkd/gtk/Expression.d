@@ -219,14 +219,14 @@ public class Expression
 	 * Params:
 	 *     target = the target object to bind to
 	 *     property = name of the property on @target to bind to
-	 *     this = the this argument for
+	 *     this_ = the this argument for
 	 *         the evaluation of @self
 	 *
 	 * Returns: a #GtkExpressionWatch
 	 */
-	public ExpressionWatch bind(ObjectG target, string property, ObjectG this)
+	public ExpressionWatch bind(ObjectG target, string property, ObjectG this_)
 	{
-		auto __p = gtk_expression_bind(gtkExpression, (target is null) ? null : target.getObjectGStruct(), Str.toStringz(property), (this is null) ? null : this.getObjectGStruct());
+		auto __p = gtk_expression_bind(gtkExpression, (target is null) ? null : target.getObjectGStruct(), Str.toStringz(property), (this_ is null) ? null : this_.getObjectGStruct());
 
 		if(__p is null)
 		{
@@ -247,14 +247,14 @@ public class Expression
 	 * will be returned.
 	 *
 	 * Params:
-	 *     this = the this argument for the evaluation
+	 *     this_ = the this argument for the evaluation
 	 *     value = an empty #GValue
 	 *
 	 * Returns: %TRUE if the expression could be evaluated
 	 */
-	public bool evaluate(ObjectG this, Value value)
+	public bool evaluate(ObjectG this_, Value value)
 	{
-		return gtk_expression_evaluate(gtkExpression, (this is null) ? null : this.getObjectGStruct(), (value is null) ? null : value.getValueStruct()) != 0;
+		return gtk_expression_evaluate(gtkExpression, (this_ is null) ? null : this_.getObjectGStruct(), (value is null) ? null : value.getValueStruct()) != 0;
 	}
 
 	/**
@@ -322,7 +322,7 @@ public class Expression
 	 * the @notify will be invoked.
 	 *
 	 * Params:
-	 *     this = the `this` argument to
+	 *     this_ = the `this` argument to
 	 *         watch
 	 *     notify = callback to invoke when the
 	 *         expression changes
@@ -335,9 +335,9 @@ public class Expression
 	 *     gtk_expression_watch_unwatch(). You should call gtk_expression_watch_ref()
 	 *     if you want to keep the watch around.
 	 */
-	public ExpressionWatch watch(ObjectG this, GtkExpressionNotify notify, void* userData, GDestroyNotify userDestroy)
+	public ExpressionWatch watch(ObjectG this_, GtkExpressionNotify notify, void* userData, GDestroyNotify userDestroy)
 	{
-		auto __p = gtk_expression_watch(gtkExpression, (this is null) ? null : this.getObjectGStruct(), notify, userData, userDestroy);
+		auto __p = gtk_expression_watch(gtkExpression, (this_ is null) ? null : this_.getObjectGStruct(), notify, userData, userDestroy);
 
 		if(__p is null)
 		{

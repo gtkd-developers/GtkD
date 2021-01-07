@@ -177,7 +177,7 @@ public class PgTabArray
 	 */
 	public void getTabs(out PangoTabAlign* alignments, out int[] locations)
 	{
-		int* outlocations = null;
+		int* outlocations;
 
 		pango_tab_array_get_tabs(pangoTabArray, &alignments, &outlocations);
 

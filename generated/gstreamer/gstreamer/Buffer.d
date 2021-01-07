@@ -580,7 +580,7 @@ public class Buffer
 	 */
 	public void extractDup(size_t offset, size_t size, out ubyte[] dest)
 	{
-		ubyte* outdest = null;
+		ubyte* outdest;
 		size_t destSize;
 
 		gst_buffer_extract_dup(gstBuffer, offset, size, cast(void**)&outdest, &destSize);

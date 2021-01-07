@@ -533,7 +533,7 @@ public class PgLayout : ObjectG
 	 */
 	public void getLogAttrs(out PangoLogAttr[] attrs)
 	{
-		PangoLogAttr* outattrs = null;
+		PangoLogAttr* outattrs;
 		int nAttrs;
 
 		pango_layout_get_log_attrs(pangoLayout, &outattrs, &nAttrs);

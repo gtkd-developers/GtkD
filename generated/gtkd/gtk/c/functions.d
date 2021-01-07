@@ -5642,13 +5642,13 @@ __gshared extern(C)
 	// gtk.Expression
 
 	GType function() c_gtk_expression_get_type;
-	GtkExpressionWatch* function(GtkExpression* self, void* target, const(char)* property, void* this) c_gtk_expression_bind;
-	int function(GtkExpression* self, void* this, GValue* value) c_gtk_expression_evaluate;
+	GtkExpressionWatch* function(GtkExpression* self, void* target, const(char)* property, void* this_) c_gtk_expression_bind;
+	int function(GtkExpression* self, void* this_, GValue* value) c_gtk_expression_evaluate;
 	GType function(GtkExpression* self) c_gtk_expression_get_value_type;
 	int function(GtkExpression* self) c_gtk_expression_is_static;
 	GtkExpression* function(GtkExpression* self) c_gtk_expression_ref;
 	void function(GtkExpression* self) c_gtk_expression_unref;
-	GtkExpressionWatch* function(GtkExpression* self, void* this, GtkExpressionNotify notify, void* userData, GDestroyNotify userDestroy) c_gtk_expression_watch;
+	GtkExpressionWatch* function(GtkExpression* self, void* this_, GtkExpressionNotify notify, void* userData, GDestroyNotify userDestroy) c_gtk_expression_watch;
 
 	// gtk.ExpressionWatch
 

@@ -69,6 +69,7 @@ lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGsk.txt
 lookup: APILookupGtk.txt
+lookup: APILookupGraphene.txt
 
 #srcDir: gtkdgl
 #lookup: APILookupGLd.txt

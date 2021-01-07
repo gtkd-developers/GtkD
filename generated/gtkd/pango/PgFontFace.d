@@ -154,7 +154,7 @@ public class PgFontFace : ObjectG
 	 */
 	public void listSizes(out int[] sizes)
 	{
-		int* outsizes = null;
+		int* outsizes;
 		int nSizes;
 
 		pango_font_face_list_sizes(pangoFontFace, &outsizes, &nSizes);

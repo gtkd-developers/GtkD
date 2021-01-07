@@ -205,7 +205,7 @@ public class PgCoverage : ObjectG
 	 */
 	public void toBytes(out ubyte[] bytes)
 	{
-		ubyte* outbytes = null;
+		ubyte* outbytes;
 		int nBytes;
 
 		pango_coverage_to_bytes(pangoCoverage, cast(char**)&outbytes, &nBytes);

@@ -139,7 +139,7 @@ public class Event
 	 */
 	public bool getAxes(out double[] axes)
 	{
-		double* outaxes = null;
+		double* outaxes;
 		uint nAxes;
 
 		auto __p = gdk_event_get_axes(gdkEvent, &outaxes, &nAxes) != 0;

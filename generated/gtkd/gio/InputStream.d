@@ -236,7 +236,7 @@ public class InputStream : ObjectG
 	 */
 	public ptrdiff_t read(out ubyte[] buffer, Cancellable cancellable)
 	{
-		ubyte* outbuffer = null;
+		ubyte* outbuffer;
 		GError* err = null;
 
 		auto __p = g_input_stream_read(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
@@ -283,7 +283,7 @@ public class InputStream : ObjectG
 	 */
 	public bool readAll(out ubyte[] buffer, out size_t bytesRead, Cancellable cancellable)
 	{
-		ubyte* outbuffer = null;
+		ubyte* outbuffer;
 		GError* err = null;
 
 		auto __p = g_input_stream_read_all(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, &bytesRead, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
@@ -321,7 +321,7 @@ public class InputStream : ObjectG
 	 */
 	public void readAllAsync(out ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		ubyte* outbuffer = null;
+		ubyte* outbuffer;
 
 		g_input_stream_read_all_async(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 
@@ -398,7 +398,7 @@ public class InputStream : ObjectG
 	 */
 	public void readAsync(out ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		ubyte* outbuffer = null;
+		ubyte* outbuffer;
 
 		g_input_stream_read_async(gInputStream, cast(void*)&outbuffer, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 

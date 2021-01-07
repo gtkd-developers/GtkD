@@ -245,7 +245,7 @@ public final class PgLayoutLine
 	 */
 	public void getXRanges(int startIndex, int endIndex, out int[] ranges)
 	{
-		int* outranges = null;
+		int* outranges;
 		int nRanges;
 
 		pango_layout_line_get_x_ranges(pangoLayoutLine, startIndex, endIndex, &outranges, &nRanges);

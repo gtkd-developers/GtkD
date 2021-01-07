@@ -425,8 +425,8 @@ public class Display : ObjectG
 	 */
 	public bool mapKeycode(uint keycode, out GdkKeymapKey[] keys, out uint[] keyvals)
 	{
-		GdkKeymapKey* outkeys = null;
-		uint* outkeyvals = null;
+		GdkKeymapKey* outkeys;
+		uint* outkeyvals;
 		int nEntries;
 
 		auto __p = gdk_display_map_keycode(gdkDisplay, keycode, &outkeys, &outkeyvals, &nEntries) != 0;
@@ -462,7 +462,7 @@ public class Display : ObjectG
 	 */
 	public bool mapKeyval(uint keyval, out GdkKeymapKey[] keys)
 	{
-		GdkKeymapKey* outkeys = null;
+		GdkKeymapKey* outkeys;
 		int nKeys;
 
 		auto __p = gdk_display_map_keyval(gdkDisplay, keyval, &outkeys, &nKeys) != 0;

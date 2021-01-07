@@ -91,7 +91,7 @@ public class ByteReader
 	 */
 	public bool dupData(out ubyte[] val)
 	{
-		ubyte* outval = null;
+		ubyte* outval;
 
 		auto __p = gst_byte_reader_dup_data(gstByteReader, cast(uint)val.length, &outval) != 0;
 
@@ -125,7 +125,7 @@ public class ByteReader
 	 */
 	public bool dupStringUtf16(out ushort[] str)
 	{
-		ushort* outstr = null;
+		ushort* outstr;
 
 		auto __p = gst_byte_reader_dup_string_utf16(gstByteReader, &outstr) != 0;
 
@@ -159,7 +159,7 @@ public class ByteReader
 	 */
 	public bool dupStringUtf32(out uint[] str)
 	{
-		uint* outstr = null;
+		uint* outstr;
 
 		auto __p = gst_byte_reader_dup_string_utf32(gstByteReader, &outstr) != 0;
 
@@ -219,7 +219,7 @@ public class ByteReader
 	 */
 	public bool getData(out ubyte[] val)
 	{
-		ubyte* outval = null;
+		ubyte* outval;
 
 		auto __p = gst_byte_reader_get_data(gstByteReader, cast(uint)val.length, &outval) != 0;
 
@@ -715,7 +715,7 @@ public class ByteReader
 	 */
 	public bool peekData(out ubyte[] val)
 	{
-		ubyte* outval = null;
+		ubyte* outval;
 
 		auto __p = gst_byte_reader_peek_data(gstByteReader, cast(uint)val.length, &outval) != 0;
 

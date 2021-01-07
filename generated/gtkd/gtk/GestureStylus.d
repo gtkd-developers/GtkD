@@ -108,7 +108,7 @@ public class GestureStylus : GestureSingle
 	 */
 	public bool getAxes(GdkAxisUse[] axes, out double[] values)
 	{
-		double* outvalues = null;
+		double* outvalues;
 
 		auto __p = gtk_gesture_stylus_get_axes(gtkGestureStylus, axes.ptr, &outvalues) != 0;
 
@@ -155,7 +155,7 @@ public class GestureStylus : GestureSingle
 	 */
 	public bool getBacklog(out GdkTimeCoord[] backlog)
 	{
-		GdkTimeCoord* outbacklog = null;
+		GdkTimeCoord* outbacklog;
 		uint nElems;
 
 		auto __p = gtk_gesture_stylus_get_backlog(gtkGestureStylus, &outbacklog, &nElems) != 0;

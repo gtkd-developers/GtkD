@@ -141,7 +141,7 @@ public class Descriptor
 	 */
 	public bool parseCa(out ushort caSystemId, out ushort caPid, out ubyte[] privateData)
 	{
-		ubyte* outprivateData = null;
+		ubyte* outprivateData;
 		size_t privateDataSize;
 
 		auto __p = gst_mpegts_descriptor_parse_ca(gstMpegtsDescriptor, &caSystemId, &caPid, &outprivateData, &privateDataSize) != 0;
@@ -278,7 +278,7 @@ public class Descriptor
 	 */
 	public bool parseDvbDataBroadcastId(out ushort dataBroadcastId, out ubyte[] idSelectorBytes)
 	{
-		ubyte* outidSelectorBytes = null;
+		ubyte* outidSelectorBytes;
 		ubyte len;
 
 		auto __p = gst_mpegts_descriptor_parse_dvb_data_broadcast_id(gstMpegtsDescriptor, &dataBroadcastId, &outidSelectorBytes, &len) != 0;
@@ -476,7 +476,7 @@ public class Descriptor
 	 */
 	public bool parseDvbPrivateDataSpecifier(out uint privateDataSpecifier, out ubyte[] privateData)
 	{
-		ubyte* outprivateData = null;
+		ubyte* outprivateData;
 		ubyte length;
 
 		auto __p = gst_mpegts_descriptor_parse_dvb_private_data_specifier(gstMpegtsDescriptor, &privateDataSpecifier, &outprivateData, &length) != 0;
