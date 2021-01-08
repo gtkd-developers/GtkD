@@ -71,13 +71,6 @@ lookup: APILookupGsk.txt
 lookup: APILookupGtk.txt
 lookup: APILookupGraphene.txt
 
-#srcDir: gtkdgl
-#lookup: APILookupGLd.txt
-#lookup: APILookupGLt.txt
-
-srcDir: sourceview
-lookup: APILookupSourceView.txt
-
 srcDir: gstreamer
 lookup: APILookupGStreamer.txt
 lookup: APILookupGstInterfaces.txt

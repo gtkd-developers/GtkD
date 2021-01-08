@@ -76,7 +76,7 @@ int main(string[] args)
 	
 	foreach ( arg; args )
 	{
-		if ( !["gtkd", "gtkdgl", "sv", "gstreamer", "vte", "peas", "all"].canFind(arg) )
+		if ( !["gtkd", "gstreamer", "vte", "peas", "all"].canFind(arg) )
 		{
 			writefln("Unknown option: %s", arg);
 			return 1;
@@ -84,10 +84,10 @@ int main(string[] args)
 	}
 	
 	if ( args.length == 0 )
-		args = ["gtkd", "sv"];
+		args = ["gtkd"];
 		
 	if ( args.canFind("all") )
-		args = ["gtkd", "sv", "gstreamer", "peas"];
+		args = ["gtkd", "gstreamer", "peas"];
 	
 	foreach ( arg; args )
 	{
@@ -95,12 +95,6 @@ int main(string[] args)
 		{
 			case "gtkd":
 				build("generated\\gtkd", "gtkd");
-				break;
-			case "gtkdgl":
-				build("generated\\gtkdgl", "gtkdgl");
-				break;
-			case "sv":
-				build("generated\\sourceview", "gtkdsv");
 				break;
 			case "gstreamer":
 				build("generated\\gstreamer", "gstreamerd");
@@ -123,7 +117,7 @@ void build(string dir, string lib)
 	{
 		if (lib == "gtkd")
 		{
-			string[] subDirs = ["atk", "cairo", "gdk", "gdkpixbuf", "gio", "glib", "gobject", "gthread", "gtkc", "gtkd", "pango", "rsvg"];
+			string[] subDirs = ["atk", "cairo", "gdk", "gdkpixbuf", "gio", "glib", "gobject", "gthread", "graphene", "gtkd", "pango", "harfbuzz", "rsvg"];
 
 			foreach(directory; subDirs)
 				buildObj(dFiles("generated\\gtkd\\"~ directory), directory);

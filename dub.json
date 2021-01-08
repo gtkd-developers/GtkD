@@ -16,7 +16,6 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:sv": "*",
         "gtk-d:vte": "*",
         "gtk-d:gtkd": "*",
         "gtk-d:gstreamer": "*",
@@ -31,24 +30,6 @@
             "sourcePaths": ["generated/gtkd"],
             "libs-posix": ["dl"],
             "importPaths": ["generated/gtkd"]
-        },
-        {
-            "name": "gtkdgl",
-            "targetType": "library",
-            "targetName": "gtkdgl-3",
-            "sourcePaths": ["generated/gtkdgl"],
-            "libs-posix": ["dl"],
-            "importPaths": ["generated/gtkdgl"],
-            "dependencies": {"gtk-d:gtkd":"*"}
-        },
-        {
-            "name": "sv",
-            "targetType": "library",
-            "targetName": "gtkdsv-3",
-            "sourcePaths": ["generated/sourceview"],
-            "libs-posix": ["dl"],
-            "importPaths": ["generated/sourceview"],
-            "dependencies": {"gtk-d:gtkd":"*"}
         },
         {
             "name": "gstreamer",
