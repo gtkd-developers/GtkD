@@ -99,7 +99,7 @@ public template NativeT(TStruct)
 	/**
 	 * Realizes a #GtkNative.
 	 */
-	public void realize()
+	public void realizeNative()
 	{
 		gtk_native_realize(getNativeStruct());
 	}
@@ -107,7 +107,7 @@ public template NativeT(TStruct)
 	/**
 	 * Unrealizes a #GtkNative.
 	 */
-	public void unrealize()
+	public void unrealizeNative()
 	{
 		gtk_native_unrealize(getNativeStruct());
 	}

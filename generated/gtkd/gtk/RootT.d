@@ -55,7 +55,7 @@ public template RootT(TStruct)
 	 *
 	 * Returns: the display of @root
 	 */
-	public Display getDisplay()
+	public Display getDisplayRoot()
 	{
 		auto __p = gtk_root_get_display(getRootStruct());
 

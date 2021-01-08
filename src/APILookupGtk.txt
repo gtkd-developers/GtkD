@@ -23,3 +23,18 @@
 # must start with wrap
 wrap: gtk
 file: Gtk-4.0.gir
+
+struct: FontChooser
+override: get_font_map
+override: set_font_map
+
+struct: MenuButton
+alias: set_direction setMenuDirection
+alias: get_direction getMenuDirection
+
+struct: Native
+alias: realize realizeNative
+alias: unrealize unrealizeNative
+
+struct: Root
+alias: get_display getDisplayRoot

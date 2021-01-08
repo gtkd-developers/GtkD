@@ -184,7 +184,7 @@ public class MenuButton : Widget
 	 *
 	 * Returns: a #GtkArrowType value
 	 */
-	public override GtkArrowType getDirection()
+	public GtkArrowType getMenuDirection()
 	{
 		return gtk_menu_button_get_direction(gtkMenuButton);
 	}
@@ -322,7 +322,7 @@ public class MenuButton : Widget
 	 * Params:
 	 *     direction = a #GtkArrowType
 	 */
-	public void setDirection(GtkArrowType direction)
+	public void setMenuDirection(GtkArrowType direction)
 	{
 		gtk_menu_button_set_direction(gtkMenuButton, direction);
 	}

@@ -224,7 +224,7 @@ public class PgFont : ObjectG
 	 */
 	public void getFeatures(out feature_t[] features, ref uint numFeatures)
 	{
-		hb_feature_t outfeatures = null;
+		hb_feature_t* outfeatures = null;
 
 		pango_font_get_features(pangoFont, outfeatures, cast(uint)features.length, &numFeatures);
 

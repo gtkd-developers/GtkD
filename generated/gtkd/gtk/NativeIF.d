@@ -99,10 +99,10 @@ public interface NativeIF{
 	/**
 	 * Realizes a #GtkNative.
 	 */
-	public void realize();
+	public void realizeNative();
 
 	/**
 	 * Unrealizes a #GtkNative.
 	 */
-	public void unrealize();
+	public void unrealizeNative();
 }

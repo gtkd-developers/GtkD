@@ -167,7 +167,7 @@ public template FontChooserT(TStruct)
 	 *
 	 * Returns: a #PangoFontMap, or %NULL
 	 */
-	public PgFontMap getFontMap()
+	public override PgFontMap getFontMap()
 	{
 		auto __p = gtk_font_chooser_get_font_map(getFontChooserStruct());
 
@@ -303,7 +303,7 @@ public template FontChooserT(TStruct)
 	 * Params:
 	 *     fontmap = a #PangoFontMap
 	 */
-	public void setFontMap(PgFontMap fontmap)
+	public override void setFontMap(PgFontMap fontmap)
 	{
 		gtk_font_chooser_set_font_map(getFontChooserStruct(), (fontmap is null) ? null : fontmap.getPgFontMapStruct());
 	}

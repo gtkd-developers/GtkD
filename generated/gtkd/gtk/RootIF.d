@@ -58,7 +58,7 @@ public interface RootIF{
 	 *
 	 * Returns: the display of @root
 	 */
-	public Display getDisplay();
+	public Display getDisplayRoot();
 
 	/**
 	 * Retrieves the current focused widget within the root.
