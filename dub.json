@@ -16,7 +16,6 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:vte": "*",
         "gtk-d:gtkd": "*",
         "gtk-d:gstreamer": "*",
         "gtk-d:peas": "*"
@@ -38,15 +37,6 @@
             "sourcePaths": ["generated/gstreamer"],
             "libs-posix": ["dl"],
             "importPaths": ["generated/gstreamer"],
-            "dependencies": {"gtk-d:gtkd":"*"}
-        },
-        {
-            "name": "vte",
-            "targetType": "library",
-            "targetName": "vted-3",
-            "sourcePaths": ["generated/vte"],
-            "libs-posix": ["dl"],
-            "importPaths": ["generated/vte"],
             "dependencies": {"gtk-d:gtkd":"*"}
         },
         {

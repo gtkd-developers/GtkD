@@ -37,31 +37,6 @@ else
 
 shared static this()
 {
-	// gstinterfaces.VideoAFDMeta
-
-	Linker.link(gst_video_afd_meta_get_info, "gst_video_afd_meta_get_info", LIBRARY_GSTINTERFACES);
-
-	// gstinterfaces.VideoBarMeta
-
-	Linker.link(gst_video_bar_meta_get_info, "gst_video_bar_meta_get_info", LIBRARY_GSTINTERFACES);
-
-	// gstinterfaces.VideoContentLightLevel
-
-	Linker.link(gst_video_content_light_level_add_to_caps, "gst_video_content_light_level_add_to_caps", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_content_light_level_from_caps, "gst_video_content_light_level_from_caps", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_content_light_level_from_string, "gst_video_content_light_level_from_string", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_content_light_level_init, "gst_video_content_light_level_init", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_content_light_level_to_string, "gst_video_content_light_level_to_string", LIBRARY_GSTINTERFACES);
-
-	// gstinterfaces.VideoMasteringDisplayInfo
-
-	Linker.link(gst_video_mastering_display_info_add_to_caps, "gst_video_mastering_display_info_add_to_caps", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_mastering_display_info_from_caps, "gst_video_mastering_display_info_from_caps", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_mastering_display_info_init, "gst_video_mastering_display_info_init", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_mastering_display_info_is_equal, "gst_video_mastering_display_info_is_equal", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_mastering_display_info_to_string, "gst_video_mastering_display_info_to_string", LIBRARY_GSTINTERFACES);
-	Linker.link(gst_video_mastering_display_info_from_string, "gst_video_mastering_display_info_from_string", LIBRARY_GSTINTERFACES);
-
 	// gstinterfaces.VideoOverlay
 
 	Linker.link(gst_video_overlay_get_type, "gst_video_overlay_get_type", LIBRARY_GSTINTERFACES);
@@ -78,31 +53,6 @@ shared static this()
 __gshared extern(C)
 {
 
-	// gstinterfaces.VideoAFDMeta
-
-	GstMetaInfo* function() c_gst_video_afd_meta_get_info;
-
-	// gstinterfaces.VideoBarMeta
-
-	GstMetaInfo* function() c_gst_video_bar_meta_get_info;
-
-	// gstinterfaces.VideoContentLightLevel
-
-	int function(GstVideoContentLightLevel* linfo, GstCaps* caps) c_gst_video_content_light_level_add_to_caps;
-	int function(GstVideoContentLightLevel* linfo, GstCaps* caps) c_gst_video_content_light_level_from_caps;
-	int function(GstVideoContentLightLevel* linfo, const(char)* level) c_gst_video_content_light_level_from_string;
-	void function(GstVideoContentLightLevel* linfo) c_gst_video_content_light_level_init;
-	char* function(GstVideoContentLightLevel* linfo) c_gst_video_content_light_level_to_string;
-
-	// gstinterfaces.VideoMasteringDisplayInfo
-
-	int function(GstVideoMasteringDisplayInfo* minfo, GstCaps* caps) c_gst_video_mastering_display_info_add_to_caps;
-	int function(GstVideoMasteringDisplayInfo* minfo, GstCaps* caps) c_gst_video_mastering_display_info_from_caps;
-	void function(GstVideoMasteringDisplayInfo* minfo) c_gst_video_mastering_display_info_init;
-	int function(GstVideoMasteringDisplayInfo* minfo, GstVideoMasteringDisplayInfo* other) c_gst_video_mastering_display_info_is_equal;
-	char* function(GstVideoMasteringDisplayInfo* minfo) c_gst_video_mastering_display_info_to_string;
-	int function(GstVideoMasteringDisplayInfo* minfo, const(char)* mastering) c_gst_video_mastering_display_info_from_string;
-
 	// gstinterfaces.VideoOverlay
 
 	GType function() c_gst_video_overlay_get_type;
@@ -116,31 +66,6 @@ __gshared extern(C)
 	void function(GstVideoOverlay* overlay, size_t handle) c_gst_video_overlay_set_window_handle;
 }
 
-
-// gstinterfaces.VideoAFDMeta
-
-alias c_gst_video_afd_meta_get_info gst_video_afd_meta_get_info;
-
-// gstinterfaces.VideoBarMeta
-
-alias c_gst_video_bar_meta_get_info gst_video_bar_meta_get_info;
-
-// gstinterfaces.VideoContentLightLevel
-
-alias c_gst_video_content_light_level_add_to_caps gst_video_content_light_level_add_to_caps;
-alias c_gst_video_content_light_level_from_caps gst_video_content_light_level_from_caps;
-alias c_gst_video_content_light_level_from_string gst_video_content_light_level_from_string;
-alias c_gst_video_content_light_level_init gst_video_content_light_level_init;
-alias c_gst_video_content_light_level_to_string gst_video_content_light_level_to_string;
-
-// gstinterfaces.VideoMasteringDisplayInfo
-
-alias c_gst_video_mastering_display_info_add_to_caps gst_video_mastering_display_info_add_to_caps;
-alias c_gst_video_mastering_display_info_from_caps gst_video_mastering_display_info_from_caps;
-alias c_gst_video_mastering_display_info_init gst_video_mastering_display_info_init;
-alias c_gst_video_mastering_display_info_is_equal gst_video_mastering_display_info_is_equal;
-alias c_gst_video_mastering_display_info_to_string gst_video_mastering_display_info_to_string;
-alias c_gst_video_mastering_display_info_from_string gst_video_mastering_display_info_from_string;
 
 // gstinterfaces.VideoOverlay
 

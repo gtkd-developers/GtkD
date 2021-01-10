@@ -78,10 +78,5 @@ lookup: APILookupGstApp.txt
 lookup: APILookupGstBase.txt
 lookup: APILookupGstMpegts.txt
 
-version !Windows: start
-	srcDir: vte
-	lookup: APILookupVte.txt
-version: end
-
 srcDir: peas
 lookup: APILookupPeas.txt

@@ -25,7 +25,6 @@
 module gstinterfaces.c.types;
 
 public import gobject.c.types;
-public import gstreamer.c.types;
 
 
 /**
@@ -231,105 +230,6 @@ public enum GstVideoTimeCodeFlags
 alias GstVideoTimeCodeFlags VideoTimeCodeFlags;
 
 /**
- * Active Format Description (AFD)
- *
- * For details, see Table 6.14 Active Format in:
- *
- * ATSC Digital Television Standard:
- * Part 4 – MPEG-2 Video System Characteristics
- *
- * https://www.atsc.org/wp-content/uploads/2015/03/a_53-Part-4-2009.pdf
- *
- * and Active Format Description in Complete list of AFD codes
- *
- * https://en.wikipedia.org/wiki/Active_Format_Description#Complete_list_of_AFD_codes
- *
- * and SMPTE ST2016-1
- *
- * Since: 1.18
- */
-struct GstVideoAFDMeta
-{
-	/**
-	 * parent #GstMeta
-	 */
-	GstMeta meta;
-	/**
-	 * 0 for progressive or field 1 and 1 for field 2
-	 */
-	ubyte field;
-	/**
-	 * #GstVideoAFDSpec that applies to @afd
-	 */
-	GstVideoAFDSpec spec;
-	/**
-	 * #GstVideoAFDValue AFD value
-	 */
-	GstVideoAFDValue afd;
-}
-
-/**
- * Bar data should be included in video user data
- * whenever the rectangular picture area containing useful information
- * does not extend to the full height or width of the coded frame
- * and AFD alone is insufficient to describe the extent of the image.
- *
- * Note: either vertical or horizontal bars are specified, but not both.
- *
- * For more details, see:
- *
- * https://www.atsc.org/wp-content/uploads/2015/03/a_53-Part-4-2009.pdf
- *
- * and SMPTE ST2016-1
- *
- * Since: 1.18
- */
-struct GstVideoBarMeta
-{
-	/**
-	 * parent #GstMeta
-	 */
-	GstMeta meta;
-	/**
-	 * 0 for progressive or field 1 and 1 for field 2
-	 */
-	ubyte field;
-	/**
-	 * if true then bar data specifies letterbox, otherwise pillarbox
-	 */
-	bool isLetterbox;
-	/**
-	 * If @is_letterbox is true, then the value specifies the
-	 * last line of a horizontal letterbox bar area at top of reconstructed frame.
-	 * Otherwise, it specifies the last horizontal luminance sample of a vertical pillarbox
-	 * bar area at the left side of the reconstructed frame
-	 */
-	uint barData1;
-	/**
-	 * If @is_letterbox is true, then the value specifies the
-	 * first line of a horizontal letterbox bar area at bottom of reconstructed frame.
-	 * Otherwise, it specifies the first horizontal
-	 * luminance sample of a vertical pillarbox bar area at the right side of the reconstructed frame.
-	 */
-	uint barData2;
-}
-
-struct GstVideoContentLightLevel
-{
-	/**
-	 * the maximum content light level
-	 * (abbreviated to MaxCLL) in candelas per square meter (cd/m^2 and nit)
-	 */
-	ushort maxContentLightLevel;
-	/**
-	 * the maximum frame average light level
-	 * (abbreviated to MaxFLL) in candelas per square meter (cd/m^2 and nit)
-	 */
-	ushort maxFrameAverageLightLevel;
-	void*[4] GstReserved;
-}
-
-/**
  * #GstVideoDirectionInterface interface.
  *
  * Since: 1.10
@@ -340,32 +240,6 @@ struct GstVideoDirectionInterface
 	 * parent interface type.
 	 */
 	GTypeInterface iface;
-}
-
-struct GstVideoMasteringDisplayInfo
-{
-	/**
-	 * the xy coordinates of primaries in the CIE 1931 color space.
-	 * the index 0 contains red, 1 is for green and 2 is for blue.
-	 * each value is normalized to 50000 (meaning that in unit of 0.00002)
-	 */
-	GstVideoMasteringDisplayInfoCoordinates[3] displayPrimaries;
-	/**
-	 * the xy coordinates of white point in the CIE 1931 color space.
-	 * each value is normalized to 50000 (meaning that in unit of 0.00002)
-	 */
-	GstVideoMasteringDisplayInfoCoordinates whitePoint;
-	/**
-	 * the maximum value of display luminance
-	 * in unit of 0.0001 candelas per square metre (cd/m^2 and nit)
-	 */
-	uint maxDisplayMasteringLuminance;
-	/**
-	 * the minimum value of display luminance
-	 * in unit of 0.0001 candelas per square metre (cd/m^2 and nit)
-	 */
-	uint minDisplayMasteringLuminance;
-	void*[4] GstReserved;
 }
 
 /**

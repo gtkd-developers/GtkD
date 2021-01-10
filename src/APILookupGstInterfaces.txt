@@ -49,6 +49,10 @@ noExternal: true
 struct: NavigationInterface
 noExternal: true
 
+struct: VideoAFDMeta
+noCode: true
+noExternal: true
+
 struct: VideoAffineTransformationMeta
 noCode: true
 noExternal: true
@@ -90,6 +94,10 @@ noExternal: true
 struct: VideoAncillary
 noExternal: true
 
+struct: VideoBarMeta
+noCode: true
+noExternal: true
+
 struct: VideoBufferPool
 noCode: true
 noExternal: true
@@ -117,6 +125,10 @@ noCode: true
 noExternal: true
 
 struct: VideoColorimetry
+noCode: true
+noExternal: true
+
+struct: VideoContentLightLevel
 noCode: true
 noExternal: true
 
@@ -164,6 +176,7 @@ struct: VideoFilterClass
 noExternal: true
 
 struct: VideoFormatInfo
+noCode: true
 noExternal: true
 
 struct: VideoFrame
@@ -175,6 +188,10 @@ noCode: true
 noExternal: true
 
 struct: VideoInfo
+noCode: true
+noExternal: true
+
+struct: VideoMasteringDisplayInfo
 noCode: true
 noExternal: true
 
