@@ -255,29 +255,6 @@ public class Label : Widget
 	}
 
 	/**
-	 * Creates a new label with the given text inside it. You can
-	 * pass %NULL to get an empty label widget.
-	 *
-	 * Params:
-	 *     str = The text of the label
-	 *
-	 * Returns: the new #GtkLabel
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string str)
-	{
-		auto __p = gtk_label_new(Str.toStringz(str));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GtkLabel*) __p);
-	}
-
-	/**
 	 * Creates a new #GtkLabel, containing the text in @str.
 	 *
 	 * If characters in @str are preceded by an underscore, they are

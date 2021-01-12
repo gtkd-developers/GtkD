@@ -4547,8 +4547,6 @@ struct GtkCheckButtonClass
 	void*[8] padding;
 }
 
-struct GtkClipboard;
-
 struct GtkClosureExpression;
 
 struct GtkColorButton;
@@ -4636,7 +4634,7 @@ struct GtkConstraintTarget;
 struct GtkConstraintTargetInterface;
 
 /**
- * @GtkCssLocation is used to present a location in a file - or other
+ * #GtkCssLocation is used to present a location in a file - or other
  * source of data parsed by the CSS engine.
  *
  * The @bytes and @line_bytes offsets are meant to be used to
@@ -7065,8 +7063,6 @@ struct GtkWindowControlsClass
 	GtkWidgetClass parentClass;
 }
 
-struct GtkWindowGeometryInfo;
-
 struct GtkWindowGroup
 {
 	GObject parentInstance;
@@ -7414,7 +7410,8 @@ public alias extern(C) void function(GtkMenuButton* menuButton, void* userData) 
  * is dismissed, and also serves as destroy notify for @data.
  *
  * Params:
- *     pageSetup = the #GtkPageSetup that has been
+ *     pageSetup = the #GtkPageSetup that has been passed to
+ *         gtk_print_run_page_setup_dialog_async()
  *     data = user data that has been passed to
  *         gtk_print_run_page_setup_dialog_async()
  */
@@ -7702,7 +7699,7 @@ alias GTK_ACCESSIBLE_VALUE_UNDEFINED = ACCESSIBLE_VALUE_UNDEFINED;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 0;
+enum BINARY_AGE = 1;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 enum IM_MODULE_EXTENSION_POINT_NAME = "gtk-im-module";
@@ -7720,7 +7717,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 0;
+enum INTERFACE_AGE = 1;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -7763,7 +7760,7 @@ alias GTK_MEDIA_FILE_EXTENSION_POINT_NAME = MEDIA_FILE_EXTENSION_POINT_NAME;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 0;
+enum MICRO_VERSION = 1;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**

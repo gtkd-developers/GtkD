@@ -104,8 +104,8 @@ public class Box : Widget, OrientableIF
 	 * Creates a new #GtkBox.
 	 *
 	 * Params:
-	 *     orientation = the box’s orientation.
-	 *     spacing = the number of pixels to place by default between children.
+	 *     orientation = the box’s orientation
+	 *     spacing = the number of pixels to place by default between children
 	 *
 	 * Returns: a new #GtkBox.
 	 *
@@ -172,7 +172,7 @@ public class Box : Widget, OrientableIF
 	 *
 	 * Params:
 	 *     child = the #GtkWidget to insert
-	 *     sibling = the sibling to move @child after, or %NULL
+	 *     sibling = the sibling after which to insert @child
 	 */
 	public void insertChildAfter(Widget child, Widget sibling)
 	{

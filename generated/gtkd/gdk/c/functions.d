@@ -1203,7 +1203,7 @@ __gshared extern(C)
 	int function(GdkToplevelLayout* layout, GdkToplevelLayout* other) c_gdk_toplevel_layout_equal;
 	int function(GdkToplevelLayout* layout, int* fullscreen) c_gdk_toplevel_layout_get_fullscreen;
 	GdkMonitor* function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_get_fullscreen_monitor;
-	int function(GdkToplevelLayout* layout, int* maximize) c_gdk_toplevel_layout_get_maximized;
+	int function(GdkToplevelLayout* layout, int* maximized) c_gdk_toplevel_layout_get_maximized;
 	int function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_get_resizable;
 	GdkToplevelLayout* function(GdkToplevelLayout* layout) c_gdk_toplevel_layout_ref;
 	void function(GdkToplevelLayout* layout, int fullscreen, GdkMonitor* monitor) c_gdk_toplevel_layout_set_fullscreen;

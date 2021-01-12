@@ -235,7 +235,7 @@ public class Picture : Widget
 	}
 
 	/**
-	 * Creates a new #GtkPicture displaying the file @filename.
+	 * Creates a new #GtkPicture displaying the resource at @resource_path.
 	 *
 	 * This is a utility function that calls gtk_picture_new_for_file().
 	 * See that function for details.

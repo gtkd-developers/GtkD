@@ -29,10 +29,16 @@ class HelloWorld : ApplicationWindow
 	{
 		super(application);
 		setTitle("GtkD");
-		setBorderWidth(10);
-		add(new Label("Hello World"));
+		
+		Label label = new Label("Hello World");
+		label.setMarginStart(10);
+		label.setMarginEnd(10);
+		label.setMarginTop(10);
+		label.setMarginBottom(10);
 
-		showAll();
+		setChild(label);
+
+		show();
 	}
 }
 

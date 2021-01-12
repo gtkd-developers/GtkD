@@ -37,6 +37,9 @@ public  import gtk.c.types;
 /**
  * #GtkMediaStream is the integration point for media playback inside GTK.
  * 
+ * GTK provides an implementation of the #GtkMediaStream interface that
+ * is called #GtkMediaFile.
+ * 
  * Apart from application-facing API for stream playback, #GtkMediaStream
  * has a number of APIs that are only useful for implementations and should
  * not be used in applications:

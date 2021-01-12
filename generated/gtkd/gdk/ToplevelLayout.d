@@ -182,15 +182,18 @@ public class ToplevelLayout
 	 * the value pointed to by @maximized is set to %TRUE if it should go
 	 * fullscreen, or %FALSE, if it should go unmaximized.
 	 *
+	 * Params:
+	 *     maximized = set to %TRUE if the toplevel should be maximized
+	 *
 	 * Returns: whether the @layout specifies the maximized state for the toplevel
 	 */
-	public bool getMaximized(out bool maximize)
+	public bool getMaximized(out bool maximized)
 	{
-		int outmaximize;
+		int outmaximized;
 
-		auto __p = gdk_toplevel_layout_get_maximized(gdkToplevelLayout, &outmaximize) != 0;
+		auto __p = gdk_toplevel_layout_get_maximized(gdkToplevelLayout, &outmaximized) != 0;
 
-		maximize = (outmaximize == 1);
+		maximized = (outmaximized == 1);
 
 		return __p;
 	}

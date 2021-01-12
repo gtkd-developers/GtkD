@@ -30,6 +30,3 @@ class: MonitorGdk
 struct: Surface
 import: cairo.Surface : CairoSurface = Surface
 structWrap: cairo.Surface CairoSurface
-
-struct: ToplevelLayout
-out: get_maximized maximize

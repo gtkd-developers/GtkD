@@ -24,6 +24,9 @@
 wrap: gtk
 file: Gtk-4.0.gir
 
+struct: Label
+noCode: new
+
 struct: FontChooser
 override: get_font_map
 override: set_font_map

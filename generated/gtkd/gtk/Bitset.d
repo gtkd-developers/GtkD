@@ -187,7 +187,7 @@ public class Bitset
 	}
 
 	/**
-	 * Checks if the given @value has been added to @bitset
+	 * Checks if the given @value has been added to @self
 	 *
 	 * Params:
 	 *     value = the value to check

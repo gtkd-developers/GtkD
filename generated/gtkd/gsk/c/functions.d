@@ -60,11 +60,6 @@ shared static this()
 	Linker.link(gsk_border_node_get_outline, "gsk_border_node_get_outline", LIBRARY_GSK);
 	Linker.link(gsk_border_node_get_widths, "gsk_border_node_get_widths", LIBRARY_GSK);
 
-	// gsk.BroadwayRenderer
-
-	Linker.link(gsk_broadway_renderer_get_type, "gsk_broadway_renderer_get_type", LIBRARY_GSK);
-	Linker.link(gsk_broadway_renderer_new, "gsk_broadway_renderer_new", LIBRARY_GSK);
-
 	// gsk.CairoNode
 
 	Linker.link(gsk_cairo_node_get_type, "gsk_cairo_node_get_type", LIBRARY_GSK);
@@ -386,11 +381,6 @@ __gshared extern(C)
 	GskRoundedRect* function(GskRenderNode* node) c_gsk_border_node_get_outline;
 	float* function(GskRenderNode* node) c_gsk_border_node_get_widths;
 
-	// gsk.BroadwayRenderer
-
-	GType function() c_gsk_broadway_renderer_get_type;
-	GskRenderer* function() c_gsk_broadway_renderer_new;
-
 	// gsk.CairoNode
 
 	GType function() c_gsk_cairo_node_get_type;
@@ -709,11 +699,6 @@ alias c_gsk_border_node_new gsk_border_node_new;
 alias c_gsk_border_node_get_colors gsk_border_node_get_colors;
 alias c_gsk_border_node_get_outline gsk_border_node_get_outline;
 alias c_gsk_border_node_get_widths gsk_border_node_get_widths;
-
-// gsk.BroadwayRenderer
-
-alias c_gsk_broadway_renderer_get_type gsk_broadway_renderer_get_type;
-alias c_gsk_broadway_renderer_new gsk_broadway_renderer_new;
 
 // gsk.CairoNode
 

@@ -78,7 +78,7 @@ ADRDOX?=doc2
 
 #######################################################################
 
-GTKD_VERSION=3.9.0
+GTKD_VERSION=4.0.0
 SO_VERSION=0
 
 MAJOR =  $(word 1,$(subst ., ,$(GTKD_VERSION)))
@@ -233,7 +233,7 @@ gtkd-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-L$(prefix)/$(libdir)/ $(LINKERFLAG)-lgtkd-$(MAJOR) $(LINKERFLAG)-ldl >> $@
 	echo Cflags: -I$(prefix)/include/d/gtkd-$(MAJOR)/ >> $@
-	echo Requires: gtk+-3.0, gdk-3.0, atk, pango, cairo, cairo-gobject, pangocairo, librsvg-2.0, gio-2.0, glib-2.0, gobject-2.0 >> $@
+	echo Requires: gtk+-4.0, atk, pango, cairo, cairo-gobject, pangocairo, librsvg-2.0, gio-2.0, glib-2.0, gobject-2.0 >> $@
 
 gstreamerd-$(MAJOR).pc:
 	echo Name: GstreamerD > $@

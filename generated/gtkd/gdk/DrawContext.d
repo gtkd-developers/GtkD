@@ -96,7 +96,7 @@ public class DrawContext : ObjectG
 	 * implementation must use gdk_draw_context_get_frame_region() to query the
 	 * region that must be drawn.
 	 *
-	 * When using GTK+, the widget system automatically places calls to
+	 * When using GTK, the widget system automatically places calls to
 	 * gdk_draw_context_begin_frame() and gdk_draw_context_end_frame() via the
 	 * use of #GskRenderers, so application code does not need to call these
 	 * functions explicitly.

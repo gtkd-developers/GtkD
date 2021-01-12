@@ -396,10 +396,6 @@ struct GskBlurNode;
 
 struct GskBorderNode;
 
-struct GskBroadwayRenderer;
-
-struct GskBroadwayRendererClass;
-
 struct GskCairoNode;
 
 struct GskCairoRenderer;
