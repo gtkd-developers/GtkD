@@ -174,29 +174,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	}
 
 	/**
-	 * Creates a new #GtkCellView widget, adds a #GtkCellRendererText
-	 * to it, and makes it show @text.
-	 *
-	 * Params:
-	 *     text = the text to display in the cell view
-	 *
-	 * Returns: A newly created #GtkCellView widget.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string text)
-	{
-		auto __p = gtk_cell_view_new_with_text(Str.toStringz(text));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_text");
-		}
-
-		this(cast(GtkCellView*) __p);
-	}
-
-	/**
 	 * Creates a new #GtkCellView widget, adds a #GtkCellRendererPixbuf
 	 * to it, and makes it show @texture.
 	 *

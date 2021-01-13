@@ -171,31 +171,6 @@ public class Video : Widget
 	}
 
 	/**
-	 * Creates a #GtkVideo to play back the resource at the
-	 * given @resource_path.
-	 *
-	 * This is a utility function that calls gtk_video_new_for_file(),
-	 *
-	 * Params:
-	 *     resourcePath = resource path to play back
-	 *
-	 * Returns: a new #GtkVideo
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string resourcePath)
-	{
-		auto __p = gtk_video_new_for_resource(Str.toStringz(resourcePath));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_for_resource");
-		}
-
-		this(cast(GtkVideo*) __p);
-	}
-
-	/**
 	 * Returns %TRUE if videos have been set to loop via gtk_video_set_loop().
 	 *
 	 * Returns: %TRUE if streams should autoplay

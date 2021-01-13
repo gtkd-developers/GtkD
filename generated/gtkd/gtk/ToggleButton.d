@@ -146,28 +146,6 @@ public class ToggleButton : Button
 	}
 
 	/**
-	 * Creates a new toggle button with a text label.
-	 *
-	 * Params:
-	 *     label = a string containing the message to be placed in the toggle button.
-	 *
-	 * Returns: a new toggle button.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string label)
-	{
-		auto __p = gtk_toggle_button_new_with_label(Str.toStringz(label));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_label");
-		}
-
-		this(cast(GtkToggleButton*) __p);
-	}
-
-	/**
 	 * Creates a new #GtkToggleButton containing a label. The label
 	 * will be created using gtk_label_new_with_mnemonic(), so underscores
 	 * in @label indicate the mnemonic for the button.

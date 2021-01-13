@@ -242,6 +242,29 @@ public class Builder : ObjectG
 		super(cast(GObject*)gtkBuilder, ownedRef);
 	}
 
+	/**
+	 * Gets all objects that have been constructed by @builder. Note that
+	 * this function does not increment the reference counts of the returned
+	 * objects.
+	 *
+	 * Returns: a newly-allocated #GSList containing all the objects
+	 *     constructed by the #GtkBuilder instance. It should be freed by
+	 *     g_slist_free()
+	 */
+	public ObjectG[] getObjects()
+	{
+		auto __p = gtk_builder_get_objects(gtkBuilder);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new ListSG(cast(GSList*) __p).toArray!ObjectG();
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
@@ -295,63 +318,6 @@ public class Builder : ObjectG
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
-		}
-
-		this(cast(GtkBuilder*) __p, true);
-	}
-
-	/**
-	 * Builds the [GtkBuilder UI definition][BUILDER-UI]
-	 * at @resource_path.
-	 *
-	 * If there is an error locating the resource or parsing the
-	 * description, then the program will be aborted.
-	 *
-	 * Params:
-	 *     resourcePath = a #GResource resource path
-	 *
-	 * Returns: a #GtkBuilder containing the described interface
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string resourcePath)
-	{
-		auto __p = gtk_builder_new_from_resource(Str.toStringz(resourcePath));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_resource");
-		}
-
-		this(cast(GtkBuilder*) __p, true);
-	}
-
-	/**
-	 * Builds the user interface described by @string (in the
-	 * [GtkBuilder UI definition][BUILDER-UI] format).
-	 *
-	 * If @string is %NULL-terminated, then @length should be -1.
-	 * If @length is not -1, then it is the length of @string.
-	 *
-	 * If there is an error parsing @string then the program will be
-	 * aborted. You should not attempt to parse user interface description
-	 * from untrusted sources.
-	 *
-	 * Params:
-	 *     string_ = a user interface (XML) description
-	 *     length = the length of @string, or -1
-	 *
-	 * Returns: a #GtkBuilder containing the interface described by @string
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string string_, ptrdiff_t length)
-	{
-		auto __p = gtk_builder_new_from_string(Str.toStringz(string_), length);
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_string");
 		}
 
 		this(cast(GtkBuilder*) __p, true);
@@ -694,27 +660,6 @@ public class Builder : ObjectG
 		}
 
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
-	}
-
-	/**
-	 * Gets all objects that have been constructed by @builder. Note that
-	 * this function does not increment the reference counts of the returned
-	 * objects.
-	 *
-	 * Returns: a newly-allocated #GSList containing all the objects
-	 *     constructed by the #GtkBuilder instance. It should be freed by
-	 *     g_slist_free()
-	 */
-	public ListSG getObjects()
-	{
-		auto __p = gtk_builder_get_objects(gtkBuilder);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

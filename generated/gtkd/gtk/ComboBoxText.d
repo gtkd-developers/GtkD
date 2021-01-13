@@ -26,9 +26,7 @@ module gtk.ComboBoxText;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gobject.ObjectG;
 private import gtk.ComboBox;
-private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
@@ -114,51 +112,41 @@ public class ComboBoxText : ComboBox
 		super(cast(GtkComboBox*)gtkComboBoxText, ownedRef);
 	}
 
+	/**
+	 * Creates a new ComboBoxText, which is a ComboBox just displaying strings.
+	 * Params:
+	 *   entry = If true, create an ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool entry=true)
+	{
+		GtkComboBoxText* __p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_text_new_with_entry (void);
+			__p = cast(GtkComboBoxText*)gtk_combo_box_text_new_with_entry();
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_text_new (void);
+			__p = cast(GtkComboBoxText*)gtk_combo_box_text_new();
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(__p);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gtk_combo_box_text_get_type();
-	}
-
-	/**
-	 * Creates a new #GtkComboBoxText, which is a #GtkComboBox just displaying
-	 * strings.
-	 *
-	 * Returns: A new #GtkComboBoxText
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this()
-	{
-		auto __p = gtk_combo_box_text_new();
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GtkComboBoxText*) __p);
-	}
-
-	/**
-	 * Creates a new #GtkComboBoxText, which is a #GtkComboBox just displaying
-	 * strings. The combo box created by this function has an entry.
-	 *
-	 * Returns: a new #GtkComboBoxText
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this()
-	{
-		auto __p = gtk_combo_box_text_new_with_entry();
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_entry");
-		}
-
-		this(cast(GtkComboBoxText*) __p);
 	}
 
 	/**

@@ -136,94 +136,71 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
 
+	/**
+	 * Creates a new empty GtkComboBox.
+	 * Params:
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool entry=true)
+	{
+		GtkComboBox* __p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_new_text (void);
+			__p = cast(GtkComboBox*)gtk_combo_box_new_with_entry();
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_new (void);
+			__p = cast(GtkComboBox*)gtk_combo_box_new();
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(__p);
+	}
+
+
+	/**
+	 * Creates a new GtkComboBox with the model initialized to model.
+	 * Params:
+	 *   model = A GtkTreeModel.
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (TreeModelIF model, bool entry=true)
+	{
+		GtkComboBox* __p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_new_with_model_and_entry (GtkTreeModel *model);
+			__p = cast(GtkComboBox*)gtk_combo_box_new_with_model_and_entry((model is null) ? null : model.getTreeModelStruct());
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
+			__p = cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(__p);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gtk_combo_box_get_type();
-	}
-
-	/**
-	 * Creates a new empty #GtkComboBox.
-	 *
-	 * Returns: A new #GtkComboBox.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this()
-	{
-		auto __p = gtk_combo_box_new();
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GtkComboBox*) __p);
-	}
-
-	/**
-	 * Creates a new empty #GtkComboBox with an entry.
-	 *
-	 * Returns: A new #GtkComboBox.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this()
-	{
-		auto __p = gtk_combo_box_new_with_entry();
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_entry");
-		}
-
-		this(cast(GtkComboBox*) __p);
-	}
-
-	/**
-	 * Creates a new #GtkComboBox with the model initialized to @model.
-	 *
-	 * Params:
-	 *     model = A #GtkTreeModel.
-	 *
-	 * Returns: A new #GtkComboBox.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(TreeModelIF model)
-	{
-		auto __p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct());
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_model");
-		}
-
-		this(cast(GtkComboBox*) __p);
-	}
-
-	/**
-	 * Creates a new empty #GtkComboBox with an entry
-	 * and with the model initialized to @model.
-	 *
-	 * Params:
-	 *     model = A #GtkTreeModel
-	 *
-	 * Returns: A new #GtkComboBox
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(TreeModelIF model)
-	{
-		auto __p = gtk_combo_box_new_with_model_and_entry((model is null) ? null : model.getTreeModelStruct());
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_model_and_entry");
-		}
-
-		this(cast(GtkComboBox*) __p);
 	}
 
 	/**

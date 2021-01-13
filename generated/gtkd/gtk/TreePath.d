@@ -68,52 +68,42 @@ public class TreePath
 			gtk_tree_path_free(gtkTreePath);
 	}
 
+	/**
+	 * Creates a new GtkTreePath. This structure refers to a row.
+	 * Params:
+	 * firstRow = if true this is the string representation of this path is "0"
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool firstRow=false)
+	{
+		GtkTreePath* __p;
+
+		if ( firstRow )
+		{
+			// GtkTreePath* gtk_tree_path_new_first (void);
+			__p = cast(GtkTreePath*)gtk_tree_path_new_first();
+		}
+		else
+		{
+			// GtkTreePath* gtk_tree_path_new (void);
+			__p = cast(GtkTreePath*)gtk_tree_path_new();
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_path_new()");
+		}
+
+		this(__p);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
 	{
 		return gtk_tree_path_get_type();
-	}
-
-	/**
-	 * Creates a new #GtkTreePath-struct.
-	 * This refers to a row.
-	 *
-	 * Returns: A newly created #GtkTreePath-struct.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this()
-	{
-		auto __p = gtk_tree_path_new();
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GtkTreePath*) __p);
-	}
-
-	/**
-	 * Creates a new #GtkTreePath-struct.
-	 *
-	 * The string representation of this path is “0”.
-	 *
-	 * Returns: A new #GtkTreePath-struct
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this()
-	{
-		auto __p = gtk_tree_path_new_first();
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_first");
-		}
-
-		this(cast(GtkTreePath*) __p);
 	}
 
 	/**

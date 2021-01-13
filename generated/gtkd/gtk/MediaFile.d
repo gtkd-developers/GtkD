@@ -167,29 +167,6 @@ public class MediaFile : MediaStream
 	}
 
 	/**
-	 * This is a utility function that converts the given @resource
-	 * to a #GFile and calls gtk_media_file_new_for_file().
-	 *
-	 * Params:
-	 *     resourcePath = resource path to open
-	 *
-	 * Returns: a new #GtkMediaFile playing @resource_path
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string resourcePath)
-	{
-		auto __p = gtk_media_file_new_for_resource(Str.toStringz(resourcePath));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_for_resource");
-		}
-
-		this(cast(GtkMediaFile*) __p, true);
-	}
-
-	/**
 	 * Resets the media file to be empty.
 	 */
 	public void clear()

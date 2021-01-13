@@ -114,29 +114,6 @@ public class CheckButton : Widget, ActionableIF
 	}
 
 	/**
-	 * Creates a new #GtkCheckButton with a #GtkLabel next to it, if
-	 * @label is non-%NULL.
-	 *
-	 * Params:
-	 *     label = the text for the check button.
-	 *
-	 * Returns: a new #GtkCheckButton
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string label)
-	{
-		auto __p = gtk_check_button_new_with_label(Str.toStringz(label));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_label");
-		}
-
-		this(cast(GtkCheckButton*) __p);
-	}
-
-	/**
 	 * Creates a new #GtkCheckButton containing a label. Underscores
 	 * in @label indicate the mnemonic for the check button.
 	 *

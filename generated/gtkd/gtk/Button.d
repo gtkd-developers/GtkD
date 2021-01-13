@@ -123,55 +123,6 @@ public class Button : Widget, ActionableIF
 	}
 
 	/**
-	 * Creates a new button containing an icon from the current icon theme.
-	 *
-	 * If the icon name isn’t known, a “broken image” icon will be
-	 * displayed instead. If the current icon theme is changed, the icon
-	 * will be updated appropriately.
-	 *
-	 * Params:
-	 *     iconName = an icon name or %NULL
-	 *
-	 * Returns: a new #GtkButton displaying the themed icon
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string iconName)
-	{
-		auto __p = gtk_button_new_from_icon_name(Str.toStringz(iconName));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_icon_name");
-		}
-
-		this(cast(GtkButton*) __p);
-	}
-
-	/**
-	 * Creates a #GtkButton widget with a #GtkLabel child containing the given
-	 * text.
-	 *
-	 * Params:
-	 *     label = The text you want the #GtkLabel to hold.
-	 *
-	 * Returns: The newly created #GtkButton widget.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string label)
-	{
-		auto __p = gtk_button_new_with_label(Str.toStringz(label));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_with_label");
-		}
-
-		this(cast(GtkButton*) __p);
-	}
-
-	/**
 	 * Creates a new #GtkButton containing a label.
 	 * If characters in @label are preceded by an underscore, they are underlined.
 	 * If you need a literal underscore character in a label, use “__” (two

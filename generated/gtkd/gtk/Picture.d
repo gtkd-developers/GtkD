@@ -235,31 +235,6 @@ public class Picture : Widget
 	}
 
 	/**
-	 * Creates a new #GtkPicture displaying the resource at @resource_path.
-	 *
-	 * This is a utility function that calls gtk_picture_new_for_file().
-	 * See that function for details.
-	 *
-	 * Params:
-	 *     resourcePath = resource path to play back
-	 *
-	 * Returns: a new #GtkPicture
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string resourcePath)
-	{
-		auto __p = gtk_picture_new_for_resource(Str.toStringz(resourcePath));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_for_resource");
-		}
-
-		this(cast(GtkPicture*) __p);
-	}
-
-	/**
 	 * Gets the alternative textual description of the picture or returns %NULL if
 	 * the picture cannot be described textually.
 	 *

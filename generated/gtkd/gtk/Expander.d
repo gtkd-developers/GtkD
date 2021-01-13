@@ -159,28 +159,6 @@ public class Expander : Widget
 
 	/**
 	 * Creates a new expander using @label as the text of the label.
-	 *
-	 * Params:
-	 *     label = the text of the label
-	 *
-	 * Returns: a new #GtkExpander widget.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string label)
-	{
-		auto __p = gtk_expander_new(Str.toStringz(label));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GtkExpander*) __p);
-	}
-
-	/**
-	 * Creates a new expander using @label as the text of the label.
 	 * If characters in @label are preceded by an underscore, they are underlined.
 	 * If you need a literal underscore character in a label, use “__” (two
 	 * underscores). The first underlined character represents a keyboard

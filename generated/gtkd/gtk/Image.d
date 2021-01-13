@@ -184,35 +184,6 @@ public class Image : Widget
 	}
 
 	/**
-	 * Creates a #GtkImage displaying an icon from the current icon theme.
-	 * If the icon name isn’t known, a “broken image” icon will be
-	 * displayed instead.  If the current icon theme is changed, the icon
-	 * will be updated appropriately.
-	 *
-	 * Note: Before 3.94, this function was taking an extra icon size
-	 * argument. See gtk_image_set_icon_size() for another way to set
-	 * the icon size.
-	 *
-	 * Params:
-	 *     iconName = an icon name or %NULL
-	 *
-	 * Returns: a new #GtkImage displaying the themed icon
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string iconName)
-	{
-		auto __p = gtk_image_new_from_icon_name(Str.toStringz(iconName));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_icon_name");
-		}
-
-		this(cast(GtkImage*) __p);
-	}
-
-	/**
 	 * Creates a new #GtkImage displaying @paintable.
 	 * The #GtkImage does not assume a reference to the
 	 * paintable; you still need to unref it if you own references.
@@ -267,39 +238,6 @@ public class Image : Widget
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pixbuf");
-		}
-
-		this(cast(GtkImage*) __p);
-	}
-
-	/**
-	 * Creates a new #GtkImage displaying the resource file @resource_path. If the file
-	 * isn’t found or can’t be loaded, the resulting #GtkImage will
-	 * display a “broken image” icon. This function never returns %NULL,
-	 * it always returns a valid #GtkImage widget.
-	 *
-	 * If you need to detect failures to load the file, use
-	 * gdk_pixbuf_new_from_file() to load the file yourself, then create
-	 * the #GtkImage from the pixbuf.
-	 *
-	 * The storage type (gtk_image_get_storage_type()) of the returned
-	 * image is not defined, it will be whatever is appropriate for
-	 * displaying the file.
-	 *
-	 * Params:
-	 *     resourcePath = a resource path
-	 *
-	 * Returns: a new #GtkImage
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string resourcePath)
-	{
-		auto __p = gtk_image_new_from_resource(Str.toStringz(resourcePath));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_resource");
 		}
 
 		this(cast(GtkImage*) __p);
