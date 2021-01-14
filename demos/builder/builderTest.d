@@ -40,7 +40,7 @@ int main(string[] args) {
 			auto button = cast(Button)builder.getObject("button");
 			if(button !is null) {
 				button.addOnClicked( delegate void(Button aux){ a.quit(); } );
-				window.showAll();
+				window.show();
 			} else {
 				writeln("No button in the window?");
 				exit(1);
