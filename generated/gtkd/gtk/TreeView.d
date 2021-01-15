@@ -26,7 +26,6 @@ module gtk.TreeView;
 
 private import gdk.ContentFormats;
 private import gdk.PaintableIF;
-private import gdk.Rectangle;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.MemorySlice;
@@ -450,13 +449,9 @@ public class TreeView : Widget, ScrollableIF
 	 *     column = a #GtkTreeViewColumn for the column, or %NULL to get only vertical coordinates
 	 *     rect = rectangle to fill with cell background rect
 	 */
-	public void getBackgroundArea(TreePath path, TreeViewColumn column, out Rectangle rect)
+	public void getBackgroundArea(TreePath path, TreeViewColumn column, out GdkRectangle rect)
 	{
-		GdkRectangle* outrect = sliceNew!GdkRectangle();
-
-		gtk_tree_view_get_background_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), outrect);
-
-		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
+		gtk_tree_view_get_background_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), &rect);
 	}
 
 	/**
@@ -475,13 +470,9 @@ public class TreeView : Widget, ScrollableIF
 	 *     column = a #GtkTreeViewColumn for the column, or %NULL to get only vertical coordinates
 	 *     rect = rectangle to fill with cell rect
 	 */
-	public void getCellArea(TreePath path, TreeViewColumn column, out Rectangle rect)
+	public void getCellArea(TreePath path, TreeViewColumn column, out GdkRectangle rect)
 	{
-		GdkRectangle* outrect = sliceNew!GdkRectangle();
-
-		gtk_tree_view_get_cell_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), outrect);
-
-		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
+		gtk_tree_view_get_cell_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), &rect);
 	}
 
 	/**
@@ -967,13 +958,9 @@ public class TreeView : Widget, ScrollableIF
 	 * Params:
 	 *     visibleRect = rectangle to fill
 	 */
-	public void getVisibleRect(out Rectangle visibleRect)
+	public void getVisibleRect(out GdkRectangle visibleRect)
 	{
-		GdkRectangle* outvisibleRect = sliceNew!GdkRectangle();
-
-		gtk_tree_view_get_visible_rect(gtkTreeView, outvisibleRect);
-
-		visibleRect = ObjectG.getDObject!(Rectangle)(outvisibleRect, true);
+		gtk_tree_view_get_visible_rect(gtkTreeView, &visibleRect);
 	}
 
 	/**

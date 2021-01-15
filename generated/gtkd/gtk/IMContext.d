@@ -26,7 +26,6 @@ module gtk.IMContext;
 
 private import gdk.Device;
 private import gdk.Event;
-private import gdk.Rectangle;
 private import gdk.Surface;
 private import glib.Str;
 private import gobject.ObjectG;
@@ -324,9 +323,9 @@ public class IMContext : ObjectG
 	 * Params:
 	 *     area = new location
 	 */
-	public void setCursorLocation(Rectangle area)
+	public void setCursorLocation(GdkRectangle* area)
 	{
-		gtk_im_context_set_cursor_location(gtkIMContext, (area is null) ? null : area.getRectangleStruct());
+		gtk_im_context_set_cursor_location(gtkIMContext, area);
 	}
 
 	/**

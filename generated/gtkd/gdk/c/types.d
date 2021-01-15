@@ -1423,6 +1423,10 @@ struct GdkRGBA
 	float alpha;
 }
 
+/**
+ * Defines the position and size of a rectangle. It is identical to
+ * #cairo_rectangle_int_t.
+ */
 struct GdkRectangle
 {
 	/**

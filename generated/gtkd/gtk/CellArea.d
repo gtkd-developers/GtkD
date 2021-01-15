@@ -25,9 +25,7 @@
 module gtk.CellArea;
 
 private import gdk.Event;
-private import gdk.Rectangle;
 private import glib.ListG;
-private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -417,9 +415,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: Whether @area was successfully activated.
 	 */
-	public bool activate(CellAreaContext context, Widget widget, Rectangle cellArea, GtkCellRendererState flags, bool editOnly)
+	public bool activate(CellAreaContext context, Widget widget, GdkRectangle* cellArea, GtkCellRendererState flags, bool editOnly)
 	{
-		return gtk_cell_area_activate(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags, editOnly) != 0;
+		return gtk_cell_area_activate(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, flags, editOnly) != 0;
 	}
 
 	/**
@@ -438,9 +436,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: whether cell activation was successful
 	 */
-	public bool activateCell(Widget widget, CellRenderer renderer, Event event, Rectangle cellArea, GtkCellRendererState flags)
+	public bool activateCell(Widget widget, CellRenderer renderer, Event event, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
-		return gtk_cell_area_activate_cell(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), (event is null) ? null : event.getEventStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags) != 0;
+		return gtk_cell_area_activate_cell(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), (event is null) ? null : event.getEventStruct(), cellArea, flags) != 0;
 	}
 
 	/**
@@ -648,9 +646,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: %TRUE if the event was handled by @area.
 	 */
-	public int event(CellAreaContext context, Widget widget, Event event, Rectangle cellArea, GtkCellRendererState flags)
+	public int event(CellAreaContext context, Widget widget, Event event, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
-		return gtk_cell_area_event(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (event is null) ? null : event.getEventStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		return gtk_cell_area_event(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (event is null) ? null : event.getEventStruct(), cellArea, flags);
 	}
 
 	/**
@@ -697,9 +695,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     callback = the #GtkCellAllocCallback to call
 	 *     callbackData = user provided data pointer
 	 */
-	public void foreachAlloc(CellAreaContext context, Widget widget, Rectangle cellArea, Rectangle backgroundArea, GtkCellAllocCallback callback, void* callbackData)
+	public void foreachAlloc(CellAreaContext context, Widget widget, GdkRectangle* cellArea, GdkRectangle* backgroundArea, GtkCellAllocCallback callback, void* callbackData)
 	{
-		gtk_cell_area_foreach_alloc(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), callback, callbackData);
+		gtk_cell_area_foreach_alloc(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, backgroundArea, callback, callbackData);
 	}
 
 	/**
@@ -714,13 +712,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *         for this row
 	 *     allocation = where to store the allocation for @renderer
 	 */
-	public void getCellAllocation(CellAreaContext context, Widget widget, CellRenderer renderer, Rectangle cellArea, out Rectangle allocation)
+	public void getCellAllocation(CellAreaContext context, Widget widget, CellRenderer renderer, GdkRectangle* cellArea, out GdkRectangle allocation)
 	{
-		GdkRectangle* outallocation = sliceNew!GdkRectangle();
-
-		gtk_cell_area_get_cell_allocation(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), outallocation);
-
-		allocation = ObjectG.getDObject!(Rectangle)(outallocation, true);
+		gtk_cell_area_get_cell_allocation(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (renderer is null) ? null : renderer.getCellRendererStruct(), cellArea, &allocation);
 	}
 
 	/**
@@ -739,13 +733,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Returns: the #GtkCellRenderer at @x and @y.
 	 */
-	public CellRenderer getCellAtPosition(CellAreaContext context, Widget widget, Rectangle cellArea, int x, int y, out Rectangle allocArea)
+	public CellRenderer getCellAtPosition(CellAreaContext context, Widget widget, GdkRectangle* cellArea, int x, int y, out GdkRectangle allocArea)
 	{
-		GdkRectangle* outallocArea = sliceNew!GdkRectangle();
-
-		auto __p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), x, y, outallocArea);
-
-		allocArea = ObjectG.getDObject!(Rectangle)(outallocArea, true);
+		auto __p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, x, y, &allocArea);
 
 		if(__p is null)
 		{
@@ -1003,13 +993,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *         is to be placed
 	 *     innerArea = the return location for the inner cell area
 	 */
-	public void innerCellArea(Widget widget, Rectangle cellArea, out Rectangle innerArea)
+	public void innerCellArea(Widget widget, GdkRectangle* cellArea, out GdkRectangle innerArea)
 	{
-		GdkRectangle* outinnerArea = sliceNew!GdkRectangle();
-
-		gtk_cell_area_inner_cell_area(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), outinnerArea);
-
-		innerArea = ObjectG.getDObject!(Rectangle)(outinnerArea, true);
+		gtk_cell_area_inner_cell_area(gtkCellArea, (widget is null) ? null : widget.getWidgetStruct(), cellArea, &innerArea);
 	}
 
 	/**
@@ -1112,9 +1098,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     flags = the #GtkCellRendererState for @area in this row.
 	 *     paintFocus = whether @area should paint focus on focused cells for focused rows or not.
 	 */
-	public void snapshot(CellAreaContext context, Widget widget, Snapshot snapshot, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags, bool paintFocus)
+	public void snapshot(CellAreaContext context, Widget widget, Snapshot snapshot, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags, bool paintFocus)
 	{
-		gtk_cell_area_snapshot(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (snapshot is null) ? null : snapshot.getGtkSnapshotStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags, paintFocus);
+		gtk_cell_area_snapshot(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), (snapshot is null) ? null : snapshot.getGtkSnapshotStruct(), backgroundArea, cellArea, flags, paintFocus);
 	}
 
 	/**
@@ -1146,7 +1132,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *         where @editable should be added
 	 *     path = the #GtkTreePath string this edit was initiated for
 	 */
-	gulong addOnAddEditable(void delegate(CellRenderer, CellEditableIF, Rectangle, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAddEditable(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "add-editable", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

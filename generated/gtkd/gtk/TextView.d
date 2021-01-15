@@ -25,7 +25,6 @@
 module gtk.TextView;
 
 private import gdk.Event;
-private import gdk.Rectangle;
 private import gio.MenuModel;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
@@ -362,15 +361,9 @@ public class TextView : Widget, ScrollableIF
 	 *     weak = location to store the weak
 	 *         cursor position (may be %NULL)
 	 */
-	public void getCursorLocations(TextIter iter, out Rectangle strong, out Rectangle weak)
+	public void getCursorLocations(TextIter iter, out GdkRectangle strong, out GdkRectangle weak)
 	{
-		GdkRectangle* outstrong = sliceNew!GdkRectangle();
-		GdkRectangle* outweak = sliceNew!GdkRectangle();
-
-		gtk_text_view_get_cursor_locations(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), outstrong, outweak);
-
-		strong = ObjectG.getDObject!(Rectangle)(outstrong, true);
-		weak = ObjectG.getDObject!(Rectangle)(outweak, true);
+		gtk_text_view_get_cursor_locations(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &strong, &weak);
 	}
 
 	/**
@@ -533,13 +526,9 @@ public class TextView : Widget, ScrollableIF
 	 *     iter = a #GtkTextIter
 	 *     location = bounds of the character at @iter
 	 */
-	public void getIterLocation(TextIter iter, out Rectangle location)
+	public void getIterLocation(TextIter iter, out GdkRectangle location)
 	{
-		GdkRectangle* outlocation = sliceNew!GdkRectangle();
-
-		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), outlocation);
-
-		location = ObjectG.getDObject!(Rectangle)(outlocation, true);
+		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &location);
 	}
 
 	/**
@@ -705,13 +694,9 @@ public class TextView : Widget, ScrollableIF
 	 * Params:
 	 *     visibleRect = rectangle to fill
 	 */
-	public void getVisibleRect(out Rectangle visibleRect)
+	public void getVisibleRect(out GdkRectangle visibleRect)
 	{
-		GdkRectangle* outvisibleRect = sliceNew!GdkRectangle();
-
-		gtk_text_view_get_visible_rect(gtkTextView, outvisibleRect);
-
-		visibleRect = ObjectG.getDObject!(Rectangle)(outvisibleRect, true);
+		gtk_text_view_get_visible_rect(gtkTextView, &visibleRect);
 	}
 
 	/**

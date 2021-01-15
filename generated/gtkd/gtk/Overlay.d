@@ -24,7 +24,6 @@
 
 module gtk.Overlay;
 
-private import gdk.Rectangle;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -250,7 +249,7 @@ public class Overlay : Widget
 	 *
 	 * Returns: %TRUE if the @allocation has been filled
 	 */
-	gulong addOnGetChildPosition(bool delegate(Widget, Rectangle, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGetChildPosition(bool delegate(Widget, GdkRectangle*, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "get-child-position", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

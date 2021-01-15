@@ -25,7 +25,6 @@
 module gtk.CellRenderer;
 
 private import gdk.Event;
-private import gdk.Rectangle;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
@@ -127,9 +126,9 @@ public class CellRenderer : ObjectG
 	 *
 	 * Returns: %TRUE if the event was consumed/handled
 	 */
-	public bool activate(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
+	public bool activate(Event event, Widget widget, string path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
-		return gtk_cell_renderer_activate(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags) != 0;
+		return gtk_cell_renderer_activate(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), backgroundArea, cellArea, flags) != 0;
 	}
 
 	/**
@@ -143,13 +142,9 @@ public class CellRenderer : ObjectG
 	 *     alignedArea = the return location for the space inside @cell_area
 	 *         that would actually be used to render.
 	 */
-	public void getAlignedArea(Widget widget, GtkCellRendererState flags, Rectangle cellArea, out Rectangle alignedArea)
+	public void getAlignedArea(Widget widget, GtkCellRendererState flags, GdkRectangle* cellArea, out GdkRectangle alignedArea)
 	{
-		GdkRectangle* outalignedArea = sliceNew!GdkRectangle();
-
-		gtk_cell_renderer_get_aligned_area(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), flags, (cellArea is null) ? null : cellArea.getRectangleStruct(), outalignedArea);
-
-		alignedArea = ObjectG.getDObject!(Rectangle)(outalignedArea, true);
+		gtk_cell_renderer_get_aligned_area(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), flags, cellArea, &alignedArea);
 	}
 
 	/**
@@ -438,9 +433,9 @@ public class CellRenderer : ObjectG
 	 *     cellArea = area normally rendered by a cell renderer
 	 *     flags = flags that affect rendering
 	 */
-	public void snapshot(Snapshot snapshot, Widget widget, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
+	public void snapshot(Snapshot snapshot, Widget widget, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
-		gtk_cell_renderer_snapshot(gtkCellRenderer, (snapshot is null) ? null : snapshot.getGtkSnapshotStruct(), (widget is null) ? null : widget.getWidgetStruct(), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		gtk_cell_renderer_snapshot(gtkCellRenderer, (snapshot is null) ? null : snapshot.getGtkSnapshotStruct(), (widget is null) ? null : widget.getWidgetStruct(), backgroundArea, cellArea, flags);
 	}
 
 	/**
@@ -459,9 +454,9 @@ public class CellRenderer : ObjectG
 	 * Returns: A new #GtkCellEditable for editing this
 	 *     @cell, or %NULL if editing is not possible
 	 */
-	public CellEditableIF startEditing(Event event, Widget widget, string path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
+	public CellEditableIF startEditing(Event event, Widget widget, string path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
-		auto __p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		auto __p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), backgroundArea, cellArea, flags);
 
 		if(__p is null)
 		{

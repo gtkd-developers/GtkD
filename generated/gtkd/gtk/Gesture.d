@@ -26,9 +26,7 @@ module gtk.Gesture;
 
 private import gdk.Device;
 private import gdk.Event;
-private import gdk.Rectangle;
 private import glib.ListG;
-private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.EventController;
@@ -173,15 +171,9 @@ public class Gesture : EventController
 	 *
 	 * Returns: %TRUE if there are active touches, %FALSE otherwise
 	 */
-	public bool getBoundingBox(out Rectangle rect)
+	public bool getBoundingBox(out GdkRectangle rect)
 	{
-		GdkRectangle* outrect = sliceNew!GdkRectangle();
-
-		auto __p = gtk_gesture_get_bounding_box(gtkGesture, outrect) != 0;
-
-		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
-
-		return __p;
+		return gtk_gesture_get_bounding_box(gtkGesture, &rect) != 0;
 	}
 
 	/**

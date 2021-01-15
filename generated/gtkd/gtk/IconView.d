@@ -26,7 +26,6 @@ module gtk.IconView;
 
 private import gdk.ContentFormats;
 private import gdk.PaintableIF;
-private import gdk.Rectangle;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.MemorySlice;
@@ -249,15 +248,9 @@ public class IconView : Widget, CellLayoutIF, ScrollableIF
 	 *
 	 * Returns: %FALSE if there is no such item, %TRUE otherwise
 	 */
-	public bool getCellRect(TreePath path, CellRenderer cell, out Rectangle rect)
+	public bool getCellRect(TreePath path, CellRenderer cell, out GdkRectangle rect)
 	{
-		GdkRectangle* outrect = sliceNew!GdkRectangle();
-
-		auto __p = gtk_icon_view_get_cell_rect(gtkIconView, (path is null) ? null : path.getTreePathStruct(), (cell is null) ? null : cell.getCellRendererStruct(), outrect) != 0;
-
-		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
-
-		return __p;
+		return gtk_icon_view_get_cell_rect(gtkIconView, (path is null) ? null : path.getTreePathStruct(), (cell is null) ? null : cell.getCellRendererStruct(), &rect) != 0;
 	}
 
 	/**

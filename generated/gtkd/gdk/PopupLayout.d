@@ -24,7 +24,6 @@
 
 module gdk.PopupLayout;
 
-private import gdk.Rectangle;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ConstructionException;
@@ -131,9 +130,9 @@ public class PopupLayout
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(Rectangle anchorRect, GdkGravity rectAnchor, GdkGravity surfaceAnchor)
+	public this(GdkRectangle* anchorRect, GdkGravity rectAnchor, GdkGravity surfaceAnchor)
 	{
-		auto __p = gdk_popup_layout_new((anchorRect is null) ? null : anchorRect.getRectangleStruct(), rectAnchor, surfaceAnchor);
+		auto __p = gdk_popup_layout_new(anchorRect, rectAnchor, surfaceAnchor);
 
 		if(__p is null)
 		{
@@ -189,16 +188,9 @@ public class PopupLayout
 	 *
 	 * Returns: The anchor rectangle.
 	 */
-	public Rectangle getAnchorRect()
+	public GdkRectangle* getAnchorRect()
 	{
-		auto __p = gdk_popup_layout_get_anchor_rect(gdkPopupLayout);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Rectangle)(cast(GdkRectangle*) __p);
+		return gdk_popup_layout_get_anchor_rect(gdkPopupLayout);
 	}
 
 	/**
@@ -273,9 +265,9 @@ public class PopupLayout
 	 * Params:
 	 *     anchorRect = the new anchor rectangle
 	 */
-	public void setAnchorRect(Rectangle anchorRect)
+	public void setAnchorRect(GdkRectangle* anchorRect)
 	{
-		gdk_popup_layout_set_anchor_rect(gdkPopupLayout, (anchorRect is null) ? null : anchorRect.getRectangleStruct());
+		gdk_popup_layout_set_anchor_rect(gdkPopupLayout, anchorRect);
 	}
 
 	/**

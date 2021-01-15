@@ -26,11 +26,9 @@ module gtk.Entry;
 
 private import gdk.ContentProvider;
 private import gdk.PaintableIF;
-private import gdk.Rectangle;
 private import gio.IconIF;
 private import gio.MenuModel;
 private import glib.ConstructionException;
-private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -355,13 +353,9 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     iconPos = Icon position
 	 *     iconArea = Return location for the icon’s area
 	 */
-	public void getIconArea(GtkEntryIconPosition iconPos, out Rectangle iconArea)
+	public void getIconArea(GtkEntryIconPosition iconPos, out GdkRectangle iconArea)
 	{
-		GdkRectangle* outiconArea = sliceNew!GdkRectangle();
-
-		gtk_entry_get_icon_area(gtkEntry, iconPos, outiconArea);
-
-		iconArea = ObjectG.getDObject!(Rectangle)(outiconArea, true);
+		gtk_entry_get_icon_area(gtkEntry, iconPos, &iconArea);
 	}
 
 	/**

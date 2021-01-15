@@ -25,10 +25,8 @@
 module gdk.MonitorGdk;
 
 private import gdk.Display;
-private import gdk.Rectangle;
 private import gdk.c.functions;
 public  import gdk.c.types;
-private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -111,13 +109,9 @@ public class MonitorGdk : ObjectG
 	 * Params:
 	 *     geometry = a #GdkRectangle to be filled with the monitor geometry
 	 */
-	public void getGeometry(out Rectangle geometry)
+	public void getGeometry(out GdkRectangle geometry)
 	{
-		GdkRectangle* outgeometry = sliceNew!GdkRectangle();
-
-		gdk_monitor_get_geometry(gdkMonitor, outgeometry);
-
-		geometry = ObjectG.getDObject!(Rectangle)(outgeometry, true);
+		gdk_monitor_get_geometry(gdkMonitor, &geometry);
 	}
 
 	/**

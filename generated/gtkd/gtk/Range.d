@@ -24,8 +24,6 @@
 
 module gtk.Range;
 
-private import gdk.Rectangle;
-private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Adjustment;
@@ -142,13 +140,9 @@ public class Range : Widget, OrientableIF
 	 * Params:
 	 *     rangeRect = return location for the range rectangle
 	 */
-	public void getRangeRect(out Rectangle rangeRect)
+	public void getRangeRect(out GdkRectangle rangeRect)
 	{
-		GdkRectangle* outrangeRect = sliceNew!GdkRectangle();
-
-		gtk_range_get_range_rect(gtkRange, outrangeRect);
-
-		rangeRect = ObjectG.getDObject!(Rectangle)(outrangeRect, true);
+		gtk_range_get_range_rect(gtkRange, &rangeRect);
 	}
 
 	/**

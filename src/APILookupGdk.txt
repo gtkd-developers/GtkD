@@ -27,6 +27,10 @@ file: Gdk-4.0.gir
 struct: Monitor
 class: MonitorGdk
 
+struct: Rectangle
+alias: get_type gdkRectangleGetType
+namespace:
+
 struct: Surface
 import: cairo.Surface : CairoSurface = Surface
 structWrap: cairo.Surface CairoSurface

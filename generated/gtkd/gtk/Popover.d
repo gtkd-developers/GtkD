@@ -24,9 +24,7 @@
 
 module gtk.Popover;
 
-private import gdk.Rectangle;
 private import glib.ConstructionException;
-private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.NativeIF;
@@ -255,15 +253,9 @@ public class Popover : Widget, NativeIF, ShortcutManagerIF
 	 *
 	 * Returns: %TRUE if a rectangle to point to was set.
 	 */
-	public bool getPointingTo(out Rectangle rect)
+	public bool getPointingTo(out GdkRectangle rect)
 	{
-		GdkRectangle* outrect = sliceNew!GdkRectangle();
-
-		auto __p = gtk_popover_get_pointing_to(gtkPopover, outrect) != 0;
-
-		rect = ObjectG.getDObject!(Rectangle)(outrect, true);
-
-		return __p;
+		return gtk_popover_get_pointing_to(gtkPopover, &rect) != 0;
 	}
 
 	/**
@@ -404,9 +396,9 @@ public class Popover : Widget, NativeIF, ShortcutManagerIF
 	 * Params:
 	 *     rect = rectangle to point to
 	 */
-	public void setPointingTo(Rectangle rect)
+	public void setPointingTo(GdkRectangle* rect)
 	{
-		gtk_popover_set_pointing_to(gtkPopover, (rect is null) ? null : rect.getRectangleStruct());
+		gtk_popover_set_pointing_to(gtkPopover, rect);
 	}
 
 	/**

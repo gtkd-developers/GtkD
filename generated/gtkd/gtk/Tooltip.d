@@ -25,7 +25,6 @@
 module gtk.Tooltip;
 
 private import gdk.PaintableIF;
-private import gdk.Rectangle;
 private import gio.IconIF;
 private import glib.Str;
 private import gobject.ObjectG;
@@ -184,8 +183,8 @@ public class Tooltip : ObjectG
 	 * Params:
 	 *     rect = a #GdkRectangle
 	 */
-	public void setTipArea(Rectangle rect)
+	public void setTipArea(GdkRectangle* rect)
 	{
-		gtk_tooltip_set_tip_area(gtkTooltip, (rect is null) ? null : rect.getRectangleStruct());
+		gtk_tooltip_set_tip_area(gtkTooltip, rect);
 	}
 }

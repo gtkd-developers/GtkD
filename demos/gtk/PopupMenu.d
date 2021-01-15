@@ -1,19 +1,19 @@
 module gtk.PopupMenu;
 
-import gio.Application : GioApplication = Application;
+import gio.Menu;
+import gio.MenuItem;
 import gtk.Application;
 import gtk.ApplicationWindow;
-import gtk.EventBox;
-import gtk.Menu;
+import gtk.GestureClick;
 import gtk.Label;
-import gtk.ImageMenuItem;
-import gtk.Widget;
-import gtk.AccelGroup;
-import gdk.Event;
+import gtk.PopoverMenu;
+import std.conv;
 
 class PopupMenuDemo : ApplicationWindow
 {
 	Menu menu;
+	PopoverMenu popupMenu;
+	GestureClick gesture;
 
 	this(Application application)
 	{
@@ -21,42 +21,38 @@ class PopupMenuDemo : ApplicationWindow
 		setTitle("GtkD: Popup Menu");
 		setDefaultSize(200, 200);
 
-		auto eventBox = new EventBox();
-		eventBox.add( new Label("Right click") );
-		eventBox.addOnButtonPress(&onButtonPress);
-		add(eventBox);
+		setChild( new Label("Right click") );
 
+		gesture = new GestureClick();
+		gesture.setButton(3);
+		gesture.addOnPressed(&onButtonPress);
+		addController(gesture);
+		
 		menu = new Menu();
-		menu.append( new ImageMenuItem(StockID.CUT, cast(AccelGroup)null) );
-		menu.append( new ImageMenuItem(StockID.COPY, cast(AccelGroup)null) );
-		menu.append( new ImageMenuItem(StockID.PASTE, cast(AccelGroup)null) );
-		menu.append( new ImageMenuItem(StockID.DELETE, cast(AccelGroup)null) );
-		menu.attachToWidget(eventBox, null);
+		menu.append("Cut", null);
+		menu.append("Copy", null);
+		menu.append("Paste", null);
+		menu.append("Delete", null);
 
-		showAll();
+		popupMenu = new PopoverMenu(menu);
+		popupMenu.setParent(this);
+		popupMenu.setHasArrow(false);
+
+		show();
 	}
 
-	public bool onButtonPress(Event event, Widget widget)
+	public void onButtonPress(int nPress, double x, double y, GestureClick _)
 	{
-		if ( event.type == EventType.BUTTON_PRESS )
-		{
-			GdkEventButton* buttonEvent = event.button;
+		GdkRectangle pos = GdkRectangle(to!int(x), to!int(y), 1, 1);
 
-			if ( buttonEvent.button == 3)
-			{
-				menu.showAll();
-				menu.popup(buttonEvent.button, buttonEvent.time);
-
-				return true;
-			}
-		}
-		return false;
+		popupMenu.setPointingTo(&pos);
+		popupMenu.popup();
 	}
 }
 
 int main(string[] args)
 {
 	auto application = new Application("org.gtkd.demo.popupmenu", GApplicationFlags.FLAGS_NONE);
-	application.addOnActivate(delegate void(GioApplication app) { new PopupMenuDemo(application); });
+	application.addOnActivate(delegate void(_) { new PopupMenuDemo(application); });
 	return application.run(args);
 }
