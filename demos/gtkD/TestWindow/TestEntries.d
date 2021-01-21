@@ -18,12 +18,13 @@
 
 module TestEntries;
 
-private import gtk.Table;
+// private import gtk.Table;
 
 private import gtk.Entry;
 private import gtk.CheckButton;
 private import gtk.Button;
 private import gtk.Label;
+private import gtk.Box;
 
 private import glib.Str;
 
@@ -31,7 +32,7 @@ private import std.stdio;
 /**
  * This tests the GtkD Entry widget
  */
-class TestEntries : Table
+class TestEntries : Box
 {
 	/**
 	 * Out main widget to test
@@ -43,28 +44,42 @@ class TestEntries : Table
 	 */
 	this()
 	{
-		super(3,2,false);
+		// super(3,2,false);
+		super(GtkOrientation.VERTICAL, 3);
 
 		// create the main test widget
-		entry = new Entry("Change me!");
-		attach(new Label("Input text"),0,1,0,1,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
-		attach(entry,1,2,0,1,AttachOptions.EXPAND,AttachOptions.EXPAND,4,4);
+		auto box1 = new Box(GtkOrientation.HORIZONTAL, 10);
+		box1.setHomogeneous(true);
+		entry = new Entry();
+		entry.setPlaceholderText("Change me!");
+		box1.append(entry);
+		box1.append(new Label("Input text"));
+		append(box1);
+		// entry = new Entry("Change me!");
+		// attach(new Label("Input text"),0,1,0,1,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
+		// attach(entry,1,2,0,1,AttachOptions.EXPAND,AttachOptions.EXPAND,4,4);
 
 		// create a button that will print the content of the entry to stdout
-		Button testButton = new Button("Show entry", &showEntry);
-		attach(testButton,2,3,0,1,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
+		Button testButton = new Button("Show entry");
+		testButton.addOnClicked(&this.showEntry);
+		// attach(testButton,2,3,0,1,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
+		append(testButton);
 		//testButton.setTooltip("This is just a test",null);
 
 		// create a button that will change the entry display mode to invisible
 		// i.e. like a password entry
-		CheckButton entryVisible = new CheckButton("Visible", &entryVisible);
+		CheckButton entryVisible = new CheckButton("Visible");
+		entryVisible.addOnToggled(&this.entryVisible);
 		entryVisible.setActive(true);
-		attach(entryVisible,2,3,1,2,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
+		append(entryVisible);
+		// attach(entryVisible,2,3,1,2,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
 
 		// create a button that will change the entry mode to not editable
-		CheckButton entryEditable = new CheckButton("Editable", &entryEditable);
+		CheckButton entryEditable = new CheckButton("Editable");
+		entryEditable.addOnToggled(&this.entryEditable);
 		entryEditable.setActive(true);
-		attach(entryEditable,1,2,1,2,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
+		append(entryEditable);
+		// attach(entryEditable,1,2,1,2,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
 	}
 
 	void showEntry(Button button)
@@ -79,6 +94,7 @@ class TestEntries : Table
 
 	void entryVisible(CheckButton button)
 	{
+		writeln(entry);
 		entry.setVisibility(button.getActive());
 	}
 

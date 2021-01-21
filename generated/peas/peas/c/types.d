@@ -228,7 +228,7 @@ struct PeasGtkPluginManagerViewClass
 	 */
 	GtkTreeViewClass parentClass;
 	/** */
-	extern(C) void function(PeasGtkPluginManagerView* view, GtkMenu* menu) populatePopup;
+	extern(C) void function(PeasGtkPluginManagerView* view, GMenu* menu) populatePopup;
 	void*[8] padding;
 }
 

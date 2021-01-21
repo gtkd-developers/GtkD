@@ -20,17 +20,18 @@ module TestThemes;
 
 private import gtk.Window;
 
-private import gtk.VBox;
+private import gtk.Box;
 private import gtk.ScrolledWindow;
 private import gtk.Widget;
 private import gtk.ComboBox;
-private import gtk.ButtonBox;
-private import gtk.HButtonBox;
+private import gtk.Viewport;
+// private import gtk.ButtonBox;
+// private import gtk.HButtonBox;
 private import gtk.Button;
 
 debug import std.stdio;
 
-class TestThemes : VBox
+class TestThemes : Box
 {
 
 	Window window;
@@ -44,16 +45,21 @@ class TestThemes : VBox
 			writeln("instantiating TestThemes");
 		}
 
-		super(false,8);
-		
-		sw = new ScrolledWindow(null,null);
-		
-		sw.addWithViewport(initTable());
+		super(GtkOrientation.VERTICAL, 8);
 
-		ButtonBox hBox = HButtonBox.createActionBox();
+		setOrientation(GtkOrientation.VERTICAL);
+		
+		sw = new ScrolledWindow();
 
-		packStart(sw,true,true,0);
-		packStart(hBox,false,false,0);
+		auto vp = new Viewport(null, null);	
+		vp.setChild(initTable());
+		sw.setChild(vp);
+
+		// auto hBox = HButtonBox.createActionBox();
+		auto hBox = new Box(GtkOrientation.HORIZONTAL, 0);
+
+		prepend(sw);
+		prepend(hBox);
 
 	}
 

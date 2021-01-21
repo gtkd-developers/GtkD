@@ -169,7 +169,7 @@ public class PluginManagerView : TreeView, ImplementorIF
 	 * Params:
 	 *     menu = A #GtkMenu.
 	 */
-	gulong addOnPopulatePopup(void delegate(Gtk.Menu, PluginManagerView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopulatePopup(void delegate(GMenu*, PluginManagerView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

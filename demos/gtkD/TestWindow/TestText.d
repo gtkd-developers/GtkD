@@ -18,7 +18,7 @@
 
 module TestText;
 
-private import gtk.VBox;
+private import gtk.Box;
 
 private import gtk.ScrolledWindow;
 private import gtk.TextView;
@@ -30,22 +30,23 @@ debug import std.stdio;
  * This tests the GtkD text widget
  */
 
-class TestText : VBox
+class TestText : Box
 {
 
 	private import gtk.ScrolledWindow;
 
 	this()
 	{
+		super(GtkOrientation.VERTICAL, 0);
 
-		super(false,0);
+		setOrientation(GtkOrientation.VERTICAL);
 
 		debug(1)
 		{
 			writeln("instantiating TestText");
 		}
 
-		ScrolledWindow sw = new ScrolledWindow(null, null);
+		ScrolledWindow sw = new ScrolledWindow();
 		sw.setPolicy(PolicyType.AUTOMATIC,PolicyType.AUTOMATIC);
 
 		TextView textView = new TextView();
@@ -67,13 +68,9 @@ To discuss about GtkD:
 Objectives
 The main goal of GtkD is to enable the creation of D GUI applications under Linux.
 GtkD should be simple and straightforward to use.
-D can interface with C so any graphics toolkit with a C API can be used directly from D, this include GTK+."
+D can interface with C so any graphics toolkit with a C API can be used directly from D, this include GTK+.", -1);
 
-		);
-
-		sw.add(textView);
-		packStart(sw,true,true,0);
-
+		sw.setChild(textView);
+		prepend(sw);
 	}
-
 }

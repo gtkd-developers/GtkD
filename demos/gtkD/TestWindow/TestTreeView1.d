@@ -20,7 +20,7 @@ module TestTreeView1;
 
 //debug = trace;
 
-private import gtk.VBox;
+private import gtk.Box;
 
 private import gobject.Value;
 
@@ -30,18 +30,19 @@ private import gtk.TreeStore;
 private import gtk.TreePath;
 private import gtk.TreeViewColumn;
 private import gtk.TreeIter;
+private import gtk.TreeModelIF;
 private import gtk.TreeSelection;
 private import gtk.CellRendererPixbuf;
 private import gtk.CellRendererText;
 private import gtk.ScrolledWindow;
-private import gdk.Pixbuf;
+private import gdkpixbuf.Pixbuf;
 private import glib.Str;
 private import std.stdio;
 
 /**
  * This tests the gtkD tree widget
  */
-public class TestTreeView1 : VBox
+public class TestTreeView1 : Box
 {
 //	enum columns
 //	{
@@ -60,7 +61,8 @@ public class TestTreeView1 : VBox
 	{
 
 		debug(trace) writeln("TestTreeView1.this 1");
-		super(false, 0);
+		super(GtkOrientation.VERTICAL, 0);
+		setOrientation(GtkOrientation.VERTICAL);
 		debug(trace) writeln("TestTreeView1.this 2");
 
 		pixbuf = new Pixbuf(greenClass_xpm);
@@ -79,28 +81,31 @@ public class TestTreeView1 : VBox
 
 		debug(trace) writeln("TestTreeView1.this 5");
 		treeView2.addOnMoveCursor(&moveCursorCallback);
-		packStart(image, false, false, 1);
-		ScrolledWindow sw = new ScrolledWindow(null, null);
-		sw.add(treeView1);
-		packStart(sw, true, true, 1);
-		sw = new ScrolledWindow(null, null);
-		sw.add(treeView2);
-		packStart(sw, true, true, 1);
+		prepend(image);
+		ScrolledWindow sw = new ScrolledWindow();
+		sw.setChild(treeView1);
+		prepend(sw);
+		sw = new ScrolledWindow();
+		sw.setChild(treeView2);
+		prepend(sw);
 
 		debug(trace) writeln("TestTreeView1.this 6");
-		//addWithViewport(treeView);
-
-
-
 	}
 
-	bool moveCursorCallback(GtkMovementStep step, int i, TreeView tree)
+	bool moveCursorCallback(GtkMovementStep step, int i, bool one, bool two, TreeView tree)
 	{
-		TreeIter iter = tree.getSelectedIter();
+		/*
+		// TreeIter iter = tree.getSelectedIter();
+		TreeModelIF model;
+		TreeIter iter = new TreeIter();
+		tree.getSelection().getSelected(model, iter);
+		// TreeIter iter = tree.getSelection();
+		// tree.getModel()
 		iter.setModel(tree.getModel());
 		Value v = new Value();
 		iter.getValue(1, v);
 		debug(trace) writefln("cursor on %s", v);
+		*/
 		return false;
 	}
 
@@ -108,6 +113,7 @@ public class TestTreeView1 : VBox
 
 	void populate(TreeStore treeStore)
 	{
+		/*
 		TreeIter iterChild;
 		TreeIter iterTop = treeStore.createIter();
 		treeStore.setValue(iterTop, 0, new Pixbuf(package_xpm) );
@@ -124,7 +130,7 @@ public class TestTreeView1 : VBox
 		iterChild = treeStore.append(iterTop);
 		treeStore.setValue(iterChild, 0, new Pixbuf(greenClass_xpm) );
 		treeStore.setValue(iterChild, 1, "Icon for classes" );
-
+		*/
 	}
 
 	/**
@@ -149,17 +155,21 @@ public class TestTreeView1 : VBox
 
 		testTreeStore1 = new TTreeStore();
 		TreeView treeView = new TreeView(testTreeStore1);
-		treeView.setRulesHint(true);
+		// treeView.setRulesHint(true);
 
 		TreeSelection ts = treeView.getSelection();
 		ts.setMode(SelectionMode.MULTIPLE);
 		TreeViewColumn column;
 		int col = 0;
-		column = new TreeViewColumn("Icon",new CellRendererPixbuf(),"pixbuf", col);
+		column = new TreeViewColumn();
+		column.setTitle("Icon");
+		column.addAttribute(new CellRendererPixbuf(),"pixbuf", col);
 		treeView.appendColumn(column);
 		++col;
 
-		column = new TreeViewColumn("Description",new CellRendererText(),"text", col);
+		column = new TreeViewColumn();
+		column.setTitle("Description");
+		column.addAttribute(new CellRendererText(),"text", col);
 		treeView.appendColumn(column);
 		column.setResizable(true);
 		column.setReorderable(true);
@@ -193,7 +203,7 @@ public class TestTreeView1 : VBox
 
 		testTreeStore2 = new TTreeStore();
 		TreeView treeView = new TreeView(testTreeStore2);
-		treeView.setRulesHint(true);
+		// treeView.setRulesHint(true);
 
 		TreeSelection ts = treeView.getSelection();
 		ts.setMode(SelectionMode.MULTIPLE);

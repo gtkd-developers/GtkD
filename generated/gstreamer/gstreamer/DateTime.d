@@ -254,17 +254,17 @@ public class DateTime
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(long usecs)
-	{
-		auto __p = gst_date_time_new_from_unix_epoch_local_time_usecs(usecs);
+	// public this(long usecs)
+	// {
+	// 	auto __p = gst_date_time_new_from_unix_epoch_local_time_usecs(usecs);
 
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_unix_epoch_local_time_usecs");
-		}
+	// 	if(__p is null)
+	// 	{
+	// 		throw new ConstructionException("null returned by new_from_unix_epoch_local_time_usecs");
+	// 	}
 
-		this(cast(GstDateTime*) __p);
-	}
+	// 	this(cast(GstDateTime*) __p);
+	// }
 
 	/**
 	 * Creates a new #GstDateTime using the time since Jan 1, 1970 specified by
