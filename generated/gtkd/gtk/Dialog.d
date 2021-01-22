@@ -177,6 +177,17 @@ public class Dialog : Window
 		super(cast(GtkWindow*)gtkDialog, ownedRef);
 	}
 
+	/** */
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()

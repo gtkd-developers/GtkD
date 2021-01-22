@@ -164,8 +164,68 @@ code: start
 	}
 code: end
 
+struct: Dialog
+code: start
+	/** */
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+code: end
+
 struct: Expander
 noCode: new
+
+struct: FileChooserDialog
+import: glib.ConstructionException
+import: gtk.Window
+noCode: new
+code: start
+	/**
+	 * Creates a new FileChooserDialog. This function is analogous to
+	 * gtk_dialog_new_with_buttons().
+	 *
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
+	{
+		if ( buttonsText  is  null )
+		{
+			buttonsText ~= "OK";
+			buttonsText ~= "Cancel";
+		}
+		if ( responses  is  null )
+		{
+			responses ~= ResponseType.OK;
+			responses ~= ResponseType.CANCEL;
+		}
+
+		auto __p = gtk_file_chooser_dialog_new(
+				Str.toStringz(title),
+				(parent is null) ? null : parent.getWindowStruct(),
+				action,
+				null,
+				0);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
+		}
+
+		this(cast(GtkFileChooserDialog*) __p);
+
+		addButtons(buttonsText, responses);
+	}
+code: end
 
 struct: FontChooser
 override: get_font_map
@@ -184,6 +244,50 @@ noCode: new_for_resource
 struct: MenuButton
 alias: set_direction setMenuDirection
 alias: get_direction getMenuDirection
+
+struct: MessageDialog
+import: glib.ConstructionException
+import: gtk.Window
+code: start
+	/**
+	 * Creates a new message dialog, which is a simple dialog with an icon
+	 * indicating the dialog type (error, warning, etc.) and some text the
+	 * user may want to see. When the user clicks a button a "response"
+	 * signal is emitted with response IDs from GtkResponseType. See
+	 * GtkDialog for more details.
+	 *
+	 * If you have an existing Pango markup string that you want to use
+	 * literally as the label, then you need to use setMarkup() instead.
+	 *
+	 * Params:
+	 *    	parent = transient parent, or NULL for none
+	 *    	flags = flags
+	 *    	type = type of message
+	 *    	buttons = set of buttons to use
+	 *    	message = the message
+	 * Returns:
+	 *  a new GtkMessageDialog
+	 */
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, string message)
+	{
+		auto __p = cast(GtkMessageDialog*)gtk_message_dialog_new(
+			parent is null ? null : parent.getWindowStruct(),
+			flags,
+			type,
+			buttons,
+			Str.toStringz(message),
+			null,
+			null
+		);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_message_dialog_new()");
+		}
+
+		this(__p);
+	}
+code: end
 
 struct: Native
 alias: realize realizeNative
@@ -226,6 +330,36 @@ code: start
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by gtk_tree_path_new()");
+		}
+
+		this(__p);
+	}
+code: end
+
+struct: TreeViewColumn
+code: start
+	/**
+	 * Creates a new Tree view column
+	 * Params:
+	 *  header = th column header text
+	 *  renderer = the rederer for the column cells
+	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
+	 *  column = the column number
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	//TODO: allow setting more attributes?
+	this(string header, CellRenderer renderer, string type, int column)
+	{
+		auto __p = gtk_tree_view_column_new_with_attributes(
+				Str.toStringz(header),
+				renderer.getCellRendererStruct(),
+				Str.toStringz(type),
+				column,
+				null);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
 		}
 
 		this(__p);

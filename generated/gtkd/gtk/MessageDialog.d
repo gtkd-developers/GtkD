@@ -116,6 +116,47 @@ public class MessageDialog : Dialog
 		super(cast(GtkDialog*)gtkMessageDialog, ownedRef);
 	}
 
+	/**
+	 * Creates a new message dialog, which is a simple dialog with an icon
+	 * indicating the dialog type (error, warning, etc.) and some text the
+	 * user may want to see. When the user clicks a button a "response"
+	 * signal is emitted with response IDs from GtkResponseType. See
+	 * GtkDialog for more details.
+	 *
+	 * If you have an existing Pango markup string that you want to use
+	 * literally as the label, then you need to use setMarkup() instead.
+	 *
+	 * Params:
+	 *    	parent = transient parent, or NULL for none
+	 *    	flags = flags
+	 *    	type = type of message
+	 *    	buttons = set of buttons to use
+	 *    	message = the message
+	 * Returns:
+	 *  a new GtkMessageDialog
+	 */
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, string message)
+	{
+		auto __p = cast(GtkMessageDialog*)gtk_message_dialog_new(
+			parent is null ? null : parent.getWindowStruct(),
+			flags,
+			type,
+			buttons,
+			Str.toStringz(message),
+			null,
+			null
+		);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_message_dialog_new()");
+		}
+
+		this(__p);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()

@@ -85,6 +85,35 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkTreeViewColumn);
 
+	/**
+	 * Creates a new Tree view column
+	 * Params:
+	 *  header = th column header text
+	 *  renderer = the rederer for the column cells
+	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
+	 *  column = the column number
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	//TODO: allow setting more attributes?
+	this(string header, CellRenderer renderer, string type, int column)
+	{
+		auto __p = gtk_tree_view_column_new_with_attributes(
+			Str.toStringz(header),
+			renderer.getCellRendererStruct(),
+			Str.toStringz(type),
+			column,
+			null);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
+		}
+
+		this(__p);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
