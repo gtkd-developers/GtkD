@@ -17,8 +17,7 @@
     ],
     "dependencies": {
         "gtk-d:gtkd": "*",
-        "gtk-d:gstreamer": "*",
-        "gtk-d:peas": "*"
+        "gtk-d:gstreamer": "*"
     },
 
     "subPackages" : [
@@ -37,15 +36,6 @@
             "sourcePaths": ["generated/gstreamer"],
             "libs-posix": ["dl"],
             "importPaths": ["generated/gstreamer"],
-            "dependencies": {"gtk-d:gtkd":"*"}
-        },
-        {
-            "name": "peas",
-            "targetType": "library",
-            "targetName": "peasd-3",
-            "sourcePaths": ["generated/peas"],
-            "libs-posix": ["dl"],
-            "importPaths": ["generated/peas"],
             "dependencies": {"gtk-d:gtkd":"*"}
         }
     ]

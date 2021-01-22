@@ -97,12 +97,6 @@ SOURCES_GSTREAMERD = $(wildcard generated/gstreamer/*/*.d) $(wildcard generated/
 OBJECTS_GSTREAMERD = $(patsubst %.d,%.o,$(SOURCES_GSTREAMERD))
 PICOBJECTS_GSTREAMERD = $(patsubst %.o,%.pic.o,$(OBJECTS_GSTREAMERD))
 
-LIBNAME_PEASD = libpeasd-$(MAJOR).a
-SONAME_PEASD = libpeasd-$(MAJOR).$(SO_POSTFIX)
-SOURCES_PEASD = $(wildcard generated/peas/*/*.d) $(wildcard generated/peas/*/c/*.d)
-OBJECTS_PEASD = $(patsubst %.d,%.o,$(SOURCES_PEASD))
-PICOBJECTS_PEASD = $(patsubst %.o,%.pic.o,$(OBJECTS_PEASD))
-
 #######################################################################
 
 USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/atk/c/functions.d)
@@ -110,7 +104,6 @@ USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/atk/c/functions.d)
 ifeq ($(USE_RUNTIME_LINKER),)
     SOFLAGS_GTKD = $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtk+-3.0 librsvg-2.0 gmodule-2.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gstreamer-base-1.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
-    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L libpeas-1.0 | sed -e 's/-[lL]/$(LINKERFLAG)&/g')
 endif
 
 #######################################################################
@@ -150,17 +143,15 @@ ifeq ("$(OS)","Darwin")
     libs: gtkd
     shared-libs: shared-gtkd
 else
-    libs: gtkd gstreamer vte peas
-    shared-libs: shared-gtkd shared-gstreamer shared-vte shared-peas
+    libs: gtkd gstreamer
+    shared-libs: shared-gtkd shared-gstreamer
 endif
 
 gtkd:      $(LIBNAME_GTKD)
 gstreamer: $(LIBNAME_GSTREAMERD)
-peas:      $(LIBNAME_PEASD)
 
 shared-gtkd:      $(SONAME_GTKD)
 shared-gstreamer: $(SONAME_GSTREAMERD)
-shared-peas:      $(SONAME_PEASD)
 
 #######################################################################
 
@@ -172,10 +163,6 @@ $(LIBNAME_GSTREAMERD): IMPORTS=-Igenerated/gtkd -Igenerated/gstreamer
 $(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
 	$(make-lib)
 
-$(LIBNAME_PEASD): IMPORTS=-Igenerated/gtkd -Igenerated/peas
-$(LIBNAME_PEASD): $(LIBNAME_GTKD) $(OBJECTS_PEASD)
-	$(make-lib)
-
 #######################################################################
 
 $(SONAME_GTKD): IMPORTS=-Igenerated/gtkd 
@@ -185,10 +172,6 @@ $(SONAME_GTKD): $(PICOBJECTS_GTKD)
 $(SONAME_GSTREAMERD): IMPORTS=-Igenerated/gtkd -Igenerated/gstreamer
 $(SONAME_GSTREAMERD): $(SONAME_GTKD) $(PICOBJECTS_GSTREAMERD)
 	$(call make-shared-lib,$(SOFLAGS_GSTREAMERD))
-
-$(SONAME_PEASD): IMPORTS=-Igenerated/gtkd -Igenerated/peas
-$(SONAME_PEASD): $(SONAME_GTKD) $(PICOBJECTS_PEASD)
-	$(call make-shared-lib,$(SOFLAGS_PEASD))
 
 #######################################################################
 
@@ -225,7 +208,6 @@ pkgconfig: pkgconfig-gtkd
 
 pkgconfig-gtkd:      gtkd-$(MAJOR).pc
 pkgconfig-gstreamer: gstreamerd-$(MAJOR).pc
-pkgconfig-peas:      peasd-$(MAJOR).pc
 
 gtkd-$(MAJOR).pc:
 	echo Name: GtkD > $@
@@ -242,13 +224,6 @@ gstreamerd-$(MAJOR).pc:
 	echo Libs: $(LINKERFLAG)-lgstreamerd-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR), gstreamer-1.0, gstreamer-base-1.0 >> $@
 
-peasd-$(MAJOR).pc:
-	echo Name: PeasD > $@
-	echo Description: A D binding and OO wrapper for Peas. >> $@
-	echo Version: $(GTKD_VERSION) >> $@
-	echo Libs: $(LINKERFLAG)-lpeasd-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR), libpeas-1.0, libpeas-gtk-1.0 >> $@
-
 #######################################################################
 
 ifeq ("$(OS)","Darwin")
@@ -256,9 +231,9 @@ ifeq ("$(OS)","Darwin")
     install-headers: install-headers-gtkd
     install-shared: install-shared-gtkd
 else
-    install: install-gtkd install-gstreamer install-peas
-    install-headers: install-headers-gtkd install-headers-gstreamer install-headers-peas
-    install-shared: install-shared-gtkd install-shared-gstreamer install-shared-peas
+    install: install-gtkd install-gstreamer
+    install-headers: install-headers-gtkd install-headers-gstreamer
+    install-shared: install-shared-gtkd install-shared-gstreamer
 endif
 
 install-gtkd: $(LIBNAME_GTKD) install-headers-gtkd
@@ -268,17 +243,11 @@ install-gtkd: $(LIBNAME_GTKD) install-headers-gtkd
 install-gstreamer: $(LIBNAME_GSTREAMERD) install-gtkd install-headers-gstreamer
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
-install-peas: $(LIBNAME_PEASD) install-gtkd install-headers-peas
-	install -m 644 $(LIBNAME_PEASD) $(DESTDIR)$(prefix)/$(libdir)
-
 install-shared-gtkd: $(SONAME_GTKD)
 	install -d $(DESTDIR)$(prefix)/$(libdir)
 	$(install-so)
 
 install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
-	$(install-so)
-
-install-shared-peas: $(SONAME_PEASD) install-shared-gtkd
 	$(install-so)
 
 install-headers-gtkd: gtkd-$(MAJOR).pc
@@ -291,11 +260,7 @@ install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd generated/gstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,generated/gstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
 	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(prefix)/$(pkgconfigdir)
 
-install-headers-peas: peasd-$(MAJOR).pc install-headers-gtkd
-	(cd generated/peas; echo $(SOURCES_PEASD) | sed -e s,generated/peas/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
-	install -m 644 peasd-$(MAJOR).pc $(DESTDIR)$(prefix)/$(pkgconfigdir)
-
-uninstall: uninstall-gstreamer uninstall-peas
+uninstall: uninstall-gstreamer
 	$(foreach dir,$(shell ls generated/gtkd)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(pkgconfigdir)/gtkd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
@@ -311,18 +276,9 @@ uninstall-gstreamer:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
-uninstall-peas:
-	$(foreach dir,$(shell ls generated/peas), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(prefix)/$(pkgconfigdir)/peasd-$(MAJOR).pc
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_PEASD)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_PEASD)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_PEASD).$(SO_VERSION)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_PEASD).$(SO_VERSION).$(MINOR).$(BUGFIX)
-
 clean:
-	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       gtkd-$(MAJOR).pc     $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
-	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) gstreamerd-$(MAJOR).pc      $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
-	-rm -f $(LIBNAME_PEASD)      $(SONAME_PEASD)      peasd-$(MAJOR).pc    $(OBJECTS_PEASD)      $(PICOBJECTS_PEASD)
+	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       gtkd-$(MAJOR).pc        $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
+	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) gstreamerd-$(MAJOR).pc  $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
 	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)      $(SONAME_GTKD).$(SO_VERSION)
 	-$(MAKE) -C wrap clean
 
