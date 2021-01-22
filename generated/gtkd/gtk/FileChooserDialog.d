@@ -25,9 +25,12 @@
 module gtk.FileChooserDialog;
 
 private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
 private import gtk.Dialog;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
+private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;

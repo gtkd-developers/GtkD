@@ -182,7 +182,6 @@ noCode: new
 struct: FileChooserDialog
 import: glib.ConstructionException
 import: gtk.Window
-noCode: new
 code: start
 	/**
 	 * Creates a new FileChooserDialog. This function is analogous to
