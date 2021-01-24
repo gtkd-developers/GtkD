@@ -18,22 +18,18 @@
 
 module gtk.OtherTests;
 
+import glib.Timeout;
 import gtk.AboutDialog;
-import gio.Application : GioApplication = Application;
 import gtk.Application;
 import gtk.ApplicationWindow;
-import gtk.Dialog;
-import gtk.Widget;
-import gtk.Label;
+import gtk.Box;
 import gtk.Button;
-import gtk.VBox;
-import gtk.Image;
-
-import glib.Timeout;
-import gdk.Event;
+import gtk.Dialog;
+import gtk.GestureClick;
+import gtk.Label;
+import gtk.Window;
 
 import std.stdio;
-import core.stdc.stdlib : exit;
 
 public class OtherTests : ApplicationWindow
 {
@@ -45,9 +41,15 @@ public class OtherTests : ApplicationWindow
 	{
 		super(application);
 		setTitle("GtkD");
-		setDecorated(true);
-		VBox box = new VBox(false, 2);
-		box.add(new Label("Hello World"));
+		
+		Box box = new Box(GtkOrientation.VERTICAL, 2);
+		box.setMarginStart(10);
+		box.setMarginEnd(10);
+		box.setMarginTop(10);
+		box.setMarginBottom(10);
+
+		box.append(new Label("Hello World"));
+		
 		Button button = new Button("About");
 		button.addOnClicked(&onClicked);
 		button.addOnClicked(&popupAbout);
@@ -55,23 +57,24 @@ public class OtherTests : ApplicationWindow
 			writefln("\nliterally clicked");
 		});
 
-		button.addOnPressed(&mousePressed);
-		//addOnButtonPress(&mousePressed);
+		GestureClick gesture = new GestureClick();
+		gesture.setPropagationPhase(PropagationPhase.CAPTURE);
+		gesture.addOnPressed(&mousePressed);
+		button.addController(gesture);
 
-		box.add(button);
+		box.append(button);
+
 		byeLabel = new Label("Bye-bye World");
-		box.add(byeLabel);
-		add(box);
-		setBorderWidth(10);
-		move(0,400);
-		showAll();
+		box.append(byeLabel);
+		setChild(box);
 
-		addOnDelete(&onDeleteEvent);
+		addOnCloseRequest(&onCloseRequest);
+		show();
 
 		timeout = new Timeout(1000, &changeLabel);
 	}
 
-	void mousePressed(Button widget)
+	void mousePressed(int nPress, double x, double y, GestureClick gesture)
 	{
 		writefln("mousePressed");
 	}
@@ -104,24 +107,16 @@ public class OtherTests : ApplicationWindow
 			setAuthors(names);
 			setDocumenters(names);
 			setArtists(names);
-			setLicense("License is LGPL");
-			setWebsite("http://lisdev.com");
-			addOnResponse(&onDialogResponse);
-			showAll();
+			setLicenseType(License.LGPL_3_0);
+			setWebsite("https://gtkd.org");
+			show();
 		}
 	}
 
-	void onDialogResponse(int response, Dialog dlg)
-	{
-		if(response == ResponseType.CANCEL)
-			dlg.destroy();
-	}
-
-	bool onDeleteEvent(Event event, Widget widget)
+	bool onCloseRequest(Window window)
 	{
 		destroy();
 		writefln("Exit by request from HelloWorld");
-		exit(0);
 		return false;
 	}
 
@@ -129,13 +124,12 @@ public class OtherTests : ApplicationWindow
 	{
 		return "I Am HelloWorld";
 	}
-
 }
 
 int main(string[] args)
 {
 	auto application = new Application("org.gtkd.demo.othertests", GApplicationFlags.FLAGS_NONE);
-	application.addOnActivate(delegate void(GioApplication app) { new OtherTests(application); });
+	application.addOnActivate(delegate void(_) { new OtherTests(application); });
 	return application.run(args);
 }
 
