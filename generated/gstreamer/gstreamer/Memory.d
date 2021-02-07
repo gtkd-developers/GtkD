@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gstreamer.Allocator;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -98,12 +97,6 @@ public class Memory
 	{
 		this.gstMemory = gstMemory;
 		this.ownedRef = ownedRef;
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_memory_unref(gstMemory);
 	}
 
 
@@ -285,24 +278,6 @@ public class Memory
 		return gst_memory_map(gstMemory, &info, flags) != 0;
 	}
 
-	alias doref = ref_;
-	/**
-	 * Increase the refcount of this memory.
-	 *
-	 * Returns: @memory (for convenience when doing assignments)
-	 */
-	public Memory ref_()
-	{
-		auto __p = gst_memory_ref(gstMemory);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
-	}
-
 	/**
 	 * Resize the memory region. @mem should be writable and offset + size should be
 	 * less than the maxsize of @mem.
@@ -352,13 +327,5 @@ public class Memory
 	public void unmap(GstMapInfo* info)
 	{
 		gst_memory_unmap(gstMemory, info);
-	}
-
-	/**
-	 * Decrease the refcount of a memory, freeing it if the refcount reaches 0.
-	 */
-	public void unref()
-	{
-		gst_memory_unref(gstMemory);
 	}
 }

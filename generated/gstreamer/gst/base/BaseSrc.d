@@ -524,7 +524,7 @@ public class BaseSrc : Element
 	 */
 	public void submitBufferList(BufferList bufferList)
 	{
-		gst_base_src_submit_buffer_list(gstBaseSrc, (bufferList is null) ? null : bufferList.getBufferListStruct(true));
+		gst_base_src_submit_buffer_list(gstBaseSrc, (bufferList is null) ? null : bufferList.getBufferListStruct());
 	}
 
 	/**

@@ -36,7 +36,6 @@ private import gstreamer.ProtectionMeta;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -156,12 +155,6 @@ public class Buffer
 	{
 		this.gstBuffer = gstBuffer;
 		this.ownedRef = ownedRef;
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_buffer_unref(gstBuffer);
 	}
 
 
@@ -405,7 +398,7 @@ public class Buffer
 	 */
 	public Buffer append(Buffer buf2)
 	{
-		auto __p = gst_buffer_append(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(true));
+		auto __p = gst_buffer_append(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct());
 
 		if(__p is null)
 		{
@@ -427,7 +420,7 @@ public class Buffer
 	 */
 	public void appendMemory(Memory mem)
 	{
-		gst_buffer_append_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
+		gst_buffer_append_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
 	}
 
 	/**
@@ -445,28 +438,7 @@ public class Buffer
 	 */
 	public Buffer appendRegion(Buffer buf2, ptrdiff_t offset, ptrdiff_t size)
 	{
-		auto __p = gst_buffer_append_region(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(true), offset, size);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
-	}
-
-	/**
-	 * Create a copy of the given buffer. This will only copy the buffer's
-	 * data to a newly allocated memory if needed (if the type of memory
-	 * requires it), otherwise the underlying data is just referenced.
-	 * Check gst_buffer_copy_deep() if you want to force the data
-	 * to be copied to newly allocated memory.
-	 *
-	 * Returns: a new copy of @buf.
-	 */
-	public Buffer copy()
-	{
-		auto __p = gst_buffer_copy(gstBuffer);
+		auto __p = gst_buffer_append_region(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(), offset, size);
 
 		if(__p is null)
 		{
@@ -865,7 +837,7 @@ public class Buffer
 	 */
 	public void insertMemory(int idx, Memory mem)
 	{
-		gst_buffer_insert_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct(true));
+		gst_buffer_insert_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct());
 	}
 
 	/**
@@ -1086,31 +1058,7 @@ public class Buffer
 	 */
 	public void prependMemory(Memory mem)
 	{
-		gst_buffer_prepend_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
-	}
-
-	alias doref = ref_;
-	/**
-	 * Increases the refcount of the given buffer by one.
-	 *
-	 * Note that the refcount affects the writability
-	 * of @buf and its metadata, see gst_buffer_is_writable().
-	 * It is important to note that keeping additional references to
-	 * GstBuffer instances can potentially increase the number
-	 * of memcpy operations in a pipeline.
-	 *
-	 * Returns: @buf
-	 */
-	public Buffer ref_()
-	{
-		auto __p = gst_buffer_ref(gstBuffer);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
+		gst_buffer_prepend_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
 	}
 
 	/**
@@ -1168,7 +1116,7 @@ public class Buffer
 	 */
 	public void replaceAllMemory(Memory mem)
 	{
-		gst_buffer_replace_all_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
+		gst_buffer_replace_all_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
 	}
 
 	/**
@@ -1180,7 +1128,7 @@ public class Buffer
 	 */
 	public void replaceMemory(uint idx, Memory mem)
 	{
-		gst_buffer_replace_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct(true));
+		gst_buffer_replace_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct());
 	}
 
 	/**
@@ -1198,7 +1146,7 @@ public class Buffer
 	 */
 	public void replaceMemoryRange(uint idx, int length, Memory mem)
 	{
-		gst_buffer_replace_memory_range(gstBuffer, idx, length, (mem is null) ? null : mem.getMemoryStruct(true));
+		gst_buffer_replace_memory_range(gstBuffer, idx, length, (mem is null) ? null : mem.getMemoryStruct());
 	}
 
 	/**
@@ -1268,15 +1216,6 @@ public class Buffer
 	}
 
 	/**
-	 * Decreases the refcount of the buffer. If the refcount reaches 0, the buffer
-	 * with the associated metadata and memory will be freed.
-	 */
-	public void unref()
-	{
-		gst_buffer_unref(gstBuffer);
-	}
-
-	/**
 	 * Clears one or more buffer flags.
 	 *
 	 * Params:
@@ -1305,32 +1244,5 @@ public class Buffer
 	public static uint getMaxMemory()
 	{
 		return gst_buffer_get_max_memory();
-	}
-
-	/**
-	 * Modifies a pointer to a #GstBuffer to point to a different #GstBuffer. The
-	 * modification is done atomically (so this is useful for ensuring thread safety
-	 * in some cases), and the reference counts are updated appropriately (the old
-	 * buffer is unreffed, the new is reffed).
-	 *
-	 * Either @nbuf or the #GstBuffer pointed to by @obuf may be %NULL.
-	 *
-	 * Params:
-	 *     obuf = pointer to a pointer to
-	 *         a #GstBuffer to be replaced.
-	 *     nbuf = pointer to a #GstBuffer that will
-	 *         replace the buffer pointed to by @obuf.
-	 *
-	 * Returns: %TRUE when @obuf was different from @nbuf.
-	 */
-	public static bool replace(ref Buffer obuf, Buffer nbuf)
-	{
-		GstBuffer* outobuf = obuf.getBufferStruct();
-
-		auto __p = gst_buffer_replace(&outobuf, (nbuf is null) ? null : nbuf.getBufferStruct()) != 0;
-
-		obuf = ObjectG.getDObject!(Buffer)(outobuf);
-
-		return __p;
 	}
 }

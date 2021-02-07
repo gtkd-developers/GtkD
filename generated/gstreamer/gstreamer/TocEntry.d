@@ -293,6 +293,6 @@ public class TocEntry
 	 */
 	public void setTags(TagList tags)
 	{
-		gst_toc_entry_set_tags(gstTocEntry, (tags is null) ? null : tags.getTagListStruct(true));
+		gst_toc_entry_set_tags(gstTocEntry, (tags is null) ? null : tags.getTagListStruct());
 	}
 }

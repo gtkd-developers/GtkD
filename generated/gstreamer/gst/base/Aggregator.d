@@ -151,7 +151,7 @@ public class Aggregator : Element
 	 */
 	public GstFlowReturn finishBuffer(Buffer buffer)
 	{
-		return gst_aggregator_finish_buffer(gstAggregator, (buffer is null) ? null : buffer.getBufferStruct(true));
+		return gst_aggregator_finish_buffer(gstAggregator, (buffer is null) ? null : buffer.getBufferStruct());
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class Aggregator : Element
 	 */
 	public GstFlowReturn finishBufferList(BufferList bufferlist)
 	{
-		return gst_aggregator_finish_buffer_list(gstAggregator, (bufferlist is null) ? null : bufferlist.getBufferListStruct(true));
+		return gst_aggregator_finish_buffer_list(gstAggregator, (bufferlist is null) ? null : bufferlist.getBufferListStruct());
 	}
 
 	/**

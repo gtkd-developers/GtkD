@@ -27,7 +27,6 @@ import gtk.TextView;
 import gtk.TextBuffer;
 import gtk.TextIter;
 import gtk.Box;
-import gtk.VBox;
 import gtk.ScrolledWindow;
 import gtk.Button;
 import gtk.Image;
@@ -49,25 +48,33 @@ class SpawnWindow : ApplicationWindow
 		setTitle("Spawn testing");
 		setupWindow();
 		setSizeRequest(400,400);
-		showAll();
+		show();
 	}
 
 	private void setupWindow()
 	{
-		Box main = new VBox(false, 2);
+		Box main = new Box(GtkOrientation.VERTICAL, 2);
 
 		viewInput = new TextView();
 		viewOutput = new TextView();
 		viewError = new TextView();
 
-		main.packStart(new ScrolledWindow(viewInput), false, false, 2);
-		Button button = new Button("exec", &execInput);
-		main.packStart(button, false, false, 4);
-		main.packStart(new ScrolledWindow(viewOutput), true, true, 2);
-		main.packStart(new ScrolledWindow(viewError), false, false, 2);
+		viewOutput.setValign(GtkAlign.FILL);
+		viewOutput.setVexpand(true);
 
-		setBorderWidth(7);
-		add(main);
+		main.append(new ScrolledWindow(viewInput));
+		Button button = new Button("exec");
+		button.addOnClicked(&execInput);
+		main.append(button);
+		main.append(new ScrolledWindow(viewOutput));
+		main.append(new ScrolledWindow(viewError));
+
+		main.setMarginStart(7);
+		main.setMarginEnd(7);
+		main.setMarginTop(7);
+		main.setMarginBottom(7);
+
+		setChild(main);
 	}
 
 	private void execInput(Button button)

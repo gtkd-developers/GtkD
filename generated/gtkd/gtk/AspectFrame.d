@@ -32,17 +32,16 @@ public  import gtk.c.types;
 
 
 /**
- * The #GtkAspectFrame is useful when you want
- * pack a widget so that it can resize but always retains
- * the same aspect ratio. For instance, one might be
- * drawing a small preview of a larger image. #GtkAspectFrame
- * derives from #GtkFrame, so it can draw a label and
- * a frame around the child. The frame will be
- * “shrink-wrapped” to the size of the child.
+ * GtkAspectFrame is useful when you want pack a widget so that it can resize
+ * while retaining the same aspect ratio. For instance, one might be drawing a
+ * small preview of a larger image.
+ * 
+ * The frame can respect the aspect ratio of the child widget, or use its own
+ * aspect ratio.
  * 
  * # CSS nodes
  * 
- * GtkAspectFrame uses a CSS node with name frame.
+ * GtkAspectFrame uses a CSS node with name `frame`.
  */
 public class AspectFrame : Widget
 {
@@ -138,7 +137,8 @@ public class AspectFrame : Widget
 	}
 
 	/**
-	 * Returns the desired aspect ratio of the child.
+	 * Returns the desired aspect ratio of the child set using
+	 * gtk_aspect_frame_set_ratio().
 	 *
 	 * Returns: the desired aspect ratio
 	 */

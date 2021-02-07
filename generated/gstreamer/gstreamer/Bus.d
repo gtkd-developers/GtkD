@@ -526,7 +526,7 @@ public class Bus : ObjectGst
 	 */
 	public bool post(Message message)
 	{
-		return gst_bus_post(gstBus, (message is null) ? null : message.getMessageStruct(true)) != 0;
+		return gst_bus_post(gstBus, (message is null) ? null : message.getMessageStruct()) != 0;
 	}
 
 	/**

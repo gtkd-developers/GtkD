@@ -33,7 +33,6 @@ private import gstreamer.Segment;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -69,12 +68,6 @@ public class Sample
 		this.ownedRef = ownedRef;
 	}
 
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_sample_unref(gstSample);
-	}
-
 
 	/** */
 	public static GType getType()
@@ -108,26 +101,6 @@ public class Sample
 		}
 
 		this(cast(GstSample*) __p);
-	}
-
-	/**
-	 * Create a copy of the given sample. This will also make a newly allocated
-	 * copy of the data the source sample contains.
-	 *
-	 * Returns: a new copy of @buf.
-	 *
-	 * Since: 1.2
-	 */
-	public Sample copy()
-	{
-		auto __p = gst_sample_copy(gstSample);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -228,24 +201,6 @@ public class Sample
 		return ObjectG.getDObject!(Segment)(cast(GstSegment*) __p);
 	}
 
-	alias doref = ref_;
-	/**
-	 * Increases the refcount of the given sample by one.
-	 *
-	 * Returns: @sample
-	 */
-	public Sample ref_()
-	{
-		auto __p = gst_sample_ref(gstSample);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
-	}
-
 	/**
 	 * Set the buffer associated with @sample. @sample must be writable.
 	 *
@@ -310,14 +265,5 @@ public class Sample
 	public void setSegment(Segment segment)
 	{
 		gst_sample_set_segment(gstSample, (segment is null) ? null : segment.getSegmentStruct());
-	}
-
-	/**
-	 * Decreases the refcount of the sample. If the refcount reaches 0, the
-	 * sample will be freed.
-	 */
-	public void unref()
-	{
-		gst_sample_unref(gstSample);
 	}
 }

@@ -674,7 +674,7 @@ public class Adapter : ObjectG
 	 */
 	public void push(Buffer buf)
 	{
-		gst_adapter_push(gstAdapter, (buf is null) ? null : buf.getBufferStruct(true));
+		gst_adapter_push(gstAdapter, (buf is null) ? null : buf.getBufferStruct());
 	}
 
 	/**

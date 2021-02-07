@@ -240,6 +240,6 @@ public class Toc
 	 */
 	public void setTags(TagList tags)
 	{
-		gst_toc_set_tags(gstToc, (tags is null) ? null : tags.getTagListStruct(true));
+		gst_toc_set_tags(gstToc, (tags is null) ? null : tags.getTagListStruct());
 	}
 }

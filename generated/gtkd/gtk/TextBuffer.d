@@ -24,6 +24,7 @@
 
 module gtk.TextBuffer;
 
+private import core.vararg;
 private import gdk.Clipboard;
 private import gdk.ContentProvider;
 private import gdk.PaintableIF;
@@ -32,6 +33,7 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gobject.c.functions;
 private import gtk.TextChildAnchor;
 private import gtk.TextIter;
 private import gtk.TextMark;
@@ -39,7 +41,10 @@ private import gtk.TextTag;
 private import gtk.TextTagTable;
 private import gtk.c.functions;
 public  import gtk.c.types;
+private import pango.PgFontDescription;
+private import pango.PgTabArray;
 private import std.algorithm;
+private import std.stdio;
 
 
 /**
@@ -76,6 +81,146 @@ public class TextBuffer : ObjectG
 		super(cast(GObject*)gtkTextBuffer, ownedRef);
 	}
 
+	/**
+	 * Inserts text into buffer at iter, applying the list of tags to
+	 * the newly-inserted text. The last tag specified must be NULL to
+	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
+	 * then gtk_text_buffer_apply_tag() on the inserted text;
+	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
+	 * Params:
+	 *  iter = an iterator in buffer
+	 *  text = UTF-8 text
+	 *  tags = list of tags to apply
+	 */
+	public void insertWithTags(TextIter iter, string text, TextTag[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTag(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
+	 * to pass in tag names instead of tag objects.
+	 * Params:
+	 *  iter = position in buffer
+	 *  text = UTF-8 text
+	 *  tags = tag names
+	 */
+	public void insertWithTagsByName(TextIter iter, string text, string[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTagByName(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Creates a tag and adds it to the tag table for buffer. Equivalent to
+	 * adding a new tag to the buffer's tag table.
+	 *
+	 * If tagName is null, the tag is anonymous.
+	 *
+	 * If tagName is non-NULL, a tag called tagName must not already exist
+	 * in the tag table for this buffer.
+	 *
+	 * Params:
+	 *     tagName = the name for the new tag.
+	 *     ...     = A list of property names and there values.
+	 */
+	TextTag createTag(string tagName, ...)
+	{
+		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
+
+		for (size_t i = 0; i < _arguments.length; i+=2)
+		{
+			//TODO: Add a proper eception type for this.
+			if ( _arguments[i] != typeid(string) )
+				throw new Exception("TextBuffer.CreateTag: The property name must be a string.");
+
+			string name = va_arg!(string)(_argptr);
+
+			if ( _arguments[i+1] == typeid(bool) ||
+				_arguments[i+1] == typeid(int) ||
+			_arguments[i+1] == typeid(GtkJustification) ||
+			_arguments[i+1] == typeid(GtkTextDirection) ||
+			_arguments[i+1] == typeid(GtkWrapMode) ||
+			_arguments[i+1] == typeid(PangoStretch) ||
+			_arguments[i+1] == typeid(PangoStyle) ||
+			_arguments[i+1] == typeid(PangoUnderline) ||
+			_arguments[i+1] == typeid(PangoVariant) ||
+			_arguments[i+1] == typeid(PangoWeight) )
+			{
+
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(double) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(const(double)) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgFontDescription) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgFontDescription)(_argptr).getPgFontDescriptionStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgTabArray) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgTabArray)(_argptr).getPgTabArrayStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(string) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), Str.toStringz(va_arg!(string)(_argptr)), null);
+			}
+			else
+			{
+				stderr.writefln("TextBuffer.CreateTag: Unsupported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+
+				//TODO: throw segfaults, druntime bug?
+				throw new Exception("TextBuffer.CreateTag: Unsupported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
+			}
+		}
+
+		return tag;
+	}
+
+	/**
+	 * Obtain the entire text
+	 * Returns: The text string
+	 */
+	string getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
@@ -893,11 +1038,10 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = a position in the buffer
 	 *     text = text in UTF-8 format
-	 *     len = length of text in bytes, or -1
 	 */
-	public void insert(TextIter iter, string text, int len)
+	public void insert(TextIter iter, string text)
 	{
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int)text.length);
 	}
 
 	/**
@@ -906,11 +1050,10 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = text in UTF-8 format
-	 *     len = length of text, in bytes
 	 */
-	public void insertAtCursor(string text, int len)
+	public void insertAtCursor(string text)
 	{
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), len);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int)text.length);
 	}
 
 	/**
@@ -948,14 +1091,13 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = a position in @buffer
 	 *     text = some UTF-8 text
-	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
 	 * Returns: whether text was actually inserted
 	 */
-	public bool insertInteractive(TextIter iter, string text, int len, bool defaultEditable)
+	public bool insertInteractive(TextIter iter, string text, bool defaultEditable)
 	{
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len, defaultEditable) != 0;
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), cast(int)text.length, defaultEditable) != 0;
 	}
 
 	/**
@@ -968,14 +1110,13 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = text in UTF-8 format
-	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
 	 * Returns: whether text was actually inserted
 	 */
-	public bool insertInteractiveAtCursor(string text, int len, bool defaultEditable)
+	public bool insertInteractiveAtCursor(string text, bool defaultEditable)
 	{
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), len, defaultEditable) != 0;
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), cast(int)text.length, defaultEditable) != 0;
 	}
 
 	/**
@@ -1252,11 +1393,10 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = UTF-8 text to insert
-	 *     len = length of @text in bytes
 	 */
-	public void setText(string text, int len)
+	public void setText(string text)
 	{
-		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), len);
+		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), cast(int)text.length);
 	}
 
 	/**

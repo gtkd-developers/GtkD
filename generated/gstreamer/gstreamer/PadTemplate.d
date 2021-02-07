@@ -276,7 +276,7 @@ public class PadTemplate : ObjectGst
 	 */
 	public void setDocumentationCaps(Caps caps)
 	{
-		gst_pad_template_set_documentation_caps(gstPadTemplate, (caps is null) ? null : caps.getCapsStruct(true));
+		gst_pad_template_set_documentation_caps(gstPadTemplate, (caps is null) ? null : caps.getCapsStruct());
 	}
 
 	/**

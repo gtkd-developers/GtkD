@@ -148,6 +148,15 @@ public class ScrolledWindow : Widget
 		super(cast(GtkWidget*)gtkScrolledWindow, ownedRef);
 	}
 
+	/** */
+	public this(Widget widget)
+	{
+		this();
+		setChild(widget);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()

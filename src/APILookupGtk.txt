@@ -298,6 +298,177 @@ noCode: new_for_resource
 struct: Root
 alias: get_display getDisplayRoot
 
+struct: ScrolledWindow
+import: gtk.Widget
+code: start
+	/** */
+	public this(Widget widget)
+	{
+		this();
+		setChild(widget);
+	}
+code: end
+
+struct: TextBuffer
+import: core.vararg
+import: gobject.c.functions
+import: pango.PgFontDescription
+import: pango.PgTabArray
+import: std.stdio
+array: insert text len
+array: insert_at_cursor text len
+array: insert_interactive text len
+array: insert_interactive_at_cursor text len
+array: set_text text len
+code: start
+	/**
+	 * Inserts text into buffer at iter, applying the list of tags to
+	 * the newly-inserted text. The last tag specified must be NULL to
+	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
+	 * then gtk_text_buffer_apply_tag() on the inserted text;
+	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
+	 * Params:
+	 *  iter = an iterator in buffer
+	 *  text = UTF-8 text
+	 *  tags = list of tags to apply
+	 */
+	public void insertWithTags(TextIter iter, string text, TextTag[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTag(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
+	 * to pass in tag names instead of tag objects.
+	 * Params:
+	 *  iter = position in buffer
+	 *  text = UTF-8 text
+	 *  tags = tag names
+	 */
+	public void insertWithTagsByName(TextIter iter, string text, string[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTagByName(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Creates a tag and adds it to the tag table for buffer. Equivalent to
+	 * adding a new tag to the buffer's tag table.
+	 *
+	 * If tagName is null, the tag is anonymous.
+	 *
+	 * If tagName is non-NULL, a tag called tagName must not already exist
+	 * in the tag table for this buffer.
+	 *
+	 * Params:
+	 *     tagName = the name for the new tag.
+	 *     ...     = A list of property names and there values.
+	 */
+	TextTag createTag(string tagName, ...)
+	{
+		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
+
+		for (size_t i = 0; i < _arguments.length; i+=2)
+		{
+			//TODO: Add a proper eception type for this.
+			if ( _arguments[i] != typeid(string) )
+				throw new Exception("TextBuffer.CreateTag: The property name must be a string.");
+
+			string name = va_arg!(string)(_argptr);
+
+			if ( _arguments[i+1] == typeid(bool) ||
+				_arguments[i+1] == typeid(int) ||
+				_arguments[i+1] == typeid(GtkJustification) ||
+				_arguments[i+1] == typeid(GtkTextDirection) ||
+				_arguments[i+1] == typeid(GtkWrapMode) ||
+				_arguments[i+1] == typeid(PangoStretch) ||
+				_arguments[i+1] == typeid(PangoStyle) ||
+				_arguments[i+1] == typeid(PangoUnderline) ||
+				_arguments[i+1] == typeid(PangoVariant) ||
+				_arguments[i+1] == typeid(PangoWeight) )
+			{
+
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(double) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(const(double)) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgFontDescription) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgFontDescription)(_argptr).getPgFontDescriptionStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgTabArray) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgTabArray)(_argptr).getPgTabArrayStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(string) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), Str.toStringz(va_arg!(string)(_argptr)), null);
+			}
+			else
+			{
+				stderr.writefln("TextBuffer.CreateTag: Unsupported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+
+				//TODO: throw segfaults, druntime bug?
+				throw new Exception("TextBuffer.CreateTag: Unsupported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
+			}
+		}
+
+		return tag;
+	}
+
+	/**
+	 * Obtain the entire text
+	 * Returns: The text string
+	 */
+	string getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
+	}
+code: end
+
+struct: TextIter
+code: start
+	/** */
+	public this()
+	{
+		this(new GtkTextIter);
+	}
+code: end
+
 struct: ToggleButton
 noCode: new_with_label
 

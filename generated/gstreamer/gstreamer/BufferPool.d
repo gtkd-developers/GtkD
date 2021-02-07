@@ -394,7 +394,7 @@ public class BufferPool : ObjectGst
 	 */
 	public void releaseBuffer(Buffer buffer)
 	{
-		gst_buffer_pool_release_buffer(gstBufferPool, (buffer is null) ? null : buffer.getBufferStruct(true));
+		gst_buffer_pool_release_buffer(gstBufferPool, (buffer is null) ? null : buffer.getBufferStruct());
 	}
 
 	/**

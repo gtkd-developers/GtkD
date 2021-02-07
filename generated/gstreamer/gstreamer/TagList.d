@@ -34,7 +34,6 @@ private import gstreamer.DateTime;
 private import gstreamer.Sample;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -70,12 +69,6 @@ public class TagList
 	{
 		this.gstTagList = gstTagList;
 		this.ownedRef = ownedRef;
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_tag_list_unref(gstTagList);
 	}
 
 
@@ -893,30 +886,6 @@ public class TagList
 		return __p;
 	}
 
-	alias doref = ref_;
-	/**
-	 * Add a reference to a #GstTagList mini object.
-	 *
-	 * From this point on, until the caller calls gst_tag_list_unref() or
-	 * gst_tag_list_make_writable(), it is guaranteed that the taglist object will
-	 * not change. To use a #GstTagList object, you must always have a refcount on
-	 * it -- either the one made implicitly by e.g. gst_tag_list_new(), or via
-	 * taking one explicitly with this function.
-	 *
-	 * Returns: the same #GstTagList mini object.
-	 */
-	public TagList ref_()
-	{
-		auto __p = gst_tag_list_ref(gstTagList);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p, true);
-	}
-
 	/**
 	 * Removes the given tag from the taglist.
 	 *
@@ -953,14 +922,6 @@ public class TagList
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
-	}
-
-	/**
-	 * Unref a #GstTagList, and and free all its memory when the refcount reaches 0.
-	 */
-	public void unref()
-	{
-		gst_tag_list_unref(gstTagList);
 	}
 
 	/**

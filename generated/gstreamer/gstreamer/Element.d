@@ -1204,7 +1204,7 @@ public class Element : ObjectGst
 	 */
 	public bool postMessage(Message message)
 	{
-		return gst_element_post_message(gstElement, (message is null) ? null : message.getMessageStruct(true)) != 0;
+		return gst_element_post_message(gstElement, (message is null) ? null : message.getMessageStruct()) != 0;
 	}
 
 	/**
@@ -1469,7 +1469,7 @@ public class Element : ObjectGst
 	 */
 	public bool sendEvent(Event event)
 	{
-		return gst_element_send_event(gstElement, (event is null) ? null : event.getEventStruct(true)) != 0;
+		return gst_element_send_event(gstElement, (event is null) ? null : event.getEventStruct()) != 0;
 	}
 
 	/**
