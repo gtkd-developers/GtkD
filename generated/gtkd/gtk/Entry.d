@@ -942,7 +942,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * This is equivalent to getting @entry's #GtkEntryBuffer and
 	 * calling gtk_entry_buffer_set_max_length() on it.
-	 * ]|
 	 *
 	 * Params:
 	 *     max = the maximum length of the entry, or 0 for no maximum.

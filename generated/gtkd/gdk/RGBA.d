@@ -71,6 +71,32 @@ public final class RGBA
 			gdk_rgba_free(gdkRGBA);
 	}
 
+	/**
+	 * Creates a new RGBA Color
+	 */
+	this()
+	{
+		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
+
+		this(gdk_rgba_copy(&rgba), true);
+	}
+
+	/** ditto */
+	this(double red, double green, double blue, double alpha = 1.0)
+	{
+		GdkRGBA rgba;
+
+		rgba.red = red;
+		rgba.green = green;
+		rgba.blue = blue;
+		rgba.alpha = alpha;
+
+		this(gdk_rgba_copy(&rgba), true);
+	}
+
+
+	/**
+	 */
 
 	/**
 	 * The intensity of the red channel from 0.0 to 1.0 inclusive

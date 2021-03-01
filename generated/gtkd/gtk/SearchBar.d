@@ -50,6 +50,10 @@ public  import gtk.c.types;
  * The following example shows you how to create a more complex search
  * entry.
  * 
+ * ## Creating a search bar
+ * 
+ * [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/master/examples/search-bar.c)
+ * 
  * # CSS nodes
  * 
  * |[<!-- language="plain" -->
@@ -64,10 +68,6 @@ public  import gtk.c.types;
  * with name revealer that contains a node with name box. The box node contains both the
  * CSS node of the child widget as well as an optional button node which gets the .close
  * style class applied.
- * 
- * ## Creating a search bar
- * 
- * [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/master/examples/search-bar.c)
  * 
  * # Accessibility
  * 

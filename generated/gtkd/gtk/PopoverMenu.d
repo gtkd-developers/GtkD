@@ -55,7 +55,7 @@ public  import gtk.c.types;
  * `<link name="section">`, you can use `<submenu>` or `<section>`
  * elements.
  * 
- * |[<!--language: xml -->
+ * |[<!-- language="xml" -->
  * <menu id='app-menu'>
  * <section>
  * <item>

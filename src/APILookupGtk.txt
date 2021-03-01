@@ -237,6 +237,28 @@ noCode: new_from_resource
 struct: Label
 noCode: new
 
+struct: ListStore
+import: gtk.TreeIter
+code: start
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter()
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_list_store_append(getListStoreStruct(), iter);
+		return new TreeIter(iter);
+	}
+
+	/** */
+	void setValue(TYPE)(TreeIter iter, int column, TYPE value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
+code: end
+
 struct: MediaFile
 noCode: new_for_resource
 
@@ -471,6 +493,18 @@ code: end
 
 struct: ToggleButton
 noCode: new_with_label
+
+struct: TreeModel
+code: start
+	/** */
+	public T getValue(T)(TreeIter iter, int column)
+	{
+		Value val;
+		getValue(iter, column, val);
+
+		return val.get!T();
+	}
+code: end
 
 struct: TreePath
 noCode: new

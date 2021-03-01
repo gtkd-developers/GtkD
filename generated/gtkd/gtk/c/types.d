@@ -7699,7 +7699,7 @@ alias GTK_ACCESSIBLE_VALUE_UNDEFINED = ACCESSIBLE_VALUE_UNDEFINED;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2;
+enum BINARY_AGE = 3;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 enum IM_MODULE_EXTENSION_POINT_NAME = "gtk-im-module";
@@ -7717,7 +7717,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 2;
+enum INTERFACE_AGE = 3;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -7760,7 +7760,7 @@ alias GTK_MEDIA_FILE_EXTENSION_POINT_NAME = MEDIA_FILE_EXTENSION_POINT_NAME;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 2;
+enum MICRO_VERSION = 3;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**
