@@ -87,6 +87,7 @@ template ImplementClassImpl(Klass, Impl)
 		string result;
 
 		result ~= "import glib.Str;\n"~
+		          "import gobject.ObjectG;\n"~
 		          "import gobject.Type : Type;\n"~
 		          "import gobject.c.functions : g_type_class_peek_parent, g_object_get_data;\n";
 
@@ -174,7 +175,10 @@ template ImplementClassImpl(Klass, Impl)
 			     !implements!Impl(toCamelCase!Impl() ~ names[i].capitalizeFirst) )
 //TODO: __traits(isOverrideFunction, Foo.foo) ?
 			{
-				result ~= "\t"~ toCamelCase!GtkClass() ~"."~ names[i] ~" = &"~ toCamelCase!Impl() ~ names[i].capitalizeFirst ~";\n";
+				static if ( is(GtkClass == getClass!Klass) )
+					result ~= "\tparentClass."~ names[i] ~" = &"~ toCamelCase!Impl() ~ names[i].capitalizeFirst ~";\n";
+				else
+					result ~= "\t"~ toCamelCase!GtkClass() ~"."~ names[i] ~" = &"~ toCamelCase!Impl() ~ names[i].capitalizeFirst ~";\n";
 			}
 		}
 
