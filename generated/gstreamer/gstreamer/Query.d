@@ -36,7 +36,6 @@ private import gstreamer.Context;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -91,12 +90,6 @@ public class Query
 	{
 		this.gstQuery = gstQuery;
 		this.ownedRef = ownedRef;
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_query_unref(gstQuery);
 	}
 
 	/**
@@ -556,25 +549,6 @@ public class Query
 	public void addSchedulingMode(GstPadMode mode)
 	{
 		gst_query_add_scheduling_mode(gstQuery, mode);
-	}
-
-	/**
-	 * Copies the given query using the copy function of the parent #GstStructure.
-	 *
-	 * Free-function: gst_query_unref
-	 *
-	 * Returns: a new copy of @q.
-	 */
-	public Query copy()
-	{
-		auto __p = gst_query_copy(gstQuery);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Query)(cast(GstQuery*) __p, true);
 	}
 
 	/**
@@ -1500,15 +1474,6 @@ public class Query
 	}
 
 	/**
-	 * Decreases the refcount of the query. If the refcount reaches 0, the query
-	 * will be freed.
-	 */
-	public void unref()
-	{
-		gst_query_unref(gstQuery);
-	}
-
-	/**
 	 * Get the structure of a query. This method should be called with a writable
 	 * @query so that the returned structure is guaranteed to be writable.
 	 *
@@ -1526,33 +1491,6 @@ public class Query
 		}
 
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
-	}
-
-	/**
-	 * Modifies a pointer to a #GstQuery to point to a different #GstQuery. The
-	 * modification is done atomically (so this is useful for ensuring thread safety
-	 * in some cases), and the reference counts are updated appropriately (the old
-	 * query is unreffed, the new one is reffed).
-	 *
-	 * Either @new_query or the #GstQuery pointed to by @old_query may be %NULL.
-	 *
-	 * Params:
-	 *     oldQuery = pointer to a pointer to a
-	 *         #GstQuery to be replaced.
-	 *     newQuery = pointer to a #GstQuery that will
-	 *         replace the query pointed to by @old_query.
-	 *
-	 * Returns: %TRUE if @new_query was different from @old_query
-	 */
-	public static bool replace(ref Query oldQuery, Query newQuery)
-	{
-		GstQuery* outoldQuery = oldQuery.getQueryStruct();
-
-		auto __p = gst_query_replace(&outoldQuery, (newQuery is null) ? null : newQuery.getQueryStruct()) != 0;
-
-		oldQuery = ObjectG.getDObject!(Query)(outoldQuery);
-
-		return __p;
 	}
 
 	/**

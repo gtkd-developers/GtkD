@@ -83,7 +83,7 @@ public class ProxyPad : Pad
 	 */
 	public static GstFlowReturn chainDefault(Pad pad, ObjectGst parent, Buffer buffer)
 	{
-		return gst_proxy_pad_chain_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (buffer is null) ? null : buffer.getBufferStruct(true));
+		return gst_proxy_pad_chain_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (buffer is null) ? null : buffer.getBufferStruct());
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class ProxyPad : Pad
 	 */
 	public static GstFlowReturn chainListDefault(Pad pad, ObjectGst parent, BufferList list)
 	{
-		return gst_proxy_pad_chain_list_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (list is null) ? null : list.getBufferListStruct(true));
+		return gst_proxy_pad_chain_list_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), (list is null) ? null : list.getBufferListStruct());
 	}
 
 	/**

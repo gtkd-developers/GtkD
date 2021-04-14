@@ -52,7 +52,6 @@ class TestText : Box
 		TextView textView = new TextView();
 		TextBuffer textBuffer = textView.getBuffer();
 		textBuffer.setText(
-
 "\nGktD
 
 Introduction
@@ -68,7 +67,7 @@ To discuss about GtkD:
 Objectives
 The main goal of GtkD is to enable the creation of D GUI applications under Linux.
 GtkD should be simple and straightforward to use.
-D can interface with C so any graphics toolkit with a C API can be used directly from D, this include GTK+.", -1);
+D can interface with C so any graphics toolkit with a C API can be used directly from D, this include GTK+.");
 
 		sw.setChild(textView);
 		prepend(sw);

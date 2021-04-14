@@ -39,7 +39,6 @@ private import gstreamer.TagList;
 private import gstreamer.Toc;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -112,12 +111,6 @@ public class Event
 	{
 		this.gstEvent = gstEvent;
 		this.ownedRef = ownedRef;
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_event_unref(gstEvent);
 	}
 
 	/**
@@ -966,7 +959,7 @@ public class Event
 	 */
 	public this(TagList taglist)
 	{
-		auto __p = gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct(true));
+		auto __p = gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct());
 
 		if(__p is null)
 		{
@@ -998,23 +991,6 @@ public class Event
 		}
 
 		this(cast(GstEvent*) __p);
-	}
-
-	/**
-	 * Copy the event using the event specific copy function.
-	 *
-	 * Returns: the new event
-	 */
-	public Event copy()
-	{
-		auto __p = gst_event_copy(gstEvent);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p, true);
 	}
 
 	/**
@@ -1527,24 +1503,6 @@ public class Event
 		uid = Str.toString(outuid);
 	}
 
-	alias doref = ref_;
-	/**
-	 * Increase the refcount of this event.
-	 *
-	 * Returns: @event (for convenience when doing assignments)
-	 */
-	public Event ref_()
-	{
-		auto __p = gst_event_ref(gstEvent);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p, true);
-	}
-
 	/**
 	 * All streams that have the same group id are supposed to be played
 	 * together, i.e. all streams inside a container file should have the
@@ -1629,14 +1587,6 @@ public class Event
 	}
 
 	/**
-	 * Decrease the refcount of an event, freeing it if the refcount reaches 0.
-	 */
-	public void unref()
-	{
-		gst_event_unref(gstEvent);
-	}
-
-	/**
 	 * Get a writable version of the structure.
 	 *
 	 * Returns: The structure of the event. The structure
@@ -1657,85 +1607,6 @@ public class Event
 		}
 
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
-	}
-
-	/**
-	 * Modifies a pointer to a #GstEvent to point to a different #GstEvent. The
-	 * modification is done atomically (so this is useful for ensuring thread safety
-	 * in some cases), and the reference counts are updated appropriately (the old
-	 * event is unreffed, the new one is reffed).
-	 *
-	 * Either @new_event or the #GstEvent pointed to by @old_event may be %NULL.
-	 *
-	 * Params:
-	 *     oldEvent = pointer to a
-	 *         pointer to a #GstEvent to be replaced.
-	 *     newEvent = pointer to a #GstEvent that will
-	 *         replace the event pointed to by @old_event.
-	 *
-	 * Returns: %TRUE if @new_event was different from @old_event
-	 */
-	public static bool replace(ref Event oldEvent, Event newEvent)
-	{
-		GstEvent* outoldEvent = oldEvent.getEventStruct();
-
-		auto __p = gst_event_replace(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct()) != 0;
-
-		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
-
-		return __p;
-	}
-
-	/**
-	 * Atomically replace the #GstEvent pointed to by @old_event with %NULL and
-	 * return the original event.
-	 *
-	 * Params:
-	 *     oldEvent = pointer to a
-	 *         pointer to a #GstEvent to be stolen.
-	 *
-	 * Returns: the #GstEvent that was in @old_event
-	 */
-	public static Event steal(ref Event oldEvent)
-	{
-		GstEvent* outoldEvent = oldEvent.getEventStruct();
-
-		auto __p = gst_event_steal(&outoldEvent);
-
-		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p, true);
-	}
-
-	/**
-	 * Modifies a pointer to a #GstEvent to point to a different #GstEvent. This
-	 * function is similar to gst_event_replace() except that it takes ownership of
-	 * @new_event.
-	 *
-	 * Either @new_event or the #GstEvent pointed to by @old_event may be %NULL.
-	 *
-	 * Params:
-	 *     oldEvent = pointer to a
-	 *         pointer to a #GstEvent to be stolen.
-	 *     newEvent = pointer to a #GstEvent that will
-	 *         replace the event pointed to by @old_event.
-	 *
-	 * Returns: %TRUE if @new_event was different from @old_event
-	 */
-	public static bool take(ref Event oldEvent, Event newEvent)
-	{
-		GstEvent* outoldEvent = oldEvent.getEventStruct();
-
-		auto __p = gst_event_take(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct(true)) != 0;
-
-		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
-
-		return __p;
 	}
 
 	/**

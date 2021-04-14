@@ -77,6 +77,3 @@ lookup: APILookupGstInterfaces.txt
 lookup: APILookupGstApp.txt
 lookup: APILookupGstBase.txt
 lookup: APILookupGstMpegts.txt
-
-srcDir: peas
-lookup: APILookupPeas.txt

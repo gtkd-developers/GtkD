@@ -5681,7 +5681,7 @@ __gshared extern(C)
 	void function(GtkFileChooser* chooser, const(char)* id, const(char)* option) c_gtk_file_chooser_set_choice;
 	void function(GtkFileChooser* chooser, int createFolders) c_gtk_file_chooser_set_create_folders;
 	int function(GtkFileChooser* chooser, GFile* file, GError** err) c_gtk_file_chooser_set_current_folder;
-	void function(GtkFileChooser* chooser, char* name) c_gtk_file_chooser_set_current_name;
+	void function(GtkFileChooser* chooser, const(char)* name) c_gtk_file_chooser_set_current_name;
 	int function(GtkFileChooser* chooser, GFile* file, GError** err) c_gtk_file_chooser_set_file;
 	void function(GtkFileChooser* chooser, GtkFileFilter* filter) c_gtk_file_chooser_set_filter;
 	void function(GtkFileChooser* chooser, int selectMultiple) c_gtk_file_chooser_set_select_multiple;

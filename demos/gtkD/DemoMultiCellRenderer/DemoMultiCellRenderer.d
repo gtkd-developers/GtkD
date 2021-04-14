@@ -38,7 +38,8 @@
 *****************************************************************************/
 module DemoMultiCellRenderer;
 
-import gtk.Main;
+import gtk.Application;
+import gtk.ApplicationWindow;
 import gdk.Event;
 import gtk.Window;
 import gtk.Widget;
@@ -51,10 +52,8 @@ import gtk.CellRendererToggle;
 import gtk.ListStore;
 
 import gdk.RGBA;
-import gdk.Color;
 
-import pango.PgFontDescription;
-import std.stdio;
+import gobject.Value;
 
 enum {
     COLUMN_NAME,
@@ -62,105 +61,93 @@ enum {
     COLUMN_TEXT_VISIBLE,
     COLUMN_BOOL,
     COLUMN_BOOL_VISIBLE,
-    COLUMN_TEXT_COLOR,
     COLUMN_TEXT_COLOR_RGBA,
-    COLUMN_TEXT_FONT_DESCRIPTION,
 }
 
-void main(string[] args){
-    Main.init(args);
-    ListStore store = new ListStore( [
-        GType.STRING,
-        GType.STRING,
-        GType.INT,
-        GType.INT,
-        GType.INT,
-        Color.getType(),
-        RGBA.getType(),
-        PgFontDescription.getType(),
-        ] );
+class DemoMultiCellRenderer : ApplicationWindow
+{
+    this(Application application)
+    {
+        super(application);
+        setTitle("Celleditor Demo");
 
-    void appendRecord( string name, string value, bool isBoolean, RGBA rgba, Color color ){
-        auto it = store.createIter();
-        store.setValue( it, COLUMN_NAME, name );
-        store.setValue( it, COLUMN_TEXT, value );
-        store.setValue( it, COLUMN_TEXT_VISIBLE, !isBoolean );
-        store.setValue( it, COLUMN_BOOL, value == "true" );
-        store.setValue( it, COLUMN_BOOL_VISIBLE, isBoolean  );
-        store.setValue( it, COLUMN_TEXT_COLOR_RGBA, rgba );
-        store.setValue( it, COLUMN_TEXT_COLOR, color );
-        store.setValue( it, COLUMN_TEXT_FONT_DESCRIPTION, new PgFontDescription() );
+        ListStore store = new ListStore( [
+            GType.STRING,
+            GType.STRING,
+            GType.INT,
+            GType.INT,
+            GType.INT,
+            RGBA.getType(),
+            ] );
+
+        void appendRecord( string name, string value, bool isBoolean, RGBA rgba){
+            auto it = store.createIter();
+            store.setValue( it, COLUMN_NAME, name );
+            store.setValue( it, COLUMN_TEXT, value );
+            store.setValue( it, COLUMN_TEXT_VISIBLE, !isBoolean );
+            store.setValue( it, COLUMN_BOOL, value == "true" );
+            store.setValue( it, COLUMN_BOOL_VISIBLE, isBoolean  );
+            store.setValue( it, COLUMN_TEXT_COLOR_RGBA, rgba );
+        }
+        // fill store with data
+        appendRecord( "Loops", "10", false, new RGBA(1.0,0.0,0.0,1.0) );
+        appendRecord( "Name", "keinfarbton", false, new RGBA(0.0,1.0,0.0,1.0) );
+        appendRecord( "Verbose", "true", true, new RGBA(0.0,0.0,1.0,1.0) );
+
+        auto tv  = new TreeView();
+        setChild(tv);
+
+        // create first column with text renderer
+        TreeViewColumn column = new TreeViewColumn();
+        column.setTitle( "Name" );
+        tv.appendColumn(column);
+
+        CellRendererText cell_text = new CellRendererText();
+        column.packStart(cell_text, 0 );
+        column.addAttribute(cell_text, "text", COLUMN_NAME);
+        column.addAttribute(cell_text, "foreground-rgba", COLUMN_TEXT_COLOR_RGBA);
+
+        // create second column with two renderers
+        column = new TreeViewColumn();
+        column.setTitle( "Value" );
+        tv.appendColumn(column);
+
+        CellRendererToggle cell_bool = new CellRendererToggle();
+        column.packStart(cell_bool, 0 );
+        column.addAttribute(cell_bool, "active", COLUMN_BOOL);
+        column.addAttribute(cell_bool, "visible", COLUMN_BOOL_VISIBLE);
+
+        cell_text = new CellRendererText();
+        column.packStart(cell_text, 0 );
+        column.addAttribute(cell_text, "text", COLUMN_TEXT);
+        column.addAttribute(cell_text, "visible", COLUMN_TEXT_VISIBLE);
+        cell_text.setProperty( "editable", 1 );
+
+        // change value in store on toggle event
+        cell_bool.addOnToggled( delegate void(string p, CellRendererToggle){
+            auto path = new TreePath( p );
+            TreeIter it;
+            store.getIter(it, path);
+            store.setValue(it, COLUMN_BOOL, store.getValue!int(it, COLUMN_BOOL) ? 0 : 1 );
+        });
+
+        // change the text in the store on end of edit
+        cell_text.addOnEdited( delegate void(string p, string v, CellRendererText cell ){
+            auto path = new TreePath( p );
+            TreeIter it;
+            store.getIter(it, path);
+            store.setValue( it, COLUMN_TEXT, v );
+        });
+
+        tv.setModel(store);
+        show();
     }
-    // fill store with data
-    appendRecord( "Loops", "10", false, new RGBA(1.0,0.0,0.0,1.0), new Color(64,64,64) );
-    appendRecord( "Name", "keinfarbton", false, new RGBA(0.0,1.0,0.0,1.0), new Color(127,127,127) );
-    appendRecord( "Verbose", "true", true, new RGBA(0.0,0.0,1.0,1.0), new Color(200,200,200) );
-
-    auto wnd = new Window( "Celleditor Demo" );
-    auto tv  = new TreeView();
-    wnd.add(tv);
-
-    // create first column with text renderer
-    TreeViewColumn column = new TreeViewColumn();
-    column.setTitle( "Name" );
-    tv.appendColumn(column);
-
-    CellRendererText cell_text = new CellRendererText();
-    column.packStart(cell_text, 0 );
-    column.addAttribute(cell_text, "text", COLUMN_NAME);
-    column.addAttribute(cell_text, "background-gdk", COLUMN_TEXT_COLOR);
-    column.addAttribute(cell_text, "foreground-rgba", COLUMN_TEXT_COLOR_RGBA);
-
-    // create second column with two renderers
-    column = new TreeViewColumn();
-    column.setTitle( "Value" );
-    tv.appendColumn(column);
-
-    CellRendererToggle cell_bool = new CellRendererToggle();
-    column.packStart(cell_bool, 0 );
-    column.addAttribute(cell_bool, "active", COLUMN_BOOL);
-    column.addAttribute(cell_bool, "visible", COLUMN_BOOL_VISIBLE);
-
-    cell_text = new CellRendererText();
-    column.packStart(cell_text, 0 );
-    column.addAttribute(cell_text, "text", COLUMN_TEXT);
-    column.addAttribute(cell_text, "visible", COLUMN_TEXT_VISIBLE);
-    cell_text.setProperty( "editable", 1 );
-
-    // change value in store on toggle event
-    cell_bool.addOnToggled( delegate void(string p, CellRendererToggle){
-        auto path = new TreePath( p );
-        auto it = new TreeIter( store, path );
-        store.setValue(it, COLUMN_BOOL, it.getValueInt( COLUMN_BOOL ) ? 0 : 1 );
-
-        auto val = store.getValue(it, COLUMN_TEXT_FONT_DESCRIPTION);
-
-        import gobject.Type;
-
-        writeln(Type.isA(PgFontDescription.getType(), GType.BOXED));
-        writeln(PgFontDescription.getType(), " ", val.gType);
-
-        auto font = val.get!PgFontDescription();
-
-        writeln(font.getFamily());
-    });
-
-    // change the text in the store on end of edit
-    cell_text.addOnEdited( delegate void(string p, string v, CellRendererText cell ){
-        auto path = new TreePath( p );
-        auto it = new TreeIter( store, path );
-        store.setValue( it, COLUMN_TEXT, v );
-    });
-
-    tv.setModel(store);
-    wnd.showAll();
-
-    wnd.addOnDelete( delegate bool (Event event, Widget widget) {
-        widget.destroy();
-        Main.quit();
-        return false;
-    });
-
-    Main.run();
 }
 
+
+int main(string[] args)
+{
+    auto application = new Application("org.gtkd.demo.multicellrenderer", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(delegate void(_) { new DemoMultiCellRenderer(application); });
+	return application.run(args);
+}

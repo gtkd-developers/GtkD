@@ -353,7 +353,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn chain(Buffer buffer)
 	{
-		return gst_pad_chain(gstPad, (buffer is null) ? null : buffer.getBufferStruct(true));
+		return gst_pad_chain(gstPad, (buffer is null) ? null : buffer.getBufferStruct());
 	}
 
 	/**
@@ -382,7 +382,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn chainList(BufferList list)
 	{
-		return gst_pad_chain_list(gstPad, (list is null) ? null : list.getBufferListStruct(true));
+		return gst_pad_chain_list(gstPad, (list is null) ? null : list.getBufferListStruct());
 	}
 
 	/**
@@ -476,7 +476,7 @@ public class Pad : ObjectGst
 	 */
 	public bool eventDefault(ObjectGst parent, Event event)
 	{
-		return gst_pad_event_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct(), (event is null) ? null : event.getEventStruct(true)) != 0;
+		return gst_pad_event_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct(), (event is null) ? null : event.getEventStruct()) != 0;
 	}
 
 	/**
@@ -1268,7 +1268,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn push(Buffer buffer)
 	{
-		return gst_pad_push(gstPad, (buffer is null) ? null : buffer.getBufferStruct(true));
+		return gst_pad_push(gstPad, (buffer is null) ? null : buffer.getBufferStruct());
 	}
 
 	/**
@@ -1288,7 +1288,7 @@ public class Pad : ObjectGst
 	 */
 	public bool pushEvent(Event event)
 	{
-		return gst_pad_push_event(gstPad, (event is null) ? null : event.getEventStruct(true)) != 0;
+		return gst_pad_push_event(gstPad, (event is null) ? null : event.getEventStruct()) != 0;
 	}
 
 	/**
@@ -1316,7 +1316,7 @@ public class Pad : ObjectGst
 	 */
 	public GstFlowReturn pushList(BufferList list)
 	{
-		return gst_pad_push_list(gstPad, (list is null) ? null : list.getBufferListStruct(true));
+		return gst_pad_push_list(gstPad, (list is null) ? null : list.getBufferListStruct());
 	}
 
 	/**
@@ -1493,7 +1493,7 @@ public class Pad : ObjectGst
 	 */
 	public bool sendEvent(Event event)
 	{
-		return gst_pad_send_event(gstPad, (event is null) ? null : event.getEventStruct(true)) != 0;
+		return gst_pad_send_event(gstPad, (event is null) ? null : event.getEventStruct()) != 0;
 	}
 
 	/**

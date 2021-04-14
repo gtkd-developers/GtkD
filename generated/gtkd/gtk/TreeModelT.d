@@ -243,6 +243,17 @@ public template TreeModelT(TStruct)
 		return cast(GtkTreeModel*)getStruct();
 	}
 
+	/** */
+	public T getValue(T)(TreeIter iter, int column)
+	{
+		Value val;
+		getValue(iter, column, val);
+
+		return val.get!T();
+	}
+
+	/**
+	 */
 
 	/**
 	 * Creates a new #GtkTreeModel, with @child_model as the child_model

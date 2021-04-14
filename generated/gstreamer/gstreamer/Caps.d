@@ -32,7 +32,6 @@ private import gstreamer.CapsFeatures;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -98,12 +97,6 @@ public class Caps
 	{
 		this.gstCaps = gstCaps;
 		this.ownedRef = ownedRef;
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_caps_unref(gstCaps);
 	}
 
 	/**
@@ -215,7 +208,7 @@ public class Caps
 	 */
 	public void append(Caps caps2)
 	{
-		gst_caps_append(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(true));
+		gst_caps_append(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
 	}
 
 	/**
@@ -661,7 +654,7 @@ public class Caps
 	 */
 	public Caps merge(Caps caps2)
 	{
-		auto __p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(true));
+		auto __p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
 
 		if(__p is null)
 		{
@@ -728,31 +721,6 @@ public class Caps
 	public Caps normalize()
 	{
 		auto __p = gst_caps_normalize(gstCaps);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
-	}
-
-	alias doref = ref_;
-	/**
-	 * Add a reference to a #GstCaps object.
-	 *
-	 * From this point on, until the caller calls gst_caps_unref() or
-	 * gst_caps_make_writable(), it is guaranteed that the caps object will not
-	 * change. This means its structures won't change, etc. To use a #GstCaps
-	 * object, you must always have a refcount on it -- either the one made
-	 * implicitly by e.g. gst_caps_new_simple(), or via taking one explicitly with
-	 * this function.
-	 *
-	 * Returns: the same #GstCaps object.
-	 */
-	public Caps ref_()
-	{
-		auto __p = gst_caps_ref(gstCaps);
 
 		if(__p is null)
 		{
@@ -948,15 +916,6 @@ public class Caps
 	}
 
 	/**
-	 * Unref a #GstCaps and and free all its structures and the
-	 * structures' values when the refcount reaches 0.
-	 */
-	public void unref()
-	{
-		gst_caps_unref(gstCaps);
-	}
-
-	/**
 	 * Converts @caps from a string representation.
 	 *
 	 * The current implementation of serialization will lead to unexpected results
@@ -977,56 +936,5 @@ public class Caps
 		}
 
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
-	}
-
-	/**
-	 * Modifies a pointer to a #GstCaps to point to a different #GstCaps. The
-	 * modification is done atomically (so this is useful for ensuring thread safety
-	 * in some cases), and the reference counts are updated appropriately (the old
-	 * caps is unreffed, the new is reffed).
-	 *
-	 * Either @new_caps or the #GstCaps pointed to by @old_caps may be %NULL.
-	 *
-	 * Params:
-	 *     oldCaps = pointer to a pointer
-	 *         to a #GstCaps to be replaced.
-	 *     newCaps = pointer to a #GstCaps that will
-	 *         replace the caps pointed to by @old_caps.
-	 *
-	 * Returns: %TRUE if @new_caps was different from @old_caps
-	 */
-	public static bool replace(ref Caps oldCaps, Caps newCaps)
-	{
-		GstCaps* outoldCaps = oldCaps.getCapsStruct();
-
-		auto __p = gst_caps_replace(&outoldCaps, (newCaps is null) ? null : newCaps.getCapsStruct()) != 0;
-
-		oldCaps = ObjectG.getDObject!(Caps)(outoldCaps);
-
-		return __p;
-	}
-
-	/**
-	 * Modifies a pointer to a #GstCaps to point to a different #GstCaps. This
-	 * function is similar to gst_caps_replace() except that it takes ownership
-	 * of @new_caps.
-	 *
-	 * Params:
-	 *     oldCaps = pointer to a pointer to a #GstCaps to be
-	 *         replaced.
-	 *     newCaps = pointer to a #GstCaps that will
-	 *         replace the caps pointed to by @old_caps.
-	 *
-	 * Returns: %TRUE if @new_caps was different from @old_caps
-	 */
-	public static bool take(ref Caps oldCaps, Caps newCaps)
-	{
-		GstCaps* outoldCaps = oldCaps.getCapsStruct();
-
-		auto __p = gst_caps_take(&outoldCaps, (newCaps is null) ? null : newCaps.getCapsStruct(true)) != 0;
-
-		oldCaps = ObjectG.getDObject!(Caps)(outoldCaps);
-
-		return __p;
 	}
 }

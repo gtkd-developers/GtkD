@@ -281,7 +281,7 @@ public class TTextView : Window
 
 		buffer.getIterAtOffset(iter, 0);
 
-		buffer.insert(iter, "The text widget can display text with all kinds of nifty attributes. It also supports multiple views of the same buffer; this demo is showing the same buffer in two places.\n\n", -1);
+		buffer.insert(iter, "The text widget can display text with all kinds of nifty attributes. It also supports multiple views of the same buffer; this demo is showing the same buffer in two places.\n\n");
 
 		// buffer.insertWithTagsByName(iter, "Font styles. ","heading");
 

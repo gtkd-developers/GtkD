@@ -160,7 +160,7 @@ public class Allocator : ObjectGst
 	 */
 	public void free(Memory memory)
 	{
-		gst_allocator_free(gstAllocator, (memory is null) ? null : memory.getMemoryStruct(true));
+		gst_allocator_free(gstAllocator, (memory is null) ? null : memory.getMemoryStruct());
 	}
 
 	/**

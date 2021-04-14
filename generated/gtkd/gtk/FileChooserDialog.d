@@ -240,6 +240,50 @@ public class FileChooserDialog : Dialog, FileChooserIF
 	// add the FileChooser capabilities
 	mixin FileChooserT!(GtkFileChooserDialog);
 
+	/**
+	 * Creates a new FileChooserDialog. This function is analogous to
+	 * gtk_dialog_new_with_buttons().
+	 *
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
+	{
+		if ( buttonsText  is  null )
+		{
+			buttonsText ~= "OK";
+			buttonsText ~= "Cancel";
+		}
+		if ( responses  is  null )
+		{
+			responses ~= ResponseType.OK;
+			responses ~= ResponseType.CANCEL;
+		}
+
+		auto __p = gtk_file_chooser_dialog_new(
+			Str.toStringz(title),
+			(parent is null) ? null : parent.getWindowStruct(),
+			action,
+			null,
+			0);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
+		}
+
+		this(cast(GtkFileChooserDialog*) __p);
+
+		addButtons(buttonsText, responses);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()

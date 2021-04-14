@@ -164,8 +164,67 @@ code: start
 	}
 code: end
 
+struct: Dialog
+code: start
+	/** */
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+code: end
+
 struct: Expander
 noCode: new
+
+struct: FileChooserDialog
+import: glib.ConstructionException
+import: gtk.Window
+code: start
+	/**
+	 * Creates a new FileChooserDialog. This function is analogous to
+	 * gtk_dialog_new_with_buttons().
+	 *
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
+	{
+		if ( buttonsText  is  null )
+		{
+			buttonsText ~= "OK";
+			buttonsText ~= "Cancel";
+		}
+		if ( responses  is  null )
+		{
+			responses ~= ResponseType.OK;
+			responses ~= ResponseType.CANCEL;
+		}
+
+		auto __p = gtk_file_chooser_dialog_new(
+				Str.toStringz(title),
+				(parent is null) ? null : parent.getWindowStruct(),
+				action,
+				null,
+				0);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
+		}
+
+		this(cast(GtkFileChooserDialog*) __p);
+
+		addButtons(buttonsText, responses);
+	}
+code: end
 
 struct: FontChooser
 override: get_font_map
@@ -178,12 +237,78 @@ noCode: new_from_resource
 struct: Label
 noCode: new
 
+struct: ListStore
+import: gtk.TreeIter
+code: start
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter()
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_list_store_append(getListStoreStruct(), iter);
+		return new TreeIter(iter);
+	}
+
+	/** */
+	void setValue(TYPE)(TreeIter iter, int column, TYPE value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
+code: end
+
 struct: MediaFile
 noCode: new_for_resource
 
 struct: MenuButton
 alias: set_direction setMenuDirection
 alias: get_direction getMenuDirection
+
+struct: MessageDialog
+import: glib.ConstructionException
+import: gtk.Window
+code: start
+	/**
+	 * Creates a new message dialog, which is a simple dialog with an icon
+	 * indicating the dialog type (error, warning, etc.) and some text the
+	 * user may want to see. When the user clicks a button a "response"
+	 * signal is emitted with response IDs from GtkResponseType. See
+	 * GtkDialog for more details.
+	 *
+	 * If you have an existing Pango markup string that you want to use
+	 * literally as the label, then you need to use setMarkup() instead.
+	 *
+	 * Params:
+	 *    	parent = transient parent, or NULL for none
+	 *    	flags = flags
+	 *    	type = type of message
+	 *    	buttons = set of buttons to use
+	 *    	message = the message
+	 * Returns:
+	 *  a new GtkMessageDialog
+	 */
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, string message)
+	{
+		auto __p = cast(GtkMessageDialog*)gtk_message_dialog_new(
+			parent is null ? null : parent.getWindowStruct(),
+			flags,
+			type,
+			buttons,
+			Str.toStringz(message),
+			null,
+			null
+		);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_message_dialog_new()");
+		}
+
+		this(__p);
+	}
+code: end
 
 struct: Native
 alias: realize realizeNative
@@ -195,8 +320,191 @@ noCode: new_for_resource
 struct: Root
 alias: get_display getDisplayRoot
 
+struct: ScrolledWindow
+import: gtk.Widget
+code: start
+	/** */
+	public this(Widget widget)
+	{
+		this();
+		setChild(widget);
+	}
+code: end
+
+struct: TextBuffer
+import: core.vararg
+import: gobject.c.functions
+import: pango.PgFontDescription
+import: pango.PgTabArray
+import: std.stdio
+array: insert text len
+array: insert_at_cursor text len
+array: insert_interactive text len
+array: insert_interactive_at_cursor text len
+array: set_text text len
+code: start
+	/**
+	 * Inserts text into buffer at iter, applying the list of tags to
+	 * the newly-inserted text. The last tag specified must be NULL to
+	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
+	 * then gtk_text_buffer_apply_tag() on the inserted text;
+	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
+	 * Params:
+	 *  iter = an iterator in buffer
+	 *  text = UTF-8 text
+	 *  tags = list of tags to apply
+	 */
+	public void insertWithTags(TextIter iter, string text, TextTag[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTag(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
+	 * to pass in tag names instead of tag objects.
+	 * Params:
+	 *  iter = position in buffer
+	 *  text = UTF-8 text
+	 *  tags = tag names
+	 */
+	public void insertWithTagsByName(TextIter iter, string text, string[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTagByName(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Creates a tag and adds it to the tag table for buffer. Equivalent to
+	 * adding a new tag to the buffer's tag table.
+	 *
+	 * If tagName is null, the tag is anonymous.
+	 *
+	 * If tagName is non-NULL, a tag called tagName must not already exist
+	 * in the tag table for this buffer.
+	 *
+	 * Params:
+	 *     tagName = the name for the new tag.
+	 *     ...     = A list of property names and there values.
+	 */
+	TextTag createTag(string tagName, ...)
+	{
+		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
+
+		for (size_t i = 0; i < _arguments.length; i+=2)
+		{
+			//TODO: Add a proper eception type for this.
+			if ( _arguments[i] != typeid(string) )
+				throw new Exception("TextBuffer.CreateTag: The property name must be a string.");
+
+			string name = va_arg!(string)(_argptr);
+
+			if ( _arguments[i+1] == typeid(bool) ||
+				_arguments[i+1] == typeid(int) ||
+				_arguments[i+1] == typeid(GtkJustification) ||
+				_arguments[i+1] == typeid(GtkTextDirection) ||
+				_arguments[i+1] == typeid(GtkWrapMode) ||
+				_arguments[i+1] == typeid(PangoStretch) ||
+				_arguments[i+1] == typeid(PangoStyle) ||
+				_arguments[i+1] == typeid(PangoUnderline) ||
+				_arguments[i+1] == typeid(PangoVariant) ||
+				_arguments[i+1] == typeid(PangoWeight) )
+			{
+
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(double) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(const(double)) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgFontDescription) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgFontDescription)(_argptr).getPgFontDescriptionStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgTabArray) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgTabArray)(_argptr).getPgTabArrayStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(string) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), Str.toStringz(va_arg!(string)(_argptr)), null);
+			}
+			else
+			{
+				stderr.writefln("TextBuffer.CreateTag: Unsupported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+
+				//TODO: throw segfaults, druntime bug?
+				throw new Exception("TextBuffer.CreateTag: Unsupported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
+			}
+		}
+
+		return tag;
+	}
+
+	/**
+	 * Obtain the entire text
+	 * Returns: The text string
+	 */
+	string getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
+	}
+code: end
+
+struct: TextIter
+code: start
+	/** */
+	public this()
+	{
+		this(new GtkTextIter);
+	}
+code: end
+
 struct: ToggleButton
 noCode: new_with_label
+
+struct: TreeModel
+code: start
+	/** */
+	public T getValue(T)(TreeIter iter, int column)
+	{
+		Value val;
+		getValue(iter, column, val);
+
+		return val.get!T();
+	}
+code: end
 
 struct: TreePath
 noCode: new
@@ -226,6 +534,36 @@ code: start
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by gtk_tree_path_new()");
+		}
+
+		this(__p);
+	}
+code: end
+
+struct: TreeViewColumn
+code: start
+	/**
+	 * Creates a new Tree view column
+	 * Params:
+	 *  header = th column header text
+	 *  renderer = the rederer for the column cells
+	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
+	 *  column = the column number
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	//TODO: allow setting more attributes?
+	this(string header, CellRenderer renderer, string type, int column)
+	{
+		auto __p = gtk_tree_view_column_new_with_attributes(
+				Str.toStringz(header),
+				renderer.getCellRendererStruct(),
+				Str.toStringz(type),
+				column,
+				null);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
 		}
 
 		this(__p);

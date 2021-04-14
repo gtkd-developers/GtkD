@@ -7779,7 +7779,7 @@ alias GST_VERSION_MAJOR = VERSION_MAJOR;
 /**
  * The micro version of GStreamer at compile time:
  */
-enum VERSION_MICRO = 2;
+enum VERSION_MICRO = 3;
 alias GST_VERSION_MICRO = VERSION_MICRO;
 
 /**

@@ -73,6 +73,11 @@ private import std.algorithm;
  * "title", _("About ExampleCode"),
  * NULL);
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * GtkAboutDialog has a single CSS node with the name window and style
+ * class .aboutdialog.
  */
 public class AboutDialog : Window
 {

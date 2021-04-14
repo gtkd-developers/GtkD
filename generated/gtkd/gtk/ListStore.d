@@ -223,6 +223,26 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	// add the TreeSortable capabilities
 	mixin TreeSortableT!(GtkListStore);
 
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter()
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_list_store_append(getListStoreStruct(), iter);
+		return new TreeIter(iter);
+	}
+
+	/** */
+	void setValue(TYPE)(TreeIter iter, int column, TYPE value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()

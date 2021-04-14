@@ -57,6 +57,10 @@ public  import gtk.c.types;
  * In this case, the #GtkImage:resource, gtk_image_new_from_resource() and
  * gtk_image_set_from_resource() should be used.
  * 
+ * GtkImage displays its image as an icon, with a size that is determined
+ * by the application. See #GtkPicture if you want to show an image at is
+ * actual size.
+ * 
  * # CSS nodes
  * 
  * GtkImage has a single CSS node with the name image. The style classes

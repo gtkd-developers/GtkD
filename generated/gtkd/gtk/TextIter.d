@@ -79,6 +79,14 @@ public class TextIter
 			gtk_text_iter_free(gtkTextIter);
 	}
 
+	/** */
+	public this()
+	{
+		this(new GtkTextIter);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()

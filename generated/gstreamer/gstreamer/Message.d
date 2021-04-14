@@ -41,7 +41,6 @@ private import gstreamer.TagList;
 private import gstreamer.Toc;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -88,12 +87,6 @@ public class Message
 	{
 		this.gstMessage = gstMessage;
 		this.ownedRef = ownedRef;
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			gst_message_unref(gstMessage);
 	}
 
 	/**
@@ -1055,7 +1048,7 @@ public class Message
 	 */
 	public this(ObjectGst src, string location, TagList tagList, Structure entryStruct)
 	{
-		auto __p = gst_message_new_redirect((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(true), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
+		auto __p = gst_message_new_redirect((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
 
 		if(__p is null)
 		{
@@ -1294,7 +1287,7 @@ public class Message
 	 */
 	public this(ObjectGst src, TagList tagList)
 	{
-		auto __p = gst_message_new_tag((src is null) ? null : src.getObjectGstStruct(), (tagList is null) ? null : tagList.getTagListStruct(true));
+		auto __p = gst_message_new_tag((src is null) ? null : src.getObjectGstStruct(), (tagList is null) ? null : tagList.getTagListStruct());
 
 		if(__p is null)
 		{
@@ -1346,7 +1339,7 @@ public class Message
 	 */
 	public void addRedirectEntry(string location, TagList tagList, Structure entryStruct)
 	{
-		gst_message_add_redirect_entry(gstMessage, Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(true), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
+		gst_message_add_redirect_entry(gstMessage, Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
 	}
 
 	/**
@@ -2264,24 +2257,6 @@ public class Message
 		structure = ObjectG.getDObject!(Structure)(outstructure);
 	}
 
-	alias doref = ref_;
-	/**
-	 * Convenience macro to increase the reference count of the message.
-	 *
-	 * Returns: @msg (for convenience when doing assignments)
-	 */
-	public Message ref_()
-	{
-		auto __p = gst_message_ref(gstMessage);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
-	}
-
 	/**
 	 * Configures the buffering stats values in @message.
 	 *
@@ -2431,15 +2406,6 @@ public class Message
 		}
 
 		return ObjectG.getDObject!(Stream)(cast(GstStream*) __p, true);
-	}
-
-	/**
-	 * Convenience macro to decrease the reference count of the message, possibly
-	 * freeing it.
-	 */
-	public void unref()
-	{
-		gst_message_unref(gstMessage);
 	}
 
 	/**
