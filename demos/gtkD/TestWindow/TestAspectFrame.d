@@ -20,7 +20,7 @@ module TestAspectFrame;
 
 private import gtk.AspectFrame;
 
-private import TestDrawingArea;
+private import TestDrawingArea : TestDrawingArea;
 
 /**
  * This tests the DUI aspect frame
