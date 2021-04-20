@@ -74,7 +74,7 @@ ifndef GIRTOD
     endif
 endif
 
-ADRDOX?=doc2
+ADRDOX?=adrdox
 
 #######################################################################
 
@@ -162,6 +162,12 @@ docs:
 	$(ADRDOX) --genSearchIndex --skeleton=docs/adrdox/skeleton.html --directory=docs/api/ --special-preprocessor=gtk generated/
 	cp -f docs/adrdox/style.css docs/api/
 	cp -f docs/adrdox/Logo.png docs/api/
+
+docs-online:
+	$(ADRDOX) --jobs=1 --skeleton=docs/adrdox/skeleton-online.html --directory=docs/api/ --special-preprocessor=gtk generated/
+	cp -f docs/adrdox/style.css docs/api/
+	cp -f docs/adrdox/Logo.png docs/api/
+	cp -fr docs/adrdox/fonts/ docs/api/
 
 #######################################################################
 
