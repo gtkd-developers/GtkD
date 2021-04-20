@@ -547,8 +547,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		modifyFont(
 			PgFontDescription.fromString(
-			family ~ " " ~ to!(string)(size)
-		)
+				family ~ " " ~ to!(string)(size)
+			)
 		);
 	}
 
