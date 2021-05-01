@@ -40,18 +40,18 @@ import gtk.ApplicationWindow;
 import gtk.Adjustment;
 import gtk.AccelGroup;
 
-import TestEntries;
+import TestEntries : TestEntries;
 
-import TestStock;
-import TestDrawingArea;
-import TestScales;
-import TestText;
-import TestTreeView;
-import TestImage;
-import TestThemes;
-import TestAspectFrame;
-import TestIdle;
-import TTextView;
+import TestStock : TestStock;
+import TestDrawingArea : TestDrawingArea;
+import TestScales : TestScales;
+import TestText : TestText;
+import TestTreeView : TestTreeView;
+import TestImage : TestImage;
+import TestThemes : TestThemes;
+import TestAspectFrame : TestAspectFrame;
+import TestIdle : TestIdle;
+import TTextView : TTextView;
 
 import gtk.MenuItem;
 import gtk.Widget;
