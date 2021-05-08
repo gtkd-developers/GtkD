@@ -59,6 +59,7 @@ import gobject.c.types;
  */
 mixin template ImplementClass(Class)
 {
+	pragma(msg, ImplementClassImpl!(Class, typeof(this))());
 	mixin(ImplementClassImpl!(Class, typeof(this))());
 }
 
@@ -420,6 +421,8 @@ private string getWrapFunction(Impl, Member, string name)()
 					result ~= "d_"~ ParamNames[i];
 				else if ( isGtkdType!(DParamTypes[i]) )
 					result ~= "ObjectG.getDObject!("~ DParamTypes[i].stringof ~")("~ ParamNames[i] ~")";
+				else if ( ParamStorage[i] == STC.out_ || ParamStorage[i] == STC.ref_ )
+					result ~= "*"~ParamNames[i];
 				else
 					result ~= ParamNames[i];
 			}
