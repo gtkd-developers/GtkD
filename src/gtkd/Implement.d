@@ -59,7 +59,7 @@ import gobject.c.types;
  */
 mixin template ImplementClass(Class)
 {
-	pragma(msg, ImplementClassImpl!(Class, typeof(this))());
+	//pragma(msg, ImplementClassImpl!(Class, typeof(this))());
 	mixin(ImplementClassImpl!(Class, typeof(this))());
 }
 
