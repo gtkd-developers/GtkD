@@ -4,6 +4,7 @@ grep -h -e "^module" generated/sourceview/* -r | sort -u | sed 's/;//' | sed 's/
 grep -h -e "^module" generated/gstreamer/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 grep -h -e "^module" generated/vte/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 grep -h -e "^module" generated/peas/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" generated/gdl/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 
 cd generated
 
@@ -16,7 +17,9 @@ dmd -o- -D -Dd../docs  ../modules.ddoc ../docs/candydoc/candy.ddoc \
 	vte/vtec/*.d  vte/vte/*.d vte/vte/c/*.d \
 	gstreamer/gstreamer/*.d gstreamer/gstreamer/c/*.d gstreamer/gstinterfaces/*.d gstreamer/gstinterfaces/c/*.d gstreamer/gstreamerc/*.d \
   gstreamer/gst/mpegts/*.d gstreamer/gst/mpegts/c/*.d gstreamer/gst/base/*.d gstreamer/gst/base/c/*.d gstreamer/gst/app/*.d gstreamer/gst/app/c/*.d \
-	peas/peas/*.d peas/peas/c/*.d peas/peasc/*.d -op
+	peas/peas/*.d peas/peas/c/*.d peas/peasc/*.d \
+	gdl/gdl/*.d gdl/gdl/c/*.d gdl/gdlc/*.d \
+	-op
 
 cd ../docs
 
