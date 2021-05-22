@@ -128,7 +128,7 @@ USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/atk/c/functions.d)
 ifeq ($(USE_RUNTIME_LINKER),)
     SOFLAGS_GTKD = $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtk+-3.0 librsvg-2.0 gmodule-2.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtkglext-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
-    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtksourceview-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
+    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtksourceview-4.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gstreamer-base-1.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L vte-2.91 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L libpeas-1.0 | sed -e 's/-[lL]/$(LINKERFLAG)&/g')
@@ -311,7 +311,7 @@ gtkdsv-$(MAJOR).pc:
 	echo Description: A D binding and OO wrapper for GtkSourceView. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdsv-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR), gtksourceview-3.0 >> $@
+	echo Requires: gtkd-$(MAJOR), gtksourceview-4.0 >> $@
 
 gstreamerd-$(MAJOR).pc:
 	echo Name: GstreamerD > $@
