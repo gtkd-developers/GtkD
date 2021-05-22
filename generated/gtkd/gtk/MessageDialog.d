@@ -289,4 +289,45 @@ public class MessageDialog : Dialog
 	{
 		gtk_message_dialog_set_markup(gtkMessageDialog, Str.toStringz(str));
 	}
+
+	/**
+	 * Sets the secondary text of the message dialog to be @messageFormat (with printf()-style).
+	 *
+	 * Params:
+	 *     messageFormat = printf()-style format string, or NULL
+	 *
+	 * Since: 2.6
+	 */
+	public void setFormatSecondaryText(string messageFormat)
+	{
+		gtk_message_dialog_format_secondary_text(gtkMessageDialog, Str.toStringz(messageFormat));
+	}
+
+	/**
+	 * Sets the secondary text of the message dialog to be @messageFormat (with printf()-style),
+	 * which is marked up with the [Pango text markup language][PangoMarkupFormat].
+	 * Due to an oversight, this function does not escape special XML characters
+	 * like (gtk_message_dialog_new_with_markup()) does. Thus, if the arguments
+	 * may contain special XML characters, you should use (g_markup_printf_escaped())
+	 * to escape it.
+	 *
+	 * Examples:
+	 * --------------------
+	 * gchar *msg;
+	 *
+	 * msg = g_markup_printf_escaped (message_format, ...);
+	 * gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
+	 *
+	 * g_free (msg);
+	 * --------------------
+	 *
+	 * Params:
+	 *     messageFormat = printf()-style format string, or NULL
+	 *
+	 * Since: 2.6
+	 */
+	public void setFormatSecondaryMarkup(string messageFormat)
+	{
+		gtk_message_dialog_format_secondary_markup(gtkMessageDialog, Str.toStringz(messageFormat));
+	}
 }
