@@ -1,16 +1,11 @@
 SHELL=/bin/sh
 prefix?=/usr/local
 pkgconfigdir?=$(libdir)/pkgconfig
+girdir?=
 PKG_CONFIG?=pkg-config
 
 OS=$(shell uname || uname -s)
 ARCH=$(shell uname -m || arch)
-
-ifeq ("$(OS)","Darwin")
-	girdir?=
-else
-	girdir?=/usr/share/gir-1.0
-endif
 
 ifeq (, $(shell which dpkg-architecture 2>/dev/null))
 	libdir?=lib/
