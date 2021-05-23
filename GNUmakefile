@@ -7,6 +7,7 @@ OS=$(shell uname || uname -s)
 ARCH=$(shell uname -m || arch)
 
 ifeq ("$(OS)","Darwin")
+	girdir?=
 else
 	girdir?=/usr/share/gir-1.0
 endif
@@ -124,14 +125,14 @@ OBJECTS_DEMO = $(shell echo $(SOURCES_DEMO) | sed -e 's/\.d/\.o/g')
 generate: generate-runtime
 
 generate-runtime: $(GIRTOD)
-ifeq ("$(OS)","Darwin")
+ifndef girdir
 	$(GIRTOD) -i src --use-runtime-linker
 else
 	$(GIRTOD) -i src --use-runtime-linker -g $(girdir)
 endif
 
 generate-compiletime: $(GIRTOD)
-ifeq ("$(OS)","Darwin")
+ifndef girdir
 	$(GIRTOD) -i src
 else
 	$(GIRTOD) -i src -g $(girdir)
