@@ -1,6 +1,7 @@
 SHELL=/bin/sh
 prefix?=/usr/local
 pkgconfigdir?=$(libdir)/pkgconfig
+girdir?=
 PKG_CONFIG?=pkg-config
 
 OS=$(shell uname || uname -s)
@@ -119,10 +120,18 @@ OBJECTS_DEMO = $(shell echo $(SOURCES_DEMO) | sed -e 's/\.d/\.o/g')
 generate: generate-runtime
 
 generate-runtime: $(GIRTOD)
+ifndef girdir
 	$(GIRTOD) -i src --use-runtime-linker
+else
+	$(GIRTOD) -i src --use-runtime-linker -g $(girdir)
+endif
 
 generate-compiletime: $(GIRTOD)
+ifndef girdir
 	$(GIRTOD) -i src
+else
+	$(GIRTOD) -i src -g $(girdir)
+endif
 
 $(GIRTOD):
 	$(if $(findstring "./wrap/girtod","$(GIRTOD)"),$(MAKE) -C wrap)
