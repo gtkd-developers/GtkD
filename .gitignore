@@ -6,3 +6,4 @@
 .hgignore
 .svn
 .dub
+.vscode/

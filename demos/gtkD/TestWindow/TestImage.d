@@ -20,15 +20,20 @@ module TestImage;
 
 //debug = trace
 
-private import gtk.VBox;
+// private import gtk.VBox;
 
-private import gtk.Table;
+// private import gtk.Table;
+private import gtk.Box;
 private import gtk.FileChooserDialog;
+private import gtk.Dialog;
 private import gtk.Button;
 private import gtk.Widget;
 private import gtk.ScrolledWindow;
-private import gtk.ButtonBox;
-private import gtk.HButtonBox;
+private import gtk.Viewport;
+private import gtk.Adjustment;
+private import gtk.Grid;
+// private import gtk.ButtonBox;
+// private import gtk.HButtonBox;
 private import gtk.Image;
 
 private import gtk.Window;
@@ -40,10 +45,12 @@ private import glib.Str;
 /**
  * This tests the GtkD loading and display and image file
  */
-class TestImage : VBox
+class TestImage : Box
 {
-	Table table;
-	FileChooserDialog fs;
+	// Table table;
+	Grid table;
+	// FileChooserDialog fs;
+	Dialog fs;
 	ScrolledWindow sw;
 
 	Window window;
@@ -56,22 +63,23 @@ class TestImage : VBox
 			writeln("instantiating TestImage");
 		}
 
-		super(false,8);
+		super(GtkOrientation.VERTICAL, 8);
 
-		sw = new ScrolledWindow(null,null);
+		sw = new ScrolledWindow();
+		auto vp = new Viewport(null, null);
+		vp.setChild(initTable());
+		sw.setChild(vp);
 
-		sw.addWithViewport(initTable());
+		auto hBox = new Box(GtkOrientation.HORIZONTAL, 0);
+		Button loadDir = new Button("Load Files");
+		loadDir.addOnClicked(&this.loadImages);
+		hBox.prepend(loadDir);
 
-		ButtonBox hBox = HButtonBox.createActionBox();
-		Button loadDir = new Button("Load Files", &loadImages);
-		hBox.packStart(loadDir,false,false,0);
-
-		packStart(sw,true,true,0);
-		packStart(hBox,false,false,0);
-
+		prepend(sw);
+		prepend(hBox);
 	}
 
-	Table initTable()
+	Grid initTable()
 	{
 
 		string[] pngs;
@@ -89,17 +97,11 @@ class TestImage : VBox
 		return loadTable(pngs);
 	}
 
-	private Table loadTable(string[] imageFiles)
+	private Grid loadTable(string[] imageFiles)
 	{
 		//Table table = new Table(1,1,false);
-		if ( table  is  null )
-		{
-			table = new Table(1,1,false);
-		}
-		else
-		{
-			table.removeAll();
-		}
+		if (table !is null) remove(table);
+		table = new Grid();
 
 
 		int row = 0;
@@ -115,7 +117,7 @@ class TestImage : VBox
 //		progressWindow.show();
 
 
-		for ( int i=0 ; i<imageFiles.length ;i++)
+		for (int i = 0; i < imageFiles.length; i++)
 		{
 			string fileName = imageFiles[i];
 			if ( fileName[0] != '/' )
@@ -126,8 +128,10 @@ class TestImage : VBox
 			//image.addOnEnterNotify(&onEnter);
 			//image.addOnLeaveNotify(&onLeave);
 			debug(trace) writefln("adding image %s to table at %s,%s", fileName, col, row);
-			table.resize(col+1, row+1);
-			table.attach(image,col,col+1,row,row+1,AttachOptions.FILL,AttachOptions.FILL,4,4);
+			// table.resize(col+1, row+1);
+			// table.attach(image,col,col+1,row,row+1,AttachOptions.FILL,AttachOptions.FILL,4,4);
+			// table.append(image);
+			table.attach(image, col, row, 4, 4);
 			++col;
 			if ( col == 8 )
 			{
@@ -151,26 +155,29 @@ private import glib.ListSG;
 			a ~= "Please don't";
 			r ~= ResponseType.ACCEPT;
 			r ~= ResponseType.CANCEL;
-			fs = new FileChooserDialog("File Selection", window, FileChooserAction.OPEN, a, r);
+			// FileChooser missing ctor
+			// fs = new FileChooserDialog("File Selection", window, FileChooserAction.OPEN, a, r);
+			fs = new Dialog();
 		}
-		fs.setSelectMultiple(true);
-		ResponseType response = cast(ResponseType) fs.run();
-		if ( response == ResponseType.ACCEPT )
-		{
-			string[] fileNames;
-			ListSG list = fs.getFilenames();
+		// fs.setSelectMultiple(true);
+		fs.show();
+		// ResponseType response = cast(ResponseType) fs.run();
+		// if ( response == ResponseType.ACCEPT )
+		// {
+		// 	string[] fileNames;
+		// 	ListSG list = fs.getFilenames();
 
 
-			for ( int i = 0; i<list.length() ; i++)
-			{
-				debug(trace) writefln("Testmage.loadImages.File selected = %s",
-						Str.toString(cast(char*)list.nthData(i)));
-				fileNames ~= Str.toString(cast(char*)list.nthData(i));
-			}
+		// 	for ( int i = 0; i<list.length() ; i++)
+		// 	{
+		// 		debug(trace) writefln("Testmage.loadImages.File selected = %s",
+		// 				Str.toString(cast(char*)list.nthData(i)));
+		// 		fileNames ~= Str.toString(cast(char*)list.nthData(i));
+		// 	}
 
-			loadTable(fileNames);
-		}
-		fs.hide();
+		// 	loadTable(fileNames);
+		// }
+		// fs.hide();
 	}
 
 	void onEnter(Widget widget)

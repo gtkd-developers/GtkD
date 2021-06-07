@@ -20,7 +20,7 @@ module TestAspectFrame;
 
 private import gtk.AspectFrame;
 
-private import TestDrawingArea;
+private import TestDrawingArea : TestDrawingArea;
 
 /**
  * This tests the DUI aspect frame
@@ -30,7 +30,7 @@ class TestAspectFrame : AspectFrame
 	this()
 	{
 		// string label, gfloat xalign, gfloat yalign, gfloat ratio, bit obeyChild)
-		super("Aspect 3x1", .5, .5, 3.0, false);
-		add(new TestDrawingArea());
+		super(.5, .5, 3.0, false);
+		setChild(new TestDrawingArea());
 	}
 }

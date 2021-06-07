@@ -23,7 +23,7 @@ module TestDrawingArea;
 private import cairo.Context;
 private import cairo.ImageSurface;
 
-private import gtk.VBox;
+private import gtk.Box;
 private import pango.PgContext;
 private import pango.PgLayout;
 
@@ -31,15 +31,15 @@ private import std.stdio;
 private import std.math;
 
 private import gtk.Widget;
-private import gtk.MenuItem;
+// private import gtk.MenuItem;
 private import gtk.ComboBox;
 private import gtk.ComboBoxText;
-private import gtk.Menu;
+// private import gtk.Menu;
 private import gtk.Adjustment;
-private import gtk.HBox;
-private import gdk.Pixbuf;
-private import gdk.Cairo;
-private import gdk.Color;
+// private import gtk.HBox;
+private import gdkpixbuf.Pixbuf;
+// private import gdk.Color;
+private import gdk.RGBA;
 private import gdk.Event;
 
 private import pango.PgCairo;
@@ -50,15 +50,21 @@ private import gtk.Image;
 private import gtk.SpinButton;
 
 
+struct Point {
+	int x;
+	int y;
+}
+
+
 /**
  * This tests the gtkD drawing area widget
  */
-class TestDrawingArea : VBox
+class TestDrawingArea : Box
 {
 
 	this()
 	{
-		super(false,4);
+		super(GtkOrientation.VERTICAL, 4);
 
 		TestDrawing drawingArea = new TestDrawing();
 
@@ -93,7 +99,7 @@ class TestDrawingArea : VBox
 		operators.appendText("HSL_COLOR");
 		operators.appendText("HSL_LUMINOSITY");
 		operators.setActive(1);
-		operators.addOnChanged(&drawingArea.onOperatorsChanged);
+		// operators.addOnChanged(&drawingArea.onOperatorsChanged);
 
 		ComboBoxText primOption = new ComboBoxText();
 		primOption.appendText("Filled Arc");
@@ -109,23 +115,23 @@ class TestDrawingArea : VBox
 		primOption.setActive(0);
 		primOption.addOnChanged(&drawingArea.onPrimOptionChanged);
 
-		packStart(drawingArea,true,true,0);
+		prepend(drawingArea);
 
-		HBox hbox = new HBox(false,4);
-		hbox.packStart(operators,false,false,2);
-		hbox.packStart(primOption,false,false,2);
-		hbox.packStart(drawingArea.spin,false,false,2);
-		hbox.packStart(drawingArea.backSpin,false,false,2);
+		Box hbox = new Box(GtkOrientation.HORIZONTAL, 4);
+		hbox.prepend(operators);
+		hbox.prepend(primOption);
+		hbox.prepend(drawingArea.spin);
+		hbox.prepend(drawingArea.backSpin);
 
-		packStart(hbox, false, false, 0);
+		prepend(hbox);
 	}
 
 	class TestDrawing : DrawingArea
 	{
 		CairoOperator operator = CairoOperator.OVER;
 		ImageSurface surface;
-		Color paintColor;
-		Color black;
+		RGBA paintColor;
+		RGBA black;
 
 		int width;
 		int height;
@@ -139,16 +145,16 @@ class TestDrawingArea : VBox
 
 		SpinButton spin;
 		SpinButton backSpin;
-		static GdkPoint[] polygonStar = [
-			{0,4},
-			{1,1},
-			{4,0},
-			{1,-1},
-			{0,-4},
-			{-1,-1},
-			{-4,0},
-			{-1,1}
-			];
+		static Point[] polygonStar = [
+			{0,  4},
+			{1,  1},
+			{4,  0},
+			{1,  -1},
+			{0,  -4},
+			{-1, -1},
+			{-4, 0},
+			{-1, 1}
+		];
 
 		this()
 		{
@@ -160,26 +166,26 @@ class TestDrawingArea : VBox
 			font = PgFontDescription.fromString("Courier 48");
 
 			image = new Image("images/gtkDlogo_a_small.png");
-			scaledPixbuf = image.getPixbuf();
-			if (scaledPixbuf is null)
-			{
-				writeln("\nFailed to load image file gtkDlogo_a_small.png");
-			}
+			// scaledPixbuf = image.getPixbuf();
+			// if (scaledPixbuf is null)
+			// {
+			// 	writeln("\nFailed to load image file gtkDlogo_a_small.png");
+			// }
 
-			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
-			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
+			paintColor = new RGBA(new GdkRGBA(0, 0, 0));
+			black = new RGBA(new GdkRGBA(0, 0, 0));
 
 			spin = new SpinButton(new Adjustment(30, 1, 400, 1, 10, 0),1,0);
-			sizeSpinChanged(spin);
-			spin.addOnValueChanged(&sizeSpinChanged);
+			// sizeSpinChanged(spin);
+			// spin.addOnValueChanged(&sizeSpinChanged);
 			backSpin = new SpinButton(new Adjustment(5, 4, 100, 1, 10, 0),1,0);
 			backSpin.addOnValueChanged(&backSpinChanged);
 
-			addOnDraw(&drawCallback);
-			addOnMotionNotify(&onMotionNotify);
-			addOnSizeAllocate(&onSizeAllocate);
-			addOnButtonPress(&onButtonPress);
-			addOnButtonRelease(&onButtonRelease);
+			// addOnDraw(&drawCallback);
+			// addOnMotionNotify(&onMotionNotify);
+			// addOnSizeAllocate(&onSizeAllocate);
+			// addOnButtonPress(&onButtonPress);
+			// addOnButtonRelease(&onButtonRelease);
 		}
 
 		void onSizeAllocate(GtkAllocation* allocation, Widget widget)
@@ -188,32 +194,32 @@ class TestDrawingArea : VBox
 			height = allocation.height;
 
 			surface = ImageSurface.create(CairoFormat.ARGB32, width, height);
-			drawPoints(Context.create(surface));
+			// drawPoints(Context.create(surface));
 		}
 
-		public bool onButtonPress(Event event, Widget widget)
-		{
-			debug(trace) writeln("button DOWN");
-			if ( event.type == EventType.BUTTON_PRESS && event.button.button == 1 )
-			{
-				debug(trace) writeln("Button 1 down");
-				buttonIsDown = true;
+		// public bool onButtonPress(Event event, Widget widget)
+		// {
+		// 	debug(trace) writeln("button DOWN");
+		// 	if ( event.getEventType() == EventType.BUTTON_PRESS && event.get.button == 1 )
+		// 	{
+		// 		debug(trace) writeln("Button 1 down");
+		// 		buttonIsDown = true;
 
-				drawPrimitive(cast(int)event.button.x, cast(int)event.button.y);
-			}
-			return false;
-		}
+		// 		drawPrimitive(cast(int)event.button.x, cast(int)event.button.y);
+		// 	}
+		// 	return false;
+		// }
 
-		public bool onButtonRelease(Event event, Widget widget)
-		{
-			debug(trace) writeln("button UP");
-			if ( event.type == EventType.BUTTON_RELEASE && event.button.button == 1 )
-			{
-				debug(trace) writeln("Button 1 UP");
-				buttonIsDown = false;
-			}
-			return false;
-		}
+		// public bool onButtonRelease(Event event, Widget widget)
+		// {
+		// 	debug(trace) writeln("button UP");
+		// 	if ( event.type == EventType.BUTTON_RELEASE && event.button.button == 1 )
+		// 	{
+		// 		debug(trace) writeln("Button 1 UP");
+		// 		buttonIsDown = false;
+		// 	}
+		// 	return false;
+		// }
 
 		/**
 		 * This will be called from the expose event call back.
@@ -228,16 +234,16 @@ class TestDrawingArea : VBox
 			return true;
 		}
 
-		public bool onMotionNotify(Event event, Widget widget)
-		{
-			//writeln("testWindow.mouseMoved -----------------------------");
-			if ( buttonIsDown && event.type == EventType.MOTION_NOTIFY )
-			{
-				drawPrimitive(cast(int)event.motion.x, cast(int)event.motion.y);
-			}
+		// public bool onMotionNotify(Event event, Widget widget)
+		// {
+		// 	//writeln("testWindow.mouseMoved -----------------------------");
+		// 	if ( buttonIsDown && event.type == EventType.MOTION_NOTIFY )
+		// 	{
+		// 		drawPrimitive(cast(int)event.motion.x, cast(int)event.motion.y);
+		// 	}
 
-			return true;
-		}
+		// 	return true;
+		// }
 
 		static int backSpinCount = 0;
 
@@ -246,221 +252,221 @@ class TestDrawingArea : VBox
 
 			debug(trace) writefln("backSpinChanged - entry %s", ++backSpinCount);
 
-			drawPoints(Context.create(surface));
+			// drawPoints(Context.create(surface));
 			this.queueDraw();
 
 			debug(trace) writeln("backSpinChanged - exit");
 		}
 
-		public void sizeSpinChanged(SpinButton spinButton)
+		// public void sizeSpinChanged(SpinButton spinButton)
+		// {
+		// 	if ( !(scaledPixbuf is null))
+		// 	{
+		// 		int width = spinButton.getValueAsInt();
+		// 		scaledPixbuf = image.getPixbuf();
+
+		// 		float ww = width * scaledPixbuf.getWidth() / 30;
+		// 		float hh = width * scaledPixbuf.getHeight() / 30;
+
+		// 		scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
+		// 	}
+		// }
+
+		// public void drawPrimitive(int x, int y)
+		// {
+		// 	int width = spin.getValueAsInt();
+		// 	int height = width * 3 / 4;
+
+		// 	Context context = Context.create(surface);
+		// 	context.setOperator(operator);
+
+		// 	debug(trace) writefln("primitiveType = %s", primitiveType);
+
+		// 	switch ( primitiveType )
+		// 	{
+		// 		case "Arc":
+		// 			context.arc(x-width/2,y-width/2,width,0,2*PI);
+		// 			context.stroke();
+		// 			break;
+
+		// 		case "Filled Arc":
+		// 			context.arc(x-width/4,y-width/4,width/2,0,2*PI);
+		// 			context.fill();
+		// 			break;
+
+		// 		case "Line":
+		// 			context.moveTo(x, y);
+		// 			context.lineTo(x+width, y);
+		// 			context.stroke();
+		// 			break;
+
+		// 		case "Point":
+		// 			context.rectangle(x, y, 1, 1);
+		// 			context.fill();
+		// 			break;
+
+		// 		case "Rectangle":
+		// 			context.rectangle(x-width/2, y-width/4, width, height);
+		// 			context.stroke();
+		// 			break;
+
+		// 		case "Filled Rectangle":
+		// 			context.rectangle(x-width/2, y-width/4, width, height);
+		// 			context.fill();
+		// 			break;
+
+		// 		case "Text":
+		// 			context.selectFontFace("FreeMono", CairoFontSlant.NORMAL, CairoFontWeight.NORMAL);
+		// 			context.setFontSize(12);
+		// 			context.moveTo(x, y);
+		// 			context.showText("gtkD toolkit");
+		// 			break;
+
+		// 		case "Pango text":
+		// 			PgLayout l = PgCairo.createLayout(context);
+		// 			PgFontDescription fd = new PgFontDescription("Sans", width);
+
+		// 			l.setText("Gtk+ with D");
+		// 			l.setFontDescription(fd);
+
+		// 			context.moveTo(x, y);
+		// 			PgCairo.showLayout(context, l);
+		// 			break;
+
+		// 		case "Image":
+		// 			if ( !(scaledPixbuf is null))
+		// 			{
+		// 				context.setSourcePixbuf(scaledPixbuf, x, y);
+		// 				context.paint();
+		// 			}
+		// 			break;
+
+		// 		case "Polygon":
+		// 			//TODO: Use Context.scale and transform ?
+		// 			for ( int scale = 10 ; scale<= 300; scale+=15)
+		// 			{
+		// 				context.save();
+		// 				context.moveTo(polygonStar[0].x*scale/2+x, polygonStar[0].y*scale/2+y);
+
+		// 				foreach(p; polygonStar[1 .. $])
+		// 				{
+		// 					context.lineTo(p.x*scale/2+x, p.y*scale/2+y);
+		// 				}
+		// 				context.closePath();
+		// 				context.stroke();
+		// 				context.restore();
+		// 			}
+		// 			break;
+
+		// 		default:
+		// 			context.arcNegative(x-2,y-2,4,0,6);
+		// 			context.fill();
+		// 			break;
+		// 	}
+
+		// 	//Redraw the Widget.
+		// 	this.queueDraw();
+		// }
+
+		// private void drawPoints(Context context)
+		// {
+		// 	int square = backSpin.getValueAsInt();
+		// 	int totalcount = 0;
+		// 	int count = 0;
+		// 	Color color = new Color();
+		// 	int width = this.width;
+		// 	int height = this.height;
+		// 	int x = 0;
+		// 	int y = 0;
+
+		// 	debug(trace) writefln("w,h = %s %s",width ,height);
+
+		// 	float dx = 256.0 / width;
+		// 	float dy = 256.0 / height ;
+		// 	float xx;
+		// 	float yy;
+		// 	while ( x < width || y <height )
+		// 	{
+		// 		context.save();
+
+		// 		xx = x * dx;
+		// 		yy = y * dy;
+		// 		context.setSourceRgba( xx / 255,
+		// 		                       yy / 255,
+		// 		                       sqrt((xx*xx)+(yy*yy)) / 255,
+		// 		                       1 );
+
+		// 		if ( square > 1 )
+		// 		{
+		// 			context.rectangle(x, y, square, square);
+		// 			context.fill();
+		// 		}
+		// 		else
+		// 		{
+		// 			context.moveTo(x, y);
+		// 			context.stroke();
+		// 		}
+		// 		x +=square;
+		// 		if  ( x > width)
+		// 		{
+		// 			if ( y>height)
+		// 			{
+		// 				//y=0;
+		// 			}
+		// 			else
+		// 			{
+		// 				x = 0;
+		// 				y+=square;
+		// 			}
+		// 		}
+		// 		++totalcount;
+
+		// 		context.restore();
+		// 	}
+		// 	color.destroy();
+		// }
+
+		// void onOperatorsChanged(ComboBox comboBox)
+		// {
+		// 	debug(trace) writefln("CairoOperator = %s", comboBox.getActiveId());
+		// 	switch ( comboBoxText.getActiveId() )
+		// 	{
+		// 		case "CLEAR":          operator = CairoOperator.CLEAR;          break;
+		// 		case "SOURCE":         operator = CairoOperator.SOURCE;         break;
+		// 		case "OVER":           operator = CairoOperator.OVER;           break;
+		// 		case "IN":             operator = CairoOperator.IN;             break;
+		// 		case "OUT":            operator = CairoOperator.OUT;            break;
+		// 		case "ATOP":           operator = CairoOperator.ATOP;           break;
+		// 		case "DEST":           operator = CairoOperator.DEST;           break;
+		// 		case "DEST_OVER":      operator = CairoOperator.DEST_OVER;      break;
+		// 		case "DEST_IN":        operator = CairoOperator.DEST_IN;        break;
+		// 		case "DEST_OUT":       operator = CairoOperator.DEST_OUT;       break;
+		// 		case "DEST_ATOP":      operator = CairoOperator.DEST_ATOP;      break;
+		// 		case "XOR":            operator = CairoOperator.XOR;            break;
+		// 		case "ADD":            operator = CairoOperator.ADD;            break;
+		// 		case "SATURATE":       operator = CairoOperator.SATURATE;       break;
+		// 		case "MULTIPLY":       operator = CairoOperator.MULTIPLY;       break;
+		// 		case "SCREEN":         operator = CairoOperator.SCREEN;         break;
+		// 		case "OVERLAY":        operator = CairoOperator.OVERLAY;        break;
+		// 		case "DARKEN":         operator = CairoOperator.DARKEN;         break;
+		// 		case "LIGHTEN":        operator = CairoOperator.LIGHTEN;        break;
+		// 		case "COLOR_DODGE":    operator = CairoOperator.COLOR_DODGE;    break;
+		// 		case "COLOR_BURN":     operator = CairoOperator.COLOR_BURN;     break;
+		// 		case "HARD_LIGHT":     operator = CairoOperator.HARD_LIGHT;     break;
+		// 		case "SOFT_LIGHT":     operator = CairoOperator.SOFT_LIGHT;     break;
+		// 		case "DIFFERENCE":     operator = CairoOperator.DIFFERENCE;     break;
+		// 		case "EXCLUSION":      operator = CairoOperator.EXCLUSION;      break;
+		// 		case "HSL_HUE":        operator = CairoOperator.HSL_HUE;        break;
+		// 		case "HSL_SATURATION": operator = CairoOperator.HSL_SATURATION; break;
+		// 		case "HSL_COLOR":      operator = CairoOperator.HSL_COLOR;      break;
+		// 		case "HSL_LUMINOSITY": operator = CairoOperator.HSL_LUMINOSITY; break;
+		// 		default:               operator = CairoOperator.OVER;           break;
+		// 	}
+		// }
+
+		void onPrimOptionChanged(ComboBox comboBox)
 		{
-			if ( !(scaledPixbuf is null))
-			{
-				int width = spinButton.getValueAsInt();
-				scaledPixbuf = image.getPixbuf();
-
-				float ww = width * scaledPixbuf.getWidth() / 30;
-				float hh = width * scaledPixbuf.getHeight() / 30;
-
-				scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
-			}
-		}
-
-		public void drawPrimitive(int x, int y)
-		{
-			int width = spin.getValueAsInt();
-			int height = width * 3 / 4;
-
-			Context context = Context.create(surface);
-			context.setOperator(operator);
-
-			debug(trace) writefln("primitiveType = %s", primitiveType);
-
-			switch ( primitiveType )
-			{
-				case "Arc":
-					context.arc(x-width/2,y-width/2,width,0,2*PI);
-					context.stroke();
-					break;
-
-				case "Filled Arc":
-					context.arc(x-width/4,y-width/4,width/2,0,2*PI);
-					context.fill();
-					break;
-
-				case "Line":
-					context.moveTo(x, y);
-					context.lineTo(x+width, y);
-					context.stroke();
-					break;
-
-				case "Point":
-					context.rectangle(x, y, 1, 1);
-					context.fill();
-					break;
-
-				case "Rectangle":
-					context.rectangle(x-width/2, y-width/4, width, height);
-					context.stroke();
-					break;
-
-				case "Filled Rectangle":
-					context.rectangle(x-width/2, y-width/4, width, height);
-					context.fill();
-					break;
-
-				case "Text":
-					context.selectFontFace("FreeMono", CairoFontSlant.NORMAL, CairoFontWeight.NORMAL);
-					context.setFontSize(12);
-					context.moveTo(x, y);
-					context.showText("gtkD toolkit");
-					break;
-
-				case "Pango text":
-					PgLayout l = PgCairo.createLayout(context);
-					PgFontDescription fd = new PgFontDescription("Sans", width);
-
-					l.setText("Gtk+ with D");
-					l.setFontDescription(fd);
-
-					context.moveTo(x, y);
-					PgCairo.showLayout(context, l);
-					break;
-
-				case "Image":
-					if ( !(scaledPixbuf is null))
-					{
-						context.setSourcePixbuf(scaledPixbuf, x, y);
-						context.paint();
-					}
-					break;
-
-				case "Polygon":
-					//TODO: Use Context.scale and transform ?
-					for ( int scale = 10 ; scale<= 300; scale+=15)
-					{
-						context.save();
-						context.moveTo(polygonStar[0].x*scale/2+x, polygonStar[0].y*scale/2+y);
-
-						foreach(p; polygonStar[1 .. $])
-						{
-							context.lineTo(p.x*scale/2+x, p.y*scale/2+y);
-						}
-						context.closePath();
-						context.stroke();
-						context.restore();
-					}
-					break;
-
-				default:
-					context.arcNegative(x-2,y-2,4,0,6);
-					context.fill();
-					break;
-			}
-
-			//Redraw the Widget.
-			this.queueDraw();
-		}
-
-		private void drawPoints(Context context)
-		{
-			int square = backSpin.getValueAsInt();
-			int totalcount = 0;
-			int count = 0;
-			Color color = new Color();
-			int width = this.width;
-			int height = this.height;
-			int x = 0;
-			int y = 0;
-
-			debug(trace) writefln("w,h = %s %s",width ,height);
-
-			float dx = 256.0 / width;
-			float dy = 256.0 / height ;
-			float xx;
-			float yy;
-			while ( x < width || y <height )
-			{
-				context.save();
-
-				xx = x * dx;
-				yy = y * dy;
-				context.setSourceRgba( xx / 255,
-				                       yy / 255,
-				                       sqrt((xx*xx)+(yy*yy)) / 255,
-				                       1 );
-
-				if ( square > 1 )
-				{
-					context.rectangle(x, y, square, square);
-					context.fill();
-				}
-				else
-				{
-					context.moveTo(x, y);
-					context.stroke();
-				}
-				x +=square;
-				if  ( x > width)
-				{
-					if ( y>height)
-					{
-						//y=0;
-					}
-					else
-					{
-						x = 0;
-						y+=square;
-					}
-				}
-				++totalcount;
-
-				context.restore();
-			}
-			color.destroy();
-		}
-
-		void onOperatorsChanged(ComboBoxText comboBoxText)
-		{
-			debug(trace) writefln("CairoOperator = %s", comboBoxText.getActiveText());
-			switch ( comboBoxText.getActiveText() )
-			{
-				case "CLEAR":          operator = CairoOperator.CLEAR;          break;
-				case "SOURCE":         operator = CairoOperator.SOURCE;         break;
-				case "OVER":           operator = CairoOperator.OVER;           break;
-				case "IN":             operator = CairoOperator.IN;             break;
-				case "OUT":            operator = CairoOperator.OUT;            break;
-				case "ATOP":           operator = CairoOperator.ATOP;           break;
-				case "DEST":           operator = CairoOperator.DEST;           break;
-				case "DEST_OVER":      operator = CairoOperator.DEST_OVER;      break;
-				case "DEST_IN":        operator = CairoOperator.DEST_IN;        break;
-				case "DEST_OUT":       operator = CairoOperator.DEST_OUT;       break;
-				case "DEST_ATOP":      operator = CairoOperator.DEST_ATOP;      break;
-				case "XOR":            operator = CairoOperator.XOR;            break;
-				case "ADD":            operator = CairoOperator.ADD;            break;
-				case "SATURATE":       operator = CairoOperator.SATURATE;       break;
-				case "MULTIPLY":       operator = CairoOperator.MULTIPLY;       break;
-				case "SCREEN":         operator = CairoOperator.SCREEN;         break;
-				case "OVERLAY":        operator = CairoOperator.OVERLAY;        break;
-				case "DARKEN":         operator = CairoOperator.DARKEN;         break;
-				case "LIGHTEN":        operator = CairoOperator.LIGHTEN;        break;
-				case "COLOR_DODGE":    operator = CairoOperator.COLOR_DODGE;    break;
-				case "COLOR_BURN":     operator = CairoOperator.COLOR_BURN;     break;
-				case "HARD_LIGHT":     operator = CairoOperator.HARD_LIGHT;     break;
-				case "SOFT_LIGHT":     operator = CairoOperator.SOFT_LIGHT;     break;
-				case "DIFFERENCE":     operator = CairoOperator.DIFFERENCE;     break;
-				case "EXCLUSION":      operator = CairoOperator.EXCLUSION;      break;
-				case "HSL_HUE":        operator = CairoOperator.HSL_HUE;        break;
-				case "HSL_SATURATION": operator = CairoOperator.HSL_SATURATION; break;
-				case "HSL_COLOR":      operator = CairoOperator.HSL_COLOR;      break;
-				case "HSL_LUMINOSITY": operator = CairoOperator.HSL_LUMINOSITY; break;
-				default:               operator = CairoOperator.OVER;           break;
-			}
-		}
-
-		void onPrimOptionChanged(ComboBoxText comboBoxText)
-		{
-			primitiveType = comboBoxText.getActiveText();
+			primitiveType = comboBox.getActiveId();
 		}
 	}
 }

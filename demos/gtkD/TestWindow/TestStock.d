@@ -23,11 +23,14 @@ import std.traits;
 private import gtk.ScrolledWindow;
 
 private import gtk.Widget;
-private import gtk.Table;
+// private import gtk.Table;
+private import gtk.Grid;
 private import gtk.Button;
 private import gtk.Tooltip;
+private import gtk.Viewport;
 
-private import gdk.Color;
+// private import gdk.Color;
+private import gdk.RGBA;
 private import gdk.Cursor;
 
 private import gdk.Event;
@@ -42,46 +45,50 @@ class TestStock : ScrolledWindow
 
 	this()
 	{
-		super(null, null);
+		super();
 		debug(1)
 		{
 			writeln("instantiating TestStock");
 		}
 
-		Table table = new Table(2,2,false);
+		auto table = new Grid();
 		int col = 0;
 		int row = 0;
 
-		Color color = new Color(cast(ubyte)0,cast(ubyte)255,cast(ubyte)255);
+		// auto color = new RGBA(cast(ubyte)0,cast(ubyte)255,cast(ubyte)255);
+		auto color = new RGBA(new GdkRGBA(0, 0, 0));
 
-		IconSize size = Button.getIconSize();
-		Button.setIconSize(IconSize.DIALOG);
+		// IconSize size = Button.getIconSize();
+		// Button.setIconSize(IconSize.DIALOG);
 		// WORKAROUND: https://issues.dlang.org/show_bug.cgi?id=14214
-		foreach(StockID stockID; [EnumMembers!StockID])
-		{
-			Button button = new Button(stockID, true);
-			button.setTooltipText(cast(string)stockID);
+// 		foreach(StockID stockID; [EnumMembers!StockID])
+// 		{
+// 			Button button = new Button(stockID, true);
+// 			button.setTooltipText(cast(string)stockID);
 
-			//button.setCursor(CursorType.BASED_ARROW_DOWN);
-			//button.setBackground(color);
-			//Cursor cursor = new Cursor(CursorType.CLOCK);
-			//button.setCursor(cursor);
+// 			//button.setCursor(CursorType.BASED_ARROW_DOWN);
+// 			//button.setBackground(color);
+// 			//Cursor cursor = new Cursor(CursorType.CLOCK);
+// 			//button.setCursor(cursor);
 
-//			button.addOnEnterNotify(&enterNotify);
-//			button.addOnLeaveNotify(&leaveNotify);
+// //			button.addOnEnterNotify(&enterNotify);
+// //			button.addOnLeaveNotify(&leaveNotify);
 
 
-			table.attach(button,col,col+1,row,row+1,AttachOptions.SHRINK,AttachOptions.SHRINK,2,2);
-			++row;
-			if ( row == 16 )
-			{
-				row = 0;
-				++col;
-			}
-		}
+// 			table.attach(button,col,col+1,row,row+1,AttachOptions.SHRINK,AttachOptions.SHRINK,2,2);
+// 			++row;
+// 			if ( row == 16 )
+// 			{
+// 				row = 0;
+// 				++col;
+// 			}
+// 		}
 
-		Button.setIconSize(size);
-		addWithViewport(table);
+// 		Button.setIconSize(size);
+		auto vp = new Viewport(null, null);
+		vp.setChild(table);
+		setChild(vp);
+		// addWithViewport(table);
 
 	}
 
