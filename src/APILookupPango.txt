@@ -148,10 +148,6 @@ code: end
 struct: Layout
 array: set_text text length
 
-struct: Map
-out: get_engines exact_engines
-out: get_engines fallback_engines
-
 struct: PangoCairoFontMap
 class: PgCairoFontMap
 extend: FontMap
