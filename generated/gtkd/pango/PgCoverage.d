@@ -26,14 +26,20 @@ module pango.PgCoverage;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import pango.c.functions;
 public  import pango.c.types;
 
 
 /**
- * The #PangoCoverage structure represents a map from Unicode characters
- * to #PangoCoverageLevel. It is an opaque structure with no public fields.
+ * A #PangoCoverage structure is a map from Unicode characters
+ * to #PangoCoverageLevel values.
+ * 
+ * It is often necessary in Pango to determine if a particular font can
+ * represent a particular character, and also how well it can represent
+ * that character. The #PangoCoverage is a data structure that is used to
+ * represent that information. It is an opaque structure with no public fields.
  */
 public class PgCoverage : ObjectG
 {
@@ -71,9 +77,9 @@ public class PgCoverage : ObjectG
 	}
 
 	/**
-	 * Create a new #PangoCoverage
+	 * Create a new `PangoCoverage`
 	 *
-	 * Returns: the newly allocated #PangoCoverage,
+	 * Returns: the newly allocated `PangoCoverage`,
 	 *     initialized to %PANGO_COVERAGE_NONE
 	 *     with a reference count of one, which
 	 *     should be freed with pango_coverage_unref().
@@ -94,16 +100,16 @@ public class PgCoverage : ObjectG
 
 	/**
 	 * Convert data generated from pango_coverage_to_bytes() back
-	 * to a #PangoCoverage
+	 * to a `PangoCoverage`.
 	 *
 	 * Deprecated: This returns %NULL
 	 *
 	 * Params:
 	 *     bytes = binary data
-	 *         representing a #PangoCoverage
+	 *         representing a `PangoCoverage`
 	 *
 	 * Returns: a newly allocated
-	 *     #PangoCoverage, or %NULL if the data was invalid.
+	 *     `PangoCoverage`, or %NULL if the data was invalid.
 	 */
 	public static PgCoverage fromBytes(char[] bytes)
 	{
@@ -118,10 +124,9 @@ public class PgCoverage : ObjectG
 	}
 
 	/**
-	 * Copy an existing #PangoCoverage. (This function may now be unnecessary
-	 * since we refcount the structure. File a bug if you use it.)
+	 * Copy an existing `PangoCoverage`.
 	 *
-	 * Returns: the newly allocated #PangoCoverage,
+	 * Returns: the newly allocated `PangoCoverage`,
 	 *     with a reference count of one, which should be freed
 	 *     with pango_coverage_unref().
 	 */
@@ -138,7 +143,7 @@ public class PgCoverage : ObjectG
 	}
 
 	/**
-	 * Determine whether a particular index is covered by @coverage
+	 * Determine whether a particular index is covered by @coverage.
 	 *
 	 * Params:
 	 *     index = the index to check
@@ -158,7 +163,7 @@ public class PgCoverage : ObjectG
 	 * Deprecated: This function does nothing
 	 *
 	 * Params:
-	 *     other = another #PangoCoverage
+	 *     other = another `PangoCoverage`
 	 */
 	public void max(PgCoverage other)
 	{
@@ -167,7 +172,7 @@ public class PgCoverage : ObjectG
 
 	alias doref = ref_;
 	/**
-	 * Increase the reference count on the #PangoCoverage by one
+	 * Increase the reference count on the `PangoCoverage` by one.
 	 *
 	 * Returns: @coverage
 	 */
@@ -196,7 +201,7 @@ public class PgCoverage : ObjectG
 	}
 
 	/**
-	 * Convert a #PangoCoverage structure into a flat binary format
+	 * Convert a `PangoCoverage` structure into a flat binary format.
 	 *
 	 * Deprecated: This returns %NULL
 	 *
@@ -214,7 +219,8 @@ public class PgCoverage : ObjectG
 	}
 
 	/**
-	 * Decrease the reference count on the #PangoCoverage by one.
+	 * Decrease the reference count on the `PangoCoverage` by one.
+	 *
 	 * If the result is zero, free the coverage and all associated memory.
 	 */
 	public override void unref()

@@ -30,21 +30,23 @@ public  import gtk.c.types;
 
 
 /**
- * GtkAccessible provides an interface for describing a UI element, like a
- * #GtkWidget, in a way that can be consumed by Assistive Technologies, or
- * “AT”. Every accessible implementation has:
+ * `GtkAccessible` is an interface for describing UI elements for
+ * Assistive Technologies.
  * 
- * - a “role”, represented by a value of the #GtkAccessibleRole enumeration
- * - an “attribute”, represented by a set of #GtkAccessibleState,
- * #GtkAccessibleProperty and #GtkAccessibleRelation values
+ * Every accessible implementation has:
  * 
- * The role cannot be changed after instantiating a #GtkAccessible
+ * - a “role”, represented by a value of the [enum@Gtk.AccessibleRole]
+ * enumeration
+ * - an “attribute”, represented by a set of [enum@Gtk.AccessibleState],
+ * [enum@Gtk.AccessibleProperty] and [enum@Gtk.AccessibleRelation] values
+ * 
+ * The role cannot be changed after instantiating a `GtkAccessible`
  * implementation.
  * 
- * The attributes are updated every time a UI element's state changes in a way that
- * should be reflected by assistive technologies. For instance, if a #GtkWidget
- * visibility changes, the %GTK_ACCESSIBLE_STATE_HIDDEN state will also change
- * to reflect the #GtkWidget:visible property.
+ * The attributes are updated every time a UI element's state changes in
+ * a way that should be reflected by assistive technologies. For instance,
+ * if a `GtkWidget` visibility changes, the %GTK_ACCESSIBLE_STATE_HIDDEN
+ * state will also change to reflect the [property@Gtk.Widget:visible] property.
  */
 public interface AccessibleIF{
 	/** Get the main Gtk struct */
@@ -61,9 +63,9 @@ public interface AccessibleIF{
 	}
 
 	/**
-	 * Retrieves the #GtkAccessibleRole for the given #GtkAccessible.
+	 * Retrieves the `GtkAccessibleRole` for the given `GtkAccessible`.
 	 *
-	 * Returns: a #GtkAccessibleRole
+	 * Returns: a `GtkAccessibleRole`
 	 */
 	public GtkAccessibleRole getAccessibleRole();
 
@@ -71,7 +73,7 @@ public interface AccessibleIF{
 	 * Resets the accessible @property to its default value.
 	 *
 	 * Params:
-	 *     property = a #GtkAccessibleProperty
+	 *     property = a `GtkAccessibleProperty`
 	 */
 	public void resetProperty(GtkAccessibleProperty property);
 
@@ -79,7 +81,7 @@ public interface AccessibleIF{
 	 * Resets the accessible @relation to its default value.
 	 *
 	 * Params:
-	 *     relation = a #GtkAccessibleRelation
+	 *     relation = a `GtkAccessibleRelation`
 	 */
 	public void resetRelation(GtkAccessibleRelation relation);
 
@@ -87,49 +89,49 @@ public interface AccessibleIF{
 	 * Resets the accessible @state to its default value.
 	 *
 	 * Params:
-	 *     state = a #GtkAccessibleState
+	 *     state = a `GtkAccessibleState`
 	 */
 	public void resetState(GtkAccessibleState state);
 
 	/**
 	 * Updates an array of accessible properties.
 	 *
-	 * This function should be called by #GtkWidget types whenever an accessible
+	 * This function should be called by `GtkWidget` types whenever an accessible
 	 * property change must be communicated to assistive technologies.
 	 *
 	 * This function is meant to be used by language bindings.
 	 *
 	 * Params:
-	 *     properties = an array of #GtkAccessibleProperty
-	 *     values = an array of #GValues, one for each property
+	 *     properties = an array of `GtkAccessibleProperty`
+	 *     values = an array of `GValues`, one for each property
 	 */
 	public void updatePropertyValue(GtkAccessibleProperty[] properties, Value[] values);
 
 	/**
 	 * Updates an array of accessible relations.
 	 *
-	 * This function should be called by #GtkWidget types whenever an accessible
+	 * This function should be called by `GtkWidget` types whenever an accessible
 	 * relation change must be communicated to assistive technologies.
 	 *
 	 * This function is meant to be used by language bindings.
 	 *
 	 * Params:
-	 *     relations = an array of #GtkAccessibleRelation
-	 *     values = an array of #GValues, one for each relation
+	 *     relations = an array of `GtkAccessibleRelation`
+	 *     values = an array of `GValues`, one for each relation
 	 */
 	public void updateRelationValue(GtkAccessibleRelation[] relations, Value[] values);
 
 	/**
 	 * Updates an array of accessible states.
 	 *
-	 * This function should be called by #GtkWidget types whenever an accessible
+	 * This function should be called by `GtkWidget` types whenever an accessible
 	 * state change must be communicated to assistive technologies.
 	 *
 	 * This function is meant to be used by language bindings.
 	 *
 	 * Params:
-	 *     states = an array of #GtkAccessibleState
-	 *     values = an array of #GValues, one for each state
+	 *     states = an array of `GtkAccessibleState`
+	 *     values = an array of `GValues`, one for each state
 	 */
 	public void updateStateValue(GtkAccessibleState[] states, Value[] values);
 }

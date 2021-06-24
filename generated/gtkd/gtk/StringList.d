@@ -28,6 +28,7 @@ private import gio.ListModelIF;
 private import gio.ListModelT;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
@@ -36,23 +37,24 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkStringList is a list model that wraps an array of strings.
+ * `GtkStringList` is a list model that wraps an array of strings.
  * 
  * The objects in the model have a "string" property.
  * 
- * GtkStringList is well-suited for any place where you would
+ * `GtkStringList` is well-suited for any place where you would
  * typically use a `char*[]`, but need a list model.
  * 
  * # GtkStringList as GtkBuildable
  * 
- * The GtkStringList implementation of the GtkBuildable interface
+ * The `GtkStringList` implementation of the `GtkBuildable` interface
  * supports adding items directly using the <items> element and
  * specifying <item> elements for each item. Each <item> element
  * supports the regular translation attributes “translatable”,
  * “context” and “comments”.
  * 
- * Here is a UI definition fragment specifying a GtkStringList
- * |[
+ * Here is a UI definition fragment specifying a `GtkStringList`
+ * 
+ * ```xml
  * <object class="GtkStringList">
  * <items>
  * <item translatable="yes">Factory</item>
@@ -60,7 +62,7 @@ public  import gtk.c.types;
  * <item translatable="yes">Subway</item>
  * </items>
  * </object>
- * ]|
+ * ```
  */
 public class StringList : ObjectG, ListModelIF, BuildableIF
 {
@@ -104,12 +106,12 @@ public class StringList : ObjectG, ListModelIF, BuildableIF
 	}
 
 	/**
-	 * Creates a new #GtkStringList with the given @strings.
+	 * Creates a new `GtkStringList` with the given @strings.
 	 *
 	 * Params:
 	 *     strings = The strings to put in the model
 	 *
-	 * Returns: a new #GtkStringList
+	 * Returns: a new `GtkStringList`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -128,8 +130,8 @@ public class StringList : ObjectG, ListModelIF, BuildableIF
 	/**
 	 * Appends @string to @self.
 	 *
-	 * The @string will be copied. See gtk_string_list_take()
-	 * for a way to avoid that.
+	 * The @string will be copied. See
+	 * [method@Gtk.StringList.take] for a way to avoid that.
 	 *
 	 * Params:
 	 *     string_ = the string to insert
@@ -140,8 +142,9 @@ public class StringList : ObjectG, ListModelIF, BuildableIF
 	}
 
 	/**
-	 * Gets the string that is at @position in @self. If @self
-	 * does not contain @position items, %NULL is returned.
+	 * Gets the string that is at @position in @self.
+	 *
+	 * If @self does not contain @position items, %NULL is returned.
 	 *
 	 * This function returns the const char *. To get the
 	 * object wrapping it, use g_list_model_get_item().
@@ -157,8 +160,10 @@ public class StringList : ObjectG, ListModelIF, BuildableIF
 	}
 
 	/**
-	 * Removes the string at @position from @self. @position must
-	 * be smaller than the current length of the list.
+	 * Removes the string at @position from @self.
+	 *
+	 * @position must be smaller than the current
+	 * length of the list.
 	 *
 	 * Params:
 	 *     position = the position of the string that is to be removed
@@ -172,9 +177,9 @@ public class StringList : ObjectG, ListModelIF, BuildableIF
 	 * Changes @self by removing @n_removals strings and adding @additions
 	 * to it.
 	 *
-	 * This function is more efficient than gtk_string_list_append() and
-	 * gtk_string_list_remove(), because it only emits
-	 * #GListModel::items-changed once for the change.
+	 * This function is more efficient than [method@Gtk.StringList.append]
+	 * and [method@Gtk.StringList.remove], because it only emits the
+	 * ::items-changed signal once for the change.
 	 *
 	 * This function copies the strings in @additions.
 	 *
@@ -196,12 +201,12 @@ public class StringList : ObjectG, ListModelIF, BuildableIF
 	 * Adds @string to self at the end, and takes
 	 * ownership of it.
 	 *
-	 * This variant of gtk_string_list_append() is
-	 * convenient for formatting strings:
+	 * This variant of [method@Gtk.StringList.append]
+	 * is convenient for formatting strings:
 	 *
-	 * |[
+	 * ```c
 	 * gtk_string_list_take (self, g_strdup_print ("%d dollars", lots));
-	 * ]|
+	 * ```
 	 *
 	 * Params:
 	 *     string_ = the string to insert

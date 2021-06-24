@@ -72,9 +72,10 @@ public class BorderNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will stroke a border rectangle inside the
-	 * given @outline. The 4 sides of the border can have different widths and
-	 * colors.
+	 * Creates a `GskRenderNode` that will stroke a border rectangle inside the
+	 * given @outline.
+	 *
+	 * The 4 sides of the border can have different widths and colors.
 	 *
 	 * Params:
 	 *     outline = a #GskRoundedRect describing the outline of the border
@@ -83,7 +84,7 @@ public class BorderNode : RenderNode
 	 *     borderColor = the color used on the top, right,
 	 *         bottom and left side.
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

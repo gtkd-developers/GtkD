@@ -31,22 +31,24 @@ private import glib.KeyFile;
 private import glib.ListG;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-private import gtkd.Loader;
 
 
 /**
- * GtkPaperSize handles paper sizes. It uses the standard called
+ * `GtkPaperSize` handles paper sizes.
+ * 
+ * It uses the standard called
  * [PWG 5101.1-2002 PWG: Standard for Media Standardized Names](http://www.pwg.org/standards.html)
  * to name the paper sizes (and to get the data for the page sizes).
- * In addition to standard paper sizes, GtkPaperSize allows to
+ * In addition to standard paper sizes, `GtkPaperSize` allows to
  * construct custom paper sizes with arbitrary dimensions.
  * 
- * The #GtkPaperSize object stores not only the dimensions (width
+ * The `GtkPaperSize` object stores not only the dimensions (width
  * and height) of a paper size and its name, it also provides
- * default [print margins][print-margins].
+ * default print margins.
  */
 public class PaperSize
 {
@@ -79,7 +81,7 @@ public class PaperSize
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_paper_size_free(gtkPaperSize);
 	}
 
@@ -91,17 +93,17 @@ public class PaperSize
 	}
 
 	/**
-	 * Creates a new #GtkPaperSize object by parsing a
+	 * Creates a new `GtkPaperSize` object by parsing a
 	 * [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)
 	 * paper name.
 	 *
 	 * If @name is %NULL, the default paper size is returned,
-	 * see gtk_paper_size_get_default().
+	 * see [func@Gtk.PaperSize.get_default].
 	 *
 	 * Params:
 	 *     name = a paper size name, or %NULL
 	 *
-	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
+	 * Returns: a new `GtkPaperSize`, use [method@Gtk.PaperSize.free]
 	 *     to free it
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -119,7 +121,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Creates a new #GtkPaperSize object with the
+	 * Creates a new `GtkPaperSize` object with the
 	 * given parameters.
 	 *
 	 * Params:
@@ -129,7 +131,7 @@ public class PaperSize
 	 *     height = the paper height, in units of @unit
 	 *     unit = the unit for @width and @height. not %GTK_UNIT_NONE.
 	 *
-	 * Returns: a new #GtkPaperSize object, use gtk_paper_size_free()
+	 * Returns: a new `GtkPaperSize` object, use [method@Gtk.PaperSize.free]
 	 *     to free it
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -147,13 +149,15 @@ public class PaperSize
 	}
 
 	/**
-	 * Deserialize a paper size from an a{sv} variant in
-	 * the format produced by gtk_paper_size_to_gvariant().
+	 * Deserialize a paper size from a `GVariant`.
+	 *
+	 * The `GVariant must be in the format produced by
+	 * [method@Gtk.PaperSize.to_gvariant].
 	 *
 	 * Params:
-	 *     variant = an a{sv} #GVariant
+	 *     variant = an a{sv} `GVariant`
 	 *
-	 * Returns: a new #GtkPaperSize object
+	 * Returns: a new `GtkPaperSize` object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -170,19 +174,19 @@ public class PaperSize
 	}
 
 	/**
-	 * Creates a new #GtkPaperSize object by using
+	 * Creates a new `GtkPaperSize` object by using
 	 * IPP information.
 	 *
 	 * If @ipp_name is not a recognized paper name,
 	 * @width and @height are used to
-	 * construct a custom #GtkPaperSize object.
+	 * construct a custom `GtkPaperSize` object.
 	 *
 	 * Params:
 	 *     ippName = an IPP paper name
 	 *     width = the paper width, in points
 	 *     height = the paper height in points
 	 *
-	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
+	 * Returns: a new `GtkPaperSize`, use [method@Gtk.PaperSize.free]
 	 *     to free it
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -204,11 +208,11 @@ public class PaperSize
 	 * @key_file.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to retrieve the papersize from
+	 *     keyFile = the `GKeyFile` to retrieve the papersize from
 	 *     groupName = the name of the group in the key file to read,
 	 *         or %NULL to read the first group
 	 *
-	 * Returns: a new #GtkPaperSize object with the restored
+	 * Returns: a new `GtkPaperSize` object with the restored
 	 *     paper size, or %NULL if an error occurred
 	 *
 	 * Throws: GException on failure.
@@ -234,12 +238,12 @@ public class PaperSize
 	}
 
 	/**
-	 * Creates a new #GtkPaperSize object by using
+	 * Creates a new `GtkPaperSize` object by using
 	 * PPD information.
 	 *
 	 * If @ppd_name is not a recognized PPD paper name,
 	 * @ppd_display_name, @width and @height are used to
-	 * construct a custom #GtkPaperSize object.
+	 * construct a custom `GtkPaperSize` object.
 	 *
 	 * Params:
 	 *     ppdName = a PPD paper name
@@ -247,7 +251,7 @@ public class PaperSize
 	 *     width = the paper width, in points
 	 *     height = the paper height in points
 	 *
-	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
+	 * Returns: a new `GtkPaperSize`, use [method@Gtk.PaperSize.free]
 	 *     to free it
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -265,7 +269,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Copies an existing #GtkPaperSize.
+	 * Copies an existing `GtkPaperSize`.
 	 *
 	 * Returns: a copy of @other
 	 */
@@ -282,7 +286,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Free the given #GtkPaperSize object.
+	 * Free the given `GtkPaperSize` object.
 	 */
 	public void free()
 	{
@@ -291,7 +295,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the default bottom margin for the #GtkPaperSize.
+	 * Gets the default bottom margin for the `GtkPaperSize`.
 	 *
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
@@ -304,7 +308,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the default left margin for the #GtkPaperSize.
+	 * Gets the default left margin for the `GtkPaperSize`.
 	 *
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
@@ -317,7 +321,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the default right margin for the #GtkPaperSize.
+	 * Gets the default right margin for the `GtkPaperSize`.
 	 *
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
@@ -330,7 +334,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the default top margin for the #GtkPaperSize.
+	 * Gets the default top margin for the `GtkPaperSize`.
 	 *
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
@@ -343,7 +347,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the human-readable name of the #GtkPaperSize.
+	 * Gets the human-readable name of the `GtkPaperSize`.
 	 *
 	 * Returns: the human-readable name of @size
 	 */
@@ -353,7 +357,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the paper height of the #GtkPaperSize, in
+	 * Gets the paper height of the `GtkPaperSize`, in
 	 * units of @unit.
 	 *
 	 * Params:
@@ -367,7 +371,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the name of the #GtkPaperSize.
+	 * Gets the name of the `GtkPaperSize`.
 	 *
 	 * Returns: the name of @size
 	 */
@@ -377,7 +381,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the PPD name of the #GtkPaperSize, which
+	 * Gets the PPD name of the `GtkPaperSize`, which
 	 * may be %NULL.
 	 *
 	 * Returns: the PPD name of @size
@@ -388,7 +392,7 @@ public class PaperSize
 	}
 
 	/**
-	 * Gets the paper width of the #GtkPaperSize, in
+	 * Gets the paper width of the `GtkPaperSize`, in
 	 * units of @unit.
 	 *
 	 * Params:
@@ -412,10 +416,10 @@ public class PaperSize
 	}
 
 	/**
-	 * Compares two #GtkPaperSize objects.
+	 * Compares two `GtkPaperSize` objects.
 	 *
 	 * Params:
-	 *     size2 = another #GtkPaperSize object
+	 *     size2 = another `GtkPaperSize` object
 	 *
 	 * Returns: %TRUE, if @size1 and @size2
 	 *     represent the same paper size
@@ -449,9 +453,9 @@ public class PaperSize
 	}
 
 	/**
-	 * Serialize a paper size to an a{sv} variant.
+	 * Serialize a paper size to an `a{sv}` variant.
 	 *
-	 * Returns: a new, floating, #GVariant
+	 * Returns: a new, floating, `GVariant`
 	 */
 	public Variant toGvariant()
 	{
@@ -469,7 +473,7 @@ public class PaperSize
 	 * This function adds the paper size from @size to @key_file.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to save the paper size to
+	 *     keyFile = the `GKeyFile` to save the paper size to
 	 *     groupName = the group to add the settings to in @key_file
 	 */
 	public void toKeyFile(KeyFile keyFile, string groupName)
@@ -497,7 +501,7 @@ public class PaperSize
 	 *         as defined in the page setup dialog
 	 *
 	 * Returns: a newly allocated list of newly
-	 *     allocated #GtkPaperSize objects
+	 *     allocated `GtkPaperSize` objects
 	 */
 	public static ListG getPaperSizes(bool includeCustom)
 	{

@@ -28,6 +28,7 @@ public  import gio.SocketAddressEnumerator;
 public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 
 

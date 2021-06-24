@@ -44,6 +44,8 @@ public  import gtk.c.types;
 
 
 /**
+ * A list-like data structure that can be used with the GtkTreeView
+ * 
  * The #GtkListStore object is a list model for use with a #GtkTreeView
  * widget.  It implements the #GtkTreeModel interface, and consequentialy,
  * can use all of the methods available there.  It also implements the
@@ -358,11 +360,12 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	/**
 	 * A variant of gtk_list_store_insert_with_values() which
 	 * takes the columns and values as two arrays, instead of
-	 * varargs. This function is mainly intended for
-	 * language-bindings.
+	 * varargs.
+	 *
+	 * This function is mainly intended for language-bindings.
 	 *
 	 * Params:
-	 *     iter = An unset #GtkTreeIter to set to the new row, or %NULL.
+	 *     iter = An unset #GtkTreeIter to set to the new row
 	 *     position = position to insert the new row, or -1 for last
 	 *     columns = an array of column numbers
 	 *     values = an array of GValues

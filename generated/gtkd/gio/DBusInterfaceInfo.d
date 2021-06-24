@@ -33,8 +33,8 @@ public  import gio.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 private import gobject.ObjectG;
-private import gtkd.Loader;
 
 
 /**
@@ -73,7 +73,7 @@ public final class DBusInterfaceInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_dbus_interface_info_unref(gDBusInterfaceInfo);
 	}
 

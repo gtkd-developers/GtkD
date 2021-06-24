@@ -32,7 +32,10 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * An expression using a custom `GClosure` to compute the value from
+ * its parameters.
+ */
 public class ClosureExpression : Expression
 {
 	/** the main Gtk struct */
@@ -69,16 +72,16 @@ public class ClosureExpression : Expression
 	}
 
 	/**
-	 * Creates a GtkExpression that calls @closure when it is evaluated.
-	 * @closure is called with the @this object and the results of evaluating
-	 * the @params expressions.
+	 * Creates a `GtkExpression` that calls `closure` when it is evaluated.
+	 * `closure` is called with the `this` object and the results of evaluating
+	 * the `params` expressions.
 	 *
 	 * Params:
 	 *     valueType = the type of the value that this expression evaluates to
 	 *     closure = closure to call when evaluating this expression. If closure is floating, it is adopted
 	 *     params = expressions for each parameter
 	 *
-	 * Returns: a new #GtkExpression
+	 * Returns: a new `GtkExpression`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

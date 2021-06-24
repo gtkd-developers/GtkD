@@ -35,6 +35,8 @@ public  import gtk.c.types;
 
 
 /**
+ * A cell area that renders GtkCellRenderers into a row or a column
+ * 
  * The #GtkCellAreaBox renders cell renderers into a row or a column
  * depending on its #GtkOrientation.
  * 

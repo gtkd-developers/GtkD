@@ -27,7 +27,6 @@ module gstreamer.AllocationParams;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -64,7 +63,7 @@ public class AllocationParams
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			gst_allocation_params_free(gstAllocationParams);
 	}
 

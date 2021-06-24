@@ -40,8 +40,7 @@ private import std.algorithm;
 
 
 /**
- * A GtkFlowBox positions child widgets in sequence according to its
- * orientation.
+ * A `GtkFlowBox` puts child widgets in reflowing grid.
  * 
  * For instance, with the horizontal orientation, the widgets will be
  * arranged from left to right, starting a new row under the previous
@@ -53,22 +52,23 @@ private import std.algorithm;
  * Reducing the height will require more columns, so a larger width will
  * be requested.
  * 
- * The size request of a GtkFlowBox alone may not be what you expect; if you
- * need to be able to shrink it along both axes and dynamically reflow its
- * children, you may have to wrap it in a #GtkScrolledWindow to enable that.
+ * The size request of a `GtkFlowBox` alone may not be what you expect;
+ * if you need to be able to shrink it along both axes and dynamically
+ * reflow its children, you may have to wrap it in a `GtkScrolledWindow`
+ * to enable that.
  * 
- * The children of a GtkFlowBox can be dynamically sorted and filtered.
+ * The children of a `GtkFlowBox` can be dynamically sorted and filtered.
  * 
- * Although a GtkFlowBox must have only #GtkFlowBoxChild children,
- * you can add any kind of widget to it via gtk_flow_box_insert(), and
- * a GtkFlowBoxChild widget will automatically be inserted between
- * the box and the widget.
+ * Although a `GtkFlowBox` must have only `GtkFlowBoxChild` children, you
+ * can add any kind of widget to it via [method@Gtk.FlowBox.insert], and a
+ * `GtkFlowBoxChild` widget will automatically be inserted between the box
+ * and the widget.
  * 
- * Also see #GtkListBox.
+ * Also see [class@Gtk.ListBox].
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * flowbox
  * ├── flowboxchild
  * │   ╰── <child>
@@ -76,16 +76,16 @@ private import std.algorithm;
  * │   ╰── <child>
  * ┊
  * ╰── [rubberband]
- * ]|
+ * ```
  * 
- * GtkFlowBox uses a single CSS node with name flowbox. GtkFlowBoxChild
- * uses a single CSS node with name flowboxchild.
- * For rubberband selection, a subnode with name rubberband is used.
+ * `GtkFlowBox` uses a single CSS node with name flowbox. `GtkFlowBoxChild`
+ * uses a single CSS node with name flowboxchild. For rubberband selection,
+ * a subnode with name rubberband is used.
  * 
  * # Accessibility
  * 
- * GtkFlowBox uses the #GTK_ACCESSIBLE_ROLE_GRID role, and GtkFlowBoxChild
- * uses the #GTK_ACCESSIBLE_ROLE_GRID_CELL role.
+ * `GtkFlowBox` uses the %GTK_ACCESSIBLE_ROLE_GRID role, and `GtkFlowBoxChild`
+ * uses the %GTK_ACCESSIBLE_ROLE_GRID_CELL role.
  */
 public class FlowBox : Widget, OrientableIF
 {
@@ -126,9 +126,9 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Creates a GtkFlowBox.
+	 * Creates a `GtkFlowBox`.
 	 *
-	 * Returns: a new #GtkFlowBox container
+	 * Returns: a new `GtkFlowBox`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -155,15 +155,14 @@ public class FlowBox : Widget, OrientableIF
 	 * If @model is %NULL, @box is left empty.
 	 *
 	 * It is undefined to add or remove widgets directly (for example, with
-	 * gtk_flow_box_insert()) while @box is bound to a
-	 * model.
+	 * [method@Gtk.FlowBox.insert]) while @box is bound to a model.
 	 *
 	 * Note that using a model is incompatible with the filtering and sorting
-	 * functionality in GtkFlowBox. When using a model, filtering and sorting
+	 * functionality in `GtkFlowBox`. When using a model, filtering and sorting
 	 * should be implemented by the model.
 	 *
 	 * Params:
-	 *     model = the #GListModel to be bound to @box
+	 *     model = the `GListModel` to be bound to @box
 	 *     createWidgetFunc = a function that creates widgets for items
 	 *     userData = user data passed to @create_widget_func
 	 *     userDataFreeFunc = function for freeing @user_data
@@ -191,7 +190,7 @@ public class FlowBox : Widget, OrientableIF
 	 *     idx = the position of the child
 	 *
 	 * Returns: the child widget, which will
-	 *     always be a #GtkFlowBoxChild or %NULL in case no child widget
+	 *     always be a `GtkFlowBoxChild` or %NULL in case no child widget
 	 *     with the given index exists.
 	 */
 	public FlowBoxChild getChildAtIndex(int idx)
@@ -207,15 +206,16 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Gets the child in the (@x, @y) position. Both @x and @y are
-	 * assumed to be relative to the origin of @box.
+	 * Gets the child in the (@x, @y) position.
+	 *
+	 * Both @x and @y are assumed to be relative to the origin of @box.
 	 *
 	 * Params:
 	 *     x = the x coordinate of the child
 	 *     y = the y coordinate of the child
 	 *
 	 * Returns: the child widget, which will
-	 *     always be a #GtkFlowBoxChild or %NULL in case no child widget
+	 *     always be a `GtkFlowBoxChild` or %NULL in case no child widget
 	 *     exists for the given x and y coordinates.
 	 */
 	public FlowBoxChild getChildAtPos(int x, int y)
@@ -241,8 +241,7 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Returns whether the box is homogeneous (all children are the
-	 * same size). See gtk_box_set_homogeneous().
+	 * Returns whether the box is homogeneous.
 	 *
 	 * Returns: %TRUE if the box is homogeneous.
 	 */
@@ -284,7 +283,7 @@ public class FlowBox : Widget, OrientableIF
 	/**
 	 * Creates a list of all selected children.
 	 *
-	 * Returns: A #GList containing the #GtkWidget for each selected child.
+	 * Returns: A `GList` containing the `GtkWidget` for each selected child.
 	 *     Free with g_list_free() when done.
 	 */
 	public ListG getSelectedChildren()
@@ -302,7 +301,7 @@ public class FlowBox : Widget, OrientableIF
 	/**
 	 * Gets the selection mode of @box.
 	 *
-	 * Returns: the #GtkSelectionMode
+	 * Returns: the `GtkSelectionMode`
 	 */
 	public GtkSelectionMode getSelectionMode()
 	{
@@ -319,7 +318,7 @@ public class FlowBox : Widget, OrientableIF
 	 * in the @box, then the @widget will be appended to the end.
 	 *
 	 * Params:
-	 *     widget = the #GtkWidget to add
+	 *     widget = the `GtkWidget` to add
 	 *     position = the position to insert @child in
 	 */
 	public void insert(Widget widget, int position)
@@ -413,7 +412,6 @@ public class FlowBox : Widget, OrientableIF
 
 	/**
 	 * Sets the horizontal space to add between children.
-	 * See the #GtkFlowBox:column-spacing property.
 	 *
 	 * Params:
 	 *     spacing = the spacing to use
@@ -425,16 +423,18 @@ public class FlowBox : Widget, OrientableIF
 
 	/**
 	 * By setting a filter function on the @box one can decide dynamically
-	 * which of the children to show. For instance, to implement a search
-	 * function that only shows the children matching the search terms.
+	 * which of the children to show.
+	 *
+	 * For instance, to implement a search function that only shows the
+	 * children matching the search terms.
 	 *
 	 * The @filter_func will be called for each child after the call, and
 	 * it will continue to be called each time a child changes (via
-	 * gtk_flow_box_child_changed()) or when gtk_flow_box_invalidate_filter()
-	 * is called.
+	 * [method@Gtk.FlowBoxChild.changed]) or when
+	 * [method@Gtk.FlowBox.invalidate_filter] is called.
 	 *
 	 * Note that using a filter function is incompatible with using a model
-	 * (see gtk_flow_box_bind_model()).
+	 * (see [method@Gtk.FlowBox.bind_model]).
 	 *
 	 * Params:
 	 *     filterFunc = callback that
@@ -449,10 +449,11 @@ public class FlowBox : Widget, OrientableIF
 
 	/**
 	 * Hooks up an adjustment to focus handling in @box.
+	 *
 	 * The adjustment is also used for autoscrolling during
-	 * rubberband selection. See gtk_scrolled_window_get_hadjustment()
+	 * rubberband selection. See [method@Gtk.ScrolledWindow.get_hadjustment]
 	 * for a typical way of obtaining the adjustment, and
-	 * gtk_flow_box_set_vadjustment()for setting the vertical
+	 * [method@Gtk.FlowBox.set_vadjustment] for setting the vertical
 	 * adjustment.
 	 *
 	 * The adjustments have to be in pixel units and in the same
@@ -469,9 +470,8 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkFlowBox:homogeneous property of @box, controlling
-	 * whether or not all children of @box are given equal space
-	 * in the box.
+	 * Sets whether or not all children of @box are given
+	 * equal space in the box.
 	 *
 	 * Params:
 	 *     homogeneous = %TRUE to create equal allotments,
@@ -512,7 +512,6 @@ public class FlowBox : Widget, OrientableIF
 
 	/**
 	 * Sets the vertical space to add between children.
-	 * See the #GtkFlowBox:row-spacing property.
 	 *
 	 * Params:
 	 *     spacing = the spacing to use
@@ -524,7 +523,6 @@ public class FlowBox : Widget, OrientableIF
 
 	/**
 	 * Sets how selection works in @box.
-	 * See #GtkSelectionMode for details.
 	 *
 	 * Params:
 	 *     mode = the new selection mode
@@ -541,11 +539,11 @@ public class FlowBox : Widget, OrientableIF
 	 *
 	 * The @sort_func will be called for each child after the call,
 	 * and will continue to be called each time a child changes (via
-	 * gtk_flow_box_child_changed()) and when gtk_flow_box_invalidate_sort()
-	 * is called.
+	 * [method@Gtk.FlowBoxChild.changed]) and when
+	 * [method@Gtk.FlowBox.invalidate_sort] is called.
 	 *
 	 * Note that using a sort function is incompatible with using a model
-	 * (see gtk_flow_box_bind_model()).
+	 * (see [method@Gtk.FlowBox.bind_model]).
 	 *
 	 * Params:
 	 *     sortFunc = the sort function
@@ -559,10 +557,11 @@ public class FlowBox : Widget, OrientableIF
 
 	/**
 	 * Hooks up an adjustment to focus handling in @box.
+	 *
 	 * The adjustment is also used for autoscrolling during
-	 * rubberband selection. See gtk_scrolled_window_get_vadjustment()
+	 * rubberband selection. See [method@Gtk.ScrolledWindow.get_vadjustment]
 	 * for a typical way of obtaining the adjustment, and
-	 * gtk_flow_box_set_hadjustment()for setting the horizontal
+	 * [method@Gtk.FlowBox.set_hadjustment] for setting the horizontal
 	 * adjustment.
 	 *
 	 * The adjustments have to be in pixel units and in the same
@@ -600,9 +599,9 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::activate-cursor-child signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user activates the @box.
+	 * Emitted when the user activates the @box.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 */
 	gulong addOnActivateCursorChild(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -610,8 +609,7 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::child-activated signal is emitted when a child has been
-	 * activated by the user.
+	 * Emitted when a child has been activated by the user.
 	 *
 	 * Params:
 	 *     child = the child that is activated
@@ -622,10 +620,9 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::move-cursor signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates a cursor movement.
+	 * Emitted when the user initiates a cursor movement.
 	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 * Applications should not connect to it, but may emit it with
 	 * g_signal_emit_by_name() if they need to control the cursor
 	 * programmatically.
@@ -634,9 +631,11 @@ public class FlowBox : Widget, OrientableIF
 	 * the variant with the Shift modifier extends the selection,
 	 * the variant without the Shift modifier does not.
 	 * There are too many key combinations to list them all here.
-	 * - Arrow keys move by individual children
-	 * - Home/End keys move to the ends of the box
-	 * - PageUp/PageDown keys move vertically by pages
+	 *
+	 * - <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd>
+	 * move by individual children
+	 * - <kbd>Home</kbd>, <kbd>End</kbd> move to the ends of the box
+	 * - <kbd>PgUp</kbd>, <kbd>PgDn</kbd> move vertically by pages
 	 *
 	 * Params:
 	 *     step = the granularity fo the move, as a #GtkMovementStep
@@ -653,12 +652,12 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::select-all signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to select all children of the box, if
-	 * the selection mode permits it.
+	 * Emitted to select all children of the box,
+	 * if the selection mode permits it.
 	 *
-	 * The default bindings for this signal is Ctrl-a.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default bindings for this signal is <kbd>Ctrl</kbd>-<kbd>a</kbd>.
 	 */
 	gulong addOnSelectAll(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -666,11 +665,10 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::selected-children-changed signal is emitted when the
-	 * set of selected children changes.
+	 * Emitted when the set of selected children changes.
 	 *
-	 * Use gtk_flow_box_selected_foreach() or
-	 * gtk_flow_box_get_selected_children() to obtain the
+	 * Use [method@Gtk.FlowBox.selected_foreach] or
+	 * [method@Gtk.FlowBox.get_selected_children] to obtain the
 	 * selected children.
 	 */
 	gulong addOnSelectedChildrenChanged(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -679,11 +677,11 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::toggle-cursor-child signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which toggles the selection of the child that has the focus.
+	 * Emitted to toggle the selection of the child that has the focus.
 	 *
-	 * The default binding for this signal is Ctrl-Space.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default binding for this signal is <kbd>Ctrl</kbd>-<kbd>Space</kbd>.
 	 */
 	gulong addOnToggleCursorChild(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -691,12 +689,12 @@ public class FlowBox : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::unselect-all signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to unselect all children of the box, if
-	 * the selection mode permits it.
+	 * Emitted to unselect all children of the box,
+	 * if the selection mode permits it.
 	 *
-	 * The default bindings for this signal is Ctrl-Shift-a.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default bindings for this signal is <kbd>Ctrl</kbd>-<kbd>Shift</kbd>-<kbd>a</kbd>.
 	 */
 	gulong addOnUnselectAll(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

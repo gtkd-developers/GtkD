@@ -35,14 +35,16 @@ private import std.algorithm;
 
 
 /**
- * #GtkGestureSwipe is a #GtkGesture implementation able to recognize
- * swipes, after a press/move/.../move/release sequence happens, the
- * #GtkGestureSwipe::swipe signal will be emitted, providing the velocity
- * and directionality of the sequence at the time it was lifted.
+ * `GtkGestureSwipe` is a `GtkGesture` for swipe gestures.
+ * 
+ * After a press/move/.../move/release sequence happens, the
+ * [signal@Gtk.GestureSwipe::swipe] signal will be emitted,
+ * providing the velocity and directionality of the sequence
+ * at the time it was lifted.
  * 
  * If the velocity is desired in intermediate points,
- * gtk_gesture_swipe_get_velocity() can be called on eg. a
- * #GtkGesture::update handler.
+ * [method@Gtk.GestureSwipe.get_velocity] can be called in a
+ * [signal@Gtk.Gesture::update] handler.
  * 
  * All velocities are reported in pixels/sec units.
  */
@@ -82,9 +84,9 @@ public class GestureSwipe : GestureSingle
 	}
 
 	/**
-	 * Returns a newly created #GtkGesture that recognizes swipes.
+	 * Returns a newly created `GtkGesture` that recognizes swipes.
 	 *
-	 * Returns: a newly created #GtkGestureSwipe
+	 * Returns: a newly created `GtkGestureSwipe`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -101,9 +103,11 @@ public class GestureSwipe : GestureSingle
 	}
 
 	/**
-	 * If the gesture is recognized, this function returns %TRUE and fill in
-	 * @velocity_x and @velocity_y with the recorded velocity, as per the
-	 * last event(s) processed.
+	 * Gets the current velocity.
+	 *
+	 * If the gesture is recognized, this function returns %TRUE and fills
+	 * in @velocity_x and @velocity_y with the recorded velocity, as per the
+	 * last events processed.
 	 *
 	 * Params:
 	 *     velocityX = return value for the velocity in the X axis, in pixels/sec
@@ -117,8 +121,9 @@ public class GestureSwipe : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted when the recognized gesture is finished, velocity
-	 * and direction are a product of previously recorded events.
+	 * Emitted when the recognized gesture is finished.
+	 *
+	 * Velocity and direction are a product of previously recorded events.
 	 *
 	 * Params:
 	 *     velocityX = velocity in the X axis, in pixels/sec

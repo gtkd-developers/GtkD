@@ -26,14 +26,14 @@ module pango.PgScriptIter;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
-private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
 
 /**
- * A #PangoScriptIter is used to iterate through a string
+ * A `PangoScriptIter` is used to iterate through a string
  * and identify ranges in different scripts.
  */
 public class PgScriptIter
@@ -67,7 +67,7 @@ public class PgScriptIter
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_script_iter_free(pangoScriptIter);
 	}
 

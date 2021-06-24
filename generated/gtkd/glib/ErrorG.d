@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -66,7 +65,7 @@ public class ErrorG
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_error_free(gError);
 	}
 
@@ -173,6 +172,62 @@ public class ErrorG
 	public bool matches(GQuark domain, int code)
 	{
 		return g_error_matches(gError, domain, code) != 0;
+	}
+
+	/**
+	 * This function registers an extended #GError domain.
+	 * @error_type_name will be duplicated. Otherwise does the same as
+	 * g_error_domain_register_static().
+	 *
+	 * Params:
+	 *     errorTypeName = string to create a #GQuark from
+	 *     errorTypePrivateSize = size of the private error data in bytes
+	 *     errorTypeInit = function initializing fields of the private error data
+	 *     errorTypeCopy = function copying fields of the private error data
+	 *     errorTypeClear = function freeing fields of the private error data
+	 *
+	 * Returns: #GQuark representing the error domain
+	 *
+	 * Since: 2.68
+	 */
+	public static GQuark domainRegister(string errorTypeName, size_t errorTypePrivateSize, GErrorInitFunc errorTypeInit, GErrorCopyFunc errorTypeCopy, GErrorClearFunc errorTypeClear)
+	{
+		return g_error_domain_register(Str.toStringz(errorTypeName), errorTypePrivateSize, errorTypeInit, errorTypeCopy, errorTypeClear);
+	}
+
+	/**
+	 * This function registers an extended #GError domain.
+	 *
+	 * @error_type_name should not be freed. @error_type_private_size must
+	 * be greater than 0.
+	 *
+	 * @error_type_init receives an initialized #GError and should then initialize
+	 * the private data.
+	 *
+	 * @error_type_copy is a function that receives both original and a copy
+	 * #GError and should copy the fields of the private error data. The standard
+	 * #GError fields are already handled.
+	 *
+	 * @error_type_clear receives the pointer to the error, and it should free the
+	 * fields of the private error data. It should not free the struct itself though.
+	 *
+	 * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+	 * already takes care of passing valid information to this function.
+	 *
+	 * Params:
+	 *     errorTypeName = static string to create a #GQuark from
+	 *     errorTypePrivateSize = size of the private error data in bytes
+	 *     errorTypeInit = function initializing fields of the private error data
+	 *     errorTypeCopy = function copying fields of the private error data
+	 *     errorTypeClear = function freeing fields of the private error data
+	 *
+	 * Returns: #GQuark representing the error domain
+	 *
+	 * Since: 2.68
+	 */
+	public static GQuark domainRegisterStatic(string errorTypeName, size_t errorTypePrivateSize, GErrorInitFunc errorTypeInit, GErrorCopyFunc errorTypeCopy, GErrorClearFunc errorTypeClear)
+	{
+		return g_error_domain_register_static(Str.toStringz(errorTypeName), errorTypePrivateSize, errorTypeInit, errorTypeCopy, errorTypeClear);
 	}
 
 	/**

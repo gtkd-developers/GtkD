@@ -30,6 +30,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -139,10 +140,10 @@ public class Credentials : ObjectG
 	 * Params:
 	 *     nativeType = The type of native credentials to get.
 	 *
-	 * Returns: The pointer to native credentials or %NULL if the
-	 *     operation there is no #GCredentials support for the OS or if
-	 *     @native_type isn't supported by the OS. Do not free the returned
-	 *     data, it is owned by @credentials.
+	 * Returns: The pointer to native credentials or
+	 *     %NULL if there is no #GCredentials support for the OS or if @native_type
+	 *     isn't supported by the OS. Do not free the returned data, it is owned
+	 *     by @credentials.
 	 *
 	 * Since: 2.26
 	 */
@@ -160,7 +161,7 @@ public class Credentials : ObjectG
 	 * about the UNIX process ID (for example this is the case for
 	 * %G_CREDENTIALS_TYPE_APPLE_XUCRED).
 	 *
-	 * Returns: The UNIX process ID, or -1 if @error is set.
+	 * Returns: The UNIX process ID, or `-1` if @error is set.
 	 *
 	 * Since: 2.36
 	 *
@@ -188,7 +189,7 @@ public class Credentials : ObjectG
 	 * OS or if the native credentials type does not contain information
 	 * about the UNIX user.
 	 *
-	 * Returns: The UNIX user identifier or -1 if @error is set.
+	 * Returns: The UNIX user identifier or `-1` if @error is set.
 	 *
 	 * Since: 2.26
 	 *

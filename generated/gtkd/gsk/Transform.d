@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import graphene.Matrix;
 private import graphene.Point;
@@ -36,11 +37,18 @@ private import graphene.Rect;
 private import graphene.Vec3;
 private import gsk.c.functions;
 public  import gsk.c.types;
-private import gtkd.Loader;
 
 
 /**
- * The `GskTransform` structure contains only private data.
+ * `GskTransform` is an object to describe transform matrices.
+ * 
+ * Unlike `graphene_matrix_t`, `GskTransform` retains the steps in how
+ * a transform was constructed, and allows inspecting them. It is modeled
+ * after the way CSS describes transforms.
+ * 
+ * `GskTransform` objects are immutable and cannot be changed after creation.
+ * This means code can safely expose them as properties of objects without
+ * having to worry about others changing them.
  */
 public class Transform
 {
@@ -73,7 +81,7 @@ public class Transform
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSK) && ownedRef )
+		if ( ownedRef )
 			gsk_transform_unref(gskTransform);
 	}
 
@@ -165,9 +173,10 @@ public class Transform
 	}
 
 	/**
-	 * Applies a perspective projection transform. This transform
-	 * scales points in X and Y based on their Z value, scaling
-	 * points with positive Z values away from the origin, and
+	 * Applies a perspective projection transform.
+	 *
+	 * This transform scales points in X and Y based on their Z value,
+	 * scaling points with positive Z values away from the origin, and
 	 * those with negative Z values towards the origin. Points
 	 * on the z=0 plane are unchanged.
 	 *
@@ -192,7 +201,10 @@ public class Transform
 
 	/**
 	 * Converts @self into a human-readable string representation suitable
-	 * for printing that can later be parsed with gsk_transform_parse().
+	 * for printing.
+	 *
+	 * The result of this function can later be parsed with
+	 * [func@Gsk.Transform.parse].
 	 *
 	 * Params:
 	 *     string_ = The string to print into
@@ -204,9 +216,9 @@ public class Transform
 
 	alias doref = ref_;
 	/**
-	 * Acquires a reference on the given #GskTransform.
+	 * Acquires a reference on the given `GskTransform`.
 	 *
-	 * Returns: the #GskTransform with an additional reference
+	 * Returns: the `GskTransform` with an additional reference
 	 */
 	public Transform ref_()
 	{
@@ -221,7 +233,7 @@ public class Transform
 	}
 
 	/**
-	 * Rotates @next @angle degrees in 2D - or in 3Dspeak, around the z axis.
+	 * Rotates @next @angle degrees in 2D - or in 3D-speak, around the z axis.
 	 *
 	 * Params:
 	 *     angle = the rotation angle, in degrees (clockwise)
@@ -243,7 +255,7 @@ public class Transform
 	/**
 	 * Rotates @next @angle degrees around @axis.
 	 *
-	 * For a rotation in 2D space, use gsk_transform_rotate().
+	 * For a rotation in 2D space, use [method@Gsk.Transform.rotate]
 	 *
 	 * Params:
 	 *     angle = the rotation angle, in degrees (clockwise)
@@ -265,7 +277,8 @@ public class Transform
 
 	/**
 	 * Scales @next in 2-dimensional space by the given factors.
-	 * Use gsk_transform_scale_3d() to scale in all 3 dimensions.
+	 *
+	 * Use [method@Gsk.Transform.scale_3d] to scale in all 3 dimensions.
 	 *
 	 * Params:
 	 *     factorX = scaling factor on the X axis
@@ -308,21 +321,21 @@ public class Transform
 	}
 
 	/**
-	 * Converts a #GskTransform to a 2D transformation
-	 * matrix.
+	 * Converts a `GskTransform` to a 2D transformation matrix.
+	 *
 	 * @self must be a 2D transformation. If you are not
 	 * sure, use gsk_transform_get_category() >=
 	 * %GSK_TRANSFORM_CATEGORY_2D to check.
 	 *
 	 * The returned values have the following layout:
 	 *
-	 * |[<!-- language="plain" -->
+	 * ```
 	 * | xx yx |   |  a  b  0 |
 	 * | xy yy | = |  c  d  0 |
 	 * | dx dy |   | tx ty  1 |
-	 * ]|
+	 * ```
 	 *
-	 * This function can be used to convert between a #GskTransform
+	 * This function can be used to convert between a `GskTransform`
 	 * and a matrix type from other 2D drawing libraries, in particular
 	 * Cairo.
 	 *
@@ -340,8 +353,8 @@ public class Transform
 	}
 
 	/**
-	 * Converts a #GskTransform to 2D affine transformation
-	 * factors.
+	 * Converts a `GskTransform` to 2D affine transformation factors.
+	 *
 	 * @self must be a 2D transformation. If you are not
 	 * sure, use gsk_transform_get_category() >=
 	 * %GSK_TRANSFORM_CATEGORY_2D_AFFINE to check.
@@ -363,6 +376,7 @@ public class Transform
 
 	/**
 	 * Computes the actual value of @self and stores it in @out_matrix.
+	 *
 	 * The previous value of @out_matrix will be ignored.
 	 *
 	 * Params:
@@ -378,11 +392,11 @@ public class Transform
 	}
 
 	/**
-	 * Converts a matrix into a string that is suitable for
-	 * printing and can later be parsed with gsk_transform_parse().
+	 * Converts a matrix into a string that is suitable for printing.
 	 *
-	 * This is a wrapper around gsk_transform_print(), see that function
-	 * for details.
+	 * The resulting string can be parsed with [func@Gsk.Transform.parse].
+	 *
+	 * This is a wrapper around [method@Gsk.Transform.print].
 	 *
 	 * Returns: A new string for @self
 	 */
@@ -395,7 +409,8 @@ public class Transform
 	}
 
 	/**
-	 * Converts a #GskTransform to a translation operation.
+	 * Converts a `GskTransform` to a translation operation.
+	 *
 	 * @self must be a 2D transformation. If you are not
 	 * sure, use gsk_transform_get_category() >=
 	 * %GSK_TRANSFORM_CATEGORY_2D_TRANSLATE to check.
@@ -432,11 +447,12 @@ public class Transform
 	}
 
 	/**
-	 * Transforms a #graphene_rect_t using the given transform @self.
+	 * Transforms a `graphene_rect_t` using the given transform @self.
+	 *
 	 * The result is the bounding box containing the coplanar quad.
 	 *
 	 * Params:
-	 *     rect = a #graphene_rect_t
+	 *     rect = a `graphene_rect_t`
 	 *     outRect = return location for the bounds
 	 *         of the transformed rectangle
 	 */
@@ -450,10 +466,10 @@ public class Transform
 	}
 
 	/**
-	 * Transforms a #graphene_point_t using the given transform @self.
+	 * Transforms a `graphene_point_t` using the given transform @self.
 	 *
 	 * Params:
-	 *     point = a #graphene_point_t
+	 *     point = a `graphene_point_t`
 	 *     outPoint = return location for
 	 *         the transformed point
 	 */
@@ -467,7 +483,7 @@ public class Transform
 	}
 
 	/**
-	 * Translates @next in 2dimensional space by @point.
+	 * Translates @next in 2-dimensional space by @point.
 	 *
 	 * Params:
 	 *     point = the point to translate the transform by
@@ -507,7 +523,7 @@ public class Transform
 	}
 
 	/**
-	 * Releases a reference on the given #GskTransform.
+	 * Releases a reference on the given `GskTransform`.
 	 *
 	 * If the reference was the last, the resources associated to the @self are
 	 * freed.
@@ -519,7 +535,9 @@ public class Transform
 
 	/**
 	 * Parses the given @string into a transform and puts it in
-	 * @out_transform. Strings printed via gsk_transform_to_string()
+	 * @out_transform.
+	 *
+	 * Strings printed via [method@Gsk.Transform.to_string]
 	 * can be read in again successfully using this function.
 	 *
 	 * If @string does not describe a valid transform, %FALSE is

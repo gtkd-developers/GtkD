@@ -35,12 +35,15 @@ private import std.algorithm;
 
 
 /**
- * #GtkGestureDrag is a #GtkGesture implementation that recognizes drag
- * operations. The drag operation itself can be tracked throughout the
- * #GtkGestureDrag::drag-begin, #GtkGestureDrag::drag-update and
- * #GtkGestureDrag::drag-end signals, or the relevant coordinates be
- * extracted through gtk_gesture_drag_get_offset() and
- * gtk_gesture_drag_get_start_point().
+ * `GtkGestureDrag` is a `GtkGesture` implementation for drags.
+ * 
+ * The drag operation itself can be tracked throughout the
+ * [signal@Gtk.GestureDrag::drag-begin],
+ * [signal@Gtk.GestureDrag::drag-update] and
+ * [signal@Gtk.GestureDrag::drag-end] signals, and the relevant
+ * coordinates can be extracted through
+ * [method@Gtk.GestureDrag.get_offset] and
+ * [method@Gtk.GestureDrag.get_start_point].
  */
 public class GestureDrag : GestureSingle
 {
@@ -78,9 +81,9 @@ public class GestureDrag : GestureSingle
 	}
 
 	/**
-	 * Returns a newly created #GtkGesture that recognizes drags.
+	 * Returns a newly created `GtkGesture` that recognizes drags.
 	 *
-	 * Returns: a newly created #GtkGestureDrag
+	 * Returns: a newly created `GtkGestureDrag`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -97,6 +100,8 @@ public class GestureDrag : GestureSingle
 	}
 
 	/**
+	 * Gets the offset from the start point.
+	 *
 	 * If the @gesture is active, this function returns %TRUE and
 	 * fills in @x and @y with the coordinates of the current point,
 	 * as an offset to the starting drag point.
@@ -113,9 +118,11 @@ public class GestureDrag : GestureSingle
 	}
 
 	/**
+	 * Gets the point where the drag started.
+	 *
 	 * If the @gesture is active, this function returns %TRUE
 	 * and fills in @x and @y with the drag start coordinates,
-	 * in window-relative coordinates.
+	 * in surface-relative coordinates.
 	 *
 	 * Params:
 	 *     x = X coordinate for the drag start point
@@ -129,7 +136,7 @@ public class GestureDrag : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever dragging starts.
+	 * Emitted whenever dragging starts.
 	 *
 	 * Params:
 	 *     startX = X coordinate, relative to the widget allocation
@@ -141,7 +148,7 @@ public class GestureDrag : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever the dragging is finished.
+	 * Emitted whenever the dragging is finished.
 	 *
 	 * Params:
 	 *     offsetX = X offset, relative to the start point
@@ -153,7 +160,7 @@ public class GestureDrag : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever the dragging point moves.
+	 * Emitted whenever the dragging point moves.
 	 *
 	 * Params:
 	 *     offsetX = X offset, relative to the start point

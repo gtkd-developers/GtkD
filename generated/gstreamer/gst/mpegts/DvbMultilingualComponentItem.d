@@ -26,9 +26,9 @@ module gst.mpegts.DvbMultilingualComponentItem;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /** */
@@ -63,7 +63,7 @@ public final class DvbMultilingualComponentItem
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMpegtsDvbMultilingualComponentItem);
 	}
 

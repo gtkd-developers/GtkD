@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +66,7 @@ public class QueueArray
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTBASE) && ownedRef )
+		if ( ownedRef )
 			gst_queue_array_free(gstQueueArray);
 	}
 

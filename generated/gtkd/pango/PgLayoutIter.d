@@ -25,7 +25,6 @@
 module pango.PgLayoutIter;
 
 private import gobject.ObjectG;
-private import gtkd.Loader;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
 private import pango.c.functions;
@@ -33,11 +32,12 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoLayoutIter structure can be used to
- * iterate over the visual extents of a #PangoLayout.
+ * A `PangoLayoutIter` can be used to iterate over the visual
+ * extents of a `PangoLayout`.
  * 
- * The #PangoLayoutIter structure is opaque, and
- * has no user-visible fields.
+ * To obtain a `PangoLayoutIter`, use [method@Pango.Layout.get_iter].
+ * 
+ * The `PangoLayoutIter` structure is opaque, and has no user-visible fields.
  */
 public class PgLayoutIter
 {
@@ -70,7 +70,7 @@ public class PgLayoutIter
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_layout_iter_free(pangoLayoutIter);
 	}
 
@@ -92,10 +92,10 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Copies a #PangoLayoutIter.
+	 * Copies a `PangoLayoutIter`.
 	 *
-	 * Returns: the newly allocated #PangoLayoutIter,
-	 *     which should be freed with pango_layout_iter_free(),
+	 * Returns: the newly allocated `PangoLayoutIter`,
+	 *     which should be freed with [method@Pango.LayoutIter.free],
 	 *     or %NULL if @iter was %NULL.
 	 *
 	 * Since: 1.20
@@ -164,7 +164,7 @@ public class PgLayoutIter
 	 * Gets the current byte index. Note that iterating forward by char
 	 * moves in visual order, not logical order, so indexes may not be
 	 * sequential. Also, the index may be equal to the length of the text
-	 * in the layout, if on the %NULL run (see pango_layout_iter_get_run()).
+	 * in the layout, if on the %NULL run (see [method@Pango.LayoutIter.get_run]).
 	 *
 	 * Returns: current byte index.
 	 */
@@ -174,7 +174,7 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Gets the layout associated with a #PangoLayoutIter.
+	 * Gets the layout associated with a `PangoLayoutIter`.
 	 *
 	 * Returns: the layout associated with @iter.
 	 *
@@ -193,15 +193,12 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Obtains the extents of the #PangoLayout being iterated
-	 * over. @ink_rect or @logical_rect can be %NULL if you
-	 * aren't interested in them.
+	 * Obtains the extents of the `PangoLayout` being iterated over.
+	 * @ink_rect or @logical_rect can be %NULL if you aren't interested in them.
 	 *
 	 * Params:
-	 *     inkRect = rectangle to fill with ink extents,
-	 *         or %NULL
-	 *     logicalRect = rectangle to fill with logical
-	 *         extents, or %NULL
+	 *     inkRect = rectangle to fill with ink extents, or %NULL
+	 *     logicalRect = rectangle to fill with logical extents, or %NULL
 	 */
 	public void getLayoutExtents(out PangoRectangle inkRect, out PangoRectangle logicalRect)
 	{
@@ -211,8 +208,9 @@ public class PgLayoutIter
 	/**
 	 * Gets the current line.
 	 *
-	 * Use the faster pango_layout_iter_get_line_readonly() if you do not plan
-	 * to modify the contents of the line (glyphs, glyph widths, etc.).
+	 * Use the faster [method@Pango.LayoutIter.get_line_readonly] if
+	 * you do not plan to modify the contents of the line (glyphs,
+	 * glyph widths, etc.).
 	 *
 	 * Returns: the current line.
 	 */
@@ -232,9 +230,9 @@ public class PgLayoutIter
 	 * Obtains the extents of the current line. @ink_rect or @logical_rect
 	 * can be %NULL if you aren't interested in them. Extents are in layout
 	 * coordinates (origin is the top-left corner of the entire
-	 * #PangoLayout).  Thus the extents returned by this function will be
+	 * `PangoLayout`). Thus the extents returned by this function will be
 	 * the same width/height but not at the same x/y as the extents
-	 * returned from pango_layout_line_get_extents().
+	 * returned from [method@Pango.LayoutLine.get_extents].
 	 *
 	 * Params:
 	 *     inkRect = rectangle to fill with ink extents, or %NULL
@@ -248,9 +246,9 @@ public class PgLayoutIter
 	/**
 	 * Gets the current line for read-only access.
 	 *
-	 * This is a faster alternative to pango_layout_iter_get_line(),
-	 * but the user is not expected
-	 * to modify the contents of the line (glyphs, glyph widths, etc.).
+	 * This is a faster alternative to [method@Pango.LayoutIter.get_line],
+	 * but the user is not expected to modify the contents of the line
+	 * (glyphs, glyph widths, etc.).
 	 *
 	 * Returns: the current line, that should not be
 	 *     modified.
@@ -270,17 +268,16 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Divides the vertical space in the #PangoLayout being iterated over
+	 * Divides the vertical space in the `PangoLayout` being iterated over
 	 * between the lines in the layout, and returns the space belonging to
-	 * the current line.  A line's range includes the line's logical
-	 * extents, plus half of the spacing above and below the line, if
-	 * pango_layout_set_spacing() has been called to set layout spacing.
+	 * the current line. A line's range includes the line's logical extents,
+	 * plus half of the spacing above and below the line, if
+	 * [method@Pango.Layout.set_spacing] has been called to set layout spacing.
 	 * The Y positions are in layout coordinates (origin at top left of the
 	 * entire layout).
 	 *
-	 * Note: Since 1.44, Pango uses line heights for placing lines,
-	 * and there may be gaps between the ranges returned by this
-	 * function.
+	 * Note: Since 1.44, Pango uses line heights for placing lines, and there
+	 * may be gaps between the ranges returned by this function.
 	 *
 	 * Params:
 	 *     y0 = start of line, or %NULL
@@ -297,8 +294,8 @@ public class PgLayoutIter
 	 * %NULL. The %NULL run at the end of each line ensures that all lines have
 	 * at least one run, even lines consisting of only a newline.
 	 *
-	 * Use the faster pango_layout_iter_get_run_readonly() if you do not plan
-	 * to modify the contents of the run (glyphs, glyph widths, etc.).
+	 * Use the faster [method@Pango.LayoutIter.get_run_readonly] if you do not
+	 * plan to modify the contents of the run (glyphs, glyph widths, etc.).
 	 *
 	 * Returns: the current run.
 	 */
@@ -326,9 +323,9 @@ public class PgLayoutIter
 	 * %NULL. The %NULL run at the end of each line ensures that all lines have
 	 * at least one run, even lines consisting of only a newline.
 	 *
-	 * This is a faster alternative to pango_layout_iter_get_run(),
-	 * but the user is not expected
-	 * to modify the contents of the run (glyphs, glyph widths, etc.).
+	 * This is a faster alternative to [method@Pango.LayoutIter.get_run],
+	 * but the user is not expected to modify the contents of the run (glyphs,
+	 * glyph widths, etc.).
 	 *
 	 * Returns: the current run, that
 	 *     should not be modified.
@@ -341,8 +338,8 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Moves @iter forward to the next character in visual order. If @iter was already at
-	 * the end of the layout, returns %FALSE.
+	 * Moves @iter forward to the next character in visual order.
+	 * If @iter was already at the end of the layout, returns %FALSE.
 	 *
 	 * Returns: whether motion was possible.
 	 */
@@ -352,8 +349,8 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Moves @iter forward to the next cluster in visual order. If @iter
-	 * was already at the end of the layout, returns %FALSE.
+	 * Moves @iter forward to the next cluster in visual order.
+	 * If @iter was already at the end of the layout, returns %FALSE.
 	 *
 	 * Returns: whether motion was possible.
 	 */
@@ -363,8 +360,8 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Moves @iter forward to the start of the next line. If @iter is
-	 * already on the last line, returns %FALSE.
+	 * Moves @iter forward to the start of the next line.
+	 * If @iter is already on the last line, returns %FALSE.
 	 *
 	 * Returns: whether motion was possible.
 	 */
@@ -374,8 +371,8 @@ public class PgLayoutIter
 	}
 
 	/**
-	 * Moves @iter forward to the next run in visual order. If @iter was
-	 * already at the end of the layout, returns %FALSE.
+	 * Moves @iter forward to the next run in visual order.
+	 * If @iter was already at the end of the layout, returns %FALSE.
 	 *
 	 * Returns: whether motion was possible.
 	 */

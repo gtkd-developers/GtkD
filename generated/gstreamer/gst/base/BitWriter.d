@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
 private import gstreamer.Buffer;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +69,7 @@ public class BitWriter
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTBASE) && ownedRef )
+		if ( ownedRef )
 			gst_bit_writer_free(gstBitWriter);
 	}
 

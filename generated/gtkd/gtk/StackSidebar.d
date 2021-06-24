@@ -33,20 +33,19 @@ public  import gtk.c.types;
 
 
 /**
- * A GtkStackSidebar enables you to quickly and easily provide a
- * consistent "sidebar" object for your user interface.
+ * A `GtkStackSidebar` uses a sidebar to switch between `GtkStack` pages.
  * 
- * In order to use a GtkStackSidebar, you simply use a GtkStack to
+ * In order to use a `GtkStackSidebar`, you simply use a `GtkStack` to
  * organize your UI flow, and add the sidebar to your sidebar area. You
- * can use gtk_stack_sidebar_set_stack() to connect the #GtkStackSidebar
- * to the #GtkStack.
+ * can use [method@Gtk.StackSidebar.set_stack] to connect the `GtkStackSidebar`
+ * to the `GtkStack`.
  * 
  * # CSS nodes
  * 
- * GtkStackSidebar has a single CSS node with name stacksidebar and
+ * `GtkStackSidebar` has a single CSS node with name stacksidebar and
  * style class .sidebar.
  * 
- * When circumstances require it, GtkStackSidebar adds the
+ * When circumstances require it, `GtkStackSidebar` adds the
  * .needs-attention style class to the widgets representing the stack
  * pages.
  */
@@ -86,9 +85,9 @@ public class StackSidebar : Widget
 	}
 
 	/**
-	 * Creates a new sidebar.
+	 * Creates a new `GtkStackSidebar`.
 	 *
-	 * Returns: the new #GtkStackSidebar
+	 * Returns: the new `GtkStackSidebar`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -106,7 +105,6 @@ public class StackSidebar : Widget
 
 	/**
 	 * Retrieves the stack.
-	 * See gtk_stack_sidebar_set_stack().
 	 *
 	 * Returns: the associated #GtkStack or
 	 *     %NULL if none has been set explicitly
@@ -124,13 +122,13 @@ public class StackSidebar : Widget
 	}
 
 	/**
-	 * Set the #GtkStack associated with this #GtkStackSidebar.
+	 * Set the `GtkStack` associated with this `GtkStackSidebar`.
 	 *
-	 * The sidebar widget will automatically update according to the order
-	 * (packing) and items within the given #GtkStack.
+	 * The sidebar widget will automatically update according to
+	 * the order and items within the given `GtkStack`.
 	 *
 	 * Params:
-	 *     stack = a #GtkStack
+	 *     stack = a `GtkStack`
 	 */
 	public void setStack(Stack stack)
 	{

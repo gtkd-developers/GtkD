@@ -29,7 +29,7 @@ public  import gdk.c.types;
 
 
 /**
- * GdkEventSequence is an opaque type representing a sequence
+ * `GdkEventSequence` is an opaque type representing a sequence
  * of related touch events.
  */
 public struct EventSequence

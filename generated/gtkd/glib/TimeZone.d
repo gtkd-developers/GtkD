@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -68,13 +67,46 @@ public class TimeZone
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_time_zone_unref(gTimeZone);
 	}
 
 
 	/**
-	 * Creates a #GTimeZone corresponding to @identifier.
+	 * A version of g_time_zone_new_identifier() which returns the UTC time zone
+	 * if @identifier could not be parsed or loaded.
+	 *
+	 * If you need to check whether @identifier was loaded successfully, use
+	 * g_time_zone_new_identifier().
+	 *
+	 * Deprecated: Use g_time_zone_new_identifier() instead, as it provides
+	 * error reporting. Change your code to handle a potentially %NULL return
+	 * value.
+	 *
+	 * Params:
+	 *     identifier = a timezone identifier
+	 *
+	 * Returns: the requested timezone
+	 *
+	 * Since: 2.26
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string identifier)
+	{
+		auto __p = g_time_zone_new(Str.toStringz(identifier));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GTimeZone*) __p);
+	}
+
+	/**
+	 * Creates a #GTimeZone corresponding to @identifier. If @identifier cannot be
+	 * parsed or loaded, %NULL is returned.
 	 *
 	 * @identifier can either be an RFC3339/ISO 8601 time offset or
 	 * something that would pass as a valid value for the `TZ` environment
@@ -142,19 +174,20 @@ public class TimeZone
 	 * Params:
 	 *     identifier = a timezone identifier
 	 *
-	 * Returns: the requested timezone
+	 * Returns: the requested timezone, or %NULL on
+	 *     failure
 	 *
-	 * Since: 2.26
+	 * Since: 2.68
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(string identifier)
 	{
-		auto __p = g_time_zone_new(Str.toStringz(identifier));
+		auto __p = g_time_zone_new_identifier(Str.toStringz(identifier));
 
 		if(__p is null)
 		{
-			throw new ConstructionException("null returned by new");
+			throw new ConstructionException("null returned by new_identifier");
 		}
 
 		this(cast(GTimeZone*) __p);

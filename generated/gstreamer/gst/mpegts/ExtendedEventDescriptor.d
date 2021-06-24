@@ -27,9 +27,9 @@ module gst.mpegts.ExtendedEventDescriptor;
 private import glib.MemorySlice;
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -66,7 +66,7 @@ public final class ExtendedEventDescriptor
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			gst_mpegts_extended_event_descriptor_free(gstMpegtsExtendedEventDescriptor);
 	}
 

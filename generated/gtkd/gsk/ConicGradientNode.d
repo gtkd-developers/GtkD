@@ -72,7 +72,9 @@ public class ConicGradientNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that draws a conic gradient. The conic gradient
+	 * Creates a `GskRenderNode` that draws a conic gradient.
+	 *
+	 * The conic gradient
 	 * starts around @center in the direction of @rotation. A rotation of 0 means
 	 * that the gradient points up. Color stops are then added clockwise.
 	 *
@@ -80,11 +82,12 @@ public class ConicGradientNode : RenderNode
 	 *     bounds = the bounds of the node
 	 *     center = the center of the gradient
 	 *     rotation = the rotation of the gradient in degrees
-	 *     colorStops = a pointer to an array of #GskColorStop defining the gradient
-	 *         The offsets of all color steps must be increasing. The first stop's offset must be >= 0 and the last
+	 *     colorStops = a pointer to an array of
+	 *         `GskColorStop` defining the gradient. The offsets of all color stops
+	 *         must be increasing. The first stop's offset must be >= 0 and the last
 	 *         stop's offset must be <= 1.
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -98,6 +101,23 @@ public class ConicGradientNode : RenderNode
 		}
 
 		this(cast(GskConicGradientNode*) __p);
+	}
+
+	/**
+	 * Retrieves the angle for the gradient in radians, normalized in [0, 2 * PI].
+	 *
+	 * The angle is starting at the top and going clockwise, as expressed
+	 * in the css specification:
+	 *
+	 * angle = 90 - gsk_conic_gradient_node_get_rotation()
+	 *
+	 * Returns: the angle for the gradient
+	 *
+	 * Since: 4.2
+	 */
+	public float getAngle()
+	{
+		return gsk_conic_gradient_node_get_angle(cast(GskRenderNode*)gskConicGradientNode);
 	}
 
 	/**

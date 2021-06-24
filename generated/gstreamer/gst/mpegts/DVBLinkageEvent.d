@@ -27,7 +27,6 @@ module gst.mpegts.DVBLinkageEvent;
 private import glib.MemorySlice;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /** */
@@ -62,7 +61,7 @@ public final class DVBLinkageEvent
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMpegtsDVBLinkageEvent);
 	}
 

@@ -29,7 +29,6 @@ private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /** */
@@ -64,7 +63,7 @@ public final class SCTESpliceEvent
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMpegtsSCTESpliceEvent);
 	}
 

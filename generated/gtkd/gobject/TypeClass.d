@@ -27,7 +27,6 @@ module gobject.TypeClass;
 private import gobject.ObjectG;
 private import gobject.c.functions;
 public  import gobject.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -64,7 +63,7 @@ public class TypeClass
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
+		if ( ownedRef )
 			g_type_class_unref(gTypeClass);
 	}
 

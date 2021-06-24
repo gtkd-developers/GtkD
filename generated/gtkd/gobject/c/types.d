@@ -256,6 +256,12 @@ public enum GSignalFlags
 	 * running with G_ENABLE_DIAGNOSTIC=1.  Since 2.32.
 	 */
 	DEPRECATED = 256,
+	/**
+	 * Only used in #GSignalAccumulator accumulator
+	 * functions for the #GSignalInvocationHint::run_type field to mark the first
+	 * call to the accumulator function for a signal emission.  Since 2.68.
+	 */
+	ACCUMULATOR_FIRST_RUN = 131072,
 }
 alias GSignalFlags SignalFlags;
 
@@ -357,7 +363,7 @@ public enum GTypeFundamentalFlags
 	 */
 	CLASSED = 1,
 	/**
-	 * Indicates an instantiable type (implies classed)
+	 * Indicates an instantiatable type (implies classed)
 	 */
 	INSTANTIATABLE = 2,
 	/**
@@ -1086,7 +1092,9 @@ struct GSignalInvocationHint
 	/**
 	 * The stage the signal emission is currently in, this
 	 * field will contain one of %G_SIGNAL_RUN_FIRST,
-	 * %G_SIGNAL_RUN_LAST or %G_SIGNAL_RUN_CLEANUP.
+	 * %G_SIGNAL_RUN_LAST or %G_SIGNAL_RUN_CLEANUP and %G_SIGNAL_ACCUMULATOR_FIRST_RUN.
+	 * %G_SIGNAL_ACCUMULATOR_FIRST_RUN is only set for the first run of the accumulator
+	 * function for a signal emission.
 	 */
 	GSignalFlags runType;
 }
@@ -1804,7 +1812,7 @@ public alias extern(C) void function(void* checkData, void* gIface) GTypeInterfa
  *
  * Params:
  *     plugin = the #GTypePlugin
- *     instanceType = the #GType of an instantiable type to which the interface
+ *     instanceType = the #GType of an instantiatable type to which the interface
  *         is added
  *     interfaceType = the #GType of the interface whose info is completed
  *     info = the #GInterfaceInfo to fill in
@@ -1876,12 +1884,12 @@ public alias extern(C) void function(GValue* srcValue, GValue* destValue) GValue
 /**
  * A #GWeakNotify function can be added to an object as a callback that gets
  * triggered when the object is finalized. Since the object is already being
- * finalized when the #GWeakNotify is called, there's not much you could do
+ * disposed when the #GWeakNotify is called, there's not much you could do
  * with the object, apart from e.g. using its address as hash-index or the like.
  *
  * Params:
  *     data = data that was provided when the weak reference was established
- *     whereTheObjectWas = the object being finalized
+ *     whereTheObjectWas = the object being disposed
  */
 public alias extern(C) void function(void* data, GObject* whereTheObjectWas) GWeakNotify;
 

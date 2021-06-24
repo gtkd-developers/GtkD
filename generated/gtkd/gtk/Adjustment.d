@@ -33,13 +33,17 @@ private import std.algorithm;
 
 
 /**
- * The #GtkAdjustment object represents a value which has an associated lower
- * and upper bound, together with step and page increments, and a page size.
- * It is used within several GTK+ widgets, including #GtkSpinButton, #GtkViewport,
- * and #GtkRange (which is a base class for #GtkScrollbar and #GtkScale).
+ * `GtkAdjustment` is a model for a numeric value.
  * 
- * The #GtkAdjustment object does not update the value itself. Instead
- * it is left up to the owner of the #GtkAdjustment to control the value.
+ * The `GtkAdjustment has an associated lower and upper bound.
+ * It also contains step and page increments, and a page size.
+ * 
+ * Adjustments are used within several GTK widgets, including
+ * [class@Gtk.SpinButton], [class@Gtk.Viewport], [class@Gtk.Scrollbar]
+ * and [class@Gtk.Scale].
+ * 
+ * The `GtkAdjustment` object does not update the value itself. Instead
+ * it is left up to the owner of the `GtkAdjustment` to control the value.
  */
 public class Adjustment : ObjectG
 {
@@ -77,7 +81,7 @@ public class Adjustment : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkAdjustment.
+	 * Creates a new `GtkAdjustment`.
 	 *
 	 * Params:
 	 *     value = the initial value
@@ -87,7 +91,7 @@ public class Adjustment : ObjectG
 	 *     pageIncrement = the page increment
 	 *     pageSize = the page size
 	 *
-	 * Returns: a new #GtkAdjustment
+	 * Returns: a new `GtkAdjustment`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -104,13 +108,15 @@ public class Adjustment : ObjectG
 	}
 
 	/**
-	 * Updates the #GtkAdjustment:value property to ensure that the range
-	 * between @lower and @upper is in the current page (i.e. between
-	 * #GtkAdjustment:value and #GtkAdjustment:value + #GtkAdjustment:page-size).
-	 * If the range is larger than the page size, then only the start of it will
-	 * be in the current page.
+	 * Updates the value property to ensure that the range
+	 * between @lower and @upper is in the current page.
 	 *
-	 * A #GtkAdjustment::value-changed signal will be emitted if the value is changed.
+	 * The current page goes from `value` to `value` + `page-size`.
+	 * If the range is larger than the page size, then only the
+	 * start of it will be in the current page.
+	 *
+	 * A [signal@Gtk.Adjustment::value-changed] signal will be emitted
+	 * if the value is changed.
 	 *
 	 * Params:
 	 *     lower = the lower value
@@ -125,9 +131,10 @@ public class Adjustment : ObjectG
 	 * Sets all properties of the adjustment at once.
 	 *
 	 * Use this function to avoid multiple emissions of the
-	 * #GtkAdjustment::changed signal. See gtk_adjustment_set_lower()
-	 * for an alternative way of compressing multiple emissions of
-	 * #GtkAdjustment::changed into one.
+	 * [signal@Gtk.Adjustment::changed] signal. See
+	 * [method@Gtk.Adjustment.set_lower] for an alternative
+	 * way of compressing multiple emissions of
+	 * [signal@Gtk.Adjustment::changed] into one.
 	 *
 	 * Params:
 	 *     value = the new value
@@ -204,7 +211,6 @@ public class Adjustment : ObjectG
 
 	/**
 	 * Gets the current value of the adjustment.
-	 * See gtk_adjustment_set_value().
 	 *
 	 * Returns: The current value of the adjustment
 	 */
@@ -217,16 +223,16 @@ public class Adjustment : ObjectG
 	 * Sets the minimum value of the adjustment.
 	 *
 	 * When setting multiple adjustment properties via their individual
-	 * setters, multiple #GtkAdjustment::changed signals will be emitted.
-	 * However, since the emission of the #GtkAdjustment::changed signal
-	 * is tied to the emission of the #GObject::notify signals of the changed
-	 * properties, it’s possible to compress the #GtkAdjustment::changed
-	 * signals into one by calling g_object_freeze_notify() and
-	 * g_object_thaw_notify() around the calls to the individual setters.
+	 * setters, multiple [signal@Gtk.Adjustment::changed] signals will
+	 * be emitted. However, since the emission of the
+	 * [signal@Gtk.Adjustment::changed] signal is tied to the emission
+	 * of the ::notify signals of the changed properties, it’s possible
+	 * to compress the [signal@Gtk.Adjustment::changed] signals into one
+	 * by calling g_object_freeze_notify() and g_object_thaw_notify()
+	 * around the calls to the individual setters.
 	 *
 	 * Alternatively, using a single g_object_set() for all the properties
-	 * to change, or using gtk_adjustment_configure() has the same effect
-	 * of compressing #GtkAdjustment::changed emissions.
+	 * to change, or using [method@Gtk.Adjustment.configure] has the same effect.
 	 *
 	 * Params:
 	 *     lower = the new minimum value
@@ -239,9 +245,9 @@ public class Adjustment : ObjectG
 	/**
 	 * Sets the page increment of the adjustment.
 	 *
-	 * See gtk_adjustment_set_lower() about how to compress multiple
-	 * emissions of the #GtkAdjustment::changed signal when setting
-	 * multiple adjustment properties.
+	 * See [method@Gtk.Adjustment.set_lower] about how to compress
+	 * multiple emissions of the [signal@Gtk.Adjustment::changed]
+	 * signal when setting multiple adjustment properties.
 	 *
 	 * Params:
 	 *     pageIncrement = the new page increment
@@ -254,9 +260,9 @@ public class Adjustment : ObjectG
 	/**
 	 * Sets the page size of the adjustment.
 	 *
-	 * See gtk_adjustment_set_lower() about how to compress multiple
-	 * emissions of the GtkAdjustment::changed signal when setting
-	 * multiple adjustment properties.
+	 * See [method@Gtk.Adjustment.set_lower] about how to compress
+	 * multiple emissions of the [signal@Gtk.Adjustment::changed]
+	 * signal when setting multiple adjustment properties.
 	 *
 	 * Params:
 	 *     pageSize = the new page size
@@ -269,9 +275,9 @@ public class Adjustment : ObjectG
 	/**
 	 * Sets the step increment of the adjustment.
 	 *
-	 * See gtk_adjustment_set_lower() about how to compress multiple
-	 * emissions of the #GtkAdjustment::changed signal when setting
-	 * multiple adjustment properties.
+	 * See [method@Gtk.Adjustment.set_lower] about how to compress
+	 * multiple emissions of the [signal@Gtk.Adjustment::changed]
+	 * signal when setting multiple adjustment properties.
 	 *
 	 * Params:
 	 *     stepIncrement = the new step increment
@@ -287,9 +293,9 @@ public class Adjustment : ObjectG
 	 * Note that values will be restricted by `upper - page-size`
 	 * if the page-size property is nonzero.
 	 *
-	 * See gtk_adjustment_set_lower() about how to compress multiple
-	 * emissions of the #GtkAdjustment::changed signal when setting
-	 * multiple adjustment properties.
+	 * See [method@Gtk.Adjustment.set_lower] about how to compress
+	 * multiple emissions of the [signal@Gtk.Adjustment::changed]
+	 * signal when setting multiple adjustment properties.
 	 *
 	 * Params:
 	 *     upper = the new maximum value
@@ -300,12 +306,15 @@ public class Adjustment : ObjectG
 	}
 
 	/**
-	 * Sets the #GtkAdjustment value. The value is clamped to lie between
-	 * #GtkAdjustment:lower and #GtkAdjustment:upper.
+	 * Sets the `GtkAdjustment` value.
 	 *
-	 * Note that for adjustments which are used in a #GtkScrollbar, the
-	 * effective range of allowed values goes from #GtkAdjustment:lower to
-	 * #GtkAdjustment:upper - #GtkAdjustment:page-size.
+	 * The value is clamped to lie between [property@Gtk.Adjustment:lower]
+	 * and [property@Gtk.Adjustment:upper].
+	 *
+	 * Note that for adjustments which are used in a `GtkScrollbar`,
+	 * the effective range of allowed values goes from
+	 * [property@Gtk.Adjustment:lower] to
+	 * [property@Gtk.Adjustment:upper] - [property@Gtk.Adjustment:page-size].
 	 *
 	 * Params:
 	 *     value = the new value
@@ -316,8 +325,11 @@ public class Adjustment : ObjectG
 	}
 
 	/**
-	 * Emitted when one or more of the #GtkAdjustment properties have been
-	 * changed, other than the #GtkAdjustment:value property.
+	 * Emitted when one or more of the `GtkAdjustment` properties have been
+	 * changed.
+	 *
+	 * Note that the [property@Gtk.Adjustment:value] property is
+	 * covered by the [signal@Gtk.Adjustment::value-changed] signal.
 	 */
 	gulong addOnChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -325,7 +337,7 @@ public class Adjustment : ObjectG
 	}
 
 	/**
-	 * Emitted when the #GtkAdjustment:value property has been changed.
+	 * Emitted when the value has been changed.
 	 */
 	gulong addOnValueChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

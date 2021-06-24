@@ -36,11 +36,13 @@ private import std.algorithm;
 
 
 /**
- * #GtkGestureClick is a #GtkGesture implementation able to recognize
- * multiple clicks on a nearby zone, which can be listened for through
- * the #GtkGestureClick::pressed signal. Whenever time or distance
- * between clicks exceed the GTK defaults, #GtkGestureClick::stopped
- * is emitted, and the click counter is reset.
+ * `GtkGestureClick` is a `GtkGesture` implementation for clicks.
+ * 
+ * It is able to recognize multiple clicks on a nearby zone, which
+ * can be listened for through the [signal@Gtk.GestureClick::pressed]
+ * signal. Whenever time or distance between clicks exceed the GTK
+ * defaults, [signal@Gtk.GestureClick::stopped] is emitted, and the
+ * click counter is reset.
  */
 public class GestureClick : GestureSingle
 {
@@ -78,10 +80,10 @@ public class GestureClick : GestureSingle
 	}
 
 	/**
-	 * Returns a newly created #GtkGesture that recognizes single and multiple
-	 * presses.
+	 * Returns a newly created `GtkGesture` that recognizes
+	 * single and multiple presses.
 	 *
-	 * Returns: a newly created #GtkGestureClick
+	 * Returns: a newly created `GtkGestureClick`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -98,7 +100,7 @@ public class GestureClick : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever a button or touch press happens.
+	 * Emitted whenever a button or touch press happens.
 	 *
 	 * Params:
 	 *     nPress = how many touch/button presses happened with this one
@@ -111,10 +113,12 @@ public class GestureClick : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted when a button or touch is released. @n_press
-	 * will report the number of press that is paired to this event, note
-	 * that #GtkGestureClick::stopped may have been emitted between the
-	 * press and its release, @n_press will only start over at the next press.
+	 * Emitted when a button or touch is released.
+	 *
+	 * @n_press will report the number of press that is paired to
+	 * this event, note that [signal@Gtk.GestureClick::stopped] may
+	 * have been emitted between the press and its release, @n_press
+	 * will only start over at the next press.
 	 *
 	 * Params:
 	 *     nPress = number of press that is paired with this release
@@ -127,8 +131,7 @@ public class GestureClick : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever any time/distance threshold has
-	 * been exceeded.
+	 * Emitted whenever any time/distance threshold has been exceeded.
 	 */
 	gulong addOnStopped(void delegate(GestureClick) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -136,11 +139,12 @@ public class GestureClick : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever the gesture receives a release
-	 * event that had no previous corresponding press. Due to implicit
-	 * grabs, this can only happen on situations where input is grabbed
-	 * elsewhere mid-press or the pressed widget voluntarily relinquishes
-	 * its implicit grab.
+	 * Emitted whenever the gesture receives a release
+	 * event that had no previous corresponding press.
+	 *
+	 * Due to implicit grabs, this can only happen on situations
+	 * where input is grabbed elsewhere mid-press or the pressed
+	 * widget voluntarily relinquishes its implicit grab.
 	 *
 	 * Params:
 	 *     x = X coordinate of the event
@@ -154,11 +158,12 @@ public class GestureClick : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever the gesture receives a release
-	 * event that had no previous corresponding press. Due to implicit
-	 * grabs, this can only happen on situations where input is grabbed
-	 * elsewhere mid-press or the pressed widget voluntarily relinquishes
-	 * its implicit grab.
+	 * Emitted whenever the gesture receives a release
+	 * event that had no previous corresponding press.
+	 *
+	 * Due to implicit grabs, this can only happen on situations
+	 * where input is grabbed elsewhere mid-press or the pressed
+	 * widget voluntarily relinquishes its implicit grab.
 	 *
 	 * Params:
 	 *     x = X coordinate of the event

@@ -35,6 +35,8 @@ private import std.algorithm;
 
 
 /**
+ * Renders a toggle button in a cell
+ * 
  * #GtkCellRendererToggle renders a toggle button in a cell. The
  * button is drawn as a radio or a checkbutton, depending on the
  * #GtkCellRendererToggle:radio property.

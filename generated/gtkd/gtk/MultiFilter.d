@@ -34,14 +34,7 @@ public  import gtk.c.types;
 
 
 /**
- * GtkMultiFilter is the base type that implements support for handling
- * multiple filters.
- * 
- * GtkAnyFilter is a subclass of GtkMultiFilter that matches an item
- * when at least one of its filters matches.
- * 
- * GtkEveryFilter is a subclass of GtkMultiFilter that matches an item
- * when each of its filters matches.
+ * `GtkMultiFilter` is the base class for filters that combine multiple filters.
  */
 public class MultiFilter : Filter, ListModelIF, BuildableIF
 {
@@ -98,6 +91,7 @@ public class MultiFilter : Filter, ListModelIF, BuildableIF
 	/**
 	 * Removes the filter at the given @position from the list of filters used
 	 * by @self.
+	 *
 	 * If @position is larger than the number of filters, nothing happens and
 	 * the function returns.
 	 *

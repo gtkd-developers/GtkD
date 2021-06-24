@@ -37,8 +37,16 @@ private import std.algorithm;
 
 
 /**
- * The GdkDrag struct contains only private fields and
- * should not be accessed directly.
+ * The `GdkDrag` object represents the source of an ongoing DND operation.
+ * 
+ * A `GdkDrag` is created when a drag is started, and stays alive for duration of
+ * the DND operation. After a drag has been started with [func@Gdk.Drag.begin],
+ * the caller gets informed about the status of the ongoing drag operation
+ * with signals on the `GdkDrag` object.
+ * 
+ * GTK provides a higher level abstraction based on top of these functions,
+ * and so they are not normally needed in GTK applications. See the
+ * "Drag and Drop" section of the GTK documentation for more information.
  */
 public class Drag : ObjectG
 {
@@ -80,15 +88,16 @@ public class Drag : ObjectG
 	 *
 	 * This function is called by the drag source. After this call, you
 	 * probably want to set up the drag icon using the surface returned
-	 * by gdk_drag_get_drag_surface().
+	 * by [method@Gdk.Drag.get_drag_surface].
 	 *
-	 * This function returns a reference to the GdkDrag object, but GTK
-	 * keeps its own reference as well, as long as the DND operation is
-	 * going on.
+	 * This function returns a reference to the [class@Gdk.Drag] object,
+	 * but GTK keeps its own reference as well, as long as the DND operation
+	 * is going on.
 	 *
 	 * Note: if @actions include %GDK_ACTION_MOVE, you need to listen for
-	 * the #GdkDrag::dnd-finished signal and delete the data at the source
-	 * if gdk_drag_get_selected_action() returns %GDK_ACTION_MOVE.
+	 * the [signal@Gdk.Drag::dnd-finished] signal and delete the data at
+	 * the source if [method@Gdk.Drag.get_selected_action] returns
+	 * %GDK_ACTION_MOVE.
 	 *
 	 * Params:
 	 *     surface = the source surface for this drag
@@ -98,8 +107,8 @@ public class Drag : ObjectG
 	 *     dx = the x offset to @device's position where the drag nominally started
 	 *     dy = the y offset to @device's position where the drag nominally started
 	 *
-	 * Returns: a newly created #GdkDrag or
-	 *     %NULL on error.
+	 * Returns: a newly created [class@Gdk.Drag]
+	 *     or %NULL on error
 	 */
 	public static Drag begin(Surface surface, Device device, ContentProvider content, GdkDragAction actions, double dx, double dy)
 	{
@@ -114,14 +123,15 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * Inform GDK if the drop ended successfully. Passing %FALSE
-	 * for @success may trigger a drag cancellation animation.
+	 * Informs GDK that the drop ended.
 	 *
-	 * This function is called by the drag source, and should
-	 * be the last call before dropping the reference to the
-	 * @drag.
+	 * Passing %FALSE for @success may trigger a drag cancellation
+	 * animation.
 	 *
-	 * The #GdkDrag will only take the first gdk_drag_drop_done()
+	 * This function is called by the drag source, and should be the
+	 * last call before dropping the reference to the @drag.
+	 *
+	 * The `GdkDrag` will only take the first [method@Gdk.Drag.drop_done]
 	 * call as effective, if this function is called multiple times,
 	 * all subsequent calls will be ignored.
 	 *
@@ -136,7 +146,7 @@ public class Drag : ObjectG
 	/**
 	 * Determines the bitmask of possible actions proposed by the source.
 	 *
-	 * Returns: the #GdkDragAction flags
+	 * Returns: the `GdkDragAction` flags
 	 */
 	public GdkDragAction getActions()
 	{
@@ -144,9 +154,9 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkContentProvider associated to the GdkDrag object.
+	 * Returns the `GdkContentProvider` associated to the `GdkDrag` object.
 	 *
-	 * Returns: The #GdkContentProvider associated to @drag.
+	 * Returns: The `GdkContentProvider` associated to @drag.
 	 */
 	public ContentProvider getContent()
 	{
@@ -161,9 +171,9 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkDevice associated to the GdkDrag object.
+	 * Returns the `GdkDevice` associated to the `GdkDrag` object.
 	 *
-	 * Returns: The #GdkDevice associated to @drag.
+	 * Returns: The `GdkDevice` associated to @drag.
 	 */
 	public Device getDevice()
 	{
@@ -178,9 +188,9 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * Gets the #GdkDisplay that the drag object was created for.
+	 * Gets the `GdkDisplay` that the drag object was created for.
 	 *
-	 * Returns: a #GdkDisplay
+	 * Returns: a `GdkDisplay`
 	 */
 	public Display getDisplay()
 	{
@@ -196,11 +206,12 @@ public class Drag : ObjectG
 
 	/**
 	 * Returns the surface on which the drag icon should be rendered
-	 * during the drag operation. Note that the surface may not be
-	 * available until the drag operation has begun. GDK will move
-	 * the surface in accordance with the ongoing drag operation.
-	 * The surface is owned by @drag and will be destroyed when
-	 * the drag operation is over.
+	 * during the drag operation.
+	 *
+	 * Note that the surface may not be available until the drag operation
+	 * has begun. GDK will move the surface in accordance with the ongoing
+	 * drag operation. The surface is owned by @drag and will be destroyed
+	 * when the drag operation is over.
 	 *
 	 * Returns: the drag surface, or %NULL
 	 */
@@ -217,9 +228,9 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * Retrieves the formats supported by this GdkDrag object.
+	 * Retrieves the formats supported by this `GdkDrag` object.
 	 *
-	 * Returns: a #GdkContentFormats
+	 * Returns: a `GdkContentFormats`
 	 */
 	public ContentFormats getFormats()
 	{
@@ -236,7 +247,7 @@ public class Drag : ObjectG
 	/**
 	 * Determines the action chosen by the drag destination.
 	 *
-	 * Returns: a #GdkDragAction value
+	 * Returns: a `GdkDragAction` value
 	 */
 	public GdkDragAction getSelectedAction()
 	{
@@ -244,9 +255,9 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkSurface where the drag originates.
+	 * Returns the `GdkSurface` where the drag originates.
 	 *
-	 * Returns: The #GdkSurface where the drag originates
+	 * Returns: The `GdkSurface` where the drag originates
 	 */
 	public Surface getSurface()
 	{
@@ -262,8 +273,9 @@ public class Drag : ObjectG
 
 	/**
 	 * Sets the position of the drag surface that will be kept
-	 * under the cursor hotspot. Initially, the hotspot is at the
-	 * top left corner of the drag surface.
+	 * under the cursor hotspot.
+	 *
+	 * Initially, the hotspot is at the top left corner of the drag surface.
 	 *
 	 * Params:
 	 *     hotX = x coordinate of the drag surface hotspot
@@ -275,7 +287,7 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * The drag operation was cancelled.
+	 * Emitted when the drag operation is cancelled.
 	 *
 	 * Params:
 	 *     reason = The reason the drag was cancelled
@@ -286,9 +298,9 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * The drag operation was finished, the destination
-	 * finished reading all data. The drag object can now
-	 * free all miscellaneous data.
+	 * Emitted when the destination side has finished reading all data.
+	 *
+	 * The drag object can now free all miscellaneous data.
 	 */
 	gulong addOnDndFinished(void delegate(Drag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -296,7 +308,7 @@ public class Drag : ObjectG
 	}
 
 	/**
-	 * The drag operation was performed on an accepting client.
+	 * Emitted when the drop operation is performed on an accepting client.
 	 */
 	gulong addOnDropPerformed(void delegate(Drag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

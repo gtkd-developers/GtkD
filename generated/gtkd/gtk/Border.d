@@ -29,12 +29,12 @@ private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-private import gtkd.Loader;
 
 
 /**
- * A struct that specifies a border around a rectangular area
- * that can be of different width on each side.
+ * A struct that specifies a border around a rectangular area.
+ * 
+ * Each side can have different width.
  */
 public final class Border
 {
@@ -67,7 +67,7 @@ public final class Border
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_border_free(gtkBorder);
 	}
 

@@ -33,9 +33,10 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkVolumeButton is a subclass of #GtkScaleButton that has
- * been tailored for use as a volume control widget with suitable
- * icons, tooltips and accessible labels.
+ * `GtkVolumeButton` is a `GtkScaleButton` subclass tailored for
+ * volume control.
+ * 
+ * ![An example GtkVolumeButton](volumebutton.png)
  */
 public class VolumeButton : ScaleButton
 {
@@ -73,11 +74,13 @@ public class VolumeButton : ScaleButton
 	}
 
 	/**
-	 * Creates a #GtkVolumeButton, with a range between 0.0 and 1.0, with
-	 * a stepping of 0.02. Volume values can be obtained and modified using
-	 * the functions from #GtkScaleButton.
+	 * Creates a `GtkVolumeButton`.
 	 *
-	 * Returns: a new #GtkVolumeButton
+	 * The button has a range between 0.0 and 1.0, with a stepping of 0.02.
+	 * Volume values can be obtained and modified using the functions from
+	 * [class@Gtk.ScaleButton].
+	 *
+	 * Returns: a new `GtkVolumeButton`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

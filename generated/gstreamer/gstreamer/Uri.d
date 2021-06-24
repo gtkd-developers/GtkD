@@ -30,6 +30,7 @@ private import glib.GException;
 private import glib.HashTable;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;

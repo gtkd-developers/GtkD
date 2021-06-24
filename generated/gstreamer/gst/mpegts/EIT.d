@@ -28,7 +28,6 @@ private import glib.MemorySlice;
 private import glib.PtrArray;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -65,7 +64,7 @@ public final class EIT
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMpegtsEIT);
 	}
 

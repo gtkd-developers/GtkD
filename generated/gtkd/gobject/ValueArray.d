@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -66,7 +65,7 @@ public class ValueArray
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
+		if ( ownedRef )
 			g_value_array_free(gValueArray);
 	}
 

@@ -262,8 +262,8 @@ public class PtrArray
 	 * Params:
 	 *     freeSeg = if %TRUE the actual pointer array is freed as well
 	 *
-	 * Returns: the pointer array if @free_seg is %FALSE, otherwise %NULL.
-	 *     The pointer array should be freed using g_free().
+	 * Returns: the pointer array if @free_seg is
+	 *     %FALSE, otherwise %NULL. The pointer array should be freed using g_free().
 	 */
 	public void** free(bool freeSeg)
 	{

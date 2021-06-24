@@ -30,7 +30,6 @@ private import glib.TimeVal;
 private import glib.TimeZone;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +69,7 @@ public class DateTime
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_date_time_unref(gDateTime);
 	}
 
@@ -587,6 +586,23 @@ public class DateTime
 	}
 
 	/**
+	 * A comparison function for #GDateTimes that is suitable
+	 * as a #GCompareFunc. Both #GDateTimes must be non-%NULL.
+	 *
+	 * Params:
+	 *     dt2 = second #GDateTime to compare
+	 *
+	 * Returns: -1, 0 or 1 if @dt1 is less than, equal to or greater
+	 *     than @dt2.
+	 *
+	 * Since: 2.26
+	 */
+	public int compare(DateTime dt2)
+	{
+		return g_date_time_compare(gDateTime, (dt2 is null) ? null : dt2.getDateTimeStruct());
+	}
+
+	/**
 	 * Calculates the difference in time between @end and @begin.  The
 	 * #GTimeSpan that is returned is effectively @end - @begin (ie:
 	 * positive if the first parameter is larger).
@@ -602,6 +618,24 @@ public class DateTime
 	public GTimeSpan difference(DateTime begin)
 	{
 		return g_date_time_difference(gDateTime, (begin is null) ? null : begin.getDateTimeStruct());
+	}
+
+	/**
+	 * Checks to see if @dt1 and @dt2 are equal.
+	 *
+	 * Equal here means that they represent the same moment after converting
+	 * them to the same time zone.
+	 *
+	 * Params:
+	 *     dt2 = a #GDateTime
+	 *
+	 * Returns: %TRUE if @dt1 and @dt2 are equal
+	 *
+	 * Since: 2.26
+	 */
+	public bool equal(DateTime dt2)
+	{
+		return g_date_time_equal(gDateTime, (dt2 is null) ? null : dt2.getDateTimeStruct()) != 0;
 	}
 
 	/**
@@ -1177,42 +1211,5 @@ public class DateTime
 	public void unref()
 	{
 		g_date_time_unref(gDateTime);
-	}
-
-	/**
-	 * A comparison function for #GDateTimes that is suitable
-	 * as a #GCompareFunc. Both #GDateTimes must be non-%NULL.
-	 *
-	 * Params:
-	 *     dt1 = first #GDateTime to compare
-	 *     dt2 = second #GDateTime to compare
-	 *
-	 * Returns: -1, 0 or 1 if @dt1 is less than, equal to or greater
-	 *     than @dt2.
-	 *
-	 * Since: 2.26
-	 */
-	public static int compare(DateTime dt1, DateTime dt2)
-	{
-		return g_date_time_compare((dt1 is null) ? null : dt1.getDateTimeStruct(), (dt2 is null) ? null : dt2.getDateTimeStruct());
-	}
-
-	/**
-	 * Checks to see if @dt1 and @dt2 are equal.
-	 *
-	 * Equal here means that they represent the same moment after converting
-	 * them to the same time zone.
-	 *
-	 * Params:
-	 *     dt1 = a #GDateTime
-	 *     dt2 = a #GDateTime
-	 *
-	 * Returns: %TRUE if @dt1 and @dt2 are equal
-	 *
-	 * Since: 2.26
-	 */
-	public static bool equal(DateTime dt1, DateTime dt2)
-	{
-		return g_date_time_equal((dt1 is null) ? null : dt1.getDateTimeStruct(), (dt2 is null) ? null : dt2.getDateTimeStruct()) != 0;
 	}
 }

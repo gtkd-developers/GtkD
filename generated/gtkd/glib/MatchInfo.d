@@ -30,7 +30,6 @@ private import glib.Regex;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -68,7 +67,7 @@ public class MatchInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_match_info_unref(gMatchInfo);
 	}
 

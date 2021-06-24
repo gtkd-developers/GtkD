@@ -31,7 +31,6 @@ private import graphene.Rect;
 private import graphene.Vec3;
 private import graphene.c.functions;
 public  import graphene.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +69,7 @@ public final class Point3D
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
+		if ( ownedRef )
 			graphene_point3d_free(graphene_point3d);
 	}
 

@@ -32,19 +32,19 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkTreeListRowSorter is a special-purpose sorter that will apply a given
- * sorter to the levels in a tree, while respecting the tree structure.
+ * `GtkTreeListRowSorter` is a special-purpose sorter that will apply a given
+ * sorter to the levels in a tree.
  * 
  * Here is an example for setting up a column view with a tree model and
- * a GtkTreeListSorter:
+ * a `GtkTreeListSorter`:
  * 
- * |[
+ * ```c
  * column_sorter = gtk_column_view_get_sorter (view);
  * sorter = gtk_tree_list_row_sorter_new (g_object_ref (column_sorter));
  * sort_model = gtk_sort_list_model_new (tree_model, sorter);
  * selection = gtk_single_selection_new (sort_model);
  * gtk_column_view_set_model (view, G_LIST_MODEL (selection));
- * ]|
+ * ```
  */
 public class TreeListRowSorter : Sorter
 {
@@ -83,15 +83,15 @@ public class TreeListRowSorter : Sorter
 
 	/**
 	 * Create a special-purpose sorter that applies the sorting
-	 * of @sorter to the levels of a #GtkTreeListModel.
+	 * of @sorter to the levels of a `GtkTreeListModel`.
 	 *
-	 * Note that this sorter relies on #GtkTreeListModel:passthrough
-	 * being %FALSE as it can only sort #GtkTreeListRows.
+	 * Note that this sorter relies on [property@Gtk.TreeListModel:passthrough]
+	 * being %FALSE as it can only sort [class@Gtk.TreeListRow]s.
 	 *
 	 * Params:
-	 *     sorter = a #GtkSorter, or %NULL
+	 *     sorter = a `GtkSorter`, or %NULL
 	 *
-	 * Returns: a new #GtkTreeListRowSorter
+	 * Returns: a new `GtkTreeListRowSorter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -127,8 +127,8 @@ public class TreeListRowSorter : Sorter
 	/**
 	 * Sets the sorter to use for items with the same parent.
 	 *
-	 * This sorter will be passed the #GtkTreeListRow:item of the tree
-	 * list rows passed to @self.
+	 * This sorter will be passed the [property@Gtk.TreeListRow:item] of
+	 * the tree list rows passed to @self.
 	 *
 	 * Params:
 	 *     sorter = The sorter to use, or %NULL

@@ -30,7 +30,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkLayoutChild in a #GtkConstraintLayout.
+ * `GtkLayoutChild` subclass for children in a `GtkConstraintLayout`.
  */
 public class ConstraintLayoutChild : LayoutChild
 {

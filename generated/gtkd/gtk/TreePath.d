@@ -26,13 +26,15 @@ module gtk.TreePath;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-private import gtkd.Loader;
 
 
-/** */
+/**
+ * An opaque structure representing a path to a row in a model.
+ */
 public class TreePath
 {
 	/** the main Gtk struct */
@@ -64,7 +66,7 @@ public class TreePath
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_tree_path_free(gtkTreePath);
 	}
 

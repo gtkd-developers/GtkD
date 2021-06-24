@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.SequenceIter;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -66,7 +65,7 @@ public class Sequence
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_sequence_free(gSequence);
 	}
 
@@ -184,9 +183,9 @@ public class Sequence
 	}
 
 	/**
-	 * Returns the length of @seq. Note that this method is O(h) where `h' is the
-	 * height of the tree. It is thus more efficient to use g_sequence_is_empty()
-	 * when comparing the length to zero.
+	 * Returns the positive length (>= 0) of @seq. Note that this method is
+	 * O(h) where `h' is the height of the tree. It is thus more efficient
+	 * to use g_sequence_is_empty() when comparing the length to zero.
 	 *
 	 * Returns: the length of @seq
 	 *

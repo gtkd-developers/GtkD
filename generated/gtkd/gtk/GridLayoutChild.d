@@ -30,7 +30,7 @@ public  import gtk.c.types;
 
 
 /**
- * Layout properties for children of #GtkGridLayout.
+ * `GtkLayoutChild` subclass for children in a `GtkGridLayout`.
  */
 public class GridLayoutChild : LayoutChild
 {

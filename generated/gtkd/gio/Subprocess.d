@@ -37,6 +37,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -479,8 +480,8 @@ public class Subprocess : ObjectG, InitableIF
 	 * Gets the #GInputStream from which to read the stderr output of
 	 * @subprocess.
 	 *
-	 * The process must have been created with
-	 * %G_SUBPROCESS_FLAGS_STDERR_PIPE.
+	 * The process must have been created with %G_SUBPROCESS_FLAGS_STDERR_PIPE,
+	 * otherwise %NULL will be returned.
 	 *
 	 * Returns: the stderr pipe
 	 *
@@ -502,8 +503,8 @@ public class Subprocess : ObjectG, InitableIF
 	 * Gets the #GOutputStream that you can write to in order to give data
 	 * to the stdin of @subprocess.
 	 *
-	 * The process must have been created with
-	 * %G_SUBPROCESS_FLAGS_STDIN_PIPE.
+	 * The process must have been created with %G_SUBPROCESS_FLAGS_STDIN_PIPE and
+	 * not %G_SUBPROCESS_FLAGS_STDIN_INHERIT, otherwise %NULL will be returned.
 	 *
 	 * Returns: the stdout pipe
 	 *
@@ -525,8 +526,8 @@ public class Subprocess : ObjectG, InitableIF
 	 * Gets the #GInputStream from which to read the stdout output of
 	 * @subprocess.
 	 *
-	 * The process must have been created with
-	 * %G_SUBPROCESS_FLAGS_STDOUT_PIPE.
+	 * The process must have been created with %G_SUBPROCESS_FLAGS_STDOUT_PIPE,
+	 * otherwise %NULL will be returned.
 	 *
 	 * Returns: the stdout pipe
 	 *

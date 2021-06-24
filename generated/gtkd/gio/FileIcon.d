@@ -106,7 +106,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Gets the #GFile associated with the given @icon.
 	 *
-	 * Returns: a #GFile, or %NULL.
+	 * Returns: a #GFile.
 	 */
 	public FileIF getFile()
 	{

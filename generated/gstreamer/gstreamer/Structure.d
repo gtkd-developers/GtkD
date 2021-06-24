@@ -27,13 +27,13 @@ module gstreamer.Structure;
 private import glib.ConstructionException;
 private import glib.Date;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.ValueArray;
 private import gstreamer.DateTime;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -168,7 +168,7 @@ public class Structure
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			gst_structure_free(gstStructure);
 	}
 

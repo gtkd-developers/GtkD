@@ -72,14 +72,14 @@ public class TextureNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will render the given
+	 * Creates a `GskRenderNode` that will render the given
 	 * @texture into the area given by @bounds.
 	 *
 	 * Params:
-	 *     texture = the #GdkTexture
+	 *     texture = the `GdkTexture`
 	 *     bounds = the rectangle to render the texture into
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -96,9 +96,9 @@ public class TextureNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the #GdkTexture used when creating this #GskRenderNode.
+	 * Retrieves the `GdkTexture` used when creating this `GskRenderNode`.
 	 *
-	 * Returns: the #GdkTexture
+	 * Returns: the `GdkTexture`
 	 */
 	public Texture getTexture()
 	{

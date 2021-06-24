@@ -34,27 +34,29 @@ public  import gtk.c.types;
 
 
 /**
- * The GtkCenterBox widget arranges three children in a horizontal
- * or vertical arrangement, keeping the middle child centered as well
- * as possible.
+ * `GtkCenterBox` arranges three children in a row, keeping the middle child
+ * centered as well as possible.
  * 
- * To add children to GtkCenterBox, use gtk_center_box_set_start_widget(),
- * gtk_center_box_set_center_widget() and gtk_center_box_set_end_widget().
+ * ![An example GtkCenterBox](centerbox.png)
+ * 
+ * To add children to `GtkCenterBox`, use [method@Gtk.CenterBox.set_start_widget],
+ * [method@Gtk.CenterBox.set_center_widget] and
+ * [method@Gtk.CenterBox.set_end_widget].
  * 
  * The sizing and positioning of children can be influenced with the
  * align and expand properties of the children.
  * 
  * # GtkCenterBox as GtkBuildable
  * 
- * The GtkCenterBox implementation of the #GtkBuildable interface supports
- * placing children in the 3 positions by specifying “start”, “center” or
- * “end” as the “type” attribute of a <child> element.
+ * The `GtkCenterBox` implementation of the `GtkBuildable` interface
+ * supports placing children in the 3 positions by specifying “start”, “center”
+ * or “end” as the “type” attribute of a <child> element.
  * 
  * # CSS nodes
  * 
- * GtkCenterBox uses a single CSS node with the name “box”,
+ * `GtkCenterBox` uses a single CSS node with the name “box”,
  * 
- * The first child of the #GtkCenterBox will be allocated depending on the
+ * The first child of the `GtkCenterBox` will be allocated depending on the
  * text direction, i.e. in left-to-right layouts it will be allocated on the
  * left and in right-to-left layouts on the right.
  * 
@@ -63,7 +65,7 @@ public  import gtk.c.types;
  * 
  * # Accessibility
  * 
- * GtkCenterBox uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+ * `GtkCenterBox` uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
 public class CenterBox : Widget, OrientableIF
 {
@@ -104,9 +106,9 @@ public class CenterBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Creates a new #GtkCenterBox.
+	 * Creates a new `GtkCenterBox`.
 	 *
-	 * Returns: the new #GtkCenterBox.
+	 * Returns: the new `GtkCenterBox`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -193,7 +195,7 @@ public class CenterBox : Widget, OrientableIF
 	 * available.
 	 *
 	 * Params:
-	 *     position = a #GtkBaselinePosition
+	 *     position = a `GtkBaselinePosition`
 	 */
 	public void setBaselinePosition(GtkBaselinePosition position)
 	{
@@ -201,7 +203,9 @@ public class CenterBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the center widget. To remove the existing center widget, pas %NULL.
+	 * Sets the center widget.
+	 *
+	 * To remove the existing center widget, pas %NULL.
 	 *
 	 * Params:
 	 *     child = the new center widget, or %NULL
@@ -212,7 +216,9 @@ public class CenterBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the end widget. To remove the existing end widget, pass %NULL.
+	 * Sets the end widget.
+	 *
+	 * To remove the existing end widget, pass %NULL.
 	 *
 	 * Params:
 	 *     child = the new end widget, or %NULL
@@ -223,7 +229,9 @@ public class CenterBox : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the start widget. To remove the existing start widget, pass %NULL.
+	 * Sets the start widget.
+	 *
+	 * To remove the existing start widget, pass %NULL.
 	 *
 	 * Params:
 	 *     child = the new start widget, or %NULL

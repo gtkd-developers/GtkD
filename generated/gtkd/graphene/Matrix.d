@@ -40,7 +40,6 @@ private import graphene.Vec3;
 private import graphene.Vec4;
 private import graphene.c.functions;
 public  import graphene.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -80,7 +79,7 @@ public class Matrix
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
+		if ( ownedRef )
 			graphene_matrix_free(graphene_matrix);
 	}
 

@@ -25,7 +25,6 @@
 module harfbuzz.ot_math_glyph_part_t;
 
 private import glib.MemorySlice;
-private import gtkd.Loader;
 private import harfbuzz.c.functions;
 public  import harfbuzz.c.types;
 
@@ -68,7 +67,7 @@ public final class ot_math_glyph_part_t
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_HARFBUZZ) && ownedRef )
+		if ( ownedRef )
 			sliceFree(hb_ot_math_glyph_part);
 	}
 

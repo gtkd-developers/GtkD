@@ -29,6 +29,7 @@ public  import gio.ListModelIF;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gtk.FileFilter;
 public  import gtk.c.functions;
@@ -36,14 +37,17 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkFileChooser is an interface that can be implemented by file
- * selection widgets.  In GTK, the main objects that implement this
- * interface are #GtkFileChooserWidget and #GtkFileChooserDialog.  You do not
- * need to write an object that implements the #GtkFileChooser interface
- * unless you are trying to adapt an existing file selector to expose a
- * standard programming interface.
+ * `GtkFileChooser` is an interface that can be implemented by file
+ * selection widgets.
  * 
- * #GtkFileChooser allows for shortcuts to various places in the filesystem.
+ * In GTK, the main objects that implement this interface are
+ * [class@Gtk.FileChooserWidget] and [class@Gtk.FileChooserDialog].
+ * 
+ * You do not need to write an object that implements the `GtkFileChooser`
+ * interface unless you are trying to adapt an existing file selector to
+ * expose a standard programming interface.
+ * 
+ * `GtkFileChooser` allows for shortcuts to various places in the filesystem.
  * In the default implementation these are displayed in the left pane. It
  * may be a bit confusing at first that these shortcuts come from various
  * sources and in various flavours, so lets explain the terminology here:
@@ -61,15 +65,14 @@ public  import gtk.c.types;
  * 
  * # File Names and Encodings
  * 
- * When the user is finished selecting files in a
- * #GtkFileChooser, your program can get the selected filenames as
- * #GFiles.
+ * When the user is finished selecting files in a `GtkFileChooser`, your
+ * program can get the selected filenames as `GFile`s.
  * 
  * # Adding options
  * 
  * You can add extra widgets to a file chooser to provide options
  * that are not present in the default design, by using
- * gtk_file_chooser_add_choice(). Each choice has an identifier and
+ * [method@Gtk.FileChooser.add_choice]. Each choice has an identifier and
  * a user visible label; additionally, each choice can have multiple
  * options. If a choice has no option, it will be rendered as a
  * check button with the given label; if a choice has options, it will
@@ -87,11 +90,14 @@ public template FileChooserT(TStruct)
 
 
 	/**
-	 * Adds a 'choice' to the file chooser. This is typically implemented
-	 * as a combobox or, for boolean choices, as a checkbutton. You can select
-	 * a value using gtk_file_chooser_set_choice() before the dialog is shown,
-	 * and you can obtain the user-selected value in the ::response signal handler
-	 * using gtk_file_chooser_get_choice().
+	 * Adds a 'choice' to the file chooser.
+	 *
+	 * This is typically implemented as a combobox or, for boolean choices,
+	 * as a checkbutton. You can select a value using
+	 * [method@Gtk.FileChooser.set_choice] before the dialog is shown,
+	 * and you can obtain the user-selected value in the
+	 * [signal@Gtk.Dialog::response] signal handler using
+	 * [method@Gtk.FileChooser.get_choice].
 	 *
 	 * Params:
 	 *     id = id for the added choice
@@ -106,6 +112,7 @@ public template FileChooserT(TStruct)
 
 	/**
 	 * Adds @filter to the list of filters that the user can select between.
+	 *
 	 * When a filter is selected, only files that are passed by that
 	 * filter are displayed.
 	 *
@@ -113,7 +120,7 @@ public template FileChooserT(TStruct)
 	 * so you have to ref and sink it if you want to keep a reference.
 	 *
 	 * Params:
-	 *     filter = a #GtkFileFilter
+	 *     filter = a `GtkFileFilter`
 	 */
 	public void addFilter(FileFilter filter)
 	{
@@ -121,13 +128,14 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Adds a folder to be displayed with the shortcut folders in a file chooser.
+	 * Adds a folder to be displayed with the shortcut folders
+	 * in a file chooser.
 	 *
 	 * Params:
-	 *     folder = a #GFile for the folder to add
+	 *     folder = a `GFile` for the folder to add
 	 *
-	 * Returns: %TRUE if the folder could be added successfully, %FALSE
-	 *     otherwise.
+	 * Returns: %TRUE if the folder could be added successfully,
+	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -146,8 +154,7 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Gets the type of operation that the file chooser is performing; see
-	 * gtk_file_chooser_set_action().
+	 * Gets the type of operation that the file chooser is performing.
 	 *
 	 * Returns: the action that the file selector is performing
 	 */
@@ -171,7 +178,6 @@ public template FileChooserT(TStruct)
 
 	/**
 	 * Gets whether file chooser will offer to create new folders.
-	 * See gtk_file_chooser_set_create_folders().
 	 *
 	 * Returns: %TRUE if the Create Folder button should be displayed.
 	 */
@@ -183,7 +189,7 @@ public template FileChooserT(TStruct)
 	/**
 	 * Gets the current folder of @chooser as #GFile.
 	 *
-	 * Returns: the #GFile for the current folder.
+	 * Returns: the `GFile` for the current folder.
 	 */
 	public FileIF getCurrentFolder()
 	{
@@ -198,16 +204,16 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Gets the current name in the file selector, as entered by the user in the
-	 * text entry for “Name”.
+	 * Gets the current name in the file selector, as entered by the user.
 	 *
-	 * This is meant to be used in save dialogs, to get the currently typed filename
-	 * when the file itself does not exist yet.
+	 * This is meant to be used in save dialogs, to get the currently typed
+	 * filename when the file itself does not exist yet.
 	 *
-	 * Returns: The raw text from the file chooser’s “Name” entry.  Free this with
-	 *     g_free().  Note that this string is not a full pathname or URI; it is
-	 *     whatever the contents of the entry are.  Note also that this string is in
-	 *     UTF-8 encoding, which is not necessarily the system’s encoding for filenames.
+	 * Returns: The raw text from the file chooser’s “Name” entry. Free with
+	 *     g_free(). Note that this string is not a full pathname or URI; it is
+	 *     whatever the contents of the entry are. Note also that this string is
+	 *     in UTF-8 encoding, which is not necessarily the system’s encoding for
+	 *     filenames.
 	 */
 	public string getCurrentName()
 	{
@@ -218,15 +224,17 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Gets the #GFile for the currently selected file in
-	 * the file selector. If multiple files are selected,
-	 * one of the files will be returned at random.
+	 * Gets the `GFile` for the currently selected file in
+	 * the file selector.
 	 *
-	 * If the file chooser is in folder mode, this function returns the selected
-	 * folder.
+	 * If multiple files are selected, one of the files will be
+	 * returned at random.
 	 *
-	 * Returns: a selected #GFile. You own the returned file;
-	 *     use g_object_unref() to release it.
+	 * If the file chooser is in folder mode, this function returns
+	 * the selected folder.
+	 *
+	 * Returns: a selected `GFile`. You own the
+	 *     returned file; use g_object_unref() to release it.
 	 */
 	public FileIF getFile()
 	{
@@ -244,7 +252,7 @@ public template FileChooserT(TStruct)
 	 * Lists all the selected files and subfolders in the current folder
 	 * of @chooser as #GFile.
 	 *
-	 * Returns: a list model containing a #GFile for each
+	 * Returns: a list model containing a `GFile` for each
 	 *     selected file and subfolder in the current folder. Free the returned
 	 *     list with g_object_unref().
 	 */
@@ -261,7 +269,7 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Gets the current filter; see gtk_file_chooser_set_filter().
+	 * Gets the current filter.
 	 *
 	 * Returns: the current filter, or %NULL
 	 */
@@ -278,13 +286,15 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Gets the current set of user-selectable filters, as a list model; see
-	 * gtk_file_chooser_add_filter(), gtk_file_chooser_remove_filter().
+	 * Gets the current set of user-selectable filters, as a list model.
+	 *
+	 * See [method@Gtk.FileChooser.add_filter] and
+	 * [method@Gtk.FileChooser.remove_filter] for changing individual filters.
 	 *
 	 * You should not modify the returned list model. Future changes to
 	 * @chooser may or may not affect the returned model.
 	 *
-	 * Returns: a #GListModel containing the current set
+	 * Returns: a `GListModel` containing the current set
 	 *     of user-selectable filters.
 	 */
 	public ListModelIF getFilters()
@@ -301,7 +311,7 @@ public template FileChooserT(TStruct)
 
 	/**
 	 * Gets whether multiple files can be selected in the file
-	 * selector. See gtk_file_chooser_set_select_multiple().
+	 * chooser.
 	 *
 	 * Returns: %TRUE if multiple files can be selected.
 	 */
@@ -311,13 +321,12 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Queries the list of shortcut folders in the file chooser, as set by
-	 * gtk_file_chooser_add_shortcut_folder().
+	 * Queries the list of shortcut folders in the file chooser.
 	 *
 	 * You should not modify the returned list model. Future changes to
 	 * @chooser may or may not affect the returned model.
 	 *
-	 * Returns: A list model of #GFiles
+	 * Returns: A list model of `GFile`s
 	 */
 	public ListModelIF getShortcutFolders()
 	{
@@ -346,7 +355,7 @@ public template FileChooserT(TStruct)
 	 * Removes @filter from the list of filters that the user can select between.
 	 *
 	 * Params:
-	 *     filter = a #GtkFileFilter
+	 *     filter = a `GtkFileFilter`
 	 */
 	public void removeFilter(FileFilter filter)
 	{
@@ -357,10 +366,10 @@ public template FileChooserT(TStruct)
 	 * Removes a folder from the shortcut folders in a file chooser.
 	 *
 	 * Params:
-	 *     folder = a #GFile for the folder to remove
+	 *     folder = a `GFile` for the folder to remove
 	 *
-	 * Returns: %TRUE if the folder could be removed successfully, %FALSE
-	 *     otherwise.
+	 * Returns: %TRUE if the folder could be removed successfully,
+	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -379,11 +388,13 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Sets the type of operation that the chooser is performing; the
-	 * user interface is adapted to suit the selected action. For example,
-	 * an option to create a new folder might be shown if the action is
-	 * %GTK_FILE_CHOOSER_ACTION_SAVE but not if the action is
-	 * %GTK_FILE_CHOOSER_ACTION_OPEN.
+	 * Sets the type of operation that the chooser is performing.
+	 *
+	 * The user interface is adapted to suit the selected action.
+	 *
+	 * For example, an option to create a new folder might be shown
+	 * if the action is %GTK_FILE_CHOOSER_ACTION_SAVE but not if the
+	 * action is %GTK_FILE_CHOOSER_ACTION_OPEN.
 	 *
 	 * Params:
 	 *     action = the action that the file selector is performing
@@ -395,8 +406,9 @@ public template FileChooserT(TStruct)
 
 	/**
 	 * Selects an option in a 'choice' that has been added with
-	 * gtk_file_chooser_add_choice(). For a boolean choice, the
-	 * possible options are "true" and "false".
+	 * gtk_file_chooser_add_choice().
+	 *
+	 * For a boolean choice, the possible options are "true" and "false".
 	 *
 	 * Params:
 	 *     id = the ID of the choice to set
@@ -409,6 +421,7 @@ public template FileChooserT(TStruct)
 
 	/**
 	 * Sets whether file chooser will offer to create new folders.
+	 *
 	 * This is only relevant if the action is not set to be
 	 * %GTK_FILE_CHOOSER_ACTION_OPEN.
 	 *
@@ -424,7 +437,7 @@ public template FileChooserT(TStruct)
 	 * Sets the current folder for @chooser from a #GFile.
 	 *
 	 * Params:
-	 *     file = the #GFile for the new folder
+	 *     file = the `GFile` for the new folder
 	 *
 	 * Returns: %TRUE if the folder could be changed successfully, %FALSE
 	 *     otherwise.
@@ -447,16 +460,18 @@ public template FileChooserT(TStruct)
 
 	/**
 	 * Sets the current name in the file selector, as if entered
-	 * by the user. Note that the name passed in here is a UTF-8
-	 * string rather than a filename. This function is meant for
-	 * such uses as a suggested name in a “Save As...” dialog.  You can
-	 * pass “Untitled.doc” or a similarly suitable suggestion for the @name.
+	 * by the user.
 	 *
-	 * If you want to preselect a particular existing file, you should use
-	 * gtk_file_chooser_set_file() instead.
+	 * Note that the name passed in here is a UTF-8 string rather
+	 * than a filename. This function is meant for such uses as a
+	 * suggested name in a “Save As...” dialog.  You can pass
+	 * “Untitled.doc” or a similarly suitable suggestion for the @name.
 	 *
-	 * Please see the documentation for those functions for an example of using
-	 * gtk_file_chooser_set_current_name() as well.
+	 * If you want to preselect a particular existing file, you should
+	 * use [method@Gtk.FileChooser.set_file] instead.
+	 *
+	 * Please see the documentation for those functions for an example
+	 * of using [method@Gtk.FileChooser.set_current_name] as well.
 	 *
 	 * Params:
 	 *     name = the filename to use, as a UTF-8 string
@@ -467,10 +482,11 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Sets @file as the current filename for the file chooser, by changing
-	 * to the file’s parent folder and actually selecting the file in list.  If
-	 * the @chooser is in %GTK_FILE_CHOOSER_ACTION_SAVE mode, the file’s base name
-	 * will also appear in the dialog’s file name entry.
+	 * Sets @file as the current filename for the file chooser.
+	 *
+	 * This includes changing to the file’s parent folder and actually selecting
+	 * the file in list. If the @chooser is in %GTK_FILE_CHOOSER_ACTION_SAVE mode,
+	 * the file’s base name will also appear in the dialog’s file name entry.
 	 *
 	 * If the file name isn’t in the current folder of @chooser, then the current
 	 * folder of @chooser will be changed to the folder containing @filename.
@@ -478,14 +494,15 @@ public template FileChooserT(TStruct)
 	 * Note that the file must exist, or nothing will be done except
 	 * for the directory change.
 	 *
-	 * If you are implementing a save dialog,
-	 * you should use this function if you already have a file name to which the
-	 * user may save; for example, when the user opens an existing file and then
-	 * does Save As...  If you don’t have
-	 * a file name already — for example, if the user just created a new
-	 * file and is saving it for the first time, do not call this function.
+	 * If you are implementing a save dialog, you should use this function if
+	 * you already have a file name to which the user may save; for example,
+	 * when the user opens an existing file and then does “Save As…”. If you
+	 * don’t have a file name already — for example, if the user just created
+	 * a new file and is saving it for the first time, do not call this function.
+	 *
 	 * Instead, use something similar to this:
-	 * |[<!-- language="C" -->
+	 *
+	 * ```c
 	 * static void
 	 * prepare_file_chooser (GtkFileChooser *chooser,
 	 * GFile          *existing_file)
@@ -506,12 +523,12 @@ public template FileChooserT(TStruct)
 	 * gtk_file_chooser_set_file (chooser, existing_file, NULL);
 	 * }
 	 * }
-	 * ]|
+	 * ```
 	 *
 	 * Params:
-	 *     file = the #GFile to set as current
+	 *     file = the `GFile` to set as current
 	 *
-	 * Returns: Not useful.
+	 * Returns: Not useful
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -530,15 +547,18 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Sets the current filter; only the files that pass the
-	 * filter will be displayed. If the user-selectable list of filters
-	 * is non-empty, then the filter should be one of the filters
-	 * in that list. Setting the current filter when the list of
-	 * filters is empty is useful if you want to restrict the displayed
+	 * Sets the current filter.
+	 *
+	 * Only the files that pass the filter will be displayed.
+	 * If the user-selectable list of filters is non-empty, then
+	 * the filter should be one of the filters in that list.
+	 *
+	 * Setting the current filter when the list of filters is
+	 * empty is useful if you want to restrict the displayed
 	 * set of files without letting the user change it.
 	 *
 	 * Params:
-	 *     filter = a #GtkFileFilter
+	 *     filter = a `GtkFileFilter`
 	 */
 	public void setFilter(FileFilter filter)
 	{
@@ -546,8 +566,10 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Sets whether multiple files can be selected in the file selector.  This is
-	 * only relevant if the action is set to be %GTK_FILE_CHOOSER_ACTION_OPEN or
+	 * Sets whether multiple files can be selected in the file chooser.
+	 *
+	 * This is only relevant if the action is set to be
+	 * %GTK_FILE_CHOOSER_ACTION_OPEN or
 	 * %GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
 	 *
 	 * Params:

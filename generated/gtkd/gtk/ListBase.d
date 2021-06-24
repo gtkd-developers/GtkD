@@ -34,7 +34,7 @@ public  import gtk.c.types;
 
 
 /**
- * GtkListBase is the abstract base class for GTK's list widgets.
+ * `GtkListBase` is the abstract base class for GTK's list widgets.
  */
 public class ListBase : Widget, OrientableIF, ScrollableIF
 {

@@ -32,12 +32,22 @@ private import glib.GException;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
-private import gtkd.Loader;
 
 
 /**
- * A #GdkPixdata contains pixbuf information in a form suitable for
- * serialization and streaming.
+ * A pixel buffer suitable for serialization and streaming.
+ * 
+ * Using `GdkPixdata`, images can be compiled into an application,
+ * making it unnecessary to refer to external image files at runtime.
+ * 
+ * `GdkPixbuf` includes a utility named `gdk-pixbuf-csource`, which
+ * can be used to convert image files into `GdkPixdata` structures suitable
+ * for inclusion in C sources. To convert the `GdkPixdata` structures back
+ * into a `GdkPixbuf`, use `gdk_pixbuf_from_pixdata()`.
+ * 
+ * Deprecated: `GdkPixdata` should not be used any more. `GResource`
+ * should be used to save the original compressed images inside the
+ * program's binary
  */
 public final class Pixdata
 {
@@ -70,14 +80,14 @@ public final class Pixdata
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gdkPixdata);
 	}
 
 
 	/**
-	 * magic number. A valid #GdkPixdata structure must have
-	 * #GDK_PIXBUF_MAGIC_NUMBER here.
+	 * magic number. A valid `GdkPixdata` structure must have
+	 * `GDK_PIXBUF_MAGIC_NUMBER` here
 	 */
 	public @property uint magic()
 	{
@@ -92,7 +102,7 @@ public final class Pixdata
 
 	/**
 	 * less than 1 to disable length checks, otherwise
-	 * #GDK_PIXDATA_HEADER_LENGTH + length of @pixel_data.
+	 * `GDK_PIXDATA_HEADER_LENGTH` plus the length of `pixel_data`
 	 */
 	public @property int length()
 	{
@@ -107,7 +117,7 @@ public final class Pixdata
 
 	/**
 	 * information about colorspace, sample width and
-	 * encoding, in a #GdkPixdataType.
+	 * encoding, in a `GdkPixdataType`
 	 */
 	public @property uint pixdataType()
 	{
@@ -121,7 +131,7 @@ public final class Pixdata
 	}
 
 	/**
-	 * Distance in bytes between rows.
+	 * Distance in bytes between rows
 	 */
 	public @property uint rowstride()
 	{
@@ -135,7 +145,7 @@ public final class Pixdata
 	}
 
 	/**
-	 * Width of the image in pixels.
+	 * Width of the image in pixels
 	 */
 	public @property uint width()
 	{
@@ -149,7 +159,7 @@ public final class Pixdata
 	}
 
 	/**
-	 * Height of the image in pixels.
+	 * Height of the image in pixels
 	 */
 	public @property uint height()
 	{
@@ -165,21 +175,25 @@ public final class Pixdata
 
 	/**
 	 * Deserializes (reconstruct) a #GdkPixdata structure from a byte stream.
-	 * The byte stream consists of a straightforward writeout of the
-	 * #GdkPixdata fields in network byte order, plus the @pixel_data
-	 * bytes the structure points to.
-	 * The @pixdata contents are reconstructed byte by byte and are checked
-	 * for validity. This function may fail with %GDK_PIXBUF_ERROR_CORRUPT_IMAGE
-	 * or %GDK_PIXBUF_ERROR_UNKNOWN_TYPE.
 	 *
-	 * Deprecated: Use #GResource instead.
+	 * The byte stream consists of a straightforward writeout of the
+	 * `GdkPixdata` fields in network byte order, plus the `pixel_data`
+	 * bytes the structure points to.
+	 *
+	 * The `pixdata` contents are reconstructed byte by byte and are checked
+	 * for validity.
+	 *
+	 * This function may fail with `GDK_PIXBUF_ERROR_CORRUPT_IMAGE`
+	 * or `GDK_PIXBUF_ERROR_UNKNOWN_TYPE`.
+	 *
+	 * Deprecated: Use `GResource` instead.
 	 *
 	 * Params:
 	 *     stream = stream of bytes containing a
 	 *         serialized #GdkPixdata structure.
 	 *
-	 * Returns: Upon successful deserialization %TRUE is returned,
-	 *     %FALSE otherwise.
+	 * Returns: Upon successful deserialization `TRUE` is returned,
+	 *     `FALSE` otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -198,23 +212,26 @@ public final class Pixdata
 	}
 
 	/**
-	 * Converts a #GdkPixbuf to a #GdkPixdata. If @use_rle is %TRUE, the
-	 * pixel data is run-length encoded into newly-allocated memory and a
-	 * pointer to that memory is returned.
+	 * Converts a `GdkPixbuf` to a `GdkPixdata`.
+	 *
+	 * If `use_rle` is `TRUE`, the pixel data is run-length encoded into
+	 * newly-allocated memory and a pointer to that memory is returned.
 	 *
 	 * Deprecated: Use #GResource instead.
 	 *
 	 * Params:
-	 *     pixbuf = the data to fill @pixdata with.
+	 *     pixbuf = the data to fill `pixdata` with.
 	 *     useRle = whether to use run-length encoding for the pixel data.
 	 *
-	 * Returns: If @use_rle is %TRUE, a pointer to the
-	 *     newly-allocated memory for the run-length encoded pixel data,
-	 *     otherwise %NULL.
+	 * Returns: If `use_rle` is
+	 *     `TRUE`, a pointer to the newly-allocated memory for the run-length
+	 *     encoded pixel data, otherwise `NULL`.
 	 */
-	public void* fromPixbuf(Pixbuf pixbuf, bool useRle)
+	public ubyte[] fromPixbuf(Pixbuf pixbuf, bool useRle)
 	{
-		return gdk_pixdata_from_pixbuf(gdkPixdata, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), useRle);
+		auto __p = gdk_pixdata_from_pixbuf(gdkPixdata, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), useRle);
+
+		return cast(ubyte[])__p[0 .. getArrayLength(__p)];
 	}
 
 	/**
@@ -242,19 +259,17 @@ public final class Pixdata
 	 * Generates C source code suitable for compiling images directly
 	 * into programs.
 	 *
-	 * gdk-pixbuf ships with a program called
-	 * [gdk-pixbuf-csource][gdk-pixbuf-csource], which offers a command
-	 * line interface to this function.
+	 * GdkPixbuf ships with a program called `gdk-pixbuf-csource`, which offers
+	 * a command line interface to this function.
 	 *
 	 * Deprecated: Use #GResource instead.
 	 *
 	 * Params:
-	 *     name = used for naming generated data structures or macros.
-	 *     dumpType = a #GdkPixdataDumpType determining the kind of C
-	 *         source to be generated.
+	 *     name = used for naming generated data structures or macros
+	 *     dumpType = the kind of C source to be generated
 	 *
-	 * Returns: a newly-allocated string containing the C source form
-	 *     of @pixdata.
+	 * Returns: a newly-allocated string buffer containing
+	 *     the C source form of `pixdata`.
 	 */
 	public StringG toCsource(string name, GdkPixdataDumpType dumpType)
 	{

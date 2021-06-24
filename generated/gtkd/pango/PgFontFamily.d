@@ -25,6 +25,7 @@
 module pango.PgFontFamily;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import pango.PgFontFace;
 private import pango.c.functions;
@@ -32,9 +33,11 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoFontFamily structure is used to represent a family of related
- * font faces. The faces in a family share a common design, but differ in
- * slant, weight, width and other aspects.
+ * A `PangoFontFamily` is used to represent a family of related
+ * font faces.
+ * 
+ * The font faces in a family share a common design, but differ in
+ * slant, weight, width or other aspects.
  */
 public class PgFontFamily : ObjectG
 {
@@ -72,14 +75,14 @@ public class PgFontFamily : ObjectG
 	}
 
 	/**
-	 * Gets the #PangoFontFace of @family with the given name.
+	 * Gets the `PangoFontFace` of @family with the given name.
 	 *
 	 * Params:
 	 *     name = the name of a face. If the name is %NULL,
 	 *         the family's default face (fontconfig calls it "Regular")
 	 *         will be returned.
 	 *
-	 * Returns: the #PangoFontFace,
+	 * Returns: the `PangoFontFace`,
 	 *     or %NULL if no face with the given name exists.
 	 *
 	 * Since: 1.46
@@ -97,9 +100,11 @@ public class PgFontFamily : ObjectG
 	}
 
 	/**
-	 * Gets the name of the family. The name is unique among all
-	 * fonts for the font backend and can be used in a #PangoFontDescription
-	 * to specify that a face from this family is desired.
+	 * Gets the name of the family.
+	 *
+	 * The name is unique among all fonts for the font backend and can
+	 * be used in a `PangoFontDescription` to specify that a face from
+	 * this family is desired.
 	 *
 	 * Returns: the name of the family. This string is owned
 	 *     by the family object and must not be modified or freed.
@@ -111,7 +116,9 @@ public class PgFontFamily : ObjectG
 
 	/**
 	 * A monospace font is a font designed for text display where the the
-	 * characters form a regular grid. For Western languages this would
+	 * characters form a regular grid.
+	 *
+	 * For Western languages this would
 	 * mean that the advance width of all characters are the same, but
 	 * this categorization also includes Asian fonts which include
 	 * double-width characters: characters that occupy two grid cells.
@@ -119,9 +126,9 @@ public class PgFontFamily : ObjectG
 	 * character is typically double-width in a monospace font.
 	 *
 	 * The best way to find out the grid-cell size is to call
-	 * pango_font_metrics_get_approximate_digit_width(), since the results
-	 * of pango_font_metrics_get_approximate_char_width() may be affected
-	 * by double-width characters.
+	 * [method@Pango.FontMetrics.get_approximate_digit_width], since the
+	 * results of [method@Pango.FontMetrics.get_approximate_char_width] may
+	 * be affected by double-width characters.
 	 *
 	 * Returns: %TRUE if the family is monospace.
 	 *
@@ -146,12 +153,13 @@ public class PgFontFamily : ObjectG
 	}
 
 	/**
-	 * Lists the different font faces that make up @family. The faces
-	 * in a family share a common design, but differ in slant, weight,
+	 * Lists the different font faces that make up @family.
+	 *
+	 * The faces in a family share a common design, but differ in slant, weight,
 	 * width and other aspects.
 	 *
 	 * Params:
-	 *     faces = location to store an array of pointers to #PangoFontFace objects,
+	 *     faces = location to store an array of pointers to `PangoFontFace` objects,
 	 *         or %NULL. This array should be freed with g_free() when it is no
 	 *         longer needed.
 	 */

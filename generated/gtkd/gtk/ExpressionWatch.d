@@ -28,10 +28,14 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gtk.c.functions;
 public  import gtk.c.types;
-private import gtkd.Loader;
 
 
-/** */
+/**
+ * An opaque structure representing a watched `GtkExpression`.
+ * 
+ * The contents of `GtkExpressionWatch` should only be accessed through the
+ * provided API.
+ */
 public class ExpressionWatch
 {
 	/** the main Gtk struct */
@@ -63,22 +67,28 @@ public class ExpressionWatch
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_expression_watch_unref(gtkExpressionWatch);
 	}
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_expression_watch_get_type();
+	}
+
 	/**
 	 * Evaluates the watched expression and on success stores the result
-	 * in @value.
+	 * in `value`.
 	 *
-	 * This is equivalent to calling gtk_expression_evaluate() with the
-	 * expression and this pointer originally used to create @watch.
+	 * This is equivalent to calling [method@Gtk.Expression.evaluate] with the
+	 * expression and this pointer originally used to create `watch`.
 	 *
 	 * Params:
-	 *     value = an empty #GValue to be set
+	 *     value = an empty `GValue` to be set
 	 *
-	 * Returns: %TRUE if the expression could be evaluated and @value was set
+	 * Returns: `TRUE` if the expression could be evaluated and `value` was set
 	 */
 	public bool evaluate(Value value)
 	{
@@ -87,9 +97,9 @@ public class ExpressionWatch
 
 	alias doref = ref_;
 	/**
-	 * Acquires a reference on the given #GtkExpressionWatch.
+	 * Acquires a reference on the given `GtkExpressionWatch`.
 	 *
-	 * Returns: the #GtkExpression with an additional reference
+	 * Returns: the `GtkExpressionWatch` with an additional reference
 	 */
 	public ExpressionWatch ref_()
 	{
@@ -100,13 +110,13 @@ public class ExpressionWatch
 			return null;
 		}
 
-		return ObjectG.getDObject!(ExpressionWatch)(cast(GtkExpressionWatch*) __p);
+		return ObjectG.getDObject!(ExpressionWatch)(cast(GtkExpressionWatch*) __p, true);
 	}
 
 	/**
-	 * Releases a reference on the given #GtkExpressionWatch.
+	 * Releases a reference on the given `GtkExpressionWatch`.
 	 *
-	 * If the reference was the last, the resources associated to @self are
+	 * If the reference was the last, the resources associated to `self` are
 	 * freed.
 	 */
 	public void unref()
@@ -115,7 +125,10 @@ public class ExpressionWatch
 	}
 
 	/**
-	 * Stops watching an expression that was established via gtk_expression_watch().
+	 * Stops watching an expression.
+	 *
+	 * See [method@Gtk.Expression.watch] for how the watch
+	 * was established.
 	 */
 	public void unwatch()
 	{

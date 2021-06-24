@@ -36,6 +36,7 @@ public  import gdk.c.types;
 private import gio.ListModelIF;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
@@ -43,18 +44,20 @@ private import std.algorithm;
 
 
 /**
- * GdkDisplay objects are the GDK representation of a workstation.
+ * `GdkDisplay` objects are the GDK representation of a workstation.
  * 
  * Their purpose are two-fold:
+ * 
  * - To manage and provide information about input devices (pointers, keyboards, etc)
  * - To manage and provide information about output devices (monitors, projectors, etc)
  * 
- * Most of the input device handling has been factored out into separate #GdkSeat
- * objects. Every display has a one or more seats, which can be accessed with
- * gdk_display_get_default_seat() and gdk_display_list_seats().
+ * Most of the input device handling has been factored out into separate
+ * [class@Gdk.Seat] objects. Every display has a one or more seats, which
+ * can be accessed with [method@Gdk.Display.get_default_seat] and
+ * [method@Gdk.Display.list_seats].
  * 
- * Output devices are represented by #GdkMonitor objects, which can be accessed
- * with gdk_display_get_monitor_at_surface() and similar APIs.
+ * Output devices are represented by [class@Gdk.Monitor] objects, which can
+ * be accessed with [method@Gdk.Display.get_monitor_at_surface] and similar APIs.
  */
 public class Display : ObjectG
 {
@@ -92,12 +95,13 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Gets the default #GdkDisplay. This is a convenience
-	 * function for:
+	 * Gets the default `GdkDisplay`.
+	 *
+	 * This is a convenience function for:
 	 * `gdk_display_manager_get_default_display (gdk_display_manager_get ())`.
 	 *
-	 * Returns: a #GdkDisplay, or %NULL if
-	 *     there is no default display.
+	 * Returns: a `GdkDisplay`, or %NULL if
+	 *     there is no default display
 	 */
 	public static Display getDefault()
 	{
@@ -117,7 +121,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     displayName = the name of the display to open
 	 *
-	 * Returns: a #GdkDisplay, or %NULL if the
+	 * Returns: a `GdkDisplay`, or %NULL if the
 	 *     display could not be opened
 	 */
 	public static Display open(string displayName)
@@ -141,8 +145,9 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Closes the connection to the windowing system for the given display,
-	 * and cleans up associated resources.
+	 * Closes the connection to the windowing system for the given display.
+	 *
+	 * This cleans up associated resources.
 	 */
 	public void close()
 	{
@@ -153,7 +158,7 @@ public class Display : ObjectG
 	 * Returns %TRUE if there is an ongoing grab on @device for @display.
 	 *
 	 * Params:
-	 *     device = a #GdkDevice
+	 *     device = a `GdkDevice`
 	 *
 	 * Returns: %TRUE if there is a grab in effect for @device.
 	 */
@@ -163,10 +168,11 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Flushes any requests queued for the windowing system; this happens automatically
-	 * when the main loop blocks waiting for new events, but if your application
-	 * is drawing without returning control to the main loop, you may need
-	 * to call this function explicitly. A common case where this function
+	 * Flushes any requests queued for the windowing system.
+	 *
+	 * This happens automatically when the main loop blocks waiting for new events,
+	 * but if your application is drawing without returning control to the main loop,
+	 * you may need to call this function explicitly. A common case where this function
 	 * needs to be called is when an application is executing drawing commands
 	 * from a thread other than the thread where the main loop is running.
 	 *
@@ -179,10 +185,10 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Returns a #GdkAppLaunchContext suitable for launching
+	 * Returns a `GdkAppLaunchContext` suitable for launching
 	 * applications on the given display.
 	 *
-	 * Returns: a new #GdkAppLaunchContext for @display.
+	 * Returns: a new `GdkAppLaunchContext` for @display.
 	 *     Free with g_object_unref() when done
 	 */
 	public AppLaunchContext getAppLaunchContext()
@@ -215,7 +221,7 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Returns the default #GdkSeat for this display.
+	 * Returns the default `GdkSeat` for this display.
 	 *
 	 * Note that a display may not have a seat. In this case,
 	 * this function will return %NULL.
@@ -236,13 +242,16 @@ public class Display : ObjectG
 
 	/**
 	 * Gets the monitor in which the largest area of @surface
-	 * resides, or a monitor close to @surface if it is outside
+	 * resides.
+	 *
+	 * Returns a monitor close to @surface if it is outside
 	 * of all monitors.
 	 *
 	 * Params:
-	 *     surface = a #GdkSurface
+	 *     surface = a `GdkSurface`
 	 *
-	 * Returns: the monitor with the largest overlap with @surface
+	 * Returns: the monitor with the largest
+	 *     overlap with @surface
 	 */
 	public MonitorGdk getMonitorAtSurface(Surface surface)
 	{
@@ -259,13 +268,13 @@ public class Display : ObjectG
 	/**
 	 * Gets the list of monitors associated with this display.
 	 *
-	 * Subsequent calls to this function will always return the same list for the
-	 * same display.
+	 * Subsequent calls to this function will always return the
+	 * same list for the same display.
 	 *
-	 * You can listen to the GListModel::items-changed signal on this list
-	 * to monitor changes to the monitor of this display.
+	 * You can listen to the GListModel::items-changed signal on
+	 * this list to monitor changes to the monitor of this display.
 	 *
-	 * Returns: a #GListModel of #GdkMonitor
+	 * Returns: a #GListModel of `GdkMonitor`
 	 */
 	public ListModelIF getMonitors()
 	{
@@ -291,9 +300,10 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Gets the clipboard used for the primary selection. On backends where the
-	 * primary clipboard is not supported natively, GDK emulates this clipboard
-	 * locally.
+	 * Gets the clipboard used for the primary selection.
+	 *
+	 * On backends where the primary clipboard is not supported natively,
+	 * GDK emulates this clipboard locally.
 	 *
 	 * Returns: the primary clipboard
 	 */
@@ -348,17 +358,19 @@ public class Display : ObjectG
 
 	/**
 	 * Returns whether surfaces can reasonably be expected to have
-	 * their alpha channel drawn correctly on the screen. Check
-	 * gdk_display_is_rgba() for whether the display supports an
-	 * alpha channel.
+	 * their alpha channel drawn correctly on the screen.
+	 *
+	 * Check [method@Gdk.Display.is_rgba] for whether the display
+	 * supports an alpha channel.
 	 *
 	 * On X11 this function returns whether a compositing manager is
 	 * compositing on @display.
 	 *
 	 * On modern displays, this value is always %TRUE.
 	 *
-	 * Returns: Whether surfaces with RGBA visuals can reasonably be
-	 *     expected to have their alpha channels drawn correctly on the screen.
+	 * Returns: Whether surfaces with RGBA visuals can reasonably
+	 *     be expected to have their alpha channels drawn correctly
+	 *     on the screen.
 	 */
 	public bool isComposited()
 	{
@@ -373,7 +385,7 @@ public class Display : ObjectG
 	 * surface’s alpha channel won’t be honored when displaying the
 	 * surface on the screen: in particular, for X an appropriate
 	 * windowing manager and compositing manager must be running to
-	 * provide appropriate display. Use gdk_display_is_composited()
+	 * provide appropriate display. Use [method@Gdk.Display.is_composited]
 	 * to check if that is the case.
 	 *
 	 * On modern displays, this value is always %TRUE.
@@ -390,7 +402,7 @@ public class Display : ObjectG
 	 * Returns the list of seats known to @display.
 	 *
 	 * Returns: the
-	 *     list of seats known to the #GdkDisplay
+	 *     list of seats known to the `GdkDisplay`
 	 */
 	public ListG listSeats()
 	{
@@ -405,8 +417,9 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Returns the keyvals bound to @keycode. The Nth #GdkKeymapKey
-	 * in @keys is bound to the Nth keyval in @keyvals.
+	 * Returns the keyvals bound to @keycode.
+	 *
+	 * The Nth `GdkKeymapKey` in @keys is bound to the Nth keyval in @keyvals.
 	 *
 	 * When a keycode is pressed by the user, the keyval from
 	 * this list of entries is selected by considering the effective
@@ -417,7 +430,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     keycode = a keycode
 	 *     keys = return
-	 *         location for array of #GdkKeymapKey, or %NULL
+	 *         location for array of `GdkKeymapKey`, or %NULL
 	 *     keyvals = return
 	 *         location for array of keyvals, or %NULL
 	 *
@@ -439,16 +452,17 @@ public class Display : ObjectG
 
 	/**
 	 * Obtains a list of keycode/group/level combinations that will
-	 * generate @keyval. Groups and levels are two kinds of keyboard mode;
-	 * in general, the level determines whether the top or bottom symbol
-	 * on a key is used, and the group determines whether the left or
-	 * right symbol is used.
+	 * generate @keyval.
+	 *
+	 * Groups and levels are two kinds of keyboard mode; in general, the level
+	 * determines whether the top or bottom symbol on a key is used, and the
+	 * group determines whether the left or right symbol is used.
 	 *
 	 * On US keyboards, the shift key changes the keyboard level, and there
 	 * are no groups. A group switch key might convert a keyboard between
 	 * Hebrew to English modes, for example.
 	 *
-	 * #GdkEventKey contains a %group field that indicates the active
+	 * `GdkEventKey` contains a %group field that indicates the active
 	 * keyboard group. The level is computed from the modifier mask.
 	 *
 	 * The returned array should be freed with g_free().
@@ -456,7 +470,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     keyval = a keyval, such as %GDK_KEY_a, %GDK_KEY_Up, %GDK_KEY_Return, etc.
 	 *     keys = return location
-	 *         for an array of #GdkKeymapKey
+	 *         for an array of `GdkKeymapKey`
 	 *
 	 * Returns: %TRUE if keys were found and returned
 	 */
@@ -476,10 +490,10 @@ public class Display : ObjectG
 	 * Indicates to the GUI environment that the application has
 	 * finished loading, using a given identifier.
 	 *
-	 * GTK will call this function automatically for #GtkWindow
+	 * GTK will call this function automatically for [class@Gtk.Window]
 	 * with custom startup-notification identifier unless
-	 * gtk_window_set_auto_startup_notification() is called to
-	 * disable that feature.
+	 * [method@Gtk.Window.set_auto_startup_notification]
+	 * is called to disable that feature.
 	 *
 	 * Params:
 	 *     startupId = a startup-notification identifier, for which
@@ -498,7 +512,7 @@ public class Display : ObjectG
 	 * and should not be used by applications.
 	 *
 	 * Params:
-	 *     event = a #GdkEvent
+	 *     event = a `GdkEvent`
 	 */
 	public void putEvent(Event event)
 	{
@@ -506,7 +520,9 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Returns %TRUE if gdk_surface_set_input_region() can
+	 * Returns %TRUE if the display supports input shapes.
+	 *
+	 * This means that [method@Gdk.Surface.set_input_region] can
 	 * be used to modify the input shape of surfaces on @display.
 	 *
 	 * On modern displays, this value is always %TRUE.
@@ -520,11 +536,12 @@ public class Display : ObjectG
 
 	/**
 	 * Flushes any requests queued for the windowing system and waits until all
-	 * requests have been handled. This is often used for making sure that the
-	 * display is synchronized with the current state of the program. Calling
-	 * gdk_display_sync() before gdk_x11_display_error_trap_pop() makes sure
-	 * that any errors generated from earlier requests are handled before the
-	 * error trap is removed.
+	 * requests have been handled.
+	 *
+	 * This is often used for making sure that the display is synchronized
+	 * with the current state of the program. Calling [method@Gdk.Display.sync]
+	 * before [method@GdkX11.Display.error_trap_pop] makes sure that any errors
+	 * generated from earlier requests are handled before the error trap is removed.
 	 *
 	 * This is most useful for X11. On windowing systems where requests are
 	 * handled synchronously, this function will do nothing.
@@ -535,23 +552,25 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * Translates the contents of a #GdkEventKey (ie @keycode, @state, and @group)
-	 * into a keyval, effective group, and level. Modifiers that affected the
-	 * translation and are thus unavailable for application use are returned in
-	 * @consumed_modifiers.
+	 * Translates the contents of a `GdkEventKey` into a keyval, effective group,
+	 * and level.
 	 *
-	 * The @effective_group is the group that was actually used for the translation;
-	 * some keys such as Enter are not affected by the active keyboard group.
-	 * The @level is derived from @state.
+	 * Modifiers that affected the translation and are thus unavailable for
+	 * application use are returned in @consumed_modifiers.
 	 *
-	 * @consumed_modifiers gives modifiers that should be masked outfrom @state
-	 * when comparing this key press to a keyboard shortcut. For instance, on a US
-	 * keyboard, the `plus` symbol is shifted, so when comparing a key press to a
-	 * `<Control>plus` accelerator `<Shift>` should be masked out.
+	 * The @effective_group is the group that was actually used for the
+	 * translation; some keys such as Enter are not affected by the active
+	 * keyboard group. The @level is derived from @state.
 	 *
-	 * This function should rarely be needed, since #GdkEventKey already contains
-	 * the translated keyval. It is exported for the benefit of virtualized test
-	 * environments.
+	 * @consumed_modifiers gives modifiers that should be masked out
+	 * from @state when comparing this key press to a keyboard shortcut.
+	 * For instance, on a US keyboard, the `plus` symbol is shifted, so
+	 * when comparing a key press to a `<Control>plus` accelerator `<Shift>`
+	 * should be masked out.
+	 *
+	 * This function should rarely be needed, since `GdkEventKey` already
+	 * contains the translated keyval. It is exported for the benefit of
+	 * virtualized test environments.
 	 *
 	 * Params:
 	 *     keycode = a keycode
@@ -572,8 +591,7 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * The ::closed signal is emitted when the connection to the windowing
-	 * system for @display is closed.
+	 * Emitted when the connection to the windowing system for @display is closed.
 	 *
 	 * Params:
 	 *     isError = %TRUE if the display was closed due to an error
@@ -584,8 +602,7 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * The ::opened signal is emitted when the connection to the windowing
-	 * system for @display is opened.
+	 * Emitted when the connection to the windowing system for @display is opened.
 	 */
 	gulong addOnOpened(void delegate(Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -593,8 +610,7 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * The ::seat-added signal is emitted whenever a new seat is made
-	 * known to the windowing system.
+	 * Emitted whenever a new seat is made known to the windowing system.
 	 *
 	 * Params:
 	 *     seat = the seat that was just added
@@ -605,8 +621,7 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * The ::seat-removed signal is emitted whenever a seat is removed
-	 * by the windowing system.
+	 * Emitted whenever a seat is removed by the windowing system.
 	 *
 	 * Params:
 	 *     seat = the seat that was just removed
@@ -617,8 +632,7 @@ public class Display : ObjectG
 	}
 
 	/**
-	 * The ::setting-changed signal is emitted whenever a setting
-	 * changes its value.
+	 * Emitted whenever a setting changes its value.
 	 *
 	 * Params:
 	 *     setting = the name of the setting that changed

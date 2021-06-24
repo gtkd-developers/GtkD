@@ -32,7 +32,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkd.Loader;
 
 
 /**
@@ -71,7 +70,7 @@ public class SettingsSchemaSource
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_settings_schema_source_unref(gSettingsSchemaSource);
 	}
 

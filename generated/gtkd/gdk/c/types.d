@@ -143,9 +143,7 @@ public enum GdkAxisFlags
 alias GdkAxisFlags AxisFlags;
 
 /**
- * An enumeration describing the way in which a device
- * axis (valuator) maps onto the predefined valuator
- * types that GTK understands.
+ * Defines how device axes are interpreted by GTK.
  *
  * Note that the X and Y axes are not really needed; pointer devices
  * report their location via the x/y members of events regardless. Whether
@@ -319,7 +317,7 @@ public enum GdkDeviceToolType
 alias GdkDeviceToolType DeviceToolType;
 
 /**
- * Used in #GdkDrop and #GdkDrag to indicate the actions that the
+ * Used in `GdkDrop` and `GdkDrag` to indicate the actions that the
  * destination can and should do with the dropped data.
  */
 public enum GdkDragAction
@@ -347,7 +345,7 @@ public enum GdkDragAction
 alias GdkDragAction DragAction;
 
 /**
- * Used in #GdkDrag to the reason of a cancelled DND operation.
+ * Used in `GdkDrag` to the reason of a cancelled DND operation.
  */
 public enum GdkDragCancelReason
 {
@@ -498,9 +496,9 @@ public enum GdkEventType
 alias GdkEventType EventType;
 
 /**
- * #GdkFrameClockPhase is used to represent the different paint clock
- * phases that can be requested. The elements of the enumeration
- * correspond to the signals of #GdkFrameClock.
+ * Used to represent the different paint clock phases that can be requested.
+ *
+ * The elements of the enumeration correspond to the signals of `GdkFrameClock`.
  */
 public enum GdkFrameClockPhase
 {
@@ -540,8 +538,7 @@ public enum GdkFrameClockPhase
 alias GdkFrameClockPhase FrameClockPhase;
 
 /**
- * Indicates which monitor (in a multi-head setup) a surface should span over
- * when in fullscreen mode.
+ * Indicates which monitor a surface should span over when in fullscreen mode.
  */
 public enum GdkFullscreenMode
 {
@@ -557,7 +554,7 @@ public enum GdkFullscreenMode
 alias GdkFullscreenMode FullscreenMode;
 
 /**
- * Error enumeration for #GdkGLContext.
+ * Error enumeration for `GdkGLContext`.
  */
 public enum GdkGLError
 {
@@ -674,8 +671,9 @@ public enum GdkInputSource
 alias GdkInputSource InputSource;
 
 /**
- * The possible return values from gdk_key_event_matches()
- * describe how well an event matches a given keyval and modifiers.
+ * Describes how well an event matches a given keyval and modifiers.
+ *
+ * `GdkKeyMatch` values are returned by [method@Gdk.KeyEvent.matches].
  */
 public enum GdkKeyMatch
 {
@@ -696,13 +694,13 @@ public enum GdkKeyMatch
 alias GdkKeyMatch KeyMatch;
 
 /**
- * #GdkMemoryFormat describes a format that bytes can have in memory.
+ * `GdkMemoryFormat` describes a format that bytes can have in memory.
  *
  * It describes formats by listing the contents of the memory passed to it.
  * So GDK_MEMORY_A8R8G8B8 will be 1 byte (8 bits) of alpha, followed by a
  * byte each of red, green and blue. It is not endian-dependent, so
- * CAIRO_FORMAT_ARGB32 is represented by different #GdkMemoryFormats on
- * architectures with different endiannesses.
+ * CAIRO_FORMAT_ARGB32 is represented by different `GdkMemoryFormats`
+ * on architectures with different endiannesses.
  *
  * Its naming is modelled after VkFormat (see
  * https://www.khronos.org/registry/vulkan/specs/1.0/html/vkspec.html#VkFormat
@@ -758,9 +756,11 @@ public enum GdkMemoryFormat
 alias GdkMemoryFormat MemoryFormat;
 
 /**
- * A set of bit-flags to indicate the state of modifier keys and mouse buttons
- * in various event types. Typical modifier keys are Shift, Control, Meta,
- * Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock.
+ * Flags to indicate the state of modifier keys and mouse buttons
+ * in events.
+ *
+ * Typical modifier keys are Shift, Control, Meta, Super, Hyper, Alt, Compose,
+ * Apple, CapsLock or ShiftLock.
  *
  * Note that GDK may add internal values to events which include values outside
  * of this enumeration. Your code should preserve and ignore them.  You can use
@@ -865,20 +865,21 @@ public enum GdkNotifyType
 alias GdkNotifyType NotifyType;
 
 /**
- * Flags about this object. Implementations use these for optimizations
- * such as caching.
+ * Flags about a paintable object.
+ *
+ * Implementations use these for optimizations such as caching.
  */
 public enum GdkPaintableFlags
 {
 	/**
 	 * The size is immutable.
-	 * The #GdkPaintable::invalidate-size signal will never be
+	 * The [signal@GdkPaintable::invalidate-size] signal will never be
 	 * emitted.
 	 */
 	SIZE = 1,
 	/**
 	 * The content is immutable.
-	 * The #GdkPaintable::invalidate-contents signal will never be
+	 * The [signal@GdkPaintable::invalidate-contents] signal will never be
 	 * emitted.
 	 */
 	CONTENTS = 2,
@@ -1030,10 +1031,11 @@ alias GdkSurfaceEdge SurfaceEdge;
 /**
  * Specifies the state of a toplevel surface.
  *
- * On platforms that support information about individual edges, the %GDK_TOPLEVEL_STATE_TILED
- * state will be set whenever any of the individual tiled states is set. On platforms
- * that lack that support, the tiled state will give an indication of tiledness without
- * any of the per-edge states being set.
+ * On platforms that support information about individual edges, the
+ * %GDK_TOPLEVEL_STATE_TILED state will be set whenever any of the individual
+ * tiled states is set. On platforms that lack that support, the tiled state
+ * will give an indication of tiledness without any of the per-edge states
+ * being set.
  */
 public enum GdkToplevelState
 {
@@ -1105,9 +1107,11 @@ public enum GdkToplevelState
 alias GdkToplevelState ToplevelState;
 
 /**
- * Specifies the current state of a touchpad gesture. All gestures are
- * guaranteed to begin with an event with phase %GDK_TOUCHPAD_GESTURE_PHASE_BEGIN,
- * followed by 0 or several events with phase %GDK_TOUCHPAD_GESTURE_PHASE_UPDATE.
+ * Specifies the current state of a touchpad gesture.
+ *
+ * All gestures are guaranteed to begin with an event with phase
+ * %GDK_TOUCHPAD_GESTURE_PHASE_BEGIN, followed by 0 or several events
+ * with phase %GDK_TOUCHPAD_GESTURE_PHASE_UPDATE.
  *
  * A finished gesture may have 2 possible outcomes, an event with phase
  * %GDK_TOUCHPAD_GESTURE_PHASE_END will be emitted when the gesture is
@@ -1212,8 +1216,8 @@ struct GdkContentProviderClass
 	/**
 	 *
 	 * Params:
-	 *     provider = a #GdkContentProvider
-	 *     result = a #GAsyncResult
+	 *     provider = a `GdkContentProvider`
+	 *     result = a `GAsyncResult`
 	 * Returns: %TRUE if the operation was completed successfully. Otherwise
 	 *     @error will be set to describe the failure.
 	 *
@@ -1223,8 +1227,8 @@ struct GdkContentProviderClass
 	/**
 	 *
 	 * Params:
-	 *     provider = a #GdkContentProvider
-	 *     value = the #GValue to fill
+	 *     provider = a `GdkContentProvider`
+	 *     value = the `GValue` to fill
 	 * Returns: %TRUE if the value was set successfully. Otherwise
 	 *     @error will be set to describe the failure.
 	 *
@@ -1261,20 +1265,18 @@ struct GdkDrag;
 struct GdkDragSurface;
 
 /**
- * The #GdkDragSurfaceInterface implementation is private to GDK.
+ * The `GdkDragSurfaceInterface` implementation is private to GDK.
  */
 struct GdkDragSurfaceInterface;
 
 struct GdkDrawContext;
-
-struct GdkDrawingContext;
 
 struct GdkDrop;
 
 struct GdkEvent;
 
 /**
- * GdkEventSequence is an opaque type representing a sequence
+ * `GdkEventSequence` is an opaque type representing a sequence
  * of related touch events.
  */
 struct GdkEventSequence;
@@ -1300,7 +1302,7 @@ struct GdkGrabBrokenEvent;
 struct GdkKeyEvent;
 
 /**
- * A #GdkKeymapKey is a hardware key that can be mapped to a keyval.
+ * A `GdkKeymapKey` is a hardware key that can be mapped to a keyval.
  */
 struct GdkKeymapKey
 {
@@ -1342,14 +1344,15 @@ struct GdkPadEvent;
 struct GdkPaintable;
 
 /**
- * The list of functions that can be implemented for the #GdkPaintable interface.
+ * The list of functions that can be implemented for the `GdkPaintable`
+ * interface.
  *
- * Note that apart from the #GdkPaintableInterface.snapshot() function, no virtual
- * function of this interface is mandatory to implement, though it is a good idea
- * to implement #GdkPaintableInterface.get_current_image() for non-static paintables
- * and #GdkPaintableInterface.get_flags() if the image is not dynamic as the default
- * implementation returns no flags and that will make the implementation likely
- * quite slow.
+ * Note that apart from the #GdkPaintableInterface.snapshot() function, no
+ * virtual function of this interface is mandatory to implement, though it
+ * is a good idea to implement #GdkPaintableInterface.get_current_image()
+ * for non-static paintables and #GdkPaintableInterface.get_flags() if the
+ * image is not dynamic as the default implementation returns no flags and
+ * that will make the implementation likely quite slow.
  */
 struct GdkPaintableInterface
 {
@@ -1359,7 +1362,7 @@ struct GdkPaintableInterface
 	/**
 	 *
 	 * Params:
-	 *     paintable = a #GdkPaintable
+	 *     paintable = a `GdkPaintable`
 	 * Returns: An immutable paintable for the current
 	 *     contents of @paintable.
 	 */
@@ -1367,28 +1370,28 @@ struct GdkPaintableInterface
 	/**
 	 *
 	 * Params:
-	 *     paintable = a #GdkPaintable
-	 * Returns: The #GdkPaintableFlags for this paintable.
+	 *     paintable = a `GdkPaintable`
+	 * Returns: The `GdkPaintableFlags` for this paintable
 	 */
 	extern(C) GdkPaintableFlags function(GdkPaintable* paintable) getFlags;
 	/**
 	 *
 	 * Params:
-	 *     paintable = a #GdkPaintable
+	 *     paintable = a `GdkPaintable`
 	 * Returns: the intrinsic width of @paintable or 0 if none.
 	 */
 	extern(C) int function(GdkPaintable* paintable) getIntrinsicWidth;
 	/**
 	 *
 	 * Params:
-	 *     paintable = a #GdkPaintable
+	 *     paintable = a `GdkPaintable`
 	 * Returns: the intrinsic height of @paintable or 0 if none.
 	 */
 	extern(C) int function(GdkPaintable* paintable) getIntrinsicHeight;
 	/**
 	 *
 	 * Params:
-	 *     paintable = a #GdkPaintable
+	 *     paintable = a `GdkPaintable`
 	 * Returns: the intrinsic aspect ratio of @paintable or 0 if none.
 	 */
 	extern(C) double function(GdkPaintable* paintable) getIntrinsicAspectRatio;
@@ -1424,8 +1427,21 @@ struct GdkRGBA
 }
 
 /**
- * Defines the position and size of a rectangle. It is identical to
- * #cairo_rectangle_int_t.
+ * A `GdkRectangle` data type for representing rectangles.
+ *
+ * `GdkRectangle` is identical to `cairo_rectangle_t`. Together with Cairo’s
+ * `cairo_region_t` data type, these are the central types for representing
+ * sets of pixels.
+ *
+ * The intersection of two rectangles can be computed with
+ * [method@Gdk.Rectangle.intersect]; to find the union of two rectangles use
+ * [method@Gdk.Rectangle.union].
+ *
+ * The `cairo_region_t` type provided by Cairo is usually used for managing
+ * non-rectangular clipping of graphical operations.
+ *
+ * The Graphene library has a number of other data types for regions and
+ * volumes in 2D and 3D.
  */
 struct GdkRectangle
 {
@@ -1501,6 +1517,7 @@ struct GdkVulkanContext;
 
 /**
  * The type of a function that can be registered with gdk_content_register_deserializer().
+ *
  * When the function gets called to operate on content, it can call functions on the
  * @deserializer object to obtain the mime type, input stream, user data, etc. for its
  * operation.
@@ -1512,6 +1529,7 @@ public alias extern(C) void function(GdkContentDeserializer* deserializer) GdkCo
 
 /**
  * The type of a function that can be registered with gdk_content_register_serializer().
+ *
  * When the function gets called to operate on content, it can call functions on the
  * @serializer object to obtain the mime type, output stream, user data, etc. for its
  * operation.
@@ -1522,9 +1540,10 @@ public alias extern(C) void function(GdkContentDeserializer* deserializer) GdkCo
 public alias extern(C) void function(GdkContentSerializer* serializer) GdkContentSerializeFunc;
 
 /**
- * Defines all possible DND actions. This can be used in gdk_drop_status()
- * messages when any drop can be accepted or a more specific drop method
- * is not yet known.
+ * Defines all possible DND actions.
+ *
+ * This can be used in [method@Gdk.Drop.status] messages when any drop
+ * can be accepted or a more specific drop method is not yet known.
  */
 enum ACTION_ALL = 7;
 alias GDK_ACTION_ALL = ACTION_ALL;
@@ -1570,15 +1589,14 @@ enum EVENT_STOP = true;
 alias GDK_EVENT_STOP = EVENT_STOP;
 
 /**
- * A mask covering all entries in #GdkModifierType.
+ * A mask covering all entries in `GdkModifierType`.
  */
 enum MODIFIER_MASK = 469769999;
 alias GDK_MODIFIER_MASK = MODIFIER_MASK;
 
 /**
  * This is the priority that the idle handler processing surface updates
- * is given in the
- * [GLib Main Loop][glib-The-Main-Event-Loop].
+ * is given in the main loop.
  */
 enum PRIORITY_REDRAW = 120;
 alias GDK_PRIORITY_REDRAW = PRIORITY_REDRAW;

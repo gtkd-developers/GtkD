@@ -27,10 +27,10 @@ module gstreamer.DateTime;
 private import glib.ConstructionException;
 private import glib.DateTime : GLibDateTime = DateTime;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -72,7 +72,7 @@ public class DateTime
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			gst_date_time_unref(gstDateTime);
 	}
 
@@ -99,35 +99,6 @@ public class DateTime
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_date_time_new_now_local_time()");
-		}
-		this(p); //, true);
-	}
-
-	/**
-	 * Creates a new GstDateTime using the time since Jan 1, 1970 specified by
-	 * secs.
-	 *
-	 * Params:
-	 *     secs = Seconds from the Unix epoch
-	 *     utc  = If true use utc else use the local timezone.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (long secs, bool utc)
-	{
-		GstDateTime* p;
-
-		if ( utc )
-		{
-			p = gst_date_time_new_from_unix_epoch_utc(secs);
-		}
-		else
-		{
-			p = gst_date_time_new_from_unix_epoch_local_time(secs);
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_date_time_new_from_unix_epoch_local_time(secs)");
 		}
 		this(p); //, true);
 	}
@@ -261,6 +232,31 @@ public class DateTime
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_unix_epoch_local_time_usecs");
+		}
+
+		this(cast(GstDateTime*) __p);
+	}
+
+	/**
+	 * Creates a new #GstDateTime using the time since Jan 1, 1970 specified by
+	 * @usecs. The #GstDateTime is in UTC.
+	 *
+	 * Params:
+	 *     usecs = microseconds from the Unix epoch
+	 *
+	 * Returns: a newly created #GstDateTime
+	 *
+	 * Since: 1.18
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(long usecs)
+	{
+		auto __p = gst_date_time_new_from_unix_epoch_utc_usecs(usecs);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_unix_epoch_utc_usecs");
 		}
 
 		this(cast(GstDateTime*) __p);

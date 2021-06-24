@@ -25,11 +25,15 @@
 module harfbuzz.language_t;
 
 private import glib.Str;
+private import glib.c.functions;
 private import harfbuzz.c.functions;
 public  import harfbuzz.c.types;
 
 
-/** */
+/**
+ * Data type for languages. Each #hb_language_t corresponds to a BCP 47
+ * language tag.
+ */
 public class language_t
 {
 	/** the main Gtk struct */

@@ -35,6 +35,7 @@ private import glib.GException;
 private import glib.KeyFile;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -311,7 +312,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 
 	/**
-	 * Gets the generic name from the destkop file.
+	 * Gets the generic name from the desktop file.
 	 *
 	 * Returns: The value of the GenericName key
 	 */

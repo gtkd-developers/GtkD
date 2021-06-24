@@ -33,8 +33,7 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkSliceListModel is a list model that takes a list model and presents a
- * slice of that model.
+ * `GtkSliceListModel` is a list model that presents a slice of another model.
  * 
  * This is useful when implementing paging by setting the size to the number
  * of elements per page and updating the offset whenever a different page is
@@ -79,15 +78,17 @@ public class SliceListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Creates a new slice model that presents the slice from @offset to
-	 * @offset + @size our of the given @model.
+	 * Creates a new slice model.
+	 *
+	 * It presents the slice from @offset to offset + @size
+	 * of the given @model.
 	 *
 	 * Params:
 	 *     model = The model to use, or %NULL
 	 *     offset = the offset of the slice
 	 *     size = maximum size of the slice
 	 *
-	 * Returns: A new #GtkSliceListModel
+	 * Returns: A new `GtkSliceListModel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -121,7 +122,7 @@ public class SliceListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Gets the offset set via gtk_slice_list_model_set_offset()
+	 * Gets the offset set via gtk_slice_list_model_set_offset().
 	 *
 	 * Returns: The offset
 	 */
@@ -141,8 +142,9 @@ public class SliceListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Sets the model to show a slice of. The model's item type must conform
-	 * to @self's item type.
+	 * Sets the model to show a slice of.
+	 *
+	 * The model's item type must conform to @self's item type.
 	 *
 	 * Params:
 	 *     model = The model to be sliced
@@ -170,8 +172,8 @@ public class SliceListModel : ObjectG, ListModelIF
 	 * Sets the maximum size. @self will never have more items
 	 * than @size.
 	 *
-	 * It can however have fewer items if the offset is too large or
-	 * the model sliced from doesn't have enough items.
+	 * It can however have fewer items if the offset is too large
+	 * or the model sliced from doesn't have enough items.
 	 *
 	 * Params:
 	 *     size = the maximum size

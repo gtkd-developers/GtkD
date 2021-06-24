@@ -70,7 +70,7 @@ public class DNDEvent : Event
 	}
 
 	/**
-	 * Gets the #GdkDrop from a DND event.
+	 * Gets the `GdkDrop` object from a DND event.
 	 *
 	 * Returns: the drop
 	 */

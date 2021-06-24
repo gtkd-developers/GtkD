@@ -36,6 +36,7 @@ private import glib.MainContext;
 private import glib.MemorySlice;
 private import glib.Source;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 

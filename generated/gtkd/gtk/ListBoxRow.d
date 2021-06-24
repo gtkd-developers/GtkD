@@ -35,7 +35,9 @@ public  import gtk.c.types;
 private import std.algorithm;
 
 
-/** */
+/**
+ * `GtkListBoxRow` is the kind of widget that can be added to a `GtkListBox`.
+ */
 public class ListBoxRow : Widget, ActionableIF
 {
 	/** the main Gtk struct */
@@ -75,9 +77,9 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Creates a new #GtkListBoxRow, to be used as a child of a #GtkListBox.
+	 * Creates a new `GtkListBoxRow`.
 	 *
-	 * Returns: a new #GtkListBoxRow
+	 * Returns: a new `GtkListBoxRow`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -95,7 +97,9 @@ public class ListBoxRow : Widget, ActionableIF
 
 	/**
 	 * Marks @row as changed, causing any state that depends on this
-	 * to be updated. This affects sorting, filtering and headers.
+	 * to be updated.
+	 *
+	 * This affects sorting, filtering and headers.
 	 *
 	 * Note that calls to this method must be in sync with the data
 	 * used for the row functions. For instance, if the list is
@@ -108,7 +112,7 @@ public class ListBoxRow : Widget, ActionableIF
 	 * This generally means that if you don’t fully control the data
 	 * model you have to duplicate the data that affects the listbox
 	 * row functions into the row widgets themselves. Another alternative
-	 * is to call gtk_list_box_invalidate_sort() on any model change,
+	 * is to call [method@Gtk.ListBox.invalidate_sort] on any model change,
 	 * but that is more expensive.
 	 */
 	public void changed()
@@ -117,8 +121,7 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Gets the value of the #GtkListBoxRow:activatable property
-	 * for this row.
+	 * Gets whether the row is activatable.
 	 *
 	 * Returns: %TRUE if the row is activatable
 	 */
@@ -145,9 +148,12 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Returns the current header of the @row. This can be used
-	 * in a #GtkListBoxUpdateHeaderFunc to see if there is a header
-	 * set already, and if so to update the state of it.
+	 * Returns the current header of the @row.
+	 *
+	 * This can be used
+	 * in a [callback@Gtk.ListBoxUpdateHeaderFunc] to see if
+	 * there is a header set already, and if so to update
+	 * the state of it.
 	 *
 	 * Returns: the current header, or %NULL if none
 	 */
@@ -164,7 +170,7 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Gets the current index of the @row in its #GtkListBox container.
+	 * Gets the current index of the @row in its `GtkListBox` container.
 	 *
 	 * Returns: the index of the @row, or -1 if the @row is not in a listbox
 	 */
@@ -174,8 +180,7 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Gets the value of the #GtkListBoxRow:selectable property
-	 * for this row.
+	 * Gets whether the row can be selected.
 	 *
 	 * Returns: %TRUE if the row is selectable
 	 */
@@ -186,7 +191,7 @@ public class ListBoxRow : Widget, ActionableIF
 
 	/**
 	 * Returns whether the child is currently selected in its
-	 * #GtkListBox container.
+	 * `GtkListBox` container.
 	 *
 	 * Returns: %TRUE if @row is selected
 	 */
@@ -196,7 +201,7 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Set the #GtkListBoxRow:activatable property for this row.
+	 * Set whether the row is activatable.
 	 *
 	 * Params:
 	 *     activatable = %TRUE to mark the row as activatable
@@ -218,9 +223,12 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Sets the current header of the @row. This is only allowed to be called
-	 * from a #GtkListBoxUpdateHeaderFunc. It will replace any existing
-	 * header in the row, and be shown in front of the row in the listbox.
+	 * Sets the current header of the @row.
+	 *
+	 * This is only allowed to be called
+	 * from a [callback@Gtk.ListBoxUpdateHeaderFunc].
+	 * It will replace any existing header in the row,
+	 * and be shown in front of the row in the listbox.
 	 *
 	 * Params:
 	 *     header = the header, or %NULL
@@ -231,7 +239,7 @@ public class ListBoxRow : Widget, ActionableIF
 	}
 
 	/**
-	 * Set the #GtkListBoxRow:selectable property for this row.
+	 * Set whether the row can be selected.
 	 *
 	 * Params:
 	 *     selectable = %TRUE to mark the row as selectable
@@ -245,7 +253,8 @@ public class ListBoxRow : Widget, ActionableIF
 	 * This is a keybinding signal, which will cause this row to be activated.
 	 *
 	 * If you want to be notified when the user activates a row (by key or not),
-	 * use the #GtkListBox::row-activated signal on the row’s parent #GtkListBox.
+	 * use the [signal@Gtk.ListBox::row-activated] signal on the row’s parent
+	 * `GtkListBox`.
 	 */
 	gulong addOnActivate(void delegate(ListBoxRow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

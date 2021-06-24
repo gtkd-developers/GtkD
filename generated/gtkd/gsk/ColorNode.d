@@ -72,14 +72,14 @@ public class ColorNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will render the color specified by @rgba into
+	 * Creates a `GskRenderNode` that will render the color specified by @rgba into
 	 * the area given by @bounds.
 	 *
 	 * Params:
-	 *     rgba = a #GdkRGBA specifying a color
+	 *     rgba = a `GdkRGBA` specifying a color
 	 *     bounds = the rectangle to render the color into
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

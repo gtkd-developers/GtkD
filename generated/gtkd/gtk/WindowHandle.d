@@ -32,17 +32,18 @@ public  import gtk.c.types;
 
 
 /**
- * GtkWindowHandle is a titlebar area widget. When added into a window, it can
- * be dragged to move the window, and handles right click, double click and
- * middle click as expected of a titlebar.
+ * `GtkWindowHandle` is a titlebar area widget.
+ * 
+ * When added into a window, it can be dragged to move the window, and handles
+ * right click, double click and middle click as expected of a titlebar.
  * 
  * # CSS nodes
  * 
- * #GtkWindowHandle has a single CSS node with the name `windowhandle`.
+ * `GtkWindowHandle` has a single CSS node with the name `windowhandle`.
  * 
  * # Accessibility
  * 
- * GtkWindowHandle uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+ * `GtkWindowHandle` uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
 public class WindowHandle : Widget
 {
@@ -80,9 +81,9 @@ public class WindowHandle : Widget
 	}
 
 	/**
-	 * Creates a new #GtkWindowHandle.
+	 * Creates a new `GtkWindowHandle`.
 	 *
-	 * Returns: a new #GtkWindowHandle.
+	 * Returns: a new `GtkWindowHandle`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -38,7 +38,6 @@ private import gobject.TypeInterface;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-private import gtkd.Loader;
 private import std.traits;
 
 
@@ -670,6 +669,13 @@ public class ObjectG
 	 * @target instances are finalized. To remove the binding without affecting the
 	 * @source and the @target you can just call g_object_unref() on the returned
 	 * #GBinding instance.
+	 *
+	 * Removing the binding by calling g_object_unref() on it must only be done if
+	 * the binding, @source and @target are only used from a single thread and it
+	 * is clear that both @source and @target outlive the binding. Especially it
+	 * is not safe to rely on this if the binding, @source or @target can be
+	 * finalized from different threads. Keep another reference to the binding and
+	 * use g_binding_unbind() instead to be on the safe side.
 	 *
 	 * A #GObject can have multiple bindings.
 	 *
@@ -1464,7 +1470,7 @@ public class ObjectG
 
 	/**
 	 * Adds a weak reference callback to an object. Weak references are
-	 * used for notification when an object is finalized. They are called
+	 * used for notification when an object is disposed. They are called
 	 * "weak references" because they allow you to safely hold a pointer
 	 * to an object without calling g_object_ref() (g_object_ref() adds a
 	 * strong reference, that is, forces the object to stay alive).

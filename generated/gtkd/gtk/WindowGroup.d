@@ -33,16 +33,17 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkWindowGroup restricts the effect of grabs to windows
- * in the same group, thereby making window groups almost behave
- * like separate applications.
+ * `GtkWindowGroup` makes group of windows behave like separate applications.
+ * 
+ * It achieves this by limiting the effect of GTK grabs and modality
+ * to windows in the same group.
  * 
  * A window can be a member in at most one window group at a time.
  * Windows that have not been explicitly assigned to a group are
  * implicitly treated like windows of the default window group.
  * 
- * GtkWindowGroup objects are referenced by each window in the group,
- * so once you have added all windows to a GtkWindowGroup, you can drop
+ * `GtkWindowGroup` objects are referenced by each window in the group,
+ * so once you have added all windows to a `GtkWindowGroup`, you can drop
  * the initial reference to the window group with g_object_unref(). If the
  * windows in the window group are subsequently destroyed, then they will
  * be removed from the window group and drop their references on the window
@@ -85,12 +86,12 @@ public class WindowGroup : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkWindowGroup object.
+	 * Creates a new `GtkWindowGroup` object.
 	 *
 	 * Modality of windows only affects windows
-	 * within the same #GtkWindowGroup.
+	 * within the same `GtkWindowGroup`.
 	 *
-	 * Returns: a new #GtkWindowGroup.
+	 * Returns: a new `GtkWindowGroup`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -107,10 +108,10 @@ public class WindowGroup : ObjectG
 	}
 
 	/**
-	 * Adds a window to a #GtkWindowGroup.
+	 * Adds a window to a `GtkWindowGroup`.
 	 *
 	 * Params:
-	 *     window = the #GtkWindow to add
+	 *     window = the `GtkWindow` to add
 	 */
 	public void addWindow(Window window)
 	{
@@ -118,7 +119,7 @@ public class WindowGroup : ObjectG
 	}
 
 	/**
-	 * Returns a list of the #GtkWindows that belong to @window_group.
+	 * Returns a list of the `GtkWindows` that belong to @window_group.
 	 *
 	 * Returns: A
 	 *     newly-allocated list of windows inside the group.
@@ -136,10 +137,10 @@ public class WindowGroup : ObjectG
 	}
 
 	/**
-	 * Removes a window from a #GtkWindowGroup.
+	 * Removes a window from a `GtkWindowGroup`.
 	 *
 	 * Params:
-	 *     window = the #GtkWindow to remove
+	 *     window = the `GtkWindow` to remove
 	 */
 	public void removeWindow(Window window)
 	{

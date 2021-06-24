@@ -28,6 +28,7 @@ private import glib.ArrayG;
 private import glib.MemorySlice;
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gst.mpegts.CableDeliverySystemDescriptor;
 private import gst.mpegts.ComponentDescriptor;
@@ -48,7 +49,6 @@ private import gst.mpegts.T2DeliverySystemDescriptor;
 private import gst.mpegts.TerrestrialDeliverySystemDescriptor;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -88,7 +88,7 @@ public class Descriptor
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			gst_mpegts_descriptor_free(gstMpegtsDescriptor);
 	}
 

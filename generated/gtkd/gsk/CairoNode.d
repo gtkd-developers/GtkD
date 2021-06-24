@@ -73,14 +73,15 @@ public class CairoNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will render a cairo surface
-	 * into the area given by @bounds. You can draw to the cairo
-	 * surface using gsk_cairo_node_get_draw_context()
+	 * Creates a `GskRenderNode` that will render a cairo surface
+	 * into the area given by @bounds.
+	 *
+	 * You can draw to the cairo surface using [method@Gsk.CairoNode.get_draw_context].
 	 *
 	 * Params:
 	 *     bounds = the rectangle to render to
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

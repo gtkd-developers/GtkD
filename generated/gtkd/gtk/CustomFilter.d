@@ -32,8 +32,7 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkCustomFilter is a #GtkFilter that uses a callback to determine
- * whether to include an item or not.
+ * `GtkCustomFilter` determines whether to include items with a callback.
  */
 public class CustomFilter : Filter
 {
@@ -84,7 +83,7 @@ public class CustomFilter : Filter
 	 *     userData = user data to pass to @match_func
 	 *     userDestroy = destroy notify for @user_data
 	 *
-	 * Returns: a new #GtkCustomFilter
+	 * Returns: a new `GtkCustomFilter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -101,7 +100,7 @@ public class CustomFilter : Filter
 	}
 
 	/**
-	 * Sets (or unsets) the function used for filtering items.
+	 * Sets the function used for filtering items.
 	 *
 	 * If @match_func is %NULL, the filter matches all items.
 	 *

@@ -37,6 +37,8 @@ public  import gtk.c.types;
 
 
 /**
+ * A GtkTreeModel which hides parts of an underlying tree model
+ * 
  * A #GtkTreeModelFilter is a tree model which wraps another tree model,
  * and can do the following things:
  * 

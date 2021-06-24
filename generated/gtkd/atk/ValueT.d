@@ -30,6 +30,7 @@ public  import atk.c.types;
 public  import glib.ListSG;
 public  import glib.MemorySlice;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gobject.Value;

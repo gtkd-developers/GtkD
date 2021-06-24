@@ -26,6 +26,7 @@ module gtk.ConstraintGuide;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.ConstraintTargetIF;
 private import gtk.ConstraintTargetT;
@@ -34,12 +35,18 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkConstraintGuide is an invisible layout element that can be
- * used by widgets inside a #GtkConstraintLayout as a source or a target
- * of a #GtkConstraint. Guides can be used like guidelines or as
- * flexible space.
+ * A `GtkConstraintGuide` is an invisible layout element in a
+ * `GtkConstraintLayout`.
  * 
- * Unlike a #GtkWidget, a #GtkConstraintGuide will not be drawn.
+ * The `GtkConstraintLayout` treats guides like widgets. They
+ * can be used as the source or target of a `GtkConstraint`.
+ * 
+ * Guides have a minimum, maximum and natural size. Depending
+ * on the constraints that are applied, they can act like a
+ * guideline that widgets can be aligned to, or like *flexible
+ * space*.
+ * 
+ * Unlike a `GtkWidget`, a `GtkConstraintGuide` will not be drawn.
  */
 public class ConstraintGuide : ObjectG, ConstraintTargetIF
 {
@@ -80,9 +87,9 @@ public class ConstraintGuide : ObjectG, ConstraintTargetIF
 	}
 
 	/**
-	 * Creates a new #GtkConstraintGuide object.
+	 * Creates a new `GtkConstraintGuide` object.
 	 *
-	 * Returns: a new #GtkConstraintGuide object.
+	 * Returns: a new `GtkConstraintGuide` object.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -163,7 +170,7 @@ public class ConstraintGuide : ObjectG, ConstraintTargetIF
 	/**
 	 * Sets the maximum size of @guide.
 	 *
-	 * If @guide is attached to a #GtkConstraintLayout,
+	 * If @guide is attached to a `GtkConstraintLayout`,
 	 * the constraints will be updated to reflect the new size.
 	 *
 	 * Params:
@@ -178,7 +185,7 @@ public class ConstraintGuide : ObjectG, ConstraintTargetIF
 	/**
 	 * Sets the minimum size of @guide.
 	 *
-	 * If @guide is attached to a #GtkConstraintLayout,
+	 * If @guide is attached to a `GtkConstraintLayout`,
 	 * the constraints will be updated to reflect the new size.
 	 *
 	 * Params:
@@ -191,7 +198,7 @@ public class ConstraintGuide : ObjectG, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets a name for the given #GtkConstraintGuide.
+	 * Sets a name for the given `GtkConstraintGuide`.
 	 *
 	 * The name is useful for debugging purposes.
 	 *
@@ -206,7 +213,7 @@ public class ConstraintGuide : ObjectG, ConstraintTargetIF
 	/**
 	 * Sets the natural size of @guide.
 	 *
-	 * If @guide is attached to a #GtkConstraintLayout,
+	 * If @guide is attached to a `GtkConstraintLayout`,
 	 * the constraints will be updated to reflect the new size.
 	 *
 	 * Params:
@@ -220,7 +227,7 @@ public class ConstraintGuide : ObjectG, ConstraintTargetIF
 
 	/**
 	 * Sets the strength of the constraint on the natural size of the
-	 * given #GtkConstraintGuide.
+	 * given `GtkConstraintGuide`.
 	 *
 	 * Params:
 	 *     strength = the strength of the constraint

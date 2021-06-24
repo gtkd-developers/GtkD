@@ -32,8 +32,8 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkFixedLayout is a layout manager which can place child widgets
- * at fixed positions, and with fixed sizes.
+ * `GtkFixedLayout` is a layout manager which can place child widgets
+ * at fixed positions.
  * 
  * Most applications should never use this layout manager; fixed positioning
  * and sizing requires constant recalculations on where children need to be
@@ -53,14 +53,14 @@ public  import gtk.c.types;
  * display of non-English text will use a different font in many
  * cases.
  * 
- * In addition, #GtkFixedLayout does not pay attention to text direction and
+ * In addition, `GtkFixedLayout` does not pay attention to text direction and
  * thus may produce unwanted results if your app is run under right-to-left
  * languages such as Hebrew or Arabic. That is: normally GTK will order
  * containers appropriately depending on the text direction, e.g. to put labels
  * to the right of the thing they label when using an RTL language;
- * #GtkFixedLayout won't be able to do that for you.
+ * `GtkFixedLayout` won't be able to do that for you.
  * 
- * Finally, fixed positioning makes it kind of annoying to add/remove GUI
+ * Finally, fixed positioning makes it kind of annoying to add/remove UI
  * elements, since you have to reposition all the other  elements. This is a
  * long-term maintenance problem for your application.
  */
@@ -100,9 +100,9 @@ public class FixedLayout : LayoutManager
 	}
 
 	/**
-	 * Creates a new #GtkFixedLayout.
+	 * Creates a new `GtkFixedLayout`.
 	 *
-	 * Returns: the newly created #GtkFixedLayout
+	 * Returns: the newly created `GtkFixedLayout`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

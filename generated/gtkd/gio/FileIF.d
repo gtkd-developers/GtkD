@@ -44,6 +44,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -233,6 +234,31 @@ public interface FileIF{
 	 * Throws: GException on failure.
 	 */
 	public FileOutputStream appendToFinish(AsyncResultIF res);
+
+	/**
+	 * Prepares the file attribute query string for copying to @file.
+	 *
+	 * This function prepares an attribute query string to be
+	 * passed to g_file_query_info() to get a list of attributes
+	 * normally copied with the file (see g_file_copy_attributes()
+	 * for the detailed description). This function is used by the
+	 * implementation of g_file_copy_attributes() and is useful
+	 * when one needs to query and set the attributes in two
+	 * stages (e.g., for recursive move of a directory).
+	 *
+	 * Params:
+	 *     flags = a set of #GFileCopyFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 *
+	 * Returns: an attribute query string for g_file_query_info(),
+	 *     or %NULL if an error occurs.
+	 *
+	 * Since: 2.68
+	 *
+	 * Throws: GException on failure.
+	 */
+	public string buildAttributeListForCopy(GFileCopyFlags flags, Cancellable cancellable);
 
 	/**
 	 * Copies the file @source to the location specified by @destination.
@@ -939,7 +965,8 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Returns: a string containing the #GFile's URI.
+	 * Returns: a string containing the #GFile's URI. If the #GFile was constructed
+	 *     with an invalid URI, an invalid URI is returned.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -953,11 +980,14 @@ public interface FileIF{
 	 * ]|
 	 * Common schemes include "file", "http", "ftp", etc.
 	 *
+	 * The scheme can be different from the one used to construct the #GFile,
+	 * in that it might be replaced with one that is logically equivalent to the #GFile.
+	 *
 	 * This call does no blocking I/O.
 	 *
 	 * Returns: a string containing the URI scheme for the given
-	 *     #GFile. The returned string should be freed with g_free()
-	 *     when no longer needed.
+	 *     #GFile or %NULL if the #GFile was constructed with an invalid URI. The
+	 *     returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getUriScheme();
 

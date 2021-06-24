@@ -27,7 +27,6 @@ module gstreamer.MiniObject;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -89,7 +88,7 @@ public class MiniObject
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			gst_mini_object_unref(gstMiniObject);
 	}
 

@@ -32,8 +32,10 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutTrigger that triggers when a specific mnemonic
- * is pressed.
+ * A `GtkShortcutTrigger` that triggers when a specific mnemonic is pressed.
+ * 
+ * Mnemonics require a *mnemonic modifier* (typically <kbd>Alt</kbd>) to be
+ * pressed together with the mnemonic key.
  */
 public class MnemonicTrigger : ShortcutTrigger
 {
@@ -71,7 +73,7 @@ public class MnemonicTrigger : ShortcutTrigger
 	}
 
 	/**
-	 * Creates a #GtkShortcutTrigger that will trigger whenever the key with
+	 * Creates a `GtkShortcutTrigger` that will trigger whenever the key with
 	 * the given @keyval is pressed and mnemonics have been activated.
 	 *
 	 * Mnemonics are activated by calling code when a key event with the right
@@ -80,7 +82,7 @@ public class MnemonicTrigger : ShortcutTrigger
 	 * Params:
 	 *     keyval = The keyval to trigger for
 	 *
-	 * Returns: A new #GtkShortcutTrigger
+	 * Returns: A new `GtkShortcutTrigger`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

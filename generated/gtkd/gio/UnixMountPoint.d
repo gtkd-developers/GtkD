@@ -28,8 +28,8 @@ private import gio.IconIF;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +67,7 @@ public class UnixMountPoint
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_unix_mount_point_free(gUnixMountPoint);
 	}
 

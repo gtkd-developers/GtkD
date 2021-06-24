@@ -31,7 +31,9 @@ private import gsk.c.functions;
 public  import gsk.c.types;
 
 
-/** */
+/**
+ * A GSK renderer that is using OpenGL.
+ */
 public class GLRenderer : Renderer
 {
 	/** the main Gtk struct */

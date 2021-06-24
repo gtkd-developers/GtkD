@@ -27,6 +27,7 @@ module gtk.AppChooserDialog;
 private import gio.FileIF;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.AppChooserIF;
 private import gtk.AppChooserT;
@@ -38,15 +39,18 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkAppChooserDialog shows a #GtkAppChooserWidget inside a #GtkDialog.
+ * `GtkAppChooserDialog` shows a `GtkAppChooserWidget` inside a `GtkDialog`.
  * 
- * Note that #GtkAppChooserDialog does not have any interesting methods
- * of its own. Instead, you should get the embedded #GtkAppChooserWidget
- * using gtk_app_chooser_dialog_get_widget() and call its methods if
- * the generic #GtkAppChooser interface is not sufficient for your needs.
+ * ![An example GtkAppChooserDialog](appchooserdialog.png)
  * 
- * To set the heading that is shown above the #GtkAppChooserWidget,
- * use gtk_app_chooser_dialog_set_heading().
+ * Note that `GtkAppChooserDialog` does not have any interesting methods
+ * of its own. Instead, you should get the embedded `GtkAppChooserWidget`
+ * using [method@Gtk.AppChooserDialog.get_widget] and call its methods if
+ * the generic [iface@Gtk.AppChooser] interface is not sufficient for
+ * your needs.
+ * 
+ * To set the heading that is shown above the `GtkAppChooserWidget`,
+ * use [method@Gtk.AppChooserDialog.set_heading].
  */
 public class AppChooserDialog : Dialog, AppChooserIF
 {
@@ -87,15 +91,16 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	}
 
 	/**
-	 * Creates a new #GtkAppChooserDialog for the provided #GFile,
-	 * to allow the user to select an application for it.
+	 * Creates a new `GtkAppChooserDialog` for the provided `GFile`.
+	 *
+	 * The dialog will show applications that can open the file.
 	 *
 	 * Params:
-	 *     parent = a #GtkWindow, or %NULL
+	 *     parent = a `GtkWindow`, or %NULL
 	 *     flags = flags for this dialog
-	 *     file = a #GFile
+	 *     file = a `GFile`
 	 *
-	 * Returns: a newly created #GtkAppChooserDialog
+	 * Returns: a newly created `GtkAppChooserDialog`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -112,15 +117,16 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	}
 
 	/**
-	 * Creates a new #GtkAppChooserDialog for the provided content type,
-	 * to allow the user to select an application for it.
+	 * Creates a new `GtkAppChooserDialog` for the provided content type.
+	 *
+	 * The dialog will show applications that can open the content type.
 	 *
 	 * Params:
-	 *     parent = a #GtkWindow, or %NULL
+	 *     parent = a `GtkWindow`, or %NULL
 	 *     flags = flags for this dialog
 	 *     contentType = a content type string
 	 *
-	 * Returns: a newly created #GtkAppChooserDialog
+	 * Returns: a newly created `GtkAppChooserDialog`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -139,8 +145,8 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	/**
 	 * Returns the text to display at the top of the dialog.
 	 *
-	 * Returns: the text to display at the top of the dialog, or %NULL, in which
-	 *     case a default text is displayed
+	 * Returns: the text to display at the top of the dialog,
+	 *     or %NULL, in which case a default text is displayed
 	 */
 	public string getHeading()
 	{
@@ -148,9 +154,9 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	}
 
 	/**
-	 * Returns the #GtkAppChooserWidget of this dialog.
+	 * Returns the `GtkAppChooserWidget` of this dialog.
 	 *
-	 * Returns: the #GtkAppChooserWidget of @self
+	 * Returns: the `GtkAppChooserWidget` of @self
 	 */
 	public Widget getWidget()
 	{
@@ -166,6 +172,7 @@ public class AppChooserDialog : Dialog, AppChooserIF
 
 	/**
 	 * Sets the text to display at the top of the dialog.
+	 *
 	 * If the heading is not set, the dialog displays a default text.
 	 *
 	 * Params:

@@ -25,6 +25,7 @@
 module gtk.FontChooserIF;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
@@ -37,10 +38,12 @@ private import std.algorithm;
 
 
 /**
- * #GtkFontChooser is an interface that can be implemented by widgets
- * displaying the list of fonts. In GTK, the main objects
- * that implement this interface are #GtkFontChooserWidget,
- * #GtkFontChooserDialog and #GtkFontButton.
+ * `GtkFontChooser` is an interface that can be implemented by widgets
+ * for choosing fonts.
+ * 
+ * In GTK, the main objects that implement this interface are
+ * [class@Gtk.FontChooserWidget], [class@Gtk.FontChooserDialog] and
+ * [class@Gtk.FontButton].
  */
 public interface FontChooserIF{
 	/** Get the main Gtk struct */
@@ -60,12 +63,12 @@ public interface FontChooserIF{
 	 * Gets the currently-selected font name.
 	 *
 	 * Note that this can be a different string than what you set with
-	 * gtk_font_chooser_set_font(), as the font chooser widget may
+	 * [method@Gtk.FontChooser.set_font], as the font chooser widget may
 	 * normalize font names and thus return a string with a different
 	 * structure. For example, “Helvetica Italic Bold 12” could be
 	 * normalized to “Helvetica Bold Italic 12”.
 	 *
-	 * Use pango_font_description_equal() if you want to compare two
+	 * Use [method@Pango.FontDescription.equal] if you want to compare two
 	 * font descriptions.
 	 *
 	 * Returns: A string with the name
@@ -78,38 +81,39 @@ public interface FontChooserIF{
 	 * Gets the currently-selected font.
 	 *
 	 * Note that this can be a different string than what you set with
-	 * gtk_font_chooser_set_font(), as the font chooser widget may
+	 * [method@Gtk.FontChooser.set_font], as the font chooser widget may
 	 * normalize font names and thus return a string with a different
 	 * structure. For example, “Helvetica Italic Bold 12” could be
 	 * normalized to “Helvetica Bold Italic 12”.
 	 *
-	 * Use pango_font_description_equal() if you want to compare two
+	 * Use [method@Pango.FontDescription.equal] if you want to compare two
 	 * font descriptions.
 	 *
-	 * Returns: A #PangoFontDescription for the
+	 * Returns: A `PangoFontDescription` for the
 	 *     current font, or %NULL if  no font is selected.
 	 */
 	public PgFontDescription getFontDesc();
 
 	/**
-	 * Gets the #PangoFontFace representing the selected font group
+	 * Gets the `PangoFontFace` representing the selected font group
 	 * details (i.e. family, slant, weight, width, etc).
 	 *
 	 * If the selected font is not installed, returns %NULL.
 	 *
-	 * Returns: A #PangoFontFace representing the
+	 * Returns: A `PangoFontFace` representing the
 	 *     selected font group details, or %NULL. The returned object is owned by
 	 *     @fontchooser and must not be modified or freed.
 	 */
 	public PgFontFace getFontFace();
 
 	/**
-	 * Gets the #PangoFontFamily representing the selected font family.
+	 * Gets the `PangoFontFamily` representing the selected font family.
+	 *
 	 * Font families are a collection of font faces.
 	 *
 	 * If the selected font is not installed, returns %NULL.
 	 *
-	 * Returns: A #PangoFontFamily representing the
+	 * Returns: A `PangoFontFamily` representing the
 	 *     selected font family, or %NULL. The returned object is owned by @fontchooser
 	 *     and must not be modified or freed.
 	 */
@@ -126,7 +130,7 @@ public interface FontChooserIF{
 	 * Gets the custom font map of this font chooser widget,
 	 * or %NULL if it does not have one.
 	 *
-	 * Returns: a #PangoFontMap, or %NULL
+	 * Returns: a `PangoFontMap`, or %NULL
 	 */
 	public PgFontMap getFontMap();
 
@@ -155,16 +159,14 @@ public interface FontChooserIF{
 	/**
 	 * Gets the text displayed in the preview area.
 	 *
-	 * Returns: the text displayed in the
-	 *     preview area
+	 * Returns: the text displayed in the preview area
 	 */
 	public string getPreviewText();
 
 	/**
 	 * Returns whether the preview entry is shown or not.
 	 *
-	 * Returns: %TRUE if the preview entry is shown
-	 *     or %FALSE if it is hidden.
+	 * Returns: %TRUE if the preview entry is shown or %FALSE if it is hidden.
 	 */
 	public bool getShowPreviewEntry();
 
@@ -173,7 +175,7 @@ public interface FontChooserIF{
 	 * in the font chooser.
 	 *
 	 * Params:
-	 *     filter = a #GtkFontFilterFunc, or %NULL
+	 *     filter = a `GtkFontFilterFunc`, or %NULL
 	 *     userData = data to pass to @filter
 	 *     destroy = function to call to free @data when it is no longer needed
 	 */
@@ -191,16 +193,17 @@ public interface FontChooserIF{
 	 * Sets the currently-selected font from @font_desc.
 	 *
 	 * Params:
-	 *     fontDesc = a #PangoFontDescription
+	 *     fontDesc = a `PangoFontDescription`
 	 */
 	public void setFontDesc(PgFontDescription fontDesc);
 
 	/**
 	 * Sets a custom font map to use for this font chooser widget.
+	 *
 	 * A custom font map can be used to present application-specific
 	 * fonts instead of or in addition to the normal system fonts.
 	 *
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * FcConfig *config;
 	 * PangoFontMap *fontmap;
 	 *
@@ -211,18 +214,18 @@ public interface FontChooserIF{
 	 * pango_fc_font_map_set_config (PANGO_FC_FONT_MAP (fontmap), config);
 	 *
 	 * gtk_font_chooser_set_font_map (font_chooser, fontmap);
-	 * ]|
+	 * ```
 	 *
-	 * Note that other GTK widgets will only be able to use the application-specific
-	 * font if it is present in the font map they use:
+	 * Note that other GTK widgets will only be able to use the
+	 * application-specific font if it is present in the font map they use:
 	 *
-	 * |[
+	 * ```c
 	 * context = gtk_widget_get_pango_context (label);
 	 * pango_context_set_font_map (context, fontmap);
-	 * ]|
+	 * ```
 	 *
 	 * Params:
-	 *     fontmap = a #PangoFontMap
+	 *     fontmap = a `PangoFontMap`
 	 */
 	public void setFontMap(PgFontMap fontmap);
 
@@ -244,6 +247,7 @@ public interface FontChooserIF{
 
 	/**
 	 * Sets the text displayed in the preview area.
+	 *
 	 * The @text is used to show how the selected font looks.
 	 *
 	 * Params:
@@ -261,6 +265,7 @@ public interface FontChooserIF{
 
 	/**
 	 * Emitted when a font is activated.
+	 *
 	 * This usually happens when the user double clicks an item,
 	 * or an item is selected and the user presses one of the keys
 	 * Space, Shift+Space, Return or Enter.

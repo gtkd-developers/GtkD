@@ -37,35 +37,38 @@ private import std.algorithm;
 
 
 /**
- * #GtkPasswordEntry is entry that has been tailored for entering secrets.
+ * `GtkPasswordEntry` is an entry that has been tailored for entering secrets.
+ * 
+ * ![An example GtkPasswordEntry](password-entry.png)
+ * 
  * It does not show its contents in clear text, does not allow to copy it
  * to the clipboard, and it shows a warning when Caps Lock is engaged. If
- * the underlying platform allows it, GtkPasswordEntry will also place the
- * text in a non-pageable memory area, to avoid it being written out to
- * disk by the operating system.
+ * the underlying platform allows it, `GtkPasswordEntry` will also place
+ * the text in a non-pageable memory area, to avoid it being written out
+ * to disk by the operating system.
  * 
  * Optionally, it can offer a way to reveal the contents in clear text.
  * 
- * GtkPasswordEntry provides only minimal API and should be used with the
- * #GtkEditable API.
+ * `GtkPasswordEntry` provides only minimal API and should be used with
+ * the [iface@Gtk.Editable] API.
  * 
  * # CSS Nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * entry.password
  * ╰── text
  * ├── image.caps-lock-indicator
  * ┊
- * ]|
+ * ```
  * 
- * GtkPasswordEntry has a single CSS node with name entry that carries
+ * `GtkPasswordEntry` has a single CSS node with name entry that carries
  * a .passwordstyle class. The text Css node below it has a child with
  * name image and style class .caps-lock-indicator for the Caps Lock
  * icon, and possibly other children.
  * 
  * # Accessibility
  * 
- * GtkPasswordEntry uses the #GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
+ * `GtkPasswordEntry` uses the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
  */
 public class PasswordEntry : Widget, EditableIF
 {
@@ -106,9 +109,9 @@ public class PasswordEntry : Widget, EditableIF
 	}
 
 	/**
-	 * Creates a #GtkPasswordEntry.
+	 * Creates a `GtkPasswordEntry`.
 	 *
-	 * Returns: a new #GtkPasswordEntry
+	 * Returns: a new `GtkPasswordEntry`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -142,8 +145,8 @@ public class PasswordEntry : Widget, EditableIF
 	}
 
 	/**
-	 * Returns whether the entry is showing a clickable icon
-	 * to reveal the contents of the entry in clear text.
+	 * Returns whether the entry is showing an icon to
+	 * reveal the contents.
 	 *
 	 * Returns: %TRUE if an icon is shown
 	 */
@@ -157,7 +160,7 @@ public class PasswordEntry : Widget, EditableIF
 	 * the context menu for @entry.
 	 *
 	 * Params:
-	 *     model = a #GMenuModel
+	 *     model = a `GMenuModel`
 	 */
 	public void setExtraMenu(MenuModel model)
 	{
@@ -166,7 +169,7 @@ public class PasswordEntry : Widget, EditableIF
 
 	/**
 	 * Sets whether the entry should have a clickable icon
-	 * to show the contents of the entry in clear text.
+	 * to reveal the contents.
 	 *
 	 * Setting this to %FALSE also hides the text again.
 	 *
@@ -178,7 +181,11 @@ public class PasswordEntry : Widget, EditableIF
 		gtk_password_entry_set_show_peek_icon(gtkPasswordEntry, showPeekIcon);
 	}
 
-	/** */
+	/**
+	 * Emitted when the entry is activated.
+	 *
+	 * The keybindings for this signal are all forms of the Enter key.
+	 */
 	gulong addOnActivate(void delegate(PasswordEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);

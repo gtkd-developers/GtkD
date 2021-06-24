@@ -35,18 +35,22 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkMessageDialog presents a dialog with some message text. It’s simply a
- * convenience widget; you could construct the equivalent of #GtkMessageDialog
- * from #GtkDialog without too much effort, but #GtkMessageDialog saves typing.
+ * `GtkMessageDialog` presents a dialog with some message text.
+ * 
+ * ![An example GtkMessageDialog](messagedialog.png)
+ * 
+ * It’s simply a convenience widget; you could construct the equivalent of
+ * `GtkMessageDialog` from `GtkDialog` without too much effort, but
+ * `GtkMessageDialog` saves typing.
  * 
  * The easiest way to do a modal message dialog is to use the %GTK_DIALOG_MODAL
- * flag, which will call gtk_window_set_modal() internally. The dialog will
+ * flag, which will call [method@Gtk.Window.set_modal] internally. The dialog will
  * prevent interaction with the parent window until it's hidden or destroyed.
- * You can use the #GtkDialog::response signal to know when the user dismissed
- * the dialog.
+ * You can use the [signal@Gtk.Dialog::response] signal to know when the user
+ * dismissed the dialog.
  * 
  * An example for using a modal dialog:
- * |[<!-- language="C" -->
+ * ```c
  * GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL;
  * dialog = gtk_message_dialog_new (parent_window,
  * flags,
@@ -61,12 +65,12 @@ public  import gtk.c.types;
  * g_signal_connect (dialog, "response",
  * G_CALLBACK (gtk_window_destroy),
  * NULL);
- * ]|
+ * ```
  * 
- * You might do a non-modal #GtkMessageDialog simply by omitting the
+ * You might do a non-modal `GtkMessageDialog` simply by omitting the
  * %GTK_DIALOG_MODAL flag:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
  * dialog = gtk_message_dialog_new (parent_window,
  * flags,
@@ -81,11 +85,11 @@ public  import gtk.c.types;
  * g_signal_connect (dialog, "response",
  * G_CALLBACK (gtk_window_destroy),
  * NULL);
- * ]|
+ * ```
  * 
  * # GtkMessageDialog as GtkBuildable
  * 
- * The GtkMessageDialog implementation of the GtkBuildable interface exposes
+ * The `GtkMessageDialog` implementation of the `GtkBuildable` interface exposes
  * the message area as an internal child with the name “message_area”.
  */
 public class MessageDialog : Dialog
@@ -165,13 +169,14 @@ public class MessageDialog : Dialog
 	}
 
 	/**
-	 * Returns the message area of the dialog. This is the box where the
-	 * dialog’s primary and secondary labels are packed. You can add your
-	 * own extra content to that box and it will appear below those labels.
-	 * See gtk_dialog_get_content_area() for the corresponding
-	 * function in the parent #GtkDialog.
+	 * Returns the message area of the dialog.
 	 *
-	 * Returns: A #GtkBox corresponding to the
+	 * This is the box where the dialog’s primary and secondary labels
+	 * are packed. You can add your own extra content to that box and it
+	 * will appear below those labels. See [method@Gtk.Dialog.get_content_area]
+	 * for the corresponding function in the parent [class@Gtk.Dialog].
+	 *
+	 * Returns: A `GtkBox` corresponding to the
 	 *     “message area” in the @message_dialog.
 	 */
 	public Widget getMessageArea()
@@ -187,11 +192,10 @@ public class MessageDialog : Dialog
 	}
 
 	/**
-	 * Sets the text of the message dialog to be @str, which is marked
-	 * up with the [Pango text markup language][PangoMarkupFormat].
+	 * Sets the text of the message dialog.
 	 *
 	 * Params:
-	 *     str = markup string (see [Pango markup format][PangoMarkupFormat])
+	 *     str = string with Pango markup
 	 */
 	public void setMarkup(string str)
 	{

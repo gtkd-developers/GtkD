@@ -35,6 +35,7 @@ private import glib.ListG;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import graphene.Matrix;
@@ -65,10 +66,12 @@ private import std.algorithm;
 
 
 /**
- * GtkWidget is the base class all widgets in GTK derive from. It manages the
- * widget lifecycle, states and style.
+ * The base class for all widgets.
  * 
- * # Height-for-width Geometry Management # {#geometry-management}
+ * `GtkWidget` is the base class all widgets in GTK derive from. It manages the
+ * widget lifecycle, layout, states and style.
+ * 
+ * ### Height-for-width Geometry Management
  * 
  * GTK uses a height-for-width (and width-for-height) geometry management
  * system. Height-for-width means that a widget can change how much
@@ -80,36 +83,36 @@ private import std.algorithm;
  * Height-for-width geometry management is implemented in GTK by way
  * of two virtual methods:
  * 
- * - #GtkWidgetClass.get_request_mode()
- * - #GtkWidgetClass.measure()
+ * - [vfunc@Gtk.Widget.get_request_mode]
+ * - [vfunc@Gtk.Widget.measure]
  * 
  * There are some important things to keep in mind when implementing
  * height-for-width and when using it in widget implementations.
  * 
- * If you implement a direct #GtkWidget subclass that supports
- * height-for-width or width-for-height geometry management for
- * itself or its child widgets, the #GtkWidgetClass.get_request_mode()
- * virtual function must be implemented as well and return the widget's
- * preferred request mode. The default implementation of this virtual function
+ * If you implement a direct `GtkWidget` subclass that supports
+ * height-for-width or width-for-height geometry management for itself
+ * or its child widgets, the [vfunc@Gtk.Widget.get_request_mode] virtual
+ * function must be implemented as well and return the widget's preferred
+ * request mode. The default implementation of this virtual function
  * returns %GTK_SIZE_REQUEST_CONSTANT_SIZE, which means that the widget will
- * only ever get -1 passed as the for_size value to its #GtkWidgetClass.measure()
- * implementation.
+ * only ever get -1 passed as the for_size value to its
+ * [vfunc@Gtk.Widget.measure] implementation.
  * 
  * The geometry management system will query a widget hierarchy in
  * only one orientation at a time. When widgets are initially queried
  * for their minimum sizes it is generally done in two initial passes
- * in the #GtkSizeRequestMode chosen by the toplevel.
+ * in the [enum@Gtk.SizeRequestMode] chosen by the toplevel.
  * 
- * For example, when queried in the normal
- * %GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH mode:
+ * For example, when queried in the normal %GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH mode:
+ * 
  * First, the default minimum and natural width for each widget
- * in the interface will be computed using gtk_widget_measure() with an
+ * in the interface will be computed using [id@gtk_widget_measure] with an
  * orientation of %GTK_ORIENTATION_HORIZONTAL and a for_size of -1.
  * Because the preferred widths for each widget depend on the preferred
  * widths of their children, this information propagates up the hierarchy,
  * and finally a minimum and natural width is determined for the entire
  * toplevel. Next, the toplevel will use the minimum width to query for the
- * minimum height contextual to that width using gtk_widget_measure() with an
+ * minimum height contextual to that width using [id@gtk_widget_measure] with an
  * orientation of %GTK_ORIENTATION_VERTICAL and a for_size of the just computed
  * width. This will also be a highly recursive operation. The minimum height
  * for the minimum width is normally used to set the minimum size constraint
@@ -117,36 +120,35 @@ private import std.algorithm;
  * 
  * After the toplevel window has initially requested its size in both
  * dimensions it can go on to allocate itself a reasonable size (or a size
- * previously specified with gtk_window_set_default_size()). During the
+ * previously specified with [method@Gtk.Window.set_default_size]). During the
  * recursive allocation process it’s important to note that request cycles
  * will be recursively executed while widgets allocate their children.
  * Each widget, once allocated a size, will go on to first share the
  * space in one orientation among its children and then request each child's
  * height for its target allocated width or its width for allocated height,
- * depending. In this way a #GtkWidget will typically be requested its size
+ * depending. In this way a `GtkWidget` will typically be requested its size
  * a number of times before actually being allocated a size. The size a
  * widget is finally allocated can of course differ from the size it has
- * requested. For this reason, #GtkWidget caches a  small number of results
+ * requested. For this reason, `GtkWidget` caches a  small number of results
  * to avoid re-querying for the same sizes in one allocation cycle.
  * 
  * If a widget does move content around to intelligently use up the
  * allocated size then it must support the request in both
- * #GtkSizeRequestModes even if the widget in question only
+ * `GtkSizeRequestMode`s even if the widget in question only
  * trades sizes in a single orientation.
  * 
- * For instance, a #GtkLabel that does height-for-width word wrapping
- * will not expect to have #GtkWidgetClass.measure() with an orientation of
+ * For instance, a [class@Gtk.Label] that does height-for-width word wrapping
+ * will not expect to have [vfunc@Gtk.Widget.measure] with an orientation of
  * %GTK_ORIENTATION_VERTICAL called because that call is specific to a
- * width-for-height request. In this
- * case the label must return the height required for its own minimum
- * possible width. By following this rule any widget that handles
- * height-for-width or width-for-height requests will always be allocated
- * at least enough space to fit its own content.
+ * width-for-height request. In this case the label must return the height
+ * required for its own minimum possible width. By following this rule any
+ * widget that handles height-for-width or width-for-height requests will
+ * always be allocated at least enough space to fit its own content.
  * 
  * Here are some examples of how a %GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH widget
  * generally deals with width-for-height requests:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * static void
  * foo_widget_measure (GtkWidget      *widget,
  * GtkOrientation  orientation,
@@ -181,7 +183,7 @@ private import std.algorithm;
  * }
  * }
  * }
- * ]|
+ * ```
  * 
  * Often a widget needs to get its own request during size request or
  * allocation. For example, when computing height it may need to also
@@ -190,46 +192,49 @@ private import std.algorithm;
  * be careful to call its virtual methods directly, like in the code
  * example above.
  * 
- * It will not work to use the wrapper function gtk_widget_measure()
- * inside your own #GtkWidgetClass.size-allocate() implementation.
- * These return a request adjusted by #GtkSizeGroup, the widget's align and expand flags
- * as well as its CSS style.
+ * It will not work to use the wrapper function [method@Gtk.Widget.measure]
+ * inside your own [vfunc@Gtk.Widget.size_allocate] implementation.
+ * These return a request adjusted by [class@Gtk.SizeGroup], the widget's
+ * align and expand flags, as well as its CSS style.
+ * 
  * If a widget used the wrappers inside its virtual method implementations,
  * then the adjustments (such as widget margins) would be applied
  * twice. GTK therefore does not allow this and will warn if you try
  * to do it.
  * 
- * Of course if you are getting the size request for
- * another widget, such as a child widget, you must use gtk_widget_measure().
- * Otherwise, you would not properly consider widget margins,
- * #GtkSizeGroup, and so forth.
+ * Of course if you are getting the size request for another widget, such
+ * as a child widget, you must use [id@gtk_widget_measure]; otherwise, you
+ * would not properly consider widget margins, [class@Gtk.SizeGroup], and
+ * so forth.
  * 
  * GTK also supports baseline vertical alignment of widgets. This
  * means that widgets are positioned such that the typographical baseline of
- * widgets in the same row are aligned. This happens if a widget supports baselines,
- * has a vertical alignment of %GTK_ALIGN_BASELINE, and is inside a widget
- * that supports baselines and has a natural “row” that it aligns to the baseline,
- * or a baseline assigned to it by the grandparent.
+ * widgets in the same row are aligned. This happens if a widget supports
+ * baselines, has a vertical alignment of %GTK_ALIGN_BASELINE, and is inside
+ * a widget that supports baselines and has a natural “row” that it aligns to
+ * the baseline, or a baseline assigned to it by the grandparent.
  * 
- * Baseline alignment support for a widget is also done by the #GtkWidgetClass.measure()
- * virtual function. It allows you to report both a minimum and natural size.
+ * Baseline alignment support for a widget is also done by the
+ * [vfunc@Gtk.Widget.measure] virtual function. It allows you to report
+ * both a minimum and natural size.
  * 
- * If a widget ends up baseline aligned it will be allocated all the space in the parent
- * as if it was %GTK_ALIGN_FILL, but the selected baseline can be found via gtk_widget_get_allocated_baseline().
- * If this has a value other than -1 you need to align the widget such that the baseline
+ * If a widget ends up baseline aligned it will be allocated all the space in
+ * the parent as if it was %GTK_ALIGN_FILL, but the selected baseline can be
+ * found via [id@gtk_widget_get_allocated_baseline]. If the baseline has a
+ * value other than -1 you need to align the widget such that the baseline
  * appears at the position.
  * 
- * # GtkWidget as GtkBuildable
+ * ### GtkWidget as GtkBuildable
  * 
- * The GtkWidget implementation of the #GtkBuildable interface supports a
- * custom elements to specify various aspects of widgets that are not
- * directly expressed as properties.
+ * The `GtkWidget` implementation of the `GtkBuildable` interface
+ * supports various custom elements to specify additional aspects of widgets
+ * that are not directly expressed as properties.
  * 
- * If the parent widget uses a #GtkLayoutManager, #GtkWidget supports a
- * custom `<layout>` element, used to define layout properties:
+ * If the widget uses a [class@Gtk.LayoutManager], `GtkWidget` supports
+ * a custom `<layout>` element, used to define layout properties:
  * 
- * |[<!-- language="xml" -->
- * <object class="MyGrid" id="grid1">
+ * ```xml
+ * <object class="GtkGrid" id="my_grid">
  * <child>
  * <object class="GtkLabel" id="label1">
  * <property name="label">Description</property>
@@ -252,58 +257,57 @@ private import std.algorithm;
  * </object>
  * </child>
  * </object>
- * ]|
+ * ```
  * 
- * GtkWidget allows style information such as style classes to
+ * `GtkWidget` allows style information such as style classes to
  * be associated with widgets, using the custom `<style>` element:
  * 
- * |[<!-- language="xml" -->
+ * ```xml
  * <object class="GtkButton" id="button1">
  * <style>
  * <class name="my-special-button-class"/>
  * <class name="dark-button"/>
  * </style>
  * </object>
- * ]|
+ * ```
  * 
- * GtkWidget allows defining accessibility information, such as properties,
+ * `GtkWidget` allows defining accessibility information, such as properties,
  * relations, and states, using the custom `<accessibility>` element:
  * 
- * |[<!-- language="xml" -->
+ * ```xml
  * <object class="GtkButton" id="button1">
  * <accessibility>
  * <property name="label">Download</property>
  * <relation name="labelled-by">label1</relation>
  * </accessibility>
  * </object>
- * ]|
+ * ```
  * 
- * # Building composite widgets from template XML ## {#composite-templates}
+ * ### Building composite widgets from template XML
  * 
- * GtkWidget exposes some facilities to automate the procedure
- * of creating composite widgets using #GtkBuilder interface description
- * language.
+ * `GtkWidget `exposes some facilities to automate the procedure
+ * of creating composite widgets using "templates".
  * 
- * To create composite widgets with #GtkBuilder XML, one must associate
+ * To create composite widgets with `GtkBuilder` XML, one must associate
  * the interface description with the widget class at class initialization
- * time using gtk_widget_class_set_template().
+ * time using [method@Gtk.WidgetClass.set_template].
  * 
  * The interface description semantics expected in composite template descriptions
- * is slightly different from regular #GtkBuilder XML.
+ * is slightly different from regular [class@Gtk.Builder] XML.
  * 
- * Unlike regular interface descriptions, gtk_widget_class_set_template() will
+ * Unlike regular interface descriptions, [method@Gtk.WidgetClass.set_template] will
  * expect a `<template>` tag as a direct child of the toplevel `<interface>`
  * tag. The `<template>` tag must specify the “class” attribute which must be
  * the type name of the widget. Optionally, the “parent” attribute may be
  * specified to specify the direct parent type of the widget type, this is
- * ignored by the GtkBuilder but required for Glade to introspect what kind
- * of properties and internal children exist for a given type when the actual
- * type does not exist.
+ * ignored by `GtkBuilder` but required for UI design tools like
+ * [Glade](https://glade.gnome.org/) to introspect what kind of properties and
+ * internal children exist for a given type when the actual type does not exist.
  * 
  * The XML which is contained inside the `<template>` tag behaves as if it were
- * added to the `<object>` tag defining @widget itself. You may set properties
- * on @widget by inserting `<property>` tags into the `<template>` tag, and also
- * add `<child>` tags to add children and extend @widget in the normal way you
+ * added to the `<object>` tag defining the widget itself. You may set properties
+ * on a widget by inserting `<property>` tags into the `<template>` tag, and also
+ * add `<child>` tags to add children and extend a widget in the normal way you
  * would with `<object>` tags.
  * 
  * Additionally, `<object>` tags can also be added before and after the initial
@@ -311,9 +315,9 @@ private import std.algorithm;
  * which might be referenced by other widgets declared as children of the
  * `<template>` tag.
  * 
- * An example of a GtkBuilder Template Definition:
+ * An example of a template definition:
  * 
- * |[<!-- language="xml" -->
+ * ```xml
  * <interface>
  * <template class="FooWidget" parent="GtkBox">
  * <property name="orientation">horizontal</property>
@@ -331,14 +335,14 @@ private import std.algorithm;
  * </child>
  * </template>
  * </interface>
- * ]|
+ * ```
  * 
  * Typically, you'll place the template fragment into a file that is
- * bundled with your project, using #GResource. In order to load the
- * template, you need to call gtk_widget_class_set_template_from_resource()
- * from the class initialization of your #GtkWidget type:
+ * bundled with your project, using `GResource`. In order to load the
+ * template, you need to call [method@Gtk.WidgetClass.set_template_from_resource]
+ * from the class initialization of your `GtkWidget` type:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * static void
  * foo_widget_class_init (FooWidgetClass *klass)
  * {
@@ -347,27 +351,29 @@ private import std.algorithm;
  * gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (klass),
  * "/com/example/ui/foowidget.ui");
  * }
- * ]|
+ * ```
  * 
- * You will also need to call gtk_widget_init_template() from the instance
- * initialization function:
+ * You will also need to call [method@Gtk.Widget.init_template] from the
+ * instance initialization function:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * static void
  * foo_widget_init (FooWidget *self)
  * {
  * // ...
  * gtk_widget_init_template (GTK_WIDGET (self));
  * }
- * ]|
+ * ```
  * 
  * You can access widgets defined in the template using the
- * gtk_widget_get_template_child() function, but you will typically declare
+ * [id@gtk_widget_get_template_child] function, but you will typically declare
  * a pointer in the instance private data structure of your type using the same
  * name as the widget in the template definition, and call
- * gtk_widget_class_bind_template_child_private() with that name, e.g.
+ * [method@Gtk.WidgetClass.bind_template_child_full] (or one of its wrapper macros
+ * [func@Gtk.widget_class_bind_template_child] and [func@Gtk.widget_class_bind_template_child_private])
+ * with that name, e.g.
  * 
- * |[<!-- language="C" -->
+ * ```c
  * typedef struct {
  * GtkWidget *hello_button;
  * GtkWidget *goodbye_button;
@@ -392,13 +398,14 @@ private import std.algorithm;
  * {
  * 
  * }
- * ]|
+ * ```
  * 
- * You can also use gtk_widget_class_bind_template_callback() to connect a signal
- * callback defined in the template with a function visible in the scope of the
- * class, e.g.
+ * You can also use [method@Gtk.WidgetClass.bind_template_callback_full] (or
+ * is wrapper macro [func@Gtk.widget_class_bind_template_callback]) to connect
+ * a signal callback defined in the template with a function visible in the
+ * scope of the class, e.g.
  * 
- * |[<!-- language="C" -->
+ * ```c
  * // the signal handler has the instance and user data swapped
  * // because of the swapped="yes" attribute in the template XML
  * static void
@@ -416,7 +423,7 @@ private import std.algorithm;
  * "/com/example/ui/foowidget.ui");
  * gtk_widget_class_bind_template_callback (GTK_WIDGET_CLASS (klass), hello_button_clicked);
  * }
- * ]|
+ * ```
  */
 public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 {
@@ -463,8 +470,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Obtains the current default reading direction. See
-	 * gtk_widget_set_default_direction().
+	 * Obtains the current default reading direction.
+	 *
+	 * See [func@Gtk.Widget.set_default_direction].
 	 *
 	 * Returns: the current default direction.
 	 */
@@ -474,12 +482,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the default reading direction for widgets where the
-	 * direction has not been explicitly set by gtk_widget_set_direction().
+	 * Sets the default reading direction for widgets.
+	 *
+	 * See [method@Gtk.Widget.set_direction].
 	 *
 	 * Params:
-	 *     dir = the new default direction. This cannot be
-	 *         %GTK_TEXT_DIR_NONE.
+	 *     dir = the new default direction. This cannot be %GTK_TEXT_DIR_NONE.
 	 */
 	public static void setDefaultDirection(GtkTextDirection dir)
 	{
@@ -501,9 +509,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * For widgets that can be “activated” (buttons, menu items, etc.)
-	 * this function activates them. The activation will emit the signal
-	 * set using gtk_widget_class_set_activate_signal() during class
-	 * initialization.
+	 * this function activates them.
+	 *
+	 * The activation will emit the signal set using
+	 * gtk_widget_class_set_activate_signal() during class initialization.
 	 *
 	 * Activation is what happens when you press Enter on a widget during
 	 * key navigation.
@@ -522,23 +531,23 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Looks up the action in the action groups associated
-	 * with @widget and its ancestors, and activates it.
+	 * Looks up the action in the action groups associated with
+	 * @widget and its ancestors, and activates it.
 	 *
 	 * If the action is in an action group added with
-	 * gtk_widget_insert_action_group(), the @name is
-	 * expected to be prefixed with the prefix that was
-	 * used when the group was inserted.
+	 * [method@Gtk.Widget.insert_action_group], the @name is expected
+	 * to be prefixed with the prefix that was used when the group was
+	 * inserted.
 	 *
-	 * The arguments must match the actions expected parameter
-	 * type, as returned by g_action_get_parameter_type().
+	 * The arguments must match the actions expected parameter type,
+	 * as returned by `g_action_get_parameter_type()`.
 	 *
 	 * Params:
 	 *     name = the name of the action to activate
 	 *     args = parameters to use, or %NULL
 	 *
-	 * Returns: %TRUE if the action was activated, %FALSE if the action does
-	 *     not exist.
+	 * Returns: %TRUE if the action was activated, %FALSE if the
+	 *     action does not exist.
 	 */
 	public bool activateActionVariant(string name, Variant args)
 	{
@@ -546,7 +555,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Activate the default.activate action from @widget.
+	 * Activates the `default.activate` action from @widget.
 	 */
 	public void activateDefault()
 	{
@@ -554,9 +563,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Adds @controller to @widget so that it will receive events. You will
-	 * usually want to call this function right after creating any kind of
-	 * #GtkEventController.
+	 * Adds @controller to @widget so that it will receive events.
+	 *
+	 * You will usually want to call this function right after
+	 * creating any kind of [class@Gtk.EventController].
 	 *
 	 * Params:
 	 *     controller = a #GtkEventController that hasn't been
@@ -568,8 +578,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Adds @css_class to @widget. After calling this function, @widget's
-	 * style will match for @css_class, after the CSS matching rules.
+	 * Adds a style class to @widget.
+	 *
+	 * After calling this function, the widgets style will match
+	 * for @css_class, according to CSS matching rules.
+	 *
+	 * Use [method@Gtk.Widget.remove_css_class] to remove the
+	 * style again.
 	 *
 	 * Params:
 	 *     cssClass = The style class to add to @widget, without
@@ -581,15 +596,16 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Adds a widget to the list of mnemonic labels for
-	 * this widget. (See gtk_widget_list_mnemonic_labels()). Note the
+	 * Adds a widget to the list of mnemonic labels for this widget.
+	 *
+	 * See [method@Gtk.Widget.list_mnemonic_labels]. Note the
 	 * list of mnemonic labels for the widget is cleared when the
 	 * widget is destroyed, so the caller must make sure to update
 	 * its internal state at this point as well, by using a connection
-	 * to the #GtkWidget::destroy signal or a weak notifier.
+	 * to the [signal@Gtk.Widget::destroy] signal or a weak notifier.
 	 *
 	 * Params:
-	 *     label = a #GtkWidget that acts as a mnemonic label for @widget
+	 *     label = a `GtkWidget` that acts as a mnemonic label for @widget
 	 */
 	public void addMnemonicLabel(Widget label)
 	{
@@ -598,25 +614,27 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Queues an animation frame update and adds a callback to be called
-	 * before each frame. Until the tick callback is removed, it will be
-	 * called frequently (usually at the frame rate of the output device
-	 * or as quickly as the application can be repainted, whichever is
-	 * slower). For this reason, is most suitable for handling graphics
-	 * that change every frame or every few frames. The tick callback does
-	 * not automatically imply a relayout or repaint. If you want a
-	 * repaint or relayout, and aren’t changing widget properties that
-	 * would trigger that (for example, changing the text of a #GtkLabel),
-	 * then you will have to call gtk_widget_queue_resize() or
-	 * gtk_widget_queue_draw() yourself.
+	 * before each frame.
 	 *
-	 * gdk_frame_clock_get_frame_time() should generally be used for timing
-	 * continuous animations and
-	 * gdk_frame_timings_get_predicted_presentation_time() if you are
+	 * Until the tick callback is removed, it will be called frequently
+	 * (usually at the frame rate of the output device or as quickly as
+	 * the application can be repainted, whichever is slower). For this
+	 * reason, is most suitable for handling graphics that change every
+	 * frame or every few frames. The tick callback does not automatically
+	 * imply a relayout or repaint. If you want a repaint or relayout, and
+	 * aren’t changing widget properties that would trigger that (for example,
+	 * changing the text of a #GtkLabel), then you will have to call
+	 * [method@Gtk.Widget.queue_resize] or [method@Gtk.Widget.queue_draw]
+	 * yourself.
+	 *
+	 * [method@Gdk.FrameClock.get_frame_time] should generally be used
+	 * for timing continuous animations and
+	 * [method@Gdk.FrameTimings.get_predicted_presentation_time] if you are
 	 * trying to display isolated frames at particular times.
 	 *
 	 * This is a more convenient alternative to connecting directly to the
-	 * #GdkFrameClock::update signal of #GdkFrameClock, since you don't
-	 * have to worry about when a #GdkFrameClock is assigned to a widget.
+	 * [signal@Gdk.FrameClock::update] signal of `GdkFrameClock`, since you
+	 * don't have to worry about when a `GdkFrameClock` is assigned to a widget.
 	 *
 	 * Params:
 	 *     callback = function to call for updating animations
@@ -625,7 +643,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 *
 	 * Returns: an id for the connection of this callback. Remove the callback
 	 *     by passing the id returned from this function to
-	 *     gtk_widget_remove_tick_callback()
+	 *     [method@Gtk.Widget.remove_tick_callback]
 	 */
 	public uint addTickCallback(GtkTickCallback callback, void* userData, GDestroyNotify notify)
 	{
@@ -633,14 +651,16 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is only used by #GtkWidget subclasses, to assign a size,
-	 * position and (optionally) baseline to their child widgets.
+	 * This function is only used by `GtkWidget` subclasses, to
+	 * assign a size, position and (optionally) baseline to their
+	 * child widgets.
 	 *
-	 * In this function, the allocation and baseline may be adjusted. The given
-	 * allocation will be forced to be bigger than the widget's minimum size,
-	 * as well as at least 0×0 in size.
+	 * In this function, the allocation and baseline may be adjusted.
+	 * The given allocation will be forced to be bigger than the
+	 * widget's minimum size, as well as at least 0×0 in size.
 	 *
-	 * For a version that does not take a transform, see gtk_widget_size_allocate()
+	 * For a version that does not take a transform, see
+	 * [method@Gtk.Widget.size_allocate].
 	 *
 	 * Params:
 	 *     width = New width of @widget
@@ -654,23 +674,26 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
+	 * Called by widgets as the user moves around the window using
+	 * keyboard shortcuts.
+	 *
+	 * The @direction argument indicates what kind of motion is taking place (up,
+	 * down, left, right, tab forward, tab backward).
+	 *
+	 * This function calls the [vfunc@Gtk.Widget.focus] virtual function; widgets
+	 * can override the virtual function in order to implement appropriate focus
+	 * behavior.
+	 *
+	 * The default `focus()` virtual function for a widget should return `TRUE` if
+	 * moving in @direction left the focus on a focusable location inside that
+	 * widget, and `FALSE` if moving in @direction moved the focus outside the
+	 * widget. When returning `TRUE`, widgets normallycall [method@Gtk.Widget.grab_focus]
+	 * to place the focus accordingly; when returning `FALSE`, they don’t modify
+	 * the current focus location.
+	 *
 	 * This function is used by custom widget implementations; if you're
-	 * writing an app, you’d use gtk_widget_grab_focus() to move the focus
-	 * to a particular widget.
-	 *
-	 * gtk_widget_child_focus() is called by widgets as the user moves
-	 * around the window using keyboard shortcuts. @direction indicates
-	 * what kind of motion is taking place (up, down, left, right, tab
-	 * forward, tab backward). gtk_widget_child_focus() calls the
-	 * #GtkWidgetClass.focus() vfunc; widgets override this vfunc
-	 * in order to implement appropriate focus behavior.
-	 *
-	 * The default focus() vfunc for a widget should return %TRUE if
-	 * moving in @direction left the focus on a focusable location inside
-	 * that widget, and %FALSE if moving in @direction moved the focus
-	 * outside the widget. If returning %TRUE, widgets normally
-	 * call gtk_widget_grab_focus() to place the focus accordingly;
-	 * if returning %FALSE, they don’t modify the current focus location.
+	 * writing an app, you’d use [method@Gtk.Widget.grab_focus] to move
+	 * the focus to a particular widget.
 	 *
 	 * Params:
 	 *     direction = direction of focus movement
@@ -684,6 +707,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Computes the bounds for @widget in the coordinate space of @target.
+	 *
 	 * FIXME: Explain what "bounds" are.
 	 *
 	 * If the operation is successful, %TRUE is returned. If @widget has no
@@ -694,7 +718,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * It is valid for @widget and @target to be the same widget.
 	 *
 	 * Params:
-	 *     target = the #GtkWidget
+	 *     target = the `GtkWidget`
 	 *     outBounds = the rectangle taking the bounds
 	 *
 	 * Returns: %TRUE if the bounds could be computed
@@ -711,9 +735,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Computes whether a container should give this widget extra space
-	 * when possible. Containers should check this, rather than
-	 * looking at gtk_widget_get_hexpand() or gtk_widget_get_vexpand().
+	 * Computes whether a container should give this widget
+	 * extra space when possible.
+	 *
+	 * Containers should check this, rather than looking at
+	 * [method@Gtk.Widget.get_hexpand] or [method@Gtk.Widget.get_vexpand].
 	 *
 	 * This function already checks whether the widget is visible, so
 	 * visibility does not need to be checked separately. Non-visible
@@ -735,11 +761,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Translates the given @point in @widget's coordinates to coordinates
-	 * relative to @target’s coordinate system. In order to perform this
-	 * operation, both widgets must share a common root.
+	 * relative to @target’s coordinate system.
+	 *
+	 * In order to perform this operation, both widgets must share a
+	 * common ancestor.
 	 *
 	 * Params:
-	 *     target = the #GtkWidget to transform into
+	 *     target = the `GtkWidget` to transform into
 	 *     point = a point in @widget's coordinate system
 	 *     outPoint = Set to the corresponding coordinates in
 	 *         @target's coordinate system
@@ -801,11 +829,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Creates a new #PangoContext with the appropriate font map,
+	 * Creates a new `PangoContext` with the appropriate font map,
 	 * font options, font description, and base direction for drawing
-	 * text for this widget. See also gtk_widget_get_pango_context().
+	 * text for this widget.
 	 *
-	 * Returns: the new #PangoContext
+	 * See also [method@Gtk.Widget.get_pango_context].
+	 *
+	 * Returns: the new `PangoContext`
 	 */
 	public PgContext createPangoContext()
 	{
@@ -820,19 +850,19 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Creates a new #PangoLayout with the appropriate font map,
+	 * Creates a new `PangoLayout` with the appropriate font map,
 	 * font description, and base direction for drawing text for
 	 * this widget.
 	 *
-	 * If you keep a #PangoLayout created in this way around, you need
-	 * to re-create it when the widget #PangoContext is replaced.
-	 * This can be tracked by listening to changes of the #GtkWidget:root property
-	 * on the widget.
+	 * If you keep a `PangoLayout` created in this way around,
+	 * you need to re-create it when the widget `PangoContext`
+	 * is replaced. This can be tracked by listening to changes
+	 * of the [property@Gtk.Widget:root] property on the widget.
 	 *
 	 * Params:
 	 *     text = text to set on the layout (can be %NULL)
 	 *
-	 * Returns: the new #PangoLayout
+	 * Returns: the new `PangoLayout`
 	 */
 	public PgLayout createPangoLayout(string text)
 	{
@@ -847,9 +877,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Checks to see if a mouse drag starting at (@start_x, @start_y) and ending
-	 * at (@current_x, @current_y) has passed the GTK drag threshold, and thus
-	 * should trigger the beginning of a drag-and-drop operation.
+	 * Checks to see if a drag movement has passed the GTK drag threshold.
 	 *
 	 * Params:
 	 *     startX = X coordinate of start of drag
@@ -866,12 +894,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Notifies the user about an input-related error on this widget.
-	 * If the #GtkSettings:gtk-error-bell setting is %TRUE, it calls
-	 * gdk_surface_beep(), otherwise it does nothing.
 	 *
-	 * Note that the effect of gdk_surface_beep() can be configured in many
-	 * ways, depending on the windowing backend and the desktop environment
-	 * or window manager that is used.
+	 * If the [property@Gtk.Settings:gtk-error-bell] setting is %TRUE,
+	 * it calls [method@Gdk.Surface.beep], otherwise it does nothing.
+	 *
+	 * Note that the effect of [method@Gdk.Surface.beep] can be configured
+	 * in many ways, depending on the windowing backend and the desktop
+	 * environment or window manager that is used.
 	 */
 	public void errorBell()
 	{
@@ -880,9 +909,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Returns the baseline that has currently been allocated to @widget.
+	 *
 	 * This function is intended to be used when implementing handlers
-	 * for the #GtkWidgetClass.snapshot() function, and when allocating child
-	 * widgets in #GtkWidgetClass.size_allocate().
+	 * for the `GtkWidget`Class.snapshot() function, and when allocating
+	 * child widgets in `GtkWidget`Class.size_allocate().
 	 *
 	 * Returns: the baseline of the @widget, or -1 if none
 	 */
@@ -916,20 +946,20 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 *
 	 * Note, when implementing a layout container: a widget’s allocation
 	 * will be its “adjusted” allocation, that is, the widget’s parent
-	 * typically calls gtk_widget_size_allocate() with an allocation,
+	 * typically calls [method@Gtk.Widget.size_allocate] with an allocation,
 	 * and that allocation is then adjusted (to handle margin
 	 * and alignment for example) before assignment to the widget.
-	 * gtk_widget_get_allocation() returns the adjusted allocation that
+	 * [method@Gtk.Widget.get_allocation] returns the adjusted allocation that
 	 * was actually assigned to the widget. The adjusted allocation is
 	 * guaranteed to be completely contained within the
-	 * gtk_widget_size_allocate() allocation, however.
+	 * [method@Gtk.Widget.size_allocate] allocation, however.
 	 *
 	 * So a layout container is guaranteed that its children stay inside
 	 * the assigned bounds, but not that they have exactly the bounds the
 	 * container assigned.
 	 *
 	 * Params:
-	 *     allocation = a pointer to a #GtkAllocation to copy to
+	 *     allocation = a pointer to a `GtkAllocation` to copy to
 	 */
 	public void getAllocation(out GtkAllocation allocation)
 	{
@@ -937,18 +967,21 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the first ancestor of @widget with type @widget_type. For example,
-	 * `gtk_widget_get_ancestor (widget, GTK_TYPE_BOX)` gets
-	 * the first #GtkBox that’s an ancestor of @widget. No reference will be
-	 * added to the returned widget; it should not be unreferenced.
+	 * Gets the first ancestor of @widget with type @widget_type.
 	 *
-	 * Note that unlike gtk_widget_is_ancestor(), gtk_widget_get_ancestor()
+	 * For example, `gtk_widget_get_ancestor (widget, GTK_TYPE_BOX)`
+	 * gets the first `GtkBox` that’s an ancestor of @widget. No
+	 * reference will be added to the returned widget; it should
+	 * not be unreferenced.
+	 *
+	 * Note that unlike [method@Gtk.Widget.is_ancestor], this function
 	 * considers @widget to be an ancestor of itself.
 	 *
 	 * Params:
 	 *     widgetType = ancestor type
 	 *
-	 * Returns: the ancestor widget, or %NULL if not found
+	 * Returns: the ancestor widget,
+	 *     or %NULL if not found
 	 */
 	public Widget getAncestor(GType widgetType)
 	{
@@ -966,7 +999,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * Determines whether the input focus can enter @widget or any
 	 * of its children.
 	 *
-	 * See gtk_widget_set_focusable().
+	 * See [method@Gtk.Widget.set_focusable].
 	 *
 	 * Returns: %TRUE if the input focus can enter @widget, %FALSE otherwise
 	 */
@@ -987,11 +1020,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Gets the value set with gtk_widget_set_child_visible().
+	 *
 	 * If you feel a need to use this function, your code probably
 	 * needs reorganization.
 	 *
-	 * This function is only useful for container implementations and
-	 * never should be called by an application.
+	 * This function is only useful for container implementations
+	 * and should never be called by an application.
 	 *
 	 * Returns: %TRUE if the widget is mapped with the parent.
 	 */
@@ -1001,8 +1035,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
+	 * Gets the clipboard object for @widget.
+	 *
 	 * This is a utility function to get the clipboard object for the
-	 * #GdkDisplay that @widget is using.
+	 * `GdkDisplay` that @widget is using.
 	 *
 	 * Note that this function always works, even when @widget is not
 	 * realized yet.
@@ -1022,7 +1058,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the list of css classes applied to @widget.
+	 * Returns the list of style classes applied to @widget.
 	 *
 	 * Returns: a %NULL-terminated list of
 	 *     css classes currently applied to @widget. The returned
@@ -1047,11 +1083,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Queries the cursor set via gtk_widget_set_cursor(). See that function for
-	 * details.
+	 * Queries the cursor set on @widget.
 	 *
-	 * Returns: the cursor currently in use or %NULL
-	 *     to use the default.
+	 * See [method@Gtk.Widget.set_cursor] for details.
+	 *
+	 * Returns: the cursor
+	 *     currently in use or %NULL to use the default.
 	 */
 	public Cursor getCursor()
 	{
@@ -1066,8 +1103,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the reading direction for a particular widget. See
-	 * gtk_widget_set_direction().
+	 * Gets the reading direction for a particular widget.
+	 *
+	 * See [method@Gtk.Widget.set_direction].
 	 *
 	 * Returns: the reading direction for the widget.
 	 */
@@ -1077,15 +1115,18 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Get the #GdkDisplay for the toplevel window associated with
-	 * this widget. This function can only be called after the widget
-	 * has been added to a widget hierarchy with a #GtkWindow at the top.
+	 * Get the `GdkDisplay` for the toplevel window associated with
+	 * this widget.
+	 *
+	 * This function can only be called after the widget has been
+	 * added to a widget hierarchy with a `GtkWindow` at the top.
 	 *
 	 * In general, you should only create display specific
 	 * resources when a widget has been realized, and you should
 	 * free those resources when the widget is unrealized.
 	 *
-	 * Returns: the #GdkDisplay for the toplevel for this widget.
+	 * Returns: the `GdkDisplay` for the toplevel
+	 *     for this widget.
 	 */
 	public Display getDisplay()
 	{
@@ -1121,8 +1162,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	/**
 	 * Returns the current focus child of @widget.
 	 *
-	 * Returns: The current focus child of @widget,
-	 *     or %NULL in case the focus child is unset.
+	 * Returns: The current focus
+	 *     child of @widget, or %NULL in case the focus child is unset.
 	 */
 	public Widget getFocusChild()
 	{
@@ -1137,11 +1178,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns whether the widget should grab focus when it is clicked with the mouse.
-	 * See gtk_widget_set_focus_on_click().
+	 * Returns whether the widget should grab focus when it is clicked
+	 * with the mouse.
 	 *
-	 * Returns: %TRUE if the widget should grab focus when it is clicked with
-	 *     the mouse.
+	 * See [method@Gtk.Widget.set_focus_on_click].
+	 *
+	 * Returns: %TRUE if the widget should grab focus when it is
+	 *     clicked with the mouse
 	 */
 	public bool getFocusOnClick()
 	{
@@ -1150,7 +1193,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Determines whether @widget can own the input focus.
-	 * See gtk_widget_set_focusable().
+	 *
+	 * See [method@Gtk.Widget.set_focusable].
 	 *
 	 * Returns: %TRUE if @widget can own the input focus, %FALSE otherwise
 	 */
@@ -1160,9 +1204,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the font map that has been set with gtk_widget_set_font_map().
+	 * Gets the font map of @widget.
 	 *
-	 * Returns: A #PangoFontMap, or %NULL
+	 * See [method@Gtk.Widget.set_font_map].
+	 *
+	 * Returns: A `PangoFontMap`, or %NULL
 	 */
 	public PgFontMap getFontMap()
 	{
@@ -1177,10 +1223,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the #cairo_font_options_t used for Pango rendering. When not set,
-	 * the defaults font options for the #GdkDisplay will be used.
+	 * Returns the `cairo_font_options_t` used for Pango rendering.
 	 *
-	 * Returns: the #cairo_font_options_t or %NULL if not set
+	 * When not set, the defaults font options for the `GdkDisplay`
+	 * will be used.
+	 *
+	 * Returns: the `cairo_font_options_t`
+	 *     or %NULL if not set
 	 */
 	public FontOption getFontOptions()
 	{
@@ -1195,18 +1244,19 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Obtains the frame clock for a widget. The frame clock is a global
-	 * “ticker” that can be used to drive animations and repaints.  The
-	 * most common reason to get the frame clock is to call
-	 * gdk_frame_clock_get_frame_time(), in order to get a time to use for
-	 * animating. For example you might record the start of the animation
-	 * with an initial value from gdk_frame_clock_get_frame_time(), and
-	 * then update the animation by calling
-	 * gdk_frame_clock_get_frame_time() again during each repaint.
+	 * Obtains the frame clock for a widget.
 	 *
-	 * gdk_frame_clock_request_phase() will result in a new frame on the
+	 * The frame clock is a global “ticker” that can be used to drive
+	 * animations and repaints. The most common reason to get the frame
+	 * clock is to call [method@Gdk.FrameClock.get_frame_time], in order
+	 * to get a time to use for animating. For example you might record
+	 * the start of the animation with an initial value from
+	 * [method@Gdk.FrameClock.get_frame_time], and then update the animation
+	 * by calling [method@Gdk.FrameClock.get_frame_time] again during each repaint.
+	 *
+	 * [method@Gdk.FrameClock.request_phase] will result in a new frame on the
 	 * clock, but won’t necessarily repaint any widgets. To repaint a
-	 * widget, you have to use gtk_widget_queue_draw() which invalidates
+	 * widget, you have to use [method@Gtk.Widget.queue_draw] which invalidates
 	 * the widget (thus scheduling it to receive a draw on the next
 	 * frame). gtk_widget_queue_draw() will also end up requesting a frame
 	 * on the appropriate frame clock.
@@ -1217,7 +1267,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 *
 	 * Unrealized widgets do not have a frame clock.
 	 *
-	 * Returns: a #GdkFrameClock,
+	 * Returns: a `GdkFrameClock`,
 	 *     or %NULL if widget is unrealized
 	 */
 	public FrameClock getFrameClock()
@@ -1233,7 +1283,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the value of the #GtkWidget:halign property.
+	 * Gets the horizontal alignment of @widget.
 	 *
 	 * For backwards compatibility reasons this method will never return
 	 * %GTK_ALIGN_BASELINE, but instead it will convert it to
@@ -1248,10 +1298,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the current value of the has-tooltip property.  See
-	 * #GtkWidget:has-tooltip for more information.
+	 * Returns the current value of the `has-tooltip` property.
 	 *
-	 * Returns: current value of has-tooltip on @widget.
+	 * Returns: current value of `has-tooltip` on @widget.
 	 */
 	public bool getHasTooltip()
 	{
@@ -1259,9 +1308,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the content height of the widget, as passed to its size-allocate implementation.
-	 * This is the size you should be using in GtkWidgetClass.snapshot(). For pointer
-	 * events, see gtk_widget_contains().
+	 * Returns the content height of the widget.
+	 *
+	 * This function returns the size passed to its
+	 * size-allocate implementation, which is the size you
+	 * should be using in GtkWidgetClass.snapshot().
+	 *
+	 * For pointer events, see [method@Gtk.Widget.contains].
 	 *
 	 * Returns: The height of @widget
 	 */
@@ -1272,13 +1325,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Gets whether the widget would like any available extra horizontal
-	 * space. When a user resizes a #GtkWindow, widgets with expand=TRUE
+	 * space.
+	 *
+	 * When a user resizes a `GtkWindow`, widgets with expand=TRUE
 	 * generally receive the extra space. For example, a list or
 	 * scrollable area or document in your window would often be set to
 	 * expand.
 	 *
-	 * Containers should use gtk_widget_compute_expand() rather than
-	 * this function, to see whether a widget, or any of its children,
+	 * Containers should use [method@Gtk.Widget.compute_expand] rather
+	 * than this function, to see whether a widget, or any of its children,
 	 * has the expand flag set. If any child of a widget wants to
 	 * expand, the parent may ask to expand also.
 	 *
@@ -1294,13 +1349,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets whether gtk_widget_set_hexpand() has been used to
-	 * explicitly set the expand flag on this widget.
+	 * Gets whether gtk_widget_set_hexpand() has been used
+	 * to explicitly set the expand flag on this widget.
 	 *
-	 * If hexpand is set, then it overrides any computed
-	 * expand value based on child widgets. If hexpand is not
-	 * set, then the expand value depends on whether any
-	 * children of the widget would like to expand.
+	 * If [property@Gtk.Widget:hexpand] property is set, then it
+	 * overrides any computed expand value based on child widgets.
+	 * If `hexpand` is not set, then the expand value depends on
+	 * whether any children of the widget would like to expand.
 	 *
 	 * There are few reasons to use this function, but it’s here
 	 * for completeness and consistency.
@@ -1332,9 +1387,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Retrieves the layout manager set using gtk_widget_set_layout_manager().
+	 * Retrieves the layout manager used by @widget
 	 *
-	 * Returns: a #GtkLayoutManager
+	 * See [method@Gtk.Widget.set_layout_manager].
+	 *
+	 * Returns: a `GtkLayoutManager`
 	 */
 	public LayoutManager getLayoutManager()
 	{
@@ -1359,7 +1416,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the value of the #GtkWidget:margin-bottom property.
+	 * Gets the bottom margin of @widget.
 	 *
 	 * Returns: The bottom margin of @widget
 	 */
@@ -1369,7 +1426,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the value of the #GtkWidget:margin-end property.
+	 * Gets the end margin of @widget.
 	 *
 	 * Returns: The end margin of @widget
 	 */
@@ -1379,7 +1436,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the value of the #GtkWidget:margin-start property.
+	 * Gets the start margin of @widget.
 	 *
 	 * Returns: The start margin of @widget
 	 */
@@ -1389,7 +1446,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the value of the #GtkWidget:margin-top property.
+	 * Gets the top margin of @widget.
 	 *
 	 * Returns: The top margin of @widget
 	 */
@@ -1399,8 +1456,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Retrieves the name of a widget. See gtk_widget_set_name() for the
-	 * significance of widget names.
+	 * Retrieves the name of a widget.
+	 *
+	 * See [method@Gtk.Widget.set_name] for the significance of widget names.
 	 *
 	 * Returns: name of the widget. This string is owned by GTK and
 	 *     should not be modified or freed
@@ -1411,13 +1469,14 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the GtkNative widget that contains @widget,
-	 * or %NULL if the widget is not contained inside a
-	 * widget tree with a native ancestor.
+	 * Returns the `GtkNative` widget that contains @widget.
 	 *
-	 * #GtkNative widgets will return themselves here.
+	 * This function will return %NULL if the widget is not
+	 * contained inside a widget tree with a native ancestor.
 	 *
-	 * Returns: the #GtkNative
+	 * `GtkNative` widgets will return themselves here.
+	 *
+	 * Returns: the `GtkNative`
 	 *     widget of @widget, or %NULL
 	 */
 	public NativeIF getNative()
@@ -1452,8 +1511,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Fetches the requested opacity for this widget.
-	 * See gtk_widget_set_opacity().
+	 * #Fetches the requested opacity for this widget.
+	 *
+	 * See [method@Gtk.Widget.set_opacity].
 	 *
 	 * Returns: the requested opacity for this widget.
 	 */
@@ -1463,7 +1523,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the value set via gtk_widget_set_overflow().
+	 * Returns the widgets overflow value.
 	 *
 	 * Returns: The widget's overflow.
 	 */
@@ -1473,15 +1533,17 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets a #PangoContext with the appropriate font map, font description,
-	 * and base direction for this widget. Unlike the context returned
-	 * by gtk_widget_create_pango_context(), this context is owned by
-	 * the widget (it can be used until the screen for the widget changes
-	 * or the widget is removed from its toplevel), and will be updated to
-	 * match any changes to the widget’s attributes. This can be tracked
-	 * by listening to changes of the #GtkWidget:root property on the widget.
+	 * Gets a `PangoContext` with the appropriate font map, font description,
+	 * and base direction for this widget.
 	 *
-	 * Returns: the #PangoContext for the widget.
+	 * Unlike the context returned by [method@Gtk.Widget.create_pango_context],
+	 * this context is owned by the widget (it can be used until the screen
+	 * for the widget changes or the widget is removed from its toplevel),
+	 * and will be updated to match any changes to the widget’s attributes.
+	 * This can be tracked by listening to changes of the
+	 * [property@Gtk.Widget:root] property on the widget.
+	 *
+	 * Returns: the `PangoContext` for the widget.
 	 */
 	public PgContext getPangoContext()
 	{
@@ -1498,7 +1560,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	/**
 	 * Returns the parent widget of @widget.
 	 *
-	 * Returns: the parent widget of @widget, or %NULL
+	 * Returns: the parent widget of @widget,
+	 *     or %NULL
 	 */
 	public Widget getParent()
 	{
@@ -1519,15 +1582,14 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * This is used to retrieve a suitable size by container widgets which do
 	 * not impose any restrictions on the child placement. It can be used
 	 * to deduce toplevel window and menu sizes as well as child widgets in
-	 * free-form containers such as GtkLayout.
+	 * free-form containers such as `GtkFixed`.
 	 *
 	 * Handle with care. Note that the natural height of a height-for-width
-	 * widget will generally be a smaller size than the minimum height, since the required
-	 * height for the natural width is generally smaller than the required height for
-	 * the minimum width.
+	 * widget will generally be a smaller size than the minimum height, since
+	 * the required height for the natural width is generally smaller than the
+	 * required height for the minimum width.
 	 *
-	 * Use gtk_widget_measure() if you want to support
-	 * baseline alignment.
+	 * Use [id@gtk_widget_measure] if you want to support baseline alignment.
 	 *
 	 * Params:
 	 *     minimumSize = location for storing the minimum size, or %NULL
@@ -1564,8 +1626,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
+	 * Gets the primary clipboard of @widget.
+	 *
 	 * This is a utility function to get the primary clipboard object
-	 * for the #GdkDisplay that @widget is using.
+	 * for the `GdkDisplay` that @widget is using.
 	 *
 	 * Note that this function always works, even when @widget is not
 	 * realized yet.
@@ -1599,7 +1663,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * within its toplevel when it has the focus, even if another widget
 	 * is the default.
 	 *
-	 * See gtk_widget_set_receives_default().
+	 * See [method@Gtk.Widget.set_receives_default].
 	 *
 	 * Returns: %TRUE if @widget acts as the default widget when focused,
 	 *     %FALSE otherwise
@@ -1613,12 +1677,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * Gets whether the widget prefers a height-for-width layout
 	 * or a width-for-height layout.
 	 *
-	 * #GtkBin widgets generally propagate the preference of
-	 * their child, container widgets need to request something either in
-	 * context of their children or in context of their allocation
-	 * capabilities.
+	 * Single-child widgets generally propagate the preference of
+	 * their child, more complex widgets need to request something
+	 * either in context of their children or in context of their
+	 * allocation capabilities.
 	 *
-	 * Returns: The #GtkSizeRequestMode preferred by @widget.
+	 * Returns: The `GtkSizeRequestMode` preferred by @widget.
 	 */
 	public GtkSizeRequestMode getRequestMode()
 	{
@@ -1626,12 +1690,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the #GtkRoot widget of @widget or %NULL if the widget is not contained
+	 * Returns the `GtkRoot` widget of @widget.
+	 *
+	 * This function will return %NULL if the widget is not contained
 	 * inside a widget tree with a root widget.
 	 *
-	 * #GtkRoot widgets will return themselves here.
+	 * `GtkRoot` widgets will return themselves here.
 	 *
-	 * Returns: the root widget of @widget, or %NULL
+	 * Returns: the root widget of @widget,
+	 *     or %NULL
 	 */
 	public RootIF getRoot()
 	{
@@ -1646,11 +1713,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Retrieves the internal scale factor that maps from window coordinates
-	 * to the actual device pixels. On traditional systems this is 1, on
-	 * high density outputs, it can be a higher value (typically 2).
+	 * Retrieves the internal scale factor that maps from window
+	 * coordinates to the actual device pixels.
 	 *
-	 * See gdk_surface_get_scale_factor().
+	 * On traditional systems this is 1, on high density outputs,
+	 * it can be a higher value (typically 2).
+	 *
+	 * See [method@Gdk.Surface.get_scale_factor].
 	 *
 	 * Returns: the scale factor for @widget
 	 */
@@ -1660,11 +1729,14 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the widget’s sensitivity (in the sense of returning
-	 * the value that has been set using gtk_widget_set_sensitive()).
+	 * Returns the widget’s sensitivity.
 	 *
-	 * The effective sensitivity of a widget is however determined by both its
-	 * own and its parent widget’s sensitivity. See gtk_widget_is_sensitive().
+	 * This function returns the value that has been set using
+	 * [method@Gtk.Widget.set_sensitive]).
+	 *
+	 * The effective sensitivity of a widget is however determined
+	 * by both its own and its parent widget’s sensitivity.
+	 * See [method@Gtk.Widget.is_sensitive].
 	 *
 	 * Returns: %TRUE if the widget is sensitive
 	 */
@@ -1676,9 +1748,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	/**
 	 * Gets the settings object holding the settings used for this widget.
 	 *
-	 * Note that this function can only be called when the #GtkWidget
+	 * Note that this function can only be called when the `GtkWidget`
 	 * is attached to a toplevel, since the settings object is specific
-	 * to a particular #GdkDisplay. If you want to monitor the widget for
+	 * to a particular `GdkDisplay`. If you want to monitor the widget for
 	 * changes in its settings, connect to notify::display.
 	 *
 	 * Returns: the relevant #GtkSettings object
@@ -1696,11 +1768,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the content width or height of the widget, depending on @orientation.
-	 * This is equivalent to calling gtk_widget_get_width() for %GTK_ORIENTATION_HORIZONTAL
-	 * or gtk_widget_get_height() for %GTK_ORIENTATION_VERTICAL, but can be used when
-	 * writing orientation-independent code, such as when implementing #GtkOrientable
-	 * widgets.
+	 * Returns the content width or height of the widget.
+	 *
+	 * Which dimension is returned depends on @orientation.
+	 *
+	 * This is equivalent to calling [method@Gtk.Widget.get_width]
+	 * for %GTK_ORIENTATION_HORIZONTAL or [method@Gtk.Widget.get_height]
+	 * for %GTK_ORIENTATION_VERTICAL, but can be used when
+	 * writing orientation-independent code, such as when
+	 * implementing [iface@Gtk.Orientable] widgets.
 	 *
 	 * Params:
 	 *     orientation = the orientation to query
@@ -1714,11 +1790,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Gets the size request that was explicitly set for the widget using
-	 * gtk_widget_set_size_request(). A value of -1 stored in @width or
-	 * @height indicates that that dimension has not been set explicitly
-	 * and the natural requisition of the widget will be used instead. See
-	 * gtk_widget_set_size_request(). To get the size a widget will
-	 * actually request, call gtk_widget_measure() instead of
+	 * gtk_widget_set_size_request().
+	 *
+	 * A value of -1 stored in @width or @height indicates that that
+	 * dimension has not been set explicitly and the natural requisition
+	 * of the widget will be used instead. See
+	 * [method@Gtk.Widget.set_size_request]. To get the size a widget will
+	 * actually request, call [method@Gtk.Widget.measure] instead of
 	 * this function.
 	 *
 	 * Params:
@@ -1731,14 +1809,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the widget state as a flag set. It is worth mentioning
-	 * that the effective %GTK_STATE_FLAG_INSENSITIVE state will be
-	 * returned, that is, also based on parent insensitivity, even if
-	 * @widget itself is sensitive.
+	 * Returns the widget state as a flag set.
+	 *
+	 * It is worth mentioning that the effective %GTK_STATE_FLAG_INSENSITIVE
+	 * state will be returned, that is, also based on parent insensitivity,
+	 * even if @widget itself is sensitive.
 	 *
 	 * Also note that if you are looking for a way to obtain the
-	 * #GtkStateFlags to pass to a #GtkStyleContext method, you
-	 * should look at gtk_style_context_get_state().
+	 * [flags@Gtk.StateFlags] to pass to a [class@Gtk.StyleContext]
+	 * method, you should look at [method@Gtk.StyleContext.get_state].
 	 *
 	 * Returns: The state flags for widget
 	 */
@@ -1748,11 +1827,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the style context associated to @widget. The returned object is
-	 * guaranteed to be the same for the lifetime of @widget.
+	 * Returns the style context associated to @widget.
 	 *
-	 * Returns: a #GtkStyleContext. This memory is owned by @widget and
-	 *     must not be freed.
+	 * The returned object is guaranteed to be the same
+	 * for the lifetime of @widget.
+	 *
+	 * Returns: a `GtkStyleContext`. This memory
+	 *     is owned by @widget and must not be freed.
 	 */
 	public StyleContext getStyleContext()
 	{
@@ -1767,21 +1848,23 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Fetch an object build from the template XML for @widget_type in this @widget instance.
+	 * Fetch an object build from the template XML for @widget_type in
+	 * this @widget instance.
 	 *
-	 * This will only report children which were previously declared with
-	 * gtk_widget_class_bind_template_child_full() or one of its
+	 * This will only report children which were previously declared
+	 * with [method@Gtk.WidgetClass.bind_template_child_full] or one of its
 	 * variants.
 	 *
-	 * This function is only meant to be called for code which is private to the @widget_type which
-	 * declared the child and is meant for language bindings which cannot easily make use
-	 * of the GObject structure offsets.
+	 * This function is only meant to be called for code which is private
+	 * to the @widget_type which declared the child and is meant for language
+	 * bindings which cannot easily make use of the GObject structure offsets.
 	 *
 	 * Params:
 	 *     widgetType = The #GType to get a template child for
 	 *     name = The “id” of the child defined in the template XML
 	 *
-	 * Returns: The object built in the template XML with the id @name
+	 * Returns: The object built in the template XML with
+	 *     the id @name
 	 */
 	public ObjectG getTemplateChild(GType widgetType, string name)
 	{
@@ -1796,8 +1879,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the contents of the tooltip for @widget set using
-	 * gtk_widget_set_tooltip_markup().
+	 * Gets the contents of the tooltip for @widget.
+	 *
+	 * If the tooltip has not been set using
+	 * [method@Gtk.Widget.set_tooltip_markup], this
+	 * function returns %NULL.
 	 *
 	 * Returns: the tooltip text
 	 */
@@ -1809,7 +1895,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	/**
 	 * Gets the contents of the tooltip for @widget.
 	 *
-	 * If the @widget's tooltip was set using gtk_widget_set_tooltip_markup(),
+	 * If the @widget's tooltip was set using
+	 * [method@Gtk.Widget.set_tooltip_markup],
 	 * this function will return the escaped text.
 	 *
 	 * Returns: the tooltip text
@@ -1820,7 +1907,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets the value of the #GtkWidget:valign property.
+	 * Gets the vertical alignment of @widget.
 	 *
 	 * Returns: the vertical alignment of @widget
 	 */
@@ -1833,7 +1920,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * Gets whether the widget would like any available extra vertical
 	 * space.
 	 *
-	 * See gtk_widget_get_hexpand() for more detail.
+	 * See [method@Gtk.Widget.get_hexpand] for more detail.
 	 *
 	 * Returns: whether vexpand flag is set
 	 */
@@ -1846,7 +1933,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * Gets whether gtk_widget_set_vexpand() has been used to
 	 * explicitly set the expand flag on this widget.
 	 *
-	 * See gtk_widget_get_hexpand_set() for more detail.
+	 * See [method@Gtk.Widget.get_hexpand_set] for more detail.
 	 *
 	 * Returns: whether vexpand has been explicitly set
 	 */
@@ -1856,13 +1943,16 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Determines whether the widget is visible. If you want to
-	 * take into account whether the widget’s parent is also marked as
-	 * visible, use gtk_widget_is_visible() instead.
+	 * Determines whether the widget is visible.
 	 *
-	 * This function does not check if the widget is obscured in any way.
+	 * If you want to take into account whether the widget’s
+	 * parent is also marked as visible, use
+	 * [method@Gtk.Widget.is_visible] instead.
 	 *
-	 * See gtk_widget_set_visible().
+	 * This function does not check if the widget is
+	 * obscured in any way.
+	 *
+	 * See [method@Gtk.Widget.set_visible].
 	 *
 	 * Returns: %TRUE if the widget is visible
 	 */
@@ -1872,9 +1962,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the content width of the widget, as passed to its size-allocate implementation.
-	 * This is the size you should be using in GtkWidgetClass.snapshot(). For pointer
-	 * events, see gtk_widget_contains().
+	 * Returns the content width of the widget.
+	 *
+	 * This function returns the size passed to its
+	 * size-allocate implementation, which is the size you
+	 * should be using in GtkWidgetClass.snapshot().
+	 *
+	 * For pointer events, see [method@Gtk.Widget.contains].
 	 *
 	 * Returns: The width of @widget
 	 */
@@ -1884,15 +1978,14 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Causes @widget (or one of its descendents) to have the keyboard focus
-	 * for the #GtkWindow it's inside.
+	 * Causes @widget to have the keyboard focus for the `GtkWindow` it's inside.
 	 *
 	 * If @widget is not focusable, or its ::grab_focus implementation cannot
 	 * transfer the focus to a descendant of @widget that is focusable, it will
 	 * not take focus and %FALSE will be returned.
 	 *
-	 * Calling gtk_widget_grab_focus() on an already focused widget is allowed,
-	 * should not have an effect, and return %TRUE.
+	 * Calling [method@Gtk.Widget.grab_focus] on an already focused widget
+	 * is allowed, should not have an effect, and return %TRUE.
 	 *
 	 * Returns: %TRUE if focus is now inside @widget.
 	 */
@@ -1905,7 +1998,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * Returns whether @css_class is currently applied to @widget.
 	 *
 	 * Params:
-	 *     cssClass = A CSS style class, without the leading '.'
+	 *     cssClass = A style class, without the leading '.'
 	 *         used for notation of style classes
 	 *
 	 * Returns: %TRUE if @css_class is currently applied to @widget,
@@ -1917,11 +2010,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Determines whether @widget is the current default widget within its
-	 * toplevel.
+	 * Determines whether @widget is the current default widget
+	 * within its toplevel.
 	 *
-	 * Returns: %TRUE if @widget is the current default widget within
-	 *     its toplevel, %FALSE otherwise
+	 * Returns: %TRUE if @widget is the current default widget
+	 *     within its toplevel, %FALSE otherwise
 	 */
 	public bool hasDefault()
 	{
@@ -1929,9 +2022,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Determines if the widget has the global input focus. See
-	 * gtk_widget_is_focus() for the difference between having the global
-	 * input focus, and only having the focus within a toplevel.
+	 * Determines if the widget has the global input focus.
+	 *
+	 * See [method@Gtk.Widget.is_focus] for the difference between
+	 * having the global input focus, and only having the focus
+	 * within a toplevel.
 	 *
 	 * Returns: %TRUE if the widget has the global input focus.
 	 */
@@ -1942,14 +2037,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Determines if the widget should show a visible indication that
-	 * it has the global input focus. This is a convenience function
-	 * that takes into account whether focus indication should currently
-	 * be shown in the toplevel window of @widget.
-	 * See gtk_window_get_focus_visible() for more information
-	 * about focus indication.
+	 * it has the global input focus.
+	 *
+	 * This is a convenience function that takes into account whether
+	 * focus indication should currently be shown in the toplevel window
+	 * of @widget. See [method@Gtk.Window.get_focus_visible] for more
+	 * information about focus indication.
 	 *
 	 * To find out if the widget has the global input focus, use
-	 * gtk_widget_has_focus().
+	 * [method@Gtk.Widget.has_focus].
 	 *
 	 * Returns: %TRUE if the widget should display a “focus rectangle”
 	 */
@@ -1959,8 +2055,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Reverses the effects of gtk_widget_show(), causing the widget to be
-	 * hidden (invisible to the user).
+	 * Reverses the effects of gtk_widget_show().
+	 *
+	 * This is causing the widget to be hidden (invisible to the user).
 	 */
 	public void hide()
 	{
@@ -1969,6 +2066,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Returns whether the widget is currently being destroyed.
+	 *
 	 * This information can sometimes be used to avoid doing
 	 * unnecessary work.
 	 *
@@ -1980,22 +2078,26 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Creates and initializes child widgets defined in templates. This
-	 * function must be called in the instance initializer for any
-	 * class which assigned itself a template using gtk_widget_class_set_template()
+	 * Creates and initializes child widgets defined in templates.
+	 *
+	 * This function must be called in the instance initializer
+	 * for any class which assigned itself a template using
+	 * [method@Gtk.WidgetClass.set_template].
 	 *
 	 * It is important to call this function in the instance initializer
-	 * of a #GtkWidget subclass and not in #GObject.constructed() or
-	 * #GObject.constructor() for two reasons.
+	 * of a `GtkWidget` subclass and not in `GObject.constructed()` or
+	 * `GObject.constructor()` for two reasons:
 	 *
-	 * One reason is that generally derived widgets will assume that parent
-	 * class composite widgets have been created in their instance
-	 * initializers.
+	 * - derived widgets will assume that the composite widgets
+	 * defined by its parent classes have been created in their
+	 * relative instance initializers
+	 * - when calling `g_object_new()` on a widget with composite templates,
+	 * it’s important to build the composite widgets before the construct
+	 * properties are set. Properties passed to `g_object_new()` should
+	 * take precedence over properties set in the private template XML
 	 *
-	 * Another reason is that when calling g_object_new() on a widget with
-	 * composite templates, it’s important to build the composite widgets
-	 * before the construct properties are set. Properties passed to g_object_new()
-	 * should take precedence over properties set in the private template XML.
+	 * A good rule of thumb is to call this function as the first thing in
+	 * an instance initialization function.
 	 */
 	public void initTemplate()
 	{
@@ -2003,9 +2105,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Inserts @group into @widget. Children of @widget that implement
-	 * #GtkActionable can then be associated with actions in @group by
-	 * setting their “action-name” to @prefix.`action-name`.
+	 * Inserts @group into @widget.
+	 *
+	 * Children of @widget that implement [iface@Gtk.Actionable] can
+	 * then be associated with actions in @group by setting their
+	 * “action-name” to @prefix.`action-name`.
 	 *
 	 * Note that inheritance is defined for individual actions. I.e.
 	 * even if you insert a group with prefix @prefix, actions with
@@ -2030,17 +2134,18 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * It will be placed after @previous_sibling, or at the beginning if
 	 * @previous_sibling is %NULL.
 	 *
-	 * After calling this function, gtk_widget_get_prev_sibling(widget) will
-	 * return @previous_sibling.
+	 * After calling this function, `gtk_widget_get_prev_sibling(widget)`
+	 * will return @previous_sibling.
 	 *
-	 * If @parent is already set as the parent widget of @widget, this function
-	 * can also be used to reorder @widget in the child widget list of @parent.
+	 * If @parent is already set as the parent widget of @widget, this
+	 * function can also be used to reorder @widget in the child widget
+	 * list of @parent.
 	 *
 	 * This API is primarily meant for widget implementations; if you are
 	 * just using a widget, you *must* use its own API for adding children.
 	 *
 	 * Params:
-	 *     parent = the parent #GtkWidget to insert @widget into
+	 *     parent = the parent `GtkWidget` to insert @widget into
 	 *     previousSibling = the new previous sibling of @widget or %NULL
 	 */
 	public void insertAfter(Widget parent, Widget previousSibling)
@@ -2054,7 +2159,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * It will be placed before @next_sibling, or at the end if
 	 * @next_sibling is %NULL.
 	 *
-	 * After calling this function, gtk_widget_get_next_sibling(widget)
+	 * After calling this function, `gtk_widget_get_next_sibling(widget)`
 	 * will return @next_sibling.
 	 *
 	 * If @parent is already set as the parent widget of @widget, this function
@@ -2064,7 +2169,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * just using a widget, you *must* use its own API for adding children.
 	 *
 	 * Params:
-	 *     parent = the parent #GtkWidget to insert @widget into
+	 *     parent = the parent `GtkWidget` to insert @widget into
 	 *     nextSibling = the new next sibling of @widget or %NULL
 	 */
 	public void insertBefore(Widget parent, Widget nextSibling)
@@ -2073,11 +2178,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Determines whether @widget is somewhere inside @ancestor, possibly with
-	 * intermediate containers.
+	 * Determines whether @widget is somewhere inside @ancestor,
+	 * possibly with intermediate containers.
 	 *
 	 * Params:
-	 *     ancestor = another #GtkWidget
+	 *     ancestor = another `GtkWidget`
 	 *
 	 * Returns: %TRUE if @ancestor contains @widget as a child,
 	 *     grandchild, great grandchild, etc.
@@ -2088,8 +2193,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Determines whether @widget can be drawn to. A widget can be drawn
-	 * if it is mapped and visible.
+	 * Determines whether @widget can be drawn to.
+	 *
+	 * A widget can be drawn if it is mapped and visible.
 	 *
 	 * Returns: %TRUE if @widget is drawable, %FALSE otherwise
 	 */
@@ -2100,9 +2206,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Determines if the widget is the focus widget within its
-	 * toplevel. (This does not mean that the #GtkWidget:has-focus property is
-	 * necessarily set; #GtkWidget:has-focus will only be set if the
-	 * toplevel widget additionally has the global input focus.)
+	 * toplevel.
+	 *
+	 * This does not mean that the [property@Gtk.Widget:has-focus]
+	 * property is necessarily set; [property@Gtk,Widget:has-focus]
+	 * will only be set if the toplevel widget additionally has the
+	 * global input focus.)
 	 *
 	 * Returns: %TRUE if the widget is the focus widget.
 	 */
@@ -2112,8 +2221,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns the widget’s effective sensitivity, which means
-	 * it is sensitive itself and also its parent widget is sensitive
+	 * Returns the widget’s effective sensitivity.
+	 *
+	 * This means it is sensitive itself and also its
+	 * parent widget is sensitive.
 	 *
 	 * Returns: %TRUE if the widget is effectively sensitive
 	 */
@@ -2128,7 +2239,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 *
 	 * This function does not check if the widget is obscured in any way.
 	 *
-	 * See also gtk_widget_get_visible() and gtk_widget_set_visible()
+	 * See also [method@Gtk.Widget.get_visible] and
+	 * [method@Gtk.Widget.set_visible].
 	 *
 	 * Returns: %TRUE if the widget and all its parents are visible
 	 */
@@ -2138,33 +2250,33 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function should be called whenever keyboard navigation within
-	 * a single widget hits a boundary. The function emits the
-	 * #GtkWidget::keynav-failed signal on the widget and its return
-	 * value should be interpreted in a way similar to the return value of
-	 * gtk_widget_child_focus():
+	 * Emits the `::keynav-failed` signal on the widget.
 	 *
-	 * When %TRUE is returned, stay in the widget, the failed keyboard
-	 * navigation is OK and/or there is nowhere we can/should move the
-	 * focus to.
+	 * This function should be called whenever keyboard navigation
+	 * within a single widget hits a boundary.
 	 *
-	 * When %FALSE is returned, the caller should continue with keyboard
-	 * navigation outside the widget, e.g. by calling
-	 * gtk_widget_child_focus() on the widget’s toplevel.
+	 * The return value of this function should be interpreted
+	 * in a way similar to the return value of
+	 * [method@Gtk.Widget.child_focus]. When %TRUE is returned,
+	 * stay in the widget, the failed keyboard  navigation is OK
+	 * and/or there is nowhere we can/should move the focus to.
+	 * When %FALSE is returned, the caller should continue with
+	 * keyboard navigation outside the widget, e.g. by calling
+	 * [method@Gtk.Widget.child_focus] on the widget’s toplevel.
 	 *
-	 * The default ::keynav-failed handler returns %FALSE for
-	 * %GTK_DIR_TAB_FORWARD and %GTK_DIR_TAB_BACKWARD. For the other
-	 * values of #GtkDirectionType it returns %TRUE.
+	 * The default [signal@Gtk.Widget::keynav-failed] handler returns
+	 * %FALSE for %GTK_DIR_TAB_FORWARD and %GTK_DIR_TAB_BACKWARD.
+	 * For the other values of #GtkDirectionType it returns %TRUE.
 	 *
 	 * Whenever the default handler returns %TRUE, it also calls
-	 * gtk_widget_error_bell() to notify the user of the failed keyboard
-	 * navigation.
+	 * [method@Gtk.Widget.error_bell] to notify the user of the
+	 * failed keyboard navigation.
 	 *
 	 * A use case for providing an own implementation of ::keynav-failed
 	 * (either by connecting to it or by overriding it) would be a row of
-	 * #GtkEntry widgets where the user should be able to navigate the
-	 * entire row with the cursor keys, as e.g. known from user interfaces
-	 * that require entering license keys.
+	 * [class@Gtk.Entry] widgets where the user should be able to navigate
+	 * the entire row with the cursor keys, as e.g. known from user
+	 * interfaces that require entering license keys.
 	 *
 	 * Params:
 	 *     direction = direction of focus movement
@@ -2179,20 +2291,21 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns a newly allocated list of the widgets, normally labels, for
-	 * which this widget is the target of a mnemonic (see for example,
-	 * gtk_label_set_mnemonic_widget()).
+	 * Returns the widgets for which this widget is the target of a
+	 * mnemonic.
 	 *
-	 * The widgets in the list are not individually referenced. If you
-	 * want to iterate through the list and perform actions involving
-	 * callbacks that might destroy the widgets, you
-	 * must call `g_list_foreach (result,
-	 * (GFunc)g_object_ref, NULL)` first, and then unref all the
-	 * widgets afterwards.
+	 * Typically, these widgets will be labels. See, for example,
+	 * [method@Gtk.Label.set_mnemonic_widget].
 	 *
-	 * Returns: the list of
-	 *     mnemonic labels; free this list
-	 *     with g_list_free() when you are done with it.
+	 * The widgets in the list are not individually referenced.
+	 * If you want to iterate through the list and perform actions
+	 * involving callbacks that might destroy the widgets, you
+	 * must call `g_list_foreach (result, (GFunc)g_object_ref, NULL)`
+	 * first, and then unref all the widgets afterwards.
+	 *
+	 * Returns: the list
+	 *     of mnemonic labels; free this list with g_list_free() when you
+	 *     are done with it.
 	 */
 	public ListG listMnemonicLabels()
 	{
@@ -2207,8 +2320,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is only for use in widget implementations. Causes
-	 * a widget to be mapped if it isn’t already.
+	 * Causes a widget to be mapped if it isn’t already.
+	 *
+	 * This function is only for use in widget implementations.
 	 */
 	public void map()
 	{
@@ -2217,11 +2331,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Measures @widget in the orientation @orientation and for the given @for_size.
-	 * As an example, if @orientation is %GTK_ORIENTATION_HORIZONTAL and @for_size is 300,
-	 * this functions will compute the minimum and natural width of @widget if
-	 * it is allocated at a height of 300 pixels.
 	 *
-	 * See [GtkWidget’s geometry management section][geometry-management] for
+	 * As an example, if @orientation is %GTK_ORIENTATION_HORIZONTAL and @for_size
+	 * is 300, this functions will compute the minimum and natural width of @widget
+	 * if it is allocated at a height of 300 pixels.
+	 *
+	 * See [GtkWidget’s geometry management section](class.Widget.html#height-for-width-geometry-management) for
 	 * a more details on implementing #GtkWidgetClass.measure().
 	 *
 	 * Params:
@@ -2244,7 +2359,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Emits the #GtkWidget::mnemonic-activate signal.
+	 * Emits the `GtkWidget`::mnemonic-activate signal.
 	 *
 	 * Params:
 	 *     groupCycling = %TRUE if there are other widgets with the same mnemonic
@@ -2257,17 +2372,16 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns a #GListModel to track the children of @widget.
+	 * Returns a `GListModel` to track the children of @widget.
 	 *
-	 * Calling this function will enable extra internal bookkeeping to track
-	 * children and emit signals on the returned listmodel. It may slow down
-	 * operations a lot.
+	 * Calling this function will enable extra internal bookkeeping
+	 * to track children and emit signals on the returned listmodel.
+	 * It may slow down operations a lot.
 	 *
-	 * Applications should try hard to avoid calling this function because of
-	 * the slowdowns.
+	 * Applications should try hard to avoid calling this function
+	 * because of the slowdowns.
 	 *
-	 * Returns: a #GListModel
-	 *     tracking @widget's children
+	 * Returns: a `GListModel` tracking @widget's children
 	 */
 	public ListModelIF observeChildren()
 	{
@@ -2282,17 +2396,17 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Returns a #GListModel to track the #GtkEventControllers of @widget.
+	 * Returns a `GListModel` to track the [class@Gtk.EventController]s
+	 * of @widget.
 	 *
-	 * Calling this function will enable extra internal bookkeeping to track
-	 * controllers and emit signals on the returned listmodel. It may slow down
-	 * operations a lot.
+	 * Calling this function will enable extra internal bookkeeping
+	 * to track controllers and emit signals on the returned listmodel.
+	 * It may slow down operations a lot.
 	 *
-	 * Applications should try hard to avoid calling this function because of
-	 * the slowdowns.
+	 * Applications should try hard to avoid calling this function
+	 * because of the slowdowns.
 	 *
-	 * Returns: a
-	 *     #GListModel tracking @widget's controllers
+	 * Returns: a `GListModel` tracking @widget's controllers
 	 */
 	public ListModelIF observeControllers()
 	{
@@ -2307,26 +2421,29 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Finds the descendant of @widget (including @widget itself) closest
-	 * to the screen at the point (@x, @y). The point must be given in
-	 * widget coordinates, so (0, 0) is assumed to be the top left of
-	 * @widget's content area.
+	 * Finds the descendant of @widget closest
+	 * to the screen at the point (@x, @y).
+	 *
+	 * The point must be given in widget coordinates, so (0, 0) is assumed
+	 * to be the top left of @widget's content area.
 	 *
 	 * Usually widgets will return %NULL if the given coordinate is not
-	 * contained in @widget checked via gtk_widget_contains(). Otherwise
-	 * they will recursively try to find a child that does not return %NULL.
-	 * Widgets are however free to customize their picking algorithm.
+	 * contained in @widget checked via [method@Gtk.Widget.contains].
+	 * Otherwise they will recursively try to find a child that does
+	 * not return %NULL. Widgets are however free to customize their
+	 * picking algorithm.
 	 *
-	 * This function is used on the toplevel to determine the widget below
-	 * the mouse cursor for purposes of hover highlighting and delivering events.
+	 * This function is used on the toplevel to determine the widget
+	 * below the mouse cursor for purposes of hover highlighting and
+	 * delivering events.
 	 *
 	 * Params:
 	 *     x = X coordinate to test, relative to @widget's origin
 	 *     y = Y coordinate to test, relative to @widget's origin
 	 *     flags = Flags to influence what is picked
 	 *
-	 * Returns: The widget descendant at the given
-	 *     coordinate or %NULL if none.
+	 * Returns: The widget descendant at
+	 *     the given coordinate or %NULL if none.
 	 */
 	public Widget pick(double x, double y, GtkPickFlags flags)
 	{
@@ -2341,14 +2458,16 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is only for use in widget implementations.
-	 *
 	 * Flags the widget for a rerun of the GtkWidgetClass::size_allocate
-	 * function. Use this function instead of gtk_widget_queue_resize()
+	 * function.
+	 *
+	 * Use this function instead of [method@Gtk.Widget.queue_resize]
 	 * when the @widget's size request didn't change but it wants to
 	 * reposition its contents.
 	 *
-	 * An example user of this function is gtk_widget_set_halign().
+	 * An example user of this function is [method@Gtk.Widget.set_halign].
+	 *
+	 * This function is only for use in widget implementations.
 	 */
 	public void queueAllocate()
 	{
@@ -2357,7 +2476,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Schedules this widget to be redrawn in paint phase of the
-	 * current or the next frame. This means @widget's GtkWidgetClass.snapshot()
+	 * current or the next frame.
+	 *
+	 * This means @widget's GtkWidgetClass.snapshot()
 	 * implementation will be called.
 	 */
 	public void queueDraw()
@@ -2366,16 +2487,19 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is only for use in widget implementations.
-	 * Flags a widget to have its size renegotiated; should
-	 * be called when a widget for some reason has a new size request.
-	 * For example, when you change the text in a #GtkLabel, #GtkLabel
-	 * queues a resize to ensure there’s enough space for the new text.
+	 * Flags a widget to have its size renegotiated.
+	 *
+	 * This should be called when a widget for some reason has a new
+	 * size request. For example, when you change the text in a
+	 * [class@Gtk.Label], the label queues a resize to ensure there’s
+	 * enough space for the new text.
 	 *
 	 * Note that you cannot call gtk_widget_queue_resize() on a widget
 	 * from inside its implementation of the GtkWidgetClass::size_allocate
 	 * virtual method. Calls to gtk_widget_queue_resize() from inside
 	 * GtkWidgetClass::size_allocate will be silently ignored.
+	 *
+	 * This function is only for use in widget implementations.
 	 */
 	public void queueResize()
 	{
@@ -2383,22 +2507,22 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Creates the GDK (windowing system) resources associated with a
-	 * widget. Normally realization happens implicitly; if you show
-	 * a widget and all its parent containers, then the widget will be
-	 * realized and mapped automatically.
+	 * Creates the GDK resources associated with a widget.
 	 *
-	 * Realizing a widget requires all
-	 * the widget’s parent widgets to be realized; calling
-	 * gtk_widget_realize() realizes the widget’s parents in addition to
-	 * @widget itself. If a widget is not yet inside a toplevel window
-	 * when you realize it, bad things will happen.
+	 * Normally realization happens implicitly; if you show a widget
+	 * and all its parent containers, then the widget will be realized
+	 * and mapped automatically.
+	 *
+	 * Realizing a widget requires all the widget’s parent widgets to be
+	 * realized; calling this function realizes the widget’s parents
+	 * in addition to @widget itself. If a widget is not yet inside a
+	 * toplevel window when you realize it, bad things will happen.
 	 *
 	 * This function is primarily used in widget implementations, and
 	 * isn’t very useful otherwise. Many times when you think you might
 	 * need it, a better approach is to connect to a signal that will be
 	 * called after the widget is realized automatically, such as
-	 * #GtkWidget::realize.
+	 * [signal@Gtk.Widget::realize].
 	 */
 	public void realize()
 	{
@@ -2407,7 +2531,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Removes @controller from @widget, so that it doesn't process
-	 * events anymore. It should not be used again.
+	 * events anymore.
+	 *
+	 * It should not be used again.
 	 *
 	 * Widgets will remove all event controllers automatically when they
 	 * are destroyed, there is normally no need to call this function.
@@ -2421,8 +2547,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Removes @css_class from @widget. After this, the style of @widget
-	 * will stop matching for @css_class.
+	 * Removes a style from @widget.
+	 *
+	 * After this, the style of @widget will stop matching for @css_class.
 	 *
 	 * Params:
 	 *     cssClass = The style class to remove from @widget, without
@@ -2434,14 +2561,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Removes a widget from the list of mnemonic labels for
-	 * this widget. (See gtk_widget_list_mnemonic_labels()). The widget
-	 * must have previously been added to the list with
-	 * gtk_widget_add_mnemonic_label().
+	 * Removes a widget from the list of mnemonic labels for this widget.
+	 *
+	 * See [method@Gtk.Widget.list_mnemonic_labels]. The widget must
+	 * have previously been added to the list with
+	 * [method@Gtk.Widget.add_mnemonic_label].
 	 *
 	 * Params:
-	 *     label = a #GtkWidget that was previously set as a mnemonic label for
-	 *         @widget with gtk_widget_add_mnemonic_label().
+	 *     label = a `GtkWidget` that was previously set as a mnemonic
+	 *         label for @widget with [method@Gtk.Widget.add_mnemonic_label]
 	 */
 	public void removeMnemonicLabel(Widget label)
 	{
@@ -2453,7 +2581,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * gtk_widget_add_tick_callback().
 	 *
 	 * Params:
-	 *     id = an id returned by gtk_widget_add_tick_callback()
+	 *     id = an id returned by [method@Gtk.Widget.add_tick_callback]
 	 */
 	public void removeTickCallback(uint id)
 	{
@@ -2473,8 +2601,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * that is marked as not can-focus in order to receive input
 	 * focus.
 	 *
-	 * See gtk_widget_grab_focus() for actually setting the input
-	 * focus on a widget.
+	 * See [method@Gtk.Widget.grab_focus] for actually setting
+	 * the input focus on a widget.
 	 *
 	 * Params:
 	 *     canFocus = whether or not the input focus can enter
@@ -2489,7 +2617,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * Sets whether @widget can be the target of pointer events.
 	 *
 	 * Params:
-	 *     canTarget = whether this widget should be able to receive pointer events
+	 *     canTarget = whether this widget should be able to
+	 *         receive pointer events
 	 */
 	public void setCanTarget(bool canTarget)
 	{
@@ -2497,14 +2626,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets whether @widget should be mapped along with its when its parent
-	 * is mapped and @widget has been shown with gtk_widget_show().
+	 * Sets whether @widget should be mapped along with its parent.
 	 *
-	 * The child visibility can be set for widget before it is added to
-	 * a container with gtk_widget_set_parent(), to avoid mapping
-	 * children unnecessary before immediately unmapping them. However
-	 * it will be reset to its default state of %TRUE when the widget
-	 * is removed from a container.
+	 * The child visibility can be set for widget before it is added
+	 * to a container with [method@Gtk.Widget.set_parent], to avoid
+	 * mapping children unnecessary before immediately unmapping them.
+	 * However it will be reset to its default state of %TRUE when the
+	 * widget is removed from a container.
 	 *
 	 * Note that changing the child visibility of a widget does not
 	 * queue a resize on the widget. Most of the time, the size of
@@ -2512,11 +2640,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * not they are mapped. If this is not the case, the container
 	 * can queue a resize itself.
 	 *
-	 * This function is only useful for container implementations and
-	 * never should be called by an application.
+	 * This function is only useful for container implementations
+	 * and should never be called by an application.
 	 *
 	 * Params:
-	 *     childVisible = if %TRUE, @widget should be mapped along with its parent.
+	 *     childVisible = if %TRUE, @widget should be mapped along
+	 *         with its parent.
 	 */
 	public void setChildVisible(bool childVisible)
 	{
@@ -2524,12 +2653,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Will clear all css classes applied to @widget
+	 * Will clear all style classes applied to @widget
 	 * and replace them with @classes.
 	 *
 	 * Params:
-	 *     classes = %NULL-terminated list
-	 *         of css classes to apply to @widget.
+	 *     classes = %NULL-terminated list of style classes to apply to @widget.
 	 */
 	public void setCssClasses(string[] classes)
 	{
@@ -2537,14 +2665,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the cursor to be shown when pointer devices point towards @widget.
+	 * Sets the cursor to be shown when pointer devices point
+	 * towards @widget.
 	 *
-	 * If the @cursor is NULL, @widget will use the cursor inherited from the
-	 * parent widget.
+	 * If the @cursor is NULL, @widget will use the cursor
+	 * inherited from the parent widget.
 	 *
 	 * Params:
-	 *     cursor = the new cursor or %NULL to use the default
-	 *         cursor
+	 *     cursor = the new cursor or %NULL to use
+	 *         the default cursor
 	 */
 	public void setCursor(Cursor cursor)
 	{
@@ -2552,18 +2681,21 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets a named cursor to be shown when pointer devices point towards @widget.
+	 * Sets a named cursor to be shown when pointer devices point
+	 * towards @widget.
 	 *
 	 * This is a utility function that creates a cursor via
-	 * gdk_cursor_new_from_name() and then sets it on @widget with
-	 * gtk_widget_set_cursor(). See those 2 functions for details.
+	 * [ctor@Gdk.Cursor.new_from_name] and then sets it on @widget
+	 * with [method@Gtk.Widget.set_cursor]. See those functions for
+	 * details.
 	 *
-	 * On top of that, this function allows @name to be %NULL, which will
-	 * do the same as calling gtk_widget_set_cursor() with a %NULL cursor.
+	 * On top of that, this function allows @name to be %NULL, which
+	 * will do the same as calling [method@Gtk.Widget.set_cursor]
+	 * with a %NULL cursor.
 	 *
 	 * Params:
-	 *     name = The name of the cursor or %NULL to use the default
-	 *         cursor
+	 *     name = The name of the cursor or %NULL to use
+	 *         the default cursor
 	 */
 	public void setCursorFromName(string name)
 	{
@@ -2571,18 +2703,19 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the reading direction on a particular widget. This direction
-	 * controls the primary direction for widgets containing text,
-	 * and also the direction in which the children of a container are
-	 * packed. The ability to set the direction is present in order
-	 * so that correct localization into languages with right-to-left
-	 * reading directions can be done. Generally, applications will
-	 * let the default reading direction present, except for containers
+	 * Sets the reading direction on a particular widget.
+	 *
+	 * This direction controls the primary direction for widgets
+	 * containing text, and also the direction in which the children
+	 * of a container are packed. The ability to set the direction is
+	 * present in order so that correct localization into languages with
+	 * right-to-left reading directions can be done. Generally, applications
+	 * will let the default reading direction present, except for containers
 	 * where the containers are arranged in an order that is explicitly
 	 * visual rather than logical (such as buttons for text justification).
 	 *
 	 * If the direction is set to %GTK_TEXT_DIR_NONE, then the value
-	 * set by gtk_widget_set_default_direction() will be used.
+	 * set by [func@Gtk.Widget.set_default_direction] will be used.
 	 *
 	 * Params:
 	 *     dir = the new direction
@@ -2593,12 +2726,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Set @child as the current focus child of @widget. The previous
-	 * focus child will be unset.
+	 * Set @child as the current focus child of @widget.
+	 *
+	 * The previous focus child will be unset.
 	 *
 	 * This function is only suitable for widget implementations.
 	 * If you want a certain widget to get the input focus, call
-	 * gtk_widget_grab_focus() on it.
+	 * [method@Gtk.Widget.grab_focus] on it.
 	 *
 	 * Params:
 	 *     child = a direct child widget of @widget or %NULL
@@ -2610,13 +2744,16 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets whether the widget should grab focus when it is clicked with the mouse.
-	 * Making mouse clicks not grab focus is useful in places like toolbars where
-	 * you don’t want the keyboard focus removed from the main area of the
-	 * application.
+	 * Sets whether the widget should grab focus when it is clicked
+	 * with the mouse.
+	 *
+	 * Making mouse clicks not grab focus is useful in places like
+	 * toolbars where you don’t want the keyboard focus removed from
+	 * the main area of the application.
 	 *
 	 * Params:
-	 *     focusOnClick = whether the widget should grab focus when clicked with the mouse
+	 *     focusOnClick = whether the widget should grab focus when clicked
+	 *         with the mouse
 	 */
 	public void setFocusOnClick(bool focusOnClick)
 	{
@@ -2635,8 +2772,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * that is marked as not can-focus in order to receive input
 	 * focus.
 	 *
-	 * See gtk_widget_grab_focus() for actually setting the input
-	 * focus on a widget.
+	 * See [method@Gtk.Widget.grab_focus] for actually setting
+	 * the input focus on a widget.
 	 *
 	 * Params:
 	 *     focusable = whether or not @widget can own the input focus
@@ -2647,16 +2784,18 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the font map to use for Pango rendering. The font map is the
-	 * object that is used to look up fonts. Setting a custom font map
-	 * can be useful in special situations, e.g. when you need to add
-	 * application-specific fonts to the set of available fonts.
+	 * Sets the font map to use for Pango rendering.
+	 *
+	 * The font map is the object that is used to look up fonts.
+	 * Setting a custom font map can be useful in special situations,
+	 * e.g. when you need to add application-specific fonts to the set
+	 * of available fonts.
 	 *
 	 * When not set, the widget will inherit the font map from its parent.
 	 *
 	 * Params:
-	 *     fontMap = a #PangoFontMap, or %NULL to unset any previously
-	 *         set font map
+	 *     fontMap = a `PangoFontMap`, or %NULL to unset any
+	 *         previously set font map
 	 */
 	public void setFontMap(PgFontMap fontMap)
 	{
@@ -2664,12 +2803,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the #cairo_font_options_t used for Pango rendering in this widget.
-	 * When not set, the default font options for the #GdkDisplay will be used.
+	 * Sets the `cairo_font_options_t` used for Pango rendering
+	 * in this widget.
+	 *
+	 * When not set, the default font options for the `GdkDisplay`
+	 * will be used.
 	 *
 	 * Params:
-	 *     options = a #cairo_font_options_t, or %NULL to unset any
-	 *         previously set default font options.
+	 *     options = a #cairo_font_options_t, or %NULL
+	 *         to unset any previously set default font options.
 	 */
 	public void setFontOptions(FontOption options)
 	{
@@ -2678,7 +2820,6 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Sets the horizontal alignment of @widget.
-	 * See the #GtkWidget:halign property.
 	 *
 	 * Params:
 	 *     align_ = the horizontal alignment
@@ -2689,8 +2830,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the has-tooltip property on @widget to @has_tooltip.  See
-	 * #GtkWidget:has-tooltip for more information.
+	 * Sets the `has-tooltip` property on @widget to @has_tooltip.
 	 *
 	 * Params:
 	 *     hasTooltip = whether or not @widget has a tooltip.
@@ -2702,7 +2842,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Sets whether the widget would like any available extra horizontal
-	 * space. When a user resizes a #GtkWindow, widgets with expand=TRUE
+	 * space.
+	 *
+	 * When a user resizes a `GtkWindow`, widgets with expand=TRUE
 	 * generally receive the extra space. For example, a list or
 	 * scrollable area or document in your window would often be set to
 	 * expand.
@@ -2713,18 +2855,18 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 *
 	 * By default, widgets automatically expand if any of their children
 	 * want to expand. (To see if a widget will automatically expand given
-	 * its current children and state, call gtk_widget_compute_expand(). A
-	 * container can decide how the expandability of children affects the
+	 * its current children and state, call [method@Gtk.Widget.compute_expand].
+	 * A container can decide how the expandability of children affects the
 	 * expansion of the container by overriding the compute_expand virtual
-	 * method on #GtkWidget.).
+	 * method on `GtkWidget`.).
 	 *
 	 * Setting hexpand explicitly with this function will override the
 	 * automatic expand behavior.
 	 *
 	 * This function forces the widget to expand or not to expand,
 	 * regardless of children.  The override occurs because
-	 * gtk_widget_set_hexpand() sets the hexpand-set property (see
-	 * gtk_widget_set_hexpand_set()) which causes the widget’s hexpand
+	 * [method@Gtk.Widget.set_hexpand] sets the hexpand-set property (see
+	 * [method@Gtk.Widget.set_hexpand_set]) which causes the widget’s hexpand
 	 * value to be used, rather than looking at children and widget state.
 	 *
 	 * Params:
@@ -2736,13 +2878,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets whether the hexpand flag (see gtk_widget_get_hexpand()) will
-	 * be used.
+	 * Sets whether the hexpand flag will be used.
 	 *
-	 * The hexpand-set property will be set automatically when you call
-	 * gtk_widget_set_hexpand() to set hexpand, so the most likely
-	 * reason to use this function would be to unset an explicit expand
-	 * flag.
+	 * The [property@Gtk.Widget:hexpand-set] property will be set
+	 * automatically when you call [method@Gtk.Widget.set_hexpand]
+	 * to set hexpand, so the most likely reason to use this function
+	 * would be to unset an explicit expand flag.
 	 *
 	 * If hexpand is set, then it overrides any computed
 	 * expand value based on child widgets. If hexpand is not
@@ -2761,11 +2902,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the layout manager delegate instance that provides an implementation
-	 * for measuring and allocating the children of @widget.
+	 * Sets the layout manager delegate instance that
+	 * provides an implementation for measuring and
+	 * allocating the children of @widget.
 	 *
 	 * Params:
-	 *     layoutManager = a #GtkLayoutManager
+	 *     layoutManager = a `GtkLayoutManager`
 	 */
 	public void setLayoutManager(LayoutManager layoutManager)
 	{
@@ -2774,7 +2916,6 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Sets the bottom margin of @widget.
-	 * See the #GtkWidget:margin-bottom property.
 	 *
 	 * Params:
 	 *     margin = the bottom margin
@@ -2786,7 +2927,6 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Sets the end margin of @widget.
-	 * See the #GtkWidget:margin-end property.
 	 *
 	 * Params:
 	 *     margin = the end margin
@@ -2798,7 +2938,6 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Sets the start margin of @widget.
-	 * See the #GtkWidget:margin-start property.
 	 *
 	 * Params:
 	 *     margin = the start margin
@@ -2810,7 +2949,6 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Sets the top margin of @widget.
-	 * See the #GtkWidget:margin-top property.
 	 *
 	 * Params:
 	 *     margin = the top margin
@@ -2821,10 +2959,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Widgets can be named, which allows you to refer to them from a
+	 * Sets a widgets name.
+	 *
+	 * Setting a name allows you to refer to the widget from a
 	 * CSS file. You can apply a style to widgets with a particular name
 	 * in the CSS file. See the documentation for the CSS syntax (on the
-	 * same page as the docs for #GtkStyleContext).
+	 * same page as the docs for [class@Gtk.StyleContext].
 	 *
 	 * Note that the CSS syntax has certain special characters to delimit
 	 * and represent elements in a selector (period, #, >, *...), so using
@@ -2840,9 +2980,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Request the @widget to be rendered partially transparent, with
-	 * opacity 0 being fully transparent and 1 fully opaque. (Opacity
-	 * values are clamped to the [0,1] range).
+	 * Request the @widget to be rendered partially transparent.
+	 *
+	 * An opacity of 0 is fully transparent and an opacity of 1
+	 * is fully opaque.
 	 *
 	 * Opacity works on both toplevel widgets and child widgets, although
 	 * there are some limitations: For toplevel widgets, applying opacity
@@ -2857,8 +2998,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * appear translucent, since it is ultimatively rendered on that
 	 * toplevel. The opacity value itself is not inherited by child
 	 * widgets (since that would make widgets deeper in the hierarchy
-	 * progressively more translucent). As a consequence, #GtkPopovers
-	 * and other #GtkNative widgets with their own surface will use their
+	 * progressively more translucent). As a consequence, [class@Gtk.Popover]s
+	 * and other [class@Gtk.Native] widgets with their own surface will use their
 	 * own opacity value, and thus by default appear non-translucent,
 	 * even if they are attached to a toplevel that is translucent.
 	 *
@@ -2871,11 +3012,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets how @widget treats content that is drawn outside the widget's content area.
-	 * See the definition of #GtkOverflow for details.
+	 * Sets how @widget treats content that is drawn outside the
+	 * widget's content area.
 	 *
-	 * This setting is provided for widget implementations and should not be used by
-	 * application code.
+	 * See the definition of [enum@Gtk.Overflow] for details.
+	 *
+	 * This setting is provided for widget implementations and
+	 * should not be used by application code.
 	 *
 	 * The default value is %GTK_OVERFLOW_VISIBLE.
 	 *
@@ -2888,13 +3031,14 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is useful only when implementing subclasses of
-	 * #GtkWidget.
+	 * Sets @parent as the parent widget of @widget.
 	 *
-	 * Sets @parent as the parent widget of @widget, and takes care of
-	 * some details such as updating the state and style of the child
-	 * to reflect its new location and resizing the parent. The opposite
-	 * function is gtk_widget_unparent().
+	 * This takes care of details such as updating the state and style
+	 * of the child to reflect its new location and resizing the parent.
+	 * The opposite function is [method@Gtk.Widget.unparent].
+	 *
+	 * This function is useful only when implementing subclasses of
+	 * `GtkWidget`.
 	 *
 	 * Params:
 	 *     parent = parent widget
@@ -2918,9 +3062,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the sensitivity of a widget. A widget is sensitive if the user
-	 * can interact with it. Insensitive widgets are “grayed out” and the
-	 * user can’t interact with them. Insensitive widgets are known as
+	 * Sets the sensitivity of a widget.
+	 *
+	 * A widget is sensitive if the user can interact with it.
+	 * Insensitive widgets are “grayed out” and the user can’t
+	 * interact with them. Insensitive widgets are known as
 	 * “inactive”, “disabled”, or “ghosted” in some other toolkits.
 	 *
 	 * Params:
@@ -2932,16 +3078,17 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the minimum size of a widget; that is, the widget’s size
-	 * request will be at least @width by @height. You can use this
-	 * function to force a widget to be larger than it normally would be.
+	 * Sets the minimum size of a widget.
 	 *
-	 * In most cases, gtk_window_set_default_size() is a better choice for
-	 * toplevel windows than this function; setting the default size will
-	 * still allow users to shrink the window. Setting the size request
-	 * will force them to leave the window at least as large as the size
-	 * request. When dealing with window sizes,
-	 * gtk_window_set_geometry_hints() can be a useful function as well.
+	 * That is, the widget’s size request will be at least @width
+	 * by @height. You can use this function to force a widget to
+	 * be larger than it normally would be.
+	 *
+	 * In most cases, [method@Gtk.Window.set_default_size] is a better
+	 * choice for toplevel windows than this function; setting the default
+	 * size will still allow users to shrink the window. Setting the size
+	 * request will force them to leave the window at least as large as
+	 * the size request.
 	 *
 	 * Note the inherent danger of setting any fixed size - themes,
 	 * translations into other languages, different fonts, and user action
@@ -2959,9 +3106,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * the “natural” size request of the widget will be used instead.
 	 *
 	 * The size request set here does not include any margin from the
-	 * #GtkWidget properties margin-left, margin-right, margin-top, and
-	 * margin-bottom, but it does include pretty much all other padding
-	 * or border properties set by any subclass of #GtkWidget.
+	 * properties
+	 * [property@Gtk.Widget:margin-start],
+	 * [property@Gtk.Widget:margin-end],
+	 * [property@Gtk.Widget:margin-top], and
+	 * [property@Gtk.Widget:margin-bottom], but it does include pretty
+	 * much all other padding or border properties set by any subclass
+	 * of `GtkWidget`.
 	 *
 	 * Params:
 	 *     width = width @widget should request, or -1 to unset
@@ -2973,12 +3124,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is for use in widget implementations. Turns on flag
-	 * values in the current widget state (insensitive, prelighted, etc.).
+	 * Turns on flag values in the current widget state.
+	 *
+	 * Typical widget states are insensitive, prelighted, etc.
 	 *
 	 * This function accepts the values %GTK_STATE_FLAG_DIR_LTR and
 	 * %GTK_STATE_FLAG_DIR_RTL but ignores them. If you want to set
-	 * the widget's direction, use gtk_widget_set_direction().
+	 * the widget's direction, use [method@Gtk.Widget.set_direction].
+	 *
+	 * This function is for use in widget implementations.
 	 *
 	 * Params:
 	 *     flags = State flags to turn on
@@ -2990,14 +3144,14 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets @markup as the contents of the tooltip, which is marked up with
-	 * the [Pango text markup language][PangoMarkupFormat].
+	 * Sets @markup as the contents of the tooltip, which is marked
+	 * up with Pango markup.
 	 *
-	 * This function will take care of setting the #GtkWidget:has-tooltip as
-	 * a side effect, and of the default handler for the #GtkWidget::query-tooltip signal.
+	 * This function will take care of setting the
+	 * [property@Gtk.Widget:has-tooltip] as a side effect, and of the
+	 * default handler for the [signal@Gtk.Widget::query-tooltip] signal.
 	 *
-	 * See also the #GtkWidget:tooltip-markup property and
-	 * gtk_tooltip_set_markup().
+	 * See also [method@Gtk.Tooltip.set_markup].
 	 *
 	 * Params:
 	 *     markup = the contents of the tooltip for @widget
@@ -3012,12 +3166,12 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 *
 	 * If @text contains any markup, it will be escaped.
 	 *
-	 * This function will take care of setting #GtkWidget:has-tooltip
-	 * as a side effect, and of the default handler for the
-	 * #GtkWidget::query-tooltip signal.
+	 * This function will take care of setting
+	 * [property@Gtk.Widget:has-tooltip] as a side effect,
+	 * and of the default handler for the
+	 * [signal@Gtk.Widget::query-tooltip] signal.
 	 *
-	 * See also the #GtkWidget:tooltip-text property and
-	 * gtk_tooltip_set_text().
+	 * See also [method@Gtk.Tooltip.set_text].
 	 *
 	 * Params:
 	 *     text = the contents of the tooltip for @widget
@@ -3029,7 +3183,6 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Sets the vertical alignment of @widget.
-	 * See the #GtkWidget:valign property.
 	 *
 	 * Params:
 	 *     align_ = the vertical alignment
@@ -3043,7 +3196,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 * Sets whether the widget would like any available extra vertical
 	 * space.
 	 *
-	 * See gtk_widget_set_hexpand() for more detail.
+	 * See [method@Gtk.Widget.set_hexpand] for more detail.
 	 *
 	 * Params:
 	 *     expand = whether to expand
@@ -3054,10 +3207,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets whether the vexpand flag (see gtk_widget_get_vexpand()) will
-	 * be used.
+	 * Sets whether the vexpand flag will be used.
 	 *
-	 * See gtk_widget_set_hexpand_set() for more detail.
+	 * See [method@Gtk.Widget.set_hexpand_set] for more detail.
 	 *
 	 * Params:
 	 *     set = value for vexpand-set property
@@ -3068,13 +3220,14 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Sets the visibility state of @widget. Note that setting this to
-	 * %TRUE doesn’t mean the widget is actually viewable, see
-	 * gtk_widget_get_visible().
+	 * Sets the visibility state of @widget.
 	 *
-	 * This function simply calls gtk_widget_show() or gtk_widget_hide()
-	 * but is nicer to use when the visibility of the widget depends on
-	 * some condition.
+	 * Note that setting this to %TRUE doesn’t mean the widget is
+	 * actually viewable, see [method@Gtk.Widget.get_visible].
+	 *
+	 * This function simply calls [method@Gtk.Widget.show] or
+	 * [method@Gtk.Widget.hide] but is nicer to use when the
+	 * visibility of the widget depends on some condition.
 	 *
 	 * Params:
 	 *     visible = whether the widget should be shown or not
@@ -3087,6 +3240,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	/**
 	 * Returns whether @widget should contribute to
 	 * the measuring and allocation of its parent.
+	 *
 	 * This is %FALSE for invisible children, but also
 	 * for children that have their own surface.
 	 *
@@ -3099,8 +3253,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Flags a widget to be displayed. Any widget that isn’t shown will
-	 * not appear on the screen.
+	 * Flags a widget to be displayed.
+	 *
+	 * Any widget that isn’t shown will not appear on the screen.
 	 *
 	 * Remember that you have to show the containers containing a widget,
 	 * in addition to the widget itself, before it will appear onscreen.
@@ -3115,8 +3270,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This is a simple form of gtk_widget_allocate() that takes the new position
-	 * of @widget as part of @allocation.
+	 * Allocates widget with a transformation that translates
+	 * the origin to the position in @allocation.
+	 *
+	 * This is a simple form of [method@Gtk.Widget.allocate].
 	 *
 	 * Params:
 	 *     allocation = position and size to be allocated to @widget
@@ -3128,17 +3285,20 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * When a widget receives a call to the snapshot function, it must send
-	 * synthetic #GtkWidgetClass.snapshot() calls to all children. This function
-	 * provides a convenient way of doing this. A widget, when it receives
-	 * a call to its #GtkWidgetClass.snapshot() function, calls
+	 * Snapshot the a child of @widget.
+	 *
+	 * When a widget receives a call to the snapshot function,
+	 * it must send synthetic `GtkWidget`Class.snapshot() calls
+	 * to all children. This function provides a convenient way
+	 * of doing this. A widget, when it receives a call to its
+	 * `GtkWidget`Class.snapshot() function, calls
 	 * gtk_widget_snapshot_child() once for each child, passing in
 	 * the @snapshot the widget received.
 	 *
 	 * gtk_widget_snapshot_child() takes care of translating the origin of
 	 * @snapshot, and deciding whether the child needs to be snapshot.
 	 *
-	 * This function does nothing for children that implement #GtkNative.
+	 * This function does nothing for children that implement `GtkNative`.
 	 *
 	 * Params:
 	 *     child = a child of @widget
@@ -3152,20 +3312,22 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Translate coordinates relative to @src_widget’s allocation to coordinates
-	 * relative to @dest_widget’s allocations. In order to perform this
-	 * operation, both widget must share a common toplevel.
+	 * Translate coordinates relative to @src_widget’s allocation
+	 * to coordinates relative to @dest_widget’s allocations.
+	 *
+	 * In order to perform this operation, both widget must share
+	 * a common ancestor.
 	 *
 	 * Params:
-	 *     destWidget = a #GtkWidget
+	 *     destWidget = a `GtkWidget`
 	 *     srcX = X position relative to @src_widget
 	 *     srcY = Y position relative to @src_widget
 	 *     destX = location to store X position relative to @dest_widget
 	 *     destY = location to store Y position relative to @dest_widget
 	 *
 	 * Returns: %FALSE if @src_widget and @dest_widget have no common
-	 *     ancestor. In this case, 0 is stored in
-	 *     *@dest_x and *@dest_y. Otherwise %TRUE.
+	 *     ancestor. In this case, 0 is stored in *@dest_x and *@dest_y.
+	 *     Otherwise %TRUE.
 	 */
 	public bool translateCoordinates(Widget destWidget, double srcX, double srcY, out double destX, out double destY)
 	{
@@ -3182,8 +3344,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is only for use in widget implementations. Causes
-	 * a widget to be unmapped if it’s currently mapped.
+	 * Causes a widget to be unmapped if it’s currently mapped.
+	 *
+	 * This function is only for use in widget implementations.
 	 */
 	public void unmap()
 	{
@@ -3191,9 +3354,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is only for use in widget implementations.
-	 * It should be called by parent widgets to dissociate @widget
-	 * from the parent, typically in dispose.
+	 * Dissociate @widget from its parent.
+	 *
+	 * This function is only for use in widget implementations,
+	 * typically in dispose.
 	 */
 	public void unparent()
 	{
@@ -3201,9 +3365,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is only useful in widget implementations.
 	 * Causes a widget to be unrealized (frees all GDK resources
 	 * associated with the widget).
+	 *
+	 * This function is only useful in widget implementations.
 	 */
 	public void unrealize()
 	{
@@ -3211,9 +3376,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * This function is for use in widget implementations. Turns off flag
-	 * values for the current widget state (insensitive, prelighted, etc.).
-	 * See gtk_widget_set_state_flags().
+	 * Turns off flag values for the current widget state.
+	 *
+	 * See [method@Gtk.Widget.set_state_flags].
+	 *
+	 * This function is for use in widget implementations.
 	 *
 	 * Params:
 	 *     flags = State flags to turn off
@@ -3225,8 +3392,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 
 	/**
 	 * Signals that all holders of a reference to the widget should release
-	 * the reference that they hold. May result in finalization of the widget
-	 * if all references are released.
+	 * the reference that they hold.
+	 *
+	 * May result in finalization of the widget if all references are released.
 	 *
 	 * This signal is not suitable for saving widget state.
 	 */
@@ -3236,8 +3404,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::direction-changed signal is emitted when the text direction
-	 * of a widget changes.
+	 * Emitted when the text direction of a widget changes.
 	 *
 	 * Params:
 	 *     previousDirection = the previous text direction of @widget
@@ -3248,8 +3415,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::hide signal is emitted when @widget is hidden, for example with
-	 * gtk_widget_hide().
+	 * Emitted when @widget is hidden.
 	 */
 	gulong addOnHide(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3257,8 +3423,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Gets emitted if keyboard navigation fails.
-	 * See gtk_widget_keynav_failed() for details.
+	 * Emitted if keyboard navigation fails.
+	 *
+	 * See [method@Gtk.Widget.keynav_failed] for details.
 	 *
 	 * Params:
 	 *     direction = the direction of movement
@@ -3273,14 +3440,15 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::map signal is emitted when @widget is going to be mapped, that is
-	 * when the widget is visible (which is controlled with
-	 * gtk_widget_set_visible()) and all its parents up to the toplevel widget
+	 * Emitted when @widget is going to be mapped.
+	 *
+	 * A widget is mapped when the widget is visible (which is controlled with
+	 * [property@Gtk.Widget:visible]) and all its parents up to the toplevel widget
 	 * are also visible.
 	 *
 	 * The ::map signal can be used to determine whether a widget will be drawn,
 	 * for instance it can resume an animation that was stopped during the
-	 * emission of #GtkWidget::unmap.
+	 * emission of [signal@Gtk.Widget::unmap].
 	 */
 	gulong addOnMap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3288,6 +3456,8 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
+	 * Emitted when a widget is activated via a mnemonic.
+	 *
 	 * The default handler for this signal activates @widget if @group_cycling
 	 * is %FALSE, or just makes @widget grab focus if @group_cycling is %TRUE.
 	 *
@@ -3314,9 +3484,11 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * Emitted when #GtkWidget:has-tooltip is %TRUE and the hover timeout
-	 * has expired with the cursor hovering "above" @widget; or emitted when @widget got
-	 * focus in keyboard mode.
+	 * Emitted when the widgets tooltip is about to be shown.
+	 *
+	 * This happens when the [property@Gtk.Widget:has-tooltip] property
+	 * is %TRUE and the hover timeout has expired with the cursor hovering
+	 * "above" @widget; or emitted when @widget got focus in keyboard mode.
 	 *
 	 * Using the given coordinates, the signal handler should determine
 	 * whether a tooltip should be shown for @widget. If this is the case
@@ -3343,9 +3515,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::realize signal is emitted when @widget is associated with a
-	 * #GdkSurface, which means that gtk_widget_realize() has been called or the
-	 * widget has been mapped (that is, it is going to be drawn).
+	 * Emitted when @widget is associated with a `GdkSurface`.
+	 *
+	 * This means that [method@Gtk.Widget.realize] has been called
+	 * or the widget has been mapped (that is, it is going to be drawn).
 	 */
 	gulong addOnRealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3353,8 +3526,7 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::show signal is emitted when @widget is shown, for example with
-	 * gtk_widget_show().
+	 * Emitted when @widget is shown.
 	 */
 	gulong addOnShow(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3362,8 +3534,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::state-flags-changed signal is emitted when the widget state
-	 * changes, see gtk_widget_get_state_flags().
+	 * Emitted when the widget state changes.
+	 *
+	 * See [method@Gtk.Widget.get_state_flags].
 	 *
 	 * Params:
 	 *     flags = The previous state flags.
@@ -3374,12 +3547,13 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::unmap signal is emitted when @widget is going to be unmapped, which
-	 * means that either it or any of its parents up to the toplevel widget have
-	 * been set as hidden.
+	 * Emitted when @widget is going to be unmapped.
 	 *
-	 * As ::unmap indicates that a widget will not be shown any longer, it can be
-	 * used to, for example, stop an animation on the widget.
+	 * A widget is unmapped when either it or any of its parents up to the
+	 * toplevel widget have been set as hidden.
+	 *
+	 * As ::unmap indicates that a widget will not be shown any longer,
+	 * it can be used to, for example, stop an animation on the widget.
 	 */
 	gulong addOnUnmap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3387,10 +3561,10 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	}
 
 	/**
-	 * The ::unrealize signal is emitted when the #GdkSurface associated with
-	 * @widget is destroyed, which means that gtk_widget_unrealize() has been
-	 * called or the widget has been unmapped (that is, it is going to be
-	 * hidden).
+	 * Emitted when the `GdkSurface` associated with @widget is destroyed.
+	 *
+	 * This means that [method@Gtk.Widget.unrealize] has been called
+	 * or the widget has been unmapped (that is, it is going to be hidden).
 	 */
 	gulong addOnUnrealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

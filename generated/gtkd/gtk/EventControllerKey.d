@@ -36,8 +36,8 @@ private import std.algorithm;
 
 
 /**
- * #GtkEventControllerKey is an event controller meant for situations
- * where you need access to key events.
+ * `GtkEventControllerKey` is an event controller that provides access
+ * to key events.
  */
 public class EventControllerKey : EventController
 {
@@ -77,7 +77,7 @@ public class EventControllerKey : EventController
 	/**
 	 * Creates a new event controller that will handle key events.
 	 *
-	 * Returns: a new #GtkEventControllerKey
+	 * Returns: a new `GtkEventControllerKey`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -97,14 +97,12 @@ public class EventControllerKey : EventController
 	 * Forwards the current event of this @controller to a @widget.
 	 *
 	 * This function can only be used in handlers for the
-	 * #GtkEventControllerKey::key-pressed,
-	 * #GtkEventControllerKey::key-released
-	 * or
-	 * #GtkEventControllerKey::modifiers
-	 * signals.
+	 * [signal@Gtk.EventControllerKey::key-pressed],
+	 * [signal@Gtk.EventControllerKey::key-released]
+	 * or [signal@Gtk.EventControllerKey::modifiers] signals.
 	 *
 	 * Params:
-	 *     widget = a #GtkWidget
+	 *     widget = a `GtkWidget`
 	 *
 	 * Returns: whether the @widget handled the event
 	 */
@@ -115,7 +113,8 @@ public class EventControllerKey : EventController
 
 	/**
 	 * Gets the key group of the current event of this @controller.
-	 * See gdk_key_event_get_group().
+	 *
+	 * See [method@Gdk.KeyEvent.get_layout].
 	 *
 	 * Returns: the key group
 	 */
@@ -127,7 +126,7 @@ public class EventControllerKey : EventController
 	/**
 	 * Gets the input method context of the key @controller.
 	 *
-	 * Returns: the #GtkIMContext
+	 * Returns: the `GtkIMContext`
 	 */
 	public IMContext getImContext()
 	{
@@ -145,7 +144,7 @@ public class EventControllerKey : EventController
 	 * Sets the input method context of the key @controller.
 	 *
 	 * Params:
-	 *     imContext = a #GtkIMContext
+	 *     imContext = a `GtkIMContext`
 	 */
 	public void setImContext(IMContext imContext)
 	{
@@ -153,10 +152,11 @@ public class EventControllerKey : EventController
 	}
 
 	/**
-	 * This signal is emitted whenever the input method context filters away a
-	 * keypress and prevents the @controller receiving it. See
-	 * gtk_event_controller_key_set_im_context() and
-	 * gtk_im_context_filter_keypress().
+	 * Emitted whenever the input method context filters away
+	 * a keypress and prevents the @controller receiving it.
+	 *
+	 * See [method@Gtk.EventControllerKey.set_im_context] and
+	 * [method@Gtk.IMContext.filter_keypress].
 	 */
 	gulong addOnImUpdate(void delegate(EventControllerKey) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -164,7 +164,7 @@ public class EventControllerKey : EventController
 	}
 
 	/**
-	 * This signal is emitted whenever a key is pressed.
+	 * Emitted whenever a key is pressed.
 	 *
 	 * Params:
 	 *     keyval = the pressed key.
@@ -179,7 +179,7 @@ public class EventControllerKey : EventController
 	}
 
 	/**
-	 * This signal is emitted whenever a key is released.
+	 * Emitted whenever a key is released.
 	 *
 	 * Params:
 	 *     keyval = the released key.
@@ -192,8 +192,7 @@ public class EventControllerKey : EventController
 	}
 
 	/**
-	 * This signal is emitted whenever the state of modifier keys and pointer
-	 * buttons change.
+	 * Emitted whenever the state of modifier keys and pointer buttons change.
 	 *
 	 * Params:
 	 *     keyval = the released key.

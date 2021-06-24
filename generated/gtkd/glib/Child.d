@@ -140,7 +140,7 @@ public struct Child
 	 * * the application must not wait for @pid to exit by any other
 	 * mechanism, including `waitpid(pid, ...)` or a second child-watch
 	 * source for the same @pid
-	 * * the application must not ignore SIGCHILD
+	 * * the application must not ignore `SIGCHLD`
 	 *
 	 * If any of those conditions are not met, this and related APIs will
 	 * not work correctly. This can often be diagnosed via a GLib warning

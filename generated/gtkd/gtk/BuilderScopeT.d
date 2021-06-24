@@ -29,31 +29,20 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkBuilderScope is an interface to provide support to #GtkBuilder, primarily
- * for looking up programming-language-specific values for strings that are
- * given in a #GtkBuilder UI file.
+ * `GtkBuilderScope` is an interface to provide language binding support
+ * to `GtkBuilder`.
  * 
- * The primary intended audience is bindings that want to provide deeper integration
- * of #GtkBuilder into the language.
+ * The goal of `GtkBuilderScope` is to look up programming-language-specific
+ * values for strings that are given in a `GtkBuilder` UI file.
  * 
- * A #GtkBuilderScope instance may be used with multiple #GtkBuilder objects, even
- * at once.
+ * The primary intended audience is bindings that want to provide deeper
+ * integration of `GtkBuilder` into the language.
  * 
- * By default, GTK will use its own implementation of #GtkBuilderScope for the C
- * language which can be created via gtk_builder_cscope_new().
+ * A `GtkBuilderScope` instance may be used with multiple `GtkBuilder` objects,
+ * even at once.
  * 
- * #GtkBuilderCScope instances use symbols explicitly added to @builder
- * with prior calls to gtk_builder_cscope_add_callback_symbol(). If developers want
- * to do that, they are encouraged to create their own scopes for that purpose.
- * 
- * In the case that symbols are not explicitly added; GTK will uses #GModule’s
- * introspective features (by opening the module %NULL) to look at the application’s
- * symbol table. From here it tries to match the signal function names given in the
- * interface description with symbols in the application.
- * 
- * Note that unless gtk_builder_cscope_add_callback_symbol() is called for
- * all signal callbacks which are referenced by the loaded XML, this
- * functionality will require that #GModule be supported on the platform.
+ * By default, GTK will use its own implementation of `GtkBuilderScope`
+ * for the C language which can be created via [ctor@Gtk.BuilderCScope.new].
  */
 public template BuilderScopeT(TStruct)
 {

@@ -27,7 +27,6 @@ module glib.RandG;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -65,7 +64,7 @@ public class RandG
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_rand_free(gRand);
 	}
 

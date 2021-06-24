@@ -28,7 +28,7 @@ private import atk.c.functions;
 public  import atk.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
-private import gtkd.Loader;
+private import glib.c.functions;
 
 
 /**
@@ -65,7 +65,7 @@ public final class TextRange
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_ATK) && ownedRef )
+		if ( ownedRef )
 			sliceFree(atkTextRange);
 	}
 

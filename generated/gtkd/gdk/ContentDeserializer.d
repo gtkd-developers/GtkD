@@ -32,13 +32,23 @@ private import gio.Cancellable;
 private import gio.InputStream;
 private import glib.ErrorG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 
 
 /**
- * A GdkContentDeserializer is used to deserialize content received via
+ * A `GdkContentDeserializer` is used to deserialize content received via
  * inter-application data transfers.
+ * 
+ * The `GdkContentDeserializer` transforms serialized content that is
+ * identified by a mime type into an object identified by a GType.
+ * 
+ * GTK provides serializers and deserializers for common data types
+ * such as text, colors, images or file lists. To register your own
+ * deserialization functions, use [func@content_register_deserializer].
+ * 
+ * Also see [class@Gdk.ContentSerializer].
  */
 public class ContentDeserializer : ObjectG, AsyncResultIF
 {
@@ -79,7 +89,9 @@ public class ContentDeserializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the cancellable that was passed to gdk_content_deserialize_async().
+	 * Gets the cancellable for the current operation.
+	 *
+	 * This is the `GCancellable` that was passed to [func@content_deserialize_async].
 	 *
 	 * Returns: the cancellable for the current operation
 	 */
@@ -106,7 +118,9 @@ public class ContentDeserializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the input stream that was passed to gdk_content_deserialize_async().
+	 * Gets the input stream for the current operation.
+	 *
+	 * This is the stream that was passed to [func@content_deserialize_async].
 	 *
 	 * Returns: the input stream for the current operation
 	 */
@@ -133,9 +147,11 @@ public class ContentDeserializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the io priority that was passed to gdk_content_deserialize_async().
+	 * Gets the I/O priority for the current operation.
 	 *
-	 * Returns: the io priority for the current operation
+	 * This is the priority that was passed to [funccontent_deserialize_async].
+	 *
+	 * Returns: the I/O priority for the current operation
 	 */
 	public int getPriority()
 	{
@@ -143,7 +159,9 @@ public class ContentDeserializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the data that was associated with @deserializer via gdk_content_deserializer_set_task_data().
+	 * Gets the data that was associated with the current operation.
+	 *
+	 * See [method@Gdk.ContentDeserializer.set_task_data].
 	 *
 	 * Returns: the task data for @deserializer
 	 */
@@ -163,9 +181,9 @@ public class ContentDeserializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the #GValue to store the deserialized object in.
+	 * Gets the `GValue` to store the deserialized object in.
 	 *
-	 * Returns: the #GValue for the current operation
+	 * Returns: the `GValue` for the current operation
 	 */
 	public Value getValue()
 	{
@@ -181,10 +199,11 @@ public class ContentDeserializer : ObjectG, AsyncResultIF
 
 	/**
 	 * Indicate that the deserialization has ended with an error.
+	 *
 	 * This function consumes @error.
 	 *
 	 * Params:
-	 *     error = a #GError
+	 *     error = a `GError`
 	 */
 	public void returnError(ErrorG error)
 	{

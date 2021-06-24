@@ -74,7 +74,8 @@ public class TextNode : RenderNode
 	}
 
 	/**
-	 * Creates a render node that renders the given glyphs,
+	 * Creates a render node that renders the given glyphs.
+	 *
 	 * Note that @color may not be used if the font contains
 	 * color glyphs.
 	 *
@@ -84,7 +85,7 @@ public class TextNode : RenderNode
 	 *     color = the foreground color to render with
 	 *     offset = offset of the baseline
 	 *
-	 * Returns: a new #GskRenderNode
+	 * Returns: a new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

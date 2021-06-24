@@ -33,11 +33,11 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkScrollable is an interface that is implemented by widgets with native
- * scrolling ability.
+ * `GtkScrollable` is an interface for widgets with native scrolling ability.
  * 
  * To implement this interface you should override the
- * #GtkScrollable:hadjustment and #GtkScrollable:vadjustment properties.
+ * [property@Gtk.Scrollable:hadjustment] and
+ * [property@Gtk.Scrollable:vadjustment] properties.
  * 
  * ## Creating a scrollable widget
  * 
@@ -45,21 +45,23 @@ public  import gtk.c.types;
  * 
  * - When a parent widget sets the scrollable child widget’s adjustments,
  * the widget should populate the adjustments’
- * #GtkAdjustment:lower, #GtkAdjustment:upper,
- * #GtkAdjustment:step-increment, #GtkAdjustment:page-increment and
- * #GtkAdjustment:page-size properties and connect to the
- * #GtkAdjustment::value-changed signal.
+ * [property@Gtk.Adjustment:lower],
+ * [property@Gtk.Adjustment:upper],
+ * [property@Gtk.Adjustment:step-increment],
+ * [property@Gtk.Adjustment:page-increment] and
+ * [property@Gtk.Adjustment:page-size] properties and connect to the
+ * [signal@Gtk.Adjustment::value-changed] signal.
  * 
  * - Because its preferred size is the size for a fully expanded widget,
  * the scrollable widget must be able to cope with underallocations.
  * This means that it must accept any value passed to its
- * #GtkWidgetClass.size_allocate() function.
+ * GtkWidgetClass.size_allocate() function.
  * 
  * - When the parent allocates space to the scrollable child widget,
  * the widget should update the adjustments’ properties with new values.
  * 
- * - When any of the adjustments emits the #GtkAdjustment::value-changed signal,
- * the scrollable widget should scroll its contents.
+ * - When any of the adjustments emits the [signal@Gtk.Adjustment::value-changed]
+ * signal, the scrollable widget should scroll its contents.
  */
 public template ScrollableT(TStruct)
 {
@@ -74,10 +76,11 @@ public template ScrollableT(TStruct)
 
 	/**
 	 * Returns the size of a non-scrolling border around the
-	 * outside of the scrollable. An example for this would
-	 * be treeview headers. GTK can use this information to
-	 * display overlaid graphics, like the overshoot indication,
-	 * at the right position.
+	 * outside of the scrollable.
+	 *
+	 * An example for this would be treeview headers. GTK can use
+	 * this information to display overlaid graphics, like the
+	 * overshoot indication, at the right position.
 	 *
 	 * Params:
 	 *     border = return location for the results
@@ -96,9 +99,9 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Retrieves the #GtkAdjustment used for horizontal scrolling.
+	 * Retrieves the `GtkAdjustment` used for horizontal scrolling.
 	 *
-	 * Returns: horizontal #GtkAdjustment.
+	 * Returns: horizontal `GtkAdjustment`.
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -113,9 +116,9 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Gets the horizontal #GtkScrollablePolicy.
+	 * Gets the horizontal `GtkScrollablePolicy`.
 	 *
-	 * Returns: The horizontal #GtkScrollablePolicy.
+	 * Returns: The horizontal `GtkScrollablePolicy`.
 	 */
 	public GtkScrollablePolicy getHscrollPolicy()
 	{
@@ -123,9 +126,9 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Retrieves the #GtkAdjustment used for vertical scrolling.
+	 * Retrieves the `GtkAdjustment` used for vertical scrolling.
 	 *
-	 * Returns: vertical #GtkAdjustment.
+	 * Returns: vertical `GtkAdjustment`.
 	 */
 	public Adjustment getVadjustment()
 	{
@@ -140,9 +143,9 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Gets the vertical #GtkScrollablePolicy.
+	 * Gets the vertical `GtkScrollablePolicy`.
 	 *
-	 * Returns: The vertical #GtkScrollablePolicy.
+	 * Returns: The vertical `GtkScrollablePolicy`.
 	 */
 	public GtkScrollablePolicy getVscrollPolicy()
 	{
@@ -150,10 +153,10 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Sets the horizontal adjustment of the #GtkScrollable.
+	 * Sets the horizontal adjustment of the `GtkScrollable`.
 	 *
 	 * Params:
-	 *     hadjustment = a #GtkAdjustment
+	 *     hadjustment = a `GtkAdjustment`
 	 */
 	public void setHadjustment(Adjustment hadjustment)
 	{
@@ -161,12 +164,13 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Sets the #GtkScrollablePolicy to determine whether
-	 * horizontal scrolling should start below the minimum width or
-	 * below the natural width.
+	 * Sets the `GtkScrollablePolicy`.
+	 *
+	 * The policy determines whether horizontal scrolling should start
+	 * below the minimum width or below the natural width.
 	 *
 	 * Params:
-	 *     policy = the horizontal #GtkScrollablePolicy
+	 *     policy = the horizontal `GtkScrollablePolicy`
 	 */
 	public void setHscrollPolicy(GtkScrollablePolicy policy)
 	{
@@ -174,10 +178,10 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Sets the vertical adjustment of the #GtkScrollable.
+	 * Sets the vertical adjustment of the `GtkScrollable`.
 	 *
 	 * Params:
-	 *     vadjustment = a #GtkAdjustment
+	 *     vadjustment = a `GtkAdjustment`
 	 */
 	public void setVadjustment(Adjustment vadjustment)
 	{
@@ -185,12 +189,13 @@ public template ScrollableT(TStruct)
 	}
 
 	/**
-	 * Sets the #GtkScrollablePolicy to determine whether
-	 * vertical scrolling should start below the minimum height or
-	 * below the natural height.
+	 * Sets the `GtkScrollablePolicy`.
+	 *
+	 * The policy determines whether vertical scrolling should start
+	 * below the minimum height or below the natural height.
 	 *
 	 * Params:
-	 *     policy = the vertical #GtkScrollablePolicy
+	 *     policy = the vertical `GtkScrollablePolicy`
 	 */
 	public void setVscrollPolicy(GtkScrollablePolicy policy)
 	{

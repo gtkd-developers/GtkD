@@ -26,13 +26,13 @@ module gstreamer.StaticPadTemplate;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.PadTemplate;
 private import gstreamer.StaticCaps;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +69,7 @@ public final class StaticPadTemplate
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstStaticPadTemplate);
 	}
 

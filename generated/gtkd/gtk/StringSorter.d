@@ -33,12 +33,14 @@ public  import gtk.c.types;
 
 
 /**
- * GtkStringSorter is a #GtkSorter that compares strings. It does the
- * comparison in a linguistically correct way using the current locale by
- * normalizing Unicode strings and possibly case-folding them before
- * performing the comparison.
+ * `GtkStringSorter` is a `GtkSorter` that compares strings.
  * 
- * To obtain the strings to compare, this sorter evaluates a #GtkExpression.
+ * It does the comparison in a linguistically correct way using the
+ * current locale by normalizing Unicode strings and possibly case-folding
+ * them before performing the comparison.
+ * 
+ * To obtain the strings to compare, this sorter evaluates a
+ * [class@Gtk.Expression].
  */
 public class StringSorter : Sorter
 {
@@ -85,7 +87,7 @@ public class StringSorter : Sorter
 	 * Params:
 	 *     expression = The expression to evaluate
 	 *
-	 * Returns: a new #GtkStringSorter
+	 * Returns: a new `GtkStringSorter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -104,7 +106,7 @@ public class StringSorter : Sorter
 	/**
 	 * Gets the expression that is evaluated to obtain strings from items.
 	 *
-	 * Returns: a #GtkExpression, or %NULL
+	 * Returns: a `GtkExpression`, or %NULL
 	 */
 	public Expression getExpression()
 	{
@@ -131,10 +133,10 @@ public class StringSorter : Sorter
 	/**
 	 * Sets the expression that is evaluated to obtain strings from items.
 	 *
-	 * The expression must have the type G_TYPE_STRING.
+	 * The expression must have the type %G_TYPE_STRING.
 	 *
 	 * Params:
-	 *     expression = a #GtkExpression, or %NULL
+	 *     expression = a `GtkExpression`, or %NULL
 	 */
 	public void setExpression(Expression expression)
 	{

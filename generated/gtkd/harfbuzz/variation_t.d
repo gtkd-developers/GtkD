@@ -26,15 +26,14 @@ module harfbuzz.variation_t;
 
 private import glib.MemorySlice;
 private import glib.Str;
-private import gtkd.Loader;
 private import harfbuzz.c.functions;
 public  import harfbuzz.c.types;
 
 
 /**
  * Data type for holding variation data. Registered OpenType
- * variation-axis tags are listed at
- * https://docs.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg
+ * variation-axis tags are listed in
+ * [OpenType Axis Tag Registry](https://docs.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg).
  *
  * Since: 1.4.2
  */
@@ -69,7 +68,7 @@ public final class variation_t
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_HARFBUZZ) && ownedRef )
+		if ( ownedRef )
 			sliceFree(hb_variation);
 	}
 
@@ -102,9 +101,18 @@ public final class variation_t
 		hb_variation.value = value;
 	}
 
-	/** */
-	public void String(string buf, uint size)
+	/**
+	 * Converts an #hb_variation_t into a %NULL-terminated string in the format
+	 * understood by hb_variation_from_string(). The client in responsible for
+	 * allocating big enough size for @buf, 128 bytes is more than enough.
+	 *
+	 * Params:
+	 *     buf = output string
+	 *
+	 * Since: 1.4.2
+	 */
+	public void String(out char[] buf)
 	{
-		hb_variation_to_string(hb_variation, Str.toStringz(buf), size);
+		hb_variation_to_string(hb_variation, buf.ptr, cast(uint)buf.length);
 	}
 }

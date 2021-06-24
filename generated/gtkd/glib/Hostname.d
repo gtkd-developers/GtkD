@@ -103,8 +103,8 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a valid UTF-8 or ASCII hostname
 	 *
-	 * Returns: an ASCII hostname, which must be freed, or %NULL if
-	 *     @hostname is in some way invalid.
+	 * Returns: an ASCII hostname, which must be freed,
+	 *     or %NULL if @hostname is in some way invalid.
 	 *
 	 * Since: 2.22
 	 */
@@ -128,8 +128,8 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a valid UTF-8 or ASCII hostname
 	 *
-	 * Returns: a UTF-8 hostname, which must be freed, or %NULL if
-	 *     @hostname is in some way invalid.
+	 * Returns: a UTF-8 hostname, which must be freed,
+	 *     or %NULL if @hostname is in some way invalid.
 	 *
 	 * Since: 2.22
 	 */

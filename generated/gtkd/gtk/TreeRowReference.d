@@ -31,7 +31,6 @@ private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +69,7 @@ public class TreeRowReference
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_tree_row_reference_free(gtkTreeRowReference);
 	}
 

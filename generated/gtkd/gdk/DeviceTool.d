@@ -30,7 +30,7 @@ private import gobject.ObjectG;
 
 
 /**
- * A physical tool associated to a #GdkDevice.
+ * A physical tool associated to a `GdkDevice`.
  */
 public class DeviceTool : ObjectG
 {
@@ -78,15 +78,17 @@ public class DeviceTool : ObjectG
 	}
 
 	/**
-	 * Gets the hardware ID of this tool, or 0 if it's not known. When
-	 * non-zero, the identificator is unique for the given tool model,
+	 * Gets the hardware ID of this tool, or 0 if it's not known.
+	 *
+	 * When non-zero, the identificator is unique for the given tool model,
 	 * meaning that two identical tools will share the same @hardware_id,
-	 * but will have different serial numbers (see gdk_device_tool_get_serial()).
+	 * but will have different serial numbers (see
+	 * [method@Gdk.DeviceTool.get_serial]).
 	 *
 	 * This is a more concrete (and device specific) method to identify
-	 * a #GdkDeviceTool than gdk_device_tool_get_tool_type(), as a tablet
-	 * may support multiple devices with the same #GdkDeviceToolType,
-	 * but having different hardware identificators.
+	 * a `GdkDeviceTool` than [method@Gdk.DeviceTool.get_tool_type],
+	 * as a tablet may support multiple devices with the same
+	 * `GdkDeviceToolType`, but different hardware identificators.
 	 *
 	 * Returns: The hardware identificator of this tool.
 	 */
@@ -96,8 +98,10 @@ public class DeviceTool : ObjectG
 	}
 
 	/**
-	 * Gets the serial of this tool, this value can be used to identify a
-	 * physical tool (eg. a tablet pen) across program executions.
+	 * Gets the serial number of this tool.
+	 *
+	 * This value can be used to identify a physical tool
+	 * (eg. a tablet pen) across program executions.
 	 *
 	 * Returns: The serial ID for this tool
 	 */
@@ -107,10 +111,11 @@ public class DeviceTool : ObjectG
 	}
 
 	/**
-	 * Gets the #GdkDeviceToolType of the tool.
+	 * Gets the `GdkDeviceToolType` of the tool.
 	 *
-	 * Returns: The physical type for this tool. This can be used to figure out what
-	 *     sort of pen is being used, such as an airbrush or a pencil.
+	 * Returns: The physical type for this tool. This can be used to
+	 *     figure out what sort of pen is being used, such as an airbrush
+	 *     or a pencil.
 	 */
 	public GdkDeviceToolType getToolType()
 	{

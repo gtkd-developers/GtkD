@@ -49,19 +49,20 @@ private import std.algorithm;
 
 
 /**
- * Widget that displays any object that implements the #GtkTreeModel interface.
+ * A widget for displaying both trees and lists
  * 
- * Please refer to the
- * [tree widget conceptual overview][TreeWidget]
- * for an overview of all the objects and data types related
- * to the tree widget and how they work together.
+ * Widget that displays any object that implements the [iface@Gtk.TreeModel] interface.
  * 
- * Several different coordinate systems are exposed in the GtkTreeView API.
+ * Please refer to the [tree widget conceptual overview](section-tree-widget.html)
+ * for an overview of all the objects and data types related to the tree
+ * widget and how they work together.
+ * 
+ * ## Coordinate systems in GtkTreeView API
+ * 
+ * Several different coordinate systems are exposed in the `GtkTreeView` API.
  * These are:
  * 
  * ![](tree-view-coordinates.png)
- * 
- * Coordinate systems in GtkTreeView API:
  * 
  * - Widget coordinates: Coordinates relative to the widget (usually `widget->window`).
  * 
@@ -73,18 +74,19 @@ private import std.algorithm;
  * Several functions are available for converting between the different
  * coordinate systems.  The most common translations are between widget and bin
  * window coordinates and between bin window and tree coordinates. For the
- * former you can use gtk_tree_view_convert_widget_to_bin_window_coords()
- * (and vice versa), for the latter gtk_tree_view_convert_bin_window_to_tree_coords()
+ * former you can use [method@Gtk.TreeView.convert_widget_to_bin_window_coords]
+ * (and vice versa), for the latter [method@Gtk.TreeView.convert_bin_window_to_tree_coords]
  * (and vice versa).
  * 
- * # GtkTreeView as GtkBuildable
+ * ## `GtkTreeView` as `GtkBuildable`
  * 
- * The GtkTreeView implementation of the GtkBuildable interface accepts
- * #GtkTreeViewColumn objects as <child> elements and exposes the internal
- * #GtkTreeSelection in UI definitions.
+ * The `GtkTreeView` implementation of the `GtkBuildable` interface accepts
+ * [class@Gtk.TreeViewColumn] objects as `<child>` elements and exposes the
+ * internal [class@Gtk.TreeSelection] in UI definitions.
  * 
- * An example of a UI definition fragment with GtkTreeView:
- * |[
+ * An example of a UI definition fragment with `GtkTreeView`:
+ * 
+ * ```xml
  * <object class="GtkTreeView" id="treeview">
  * <property name="model">liststore1</property>
  * <child>
@@ -104,28 +106,35 @@ private import std.algorithm;
  * </object>
  * </child>
  * </object>
- * ]|
+ * ```
  * 
- * # CSS nodes
+ * ## CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * treeview.view
  * ├── header
- * │   ├── <column header>
+ * │   ├── button
+ * │   │   ╰── [sort-indicator]
  * ┊   ┊
- * │   ╰── <column header>
+ * │   ╰── button
+ * │       ╰── [sort-indicator]
  * │
  * ├── [rubberband]
  * ╰── [dndtarget]
- * ]|
+ * ```
  * 
- * GtkTreeView has a main CSS node with name treeview and style class .view.
- * It has a subnode with name header, which is the parent for all the column
+ * `GtkTreeView` has a main CSS node with name `treeview` and style class `.view`.
+ * It has a subnode with name `header`, which is the parent for all the column
  * header widgets' CSS nodes.
  * 
- * For rubberband selection, a subnode with name rubberband is used.
+ * Each column header consists of a `button`, which among other content, has a
+ * child with name `sort-indicator`, which carries the `.ascending` or `.descending`
+ * style classes when the column header should show a sort indicator. The CSS
+ * is expected to provide a suitable image using the `-gtk-icon-source` property.
  * 
- * For the drop target location during DND, a subnode with name dndtarget is used.
+ * For rubberband selection, a subnode with name `rubberband` is used.
+ * 
+ * For the drop target location during DND, a subnode with name `dndtarget` is used.
  */
 public class TreeView : Widget, ScrollableIF
 {

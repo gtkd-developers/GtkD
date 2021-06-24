@@ -26,9 +26,9 @@ module gstreamer.Meta;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -83,7 +83,7 @@ public final class Meta
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMeta);
 	}
 

@@ -48,11 +48,13 @@ private import std.algorithm;
 
 
 /**
- * #GtkIconView provides an alternative view on a #GtkTreeModel.
+ * `GtkIconView` is a widget which displays data in a grid of icons.
+ * 
+ * `GtkIconView` provides an alternative view on a `GtkTreeModel`.
  * It displays the model as a grid of icons with labels. Like
- * #GtkTreeView, it allows to select one or multiple items
- * (depending on the selection mode, see gtk_icon_view_set_selection_mode()).
- * In addition to selection with the arrow keys, #GtkIconView supports
+ * [class@Gtk.TreeView], it allows to select one or multiple items
+ * (depending on the selection mode, see [method@Gtk.IconView.set_selection_mode]).
+ * In addition to selection with the arrow keys, `GtkIconView` supports
  * rubberband selection, which is controlled by dragging the pointer.
  * 
  * Note that if the tree model is backed by an actual tree store (as
@@ -62,12 +64,12 @@ private import std.algorithm;
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * iconview.view
  * ╰── [rubberband]
- * ]|
+ * ```
  * 
- * GtkIconView has a single CSS node with name iconview and style class .view.
+ * `GtkIconView` has a single CSS node with name iconview and style class .view.
  * For rubberband selection, a subnode with name rubberband is used.
  */
 public class IconView : Widget, CellLayoutIF, ScrollableIF

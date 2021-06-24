@@ -31,8 +31,15 @@ private import std.algorithm;
 
 
 /**
- * GtkStyleProvider is an interface used to provide style information to a #GtkStyleContext.
- * See gtk_style_context_add_provider() and gtk_style_context_add_provider_for_display().
+ * `GtkStyleProvider` is an interface for style information used by
+ * `GtkStyleContext`.
+ * 
+ * See [method@Gtk.StyleContext.add_provider] and
+ * [func@Gtk.StyleContext.add_provider_for_display] for
+ * adding `GtkStyleProviders`.
+ * 
+ * GTK uses the `GtkStyleProvider` implementation for CSS in
+ * [iface@Gtk.CssProvider].
  */
 public interface StyleProviderIF{
 	/** Get the main Gtk struct */

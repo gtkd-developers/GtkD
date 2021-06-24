@@ -34,8 +34,15 @@ private import std.algorithm;
 
 
 /**
- * #GtkEventControllerFocus is an event controller meant for situations
- * where you need to know where the focus is.
+ * `GtkEventControllerFocus` is an event controller to keep track of
+ * keyboard focus.
+ * 
+ * The event controller offers [signal@Gtk.EventControllerFocus::enter]
+ * and [signal@Gtk.EventControllerFocus::leave] signals, as well as
+ * [property@Gtk.EventControllerFocus:is-focus] and
+ * [property@Gtk.EventControllerFocus:contains-focus] properties
+ * which are updated to reflect focus changes inside the widget hierarchy
+ * that is rooted at the controllers widget.
  */
 public class EventControllerFocus : EventController
 {
@@ -75,7 +82,7 @@ public class EventControllerFocus : EventController
 	/**
 	 * Creates a new event controller that will handle focus events.
 	 *
-	 * Returns: a new #GtkEventControllerFocus
+	 * Returns: a new `GtkEventControllerFocus`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -92,7 +99,7 @@ public class EventControllerFocus : EventController
 	}
 
 	/**
-	 * Returns the value of the GtkEventControllerFocus:contains-focus property.
+	 * Returns %TRUE if focus is within @self or one of its children.
 	 *
 	 * Returns: %TRUE if focus is within @self or one of its children
 	 */
@@ -102,9 +109,9 @@ public class EventControllerFocus : EventController
 	}
 
 	/**
-	 * Returns the value of the GtkEventControllerFocus:is-focus property.
+	 * Returns %TRUE if focus is within @self, but not one of its children.
 	 *
-	 * Returns: %TRUE if focus is within @self but not one of its children
+	 * Returns: %TRUE if focus is within @self, but not one of its children
 	 */
 	public bool isFocus()
 	{
@@ -112,14 +119,15 @@ public class EventControllerFocus : EventController
 	}
 
 	/**
-	 * This signal is emitted whenever the focus enters into the
-	 * widget or one of its descendents.
+	 * Emitted whenever the focus enters into the widget or one
+	 * of its descendents.
 	 *
 	 * Note that this means you may not get an ::enter signal
 	 * even though the widget becomes the focus location, in
 	 * certain cases (such as when the focus moves from a descendent
 	 * of the widget to the widget itself). If you are interested
-	 * in these cases, you can monitor the #GtkEventControllerFocus:is-focus
+	 * in these cases, you can monitor the
+	 * [property@Gtk.EventControllerFocus:is-focus]
 	 * property for changes.
 	 */
 	gulong addOnEnter(void delegate(EventControllerFocus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -128,16 +136,15 @@ public class EventControllerFocus : EventController
 	}
 
 	/**
-	 * This signal is emitted whenever the focus leaves the
-	 * widget hierarchy that is rooted at the widget that the
-	 * controller is attached to.
+	 * Emitted whenever the focus leaves the widget hierarchy
+	 * that is rooted at the widget that the controller is attached to.
 	 *
 	 * Note that this means you may not get a ::leave signal
 	 * even though the focus moves away from the widget, in
 	 * certain cases (such as when the focus moves from the widget
 	 * to a descendent). If you are interested in these cases, you
-	 * can monitor the #GtkEventControllerFocus:is-focus property
-	 * for changes.
+	 * can monitor the [property@Gtk.EventControllerFocus:is-focus]
+	 * property for changes.
 	 */
 	gulong addOnLeave(void delegate(EventControllerFocus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

@@ -28,6 +28,7 @@ private import gdk.Display;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.IconPaintable;
@@ -37,25 +38,24 @@ private import std.algorithm;
 
 
 /**
- * #GtkIconTheme provides a facility for looking up icons by name
- * and size. The main reason for using a name rather than simply
- * providing a filename is to allow different icons to be used
- * depending on what “icon theme” is selected
- * by the user. The operation of icon themes on Linux and Unix
+ * `GtkIconTheme` provides a facility for loading themed icons.
+ * 
+ * The main reason for using a name rather than simply providing a filename
+ * is to allow different icons to be used depending on what “icon theme” is
+ * selected by the user. The operation of icon themes on Linux and Unix
  * follows the [Icon Theme Specification](http://www.freedesktop.org/Standards/icon-theme-spec)
  * There is a fallback icon theme, named `hicolor`, where applications
  * should install their icons, but additional icon themes can be installed
  * as operating system vendors and users choose.
  * 
- * In many cases, named themes are used indirectly, via #GtkImage
- * rather than directly, but looking up icons
- * directly is also simple. The #GtkIconTheme object acts
- * as a database of all the icons in the current theme. You
- * can create new #GtkIconTheme objects, but it’s much more
- * efficient to use the standard icon theme of the #GtkWidget
- * so that the icon information is shared with other people
- * looking up icons.
- * |[<!-- language="C" -->
+ * In many cases, named themes are used indirectly, via [class@Gtk.Image]
+ * rather than directly, but looking up icons directly is also simple. The
+ * `GtkIconTheme` object acts as a database of all the icons in the current
+ * theme. You can create new `GtkIconTheme` objects, but it’s much more
+ * efficient to use the standard icon theme of the `GtkWidget` so that the
+ * icon information is shared with other people looking up icons.
+ * 
+ * ```c
  * GtkIconTheme *icon_theme;
  * GtkIconPaintable *icon;
  * GdkPaintable *paintable;
@@ -69,7 +69,7 @@ private import std.algorithm;
  * paintable = GDK_PAINTABLE (icon);
  * // Use the paintable
  * g_object_unref (icon);
- * ]|
+ * ```
  */
 public class IconTheme : ObjectG
 {
@@ -107,12 +107,14 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Creates a new icon theme object. Icon theme objects are used
-	 * to lookup up an icon by name in a particular icon theme.
-	 * Usually, you’ll want to use gtk_icon_theme_get_for_display()
-	 * rather than creating a new icon theme object for scratch.
+	 * Creates a new icon theme object.
 	 *
-	 * Returns: the newly created #GtkIconTheme object.
+	 * Icon theme objects are used to lookup up an icon by name
+	 * in a particular icon theme. Usually, you’ll want to use
+	 * [func@Gtk.IconTheme.get_for_display] rather than creating
+	 * a new icon theme object for scratch.
+	 *
+	 * Returns: the newly created `GtkIconTheme` object.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -129,22 +131,21 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Gets the icon theme object associated with @display; if this
-	 * function has not previously been called for the given
-	 * display, a new icon theme object will be created and
-	 * associated with the display. Icon theme objects are
-	 * fairly expensive to create, so using this function
-	 * is usually a better choice than calling than gtk_icon_theme_new()
-	 * and setting the display yourself; by using this function
-	 * a single icon theme object will be shared between users.
+	 * Gets the icon theme object associated with @display.
+	 *
+	 * If this function has not previously been called for the given
+	 * display, a new icon theme object will be created and associated
+	 * with the display. Icon theme objects are fairly expensive to create,
+	 * so using this function is usually a better choice than calling
+	 * [ctor@Gtk.IconTheme.new] and setting the display yourself; by using
+	 * this function a single icon theme object will be shared between users.
 	 *
 	 * Params:
-	 *     display = a #GdkDisplay
+	 *     display = a `GdkDisplay`
 	 *
-	 * Returns: A unique #GtkIconTheme associated with
-	 *     the given display. This icon theme is associated with
-	 *     the display and can be used as long as the display
-	 *     is open. Do not ref or unref it.
+	 * Returns: A unique `GtkIconTheme` associated with
+	 *     the given display. This icon theme is associated with the display
+	 *     and can be used as long as the display is open. Do not ref or unref it.
 	 */
 	public static IconTheme getForDisplay(Display display)
 	{
@@ -162,7 +163,7 @@ public class IconTheme : ObjectG
 	 * Adds a resource path that will be looked at when looking
 	 * for icons, similar to search paths.
 	 *
-	 * See gtk_icon_theme_set_resource_path().
+	 * See [method@Gtk.IconTheme.set_resource_path].
 	 *
 	 * This function should be used to make application-specific icons
 	 * available as part of the icon theme.
@@ -177,7 +178,8 @@ public class IconTheme : ObjectG
 
 	/**
 	 * Appends a directory to the search path.
-	 * See gtk_icon_theme_set_search_path().
+	 *
+	 * See [method@Gtk.IconTheme.set_search_path].
 	 *
 	 * Params:
 	 *     path = directory name to append to the icon path
@@ -188,7 +190,7 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Returns the display that the GtkIconTheme object was
+	 * Returns the display that the `GtkIconTheme` object was
 	 * created for.
 	 *
 	 * Returns: the display of @icon_theme
@@ -222,9 +224,10 @@ public class IconTheme : ObjectG
 
 	/**
 	 * Returns an array of integers describing the sizes at which
-	 * the icon is available without scaling. A size of -1 means
-	 * that the icon is available in a scalable format. The array
-	 * is zero-terminated.
+	 * the icon is available without scaling.
+	 *
+	 * A size of -1 means that the icon is available in a scalable
+	 * format. The array is zero-terminated.
 	 *
 	 * Params:
 	 *     iconName = the name of an icon
@@ -244,7 +247,7 @@ public class IconTheme : ObjectG
 	/**
 	 * Gets the current resource path.
 	 *
-	 * See gtk_icon_theme_set_resource_path().
+	 * See [method@Gtk.IconTheme.set_resource_path].
 	 *
 	 * Returns: A list of resource paths or %NULL.
 	 *     The returned value should be freed with g_strfreev().
@@ -258,7 +261,9 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Gets the current search path. See gtk_icon_theme_set_search_path().
+	 * Gets the current search path.
+	 *
+	 * See [method@Gtk.IconTheme.set_search_path].
 	 *
 	 * Returns: a list of icon theme path directories or %NULL.
 	 *     The returned value should be freed with g_strfreev().
@@ -286,6 +291,20 @@ public class IconTheme : ObjectG
 
 	/**
 	 * Checks whether an icon theme includes an icon
+	 * for a particular `GIcon`.
+	 *
+	 * Params:
+	 *     gicon = a `GIcon`
+	 *
+	 * Returns: %TRUE if @self includes an icon for @gicon
+	 */
+	public bool hasGicon(IconIF gicon)
+	{
+		return gtk_icon_theme_has_gicon(gtkIconTheme, (gicon is null) ? null : gicon.getIconStruct()) != 0;
+	}
+
+	/**
+	 * Checks whether an icon theme includes an icon
 	 * for a particular name.
 	 *
 	 * Params:
@@ -300,18 +319,19 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Looks up a icon for a desired size and window scale, returning a
-	 * #GtkIconPaintable. The icon can then be rendered by using it as a #GdkPaintable,
+	 * Looks up a icon for a desired size and window scale.
+	 *
+	 * The icon can then be rendered by using it as a `GdkPaintable`,
 	 * or you can get information such as the filename and size.
 	 *
 	 * Params:
-	 *     icon = the #GIcon to look up
+	 *     icon = the `GIcon` to look up
 	 *     size = desired icon size
 	 *     scale = the desired scale
 	 *     direction = text direction the icon will be displayed in
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Returns: a #GtkIconPaintable containing
+	 * Returns: a `GtkIconPaintable` containing
 	 *     information about the icon. Unref with g_object_unref()
 	 */
 	public IconPaintable lookupByGicon(IconIF icon, int size, int scale, GtkTextDirection direction, GtkIconLookupFlags flags)
@@ -327,20 +347,22 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Looks up a named icon for a desired size and window scale, returning a
-	 * #GtkIconPaintable. The icon can then be rendered by using it as a #GdkPaintable,
+	 * Looks up a named icon for a desired size and window scale,
+	 * returning a `GtkIconPaintable`.
+	 *
+	 * The icon can then be rendered by using it as a `GdkPaintable`,
 	 * or you can get information such as the filename and size.
 	 *
-	 * If the available @icon_name is not available and @fallbacks are provided,
-	 * they will be tried in order.
+	 * If the available @icon_name is not available and @fallbacks are
+	 * provided, they will be tried in order.
 	 *
 	 * If no matching icon is found, then a paintable that renders the
 	 * "missing icon" icon is returned. If you need to do something else
-	 * for missing icons you need to use gtk_icon_theme_has_icon().
+	 * for missing icons you need to use [method@Gtk.IconTheme.has_icon].
 	 *
 	 * Note that you probably want to listen for icon theme changes and
 	 * update the icon. This is usually done by overriding the
-	 * #GtkWidgetClass.css-changed() function.
+	 * GtkWidgetClass.css-changed() function.
 	 *
 	 * Params:
 	 *     iconName = the name of the icon to lookup
@@ -349,7 +371,7 @@ public class IconTheme : ObjectG
 	 *     direction = text direction the icon will be displayed in
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Returns: a #GtkIconPaintable object
+	 * Returns: a `GtkIconPaintable` object
 	 *     containing the icon.
 	 */
 	public IconPaintable lookupIcon(string iconName, string[] fallbacks, int size, int scale, GtkTextDirection direction, GtkIconLookupFlags flags)
@@ -387,9 +409,10 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Sets the search path for the icon theme object. When looking
-	 * for an icon theme, GTK will search for a subdirectory of
-	 * one or more of the directories in @path with the same name
+	 * Sets the search path for the icon theme object.
+	 *
+	 * When looking for an icon theme, GTK will search for a subdirectory
+	 * of one or more of the directories in @path with the same name
 	 * as the icon theme containing an index.theme file. (Themes from
 	 * multiple of the path elements are combined to allow themes to be
 	 * extended by adding icons in the user’s home directory.)
@@ -412,9 +435,11 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Sets the name of the icon theme that the #GtkIconTheme object uses
-	 * overriding system configuration. This function cannot be called
-	 * on the icon theme objects returned from gtk_icon_theme_get_for_display().
+	 * Sets the name of the icon theme that the `GtkIconTheme` object uses
+	 * overriding system configuration.
+	 *
+	 * This function cannot be called on the icon theme objects returned
+	 * from [type_func@Gtk.IconTheme.get_for_display].
 	 *
 	 * Params:
 	 *     themeName = name of icon theme to use instead of
@@ -426,9 +451,11 @@ public class IconTheme : ObjectG
 	}
 
 	/**
-	 * Emitted when the current icon theme is switched or GTK detects
-	 * that a change has occurred in the contents of the current
-	 * icon theme.
+	 * Emitted when the icon theme changes.
+	 *
+	 * This can happen becuase current icon theme is switched or
+	 * because GTK detects that a change has occurred in the
+	 * contents of the current icon theme.
 	 */
 	gulong addOnChanged(void delegate(IconTheme) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

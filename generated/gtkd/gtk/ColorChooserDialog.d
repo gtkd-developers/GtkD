@@ -37,8 +37,18 @@ public  import gtk.c.types;
 
 
 /**
- * The #GtkColorChooserDialog widget is a dialog for choosing
- * a color. It implements the #GtkColorChooser interface.
+ * A dialog for choosing a color.
+ * 
+ * ![An example GtkColorChooserDialog](colorchooser.png)
+ * 
+ * `GtkColorChooserDialog` implements the [iface@Gtk.ColorChooser] interface
+ * and does not provide much API of its own.
+ * 
+ * To create a `GtkColorChooserDialog`, use [ctor@Gtk.ColorChooserDialog.new].
+ * 
+ * To change the initially selected color, use
+ * [method@Gtk.ColorChooser.set_rgba]. To get the selected color use
+ * [method@Gtk.ColorChooser.get_rgba].
  */
 public class ColorChooserDialog : Dialog, ColorChooserIF
 {
@@ -79,13 +89,13 @@ public class ColorChooserDialog : Dialog, ColorChooserIF
 	}
 
 	/**
-	 * Creates a new #GtkColorChooserDialog.
+	 * Creates a new `GtkColorChooserDialog`.
 	 *
 	 * Params:
 	 *     title = Title of the dialog, or %NULL
 	 *     parent = Transient parent of the dialog, or %NULL
 	 *
-	 * Returns: a new #GtkColorChooserDialog
+	 * Returns: a new `GtkColorChooserDialog`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

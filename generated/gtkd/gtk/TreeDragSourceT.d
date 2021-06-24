@@ -31,7 +31,9 @@ public  import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * Interface for Drag-and-Drop destinations in `GtkTreeView`.
+ */
 public template TreeDragSourceT(TStruct)
 {
 	/** Get the main Gtk struct */

@@ -28,7 +28,6 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -66,7 +65,7 @@ public class VariantIter
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_variant_iter_free(gVariantIter);
 	}
 

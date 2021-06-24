@@ -34,7 +34,19 @@ public  import gtk.c.types;
 
 
 /**
- * This should not be accessed directly. Use the accessor functions below.
+ * `GtkMountOperation` is an implementation of `GMountOperation`.
+ * 
+ * The functions and objects described here make working with GTK and
+ * GIO more convenient.
+ * 
+ * `GtkMountOperation` is needed when mounting volumes:
+ * It is an implementation of `GMountOperation` that can be used with
+ * GIO functions for mounting volumes such as
+ * g_file_mount_enclosing_volume(), g_file_mount_mountable(),
+ * g_volume_mount(), g_mount_unmount_with_operation() and others.
+ * 
+ * When necessary, `GtkMountOperation` shows dialogs to let the user
+ * enter passwords, ask questions or show processes blocking unmount.
  */
 public class MountOperation : DGioMountOperation
 {
@@ -72,12 +84,12 @@ public class MountOperation : DGioMountOperation
 	}
 
 	/**
-	 * Creates a new #GtkMountOperation
+	 * Creates a new `GtkMountOperation`.
 	 *
 	 * Params:
 	 *     parent = transient parent of the window, or %NULL
 	 *
-	 * Returns: a new #GtkMountOperation
+	 * Returns: a new `GtkMountOperation`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -94,7 +106,7 @@ public class MountOperation : DGioMountOperation
 	}
 
 	/**
-	 * Gets the display on which windows of the #GtkMountOperation
+	 * Gets the display on which windows of the `GtkMountOperation`
 	 * will be shown.
 	 *
 	 * Returns: the display on which windows of @op are shown
@@ -112,7 +124,7 @@ public class MountOperation : DGioMountOperation
 	}
 
 	/**
-	 * Gets the transient parent used by the #GtkMountOperation
+	 * Gets the transient parent used by the `GtkMountOperation`.
 	 *
 	 * Returns: the transient parent for windows shown by @op
 	 */
@@ -129,7 +141,7 @@ public class MountOperation : DGioMountOperation
 	}
 
 	/**
-	 * Returns whether the #GtkMountOperation is currently displaying
+	 * Returns whether the `GtkMountOperation` is currently displaying
 	 * a window.
 	 *
 	 * Returns: %TRUE if @op is currently displaying a window
@@ -140,10 +152,10 @@ public class MountOperation : DGioMountOperation
 	}
 
 	/**
-	 * Sets the display to show windows of the #GtkMountOperation on.
+	 * Sets the display to show windows of the `GtkMountOperation` on.
 	 *
 	 * Params:
-	 *     display = a #GdkDisplay
+	 *     display = a `GdkDisplay`
 	 */
 	public void setDisplay(Display display)
 	{
@@ -152,7 +164,7 @@ public class MountOperation : DGioMountOperation
 
 	/**
 	 * Sets the transient parent for windows shown by the
-	 * #GtkMountOperation.
+	 * `GtkMountOperation`.
 	 *
 	 * Params:
 	 *     parent = transient parent of the window, or %NULL

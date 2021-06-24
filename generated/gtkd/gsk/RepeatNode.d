@@ -71,7 +71,7 @@ public class RepeatNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will repeat the drawing of @child across
+	 * Creates a `GskRenderNode` that will repeat the drawing of @child across
 	 * the given @bounds.
 	 *
 	 * Params:
@@ -80,7 +80,7 @@ public class RepeatNode : RenderNode
 	 *     childBounds = The area of the child to repeat or %NULL to
 	 *         use the child's bounds
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -99,7 +99,7 @@ public class RepeatNode : RenderNode
 	/**
 	 * Retrieves the child of @node.
 	 *
-	 * Returns: a #GskRenderNode
+	 * Returns: a `GskRenderNode`
 	 */
 	public RenderNode getChild()
 	{

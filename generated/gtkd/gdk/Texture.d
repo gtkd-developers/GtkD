@@ -38,7 +38,21 @@ private import gobject.ObjectG;
 
 
 /**
- * The `GdkTexture` structure contains only private data.
+ * `GdkTexture` is the basic element used to refer to pixel data.
+ * 
+ * It is primarily meant for pixel data that will not change over
+ * multiple frames, and will be used for a long time.
+ * 
+ * There are various ways to create `GdkTexture` objects from a
+ * `GdkPixbuf`, or a Cairo surface, or other pixel data.
+ * 
+ * The ownership of the pixel data is transferred to the `GdkTexture`
+ * instance; you can only make a copy of it, via
+ * [method@Gdk.Texture.download].
+ * 
+ * `GdkTexture` is an immutable object: That means you cannot change
+ * anything about it other than increasing the reference count via
+ * g_object_ref().
  */
 public class Texture : ObjectG, PaintableIF
 {
@@ -79,12 +93,12 @@ public class Texture : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Creates a new texture object representing the #GdkPixbuf.
+	 * Creates a new texture object representing the `GdkPixbuf`.
 	 *
 	 * Params:
-	 *     pixbuf = a #GdkPixbuf
+	 *     pixbuf = a `GdkPixbuf`
 	 *
-	 * Returns: a new #GdkTexture
+	 * Returns: a new `GdkTexture`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -102,16 +116,16 @@ public class Texture : ObjectG, PaintableIF
 
 	/**
 	 * Creates a new texture by loading an image from a file.
-	 * The file format is detected automatically.
-	 * The supported formats are PNG and JPEG, though more formats might be
-	 * available.
+	 *
+	 * The file format is detected automatically. The supported formats
+	 * are PNG and JPEG, though more formats might be available.
 	 *
 	 * If %NULL is returned, then @error will be set.
 	 *
 	 * Params:
-	 *     file = #GFile to load
+	 *     file = `GFile` to load
 	 *
-	 * Returns: A newly-created #GdkTexture or %NULL if an error occurred.
+	 * Returns: A newly-created `GdkTexture` or %NULL if an error occurred.
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -137,19 +151,19 @@ public class Texture : ObjectG, PaintableIF
 
 	/**
 	 * Creates a new texture by loading an image from a resource.
-	 * The file format is detected automatically.
-	 * The supported formats are PNG and JPEG, though more formats might be
-	 * available.
+	 *
+	 * The file format is detected automatically. The supported formats
+	 * are PNG and JPEG, though more formats might be available.
 	 *
 	 * It is a fatal error if @resource_path does not specify a valid
 	 * image resource and the program will abort if that happens.
 	 * If you are unsure about the validity of a resource, use
-	 * gdk_texture_new_from_file() to load it.
+	 * [ctor@Gdk.Texture.new_from_file] to load it.
 	 *
 	 * Params:
 	 *     resourcePath = the path of the resource file
 	 *
-	 * Returns: A newly-created texture
+	 * Returns: A newly-created `GdkTexture`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -166,16 +180,17 @@ public class Texture : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Downloads the @texture into local memory. This may be
-	 * an expensive operation, as the actual texture data may
-	 * reside on a GPU or on a remote display server.
+	 * Downloads the @texture into local memory.
+	 *
+	 * This may be an expensive operation, as the actual texture data
+	 * may reside on a GPU or on a remote display server.
 	 *
 	 * The data format of the downloaded data is equivalent to
 	 * %CAIRO_FORMAT_ARGB32, so every downloaded pixel requires
 	 * 4 bytes of memory.
 	 *
 	 * Downloading a texture into a Cairo image surface:
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
 	 * gdk_texture_get_width (texture),
 	 * gdk_texture_get_height (texture));
@@ -183,7 +198,7 @@ public class Texture : ObjectG, PaintableIF
 	 * cairo_image_surface_get_data (surface),
 	 * cairo_image_surface_get_stride (surface));
 	 * cairo_surface_mark_dirty (surface);
-	 * ]|
+	 * ```
 	 *
 	 * Params:
 	 *     data = pointer to enough memory to be filled with the
@@ -198,7 +213,7 @@ public class Texture : ObjectG, PaintableIF
 	/**
 	 * Returns the height of the @texture, in pixels.
 	 *
-	 * Returns: the height of the #GdkTexture
+	 * Returns: the height of the `GdkTexture`
 	 */
 	public int getHeight()
 	{
@@ -208,7 +223,7 @@ public class Texture : ObjectG, PaintableIF
 	/**
 	 * Returns the width of @texture, in pixels.
 	 *
-	 * Returns: the width of the #GdkTexture
+	 * Returns: the width of the `GdkTexture`
 	 */
 	public int getWidth()
 	{
@@ -220,7 +235,7 @@ public class Texture : ObjectG, PaintableIF
 	 *
 	 * This is a utility function intended for debugging and testing.
 	 * If you want more control over formats, proper error handling or
-	 * want to store to a #GFile or other location, you might want to
+	 * want to store to a `GFile` or other location, you might want to
 	 * look into using the gdk-pixbuf library.
 	 *
 	 * Params:

@@ -33,30 +33,31 @@ private import std.algorithm;
 
 
 /**
- * #GtkSelectionModel is an interface that extends the #GListModel interface by
- * adding support for selections. This support is then used by widgets using list
- * models to add the ability to select and unselect various items.
+ * `GtkSelectionModel` is an interface that add support for selection to list models.
+ * 
+ * This support is then used by widgets using list models to add the ability
+ * to select and unselect various items.
  * 
  * GTK provides default implementations of the most common selection modes such
- * as #GtkSingleSelection, so you will only need to implement this interface if
- * you want detailed control about how selections should be handled.
+ * as [class@Gtk.SingleSelection], so you will only need to implement this
+ * interface if you want detailed control about how selections should be handled.
  * 
- * A #GtkSelectionModel supports a single boolean per item indicating if an item
- * is selected or not. This can be queried via gtk_selection_model_is_selected().
+ * A `GtkSelectionModel` supports a single boolean per item indicating if an item is
+ * selected or not. This can be queried via [method@Gtk.SelectionModel.is_selected].
  * When the selected state of one or more items changes, the model will emit the
- * #GtkSelectionModel::selection-changed signal by calling the
- * gtk_selection_model_selection_changed() function. The positions given in that
- * signal may have their selection state changed, though that is not a requirement.
- * If new items added to the model via the #GListModel::items-changed signal are
- * selected or not is up to the implementation.
+ * [signal@Gtk.SelectionModel::selection-changed] signal by calling the
+ * [method@Gtk.SelectionModel.selection_changed] function. The positions given
+ * in that signal may have their selection state changed, though that is not a
+ * requirement. If new items added to the model via the ::items-changed signal
+ * are selected or not is up to the implementation.
  * 
- * Note that items added via #GListModel::items-changed may already be selected
- * and no #GtkSelectionModel::selection-changed will be emitted for them. So to
+ * Note that items added via ::items-changed may already be selected and no
+ * [Gtk.SelectionModel::selection-changed] will be emitted for them. So to
  * track which items are selected, it is necessary to listen to both signals.
  * 
  * Additionally, the interface can expose functionality to select and unselect
  * items. If these functions are implemented, GTK's list widgets will allow users
- * to select and unselect items. However, #GtkSelectionModels are free to only
+ * to select and unselect items. However, `GtkSelectionModel`s are free to only
  * implement them partially or not at all. In that case the widgets will not
  * support the unimplemented operations.
  * 
@@ -86,30 +87,30 @@ public interface SelectionModelIF{
 	 * Gets the set containing all currently selected items in the model.
 	 *
 	 * This function may be slow, so if you are only interested in single item,
-	 * consider using gtk_selection_model_is_selected() or if you are only
-	 * interested in a few consider gtk_selection_model_get_selection_in_range().
+	 * consider using [method@Gtk.SelectionModel.is_selected] or if you are only
+	 * interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
 	 *
-	 * Returns: a #GtkBitset containing all the values currently
+	 * Returns: a `GtkBitset` containing all the values currently
 	 *     selected in @model. If no items are selected, the bitset is empty.
 	 *     The bitset must not be modified.
 	 */
 	public Bitset getSelection();
 
 	/**
-	 * Gets a set containing a set where the values in the range `[position,
-	 * position + n_items)` match the selected state of the items in that range.
-	 * All values outside that range are undefined.
+	 * Gets the set of selected items in a range.
 	 *
-	 * This function is an optimization for gtk_selection_model_get_selection() when
-	 * you are only interested in part of the model's selected state. A common use
-	 * case is in response to the #GtkSelectionModel::selection-changed signal.
+	 * This function is an optimization for
+	 * [method@Gtk.SelectionModel.get_selection] when you are only
+	 * interested in part of the model's selected state. A common use
+	 * case is in response to the [signal@Gtk.SelectionModel::selection-changed]
+	 * signal.
 	 *
 	 * Params:
 	 *     position = start of the queired range
 	 *     nItems = number of items in the queried range
 	 *
-	 * Returns: A #GtkBitset that matches the selection state for the given state
-	 *     with all other values being undefined.
+	 * Returns: A `GtkBitset` that matches the selection state
+	 *     for the given range with all other values being undefined.
 	 *     The bitset must not be modified.
 	 */
 	public Bitset getSelectionInRange(uint position, uint nItems);
@@ -158,9 +159,10 @@ public interface SelectionModelIF{
 	public bool selectRange(uint position, uint nItems, bool unselectRest);
 
 	/**
-	 * Helper function for implementations of #GtkSelectionModel.
+	 * Helper function for implementations of `GtkSelectionModel`.
+	 *
 	 * Call this when a the selection changes to emit the
-	 * #GtkSelectionModel::selection-changed signal.
+	 * [signal@Gtk.SelectionModel::selection-changed] signal.
 	 *
 	 * Params:
 	 *     position = the first changed item
@@ -169,17 +171,19 @@ public interface SelectionModelIF{
 	public void selectionChanged(uint position, uint nItems);
 
 	/**
-	 * This is the most advanced selection updating method that allows
-	 * the most fine-grained control over selection changes.
-	 * If you can, you should try the simpler versions, as implementations
-	 * are more likely to implement support for those.
+	 * Make selection changes.
 	 *
-	 * Requests that the selection state of all positions set in @mask be
-	 * updated to the respective value in the @selected bitmask.
+	 * This is the most advanced selection updating method that allows
+	 * the most fine-grained control over selection changes. If you can,
+	 * you should try the simpler versions, as implementations are more
+	 * likely to implement support for those.
+	 *
+	 * Requests that the selection state of all positions set in @mask
+	 * be updated to the respective value in the @selected bitmask.
 	 *
 	 * In pseudocode, it would look something like this:
 	 *
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * for (i = 0; i < n_items; i++)
 	 * {
 	 * // don't change values not in the mask
@@ -192,11 +196,14 @@ public interface SelectionModelIF{
 	 * unselect_item (i);
 	 * }
 	 *
-	 * gtk_selection_model_selection_changed (model, first_changed_item, n_changed_items);
-	 * ]|
+	 * gtk_selection_model_selection_changed (model,
+	 * first_changed_item,
+	 * n_changed_items);
+	 * ```
 	 *
-	 * @mask and @selected must not be modified. They may refer to the same bitset,
-	 * which would mean that every item in the set should be selected.
+	 * @mask and @selected must not be modified. They may refer to the
+	 * same bitset, which would mean that every item in the set should
+	 * be selected.
 	 *
 	 * Params:
 	 *     selected = bitmask specifying if items should be selected or
@@ -243,11 +250,10 @@ public interface SelectionModelIF{
 	/**
 	 * Emitted when the selection state of some of the items in @model changes.
 	 *
-	 * Note that this signal does not specify the new selection state of the items,
-	 * they need to be queried manually.
-	 * It is also not necessary for a model to change the selection state of any of
-	 * the items in the selection model, though it would be rather useless to emit
-	 * such a signal.
+	 * Note that this signal does not specify the new selection state of the
+	 * items, they need to be queried manually. It is also not necessary for
+	 * a model to change the selection state of any of the items in the selection
+	 * model, though it would be rather useless to emit such a signal.
 	 *
 	 * Params:
 	 *     position = The first item that may have changed

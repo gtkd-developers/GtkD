@@ -32,9 +32,12 @@ public  import gtk.c.types;
 
 
 /**
- * GtkActionBar is designed to present contextual actions. It is
- * expected to be displayed below the content and expand horizontally
- * to fill the area.
+ * `GtkActionBar` is designed to present contextual actions.
+ * 
+ * ![An example GtkActionBar](action-bar.png)
+ * 
+ * It is expected to be displayed below the content and expand
+ * horizontally to fill the area.
  * 
  * It allows placing children at the start or the end. In addition, it
  * contains an internal centered box which is centered with respect to
@@ -43,7 +46,7 @@ public  import gtk.c.types;
  * 
  * # CSS nodes
  * 
- * GtkActionBar has a single CSS node with name actionbar.
+ * `GtkActionBar` has a single CSS node with name actionbar.
  */
 public class ActionBar : Widget
 {
@@ -81,9 +84,9 @@ public class ActionBar : Widget
 	}
 
 	/**
-	 * Creates a new #GtkActionBar widget.
+	 * Creates a new `GtkActionBar` widget.
 	 *
-	 * Returns: a new #GtkActionBar
+	 * Returns: a new `GtkActionBar`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -102,7 +105,7 @@ public class ActionBar : Widget
 	/**
 	 * Retrieves the center bar widget of the bar.
 	 *
-	 * Returns: the center #GtkWidget or %NULL.
+	 * Returns: the center `GtkWidget` or %NULL.
 	 */
 	public Widget getCenterWidget()
 	{
@@ -117,9 +120,10 @@ public class ActionBar : Widget
 	}
 
 	/**
-	 * Gets the value of the #GtkActionBar:revealed property.
+	 * Gets whether the contents of the action bar are revealed.
 	 *
-	 * Returns: the current value of the #GtkActionBar:revealed property.
+	 * Returns: the current value of the [property@Gtk.ActionBar:revealed]
+	 *     property.
 	 */
 	public bool getRevealed()
 	{
@@ -131,7 +135,7 @@ public class ActionBar : Widget
 	 * end of the @action_bar.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to be added to @action_bar
+	 *     child = the `GtkWidget` to be added to @action_bar
 	 */
 	public void packEnd(Widget child)
 	{
@@ -143,7 +147,7 @@ public class ActionBar : Widget
 	 * start of the @action_bar.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to be added to @action_bar
+	 *     child = the `GtkWidget` to be added to @action_bar
 	 */
 	public void packStart(Widget child)
 	{
@@ -154,7 +158,7 @@ public class ActionBar : Widget
 	 * Removes a child from @action_bar.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to be removed
+	 *     child = the `GtkWidget` to be removed
 	 */
 	public void remove(Widget child)
 	{
@@ -162,7 +166,7 @@ public class ActionBar : Widget
 	}
 
 	/**
-	 * Sets the center widget for the #GtkActionBar.
+	 * Sets the center widget for the `GtkActionBar`.
 	 *
 	 * Params:
 	 *     centerWidget = a widget to use for the center
@@ -173,12 +177,11 @@ public class ActionBar : Widget
 	}
 
 	/**
-	 * Sets the #GtkActionBar:revealed property to @revealed. Changing this will
-	 * make @action_bar reveal (%TRUE) or conceal (%FALSE) itself via a sliding
-	 * transition.
+	 * Reveals or conceals the content of the action bar.
 	 *
-	 * Note: this does not show or hide @action_bar in the #GtkWidget:visible sense,
-	 * so revealing has no effect if #GtkWidget:visible is %FALSE.
+	 * Note: this does not show or hide @action_bar in the
+	 * [property@Gtk.Widget:visible] sense, so revealing has
+	 * no effect if the action bar is hidden.
 	 *
 	 * Params:
 	 *     revealed = The new value of the property

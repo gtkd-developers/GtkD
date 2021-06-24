@@ -26,41 +26,46 @@ module gtk.ComboBoxText;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gtk.ComboBox;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
 /**
- * A GtkComboBoxText is a simple variant of #GtkComboBox that hides
- * the model-view complexity for simple text-only use cases.
+ * A `GtkComboBoxText` is a simple variant of `GtkComboBox` for text-only
+ * use cases.
  * 
- * To create a GtkComboBoxText, use gtk_combo_box_text_new() or
- * gtk_combo_box_text_new_with_entry().
+ * ![An example GtkComboBoxText](combo-box-text.png)
  * 
- * You can add items to a GtkComboBoxText with
- * gtk_combo_box_text_append_text(), gtk_combo_box_text_insert_text()
- * or gtk_combo_box_text_prepend_text() and remove options with
- * gtk_combo_box_text_remove().
+ * `GtkComboBoxText` hides the model-view complexity of `GtkComboBox`.
  * 
- * If the GtkComboBoxText contains an entry (via the “has-entry” property),
- * its contents can be retrieved using gtk_combo_box_text_get_active_text().
- * The entry itself can be accessed by calling gtk_bin_get_child() on the
- * combo box.
+ * To create a `GtkComboBoxText`, use [ctor@Gtk.ComboBoxText.new] or
+ * [ctor@Gtk.ComboBoxText.new_with_entry].
  * 
- * You should not call gtk_combo_box_set_model() or attempt to pack more cells
- * into this combo box via its GtkCellLayout interface.
+ * You can add items to a `GtkComboBoxText` with
+ * [method@Gtk.ComboBoxText.append_text],
+ * [method@Gtk.ComboBoxText.insert_text] or
+ * [method@Gtk.ComboBoxText.prepend_text] and remove options with
+ * [method@Gtk.ComboBoxText.remove].
+ * 
+ * If the `GtkComboBoxText` contains an entry (via the
+ * [property@Gtk.ComboBox:has-entry] property), its contents can be retrieved
+ * using [method@Gtk.ComboBoxText.get_active_text].
+ * 
+ * You should not call [method@Gtk.ComboBox.set_model] or attempt to pack more
+ * cells into this combo box via its [interface@Gtk.CellLayout] interface.
  * 
  * # GtkComboBoxText as GtkBuildable
  * 
- * The GtkComboBoxText implementation of the GtkBuildable interface supports
+ * The `GtkComboBoxText` implementation of the `GtkBuildable` interface supports
  * adding items directly using the <items> element and specifying <item>
  * elements for each item. Each <item> element can specify the “id”
  * corresponding to the appended text and also supports the regular
  * translation attributes “translatable”, “context” and “comments”.
  * 
- * Here is a UI definition fragment specifying GtkComboBoxText items:
- * |[
+ * Here is a UI definition fragment specifying `GtkComboBoxText` items:
+ * ```xml
  * <object class="GtkComboBoxText">
  * <items>
  * <item translatable="yes" id="factory">Factory</item>
@@ -68,19 +73,19 @@ public  import gtk.c.types;
  * <item translatable="yes" id="subway">Subway</item>
  * </items>
  * </object>
- * ]|
+ * ```
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * combobox
  * ╰── box.linked
  * ├── entry.combo
  * ├── button.combo
  * ╰── window.popup
- * ]|
+ * ```
  * 
- * GtkComboBoxText has a single CSS node with name combobox. It adds
+ * `GtkComboBoxText` has a single CSS node with name combobox. It adds
  * the style class .combo to the main CSS nodes of its entry and button
  * children, and the .linked class to the node of its internal box.
  */
@@ -151,10 +156,11 @@ public class ComboBoxText : ComboBox
 
 	/**
 	 * Appends @text to the list of strings stored in @combo_box.
+	 *
 	 * If @id is non-%NULL then it is used as the ID of the row.
 	 *
-	 * This is the same as calling gtk_combo_box_text_insert() with a
-	 * position of -1.
+	 * This is the same as calling [method@Gtk.ComboBoxText.insert]
+	 * with a position of -1.
 	 *
 	 * Params:
 	 *     id = a string ID for this value, or %NULL
@@ -168,8 +174,8 @@ public class ComboBoxText : ComboBox
 	/**
 	 * Appends @text to the list of strings stored in @combo_box.
 	 *
-	 * This is the same as calling gtk_combo_box_text_insert_text() with a
-	 * position of -1.
+	 * This is the same as calling [method@Gtk.ComboBoxText.insert_text]
+	 * with a position of -1.
 	 *
 	 * Params:
 	 *     text = A string
@@ -180,13 +186,16 @@ public class ComboBoxText : ComboBox
 	}
 
 	/**
-	 * Returns the currently active string in @combo_box, or %NULL
-	 * if none is selected. If @combo_box contains an entry, this
-	 * function will return its contents (which will not necessarily
+	 * Returns the currently active string in @combo_box.
+	 *
+	 * If no row is currently selected, %NULL is returned.
+	 * If @combo_box contains an entry, this function will
+	 * return its contents (which will not necessarily
 	 * be an item from the list).
 	 *
-	 * Returns: a newly allocated string containing the
-	 *     currently active text. Must be freed with g_free().
+	 * Returns: a newly allocated
+	 *     string containing the currently active text.
+	 *     Must be freed with g_free().
 	 */
 	public string getActiveText()
 	{
@@ -198,8 +207,9 @@ public class ComboBoxText : ComboBox
 
 	/**
 	 * Inserts @text at @position in the list of strings stored in @combo_box.
-	 * If @id is non-%NULL then it is used as the ID of the row.  See
-	 * #GtkComboBox:id-column.
+	 *
+	 * If @id is non-%NULL then it is used as the ID of the row.
+	 * See [property@Gtk.ComboBox:id-column].
 	 *
 	 * If @position is negative then @text is appended.
 	 *
@@ -218,8 +228,8 @@ public class ComboBoxText : ComboBox
 	 *
 	 * If @position is negative then @text is appended.
 	 *
-	 * This is the same as calling gtk_combo_box_text_insert() with a %NULL
-	 * ID string.
+	 * This is the same as calling [method@Gtk.ComboBoxText.insert]
+	 * with a %NULL ID string.
 	 *
 	 * Params:
 	 *     position = An index to insert @text
@@ -232,10 +242,11 @@ public class ComboBoxText : ComboBox
 
 	/**
 	 * Prepends @text to the list of strings stored in @combo_box.
+	 *
 	 * If @id is non-%NULL then it is used as the ID of the row.
 	 *
-	 * This is the same as calling gtk_combo_box_text_insert() with a
-	 * position of 0.
+	 * This is the same as calling [method@Gtk.ComboBoxText.insert]
+	 * with a position of 0.
 	 *
 	 * Params:
 	 *     id = a string ID for this value, or %NULL
@@ -249,8 +260,8 @@ public class ComboBoxText : ComboBox
 	/**
 	 * Prepends @text to the list of strings stored in @combo_box.
 	 *
-	 * This is the same as calling gtk_combo_box_text_insert_text() with a
-	 * position of 0.
+	 * This is the same as calling [method@Gtk.ComboBoxText.insert_text]
+	 * with a position of 0.
 	 *
 	 * Params:
 	 *     text = A string

@@ -613,24 +613,8 @@ public class Spawn
 	}
 
 	/**
-	 * Identical to g_spawn_async_with_pipes() but instead of
-	 * creating pipes for the stdin/stdout/stderr, you can pass existing
-	 * file descriptors into this function through the @stdin_fd,
-	 * @stdout_fd and @stderr_fd parameters. The following @flags
-	 * also have their behaviour slightly tweaked as a result:
-	 *
-	 * %G_SPAWN_STDOUT_TO_DEV_NULL means that the child's standard output
-	 * will be discarded, instead of going to the same location as the parent's
-	 * standard output. If you use this flag, @standard_output must be -1.
-	 * %G_SPAWN_STDERR_TO_DEV_NULL means that the child's standard error
-	 * will be discarded, instead of going to the same location as the parent's
-	 * standard error. If you use this flag, @standard_error must be -1.
-	 * %G_SPAWN_CHILD_INHERITS_STDIN means that the child will inherit the parent's
-	 * standard input (by default, the child's standard input is attached to
-	 * /dev/null). If you use this flag, @standard_input must be -1.
-	 *
-	 * It is valid to pass the same fd in multiple parameters (e.g. you can pass
-	 * a single fd for both stdout and stderr).
+	 * Identical to g_spawn_async_with_pipes_and_fds() but with `n_fds` set to zero,
+	 * so no FD assignments are used.
 	 *
 	 * Params:
 	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's, in the GLib file name encoding
@@ -640,9 +624,9 @@ public class Spawn
 	 *     childSetup = function to run in the child just before exec()
 	 *     userData = user data for @child_setup
 	 *     childPid = return location for child process ID, or %NULL
-	 *     stdinFd = file descriptor to use for child's stdin, or -1
-	 *     stdoutFd = file descriptor to use for child's stdout, or -1
-	 *     stderrFd = file descriptor to use for child's stderr, or -1
+	 *     stdinFd = file descriptor to use for child's stdin, or `-1`
+	 *     stdoutFd = file descriptor to use for child's stdout, or `-1`
+	 *     stderrFd = file descriptor to use for child's stderr, or `-1`
 	 *
 	 * Returns: %TRUE on success, %FALSE if an error was set
 	 *

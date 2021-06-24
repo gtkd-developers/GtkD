@@ -30,7 +30,6 @@ private import glib.GException;
 private import glib.MemorySlice;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +68,7 @@ public final class ThreadPool
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gThreadPool);
 	}
 

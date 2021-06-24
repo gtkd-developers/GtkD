@@ -27,7 +27,6 @@ module gst.mpegts.TerrestrialDeliverySystemDescriptor;
 private import glib.MemorySlice;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -64,7 +63,7 @@ public final class TerrestrialDeliverySystemDescriptor
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMpegtsTerrestrialDeliverySystemDescriptor);
 	}
 

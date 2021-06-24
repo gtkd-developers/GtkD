@@ -31,7 +31,6 @@ private import graphene.Vec2;
 private import graphene.Vec4;
 private import graphene.c.functions;
 public  import graphene.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -71,7 +70,7 @@ public class Vec3
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
+		if ( ownedRef )
 			graphene_vec3_free(graphene_vec3);
 	}
 

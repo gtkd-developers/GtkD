@@ -27,6 +27,7 @@ module gtk.EventController;
 private import gdk.Device;
 private import gdk.Event;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
@@ -34,9 +35,18 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkEventController is a base, low-level implementation for event
- * controllers. Those react to a series of #GdkEvents, and possibly trigger
- * actions as a consequence of those.
+ * `GtkEventController` is the base class for event controllers.
+ * 
+ * These are ancillary objects associated to widgets, which react
+ * to `GdkEvents`, and possibly trigger actions as a consequence.
+ * 
+ * Event controllers are added to a widget with
+ * [method@Gtk.Widget.add_controller]. It is rarely necessary to
+ * explicitly remove a controller with [method@Gtk.Widget.remove_controller].
+ * 
+ * See the chapter of [input handling](input-handling.html) for
+ * an overview of the basic concepts, such as the capture and bubble
+ * phases of even propagation.
  */
 public class EventController : ObjectG
 {
@@ -77,7 +87,8 @@ public class EventController : ObjectG
 	 * Returns the event that is currently being handled by the
 	 * controller, and %NULL at other times.
 	 *
-	 * Returns: the event is current handled by @controller
+	 * Returns: the event that is currently
+	 *     handled by @controller
 	 */
 	public Event getCurrentEvent()
 	{
@@ -95,7 +106,8 @@ public class EventController : ObjectG
 	 * Returns the device of the event that is currently being
 	 * handled by the controller, and %NULL otherwise.
 	 *
-	 * Returns: device of the event is current handled by @controller
+	 * Returns: device of the event is
+	 *     currently handled by @controller
 	 */
 	public Device getCurrentEventDevice()
 	{
@@ -113,7 +125,7 @@ public class EventController : ObjectG
 	 * Returns the modifier state of the event that is currently being
 	 * handled by the controller, and 0 otherwise.
 	 *
-	 * Returns: modifier state of the event is current handled by @controller
+	 * Returns: modifier state of the event is currently handled by @controller
 	 */
 	public GdkModifierType getCurrentEventState()
 	{
@@ -124,7 +136,7 @@ public class EventController : ObjectG
 	 * Returns the timestamp of the event that is currently being
 	 * handled by the controller, and 0 otherwise.
 	 *
-	 * Returns: timestamp of the event is current handled by @controller
+	 * Returns: timestamp of the event is currently handled by @controller
 	 */
 	public uint getCurrentEventTime()
 	{
@@ -162,7 +174,7 @@ public class EventController : ObjectG
 	/**
 	 * Returns the #GtkWidget this controller relates to.
 	 *
-	 * Returns: a #GtkWidget
+	 * Returns: a `GtkWidget`
 	 */
 	public Widget getWidget()
 	{
@@ -177,9 +189,7 @@ public class EventController : ObjectG
 	}
 
 	/**
-	 * Resets the @controller to a clean state. Every interaction
-	 * the controller did through gtk_event_controller_handle_event()
-	 * will be dropped at this point.
+	 * Resets the @controller to a clean state.
 	 */
 	public void reset()
 	{
@@ -187,8 +197,7 @@ public class EventController : ObjectG
 	}
 
 	/**
-	 * Sets a name on the controller that can be used for
-	 * debugging.
+	 * Sets a name on the controller that can be used for debugging.
 	 *
 	 * Params:
 	 *     name = a name for @controller
@@ -217,8 +226,7 @@ public class EventController : ObjectG
 	 * Sets the propagation phase at which a controller handles events.
 	 *
 	 * If @phase is %GTK_PHASE_NONE, no automatic event handling will be
-	 * performed, but other additional gesture maintenance will. In that phase,
-	 * the events can be managed by calling gtk_event_controller_handle_event().
+	 * performed, but other additional gesture maintenance will.
 	 *
 	 * Params:
 	 *     phase = a propagation phase

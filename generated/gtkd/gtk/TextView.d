@@ -45,14 +45,17 @@ private import std.algorithm;
 
 
 /**
- * You may wish to begin by reading the
- * [text widget conceptual overview][TextWidget]
- * which gives an overview of all the objects and data
- * types related to the text widget and how they work together.
+ * A widget that displays the contents of a [class@Gtk.TextBuffer].
  * 
- * # CSS nodes
+ * ![An example GtkTextview](multiline-text.png)
  * 
- * |[<!-- language="plain" -->
+ * You may wish to begin by reading the [conceptual overview](section-text-widget.html),
+ * which gives an overview of all the objects and data types related to the
+ * text widget and how they work together.
+ * 
+ * ## CSS nodes
+ * 
+ * ```
  * textview.view
  * ├── border.top
  * ├── border.left
@@ -61,9 +64,9 @@ private import std.algorithm;
  * ├── border.right
  * ├── border.bottom
  * ╰── [window.popup]
- * ]|
+ * ```
  * 
- * GtkTextView has a main css node with name textview and style class .view,
+ * `GtkTextView` has a main css node with name textview and style class .view,
  * and subnodes for each of the border windows, and the main text area,
  * with names border and text, respectively. The border nodes each get
  * one of the style classes .left, .right, .top or .bottom.
@@ -73,9 +76,9 @@ private import std.algorithm;
  * If a context menu is opened, the window node will appear as a subnode
  * of the main node.
  * 
- * # Accessibility
+ * ## Accessibility
  * 
- * GtkTextView uses the #GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
+ * `GtkTextView` uses the #GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
  */
 public class TextView : Widget, ScrollableIF
 {
@@ -116,12 +119,14 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Creates a new #GtkTextView. If you don’t call gtk_text_view_set_buffer()
-	 * before using the text view, an empty default buffer will be created
-	 * for you. Get the buffer with gtk_text_view_get_buffer(). If you want
-	 * to specify your own buffer, consider gtk_text_view_new_with_buffer().
+	 * Creates a new `GtkTextView`.
 	 *
-	 * Returns: a new #GtkTextView
+	 * If you don’t call [method@Gtk.TextView.set_buffer] before using the
+	 * text view, an empty default buffer will be created for you. Get the
+	 * buffer with [method@Gtk.TextView.get_buffer]. If you want to specify
+	 * your own buffer, consider [ctor@Gtk.TextView.new_with_buffer].
+	 *
+	 * Returns: a new `GtkTextView`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -138,17 +143,17 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Creates a new #GtkTextView widget displaying the buffer
-	 * @buffer. One buffer can be shared among many widgets.
-	 * @buffer may be %NULL to create a default buffer, in which case
-	 * this function is equivalent to gtk_text_view_new(). The
-	 * text view adds its own reference count to the buffer; it does not
-	 * take over an existing reference.
+	 * Creates a new `GtkTextView` widget displaying the buffer @buffer.
+	 *
+	 * One buffer can be shared among many widgets. @buffer may be %NULL
+	 * to create a default buffer, in which case this function is equivalent
+	 * to [ctor@Gtk.TextView.new]. The text view adds its own reference count
+	 * to the buffer; it does not take over an existing reference.
 	 *
 	 * Params:
-	 *     buffer = a #GtkTextBuffer
+	 *     buffer = a `GtkTextBuffer`
 	 *
-	 * Returns: a new #GtkTextView.
+	 * Returns: a new `GtkTextView`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -168,8 +173,8 @@ public class TextView : Widget, ScrollableIF
 	 * Adds a child widget in the text buffer, at the given @anchor.
 	 *
 	 * Params:
-	 *     child = a #GtkWidget
-	 *     anchor = a #GtkTextChildAnchor in the #GtkTextBuffer for @text_view
+	 *     child = a `GtkWidget`
+	 *     anchor = a `GtkTextChildAnchor` in the `GtkTextBuffer` for @text_view
 	 */
 	public void addChildAtAnchor(Widget child, TextChildAnchor anchor)
 	{
@@ -177,14 +182,16 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Adds @child at a fixed coordinate in the #GtkTextView's text window. The
-	 * @xpos and @ypos must be in buffer coordinates (see
-	 * gtk_text_view_get_iter_location() to convert to buffer coordinates).
+	 * Adds @child at a fixed coordinate in the `GtkTextView`'s text window.
+	 *
+	 * The @xpos and @ypos must be in buffer coordinates (see
+	 * [method@Gtk.TextView.get_iter_location] to convert to
+	 * buffer coordinates).
 	 *
 	 * @child will scroll with the text view.
 	 *
-	 * If instead you want a widget that will not move with the #GtkTextView
-	 * contents see #GtkOverlay.
+	 * If instead you want a widget that will not move with the
+	 * `GtkTextView` contents see #GtkOverlay.
 	 *
 	 * Params:
 	 *     child = a #GtkWidget
@@ -198,16 +205,17 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Moves the given @iter backward by one display (wrapped) line.
+	 *
 	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view’s width; paragraphs are the same in all
-	 * views, since they depend on the contents of the #GtkTextBuffer.
+	 * views, since they depend on the contents of the `GtkTextBuffer`.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *
 	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
@@ -218,16 +226,17 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Moves the given @iter backward to the next display line start.
+	 *
 	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view’s width; paragraphs are the same in all
-	 * views, since they depend on the contents of the #GtkTextBuffer.
+	 * views, since they depend on the contents of the `GtkTextBuffer`.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *
 	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
@@ -237,8 +246,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Converts coordinate (@buffer_x, @buffer_y) to coordinates for the window
-	 * @win, and stores the result in (@window_x, @window_y).
+	 * Converts buffer coordinates to window coordinates.
 	 *
 	 * Params:
 	 *     win = a #GtkTextWindowType
@@ -254,16 +262,17 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Moves the given @iter forward by one display (wrapped) line.
+	 *
 	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view’s width; paragraphs are the same in all
-	 * views, since they depend on the contents of the #GtkTextBuffer.
+	 * views, since they depend on the contents of the `GtkTextBuffer`.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *
 	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
@@ -274,16 +283,17 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Moves the given @iter forward to the next display line end.
+	 *
 	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view’s width; paragraphs are the same in all
-	 * views, since they depend on the contents of the #GtkTextBuffer.
+	 * views, since they depend on the contents of the `GtkTextBuffer`.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *
 	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
@@ -294,7 +304,8 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Returns whether pressing the Tab key inserts a tab characters.
-	 * gtk_text_view_set_accepts_tab().
+	 *
+	 * See [method@Gtk.TextView.set_accepts_tab].
 	 *
 	 * Returns: %TRUE if pressing the Tab key inserts a tab character,
 	 *     %FALSE if pressing the Tab key moves the keyboard focus.
@@ -315,11 +326,12 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Returns the #GtkTextBuffer being displayed by this text view.
+	 * Returns the `GtkTextBuffer` being displayed by this text view.
+	 *
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won’t own a new reference.
 	 *
-	 * Returns: a #GtkTextBuffer
+	 * Returns: a `GtkTextBuffer`
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -334,14 +346,15 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Given an @iter within a text layout, determine the positions of the
-	 * strong and weak cursors if the insertion point is at that
-	 * iterator. The position of each cursor is stored as a zero-width
-	 * rectangle. The strong cursor location is the location where
-	 * characters of the directionality equal to the base direction of the
-	 * paragraph are inserted.  The weak cursor location is the location
-	 * where characters of the directionality opposite to the base
-	 * direction of the paragraph are inserted.
+	 * Determine the positions of the strong and weak cursors if the
+	 * insertion point is at @iter.
+	 *
+	 * The position of each cursor is stored as a zero-width rectangle.
+	 * The strong cursor location is the location where characters of
+	 * the directionality equal to the base direction of the paragraph
+	 * are inserted. The weak cursor location is the location where
+	 * characters of the directionality opposite to the base direction
+	 * of the paragraph are inserted.
 	 *
 	 * If @iter is %NULL, the actual cursor position is used.
 	 *
@@ -351,11 +364,11 @@ public class TextView : Widget, ScrollableIF
 	 * cursor’s offset within the preedit sequence.
 	 *
 	 * The rectangle position is in buffer coordinates; use
-	 * gtk_text_view_buffer_to_window_coords() to convert these
+	 * [method@Gtk.TextView.buffer_to_window_coords] to convert these
 	 * coordinates to coordinates for one of the windows in the text view.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *     strong = location to store the strong
 	 *         cursor position (may be %NULL)
 	 *     weak = location to store the weak
@@ -377,8 +390,9 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Returns the default editability of the #GtkTextView. Tags in the
-	 * buffer may override this setting for some ranges of text.
+	 * Returns the default editability of the `GtkTextView`.
+	 *
+	 * Tags in the buffer may override this setting for some ranges of text.
 	 *
 	 * Returns: whether text is editable by default
 	 */
@@ -388,7 +402,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the menu model set with gtk_text_view_set_extra_menu()
+	 * Gets the menu model that gets added to the context menu
 	 * or %NULL if none has been set.
 	 *
 	 * Returns: the menu model
@@ -406,16 +420,17 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets a #GtkWidget that has previously been set with
-	 * gtk_text_view_set_gutter().
+	 * Gets a `GtkWidget` that has previously been set as gutter.
+	 *
+	 * See [method@Gtk.TextView.set_gutter].
 	 *
 	 * @win must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
 	 * %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
 	 *
 	 * Params:
-	 *     win = a #GtkTextWindowType
+	 *     win = a `GtkTextWindowType`
 	 *
-	 * Returns: a #GtkWidget or %NULL
+	 * Returns: a `GtkWidget` or %NULL
 	 */
 	public Widget getGutter(GtkTextWindowType win)
 	{
@@ -431,6 +446,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Gets the default indentation of paragraphs in @text_view.
+	 *
 	 * Tags in the view’s buffer may override the default.
 	 * The indentation may be negative.
 	 *
@@ -442,7 +458,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the value of the #GtkTextView:input-hints property.
+	 * Gets the `input-hints` of the `GtkTextView`.
 	 */
 	public GtkInputHints getInputHints()
 	{
@@ -450,7 +466,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the value of the #GtkTextView:input-purpose property.
+	 * Gets the `input-purpose` of the `GtkTextView`.
 	 */
 	public GtkInputPurpose getInputPurpose()
 	{
@@ -458,14 +474,15 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Retrieves the iterator at buffer coordinates @x and @y. Buffer
-	 * coordinates are coordinates for the entire buffer, not just the
-	 * currently-displayed portion.  If you have coordinates from an
+	 * Retrieves the iterator at buffer coordinates @x and @y.
+	 *
+	 * Buffer coordinates are coordinates for the entire buffer, not just
+	 * the currently-displayed portion. If you have coordinates from an
 	 * event, you have to convert those to buffer coordinates with
-	 * gtk_text_view_window_to_buffer_coords().
+	 * [method@Gtk.TextView.window_to_buffer_coords].
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *     x = x position, in buffer coordinates
 	 *     y = y position, in buffer coordinates
 	 *
@@ -484,21 +501,21 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Retrieves the iterator pointing to the character at buffer
-	 * coordinates @x and @y. Buffer coordinates are coordinates for
-	 * the entire buffer, not just the currently-displayed portion.
-	 * If you have coordinates from an event, you have to convert
-	 * those to buffer coordinates with
-	 * gtk_text_view_window_to_buffer_coords().
+	 * coordinates @x and @y.
 	 *
-	 * Note that this is different from gtk_text_view_get_iter_at_location(),
-	 * which returns cursor locations, i.e. positions between
-	 * characters.
+	 * Buffer coordinates are coordinates for the entire buffer, not just
+	 * the currently-displayed portion. If you have coordinates from an event,
+	 * you have to convert those to buffer coordinates with
+	 * [method@Gtk.TextView.window_to_buffer_coords].
+	 *
+	 * Note that this is different from [method@Gtk.TextView.get_iter_at_location],
+	 * which returns cursor locations, i.e. positions between characters.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
-	 *     trailing = if non-%NULL, location to store an integer indicating where
-	 *         in the grapheme the user clicked. It will either be
-	 *         zero, or the number of characters in the grapheme.
+	 *     iter = a `GtkTextIter`
+	 *     trailing = if non-%NULL, location to store
+	 *         an integer indicating where in the grapheme the user clicked.
+	 *         It will either be zero, or the number of characters in the grapheme.
 	 *         0 represents the trailing edge of the grapheme.
 	 *     x = x position, in buffer coordinates
 	 *     y = y position, in buffer coordinates
@@ -518,12 +535,13 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Gets a rectangle which roughly contains the character at @iter.
+	 *
 	 * The rectangle position is in buffer coordinates; use
-	 * gtk_text_view_buffer_to_window_coords() to convert these
+	 * [method@Gtk.TextView.buffer_to_window_coords] to convert these
 	 * coordinates to coordinates for one of the windows in the text view.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *     location = bounds of the character at @iter
 	 */
 	public void getIterLocation(TextIter iter, out GdkRectangle location)
@@ -533,6 +551,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Gets the default justification of paragraphs in @text_view.
+	 *
 	 * Tags in the buffer may override the default.
 	 *
 	 * Returns: default justification
@@ -544,6 +563,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Gets the default left margin size of paragraphs in the @text_view.
+	 *
 	 * Tags in the buffer may override the default.
 	 *
 	 * Returns: left margin in pixels
@@ -554,14 +574,16 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the #GtkTextIter at the start of the line containing
-	 * the coordinate @y. @y is in buffer coordinates, convert from
-	 * window coordinates with gtk_text_view_window_to_buffer_coords().
-	 * If non-%NULL, @line_top will be filled with the coordinate of the top
-	 * edge of the line.
+	 * Gets the `GtkTextIter` at the start of the line containing
+	 * the coordinate @y.
+	 *
+	 * @y is in buffer coordinates, convert from window coordinates with
+	 * [method@Gtk.TextView.window_to_buffer_coords]. If non-%NULL,
+	 * @line_top will be filled with the coordinate of the top edge
+	 * of the line.
 	 *
 	 * Params:
-	 *     targetIter = a #GtkTextIter
+	 *     targetIter = a `GtkTextIter`
 	 *     y = a y coordinate
 	 *     lineTop = return location for top coordinate of the line
 	 */
@@ -576,11 +598,13 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Gets the y coordinate of the top of the line containing @iter,
-	 * and the height of the line. The coordinate is a buffer coordinate;
-	 * convert to window coordinates with gtk_text_view_buffer_to_window_coords().
+	 * and the height of the line.
+	 *
+	 * The coordinate is a buffer coordinate; convert to window
+	 * coordinates with [method@Gtk.TextView.buffer_to_window_coords].
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *     y = return location for a y coordinate
 	 *     height = return location for a height
 	 */
@@ -590,7 +614,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the value of the #GtkTextView:monospace property.
+	 * Gets whether the `GtkTextView` uses monospace styling.
 	 *
 	 * Returns: %TRUE if monospace fonts are desired
 	 */
@@ -600,7 +624,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Returns whether the #GtkTextView is in overwrite mode or not.
+	 * Returns whether the `GtkTextView` is in overwrite mode or not.
 	 *
 	 * Returns: whether @text_view is in overwrite mode or not.
 	 */
@@ -611,7 +635,8 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Gets the default number of pixels to put above paragraphs.
-	 * Adding this function with gtk_text_view_get_pixels_below_lines()
+	 *
+	 * Adding this function with [method@Gtk.TextView.get_pixels_below_lines]
 	 * is equal to the line space between each paragraph.
 	 *
 	 * Returns: default number of pixels above paragraphs
@@ -622,10 +647,10 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the value set by gtk_text_view_set_pixels_below_lines().
+	 * Gets the default number of pixels to put below paragraphs.
 	 *
-	 * The line space is the sum of the value returned by this function and the
-	 * value returned by gtk_text_view_get_pixels_above_lines().
+	 * The line space is the sum of the value returned by this function and
+	 * the value returned by [method@Gtk.TextView.get_pixels_above_lines].
 	 *
 	 * Returns: default number of blank pixels below paragraphs
 	 */
@@ -635,7 +660,8 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the value set by gtk_text_view_set_pixels_inside_wrap().
+	 * Gets the default number of pixels to put between wrapped lines
+	 * inside a paragraph.
 	 *
 	 * Returns: default number of pixels of blank space between wrapped lines
 	 */
@@ -645,8 +671,9 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the default right margin for text in @text_view. Tags
-	 * in the buffer may override the default.
+	 * Gets the default right margin for text in @text_view.
+	 *
+	 * Tags in the buffer may override the default.
 	 *
 	 * Returns: right margin in pixels
 	 */
@@ -656,13 +683,15 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Gets the default tabs for @text_view. Tags in the buffer may
-	 * override the defaults. The returned array will be %NULL if
-	 * “standard” (8-space) tabs are used. Free the return value
-	 * with pango_tab_array_free().
+	 * Gets the default tabs for @text_view.
 	 *
-	 * Returns: copy of default tab array, or %NULL if
-	 *     “standard" tabs are used; must be freed with pango_tab_array_free().
+	 * Tags in the buffer may override the defaults. The returned array
+	 * will be %NULL if “standard” (8-space) tabs are used. Free the
+	 * return value with [method@Pango.TabArray.free].
+	 *
+	 * Returns: copy of default tab array,
+	 *     or %NULL if standard tabs are used; must be freed with
+	 *     [method@Pango.TabArray.free].
 	 */
 	public PgTabArray getTabs()
 	{
@@ -688,8 +717,10 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Fills @visible_rect with the currently-visible
-	 * region of the buffer, in buffer coordinates. Convert to window coordinates
-	 * with gtk_text_view_buffer_to_window_coords().
+	 * region of the buffer, in buffer coordinates.
+	 *
+	 * Convert to window coordinates with
+	 * [method@Gtk.TextView.buffer_to_window_coords].
 	 *
 	 * Params:
 	 *     visibleRect = rectangle to fill
@@ -710,17 +741,18 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Allow the #GtkTextView input method to internally handle key press
-	 * and release events. If this function returns %TRUE, then no further
-	 * processing should be done for this key event. See
-	 * gtk_im_context_filter_keypress().
+	 * Allow the `GtkTextView` input method to internally handle key press
+	 * and release events.
+	 *
+	 * If this function returns %TRUE, then no further processing should be
+	 * done for this key event. See [method@Gtk.IMContext.filter_keypress].
 	 *
 	 * Note that you are expected to call this function from your handler
 	 * when overriding key event handling. This is needed in the case when
 	 * you need to insert your own key handling between the input method
-	 * and the default key event handling of the #GtkTextView.
+	 * and the default key event handling of the `GtkTextView`.
 	 *
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * static gboolean
 	 * gtk_foo_bar_key_press_event (GtkWidget *widget,
 	 * GdkEvent  *event)
@@ -739,7 +771,7 @@ public class TextView : Widget, ScrollableIF
 	 *
 	 * return GTK_WIDGET_CLASS (gtk_foo_bar_parent_class)->key_press_event (widget, event);
 	 * }
-	 * ]|
+	 * ```
 	 *
 	 * Params:
 	 *     event = the key event
@@ -756,7 +788,7 @@ public class TextView : Widget, ScrollableIF
 	 * located within the currently-visible text area.
 	 *
 	 * Params:
-	 *     mark = a #GtkTextMark
+	 *     mark = a `GtkTextMark`
 	 *
 	 * Returns: %TRUE if the mark moved (wasn’t already onscreen)
 	 */
@@ -766,10 +798,12 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Updates the position of a child, as for gtk_text_view_add_overlay().
+	 * Updates the position of a child.
+	 *
+	 * See [method@Gtk.TextView.add_overlay].
 	 *
 	 * Params:
-	 *     child = a widget already added with gtk_text_view_add_overlay()
+	 *     child = a widget already added with [method@Gtk.TextView.add_overlay]
 	 *     xpos = new X position in buffer coordinates
 	 *     ypos = new Y position in buffer coordinates
 	 */
@@ -780,11 +814,12 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Move the iterator a given number of characters visually, treating
-	 * it as the strong cursor position. If @count is positive, then the
-	 * new strong cursor position will be @count positions to the right of
-	 * the old cursor position. If @count is negative then the new strong
-	 * cursor position will be @count positions to the left of the old
-	 * cursor position.
+	 * it as the strong cursor position.
+	 *
+	 * If @count is positive, then the new strong cursor position will
+	 * be @count positions to the right of the old cursor position.
+	 * If @count is negative then the new strong cursor position will
+	 * be @count positions to the left of the old cursor position.
 	 *
 	 * In the presence of bi-directional text, the correspondence
 	 * between logical and visual order will depend on the direction
@@ -792,7 +827,7 @@ public class TextView : Widget, ScrollableIF
 	 * is moved off of the end of a run.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *     count = number of characters to move (negative moves left,
 	 *         positive moves right)
 	 *
@@ -805,7 +840,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Moves the cursor to the currently visible region of the
-	 * buffer, if it isn’t there already.
+	 * buffer.
 	 *
 	 * Returns: %TRUE if the cursor had to be moved.
 	 */
@@ -826,8 +861,9 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Ensures that the cursor is shown (i.e. not in an 'off' blink
-	 * interval) and resets the time that it will stay blinking (or
+	 * Ensures that the cursor is shown.
+	 *
+	 * This also resets the time that it will stay blinking (or
 	 * visible, in case blinking is disabled).
 	 *
 	 * This function should be called in response to user input
@@ -864,22 +900,23 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Scrolls @text_view so that @iter is on the screen in the position
-	 * indicated by @xalign and @yalign. An alignment of 0.0 indicates
-	 * left or top, 1.0 indicates right or bottom, 0.5 means center.
-	 * If @use_align is %FALSE, the text scrolls the minimal distance to
-	 * get the mark onscreen, possibly not scrolling at all. The effective
-	 * screen for purposes of this function is reduced by a margin of size
-	 * @within_margin.
+	 * indicated by @xalign and @yalign.
+	 *
+	 * An alignment of 0.0 indicates left or top, 1.0 indicates right or
+	 * bottom, 0.5 means center. If @use_align is %FALSE, the text scrolls
+	 * the minimal distance to get the mark onscreen, possibly not scrolling
+	 * at all. The effective screen for purposes of this function is reduced
+	 * by a margin of size @within_margin.
 	 *
 	 * Note that this function uses the currently-computed height of the
 	 * lines in the text buffer. Line heights are computed in an idle
 	 * handler; so this function may not have the desired effect if it’s
 	 * called before the height computations. To avoid oddness, consider
-	 * using gtk_text_view_scroll_to_mark() which saves a point to be
+	 * using [method@Gtk.TextView.scroll_to_mark] which saves a point to be
 	 * scrolled to after line validation.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *     withinMargin = margin as a [0.0,0.5) fraction of screen size
 	 *     useAlign = whether to use alignment arguments (if %FALSE,
 	 *         just get the mark onscreen)
@@ -895,15 +932,16 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Scrolls @text_view so that @mark is on the screen in the position
-	 * indicated by @xalign and @yalign. An alignment of 0.0 indicates
-	 * left or top, 1.0 indicates right or bottom, 0.5 means center.
-	 * If @use_align is %FALSE, the text scrolls the minimal distance to
-	 * get the mark onscreen, possibly not scrolling at all. The effective
-	 * screen for purposes of this function is reduced by a margin of size
-	 * @within_margin.
+	 * indicated by @xalign and @yalign.
+	 *
+	 * An alignment of 0.0 indicates left or top, 1.0 indicates right or
+	 * bottom, 0.5 means center. If @use_align is %FALSE, the text scrolls
+	 * the minimal distance to get the mark onscreen, possibly not scrolling
+	 * at all. The effective screen for purposes of this function is reduced
+	 * by a margin of size @within_margin.
 	 *
 	 * Params:
-	 *     mark = a #GtkTextMark
+	 *     mark = a `GtkTextMark`
 	 *     withinMargin = margin as a [0.0,0.5) fraction of screen size
 	 *     useAlign = whether to use alignment arguments (if %FALSE, just
 	 *         get the mark onscreen)
@@ -917,6 +955,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the behavior of the text widget when the Tab key is pressed.
+	 *
 	 * If @accepts_tab is %TRUE, a tab character is inserted. If @accepts_tab
 	 * is %FALSE the keyboard focus is moved to the next widget in the focus
 	 * chain.
@@ -946,14 +985,15 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Sets @buffer as the buffer being displayed by @text_view. The previous
-	 * buffer displayed by the text view is unreferenced, and a reference is
-	 * added to @buffer. If you owned a reference to @buffer before passing it
-	 * to this function, you must remove that reference yourself; #GtkTextView
-	 * will not “adopt” it.
+	 * Sets @buffer as the buffer being displayed by @text_view.
+	 *
+	 * The previous buffer displayed by the text view is unreferenced, and
+	 * a reference is added to @buffer. If you owned a reference to @buffer
+	 * before passing it to this function, you must remove that reference
+	 * yourself; `GtkTextView` will not “adopt” it.
 	 *
 	 * Params:
-	 *     buffer = a #GtkTextBuffer
+	 *     buffer = a `GtkTextBuffer`
 	 */
 	public void setBuffer(TextBuffer buffer)
 	{
@@ -961,12 +1001,13 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Toggles whether the insertion point should be displayed. A buffer with
-	 * no editable text probably shouldn’t have a visible cursor, so you may
-	 * want to turn the cursor off.
+	 * Toggles whether the insertion point should be displayed.
+	 *
+	 * A buffer with no editable text probably shouldn’t have a visible
+	 * cursor, so you may want to turn the cursor off.
 	 *
 	 * Note that this property may be overridden by the
-	 * #GtkSettings:gtk-keynav-use-caret settings.
+	 * [property@GtkSettings:gtk-keynav-use-caret] setting.
 	 *
 	 * Params:
 	 *     setting = whether to show the insertion cursor
@@ -977,9 +1018,10 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Sets the default editability of the #GtkTextView. You can override
-	 * this default setting with tags in the buffer, using the “editable”
-	 * attribute of tags.
+	 * Sets the default editability of the `GtkTextView`.
+	 *
+	 * You can override this default setting with tags in the buffer,
+	 * using the “editable” attribute of tags.
 	 *
 	 * Params:
 	 *     setting = whether it’s editable
@@ -990,12 +1032,13 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Sets a menu model to add when constructing
-	 * the context menu for @text_view. You can pass
-	 * %NULL to remove a previously set extra menu.
+	 * Sets a menu model to add when constructing the context
+	 * menu for @text_view.
+	 *
+	 * You can pass %NULL to remove a previously set extra menu.
 	 *
 	 * Params:
-	 *     model = a #GMenuModel
+	 *     model = a `GMenuModel`
 	 */
 	public void setExtraMenu(MenuModel model)
 	{
@@ -1009,8 +1052,8 @@ public class TextView : Widget, ScrollableIF
 	 * %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
 	 *
 	 * Params:
-	 *     win = a #GtkTextWindowType
-	 *     widget = a #GtkWidget or %NULL
+	 *     win = a `GtkTextWindowType`
+	 *     widget = a `GtkWidget` or %NULL
 	 */
 	public void setGutter(GtkTextWindowType win, Widget widget)
 	{
@@ -1019,6 +1062,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default indentation for paragraphs in @text_view.
+	 *
 	 * Tags in the buffer may override the default.
 	 *
 	 * Params:
@@ -1030,8 +1074,10 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Sets the #GtkTextView:input-hints property, which
-	 * allows input methods to fine-tune their behaviour.
+	 * Sets the `input-hints` of the `GtkTextView`.
+	 *
+	 * The `input-hints` allow input methods to fine-tune
+	 * their behaviour.
 	 *
 	 * Params:
 	 *     hints = the hints
@@ -1042,9 +1088,10 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Sets the #GtkTextView:input-purpose property which
-	 * can be used by on-screen keyboards and other input
-	 * methods to adjust their behaviour.
+	 * Sets the `input-purpose` of the `GtkTextView`.
+	 *
+	 * The `input-purpose` can be used by on-screen keyboards
+	 * and other input methods to adjust their behaviour.
 	 *
 	 * Params:
 	 *     purpose = the purpose
@@ -1056,6 +1103,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default justification of text in @text_view.
+	 *
 	 * Tags in the view’s buffer may override the default.
 	 *
 	 * Params:
@@ -1068,6 +1116,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default left margin for text in @text_view.
+	 *
 	 * Tags in the buffer may override the default.
 	 *
 	 * Note that this function is confusingly named.
@@ -1082,9 +1131,8 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Sets the #GtkTextView:monospace property, which
-	 * indicates that the text view should use monospace
-	 * fonts.
+	 * Sets whether the `GtkTextView` should display text in
+	 * monospace styling.
 	 *
 	 * Params:
 	 *     monospace = %TRUE to request monospace styling
@@ -1095,7 +1143,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * Changes the #GtkTextView overwrite mode.
+	 * Changes the `GtkTextView` overwrite mode.
 	 *
 	 * Params:
 	 *     overwrite = %TRUE to turn on overwrite mode, %FALSE to turn it off
@@ -1107,6 +1155,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default number of blank pixels above paragraphs in @text_view.
+	 *
 	 * Tags in the buffer for @text_view may override the defaults.
 	 *
 	 * Params:
@@ -1119,8 +1168,9 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default number of pixels of blank space
-	 * to put below paragraphs in @text_view. May be overridden
-	 * by tags applied to @text_view’s buffer.
+	 * to put below paragraphs in @text_view.
+	 *
+	 * May be overridden by tags applied to @text_view’s buffer.
 	 *
 	 * Params:
 	 *     pixelsBelowLines = pixels below paragraphs
@@ -1132,8 +1182,9 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default number of pixels of blank space to leave between
-	 * display/wrapped lines within a paragraph. May be overridden by
-	 * tags in @text_view’s buffer.
+	 * display/wrapped lines within a paragraph.
+	 *
+	 * May be overridden by tags in @text_view’s buffer.
 	 *
 	 * Params:
 	 *     pixelsInsideWrap = default number of pixels between wrapped lines
@@ -1145,6 +1196,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default right margin for text in the text view.
+	 *
 	 * Tags in the buffer may override the default.
 	 *
 	 * Note that this function is confusingly named.
@@ -1160,6 +1212,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Sets the default tab stops for paragraphs in @text_view.
+	 *
 	 * Tags in the buffer may override the default.
 	 *
 	 * Params:
@@ -1188,7 +1241,7 @@ public class TextView : Widget, ScrollableIF
 	 * Sets the line wrapping for the view.
 	 *
 	 * Params:
-	 *     wrapMode = a #GtkWrapMode
+	 *     wrapMode = a `GtkWrapMode`
 	 */
 	public void setWrapMode(GtkWrapMode wrapMode)
 	{
@@ -1197,11 +1250,12 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Determines whether @iter is at the start of a display line.
-	 * See gtk_text_view_forward_display_line() for an explanation of
-	 * display lines vs. paragraphs.
+	 *
+	 * See [method@Gtk.TextView.forward_display_line] for an
+	 * explanation of display lines vs. paragraphs.
 	 *
 	 * Params:
-	 *     iter = a #GtkTextIter
+	 *     iter = a `GtkTextIter`
 	 *
 	 * Returns: %TRUE if @iter begins a wrapped line
 	 */
@@ -1212,7 +1266,7 @@ public class TextView : Widget, ScrollableIF
 
 	/**
 	 * Converts coordinates on the window identified by @win to buffer
-	 * coordinates, storing the result in (@buffer_x,@buffer_y).
+	 * coordinates.
 	 *
 	 * Params:
 	 *     win = a #GtkTextWindowType
@@ -1227,12 +1281,12 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::backspace signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Gets emitted when the user asks for it.
+	 *
+	 * The ::backspace signal is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are
-	 * Backspace and Shift-Backspace.
+	 * <kbd>Backspace</kbd> and <kbd>Shift</kbd>-<kbd>Backspace</kbd>.
 	 */
 	gulong addOnBackspace(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1240,12 +1294,13 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::copy-clipboard signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to copy the selection to the clipboard.
+	 * Gets emitted to copy the selection to the clipboard.
+	 *
+	 * The ::copy-clipboard signal is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are
-	 * Ctrl-c and Ctrl-Insert.
+	 * <kbd>Ctrl</kbd>-<kbd>c</kbd> and
+	 * <kbd>Ctrl</kbd>-<kbd>Insert</kbd>.
 	 */
 	gulong addOnCopyClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1253,12 +1308,13 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::cut-clipboard signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to cut the selection to the clipboard.
+	 * Gets emitted to cut the selection to the clipboard.
+	 *
+	 * The ::cut-clipboard signal is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are
-	 * Ctrl-x and Shift-Delete.
+	 * <kbd>Ctrl</kbd>-<kbd>x</kbd> and
+	 * <kbd>Shift</kbd>-<kbd>Delete</kbd>.
 	 */
 	gulong addOnCutClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1266,18 +1322,18 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::delete-from-cursor signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates a text deletion.
+	 * Gets emitted when the user initiates a text deletion.
 	 *
-	 * If the @type is %GTK_DELETE_CHARS, GTK+ deletes the selection
+	 * The ::delete-from-cursor signal is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * If the @type is %GTK_DELETE_CHARS, GTK deletes the selection
 	 * if there is one, otherwise it deletes the requested number
 	 * of characters.
 	 *
-	 * The default bindings for this signal are
-	 * Delete for deleting a character, Ctrl-Delete for
-	 * deleting a word and Ctrl-Backspace for deleting a word
-	 * backwards.
+	 * The default bindings for this signal are <kbd>Delete</kbd> for
+	 * deleting a character, <kbd>Ctrl</kbd>-<kbd>Delete</kbd> for
+	 * deleting a word and <kbd>Ctrl</kbd>-<kbd>Backspace</kbd> for
+	 * deleting a word backwards.
 	 *
 	 * Params:
 	 *     type = the granularity of the deletion, as a #GtkDeleteType
@@ -1289,8 +1345,7 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::extend-selection signal is emitted when the selection needs to be
-	 * extended at @location.
+	 * Emitted when the selection needs to be extended at @location.
 	 *
 	 * Params:
 	 *     granularity = the granularity type
@@ -1307,10 +1362,10 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::insert-at-cursor signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates the insertion of a
+	 * Gets emitted when the user initiates the insertion of a
 	 * fixed string at the cursor.
+	 *
+	 * The ::insert-at-cursor signal is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This signal has no default bindings.
 	 *
@@ -1323,11 +1378,13 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::insert-emoji signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to present the Emoji chooser for the @text_view.
+	 * Gets emitted to present the Emoji chooser for the @text_view.
 	 *
-	 * The default bindings for this signal are Ctrl-. and Ctrl-;
+	 * The ::insert-emoji signal is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default bindings for this signal are
+	 * <kbd>Ctrl</kbd>-<kbd>.</kbd> and
+	 * <kbd>Ctrl</kbd>-<kbd>;</kbd>
 	 */
 	gulong addOnInsertEmoji(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1335,9 +1392,9 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::move-cursor signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates a cursor movement.
+	 * Gets emitted when the user initiates a cursor movement.
+	 *
+	 * The ::move-cursor signal is a [keybinding signal](class.SignalAction.html).
 	 * If the cursor is not visible in @text_view, this signal causes
 	 * the viewport to be moved instead.
 	 *
@@ -1345,15 +1402,19 @@ public class TextView : Widget, ScrollableIF
 	 * g_signal_emit_by_name() if they need to control the cursor
 	 * programmatically.
 	 *
+	 *
 	 * The default bindings for this signal come in two variants,
-	 * the variant with the Shift modifier extends the selection,
-	 * the variant without the Shift modifier does not.
+	 * the variant with the <kbd>Shift</kbd> modifier extends the
+	 * selection, the variant without it does not.
 	 * There are too many key combinations to list them all here.
-	 * - Arrow keys move by individual characters/lines
-	 * - Ctrl-arrow key combinations move by words/paragraphs
-	 * - Home/End keys move to the ends of the buffer
-	 * - PageUp/PageDown keys move vertically by pages
-	 * - Ctrl-PageUp/PageDown keys move horizontally by pages
+	 *
+	 * - <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd>
+	 * move by individual characters/lines
+	 * - <kbd>Ctrl</kbd>-<kbd>→</kbd>, etc. move by words/paragraphs
+	 * - <kbd>Home</kbd>, <kbd>End</kbd> move to the ends of the buffer
+	 * - <kbd>PgUp</kbd>, <kbd>PgDn</kbd> move vertically by pages
+	 * - <kbd>Ctrl</kbd>-<kbd>PgUp</kbd>, <kbd>Ctrl</kbd>-<kbd>PgDn</kbd>
+	 * move horizontally by pages
 	 *
 	 * Params:
 	 *     step = the granularity of the move, as a #GtkMovementStep
@@ -1366,11 +1427,12 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::move-viewport signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which can be bound to key combinations to allow the user
-	 * to move the viewport, i.e. change what part of the text view
-	 * is visible in a containing scrolled window.
+	 * Gets emitted to move the viewport.
+	 *
+	 * The ::move-viewport signal is a [keybinding signal](class.SignalAction.html),
+	 * which can be bound to key combinations to allow the user to move the viewport,
+	 * i.e. change what part of the text view is visible in a containing scrolled
+	 * window.
 	 *
 	 * There are no default bindings for this signal.
 	 *
@@ -1384,13 +1446,14 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::paste-clipboard signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to paste the contents of the clipboard
+	 * Gets emitted to paste the contents of the clipboard
 	 * into the text view.
 	 *
+	 * The ::paste-clipboard signal is a [keybinding signal](class.SignalAction.html).
+	 *
 	 * The default bindings for this signal are
-	 * Ctrl-v and Shift-Insert.
+	 * <kbd>Ctrl</kbd>-<kbd>v</kbd> and
+	 * <kbd>Shift</kbd>-<kbd>Insert</kbd>.
 	 */
 	gulong addOnPasteClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1398,6 +1461,8 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
+	 * Emitted when preedit text of the active IM changes.
+	 *
 	 * If an input method is used, the typed text will not immediately
 	 * be committed to the buffer. So if you are interested in the text,
 	 * connect to this signal.
@@ -1414,13 +1479,15 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::select-all signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to select or unselect the complete
-	 * contents of the text view.
+	 * Gets emitted to select or unselect the complete contents of the text view.
 	 *
-	 * The default bindings for this signal are Ctrl-a and Ctrl-/
-	 * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.
+	 * The ::select-all signal is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default bindings for this signal are
+	 * <kbd>Ctrl</kbd>-<kbd>a</kbd> and
+	 * <kbd>Ctrl</kbd>-<kbd>/</kbd> for selecting and
+	 * <kbd>Shift</kbd>-<kbd>Ctrl</kbd>-<kbd>a</kbd> and
+	 * <kbd>Ctrl</kbd>-<kbd>\</kbd> for unselecting.
 	 *
 	 * Params:
 	 *     select = %TRUE to select, %FALSE to unselect
@@ -1431,8 +1498,9 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::set-anchor signal is a
-	 * [keybinding signal][GtkSignalAction]
+	 * Gets emitted when the user initiates settings the "anchor" mark.
+	 *
+	 * The ::set-anchor signal is a [keybinding signal](class.SignalAction.html)
 	 * which gets emitted when the user initiates setting the "anchor"
 	 * mark. The "anchor" mark gets placed at the same position as the
 	 * "insert" mark.
@@ -1445,12 +1513,12 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::toggle-cursor-visible signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to toggle the #GtkTextView:cursor-visible
-	 * property.
+	 * Gets emitted to toggle the `cursor-visible` property.
 	 *
-	 * The default binding for this signal is F7.
+	 * The ::toggle-cursor-visible signal is a
+	 * [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default binding for this signal is <kbd>F7</kbd>.
 	 */
 	gulong addOnToggleCursorVisible(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1458,11 +1526,11 @@ public class TextView : Widget, ScrollableIF
 	}
 
 	/**
-	 * The ::toggle-overwrite signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to toggle the overwrite mode of the text view.
+	 * Gets emitted to toggle the overwrite mode of the text view.
 	 *
-	 * The default bindings for this signal is Insert.
+	 * The ::toggle-overwrite signal is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default binding for this signal is <kbd>Insert</kbd>.
 	 */
 	gulong addOnToggleOverwrite(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

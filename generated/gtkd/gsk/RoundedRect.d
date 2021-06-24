@@ -35,12 +35,17 @@ public  import gsk.c.types;
 /**
  * A rectangular region with rounded corners.
  * 
- * Application code should normalize rectangles using gsk_rounded_rect_normalize();
- * this function will ensure that the bounds of the rectangle are normalized
- * and ensure that the corner values are positive and the corners do not overlap.
- * All functions taking a #GskRoundedRect as an argument will internally operate on
- * a normalized copy; all functions returning a #GskRoundedRect will always return
- * a normalized one.
+ * Application code should normalize rectangles using
+ * [method@Gsk.RoundedRect.normalize]; this function will ensure that
+ * the bounds of the rectangle are normalized and ensure that the corner
+ * values are positive and the corners do not overlap.
+ * 
+ * All functions taking a `GskRoundedRect` as an argument will internally
+ * operate on a normalized copy; all functions returning a `GskRoundedRect`
+ * will always return a normalized one.
+ * 
+ * The algorithm used for normalizing corner sizes is described in
+ * [the CSS specification](https://drafts.csswg.org/css-backgrounds-3/#border-radius).
  */
 public class RoundedRect
 {
@@ -73,8 +78,7 @@ public class RoundedRect
 
 
 	/**
-	 * Checks if the given @point is inside the rounded rectangle. This function
-	 * returns %FALSE if the point is in the rounded corner areas.
+	 * Checks if the given @point is inside the rounded rectangle.
 	 *
 	 * Params:
 	 *     point = the point to check
@@ -88,8 +92,6 @@ public class RoundedRect
 
 	/**
 	 * Checks if the given @rect is contained inside the rounded rectangle.
-	 * This function returns %FALSE if @rect extends into one of the rounded
-	 * corner areas.
 	 *
 	 * Params:
 	 *     rect = the rectangle to check
@@ -102,13 +104,13 @@ public class RoundedRect
 	}
 
 	/**
-	 * Initializes the given #GskRoundedRect with the given values.
+	 * Initializes the given `GskRoundedRect` with the given values.
 	 *
-	 * This function will implicitly normalize the #GskRoundedRect
+	 * This function will implicitly normalize the `GskRoundedRect`
 	 * before returning.
 	 *
 	 * Params:
-	 *     bounds = a #graphene_rect_t describing the bounds
+	 *     bounds = a `graphene_rect_t` describing the bounds
 	 *     topLeft = the rounding radius of the top left corner
 	 *     topRight = the rounding radius of the top right corner
 	 *     bottomRight = the rounding radius of the bottom right corner
@@ -131,11 +133,11 @@ public class RoundedRect
 	/**
 	 * Initializes @self using the given @src rectangle.
 	 *
-	 * This function will not normalize the #GskRoundedRect, so
-	 * make sure the source is normalized.
+	 * This function will not normalize the `GskRoundedRect`,
+	 * so make sure the source is normalized.
 	 *
 	 * Params:
-	 *     src = a #GskRoundedRect
+	 *     src = a `GskRoundedRect`
 	 *
 	 * Returns: the initialized rectangle
 	 */
@@ -152,11 +154,11 @@ public class RoundedRect
 	}
 
 	/**
-	 * Initializes @self to the given @bounds and sets the radius of all
-	 * four corners to @radius.
+	 * Initializes @self to the given @bounds and sets the radius
+	 * of all four corners to @radius.
 	 *
 	 * Params:
-	 *     bounds = a #graphene_rect_t
+	 *     bounds = a `graphene_rect_t`
 	 *     radius = the border radius
 	 *
 	 * Returns: the initialized rectangle
@@ -175,8 +177,6 @@ public class RoundedRect
 
 	/**
 	 * Checks if part of the given @rect is contained inside the rounded rectangle.
-	 * This function returns %FALSE if @rect only extends into one of the rounded
-	 * corner areas but not into the rounded rectangle itself.
 	 *
 	 * Params:
 	 *     rect = the rectangle to check
@@ -192,8 +192,8 @@ public class RoundedRect
 	 * Checks if all corners of @self are right angles and the
 	 * rectangle covers all of its bounds.
 	 *
-	 * This information can be used to decide if gsk_clip_node_new()
-	 * or gsk_rounded_clip_node_new() should be called.
+	 * This information can be used to decide if [ctor@Gsk.ClipNode.new]
+	 * or [ctor@Gsk.RoundedClipNode.new] should be called.
 	 *
 	 * Returns: %TRUE if the rectangle is rectilinear
 	 */
@@ -205,8 +205,9 @@ public class RoundedRect
 	/**
 	 * Normalizes the passed rectangle.
 	 *
-	 * this function will ensure that the bounds of the rectangle are normalized
-	 * and ensure that the corner values are positive and the corners do not overlap.
+	 * This function will ensure that the bounds of the rectangle
+	 * are normalized and ensure that the corner values are positive
+	 * and the corners do not overlap.
 	 *
 	 * Returns: the normalized rectangle
 	 */
@@ -247,9 +248,10 @@ public class RoundedRect
 
 	/**
 	 * Shrinks (or grows) the given rectangle by moving the 4 sides
-	 * according to the offsets given. The corner radii will be changed
-	 * in a way that tries to keep the center of the corner circle intact.
-	 * This emulates CSS behavior.
+	 * according to the offsets given.
+	 *
+	 * The corner radii will be changed in a way that tries to keep
+	 * the center of the corner circle intact. This emulates CSS behavior.
 	 *
 	 * This function also works for growing rectangles if you pass
 	 * negative values for the @top, @right, @bottom or @left.
@@ -260,7 +262,7 @@ public class RoundedRect
 	 *     bottom = How far to move the bottom side upwards
 	 *     left = How far to move the left side to the right
 	 *
-	 * Returns: the resized #GskRoundedRect
+	 * Returns: the resized `GskRoundedRect`
 	 */
 	public RoundedRect shrink(float top, float right, float bottom, float left)
 	{

@@ -35,6 +35,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import std.algorithm;
@@ -50,13 +51,15 @@ private import std.algorithm;
  * To just export an object on a well-known name on a message bus, such as the
  * session or system bus, you should instead use g_bus_own_name().
  * 
- * An example of peer-to-peer communication with G-DBus can be found
+ * An example of peer-to-peer communication with GDBus can be found
  * in [gdbus-example-peer.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-peer.c).
  * 
  * Note that a minimal #GDBusServer will accept connections from any
  * peer. In many use-cases it will be necessary to add a #GDBusAuthObserver
  * that only accepts connections that have successfully authenticated
- * as the same user that is running the #GDBusServer.
+ * as the same user that is running the #GDBusServer. Since GLib 2.68 this can
+ * be achieved more simply by passing the
+ * %G_DBUS_SERVER_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER flag to the server.
  *
  * Since: 2.26
  */

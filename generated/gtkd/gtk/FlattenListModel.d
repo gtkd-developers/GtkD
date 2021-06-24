@@ -33,11 +33,10 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkFlattenListModel is a list model that takes a list model containing
- * list models and flattens it into a single model.
+ * `GtkFlattenListModel` is a list model that concatenates other list models.
  * 
- * Another term for this is concatenation: #GtkFlattenListModel takes a
- * list of lists and concatenates them into a single list.
+ * `GtkFlattenListModel` takes a list model containing list models,
+ * and flattens it into a single model.
  */
 public class FlattenListModel : ObjectG, ListModelIF
 {
@@ -78,12 +77,12 @@ public class FlattenListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Creates a new #GtkFlattenListModel that flattens @list.
+	 * Creates a new `GtkFlattenListModel` that flattens @list.
 	 *
 	 * Params:
 	 *     model = the model to be flattened
 	 *
-	 * Returns: a new #GtkFlattenListModel
+	 * Returns: a new `GtkFlattenListModel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

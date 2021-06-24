@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -66,7 +65,7 @@ public class QueueG
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_queue_free(gQueue);
 	}
 

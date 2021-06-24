@@ -32,6 +32,8 @@ public  import gtk.c.types;
 
 
 /**
+ * Renders a pixbuf in a cell
+ * 
  * A #GtkCellRendererPixbuf can be used to render an image in a cell. It allows
  * to render either a given #GdkPixbuf (set via the
  * #GtkCellRendererPixbuf:pixbuf property) or a named icon (set via the

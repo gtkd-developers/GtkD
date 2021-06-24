@@ -30,7 +30,6 @@ private import glib.PtrArray;
 private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +66,7 @@ public final class NIT
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMpegtsNIT);
 	}
 

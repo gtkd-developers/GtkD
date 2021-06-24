@@ -33,7 +33,6 @@ private import graphene.Vec3;
 private import graphene.Vec4;
 private import graphene.c.functions;
 public  import graphene.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -75,7 +74,7 @@ public class Quaternion
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
+		if ( ownedRef )
 			graphene_quaternion_free(graphene_quaternion);
 	}
 

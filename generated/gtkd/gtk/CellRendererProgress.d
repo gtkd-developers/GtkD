@@ -34,6 +34,8 @@ public  import gtk.c.types;
 
 
 /**
+ * Renders numbers as progress bars
+ * 
  * #GtkCellRendererProgress renders a numeric value as a progress par in a cell.
  * Additionally, it can display a text on top of the progress bar.
  */

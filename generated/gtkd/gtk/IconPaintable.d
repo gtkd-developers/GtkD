@@ -29,14 +29,16 @@ private import gdk.PaintableT;
 private import gio.FileIF;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
 /**
- * Contains information found when looking up an icon in
- * an icon theme and supports painting it as a #GdkPaintable.
+ * Contains information found when looking up an icon in `GtkIconTheme`.
+ * 
+ * `GtkIconPaintable` implements `GdkPaintable`.
  */
 public class IconPaintable : ObjectG, PaintableIF
 {
@@ -77,15 +79,16 @@ public class IconPaintable : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Creates a #GtkIconPaintable for a file with a given size and scale
-	 * #GtkIconPaintable. The icon can then be rendered by using it as a #GdkPaintable.
+	 * Creates a `GtkIconPaintable` for a file with a given size and scale.
+	 *
+	 * The icon can then be rendered by using it as a `GdkPaintable`.
 	 *
 	 * Params:
-	 *     file = a #GFile
+	 *     file = a `GFile`
 	 *     size = desired icon size
 	 *     scale = the desired scale
 	 *
-	 * Returns: a #GtkIconPaintable containing
+	 * Returns: a `GtkIconPaintable` containing
 	 *     for the icon. Unref with g_object_unref()
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -103,8 +106,9 @@ public class IconPaintable : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Gets the #GFile that was used to load the icon, or %NULL if the icon was
-	 * not loaded from a file.
+	 * Gets the `GFile` that was used to load the icon.
+	 *
+	 * Returns %NULL if the icon was not loaded from a file.
 	 *
 	 * Returns: the #GFile for the icon, or %NULL.
 	 *     Free with g_object_unref().
@@ -129,10 +133,11 @@ public class IconPaintable : ObjectG, PaintableIF
 	 * gtk_icon_theme_lookup_icon() or the always-available
 	 * "image-missing". The icon chosen is returned by this function.
 	 *
-	 * If the icon was created without an icon theme, this function returns %NULL.
+	 * If the icon was created without an icon theme, this function
+	 * returns %NULL.
 	 *
-	 * Returns: the themed icon-name for the icon, or %NULL
-	 *     if its not a themed icon.
+	 * Returns: the themed icon-name for the
+	 *     icon, or %NULL if its not a themed icon.
 	 */
 	public string getIconName()
 	{
@@ -140,12 +145,13 @@ public class IconPaintable : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Checks if the icon is symbolic or not. This currently uses only
-	 * the file name and not the file contents for determining this.
-	 * This behaviour may change in the future.
+	 * Checks if the icon is symbolic or not.
 	 *
-	 * Note that to render a symbolic #GtkIconPaintable properly (with
-	 * recoloring), you have to set its icon name on a #GtkImage.
+	 * This currently uses only the file name and not the file contents
+	 * for determining this. This behaviour may change in the future.
+	 *
+	 * Note that to render a symbolic `GtkIconPaintable` properly (with
+	 * recoloring), you have to set its icon name on a `GtkImage`.
 	 *
 	 * Returns: %TRUE if the icon is symbolic, %FALSE otherwise
 	 */

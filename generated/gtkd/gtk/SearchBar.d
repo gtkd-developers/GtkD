@@ -33,45 +33,50 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkSearchBar is a container made to have a search entry (possibly
- * with additional connex widgets, such as drop-down menus, or buttons)
- * built-in. The search bar would appear when a search is started through
- * typing on the keyboard, or the application’s search mode is toggled on.
+ * `GtkSearchBar` is a container made to have a search entry.
+ * 
+ * ![An example GtkSearchBar](search-bar.png)
+ * 
+ * It can also contain additional widgets, such as drop-down menus,
+ * or buttons.  The search bar would appear when a search is started
+ * through typing on the keyboard, or the application’s search mode
+ * is toggled on.
  * 
  * For keyboard presses to start a search, the search bar must be told
  * of a widget to capture key events from through
- * gtk_search_bar_set_key_capture_widget(). This widget will typically
- * be the top-level window, or a parent container of the search bar. Common
- * shortcuts such as Ctrl+F should be handled as an application action, or
- * through the menu items.
+ * [method@Gtk.SearchBar.set_key_capture_widget]. This widget will
+ * typically be the top-level window, or a parent container of the
+ * search bar. Common shortcuts such as Ctrl+F should be handled as an
+ * application action, or through the menu items.
  * 
  * You will also need to tell the search bar about which entry you
- * are using as your search entry using gtk_search_bar_connect_entry().
- * The following example shows you how to create a more complex search
- * entry.
+ * are using as your search entry using [method@Gtk.SearchBar.connect_entry].
  * 
  * ## Creating a search bar
+ * 
+ * The following example shows you how to create a more complex search
+ * entry.
  * 
  * [A simple example](https://gitlab.gnome.org/GNOME/gtk/tree/master/examples/search-bar.c)
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * searchbar
  * ╰── revealer
  * ╰── box
  * ├── [child]
  * ╰── [button.close]
- * ]|
+ * ```
  * 
- * GtkSearchBar has a main CSS node with name searchbar. It has a child node
- * with name revealer that contains a node with name box. The box node contains both the
- * CSS node of the child widget as well as an optional button node which gets the .close
- * style class applied.
+ * `GtkSearchBar` has a main CSS node with name searchbar. It has a child
+ * node with name revealer that contains a node with name box. The box node
+ * contains both the CSS node of the child widget as well as an optional button
+ * node which gets the .close style class applied.
  * 
  * # Accessibility
  * 
- * GtkSearchBar uses the %GTK_ACCESSIBLE_ROLE_SEARCH role.
+ * `GtkSearchBar` uses the %GTK_ACCESSIBLE_ROLE_SEARCH role.
  */
 public class SearchBar : Widget
 {
@@ -109,11 +114,12 @@ public class SearchBar : Widget
 	}
 
 	/**
-	 * Creates a #GtkSearchBar. You will need to tell it about
-	 * which widget is going to be your text entry using
-	 * gtk_search_bar_connect_entry().
+	 * Creates a `GtkSearchBar`.
 	 *
-	 * Returns: a new #GtkSearchBar
+	 * You will need to tell it about which widget is going to be your text
+	 * entry using [method@Gtk.SearchBar.connect_entry].
+	 *
+	 * Returns: a new `GtkSearchBar`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -130,13 +136,15 @@ public class SearchBar : Widget
 	}
 
 	/**
-	 * Connects the #GtkEntry widget passed as the one to be used in
-	 * this search bar. The entry should be a descendant of the search bar.
-	 * This is only required if the entry isn’t the direct child of the
-	 * search bar (as in our main example).
+	 * Connects the `GtkEditable widget passed as the one to be used in
+	 * this search bar.
+	 *
+	 * The entry should be a descendant of the search bar. Calling this
+	 * function manually is only required if the entry isn’t the direct
+	 * child of the search bar (as in our main example).
 	 *
 	 * Params:
-	 *     entry = a #GtkEditable
+	 *     entry = a `GtkEditable`
 	 */
 	public void connectEntry(EditableIF entry)
 	{
@@ -209,13 +217,21 @@ public class SearchBar : Widget
 	}
 
 	/**
-	 * Sets @widget as the widget that @bar will capture key events from.
+	 * Sets @widget as the widget that @bar will capture key events
+	 * from.
 	 *
 	 * If key events are handled by the search bar, the bar will
 	 * be shown, and the entry populated with the entered text.
 	 *
+	 * Note that despite the name of this function, the events
+	 * are only 'captured' in the bubble phase, which means that
+	 * editable child widgets of @widget will receive text input
+	 * before it gets captured. If that is not desired, you can
+	 * capture and forward the events yourself with
+	 * [method@Gtk.EventControllerKey.forward].
+	 *
 	 * Params:
-	 *     widget = a #GtkWidget
+	 *     widget = a `GtkWidget`
 	 */
 	public void setKeyCaptureWidget(Widget widget)
 	{
@@ -234,10 +250,11 @@ public class SearchBar : Widget
 	}
 
 	/**
-	 * Shows or hides the close button. Applications that
-	 * already have a “search” toggle button should not show a close
-	 * button in their search bar, as it duplicates the role of the
-	 * toggle button.
+	 * Shows or hides the close button.
+	 *
+	 * Applications that already have a “search” toggle button should not
+	 * show a close button in their search bar, as it duplicates the role
+	 * of the toggle button.
 	 *
 	 * Params:
 	 *     visible = whether the close button will be shown or not

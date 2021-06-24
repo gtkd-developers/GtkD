@@ -27,6 +27,7 @@ module gtk.CellArea;
 private import gdk.Event;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
@@ -47,6 +48,8 @@ private import std.algorithm;
 
 
 /**
+ * An abstract class for laying out GtkCellRenderers
+ * 
  * The #GtkCellArea is an abstract class for #GtkCellLayout widgets
  * (also referred to as "layouting widgets") to interface with an
  * arbitrary number of #GtkCellRenderers and interact with the user

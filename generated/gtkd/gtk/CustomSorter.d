@@ -32,8 +32,8 @@ public  import gtk.c.types;
 
 
 /**
- * GtkCustomSorter is a #GtkSorter implementation that sorts
- * via a traditional #GCompareDataFunc callback.
+ * `GtkCustomSorter` is a `GtkSorter` implementation that sorts via a callback
+ * function.
  */
 public class CustomSorter : Sorter
 {
@@ -71,17 +71,17 @@ public class CustomSorter : Sorter
 	}
 
 	/**
-	 * Creates a new #GtkSorter that works by calling
+	 * Creates a new `GtkSorter` that works by calling
 	 * @sort_func to compare items.
 	 *
 	 * If @sort_func is %NULL, all items are considered equal.
 	 *
 	 * Params:
-	 *     sortFunc = the #GCompareDataFunc to use for sorting
+	 *     sortFunc = the `GCompareDataFunc` to use for sorting
 	 *     userData = user data to pass to @sort_func
 	 *     userDestroy = destroy notify for @user_data
 	 *
-	 * Returns: a new #GtkCustomSorter
+	 * Returns: a new `GtkCustomSorter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

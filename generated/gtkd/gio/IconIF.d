@@ -32,6 +32,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 

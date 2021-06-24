@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.StringG;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
@@ -35,30 +36,33 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkShortcutAction is the object used to describe what a #GtkShortcut should
- * do when triggered. To activate a #GtkShortcutAction manually,
- * gtk_shortcut_action_activate() can be called.
+ * `GtkShortcutAction` encodes an action that can be triggered by a
+ * keyboard shortcut.
  * 
- * #GtkShortcutActions contain functions that allow easy presentation to end
- * users as well as being printed for debugging.
+ * `GtkShortcutActions` contain functions that allow easy presentation
+ * to end users as well as being printed for debugging.
  * 
- * All #GtkShortcutActions are immutable, you can only specify their properties
- * during construction. If you want to change a action, you have to replace it
- * with a new one. If you need to pass arguments to an action, these are specified
- * by the higher-level #GtkShortcut object.
+ * All `GtkShortcutActions` are immutable, you can only specify their
+ * properties during construction. If you want to change a action, you
+ * have to replace it with a new one. If you need to pass arguments to
+ * an action, these are specified by the higher-level `GtkShortcut` object.
+ * 
+ * To activate a `GtkShortcutAction` manually, [method@Gtk.ShortcutAction.activate]
+ * can be called.
  * 
  * GTK provides various actions:
  * 
- * - #GtkMnemonicAction: a shortcut action that calls gtk_widget_mnemonic_activate()
- * - #GtkCallbackAction: a shortcut action that invokes a given callback
- * - #GtkSignalAction: a shortcut action that emits a given signal
- * - #GtkActivateAction: a shortcut action that calls gtk_widget_activate()
- * - #GtkNamedAction: a shortcut action that calls gtk_widget_activate_action()
- * - #GtkNothingAction: a shortcut action that does nothing
- * 
- * # GtkShortcutAction as GtkBuildable
- * 
- * GtkShortcut
+ * - [class@Gtk.MnemonicAction]: a shortcut action that calls
+ * gtk_widget_mnemonic_activate()
+ * - [class@Gtk.CallbackAction]: a shortcut action that invokes
+ * a given callback
+ * - [class@Gtk.SignalAction]: a shortcut action that emits a
+ * given signal
+ * - [class@Gtk.ActivateAction]: a shortcut action that calls
+ * gtk_widget_activate()
+ * - [class@Gtk.NamedAction]: a shortcut action that calls
+ * gtk_widget_activate_action()
+ * - [class@Gtk.NothingAction]: a shortcut action that does nothing
  */
 public class ShortcutAction : ObjectG
 {
@@ -96,22 +100,23 @@ public class ShortcutAction : ObjectG
 	}
 
 	/**
-	 * Tries to parse the given string into an action. On
-	 * success, the parsed action is returned. When parsing
+	 * Tries to parse the given string into an action.
+	 *
+	 * On success, the parsed action is returned. When parsing
 	 * failed, %NULL is returned.
 	 *
 	 * The accepted strings are:
 	 *
-	 * - `nothing`, for #GtkNothingAction
-	 * - `activate`, for #GtkActivateAction
-	 * - `mnemonic-activate`, for #GtkMnemonicAction
-	 * - `action(NAME)`, for a #GtkNamedAction for the action named `NAME`
-	 * - `signal(NAME)`, for a #GtkSignalAction for the signal `NAME`
+	 * - `nothing`, for `GtkNothingAction`
+	 * - `activate`, for `GtkActivateAction`
+	 * - `mnemonic-activate`, for `GtkMnemonicAction`
+	 * - `action(NAME)`, for a `GtkNamedAction` for the action named `NAME`
+	 * - `signal(NAME)`, for a `GtkSignalAction` for the signal `NAME`
 	 *
 	 * Params:
 	 *     string_ = the string to parse
 	 *
-	 * Returns: a new #GtkShortcutAction
+	 * Returns: a new `GtkShortcutAction`
 	 *     or %NULL on error
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -151,13 +156,14 @@ public class ShortcutAction : ObjectG
 
 	/**
 	 * Prints the given action into a string for the developer.
+	 *
 	 * This is meant for debugging and logging.
 	 *
 	 * The form of the representation may change at any time and is
 	 * not guaranteed to stay identical.
 	 *
 	 * Params:
-	 *     string_ = a #GString to print into
+	 *     string_ = a `GString` to print into
 	 */
 	public void print(StringG string_)
 	{
@@ -166,8 +172,9 @@ public class ShortcutAction : ObjectG
 
 	/**
 	 * Prints the given action into a human-readable string.
-	 * This is a small wrapper around gtk_shortcut_action_print() to help
-	 * when debugging.
+	 *
+	 * This is a small wrapper around [method@Gtk.ShortcutAction.print]
+	 * to help when debugging.
 	 *
 	 * Returns: a new string
 	 */

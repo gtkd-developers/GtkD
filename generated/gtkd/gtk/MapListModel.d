@@ -33,11 +33,12 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkMapListModel is a list model that takes a list model and maps the items
- * in that model to different items according to a #GtkMapListModelMapFunc.
+ * A `GtkMapListModel` maps the items in a list model to different items.
  * 
- * Example: Create a list of #GtkEventControllers
- * |[
+ * `GtkMapListModel` uses a [callback@Gtk.MapListModelMapFunc].
+ * 
+ * Example: Create a list of `GtkEventControllers`
+ * ```c
  * static gpointer
  * map_to_controllers (gpointer widget,
  * gpointer data)
@@ -56,9 +57,9 @@ public  import gtk.c.types;
  * 
  * model = gtk_flatten_list_model_new (GTK_TYPE_EVENT_CONTROLLER,
  * controllers);
- * ]|
+ * ```
  * 
- * #GtkMapListModel will attempt to discard the mapped objects as soon as
+ * `GtkMapListModel` will attempt to discard the mapped objects as soon as
  * they are no longer needed and recreate them if necessary.
  */
 public class MapListModel : ObjectG, ListModelIF
@@ -100,7 +101,7 @@ public class MapListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Creates a new #GtkMapListModel for the given arguments.
+	 * Creates a new `GtkMapListModel` for the given arguments.
 	 *
 	 * Params:
 	 *     model = The model to map or %NULL for none
@@ -108,7 +109,7 @@ public class MapListModel : ObjectG, ListModelIF
 	 *     userData = user data passed to @map_func
 	 *     userDestroy = destroy notifier for @user_data
 	 *
-	 * Returns: a new #GtkMapListModel
+	 * Returns: a new `GtkMapListModel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -142,7 +143,7 @@ public class MapListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Checks if a map function is currently set on @self
+	 * Checks if a map function is currently set on @self.
 	 *
 	 * Returns: %TRUE if a map function is set
 	 */
@@ -152,12 +153,13 @@ public class MapListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Sets the function used to map items. The function will be called whenever
-	 * an item needs to be mapped and must return the item to use for the given
-	 * input item.
+	 * Sets the function used to map items.
 	 *
-	 * Note that #GtkMapListModel may call this function multiple times on the
-	 * same item, because it may delete items it doesn't need anymore.
+	 * The function will be called whenever an item needs to be mapped
+	 * and must return the item to use for the given input item.
+	 *
+	 * Note that `GtkMapListModel` may call this function multiple times
+	 * on the same item, because it may delete items it doesn't need anymore.
 	 *
 	 * GTK makes no effort to ensure that @map_func conforms to the item type
 	 * of @self. It assumes that the caller knows what they are doing and the map

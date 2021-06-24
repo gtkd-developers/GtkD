@@ -30,7 +30,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * Interface for Drag-and-Drop destinations in `GtkTreeView`.
+ */
 public interface TreeDragDestIF{
 	/** Get the main Gtk struct */
 	public GtkTreeDragDest* getTreeDragDestStruct(bool transferOwnership = false);

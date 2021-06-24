@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.TimeVal;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +66,7 @@ public class AsyncQueue
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_async_queue_unref(gAsyncQueue);
 	}
 

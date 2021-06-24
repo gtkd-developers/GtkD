@@ -34,8 +34,8 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkSelectionFilterModel is a list model that presents the
- * selected items in a #GtkSelectionModel as its own list model.
+ * `GtkSelectionFilterModel` is a list model that presents the selection from
+ * a `GtkSelectionModel`.
  */
 public class SelectionFilterModel : ObjectG, ListModelIF
 {
@@ -76,13 +76,13 @@ public class SelectionFilterModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Creates a new #GtkSelectionFilterModel that will include the
+	 * Creates a new `GtkSelectionFilterModel` that will include the
 	 * selected items from the underlying selection model.
 	 *
 	 * Params:
 	 *     model = the selection model to filter, or %NULL
 	 *
-	 * Returns: a new #GtkSelectionFilterModel
+	 * Returns: a new `GtkSelectionFilterModel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

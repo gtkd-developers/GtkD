@@ -33,9 +33,11 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkCenterLayout is a layout manager that manages up to three children.
- * The start widget is allocated at the start of the layout (left in LRT
- * layouts and right in RTL ones), and the end widget at the end.
+ * `GtkCenterLayout` is a layout manager that manages up to three children.
+ * 
+ * The start widget is allocated at the start of the layout (left in
+ * left-to-right locales and right in right-to-left ones), and the end
+ * widget at the end.
  * 
  * The center widget is centered regarding the full width of the layout's.
  */
@@ -75,9 +77,9 @@ public class CenterLayout : LayoutManager
 	}
 
 	/**
-	 * Creates a new #GtkCenterLayout.
+	 * Creates a new `GtkCenterLayout`.
 	 *
-	 * Returns: the newly created #GtkCenterLayout
+	 * Returns: the newly created `GtkCenterLayout`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

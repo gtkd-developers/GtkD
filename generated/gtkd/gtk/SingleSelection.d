@@ -35,12 +35,11 @@ public  import gtk.c.types;
 
 
 /**
- * GtkSingleSelection is an implementation of the #GtkSelectionModel interface
- * that allows selecting a single element. It is the default selection method
- * used by list widgets in GTK.
+ * `GtkSingleSelection` is a `GtkSelectionModel` that allows selecting a single
+ * item.
  * 
  * Note that the selection is *persistent* -- if the selected item is removed
- * and re-added in the same #GListModel::items-changed emission, it stays selected.
+ * and re-added in the same ::items-changed emission, it stays selected.
  * In particular, this means that changing the sort order of an underlying sort
  * model will preserve the selection.
  */
@@ -89,9 +88,9 @@ public class SingleSelection : ObjectG, ListModelIF, SelectionModelIF
 	 * Creates a new selection to handle @model.
 	 *
 	 * Params:
-	 *     model = the #GListModel to manage, or %NULL
+	 *     model = the `GListModel` to manage, or %NULL
 	 *
-	 * Returns: a new #GtkSingleSelection
+	 * Returns: a new `GtkSingleSelection`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -147,8 +146,9 @@ public class SingleSelection : ObjectG, ListModelIF, SelectionModelIF
 	}
 
 	/**
-	 * Gets the position of the selected item. If no item is selected,
-	 * #GTK_INVALID_LIST_POSITION is returned.
+	 * Gets the position of the selected item.
+	 *
+	 * If no item is selected, %GTK_INVALID_LIST_POSITION is returned.
 	 *
 	 * Returns: The position of the selected item
 	 */
@@ -164,12 +164,21 @@ public class SingleSelection : ObjectG, ListModelIF, SelectionModelIF
 	 *
 	 * Returns: The selected item
 	 */
-	public void* getSelectedItem()
+	public ObjectG getSelectedItem()
 	{
-		return gtk_single_selection_get_selected_item(gtkSingleSelection);
+		auto __p = gtk_single_selection_get_selected_item(gtkSingleSelection);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
+	 * Enables or disables autoselect.
+	 *
 	 * If @autoselect is %TRUE, @self will enforce that an item is always
 	 * selected. It will select a new item when the currently selected
 	 * item is deleted and it will disallow unselecting the current item.
@@ -186,9 +195,9 @@ public class SingleSelection : ObjectG, ListModelIF, SelectionModelIF
 	 * If %TRUE, unselecting the current item via
 	 * gtk_selection_model_unselect_item() is supported.
 	 *
-	 * Note that setting #GtkSingleSelection:autoselect will cause the
-	 * unselecting to not work, so it practically makes no sense to set
-	 * both at the same time the same time.
+	 * Note that setting [property@Gtk.SingleSelection:autoselect] will
+	 * cause unselecting to not work, so it practically makes no sense
+	 * to set both at the same time the same time.
 	 *
 	 * Params:
 	 *     canUnselect = %TRUE to allow unselecting
@@ -199,11 +208,12 @@ public class SingleSelection : ObjectG, ListModelIF, SelectionModelIF
 	}
 
 	/**
-	 * Sets the model that @self should wrap. If @model is %NULL, @self
-	 * will be empty.
+	 * Sets the model that @self should wrap.
+	 *
+	 * If @model is %NULL, @self will be empty.
 	 *
 	 * Params:
-	 *     model = A #GListModel to wrap
+	 *     model = A `GListModel` to wrap
 	 */
 	public void setModel(ListModelIF model)
 	{
@@ -214,13 +224,14 @@ public class SingleSelection : ObjectG, ListModelIF, SelectionModelIF
 	 * Selects the item at the given position.
 	 *
 	 * If the list does not have an item at @position or
-	 * #GTK_INVALID_LIST_POSITION is given, the behavior depends on the
-	 * value of the #GtkSingleSelection:autoselect property: If it is set,
-	 * no change will occur and the old item will stay selected. If it is
-	 * unset, the selection will be unset and no item will be selected.
+	 * %GTK_INVALID_LIST_POSITION is given, the behavior depends on the
+	 * value of the [property@Gtk.SingleSelection:autoselect] property:
+	 * If it is set, no change will occur and the old item will stay
+	 * selected. If it is unset, the selection will be unset and no item
+	 * will be selected.
 	 *
 	 * Params:
-	 *     position = the item to select or #GTK_INVALID_LIST_POSITION
+	 *     position = the item to select or %GTK_INVALID_LIST_POSITION
 	 */
 	public void setSelected(uint position)
 	{

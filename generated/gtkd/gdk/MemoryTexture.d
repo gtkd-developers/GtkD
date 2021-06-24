@@ -33,7 +33,7 @@ private import gobject.ObjectG;
 
 
 /**
- * A #GdkTexture representing image data in memory.
+ * A `GdkTexture` representing image data in memory.
  */
 public class MemoryTexture : Texture
 {
@@ -72,17 +72,18 @@ public class MemoryTexture : Texture
 
 	/**
 	 * Creates a new texture for a blob of image data.
-	 * The #GBytes must contain @stride x @height pixels
+	 *
+	 * The `GBytes` must contain @stride x @height pixels
 	 * in the given format.
 	 *
 	 * Params:
 	 *     width = the width of the texture
 	 *     height = the height of the texture
 	 *     format = the format of the data
-	 *     bytes = the #GBytes containing the pixel data
+	 *     bytes = the `GBytes` containing the pixel data
 	 *     stride = rowstride for the data
 	 *
-	 * Returns: A newly-created #GdkTexture
+	 * Returns: A newly-created `GdkTexture`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -37,27 +37,28 @@ public  import gtk.c.types;
 
 
 /**
- * A GtkPageSetup object stores the page size, orientation and margins.
+ * A `GtkPageSetup` object stores the page size, orientation and margins.
+ * 
  * The idea is that you can get one of these from the page setup dialog
- * and then pass it to the #GtkPrintOperation when printing.
- * The benefit of splitting this out of the #GtkPrintSettings is that
+ * and then pass it to the `GtkPrintOperation` when printing.
+ * The benefit of splitting this out of the `GtkPrintSettings` is that
  * these affect the actual layout of the page, and thus need to be set
  * long before user prints.
  * 
- * ## Margins ## {#print-margins}
+ * ## Margins
+ * 
  * The margins specified in this object are the “print margins”, i.e. the
  * parts of the page that the printer cannot print on. These are different
  * from the layout margins that a word processor uses; they are typically
- * used to determine the minimal size for the layout
- * margins.
+ * used to determine the minimal size for the layout margins.
  * 
- * To obtain a #GtkPageSetup use gtk_page_setup_new() to get the defaults,
- * or use gtk_print_run_page_setup_dialog() to show the page setup dialog
+ * To obtain a `GtkPageSetup` use [ctor@Gtk.PageSetup.new] to get the defaults,
+ * or use [func@Gtk.print_run_page_setup_dialog] to show the page setup dialog
  * and receive the resulting page setup.
  * 
  * ## A page setup dialog
  * 
- * |[<!-- language="C" -->
+ * ```c
  * static GtkPrintSettings *settings = NULL;
  * static GtkPageSetup *page_setup = NULL;
  * 
@@ -77,7 +78,7 @@ public  import gtk.c.types;
  * 
  * page_setup = new_page_setup;
  * }
- * ]|
+ * ```
  */
 public class PageSetup : ObjectG
 {
@@ -115,9 +116,9 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkPageSetup.
+	 * Creates a new `GtkPageSetup`.
 	 *
-	 * Returns: a new #GtkPageSetup.
+	 * Returns: a new `GtkPageSetup`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -134,14 +135,16 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Reads the page setup from the file @file_name. Returns a
-	 * new #GtkPageSetup object with the restored page setup,
-	 * or %NULL if an error occurred. See gtk_page_setup_to_file().
+	 * Reads the page setup from the file @file_name.
+	 *
+	 * Returns a new `GtkPageSetup` object with the restored
+	 * page setup, or %NULL if an error occurred.
+	 * See [method@Gtk.PageSetup.to_file].
 	 *
 	 * Params:
 	 *     fileName = the filename to read the page setup from
 	 *
-	 * Returns: the restored #GtkPageSetup
+	 * Returns: the restored `GtkPageSetup`
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -166,13 +169,15 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Desrialize a page setup from an a{sv} variant in
-	 * the format produced by gtk_page_setup_to_gvariant().
+	 * Desrialize a page setup from an a{sv} variant.
+	 *
+	 * The variant must be in the format produced by
+	 * [method@Gtk.PageSetup.to_gvariant].
 	 *
 	 * Params:
-	 *     variant = an a{sv} #GVariant
+	 *     variant = an a{sv} `GVariant`
 	 *
-	 * Returns: a new #GtkPageSetup object
+	 * Returns: a new `GtkPageSetup` object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -190,15 +195,17 @@ public class PageSetup : ObjectG
 
 	/**
 	 * Reads the page setup from the group @group_name in the key file
-	 * @key_file. Returns a new #GtkPageSetup object with the restored
+	 * @key_file.
+	 *
+	 * Returns a new `GtkPageSetup` object with the restored
 	 * page setup, or %NULL if an error occurred.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to retrieve the page_setup from
+	 *     keyFile = the `GKeyFile` to retrieve the page_setup from
 	 *     groupName = the name of the group in the key_file to read, or %NULL
 	 *         to use the default name “Page Setup”
 	 *
-	 * Returns: the restored #GtkPageSetup
+	 * Returns: the restored `GtkPageSetup`
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -223,7 +230,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Copies a #GtkPageSetup.
+	 * Copies a `GtkPageSetup`.
 	 *
 	 * Returns: a copy of @other
 	 */
@@ -266,7 +273,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Gets the page orientation of the #GtkPageSetup.
+	 * Gets the page orientation of the `GtkPageSetup`.
 	 *
 	 * Returns: the page orientation
 	 */
@@ -278,9 +285,9 @@ public class PageSetup : ObjectG
 	/**
 	 * Returns the page height in units of @unit.
 	 *
-	 * Note that this function takes orientation and
-	 * margins into consideration.
-	 * See gtk_page_setup_get_paper_height().
+	 * Note that this function takes orientation
+	 * and margins into consideration.
+	 * See [method@Gtk.PageSetup.get_paper_height].
 	 *
 	 * Params:
 	 *     unit = the unit for the return value
@@ -295,9 +302,9 @@ public class PageSetup : ObjectG
 	/**
 	 * Returns the page width in units of @unit.
 	 *
-	 * Note that this function takes orientation and
-	 * margins into consideration.
-	 * See gtk_page_setup_get_paper_width().
+	 * Note that this function takes orientation
+	 * and margins into consideration.
+	 * See [method@Gtk.PageSetup.get_paper_width].
 	 *
 	 * Params:
 	 *     unit = the unit for the return value
@@ -312,9 +319,9 @@ public class PageSetup : ObjectG
 	/**
 	 * Returns the paper height in units of @unit.
 	 *
-	 * Note that this function takes orientation, but
-	 * not margins into consideration.
-	 * See gtk_page_setup_get_page_height().
+	 * Note that this function takes orientation,
+	 * but not margins into consideration.
+	 * See [method@Gtk.PageSetup.get_page_height].
 	 *
 	 * Params:
 	 *     unit = the unit for the return value
@@ -327,7 +334,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Gets the paper size of the #GtkPageSetup.
+	 * Gets the paper size of the `GtkPageSetup`.
 	 *
 	 * Returns: the paper size
 	 */
@@ -346,9 +353,9 @@ public class PageSetup : ObjectG
 	/**
 	 * Returns the paper width in units of @unit.
 	 *
-	 * Note that this function takes orientation, but
-	 * not margins into consideration.
-	 * See gtk_page_setup_get_page_width().
+	 * Note that this function takes orientation,
+	 * but not margins into consideration.
+	 * See [method@Gtk.PageSetup.get_page_width].
 	 *
 	 * Params:
 	 *     unit = the unit for the return value
@@ -388,7 +395,8 @@ public class PageSetup : ObjectG
 
 	/**
 	 * Reads the page setup from the file @file_name.
-	 * See gtk_page_setup_to_file().
+	 *
+	 * See [method@Gtk.PageSetup.to_file].
 	 *
 	 * Params:
 	 *     fileName = the filename to read the page setup from
@@ -416,7 +424,7 @@ public class PageSetup : ObjectG
 	 * @key_file.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to retrieve the page_setup from
+	 *     keyFile = the `GKeyFile` to retrieve the page_setup from
 	 *     groupName = the name of the group in the key_file to read, or %NULL
 	 *         to use the default name “Page Setup”
 	 *
@@ -439,7 +447,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Sets the bottom margin of the #GtkPageSetup.
+	 * Sets the bottom margin of the `GtkPageSetup`.
 	 *
 	 * Params:
 	 *     margin = the new bottom margin in units of @unit
@@ -451,7 +459,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Sets the left margin of the #GtkPageSetup.
+	 * Sets the left margin of the `GtkPageSetup`.
 	 *
 	 * Params:
 	 *     margin = the new left margin in units of @unit
@@ -463,7 +471,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Sets the page orientation of the #GtkPageSetup.
+	 * Sets the page orientation of the `GtkPageSetup`.
 	 *
 	 * Params:
 	 *     orientation = a #GtkPageOrientation value
@@ -474,9 +482,10 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Sets the paper size of the #GtkPageSetup without
-	 * changing the margins. See
-	 * gtk_page_setup_set_paper_size_and_default_margins().
+	 * Sets the paper size of the `GtkPageSetup` without
+	 * changing the margins.
+	 *
+	 * See [method@Gtk.PageSetup.set_paper_size_and_default_margins].
 	 *
 	 * Params:
 	 *     size = a #GtkPaperSize
@@ -487,7 +496,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Sets the paper size of the #GtkPageSetup and modifies
+	 * Sets the paper size of the `GtkPageSetup` and modifies
 	 * the margins according to the new paper size.
 	 *
 	 * Params:
@@ -499,7 +508,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Sets the right margin of the #GtkPageSetup.
+	 * Sets the right margin of the `GtkPageSetup`.
 	 *
 	 * Params:
 	 *     margin = the new right margin in units of @unit
@@ -511,7 +520,7 @@ public class PageSetup : ObjectG
 	}
 
 	/**
-	 * Sets the top margin of the #GtkPageSetup.
+	 * Sets the top margin of the `GtkPageSetup`.
 	 *
 	 * Params:
 	 *     margin = the new top margin in units of @unit
@@ -567,7 +576,7 @@ public class PageSetup : ObjectG
 	 * This function adds the page setup from @setup to @key_file.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to save the page setup to
+	 *     keyFile = the `GKeyFile` to save the page setup to
 	 *     groupName = the group to add the settings to in @key_file,
 	 *         or %NULL to use the default name “Page Setup”
 	 */

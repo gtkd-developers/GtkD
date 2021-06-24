@@ -31,7 +31,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutTrigger that never triggers.
+ * A `GtkShortcutTrigger` that never triggers.
  */
 public class NeverTrigger : ShortcutTrigger
 {
@@ -69,9 +69,11 @@ public class NeverTrigger : ShortcutTrigger
 	}
 
 	/**
-	 * Gets the never trigger. This is a singleton for a trigger
-	 * that never triggers. Use this trigger instead of %NULL
-	 * because it implements all virtual functions.
+	 * Gets the never trigger.
+	 *
+	 * This is a singleton for a trigger that never triggers.
+	 * Use this trigger instead of %NULL because it implements
+	 * all virtual functions.
 	 *
 	 * Returns: The never trigger
 	 */

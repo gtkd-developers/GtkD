@@ -36,36 +36,36 @@ private import std.algorithm;
 
 
 /**
- * GtkDropTargetAsync is an auxiliary object that can be used to receive
- * Drag-and-Drop operations.
+ * `GtkDropTargetAsync` is an event controller to receive Drag-and-Drop
+ * operations, asynchronously.
+ * 
  * It is the more complete but also more complex method of handling drop
- * operations compared to #GtkDropTarget and you should only use it if
- * #GtkDropTarget doesn't provide all the features you need.
+ * operations compared to [class@Gtk.DropTarget], and you should only use
+ * it if `GtkDropTarget` doesn't provide all the features you need.
  * 
- * To use a #GtkDropTargetAsync to receive drops on a widget, you create
- * a #GtkDropTargetAsync object, configure which data formats and actions
- * you support, connect to its signals, and then attach
- * it to the widget with gtk_widget_add_controller().
+ * To use a `GtkDropTargetAsync` to receive drops on a widget, you create
+ * a `GtkDropTargetAsync` object, configure which data formats and actions
+ * you support, connect to its signals, and then attach it to the widget
+ * with [method@Gtk.Widget.add_controller].
  * 
- * During a drag operation, the first signal that a GtkDropTargetAsync
- * emits is #GtkDropTargetAsync::accept, which is meant to determine
- * whether the target is a possible drop site for the ongoing drop.
- * The default handler for the ::accept signal accepts the drop
- * if it finds a compatible data format and an action that is supported
- * on both sides.
+ * During a drag operation, the first signal that a `GtkDropTargetAsync`
+ * emits is [signal@Gtk.DropTargetAsync::accept], which is meant to determine
+ * whether the target is a possible drop site for the ongoing drop. The
+ * default handler for the ::accept signal accepts the drop if it finds
+ * a compatible data format and an action that is supported on both sides.
  * 
  * If it is, and the widget becomes a target, you will receive a
- * #GtkDropTargetAsync::drag-enter signal, followed by
- * #GtkDropTargetAsync::drag-motion signals as the pointer moves,
- * optionally a #GtkDropTargetAsync::drop signal when a drop happens,
- * and finally a #GtkDropTargetAsync::drag-leave signal when the pointer
- * moves off the widget.
+ * [signal@Gtk.DropTargetAsync::drag-enter] signal, followed by
+ * [signal@Gtk.DropTargetAsync::drag-motion] signals as the pointer moves,
+ * optionally a [signal@Gtk.DropTargetAsync::drop] signal when a drop happens,
+ * and finally a [signal@Gtk.DropTargetAsync::drag-leave] signal when the
+ * pointer moves off the widget.
  * 
- * The ::drag-enter and ::drag-motion handler return a #GdkDragAction
+ * The ::drag-enter and ::drag-motion handler return a `GdkDragAction`
  * to update the status of the ongoing operation. The ::drop handler
  * should decide if it ultimately accepts the drop and if it does, it
  * should initiate the data transfer and finish the operation by calling
- * gdk_drop_finish().
+ * [method@Gdk.Drop.finish].
  * 
  * Between the ::drag-enter and ::drag-leave signals the widget is a
  * current drop target, and will receive the %GTK_STATE_FLAG_DROP_ACTIVE
@@ -107,13 +107,13 @@ public class DropTargetAsync : EventController
 	}
 
 	/**
-	 * Creates a new #GtkDropTargetAsync object.
+	 * Creates a new `GtkDropTargetAsync` object.
 	 *
 	 * Params:
 	 *     formats = the supported data formats
 	 *     actions = the supported actions
 	 *
-	 * Returns: the new #GtkDropTargetAsync
+	 * Returns: the new `GtkDropTargetAsync`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -197,13 +197,13 @@ public class DropTargetAsync : EventController
 	}
 
 	/**
-	 * The ::accept signal is emitted on the drop site when a drop operation
-	 * is about to begin.
+	 * Emitted on the drop site when a drop operation is about to begin.
 	 *
 	 * If the drop is not accepted, %FALSE will be returned and the drop target
 	 * will ignore the drop. If %TRUE is returned, the drop is accepted for now
-	 * but may be rejected later via a call to gtk_drop_target_async_reject() or
-	 * ultimately by returning %FALSE from #GtkDropTargetAsync::drop.
+	 * but may be rejected later via a call to [method@Gtk.DropTargetAsync.reject_drop]
+	 * or ultimately by returning %FALSE from a [signal@Gtk.DropTargetAsync::drop]
+	 * handler.
 	 *
 	 * The default handler for this signal decides whether to accept the drop
 	 * based on the formats provided by the @drop.
@@ -211,7 +211,7 @@ public class DropTargetAsync : EventController
 	 * If the decision whether the drop will be accepted or rejected needs
 	 * further processing, such as inspecting the data, this function should
 	 * return %TRUE and proceed as is @drop was accepted and if it decides to
-	 * reject the drop later, it should call gtk_drop_target_async_reject_drop().
+	 * reject the drop later, it should call [method@Gtk.DropTargetAsync.reject_drop].
 	 *
 	 * Params:
 	 *     drop = the #GdkDrop
@@ -224,8 +224,9 @@ public class DropTargetAsync : EventController
 	}
 
 	/**
-	 * The ::drag-enter signal is emitted on the drop site when the pointer
-	 * enters the widget. It can be used to set up custom highlighting.
+	 * Emitted on the drop site when the pointer enters the widget.
+	 *
+	 * It can be used to set up custom highlighting.
 	 *
 	 * Params:
 	 *     drop = the #GdkDrop
@@ -240,9 +241,10 @@ public class DropTargetAsync : EventController
 	}
 
 	/**
-	 * The ::drag-leave signal is emitted on the drop site when the pointer
-	 * leaves the widget. Its main purpose it to undo things done in
-	 * #GtkDropTargetAsync::drag-enter.
+	 * Emitted on the drop site when the pointer leaves the widget.
+	 *
+	 * Its main purpose it to undo things done in
+	 * `GtkDropTargetAsync`::drag-enter.
 	 *
 	 * Params:
 	 *     drop = the #GdkDrop
@@ -253,8 +255,7 @@ public class DropTargetAsync : EventController
 	}
 
 	/**
-	 * The ::drag-motion signal is emitted while the pointer is moving
-	 * over the drop target.
+	 * Emitted while the pointer is moving over the drop target.
 	 *
 	 * Params:
 	 *     drop = the #GdkDrop
@@ -269,18 +270,20 @@ public class DropTargetAsync : EventController
 	}
 
 	/**
-	 * The ::drop signal is emitted on the drop site when the user drops
-	 * the data onto the widget. The signal handler must determine whether
-	 * the pointer position is in a drop zone or not. If it is not in a drop
-	 * zone, it returns %FALSE and no further processing is necessary.
+	 * Emitted on the drop site when the user drops the data onto the widget.
+	 *
+	 * The signal handler must determine whether the pointer position is in a
+	 * drop zone or not. If it is not in a drop zone, it returns %FALSE and no
+	 * further processing is necessary.
 	 *
 	 * Otherwise, the handler returns %TRUE. In this case, this handler will
-	 * accept the drop. The handler must ensure that gdk_drop_finish() is
-	 * called to let the source know that the drop is done. The call to
-	 * gdk_drop_finish() must only be done when all data has been received.
+	 * accept the drop. The handler must ensure that [method@Gdk.Drop.finish]
+	 * is called to let the source know that the drop is done. The call to
+	 * [method@Gdk.Drop.finish] must only be done when all data has been received.
 	 *
-	 * To receive the data, use one of the read functions provides by #GdkDrop
-	 * such as gdk_drop_read_async() or gdk_drop_read_value_async().
+	 * To receive the data, use one of the read functions provided by
+	 * [class@Gdk.Drop] such as [method@Gdk.Drop.read_async] or
+	 * [method@Gdk.Drop.read_value_async].
 	 *
 	 * Params:
 	 *     drop = the #GdkDrop

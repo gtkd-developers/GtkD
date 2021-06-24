@@ -27,9 +27,9 @@ module gst.mpegts.AtscMultString;
 private import glib.MemorySlice;
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /** */
@@ -64,7 +64,7 @@ public final class AtscMultString
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gstMpegtsAtscMultString);
 	}
 

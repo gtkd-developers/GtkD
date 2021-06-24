@@ -34,17 +34,17 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkSortListModel is a list model that takes a list model and
- * sorts its elements according to a #GtkSorter.
+ * `GtkSortListModel` is a list model that sorts the elements of
+ * the underlying model according to a `GtkSorter`.
  * 
  * The model can be set up to do incremental sorting, so that
  * sorting long lists doesn't block the UI. See
- * gtk_sort_list_model_set_incremental() for details.
+ * [method@Gtk.SortListModel.set_incremental] for details.
  * 
- * #GtkSortListModel is a generic model and because of that it
+ * `GtkSortListModel` is a generic model and because of that it
  * cannot take advantage of any external knowledge when sorting.
- * If you run into performance issues with #GtkSortListModel, it
- * is strongly recommended that you write your own sorting list
+ * If you run into performance issues with `GtkSortListModel`,
+ * it is strongly recommended that you write your own sorting list
  * model.
  */
 public class SortListModel : ObjectG, ListModelIF
@@ -90,9 +90,9 @@ public class SortListModel : ObjectG, ListModelIF
 	 *
 	 * Params:
 	 *     model = the model to sort, or %NULL
-	 *     sorter = the #GtkSorter to sort @model with, or %NULL
+	 *     sorter = the `GtkSorter` to sort @model with, or %NULL
 	 *
-	 * Returns: a new #GtkSortListModel
+	 * Returns: a new `GtkSortListModel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -109,8 +109,9 @@ public class SortListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Returns whether incremental sorting was enabled via
-	 * gtk_sort_list_model_set_incremental().
+	 * Returns whether incremental sorting is enabled.
+	 *
+	 * See [method@Gtk.SortListModel.set_incremental].
 	 *
 	 * Returns: %TRUE if incremental sorting is enabled
 	 */
@@ -137,7 +138,7 @@ public class SortListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Estimates progress of an ongoing sorting operation
+	 * Estimates progress of an ongoing sorting operation.
 	 *
 	 * The estimate is the number of items that would still need to be
 	 * sorted to finish the sorting operation if this was a linear
@@ -145,14 +146,15 @@ public class SortListModel : ObjectG, ListModelIF
 	 * already correctly sorted.
 	 *
 	 * If you want to estimate the progress, you can use code like this:
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * pending = gtk_sort_list_model_get_pending (self);
 	 * model = gtk_sort_list_model_get_model (self);
 	 * progress = 1.0 - pending / (double) MAX (1, g_list_model_get_n_items (model));
-	 * ]|
+	 * ```
 	 *
 	 * If no sort operation is ongoing - in particular when
-	 * #GtkSortListModel:incremental is %FALSE - this function returns 0.
+	 * [property@Gtk.SortListModel:incremental] is %FALSE - this
+	 * function returns 0.
 	 *
 	 * Returns: a progress estimate of remaining items to sort
 	 */
@@ -181,7 +183,7 @@ public class SortListModel : ObjectG, ListModelIF
 	/**
 	 * Sets the sort model to do an incremental sort.
 	 *
-	 * When incremental sorting is enabled, the sortlistmodel will not do
+	 * When incremental sorting is enabled, the `GtkSortListModel` will not do
 	 * a complete sort immediately, but will instead queue an idle handler that
 	 * incrementally sorts the items towards their correct position. This of
 	 * course means that items do not instantly appear in the right place. It
@@ -193,7 +195,7 @@ public class SortListModel : ObjectG, ListModelIF
 	 *
 	 * By default, incremental sorting is disabled.
 	 *
-	 * See gtk_sort_list_model_get_pending() for progress information
+	 * See [method@Gtk.SortListModel.get_pending] for progress information
 	 * about an ongoing incremental sorting operation.
 	 *
 	 * Params:
@@ -205,8 +207,9 @@ public class SortListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Sets the model to be sorted. The @model's item type must conform to
-	 * the item type of @self.
+	 * Sets the model to be sorted.
+	 *
+	 * The @model's item type must conform to the item type of @self.
 	 *
 	 * Params:
 	 *     model = The model to be sorted
@@ -220,7 +223,7 @@ public class SortListModel : ObjectG, ListModelIF
 	 * Sets a new sorter on @self.
 	 *
 	 * Params:
-	 *     sorter = the #GtkSorter to sort @model with
+	 *     sorter = the `GtkSorter` to sort @model with
 	 */
 	public void setSorter(Sorter sorter)
 	{

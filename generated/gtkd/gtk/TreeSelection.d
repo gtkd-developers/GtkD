@@ -38,6 +38,8 @@ private import std.algorithm;
 
 
 /**
+ * The selection object for GtkTreeView
+ * 
  * The #GtkTreeSelection object is a helper object to manage the selection
  * for a #GtkTreeView widget.  The #GtkTreeSelection object is
  * automatically created when a new #GtkTreeView widget is created, and

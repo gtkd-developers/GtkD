@@ -28,6 +28,7 @@ private import gdk.Device;
 private import gdk.Event;
 private import gdk.Surface;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
@@ -38,72 +39,43 @@ private import std.algorithm;
 
 
 /**
- * #GtkIMContext defines the interface for GTK input methods. An input method
- * is used by GTK text input widgets like #GtkEntry to map from key events to
- * Unicode character strings.
+ * `GtkIMContext` defines the interface for GTK input methods.
  * 
- * The default input method can be set programmatically via the
- * #GtkSettings:gtk-im-module GtkSettings property. Alternatively, you may set
- * the GTK_IM_MODULE environment variable as documented in
- * [Running GTK Applications][gtk-running].
+ * `GtkIMContext` is used by GTK text input widgets like `GtkText`
+ * to map from key events to Unicode character strings.
  * 
- * The #GtkEntry #GtkEntry:im-module and #GtkTextView #GtkTextView:im-module
- * properties may also be used to set input methods for specific widget
- * instances. For instance, a certain entry widget might be expected to contain
- * certain characters which would be easier to input with a certain input
- * method.
+ * By default, GTK uses a platform-dependent default input method.
+ * On Windows, the default implementation is IME-based and on Wayland,
+ * it is using the Wayland text protocol. The choice can be overridden
+ * programmatically via the [property@Gtk.Settings:gtk-im-module] setting.
+ * Users may set the `GTK_IM_MODULE` environment variable to override the
+ * default.
  * 
- * An input method may consume multiple key events in sequence and finally
- * output the composed result. This is called preediting, and an input method
- * may provide feedback about this process by displaying the intermediate
- * composition states as preedit text. For instance, the default GTK input
- * method implements the input of arbitrary Unicode code points by holding down
- * the Control and Shift keys and then typing “U” followed by the hexadecimal
- * digits of the code point.  When releasing the Control and Shift keys,
- * preediting ends and the character is inserted as text. Ctrl+Shift+u20AC for
- * example results in the € sign.
+ * Text widgets have a :im-module property (e.g. [property@Gtk.TextView:im-module])
+ * that may also be used to set input methods for specific widget instances.
+ * For instance, a certain entry widget might be expected to contain
+ * certain characters which would be easier to input with a specific
+ * input method.
+ * 
+ * An input method may consume multiple key events in sequence before finally
+ * outputting the composed result. This is called *preediting*, and an input
+ * method may provide feedback about this process by displaying the intermediate
+ * composition states as preedit text.
+ * 
+ * For instance, the built-in GTK input method `GtkIMContextSimple` implements
+ * the input of arbitrary Unicode code points by holding down the
+ * <kbd>Control</kbd> and <kbd>Shift</kbd> keys and then typing <kbd>U</kbd>
+ * followed by the hexadecimal digits of the code point. When releasing the
+ * <kbd>Control</kbd> and <kbd>Shift</kbd> keys, preediting ends and the
+ * character is inserted as text. For example,
+ * 
+ * Ctrl+Shift+u 2 0 A C
+ * 
+ * results in the € sign.
  * 
  * Additional input methods can be made available for use by GTK widgets as
  * loadable modules. An input method module is a small shared library which
- * implements a subclass of #GtkIMContext or #GtkIMContextSimple and exports
- * these four functions:
- * 
- * |[<!-- language="C" -->
- * void im_module_init(GTypeModule *module);
- * ]|
- * This function should register the #GType of the #GtkIMContext subclass which
- * implements the input method by means of g_type_module_register_type(). Note
- * that g_type_register_static() cannot be used as the type needs to be
- * registered dynamically.
- * 
- * |[<!-- language="C" -->
- * void im_module_exit(void);
- * ]|
- * Here goes any cleanup code your input method might require on module unload.
- * 
- * |[<!-- language="C" -->
- * void im_module_list(const GtkIMContextInfo ***contexts, int *n_contexts)
- * {
- * *contexts = info_list;
- * *n_contexts = G_N_ELEMENTS (info_list);
- * }
- * ]|
- * This function returns the list of input methods provided by the module. The
- * example implementation above shows a common solution and simply returns a
- * pointer to statically defined array of #GtkIMContextInfo items for each
- * provided input method.
- * 
- * |[<!-- language="C" -->
- * GtkIMContext * im_module_create(const char *context_id);
- * ]|
- * This function should return a pointer to a newly created instance of the
- * #GtkIMContext subclass identified by @context_id. The context ID is the same
- * as specified in the #GtkIMContextInfo array returned by im_module_list().
- * 
- * After a new loadable input method module has been installed on the system,
- * the configuration file `gtk.immodules` needs to be
- * regenerated by [gtk-query-immodules-3.0][gtk-query-immodules-3.0],
- * in order for the new input method to become available to GTK applications.
+ * provides a `GIOExtension` for the extension point named "gtk-im-module".
  */
 public class IMContext : ObjectG
 {
@@ -143,9 +115,10 @@ public class IMContext : ObjectG
 	/**
 	 * Asks the widget that the input context is attached to delete
 	 * characters around the cursor position by emitting the
-	 * GtkIMContext::delete_surrounding signal. Note that @offset and @n_chars
-	 * are in characters not in bytes which differs from the usage other
-	 * places in #GtkIMContext.
+	 * GtkIMContext::delete_surrounding signal.
+	 *
+	 * Note that @offset and @n_chars are in characters not in bytes
+	 * which differs from the usage other places in #GtkIMContext.
 	 *
 	 * In order to use this function, you should first call
 	 * gtk_im_context_get_surrounding() to get the current context, and
@@ -172,7 +145,7 @@ public class IMContext : ObjectG
 
 	/**
 	 * Allow an input method to forward key press and release events
-	 * to another input method, without necessarily having a GdkEvent
+	 * to another input methodm without necessarily having a `GdkEvent`
 	 * available.
 	 *
 	 * Params:
@@ -193,7 +166,9 @@ public class IMContext : ObjectG
 
 	/**
 	 * Allow an input method to internally handle key press and release
-	 * events. If this function returns %TRUE, then no further processing
+	 * events.
+	 *
+	 * If this function returns %TRUE, then no further processing
 	 * should be done for this key event.
 	 *
 	 * Params:
@@ -208,9 +183,10 @@ public class IMContext : ObjectG
 
 	/**
 	 * Notify the input method that the widget to which this
-	 * input context corresponds has gained focus. The input method
-	 * may, for example, change the displayed feedback to reflect
-	 * this change.
+	 * input context corresponds has gained focus.
+	 *
+	 * The input method may, for example, change the displayed
+	 * feedback to reflect this change.
 	 */
 	public void focusIn()
 	{
@@ -219,9 +195,10 @@ public class IMContext : ObjectG
 
 	/**
 	 * Notify the input method that the widget to which this
-	 * input context corresponds has lost focus. The input method
-	 * may, for example, change the displayed feedback or reset the contexts
-	 * state to reflect this change.
+	 * input context corresponds has lost focus.
+	 *
+	 * The input method may, for example, change the displayed
+	 * feedback or reset the contexts state to reflect this change.
 	 */
 	public void focusOut()
 	{
@@ -231,8 +208,8 @@ public class IMContext : ObjectG
 	/**
 	 * Retrieve the current preedit string for the input context,
 	 * and a list of attributes to apply to the string.
-	 * This string should be displayed inserted at the insertion
-	 * point.
+	 *
+	 * This string should be displayed inserted at the insertion point.
 	 *
 	 * Params:
 	 *     str = location to store the retrieved
@@ -255,18 +232,23 @@ public class IMContext : ObjectG
 	}
 
 	/**
-	 * Retrieves context around the insertion point. Input methods
-	 * typically want context in order to constrain input text based on
-	 * existing text; this is important for languages such as Thai where
-	 * only some sequences of characters are allowed.
+	 * Retrieves context around the insertion point.
+	 *
+	 * Input methods typically want context in order to constrain input text
+	 * based on existing text; this is important for languages such as Thai
+	 * where only some sequences of characters are allowed.
 	 *
 	 * This function is implemented by emitting the
-	 * GtkIMContext::retrieve_surrounding signal on the input method; in
-	 * response to this signal, a widget should provide as much context as
+	 * [signal@Gtk.IMContext::retrieve-surrounding] signal on the input method;
+	 * in response to this signal, a widget should provide as much context as
 	 * is available, up to an entire paragraph, by calling
-	 * gtk_im_context_set_surrounding(). Note that there is no obligation
-	 * for a widget to respond to the ::retrieve_surrounding signal, so input
-	 * methods must be prepared to function without context.
+	 * [method@Gtk.IMContext.set_surrounding].
+	 *
+	 * Note that there is no obligation for a widget to respond to the
+	 * `::retrieve-surrounding` signal, so input methods must be prepared to
+	 * function without context.
+	 *
+	 * Deprecated: Use [method@Gtk.IMContext.get_surrounding_with_selection] instead.
 	 *
 	 * Params:
 	 *     text = location to store a UTF-8 encoded
@@ -276,8 +258,8 @@ public class IMContext : ObjectG
 	 *     cursorIndex = location to store byte index of the insertion
 	 *         cursor within @text.
 	 *
-	 * Returns: %TRUE if surrounding text was provided; in this case
-	 *     you must free the result stored in *text.
+	 * Returns: `TRUE` if surrounding text was provided; in this case
+	 *     you must free the result stored in `text`.
 	 */
 	public bool getSurrounding(out string text, out int cursorIndex)
 	{
@@ -291,9 +273,53 @@ public class IMContext : ObjectG
 	}
 
 	/**
+	 * Retrieves context around the insertion point.
+	 *
+	 * Input methods typically want context in order to constrain input
+	 * text based on existing text; this is important for languages such
+	 * as Thai where only some sequences of characters are allowed.
+	 *
+	 * This function is implemented by emitting the
+	 * [signal@Gtk.IMContext::retrieve-surrounding] signal on the input method;
+	 * in response to this signal, a widget should provide as much context as
+	 * is available, up to an entire paragraph, by calling
+	 * [method@Gtk.IMContext.set_surrounding_with_selection].
+	 *
+	 * Note that there is no obligation for a widget to respond to the
+	 * `::retrieve-surrounding` signal, so input methods must be prepared to
+	 * function without context.
+	 *
+	 * Params:
+	 *     text = location to store a UTF-8 encoded
+	 *         string of text holding context around the insertion point.
+	 *         If the function returns %TRUE, then you must free the result
+	 *         stored in this location with g_free().
+	 *     cursorIndex = location to store byte index of the insertion
+	 *         cursor within @text.
+	 *     anchorIndex = location to store byte index of the selection
+	 *         bound within @text
+	 *
+	 * Returns: `TRUE` if surrounding text was provided; in this case
+	 *     you must free the result stored in `text`.
+	 *
+	 * Since: 4.2
+	 */
+	public bool getSurroundingWithSelection(out string text, out int cursorIndex, out int anchorIndex)
+	{
+		char* outtext = null;
+
+		auto __p = gtk_im_context_get_surrounding_with_selection(gtkIMContext, &outtext, &cursorIndex, &anchorIndex) != 0;
+
+		text = Str.toString(outtext);
+
+		return __p;
+	}
+
+	/**
 	 * Notify the input method that a change such as a change in cursor
-	 * position has been made. This will typically cause the input
-	 * method to clear the preedit state.
+	 * position has been made.
+	 *
+	 * This will typically cause the input method to clear the preedit state.
 	 */
 	public void reset()
 	{
@@ -301,8 +327,9 @@ public class IMContext : ObjectG
 	}
 
 	/**
-	 * Set the client window for the input context; this is the
-	 * #GtkWidget holding the input focus. This widget is
+	 * Set the client widget for the input context.
+	 *
+	 * This is the `GtkWidget` holding the input focus. This widget is
 	 * used in order to correctly position status windows, and may
 	 * also be used for purposes internal to the input method.
 	 *
@@ -317,8 +344,9 @@ public class IMContext : ObjectG
 
 	/**
 	 * Notify the input method that a change in cursor
-	 * position has been made. The location is relative to the client
-	 * window.
+	 * position has been made.
+	 *
+	 * The location is relative to the client window.
 	 *
 	 * Params:
 	 *     area = new location
@@ -330,9 +358,13 @@ public class IMContext : ObjectG
 
 	/**
 	 * Sets surrounding context around the insertion point and preedit
-	 * string. This function is expected to be called in response to the
-	 * GtkIMContext::retrieve_surrounding signal, and will likely have no
-	 * effect if called at other times.
+	 * string.
+	 *
+	 * This function is expected to be called in response to the
+	 * [signal@Gtk.IMContext::retrieve-surrounding] signal, and will
+	 * likely have no effect if called at other times.
+	 *
+	 * Deprecated: Use [method@Gtk.IMContext.set_surrounding_with_selection] instead
 	 *
 	 * Params:
 	 *     text = text surrounding the insertion point, as UTF-8.
@@ -347,10 +379,33 @@ public class IMContext : ObjectG
 	}
 
 	/**
+	 * Sets surrounding context around the insertion point and preedit
+	 * string. This function is expected to be called in response to the
+	 * GtkIMContext::retrieve_surrounding signal, and will likely have no
+	 * effect if called at other times.
+	 *
+	 * Params:
+	 *     text = text surrounding the insertion point, as UTF-8.
+	 *         the preedit string should not be included within
+	 *         @text.
+	 *     len = the length of @text, or -1 if @text is nul-terminated
+	 *     cursorIndex = the byte index of the insertion cursor within @text
+	 *     anchorIndex = the byte index of the selection bound within @text
+	 *
+	 * Since: 4.2
+	 */
+	public void setSurroundingWithSelection(string text, int len, int cursorIndex, int anchorIndex)
+	{
+		gtk_im_context_set_surrounding_with_selection(gtkIMContext, Str.toStringz(text), len, cursorIndex, anchorIndex);
+	}
+
+	/**
 	 * Sets whether the IM context should use the preedit string
-	 * to display feedback. If @use_preedit is FALSE (default
-	 * is TRUE), then the IM context may use some other method to display
-	 * feedback, such as displaying it in a child of the root window.
+	 * to display feedback.
+	 *
+	 * If @use_preedit is %FALSE (default is %TRUE), then the IM context
+	 * may use some other method to display feedback, such as displaying
+	 * it in a child of the root window.
 	 *
 	 * Params:
 	 *     usePreedit = whether the IM context should use the preedit string.

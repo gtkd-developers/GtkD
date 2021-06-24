@@ -28,8 +28,8 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
-private import gtkd.Loader;
 
 
 /**
@@ -68,7 +68,7 @@ public final class DBusAnnotationInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_dbus_annotation_info_unref(gDBusAnnotationInfo);
 	}
 

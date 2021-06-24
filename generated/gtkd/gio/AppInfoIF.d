@@ -36,6 +36,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -444,7 +445,7 @@ public interface AppInfoIF{
 	/**
 	 * Checks if two #GAppInfos are equal.
 	 *
-	 * Note that the check <emphasis>may not</emphasis> compare each individual
+	 * Note that the check *may not* compare each individual
 	 * field, and only does an identity check. In case detecting changes in the
 	 * contents is needed, program code must additionally compare relevant fields.
 	 *

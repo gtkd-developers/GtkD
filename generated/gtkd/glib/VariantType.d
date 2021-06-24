@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -59,7 +58,7 @@ private import gtkd.Loader;
  * 
  * Just as in D-Bus, GVariant types are described with strings ("type
  * strings").  Subject to the differences mentioned above, these strings
- * are of the same form as those found in DBus.  Note, however: D-Bus
+ * are of the same form as those found in D-Bus.  Note, however: D-Bus
  * always works in terms of messages and therefore individual type
  * strings appear nowhere in its interface.  Instead, "signatures"
  * are a concatenation of the strings of the type of each argument in a
@@ -211,7 +210,7 @@ public class VariantType
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_variant_type_free(gVariantType);
 	}
 

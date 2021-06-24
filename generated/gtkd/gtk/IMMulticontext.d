@@ -26,13 +26,21 @@ module gtk.IMMulticontext;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.IMContext;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkIMMulticontext` is input method supporting multiple, switchable input
+ * methods.
+ * 
+ * Text widgets such as `GtkText` or `GtkTextView` use a `GtkIMMultiContext`
+ * to implement their `im-module` property for switching between different
+ * input methods.
+ */
 public class IMMulticontext : IMContext
 {
 	/** the main Gtk struct */
@@ -69,9 +77,9 @@ public class IMMulticontext : IMContext
 	}
 
 	/**
-	 * Creates a new #GtkIMMulticontext.
+	 * Creates a new `GtkIMMulticontext`.
 	 *
-	 * Returns: a new #GtkIMMulticontext.
+	 * Returns: a new `GtkIMMulticontext`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

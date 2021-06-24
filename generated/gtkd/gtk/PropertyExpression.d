@@ -33,7 +33,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * A `GObject` property value in a `GtkExpression`.
+ */
 public class PropertyExpression : Expression
 {
 	/** the main Gtk struct */
@@ -71,23 +73,23 @@ public class PropertyExpression : Expression
 
 	/**
 	 * Creates an expression that looks up a property via the
-	 * given @expression or the `this` argument when @expression
-	 * is %NULL.
+	 * given `expression` or the `this` argument when `expression`
+	 * is `NULL`.
 	 *
-	 * If the resulting object conforms to @this_type, its property
-	 * named @property_name will be queried.
-	 * Otherwise, this expression's evaluation will fail.
+	 * If the resulting object conforms to `this_type`, its property named
+	 * `property_name` will be queried. Otherwise, this expression's
+	 * evaluation will fail.
 	 *
-	 * The given @this_type must have a property with @property_name.
+	 * The given `this_type` must have a property with `property_name`.
 	 *
 	 * Params:
 	 *     thisType = The type to expect for the this type
 	 *     expression = Expression to
-	 *         evaluate to get the object to query or %NULL to
+	 *         evaluate to get the object to query or `NULL` to
 	 *         query the `this` object
 	 *     propertyName = name of the property
 	 *
-	 * Returns: a new #GtkExpression
+	 * Returns: a new `GtkExpression`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,20 +107,20 @@ public class PropertyExpression : Expression
 
 	/**
 	 * Creates an expression that looks up a property via the
-	 * given @expression or the `this` argument when @expression
-	 * is %NULL.
+	 * given `expression` or the `this` argument when `expression`
+	 * is `NULL`.
 	 *
-	 * If the resulting object conforms to @this_type, its
-	 * property specified by @pspec will be queried.
+	 * If the resulting object conforms to `this_type`, its
+	 * property specified by `pspec` will be queried.
 	 * Otherwise, this expression's evaluation will fail.
 	 *
 	 * Params:
 	 *     expression = Expression to
-	 *         evaluate to get the object to query or %NULL to
+	 *         evaluate to get the object to query or `NULL` to
 	 *         query the `this` object
-	 *     pspec = the #GParamSpec for the property to query
+	 *     pspec = the `GParamSpec` for the property to query
 	 *
-	 * Returns: a new #GtkExpression
+	 * Returns: a new `GtkExpression`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -153,10 +155,10 @@ public class PropertyExpression : Expression
 	}
 
 	/**
-	 * Gets the #GParamSpec specifying the property of
+	 * Gets the `GParamSpec` specifying the property of
 	 * a property expression.
 	 *
-	 * Returns: the #GParamSpec
+	 * Returns: the `GParamSpec` for the property
 	 */
 	public ParamSpec getPspec()
 	{

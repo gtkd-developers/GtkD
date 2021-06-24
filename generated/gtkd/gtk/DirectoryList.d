@@ -30,31 +30,34 @@ private import gio.ListModelT;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
 /**
- * #GtkDirectoryList is a list model that wraps g_file_enumerate_children_async().
- * It presents a #GListModel and fills it asynchronously with the #GFileInfos
+ * `GtkDirectoryList` is a list model that wraps g_file_enumerate_children_async().
+ * 
+ * It presents a `GListModel` and fills it asynchronously with the `GFileInfo`s
  * returned from that function.
  * 
- * Enumeration will start automatically when a the #GtkDirectoryList:file property
- * is set.
+ * Enumeration will start automatically when a the
+ * [property@Gtk.DirectoryList:file] property is set.
  * 
- * While the #GtkDirectoryList is being filled, the #GtkDirectoryList:loading
- * property will be set to %TRUE. You can listen to that property if you want
- * to show information like a #GtkSpinner or a "Loading..." text.
+ * While the `GtkDirectoryList` is being filled, the
+ * [property@Gtk.DirectoryList:loading] property will be set to %TRUE. You can
+ * listen to that property if you want to show information like a `GtkSpinner`
+ * or a "Loading..." text.
  * 
- * If loading fails at any point, the #GtkDirectoryList:error property will be
- * set to give more indication about the failure.
+ * If loading fails at any point, the [property@Gtk.DirectoryList:error]
+ * property will be set to give more indication about the failure.
  * 
- * The #GFileInfos returned from a #GtkDirectoryList have the "standard::file"
- * attribute set to the #GFile they refer to. This way you can get at the file
+ * The `GFileInfo`s returned from a `GtkDirectoryList` have the "standard::file"
+ * attribute set to the `GFile` they refer to. This way you can get at the file
  * that is referred to in the same way you would via g_file_enumerator_get_child().
- * This means you do not need access to the #GtkDirectoryList but can access
- * the #GFile directly from the #GFileInfo when operating with a #GtkListView
+ * This means you do not need access to the `GtkDirectoryList`, but can access
+ * the `GFile` directly from the `GFileInfo` when operating with a `GtkListView`
  * or similar.
  */
 public class DirectoryList : ObjectG, ListModelIF
@@ -96,14 +99,16 @@ public class DirectoryList : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Creates a new #GtkDirectoryList querying the given @file with the given
-	 * @attributes.
+	 * Creates a new `GtkDirectoryList`.
+	 *
+	 * The `GtkDirectoryList` is querying the given @file
+	 * with the given @attributes.
 	 *
 	 * Params:
 	 *     attributes = The attributes to query with
 	 *     file = The file to query
 	 *
-	 * Returns: a new #GtkDirectoryList
+	 * Returns: a new `GtkDirectoryList`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -211,7 +216,7 @@ public class DirectoryList : ObjectG, ListModelIF
 	 * Sets the @attributes to be enumerated and starts the enumeration.
 	 *
 	 * If @attributes is %NULL, no attributes will be queried, but a list
-	 * of #GFileInfos will still be created.
+	 * of `GFileInfo`s will still be created.
 	 *
 	 * Params:
 	 *     attributes = the attributes to enumerate
@@ -255,9 +260,8 @@ public class DirectoryList : ObjectG, ListModelIF
 
 	/**
 	 * Sets whether the directory list will monitor the directory
-	 * for changes. If monitoring is enabled, the
-	 * #GListModel::items-changed signal will be emitted when the
-	 * directory contents change.
+	 * for changes. If monitoring is enabled, the ::items-changed
+	 * signal will be emitted when the directory contents change.
 	 *
 	 * When monitoring is turned on after the initial creation
 	 * of the directory list, the directory is reloaded to avoid

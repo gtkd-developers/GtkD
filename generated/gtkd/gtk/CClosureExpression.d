@@ -31,7 +31,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * A variant of `GtkClosureExpression` using a C closure.
+ */
 public class CClosureExpression : Expression
 {
 	/** the main Gtk struct */
@@ -68,9 +70,9 @@ public class CClosureExpression : Expression
 	}
 
 	/**
-	 * This function is a variant of gtk_closure_expression_new() that
-	 * creates a #GClosure by calling g_cclosure_new() with the given
-	 * @callback_func, @user_data and @user_destroy.
+	 * This function is a variant of [ctor@Gtk.ClosureExpression.new] that
+	 * creates a `GClosure` by calling `g_cclosure_new()` with the given
+	 * `callback_func`, `user_data` and `user_destroy`.
 	 *
 	 * Params:
 	 *     valueType = the type of the value that this expression evaluates to
@@ -80,7 +82,7 @@ public class CClosureExpression : Expression
 	 *     userData = user data used for creating a closure
 	 *     userDestroy = destroy notify for @user_data
 	 *
-	 * Returns: a new #GtkExpression
+	 * Returns: a new `GtkExpression`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

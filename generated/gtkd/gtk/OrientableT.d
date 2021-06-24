@@ -29,10 +29,11 @@ public  import gtk.c.types;
 
 
 /**
- * The #GtkOrientable interface is implemented by all widgets that can be
- * oriented horizontally or vertically. #GtkOrientable is more flexible in that
- * it allows the orientation to be changed at runtime, allowing the widgets
- * to “flip”.
+ * The `GtkOrientable` interface is implemented by all widgets that can be
+ * oriented horizontally or vertically.
+ * 
+ * `GtkOrientable` is more flexible in that it allows the orientation to be
+ * changed at runtime, allowing the widgets to “flip”.
  */
 public template OrientableT(TStruct)
 {

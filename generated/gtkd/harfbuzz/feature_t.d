@@ -26,7 +26,6 @@ module harfbuzz.feature_t;
 
 private import glib.MemorySlice;
 private import glib.Str;
-private import gtkd.Loader;
 private import harfbuzz.c.functions;
 public  import harfbuzz.c.types;
 
@@ -35,7 +34,7 @@ public  import harfbuzz.c.types;
  * The #hb_feature_t is the structure that holds information about requested
  * feature application. The feature will be applied with the given value to all
  * glyphs which are in clusters between @start (inclusive) and @end (exclusive).
- * Setting start to @HB_FEATURE_GLOBAL_START and end to @HB_FEATURE_GLOBAL_END
+ * Setting start to #HB_FEATURE_GLOBAL_START and end to #HB_FEATURE_GLOBAL_END
  * specifies that the feature always applies to the entire buffer.
  */
 public final class feature_t
@@ -69,7 +68,7 @@ public final class feature_t
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_HARFBUZZ) && ownedRef )
+		if ( ownedRef )
 			sliceFree(hb_feature);
 	}
 

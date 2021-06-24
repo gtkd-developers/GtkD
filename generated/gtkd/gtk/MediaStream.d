@@ -35,23 +35,23 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkMediaStream is the integration point for media playback inside GTK.
+ * `GtkMediaStream` is the integration point for media playback inside GTK.
  * 
- * GTK provides an implementation of the #GtkMediaStream interface that
- * is called #GtkMediaFile.
+ * GTK provides an implementation of the `GtkMediaStream` interface that
+ * is called [class@Gtk.MediaFile].
  * 
- * Apart from application-facing API for stream playback, #GtkMediaStream
+ * Apart from application-facing API for stream playback, `GtkMediaStream`
  * has a number of APIs that are only useful for implementations and should
  * not be used in applications:
- * gtk_media_stream_prepared(),
- * gtk_media_stream_unprepared(),
- * gtk_media_stream_update(),
- * gtk_media_stream_ended(),
- * gtk_media_stream_seek_success(),
- * gtk_media_stream_seek_failed(),
- * gtk_media_stream_gerror(),
- * gtk_media_stream_error(),
- * gtk_media_stream_error_valist().
+ * [method@Gtk.MediaStream.prepared],
+ * [method@Gtk.MediaStream.unprepared],
+ * [method@Gtk.MediaStream.update],
+ * [method@Gtk.MediaStream.ended],
+ * [method@Gtk.MediaStream.seek_success],
+ * [method@Gtk.MediaStream.seek_failed],
+ * [method@Gtk.MediaStream.gerror],
+ * [method@Gtk.MediaStream.error],
+ * [method@Gtk.MediaStream.error_valist].
  */
 public class MediaStream : ObjectG, PaintableIF
 {
@@ -92,8 +92,12 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Pauses the media stream and marks it as ended. This is a hint only, calls
-	 * to GtkMediaStream.play() may still happen.
+	 * Pauses the media stream and marks it as ended.
+	 *
+	 * This is a hint only, calls to GtkMediaStream.play()
+	 * may still happen.
+	 *
+	 * The media stream must be prepared when this function is called.
 	 */
 	public void ended()
 	{
@@ -103,14 +107,14 @@ public class MediaStream : ObjectG, PaintableIF
 	/**
 	 * Sets @self into an error state using a printf()-style format string.
 	 *
-	 * This is a utility function that calls gtk_media_stream_gerror(). See
-	 * that function for details.
+	 * This is a utility function that calls [method@Gtk.MediaStream.gerror].
+	 * See that function for details.
 	 *
 	 * Params:
 	 *     domain = error domain
 	 *     code = error code
 	 *     format = printf()-style format for error message
-	 *     args = #va_list of parameters for the message format
+	 *     args = `va_list` of parameters for the message format
 	 */
 	public void errorValist(GQuark domain, int code, string format, void* args)
 	{
@@ -118,20 +122,21 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Sets @self into an error state. This will pause the stream
-	 * (you can check for an error via gtk_media_stream_get_error() in
-	 * your GtkMediaStream.pause() implementation), abort pending seeks
-	 * and mark the stream as prepared.
+	 * Sets @self into an error state.
 	 *
-	 * if the stream is already in an error state, this call will be ignored
-	 * and the existing error will be retained.
-	 * FIXME: Or do we want to set the new error?
+	 * This will pause the stream (you can check for an error
+	 * via [method@Gtk.MediaStream.get_error] in your
+	 * GtkMediaStream.pause() implementation), abort pending
+	 * seeks and mark the stream as prepared.
+	 *
+	 * if the stream is already in an error state, this call
+	 * will be ignored and the existing error will be retained.
 	 *
 	 * To unset an error, the stream must be reset via a call to
-	 * gtk_media_stream_unprepared().
+	 * [method@Gtk.MediaStream.unprepared].
 	 *
 	 * Params:
-	 *     error = the #GError to set
+	 *     error = the `GError` to set
 	 */
 	public void gerror(ErrorG error)
 	{
@@ -139,8 +144,9 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Gets the duration of the stream. If the duration is not known,
-	 * 0 will be returned.
+	 * Gets the duration of the stream.
+	 *
+	 * If the duration is not known, 0 will be returned.
 	 *
 	 * Returns: the duration of the stream or 0 if not known.
 	 */
@@ -160,19 +166,23 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * If the stream is in an error state, returns the #GError explaining that state.
-	 * Any type of error can be reported here depending on the implementation of the
-	 * media stream.
+	 * If the stream is in an error state, returns the `GError`
+	 * explaining that state.
 	 *
-	 * A media stream in an error cannot be operated on, calls like
-	 * gtk_media_stream_play() or gtk_media_stream_seek() will not have any effect.
+	 * Any type of error can be reported here depending on the
+	 * implementation of the media stream.
 	 *
-	 * #GtkMediaStream itself does not provide a way to unset an error, but
-	 * implementations may provide options. For example, a #GtkMediaFile will unset
-	 * errors when a new source is set with ie gtk_media_file_set_file().
+	 * A media stream in an error cannot be operated on, calls
+	 * like [method@Gtk.MediaStream.play] or
+	 * [method@Gtk.MediaStream.seek] will not have any effect.
 	 *
-	 * Returns: %NULL if not in an error state or
-	 *     the #GError of the stream
+	 * `GtkMediaStream` itself does not provide a way to unset
+	 * an error, but implementations may provide options. For example,
+	 * a [class@Gtk.MediaFile] will unset errors when a new source is
+	 * set, e.g. with [method@Gtk.MediaFile.set_file].
+	 *
+	 * Returns: %NULL if not in an
+	 *     error state or the `GError` of the stream
 	 */
 	public ErrorG getError()
 	{
@@ -187,8 +197,9 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Returns whether the stream is set to loop. See
-	 * gtk_media_stream_set_loop() for details.
+	 * Returns whether the stream is set to loop.
+	 *
+	 * See [method@Gtk.MediaStream.set_loop] for details.
 	 *
 	 * Returns: %TRUE if the stream should loop
 	 */
@@ -199,7 +210,8 @@ public class MediaStream : ObjectG, PaintableIF
 
 	/**
 	 * Returns whether the audio for the stream is muted.
-	 * See gtk_media_stream_set_muted() for details.
+	 *
+	 * See [method@Gtk.MediaStream.set_muted] for details.
 	 *
 	 * Returns: %TRUE if the stream is muted
 	 */
@@ -230,7 +242,8 @@ public class MediaStream : ObjectG, PaintableIF
 
 	/**
 	 * Returns the volume of the audio for the stream.
-	 * See gtk_media_stream_set_volume() for details.
+	 *
+	 * See [method@Gtk.MediaStream.set_volume] for details.
 	 *
 	 * Returns: volume of the stream from 0.0 to 1.0
 	 */
@@ -260,8 +273,9 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Returns whether the stream has finished initializing and existence of
-	 * audio and video is known.
+	 * Returns whether the stream has finished initializing.
+	 *
+	 * At this point the existence of audio and video is known.
 	 *
 	 * Returns: %TRUE if the stream is prepared
 	 */
@@ -278,7 +292,7 @@ public class MediaStream : ObjectG, PaintableIF
 	 * %FALSE, streams are guaranteed to not be seekable and user interfaces
 	 * may hide controls that allow seeking.
 	 *
-	 * It is allowed to call gtk_media_stream_seek() on a non-seekable
+	 * It is allowed to call [method@Gtk.MediaStream.seek] on a non-seekable
 	 * stream, though it will not do anything.
 	 *
 	 * Returns: %TRUE if the stream may support seeking
@@ -299,8 +313,9 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Pauses playback of the stream. If the stream
-	 * is not playing, do nothing.
+	 * Pauses playback of the stream.
+	 *
+	 * If the stream is not playing, do nothing.
 	 */
 	public void pause()
 	{
@@ -308,8 +323,9 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Starts playing the stream. If the stream
-	 * is in error or already playing, do nothing.
+	 * Starts playing the stream.
+	 *
+	 * If the stream is in error or already playing, do nothing.
 	 */
 	public void play()
 	{
@@ -317,7 +333,7 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Called by #GtkMediaStream implementations to advertise the stream
+	 * Called by `GtkMediaStream` implementations to advertise the stream
 	 * being ready to play and providing details about the stream.
 	 *
 	 * Note that the arguments are hints. If the stream implementation
@@ -326,7 +342,7 @@ public class MediaStream : ObjectG, PaintableIF
 	 * values to determine what controls to show.
 	 *
 	 * This function may not be called again until the stream has been
-	 * reset via gtk_media_stream_unprepared().
+	 * reset via [method@Gtk.MediaStream.unprepared].
 	 *
 	 * Params:
 	 *     hasAudio = %TRUE if the stream should advertise audio support
@@ -340,23 +356,25 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Called by users to attach the media stream to a #GdkSurface they manage.
-	 * The stream can then access the resources of @surface for its rendering
-	 * purposes. In particular, media streams might want to create
-	 * #GdkGLContexts or sync to the #GdkFrameClock.
+	 * Called by users to attach the media stream to a `GdkSurface` they manage.
+	 *
+	 * The stream can then access the resources of @surface for its
+	 * rendering purposes. In particular, media streams might want to
+	 * create a `GdkGLContext` or sync to the `GdkFrameClock`.
 	 *
 	 * Whoever calls this function is responsible for calling
-	 * gtk_media_stream_unrealize() before either the stream or @surface get
-	 * destroyed.
+	 * [method@Gtk.MediaStream.unrealize] before either the stream
+	 * or @surface get destroyed.
 	 *
-	 * Multiple calls to this function may happen from different users of the
-	 * video, even with the same @surface. Each of these calls must be followed
-	 * by its own call to gtk_media_stream_unrealize().
+	 * Multiple calls to this function may happen from different
+	 * users of the video, even with the same @surface. Each of these
+	 * calls must be followed by its own call to
+	 * [method@Gtk.MediaStream.unrealize].
 	 *
 	 * It is not required to call this function to make a media stream work.
 	 *
 	 * Params:
-	 *     surface = a #GdkSurface
+	 *     surface = a `GdkSurface`
 	 */
 	public void realize(Surface surface)
 	{
@@ -364,14 +382,17 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Start a seek operation on @self to @timestamp. If @timestamp is out of range,
-	 * it will be clamped.
+	 * Start a seek operation on @self to @timestamp.
 	 *
-	 * Seek operations may not finish instantly. While a seek operation is
-	 * in process, the GtkMediaStream:seeking property will be set.
+	 * If @timestamp is out of range, it will be clamped.
 	 *
-	 * When calling gtk_media_stream_seek() during an ongoing seek operation,
-	 * the new seek will override any pending seek.
+	 * Seek operations may not finish instantly. While a
+	 * seek operation is in process, the [property@Gtk.MediaStream:seeking]
+	 * property will be set.
+	 *
+	 * When calling gtk_media_stream_seek() during an
+	 * ongoing seek operation, the new seek will override
+	 * any pending seek.
 	 *
 	 * Params:
 	 *     timestamp = timestamp to seek to.
@@ -383,10 +404,11 @@ public class MediaStream : ObjectG, PaintableIF
 
 	/**
 	 * Ends a seek operation started via GtkMediaStream.seek() as a failure.
+	 *
 	 * This will not cause an error on the stream and will assume that
 	 * playback continues as if no seek had happened.
 	 *
-	 * See gtk_media_stream_seek_success() for the other way of
+	 * See [method@Gtk.MediaStream.seek_success] for the other way of
 	 * ending a seek.
 	 */
 	public void seekFailed()
@@ -396,10 +418,11 @@ public class MediaStream : ObjectG, PaintableIF
 
 	/**
 	 * Ends a seek operation started via GtkMediaStream.seek() successfully.
-	 * This function will unset the GtkMediaStream:ended property if it was
-	 * set.
 	 *
-	 * See gtk_media_stream_seek_failed() for the other way of
+	 * This function will unset the GtkMediaStream:ended property
+	 * if it was set.
+	 *
+	 * See [method@Gtk.MediaStream.seek_failed] for the other way of
 	 * ending a seek.
 	 */
 	public void seekSuccess()
@@ -408,11 +431,14 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Sets whether the stream should loop, ie restart playback from
-	 * the beginning instead of stopping at the end.
+	 * Sets whether the stream should loop.
 	 *
-	 * Not all streams may support looping, in particular non-seekable
-	 * streams. Those streams will ignore the loop setting and just end.
+	 * In this case, it will attempt to restart playback
+	 * from the beginning instead of stopping at the end.
+	 *
+	 * Not all streams may support looping, in particular
+	 * non-seekable streams. Those streams will ignore the
+	 * loop setting and just end.
 	 *
 	 * Params:
 	 *     loop = %TRUE if the stream should loop
@@ -423,13 +449,14 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Sets whether the audio stream should be muted. Muting a stream will
-	 * cause no audio to be played, but it does not modify the volume.
-	 * This means that muting and then unmuting the stream will restore
-	 * the volume settings.
+	 * Sets whether the audio stream should be muted.
 	 *
-	 * If the stream has no audio, calling this function will still work
-	 * but it will not have an audible effect.
+	 * Muting a stream will cause no audio to be played, but it
+	 * does not modify the volume. This means that muting and
+	 * then unmuting the stream will restore the volume settings.
+	 *
+	 * If the stream has no audio, calling this function will
+	 * still work but it will not have an audible effect.
 	 *
 	 * Params:
 	 *     muted = %TRUE if the stream should be muted
@@ -451,16 +478,17 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Sets the volume of the audio stream. This function call will work even if
-	 * the stream is muted.
+	 * Sets the volume of the audio stream.
 	 *
-	 * The given @volume should range from 0.0 for silence to 1.0 for as loud as
-	 * possible. Values outside of this range will be clamped to the nearest
-	 * value.
+	 * This function call will work even if the stream is muted.
 	 *
-	 * If the stream has no audio or is muted, calling this function will still
-	 * work but it will not have an immediate audible effect. When the stream is
-	 * unmuted, the new volume setting will take effect.
+	 * The given @volume should range from 0.0 for silence to 1.0
+	 * for as loud as possible. Values outside of this range will
+	 * be clamped to the nearest value.
+	 *
+	 * If the stream has no audio or is muted, calling this function
+	 * will still work but it will not have an immediate audible effect.
+	 * When the stream is unmuted, the new volume setting will take effect.
 	 *
 	 * Params:
 	 *     volume = New volume of the stream from 0.0 to 1.0
@@ -471,8 +499,9 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Resets a given media stream implementation. gtk_media_stream_prepared()
-	 * can now be called again.
+	 * Resets a given media stream implementation.
+	 *
+	 * [method@Gtk.MediaStream.prepared] can then be called again.
 	 *
 	 * This function will also reset any error state the stream was in.
 	 */
@@ -482,11 +511,13 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Undoes a previous call to gtk_media_stream_realize() and causes
-	 * the stream to release all resources it had allocated from @surface.
+	 * Undoes a previous call to gtk_media_stream_realize().
+	 *
+	 * This causes the stream to release all resources it had
+	 * allocated from @surface.
 	 *
 	 * Params:
-	 *     surface = the #GdkSurface the stream was realized with
+	 *     surface = the `GdkSurface` the stream was realized with
 	 */
 	public void unrealize(Surface surface)
 	{
@@ -494,9 +525,13 @@ public class MediaStream : ObjectG, PaintableIF
 	}
 
 	/**
-	 * Media stream implementations should regularly call this function to
-	 * update the timestamp reported by the stream. It is up to
-	 * implementations to call this at the frequency they deem appropriate.
+	 * Media stream implementations should regularly call this
+	 * function to update the timestamp reported by the stream.
+	 *
+	 * It is up to implementations to call this at the frequency
+	 * they deem appropriate.
+	 *
+	 * The media stream must be prepared when this function is called.
 	 *
 	 * Params:
 	 *     timestamp = the new timestamp

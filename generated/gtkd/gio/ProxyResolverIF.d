@@ -32,6 +32,7 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -63,7 +64,8 @@ public interface ProxyResolverIF{
 	/**
 	 * Gets the default #GProxyResolver for the system.
 	 *
-	 * Returns: the default #GProxyResolver.
+	 * Returns: the default #GProxyResolver, which
+	 *     will be a dummy object if no proxy resolver is available
 	 *
 	 * Since: 2.26
 	 */

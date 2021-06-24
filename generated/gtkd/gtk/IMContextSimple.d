@@ -33,11 +33,12 @@ public  import gtk.c.types;
 
 
 /**
- * GtkIMContextSimple is a simple input method context supporting table-based
- * input methods. It has a built-in table of compose sequences that is derived
- * from the X11 Compose files.
+ * `GtkIMContextSimple` is an input method supporting table-based input methods.
  * 
- * GtkIMContextSimple reads additional compose sequences from the first of the
+ * `GtkIMContextSimple` has a built-in table of compose sequences that is
+ * derived from the X11 Compose files.
+ * 
+ * `GtkIMContextSimple` reads additional compose sequences from the first of the
  * following files that is found: ~/.config/gtk-4.0/Compose, ~/.XCompose,
  * /usr/share/X11/locale/$locale/Compose (for locales that have a nontrivial
  * Compose file). The syntax of these files is described in the Compose(5)
@@ -45,10 +46,15 @@ public  import gtk.c.types;
  * 
  * ## Unicode characters
  * 
- * GtkIMContextSimple also supports numeric entry of Unicode characters
- * by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint.
- * For example, Ctrl-Shift-u 1 2 3 Enter yields U+0123 LATIN SMALL LETTER
- * G WITH CEDILLA, i.e. ģ.
+ * `GtkIMContextSimple` also supports numeric entry of Unicode characters
+ * by typing <kbd>Ctrl</kbd>-<kbd>Shift</kbd>-<kbd>u</kbd>, followed by a
+ * hexadecimal Unicode codepoint.
+ * 
+ * For example,
+ * 
+ * Ctrl-Shift-u 1 2 3 Enter
+ * 
+ * yields U+0123 LATIN SMALL LETTER G WITH CEDILLA, i.e. ģ.
  */
 public class IMContextSimple : IMContext
 {
@@ -129,7 +135,6 @@ public class IMContextSimple : IMContext
 	 * Params:
 	 *     data = the table
 	 *     maxSeqLen = Maximum length of a sequence in the table
-	 *         (cannot be greater than #GTK_MAX_COMPOSE_LEN)
 	 *     nSeqs = number of sequences in the table
 	 */
 	public void addTable(ushort[] data, int maxSeqLen, int nSeqs)

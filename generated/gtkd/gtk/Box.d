@@ -34,33 +34,38 @@ public  import gtk.c.types;
 
 
 /**
- * The GtkBox widget arranges child widgets into a single row or column,
- * depending upon the value of its #GtkOrientable:orientation property. Within
- * the other dimension, all children are allocated the same size. Of course,
- * the #GtkWidget:halign and #GtkWidget:valign properties can be used on
- * the children to influence their allocation.
+ * The `GtkBox` widget arranges child widgets into a single row or column.
  * 
- * Use repeated calls to gtk_box_append() to pack widgets into a GtkBox
- * from start to end. Use gtk_box_remove() to remove widgets from the GtkBox.
- * gtk_box_insert_child_after() can be used to add a child at a particular position.
+ * ![An example GtkBox](box.png)
  * 
- * Use gtk_box_set_homogeneous() to specify whether or not all children
- * of the GtkBox are forced to get the same amount of space.
+ * Whether it is a row or column depends on the value of its
+ * [property@Gtk.Orientable:orientation] property. Within the other
+ * dimension, all children are allocated the same size. Of course, the
+ * [property@Gtk.Widget:halign] and [property@Gtk.Widget:valign] properties
+ * can be used on the children to influence their allocation.
  * 
- * Use gtk_box_set_spacing() to determine how much space will be
- * minimally placed between all children in the GtkBox. Note that
- * spacing is added between the children.
+ * Use repeated calls to [method@Gtk.Box.append] to pack widgets into a
+ * `GtkBox` from start to end. Use [method@Gtk.Box.remove] to remove widgets
+ * from the `GtkBox`. [method@Gtk.Box.insert_child_after] can be used to add
+ * a child at a particular position.
  * 
- * Use gtk_box_reorder_child_after() to move a child to a different
+ * Use [method@Gtk.Box.set_homogeneous] to specify whether or not all children
+ * of the `GtkBox` are forced to get the same amount of space.
+ * 
+ * Use [method@Gtk.Box.set_spacing] to determine how much space will be minimally
+ * placed between all children in the `GtkBox`. Note that spacing is added
+ * *between* the children.
+ * 
+ * Use [method@Gtk.Box.reorder_child_after] to move a child to a different
  * place in the box.
  * 
  * # CSS nodes
  * 
- * GtkBox uses a single CSS node with name box.
+ * `GtkBox` uses a single CSS node with name box.
  * 
  * # Accessibility
  * 
- * GtkBox uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+ * `GtkBox` uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
 public class Box : Widget, OrientableIF
 {
@@ -101,13 +106,13 @@ public class Box : Widget, OrientableIF
 	}
 
 	/**
-	 * Creates a new #GtkBox.
+	 * Creates a new `GtkBox`.
 	 *
 	 * Params:
 	 *     orientation = the box’s orientation
 	 *     spacing = the number of pixels to place by default between children
 	 *
-	 * Returns: a new #GtkBox.
+	 * Returns: a new `GtkBox`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -127,7 +132,7 @@ public class Box : Widget, OrientableIF
 	 * Adds @child as the last child to @box.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to append
+	 *     child = the `GtkWidget` to append
 	 */
 	public void append(Widget child)
 	{
@@ -146,7 +151,7 @@ public class Box : Widget, OrientableIF
 
 	/**
 	 * Returns whether the box is homogeneous (all children are the
-	 * same size). See gtk_box_set_homogeneous().
+	 * same size).
 	 *
 	 * Returns: %TRUE if the box is homogeneous.
 	 */
@@ -167,11 +172,12 @@ public class Box : Widget, OrientableIF
 
 	/**
 	 * Inserts @child in the position after @sibling in the list
-	 * of @box children. If @sibling is %NULL, insert @child at
-	 * the first position.
+	 * of @box children.
+	 *
+	 * If @sibling is %NULL, insert @child at the first position.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to insert
+	 *     child = the `GtkWidget` to insert
 	 *     sibling = the sibling after which to insert @child
 	 */
 	public void insertChildAfter(Widget child, Widget sibling)
@@ -183,7 +189,7 @@ public class Box : Widget, OrientableIF
 	 * Adds @child as the first child to @box.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to prepend
+	 *     child = the `GtkWidget` to prepend
 	 */
 	public void prepend(Widget child)
 	{
@@ -191,9 +197,11 @@ public class Box : Widget, OrientableIF
 	}
 
 	/**
-	 * Removes a child widget from @box, after it has been
-	 * added with gtk_box_append(), gtk_box_prepend(), or
-	 * gtk_box_insert_child_after().
+	 * Removes a child widget from @box.
+	 *
+	 * The child must have been added before with
+	 * [method@Gtk.Box.append], [method@Gtk.Box.prepend], or
+	 * [method@Gtk.Box.insert_child_after].
 	 *
 	 * Params:
 	 *     child = the child to remove
@@ -205,11 +213,12 @@ public class Box : Widget, OrientableIF
 
 	/**
 	 * Moves @child to the position after @sibling in the list
-	 * of @box children. If @sibling is %NULL, move @child to
-	 * the first position.
+	 * of @box children.
+	 *
+	 * If @sibling is %NULL, move @child to the first position.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to move, must be a child of @box
+	 *     child = the `GtkWidget` to move, must be a child of @box
 	 *     sibling = the sibling to move @child after, or %NULL
 	 */
 	public void reorderChildAfter(Widget child, Widget sibling)
@@ -218,15 +227,16 @@ public class Box : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the baseline position of a box. This affects
-	 * only horizontal boxes with at least one baseline aligned
-	 * child. If there is more vertical space available than requested,
-	 * and the baseline is not allocated by the parent then
-	 * @position is used to allocate the baseline wrt the
+	 * Sets the baseline position of a box.
+	 *
+	 * This affects only horizontal boxes with at least one baseline
+	 * aligned child. If there is more vertical space available than
+	 * requested, and the baseline is not allocated by the parent then
+	 * @position is used to allocate the baseline with respect to the
 	 * extra space available.
 	 *
 	 * Params:
-	 *     position = a #GtkBaselinePosition
+	 *     position = a `GtkBaselinePosition`
 	 */
 	public void setBaselinePosition(GtkBaselinePosition position)
 	{
@@ -234,8 +244,7 @@ public class Box : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkBox:homogeneous property of @box, controlling
-	 * whether or not all children of @box are given equal space
+	 * Sets whether or not all children of @box are given equal space
 	 * in the box.
 	 *
 	 * Params:
@@ -248,8 +257,7 @@ public class Box : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkBox:spacing property of @box, which is the
-	 * number of pixels to place between children of @box.
+	 * Sets the number of pixels to place between children of @box.
 	 *
 	 * Params:
 	 *     spacing = the number of pixels to put between children

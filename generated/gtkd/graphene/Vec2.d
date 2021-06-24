@@ -29,7 +29,6 @@ private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import graphene.c.functions;
 public  import graphene.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +68,7 @@ public class Vec2
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
+		if ( ownedRef )
 			graphene_vec2_free(graphene_vec2);
 	}
 

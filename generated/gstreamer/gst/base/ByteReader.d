@@ -29,7 +29,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -71,7 +70,7 @@ public class ByteReader
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTBASE) && ownedRef )
+		if ( ownedRef )
 			gst_byte_reader_free(gstByteReader);
 	}
 

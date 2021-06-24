@@ -31,7 +31,6 @@ private import glib.OptionGroup;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +69,7 @@ public class OptionContext
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_option_context_free(gOptionContext);
 	}
 

@@ -26,6 +26,7 @@ module gtk.EntryBuffer;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
@@ -34,14 +35,13 @@ private import std.algorithm;
 
 
 /**
- * The #GtkEntryBuffer class contains the actual text displayed in a
- * #GtkEntry widget.
+ * A `GtkEntryBuffer` hold the text displayed in a `GtkText` widget.
  * 
- * A single #GtkEntryBuffer object can be shared by multiple #GtkEntry
- * widgets which will then share the same text content, but not the cursor
+ * A single `GtkEntryBuffer` object can be shared by multiple widgets
+ * which will then share the same text content, but not the cursor
  * position, visibility attributes, icon etc.
  * 
- * #GtkEntryBuffer may be derived from. Such a derived class might allow
+ * `GtkEntryBuffer` may be derived from. Such a derived class might allow
  * text to be stored in an alternate location, such as non-pageable memory,
  * useful in the case of important passwords. Or a derived class could
  * integrate with an application’s concept of undo/redo.
@@ -82,7 +82,7 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * Create a new GtkEntryBuffer object.
+	 * Create a new `GtkEntryBuffer` object.
 	 *
 	 * Optionally, specify initial text to set in the buffer.
 	 *
@@ -90,7 +90,7 @@ public class EntryBuffer : ObjectG
 	 *     initialChars = initial buffer text, or %NULL
 	 *     nInitialChars = number of characters in @initial_chars, or -1
 	 *
-	 * Returns: A new GtkEntryBuffer object.
+	 * Returns: A new `GtkEntryBuffer` object.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -107,14 +107,17 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * Deletes a sequence of characters from the buffer. @n_chars characters are
-	 * deleted starting at @position. If @n_chars is negative, then all characters
-	 * until the end of the text are deleted.
+	 * Deletes a sequence of characters from the buffer.
 	 *
-	 * If @position or @n_chars are out of bounds, then they are coerced to sane
-	 * values.
+	 * @n_chars characters are deleted starting at @position.
+	 * If @n_chars is negative, then all characters until the
+	 * end of the text are deleted.
 	 *
-	 * Note that the positions are specified in characters, not bytes.
+	 * If @position or @n_chars are out of bounds, then they
+	 * are coerced to sane values.
+	 *
+	 * Note that the positions are specified in characters,
+	 * not bytes.
 	 *
 	 * Params:
 	 *     position = position at which to delete text
@@ -128,7 +131,7 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * Used when subclassing #GtkEntryBuffer
+	 * Used when subclassing `GtkEntryBuffer`.
 	 *
 	 * Params:
 	 *     position = position at which text was deleted
@@ -140,7 +143,7 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * Used when subclassing #GtkEntryBuffer
+	 * Used when subclassing `GtkEntryBuffer`.
 	 *
 	 * Params:
 	 *     position = position at which text was inserted
@@ -154,7 +157,8 @@ public class EntryBuffer : ObjectG
 
 	/**
 	 * Retrieves the length in bytes of the buffer.
-	 * See gtk_entry_buffer_get_length().
+	 *
+	 * See [method@Gtk.EntryBuffer.get_length].
 	 *
 	 * Returns: The byte length of the buffer.
 	 */
@@ -174,8 +178,7 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * Retrieves the maximum allowed length of the text in
-	 * @buffer. See gtk_entry_buffer_set_max_length().
+	 * Retrieves the maximum allowed length of the text in @buffer.
 	 *
 	 * Returns: the maximum allowed number of characters
 	 *     in #GtkEntryBuffer, or 0 if there is no maximum.
@@ -192,9 +195,8 @@ public class EntryBuffer : ObjectG
 	 * unless this object emits a signal, or is finalized.
 	 *
 	 * Returns: a pointer to the contents of the widget as a
-	 *     string. This string points to internally allocated
-	 *     storage in the buffer and must not be freed, modified or
-	 *     stored.
+	 *     string. This string points to internally allocated storage
+	 *     in the buffer and must not be freed, modified or stored.
 	 */
 	public string getText()
 	{
@@ -225,9 +227,10 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * Sets the maximum allowed length of the contents of the buffer. If
-	 * the current contents are longer than the given length, then they
-	 * will be truncated to fit.
+	 * Sets the maximum allowed length of the contents of the buffer.
+	 *
+	 * If the current contents are longer than the given length, then
+	 * they will be truncated to fit.
 	 *
 	 * Params:
 	 *     maxLength = the maximum length of the entry buffer, or 0 for no maximum.
@@ -242,8 +245,9 @@ public class EntryBuffer : ObjectG
 	/**
 	 * Sets the text in the buffer.
 	 *
-	 * This is roughly equivalent to calling gtk_entry_buffer_delete_text()
-	 * and gtk_entry_buffer_insert_text().
+	 * This is roughly equivalent to calling
+	 * [method@Gtk.EntryBuffer.delete_text] and
+	 * [method@Gtk.EntryBuffer.insert_text].
 	 *
 	 * Note that @n_chars is in characters, not in bytes.
 	 *
@@ -257,9 +261,10 @@ public class EntryBuffer : ObjectG
 	}
 
 	/**
-	 * The text is altered in the default handler for this signal. If you want
-	 * access to the text after the text has been modified, use
-	 * %G_CONNECT_AFTER.
+	 * The text is altered in the default handler for this signal.
+	 *
+	 * If you want access to the text after the text has been modified,
+	 * use %G_CONNECT_AFTER.
 	 *
 	 * Params:
 	 *     position = the position the text was deleted at.

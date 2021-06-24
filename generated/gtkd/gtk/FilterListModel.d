@@ -34,14 +34,15 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkFilterListModel is a list model that filters a given other
- * listmodel.
+ * `GtkFilterListModel` is a list model that filters the elements of
+ * the underlying model according to a `GtkFilter`.
+ * 
  * It hides some elements from the other model according to
- * criteria given by a #GtkFilter.
+ * criteria given by a `GtkFilter`.
  * 
  * The model can be set up to do incremental searching, so that
  * filtering long lists doesn't block the UI. See
- * gtk_filter_list_model_set_incremental() for details.
+ * [method@Gtk.FilterListModel.set_incremental] for details.
  */
 public class FilterListModel : ObjectG, ListModelIF
 {
@@ -82,14 +83,14 @@ public class FilterListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Creates a new #GtkFilterListModel that will filter @model using the given
+	 * Creates a new `GtkFilterListModel` that will filter @model using the given
 	 * @filter.
 	 *
 	 * Params:
 	 *     model = the model to sort, or %NULL
 	 *     filter = filter or %NULL to not filter items
 	 *
-	 * Returns: a new #GtkFilterListModel
+	 * Returns: a new `GtkFilterListModel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -106,7 +107,7 @@ public class FilterListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Gets the #GtkFilter currently set on @self.
+	 * Gets the `GtkFilter` currently set on @self.
 	 *
 	 * Returns: The filter currently in use
 	 *     or %NULL if the list isn't filtered
@@ -124,8 +125,9 @@ public class FilterListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Returns whether incremental filtering was enabled via
-	 * gtk_filter_list_model_set_incremental().
+	 * Returns whether incremental filtering is enabled.
+	 *
+	 * See [method@Gtk.FilterListModel.set_incremental].
 	 *
 	 * Returns: %TRUE if incremental filtering is enabled
 	 */
@@ -159,14 +161,15 @@ public class FilterListModel : ObjectG, ListModelIF
 	 * of the filter remaining by dividing the return value by the total
 	 * number of items in the underlying model:
 	 *
-	 * |[
+	 * ```c
 	 * pending = gtk_filter_list_model_get_pending (self);
 	 * model = gtk_filter_list_model_get_model (self);
 	 * percentage = pending / (double) g_list_model_get_n_items (model);
-	 * ]|
+	 * ```
 	 *
 	 * If no filter operation is ongoing - in particular when
-	 * #GtkFilterListModel:incremental is %FALSE - this function returns 0.
+	 * [property@Gtk.FilterListModel:incremental] is %FALSE - this
+	 * function returns 0.
 	 *
 	 * Returns: The number of items not yet filtered
 	 */
@@ -187,7 +190,9 @@ public class FilterListModel : ObjectG, ListModelIF
 	}
 
 	/**
-	 * When incremental filtering is enabled, the GtkFilterListModel will not
+	 * Sets the filter model to do an incremental sort.
+	 *
+	 * When incremental filtering is enabled, the `GtkFilterListModel` will not
 	 * run filters immediately, but will instead queue an idle handler that
 	 * incrementally filters the items and adds them to the list. This of course
 	 * means that items are not instantly added to the list, but only appear
@@ -199,7 +204,7 @@ public class FilterListModel : ObjectG, ListModelIF
 	 *
 	 * By default, incremental filtering is disabled.
 	 *
-	 * See gtk_filter_list_model_get_pending() for progress information
+	 * See [method@Gtk.FilterListModel.get_pending] for progress information
 	 * about an ongoing incremental filtering operation.
 	 *
 	 * Params:

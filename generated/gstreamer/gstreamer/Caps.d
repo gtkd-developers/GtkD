@@ -26,6 +26,7 @@ module gstreamer.Caps;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.CapsFeatures;

@@ -30,6 +30,7 @@ private import glib.GException;
 private import glib.KeyFile;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.PaperSize;
 private import gtk.c.functions;
@@ -37,11 +38,13 @@ public  import gtk.c.types;
 
 
 /**
- * A GtkPrintSettings object represents the settings of a print dialog in
- * a system-independent way. The main use for this object is that once
- * you’ve printed you can get a settings object that represents the settings
- * the user chose, and the next time you print you can pass that object in so
- * that the user doesn’t have to re-set all his settings.
+ * A `GtkPrintSettings` object represents the settings of a print dialog in
+ * a system-independent way.
+ * 
+ * The main use for this object is that once you’ve printed you can get a
+ * settings object that represents the settings the user chose, and the next
+ * time you print you can pass that object in so that the user doesn’t have
+ * to re-set all his settings.
  * 
  * Its also possible to enumerate the settings so that you can easily save
  * the settings for the next time your app runs, or even store them in a
@@ -84,9 +87,9 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkPrintSettings object.
+	 * Creates a new `GtkPrintSettings` object.
 	 *
-	 * Returns: a new #GtkPrintSettings object
+	 * Returns: a new `GtkPrintSettings` object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -103,15 +106,18 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * Reads the print settings from @file_name. Returns a new #GtkPrintSettings
-	 * object with the restored settings, or %NULL if an error occurred. If the
-	 * file could not be loaded then error is set to either a #GFileError or
-	 * #GKeyFileError.  See gtk_print_settings_to_file().
+	 * Reads the print settings from @file_name.
+	 *
+	 * Returns a new `GtkPrintSettings` object with the restored settings,
+	 * or %NULL if an error occurred. If the file could not be loaded then
+	 * error is set to either a `GFileError` or `GKeyFileError`.
+	 *
+	 * See [method@Gtk.PrintSettings.to_file].
 	 *
 	 * Params:
 	 *     fileName = the filename to read the settings from
 	 *
-	 * Returns: the restored #GtkPrintSettings
+	 * Returns: the restored `GtkPrintSettings`
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -136,13 +142,15 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * Deserialize print settings from an a{sv} variant in
-	 * the format produced by gtk_print_settings_to_gvariant().
+	 * Deserialize print settings from an a{sv} variant.
+	 *
+	 * The variant must be in the format produced by
+	 * [method@Gtk.PrintSettings.to_gvariant].
 	 *
 	 * Params:
-	 *     variant = an a{sv} #GVariant
+	 *     variant = an a{sv} `GVariant`
 	 *
-	 * Returns: a new #GtkPrintSettings object
+	 * Returns: a new `GtkPrintSettings` object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -159,17 +167,18 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * Reads the print settings from the group @group_name in @key_file.  Returns a
-	 * new #GtkPrintSettings object with the restored settings, or %NULL if an
-	 * error occurred. If the file could not be loaded then error is set to either
-	 * a #GFileError or #GKeyFileError.
+	 * Reads the print settings from the group @group_name in @key_file.
+	 *
+	 * Returns a new `GtkPrintSettings` object with the restored settings,
+	 * or %NULL if an error occurred. If the file could not be loaded then
+	 * error is set to either `GFileError` or `GKeyFileError`.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to retrieve the settings from
+	 *     keyFile = the `GKeyFile` to retrieve the settings from
 	 *     groupName = the name of the group to use, or %NULL to use
 	 *         the default “Print Settings”
 	 *
-	 * Returns: the restored #GtkPrintSettings
+	 * Returns: the restored `GtkPrintSettings`
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -194,7 +203,7 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * Copies a #GtkPrintSettings object.
+	 * Copies a `GtkPrintSettings` object.
 	 *
 	 * Returns: a newly allocated copy of @other
 	 */
@@ -364,7 +373,9 @@ public class PrintSettings : ObjectG
 
 	/**
 	 * Returns the value associated with @key, interpreted
-	 * as a length. The returned value is converted to @units.
+	 * as a length.
+	 *
+	 * The returned value is converted to @units.
 	 *
 	 * Params:
 	 *     key = a key
@@ -421,7 +432,7 @@ public class PrintSettings : ObjectG
 
 	/**
 	 * Get the value of %GTK_PRINT_SETTINGS_ORIENTATION,
-	 * converted to a #GtkPageOrientation.
+	 * converted to a `GtkPageOrientation`.
 	 *
 	 * Returns: the orientation
 	 */
@@ -444,7 +455,7 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_PAGE_RANGES.
 	 *
 	 * Returns: an array
-	 *     of #GtkPageRanges.  Use g_free() to free the array when
+	 *     of `GtkPageRange`s. Use g_free() to free the array when
 	 *     it is no longer needed.
 	 */
 	public GtkPageRange[] getPageRanges()
@@ -482,7 +493,7 @@ public class PrintSettings : ObjectG
 
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_PAPER_FORMAT,
-	 * converted to a #GtkPaperSize.
+	 * converted to a `GtkPaperSize`.
 	 *
 	 * Returns: the paper size
 	 */
@@ -627,9 +638,12 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * Reads the print settings from @file_name. If the file could not be loaded
-	 * then error is set to either a #GFileError or #GKeyFileError.
-	 * See gtk_print_settings_to_file().
+	 * Reads the print settings from @file_name.
+	 *
+	 * If the file could not be loaded then error is set to either
+	 * a `GFileError` or `GKeyFileError`.
+	 *
+	 * See [method@Gtk.PrintSettings.to_file].
 	 *
 	 * Params:
 	 *     fileName = the filename to read the settings from
@@ -653,14 +667,15 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * Reads the print settings from the group @group_name in @key_file. If the
-	 * file could not be loaded then error is set to either a #GFileError or
-	 * #GKeyFileError.
+	 * Reads the print settings from the group @group_name in @key_file.
+	 *
+	 * If the file could not be loaded then error is set to either a
+	 * `GFileError` or `GKeyFileError`.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to retrieve the settings from
-	 *     groupName = the name of the group to use, or %NULL to use the default
-	 *         “Print Settings”
+	 *     keyFile = the `GKeyFile` to retrieve the settings from
+	 *     groupName = the name of the group to use, or %NULL
+	 *         to use the default “Print Settings”
 	 *
 	 * Returns: %TRUE on success
 	 *
@@ -868,7 +883,7 @@ public class PrintSettings : ObjectG
 	 * Sets the value of %GTK_PRINT_SETTINGS_PAGE_RANGES.
 	 *
 	 * Params:
-	 *     pageRanges = an array of #GtkPageRanges
+	 *     pageRanges = an array of `GtkPageRange`s
 	 */
 	public void setPageRanges(GtkPageRange[] pageRanges)
 	{
@@ -1029,9 +1044,10 @@ public class PrintSettings : ObjectG
 	}
 
 	/**
-	 * This function saves the print settings from @settings to @file_name. If the
-	 * file could not be loaded then error is set to either a #GFileError or
-	 * #GKeyFileError.
+	 * This function saves the print settings from @settings to @file_name.
+	 *
+	 * If the file could not be written then error is set to either a
+	 * `GFileError` or `GKeyFileError`.
 	 *
 	 * Params:
 	 *     fileName = the file to save to
@@ -1057,7 +1073,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Serialize print settings to an a{sv} variant.
 	 *
-	 * Returns: a new, floating, #GVariant
+	 * Returns: a new, floating, `GVariant`
 	 */
 	public Variant toGvariant()
 	{
@@ -1075,7 +1091,7 @@ public class PrintSettings : ObjectG
 	 * This function adds the print settings from @settings to @key_file.
 	 *
 	 * Params:
-	 *     keyFile = the #GKeyFile to save the print settings to
+	 *     keyFile = the `GKeyFile` to save the print settings to
 	 *     groupName = the group to add the settings to in @key_file, or
 	 *         %NULL to use the default “Print Settings”
 	 */
@@ -1086,6 +1102,7 @@ public class PrintSettings : ObjectG
 
 	/**
 	 * Removes any value associated with @key.
+	 *
 	 * This has the same effect as setting the value to %NULL.
 	 *
 	 * Params:

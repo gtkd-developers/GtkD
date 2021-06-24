@@ -36,30 +36,33 @@ public  import gtk.c.types;
 
 
 /**
- * GtkDropDown is a widget that allows the user to choose an item
- * from a list of options. The GtkDropDown displays the selected
- * choice.
+ * `GtkDropDown` is a widget that allows the user to choose an item
+ * from a list of options.
  * 
- * The options are given to GtkDropDown in the form of #GListModel,
+ * ![An example GtkDropDown](drop-down.png)
+ * 
+ * The `GtkDropDown` displays the selected choice.
+ * 
+ * The options are given to `GtkDropDown` in the form of `GListModel`
  * and how the individual options are represented is determined by
- * a #GtkListItemFactory. The default factory displays simple strings.
+ * a [class@Gtk.ListItemFactory]. The default factory displays simple strings.
  * 
- * GtkDropDown knows how to obtain strings from the items in a
- * #GtkStringList; for other models, you have to provide an expression
- * to find the strings via gtk_drop_down_set_expression().
+ * `GtkDropDown` knows how to obtain strings from the items in a
+ * [class@Gtk.StringList]; for other models, you have to provide an expression
+ * to find the strings via [method@Gtk.DropDown.set_expression].
  * 
- * GtkDropDown can optionally allow search in the popup, which is
+ * `GtkDropDown` can optionally allow search in the popup, which is
  * useful if the list of options is long. To enable the search entry,
- * use gtk_drop_down_set_enable_search().
+ * use [method@Gtk.DropDown.set_enable_search].
  * 
  * # CSS nodes
  * 
- * GtkDropDown has a single CSS node with name dropdown,
+ * `GtkDropDown` has a single CSS node with name dropdown,
  * with the button and popover nodes as children.
  * 
  * # Accessibility
  * 
- * GtkDropDown uses the #GTK_ACCESSIBLE_ROLE_COMBO_BOX role.
+ * `GtkDropDown` uses the %GTK_ACCESSIBLE_ROLE_COMBO_BOX role.
  */
 public class DropDown : Widget
 {
@@ -97,16 +100,16 @@ public class DropDown : Widget
 	}
 
 	/**
-	 * Creates a new #GtkDropDown.
+	 * Creates a new `GtkDropDown`.
 	 *
-	 * You may want to call gtk_drop_down_set_factory()
+	 * You may want to call [method@Gtk.DropDown.set_factory]
 	 * to set up a way to map its items to widgets.
 	 *
 	 * Params:
 	 *     model = the model to use or %NULL for none
 	 *     expression = the expression to use or %NULL for none
 	 *
-	 * Returns: a new #GtkDropDown
+	 * Returns: a new `GtkDropDown`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -123,13 +126,13 @@ public class DropDown : Widget
 	}
 
 	/**
-	 * Creates a new #GtkDropDown that is populated with
-	 * the strings in @strings.
+	 * Creates a new `GtkDropDown` that is populated with
+	 * the strings.
 	 *
 	 * Params:
 	 *     strings = The strings to put in the dropdown
 	 *
-	 * Returns: a new #GtkDropDown
+	 * Returns: a new `GtkDropDown`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -156,9 +159,11 @@ public class DropDown : Widget
 	}
 
 	/**
-	 * Gets the expression set with gtk_drop_down_set_expression().
+	 * Gets the expression set that is used to obtain strings from items.
 	 *
-	 * Returns: a #GtkExpression or %NULL
+	 * See [method@Gtk.DropDown.set_expression].
+	 *
+	 * Returns: a `GtkExpression` or %NULL
 	 */
 	public Expression getExpression()
 	{
@@ -177,7 +182,7 @@ public class DropDown : Widget
 	 *
 	 * The factory returned by this function is always used for the
 	 * item in the button. It is also used for items in the popup
-	 * if #GtkDropDown:list-factory is not set.
+	 * if [property@Gtk.DropDown:list-factory] is not set.
 	 *
 	 * Returns: The factory in use
 	 */
@@ -230,7 +235,7 @@ public class DropDown : Widget
 	/**
 	 * Gets the position of the selected item.
 	 *
-	 * Returns: the position of the selected item, or #GTK_INVALID_LIST_POSITION
+	 * Returns: the position of the selected item, or %GTK_INVALID_LIST_POSITION
 	 *     if not item is selected
 	 */
 	public uint getSelected()
@@ -259,7 +264,8 @@ public class DropDown : Widget
 	 * Sets whether a search entry will be shown in the popup that
 	 * allows to search for items in the list.
 	 *
-	 * Note that #GtkDropDown:expression must be set for search to work.
+	 * Note that [property@Gtk.DropDown:expression] must be set for
+	 * search to work.
 	 *
 	 * Params:
 	 *     enableSearch = whether to enable search
@@ -270,12 +276,13 @@ public class DropDown : Widget
 	}
 
 	/**
-	 * Sets the expression that gets evaluated to obtain strings from items
-	 * when searching in the popup. The expression must have a value type of
-	 * #G_TYPE_STRING.
+	 * Sets the expression that gets evaluated to obtain strings from items.
+	 *
+	 * This is used for search in the popup. The expression must have
+	 * a value type of %G_TYPE_STRING.
 	 *
 	 * Params:
-	 *     expression = a #GtkExpression, or %NULL
+	 *     expression = a `GtkExpression`, or %NULL
 	 */
 	public void setExpression(Expression expression)
 	{
@@ -283,7 +290,7 @@ public class DropDown : Widget
 	}
 
 	/**
-	 * Sets the #GtkListItemFactory to use for populating list items.
+	 * Sets the `GtkListItemFactory` to use for populating list items.
 	 *
 	 * Params:
 	 *     factory = the factory to use or %NULL for none
@@ -294,7 +301,7 @@ public class DropDown : Widget
 	}
 
 	/**
-	 * Sets the #GtkListItemFactory to use for populating list items in the popup.
+	 * Sets the `GtkListItemFactory` to use for populating list items in the popup.
 	 *
 	 * Params:
 	 *     factory = the factory to use or %NULL for none
@@ -305,7 +312,7 @@ public class DropDown : Widget
 	}
 
 	/**
-	 * Sets the #GListModel to use.
+	 * Sets the `GListModel` to use.
 	 *
 	 * Params:
 	 *     model = the model to use or %NULL for none
@@ -319,7 +326,7 @@ public class DropDown : Widget
 	 * Selects the item at the given position.
 	 *
 	 * Params:
-	 *     position = the position of the item to select, or #GTK_INVALID_LIST_POSITION
+	 *     position = the position of the item to select, or %GTK_INVALID_LIST_POSITION
 	 */
 	public void setSelected(uint position)
 	{

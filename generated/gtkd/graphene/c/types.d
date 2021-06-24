@@ -338,23 +338,11 @@ struct graphene_vec4_t
 	graphene_simd4f_t value;
 }
 
-enum HAS_GCC = 1;
-alias GRAPHENE_HAS_GCC = HAS_GCC;
-
-enum HAS_SCALAR = 1;
-alias GRAPHENE_HAS_SCALAR = HAS_SCALAR;
-
-enum HAS_SSE = 1;
-alias GRAPHENE_HAS_SSE = HAS_SSE;
-
 enum PI = 3.141593;
 alias GRAPHENE_PI = PI;
 
 enum PI_2 = 1.570796;
 alias GRAPHENE_PI_2 = PI_2;
-
-enum SIMD_S = "sse";
-alias GRAPHENE_SIMD_S = SIMD_S;
 
 /**
  * Evaluates to the number of components of a #graphene_vec2_t.

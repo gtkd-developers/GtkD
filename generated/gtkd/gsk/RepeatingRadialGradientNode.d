@@ -72,9 +72,11 @@ public class RepeatingRadialGradientNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that draws a repeating radial gradient. The radial gradient
-	 * starts around @center. The size of the gradient is dictated by @hradius
-	 * in horizontal orientation and by @vradius in vertial orientation.
+	 * Creates a `GskRenderNode` that draws a repeating radial gradient.
+	 *
+	 * The radial gradient starts around @center. The size of the gradient
+	 * is dictated by @hradius in horizontal orientation and by @vradius
+	 * in vertial orientation.
 	 *
 	 * Params:
 	 *     bounds = the bounds of the node
@@ -83,11 +85,12 @@ public class RepeatingRadialGradientNode : RenderNode
 	 *     vradius = the vertical radius
 	 *     start = a percentage >= 0 that defines the start of the gradient around @center
 	 *     end = a percentage >= 0 that defines the end of the gradient around @center
-	 *     colorStops = a pointer to an array of #GskColorStop defining the gradient
-	 *         The offsets of all color steps must be increasing. The first stop's offset must be >= 0 and the last
+	 *     colorStops = a pointer to an array of
+	 *         `GskColorStop` defining the gradient. The offsets of all color stops
+	 *         must be increasing. The first stop's offset must be >= 0 and the last
 	 *         stop's offset must be <= 1.
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

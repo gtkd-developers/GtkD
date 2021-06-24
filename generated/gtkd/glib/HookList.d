@@ -28,7 +28,6 @@ private import glib.Hook;
 private import glib.MemorySlice;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -65,7 +64,7 @@ public final class HookList
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gHookList);
 	}
 

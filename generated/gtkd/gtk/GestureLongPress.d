@@ -35,13 +35,21 @@ private import std.algorithm;
 
 
 /**
- * #GtkGestureLongPress is a #GtkGesture implementation able to recognize
- * long presses, triggering the #GtkGestureLongPress::pressed after the
- * timeout is exceeded.
+ * `GtkGestureLongPress` is a `GtkGesture` for long presses.
  * 
- * If the touchpoint is lifted before the timeout passes, or if it drifts
- * too far of the initial press point, the #GtkGestureLongPress::cancelled
- * signal will be emitted.
+ * This gesture is also known as “Press and Hold”.
+ * 
+ * When the timeout is exceeded, the gesture is triggering the
+ * [signal@Gtk.GestureLongPress::pressed] signal.
+ * 
+ * If the touchpoint is lifted before the timeout passes, or if
+ * it drifts too far of the initial press point, the
+ * [signal@Gtk.GestureLongPress::cancelled] signal will be emitted.
+ * 
+ * How long the timeout is before the ::pressed signal gets emitted is
+ * determined by the [property@Gtk.Settings:gtk-long-press-time] setting.
+ * It can be modified by the [property@Gtk.GestureLongPress:delay-factor]
+ * property.
  */
 public class GestureLongPress : GestureSingle
 {
@@ -79,9 +87,9 @@ public class GestureLongPress : GestureSingle
 	}
 
 	/**
-	 * Returns a newly created #GtkGesture that recognizes long presses.
+	 * Returns a newly created `GtkGesture` that recognizes long presses.
 	 *
-	 * Returns: a newly created #GtkGestureLongPress
+	 * Returns: a newly created `GtkGestureLongPress`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -98,7 +106,7 @@ public class GestureLongPress : GestureSingle
 	}
 
 	/**
-	 * Returns the delay factor as set by gtk_gesture_long_press_set_delay_factor().
+	 * Returns the delay factor.
 	 *
 	 * Returns: the delay factor
 	 */
@@ -108,8 +116,10 @@ public class GestureLongPress : GestureSingle
 	}
 
 	/**
-	 * Applies the given delay factor. The default long press time will be
-	 * multiplied by this value. Valid values are in the range [0.5..2.0].
+	 * Applies the given delay factor.
+	 *
+	 * The default long press time will be multiplied by this value.
+	 * Valid values are in the range [0.5..2.0].
 	 *
 	 * Params:
 	 *     delayFactor = The delay factor to apply
@@ -120,8 +130,8 @@ public class GestureLongPress : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever a press moved too far, or was released
-	 * before #GtkGestureLongPress::pressed happened.
+	 * Emitted whenever a press moved too far, or was released
+	 * before [signal@Gtk.GestureLongPress::pressed] happened.
 	 */
 	gulong addOnCancelled(void delegate(GestureLongPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -129,7 +139,7 @@ public class GestureLongPress : GestureSingle
 	}
 
 	/**
-	 * This signal is emitted whenever a press goes unmoved/unreleased longer than
+	 * Emitted whenever a press goes unmoved/unreleased longer than
 	 * what the GTK defaults tell.
 	 *
 	 * Params:

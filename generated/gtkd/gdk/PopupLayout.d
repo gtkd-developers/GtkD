@@ -28,13 +28,11 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkd.Loader;
 
 
 /**
- * Popups are positioned relative to their parent surface.
- * The GdkPopupLayout struct contains information that is
- * necessary to do so.
+ * The `GdkPopupLayout` struct contains information that is
+ * necessary position a [interface@Gdk.Popup] relative to its parent.
  * 
  * The positioning requires a negotiation with the windowing system,
  * since it depends on external constraints, such as the position of
@@ -60,12 +58,12 @@ private import gtkd.Loader;
  * 
  * Ultimatively, it is up to the windowing system to determine the position
  * and size of the popup. You can learn about the result by calling
- * gdk_popup_get_position_x(), gdk_popup_get_position_y(),
- * gdk_popup_get_rect_anchor() and gdk_popup_get_surface_anchor() after the
- * popup has been presented. This can be used to adjust the rendering. For
- * example, GtkPopover changes its arrow position accordingly. But you have
- * to be careful avoid changing the size of the popover, or it has to be
- * presented again.
+ * [method@Gdk.Popup.get_position_x], [method@Gdk.Popup.get_position_y],
+ * [method@Gdk.Popup.get_rect_anchor] and [method@Gdk.Popup.get_surface_anchor]
+ * after the popup has been presented. This can be used to adjust the rendering.
+ * For example, [class@Gtk.Popover] changes its arrow position accordingly.
+ * But you have to be careful avoid changing the size of the popover, or it
+ * has to be presented again.
  */
 public class PopupLayout
 {
@@ -98,7 +96,7 @@ public class PopupLayout
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
+		if ( ownedRef )
 			gdk_popup_layout_unref(gdkPopupLayout);
 	}
 
@@ -110,23 +108,25 @@ public class PopupLayout
 	}
 
 	/**
-	 * Create a popup layout description. Used together with gdk_popup_present()
-	 * to describe how a popup surface should be placed and behave on-screen.
+	 * Create a popup layout description.
+	 *
+	 * Used together with [method@Gdk.Popup.present] to describe how a popup
+	 * surface should be placed and behave on-screen.
 	 *
 	 * @anchor_rect is relative to the top-left corner of the surface's parent.
 	 * @rect_anchor and @surface_anchor determine anchor points on @anchor_rect
 	 * and surface to pin together.
 	 *
 	 * The position of @anchor_rect's anchor point can optionally be offset using
-	 * gdk_popup_layout_set_offset(), which is equivalent to offsetting the
+	 * [method@Gdk.PopupLayout.set_offset], which is equivalent to offsetting the
 	 * position of surface.
 	 *
 	 * Params:
-	 *     anchorRect = the anchor #GdkRectangle to align @surface with
+	 *     anchorRect = the anchor `GdkRectangle` to align @surface with
 	 *     rectAnchor = the point on @anchor_rect to align with @surface's anchor point
 	 *     surfaceAnchor = the point on @surface to align with @rect's anchor point
 	 *
-	 * Returns: newly created instance of #GdkPopupLayout
+	 * Returns: newly created instance of `GdkPopupLayout`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -143,7 +143,7 @@ public class PopupLayout
 	}
 
 	/**
-	 * Create a new #GdkPopupLayout and copy the contents of @layout into it.
+	 * Makes a copy of @layout.
 	 *
 	 * Returns: a copy of @layout.
 	 */
@@ -163,7 +163,7 @@ public class PopupLayout
 	 * Check whether @layout and @other has identical layout properties.
 	 *
 	 * Params:
-	 *     other = another #GdkPopupLayout
+	 *     other = another `GdkPopupLayout`
 	 *
 	 * Returns: %TRUE if @layout and @other have identical layout properties,
 	 *     otherwise %FALSE.
@@ -174,9 +174,9 @@ public class PopupLayout
 	}
 
 	/**
-	 * Get the #GdkAnchorHints.
+	 * Get the `GdkAnchorHints`.
 	 *
-	 * Returns: the #GdkAnchorHints.
+	 * Returns: the `GdkAnchorHints`
 	 */
 	public GdkAnchorHints getAnchorHints()
 	{
@@ -186,7 +186,7 @@ public class PopupLayout
 	/**
 	 * Get the anchor rectangle.
 	 *
-	 * Returns: The anchor rectangle.
+	 * Returns: The anchor rectangle
 	 */
 	public GdkRectangle* getAnchorRect()
 	{
@@ -213,6 +213,22 @@ public class PopupLayout
 	public GdkGravity getRectAnchor()
 	{
 		return gdk_popup_layout_get_rect_anchor(gdkPopupLayout);
+	}
+
+	/**
+	 * Obtains the shadow widths of this layout.
+	 *
+	 * Params:
+	 *     left = return location for the left shadow width
+	 *     right = return location for the right shadow width
+	 *     top = return location for the top shadow width
+	 *     bottom = return location for the bottom shadow width
+	 *
+	 * Since: 4.2
+	 */
+	public void getShadowWidth(out int left, out int right, out int top, out int bottom)
+	{
+		gdk_popup_layout_get_shadow_width(gdkPopupLayout, &left, &right, &top, &bottom);
 	}
 
 	/**
@@ -246,13 +262,14 @@ public class PopupLayout
 	/**
 	 * Set new anchor hints.
 	 *
-	 * The set @anchor_hints determines how @surface will be moved if the anchor
-	 * points cause it to move off-screen. For example, %GDK_ANCHOR_FLIP_X will
-	 * replace %GDK_GRAVITY_NORTH_WEST with %GDK_GRAVITY_NORTH_EAST and vice versa
-	 * if @surface extends beyond the left or right edges of the monitor.
+	 * The set @anchor_hints determines how @surface will be moved
+	 * if the anchor points cause it to move off-screen. For example,
+	 * %GDK_ANCHOR_FLIP_X will replace %GDK_GRAVITY_NORTH_WEST with
+	 * %GDK_GRAVITY_NORTH_EAST and vice versa if @surface extends
+	 * beyond the left or right edges of the monitor.
 	 *
 	 * Params:
-	 *     anchorHints = the new #GdkAnchorHints
+	 *     anchorHints = the new `GdkAnchorHints`
 	 */
 	public void setAnchorHints(GdkAnchorHints anchorHints)
 	{
@@ -291,6 +308,26 @@ public class PopupLayout
 	public void setRectAnchor(GdkGravity anchor)
 	{
 		gdk_popup_layout_set_rect_anchor(gdkPopupLayout, anchor);
+	}
+
+	/**
+	 * Sets the shadow width of the popup.
+	 *
+	 * The shadow width corresponds to the part of the computed
+	 * surface size that would consist of the shadow margin
+	 * surrounding the window, would there be any.
+	 *
+	 * Params:
+	 *     left = width of the left part of the shadow
+	 *     right = width of the right part of the shadow
+	 *     top = height of the top part of the shadow
+	 *     bottom = height of the bottom part of the shadow
+	 *
+	 * Since: 4.2
+	 */
+	public void setShadowWidth(int left, int right, int top, int bottom)
+	{
+		gdk_popup_layout_set_shadow_width(gdkPopupLayout, left, right, top, bottom);
 	}
 
 	/**

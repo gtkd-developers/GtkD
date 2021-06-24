@@ -28,6 +28,7 @@ private import gio.FileIF;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -72,7 +73,8 @@ public class Vfs : ObjectG
 	/**
 	 * Gets the default #GVfs for the system.
 	 *
-	 * Returns: a #GVfs.
+	 * Returns: a #GVfs, which will be the local
+	 *     file system #GVfs if no other implementation is available.
 	 */
 	public static Vfs getDefault()
 	{

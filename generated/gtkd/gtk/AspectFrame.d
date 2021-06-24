@@ -32,16 +32,14 @@ public  import gtk.c.types;
 
 
 /**
- * GtkAspectFrame is useful when you want pack a widget so that it can resize
- * while retaining the same aspect ratio. For instance, one might be drawing a
- * small preview of a larger image.
+ * `GtkAspectFrame` preserves the aspect ratio of its child.
  * 
- * The frame can respect the aspect ratio of the child widget, or use its own
- * aspect ratio.
+ * The frame can respect the aspect ratio of the child widget,
+ * or use its own aspect ratio.
  * 
  * # CSS nodes
  * 
- * GtkAspectFrame uses a CSS node with name `frame`.
+ * `GtkAspectFrame` uses a CSS node with name `frame`.
  */
 public class AspectFrame : Widget
 {
@@ -79,20 +77,18 @@ public class AspectFrame : Widget
 	}
 
 	/**
-	 * Create a new #GtkAspectFrame.
+	 * Create a new `GtkAspectFrame`.
 	 *
 	 * Params:
-	 *     xalign = Horizontal alignment of the child within the allocation of
-	 *         the #GtkAspectFrame. This ranges from 0.0 (left aligned)
-	 *         to 1.0 (right aligned)
-	 *     yalign = Vertical alignment of the child within the allocation of
-	 *         the #GtkAspectFrame. This ranges from 0.0 (top aligned)
-	 *         to 1.0 (bottom aligned)
+	 *     xalign = Horizontal alignment of the child within the parent.
+	 *         Ranges from 0.0 (left aligned) to 1.0 (right aligned)
+	 *     yalign = Vertical alignment of the child within the parent.
+	 *         Ranges from 0.0 (top aligned) to 1.0 (bottom aligned)
 	 *     ratio = The desired aspect ratio.
 	 *     obeyChild = If %TRUE, @ratio is ignored, and the aspect
 	 *         ratio is taken from the requistion of the child.
 	 *
-	 * Returns: the new #GtkAspectFrame.
+	 * Returns: the new `GtkAspectFrame`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -127,7 +123,7 @@ public class AspectFrame : Widget
 
 	/**
 	 * Returns whether the child's size request should override
-	 * the set aspect ratio of the #GtkAspectFrame.
+	 * the set aspect ratio of the `GtkAspectFrame`.
 	 *
 	 * Returns: whether to obey the child's size request
 	 */
@@ -137,8 +133,7 @@ public class AspectFrame : Widget
 	}
 
 	/**
-	 * Returns the desired aspect ratio of the child set using
-	 * gtk_aspect_frame_set_ratio().
+	 * Returns the desired aspect ratio of the child.
 	 *
 	 * Returns: the desired aspect ratio
 	 */
@@ -149,7 +144,7 @@ public class AspectFrame : Widget
 
 	/**
 	 * Returns the horizontal alignment of the child within the
-	 * allocation of the #GtkAspectFrame.
+	 * allocation of the `GtkAspectFrame`.
 	 *
 	 * Returns: the horizontal alignment
 	 */
@@ -160,7 +155,7 @@ public class AspectFrame : Widget
 
 	/**
 	 * Returns the vertical alignment of the child within the
-	 * allocation of the #GtkAspectFrame.
+	 * allocation of the `GtkAspectFrame`.
 	 *
 	 * Returns: the vertical alignment
 	 */
@@ -183,7 +178,7 @@ public class AspectFrame : Widget
 	/**
 	 * Sets whether the aspect ratio of the child's size
 	 * request should override the set aspect ratio of
-	 * the #GtkAspectFrame.
+	 * the `GtkAspectFrame`.
 	 *
 	 * Params:
 	 *     obeyChild = If %TRUE, @ratio is ignored, and the aspect
@@ -207,7 +202,7 @@ public class AspectFrame : Widget
 
 	/**
 	 * Sets the horizontal alignment of the child within the allocation
-	 * of the #GtkAspectFrame.
+	 * of the `GtkAspectFrame`.
 	 *
 	 * Params:
 	 *     xalign = horizontal alignment, from 0.0 (left aligned) to 1.0 (right aligned)
@@ -219,7 +214,7 @@ public class AspectFrame : Widget
 
 	/**
 	 * Sets the vertical alignment of the child within the allocation
-	 * of the #GtkAspectFrame.
+	 * of the `GtkAspectFrame`.
 	 *
 	 * Params:
 	 *     yalign = horizontal alignment, from 0.0 (top aligned) to 1.0 (bottom aligned)

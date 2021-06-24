@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.TestLogMsg;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /** */
@@ -63,7 +62,7 @@ public class TestLogBuffer
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_test_log_buffer_free(gTestLogBuffer);
 	}
 

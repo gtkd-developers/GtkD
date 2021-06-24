@@ -36,14 +36,17 @@ private import std.algorithm;
 
 
 /**
- * The #GtkEmojiChooser popover is used by text widgets such as #GtkEntry or
- * #GtkTextView to offer users a convenient way to insert Emoji characters.
+ * The `GtkEmojiChooser` is used by text widgets such as `GtkEntry` or
+ * `GtkTextView` to let users insert Emoji characters.
  * 
- * GtkEmojiChooser emits the #GtkEmojiChooser::emoji-picked signal when an
- * Emoji is selected.
+ * ![An example GtkEmojiChooser](emojichooser.png)
+ * 
+ * `GtkEmojiChooser` emits the [signal@Gtk.EmojiChooser::emoji-picked]
+ * signal when an Emoji is selected.
  * 
  * # CSS nodes
- * |[<!-- language="plain" -->
+ * 
+ * ```
  * popover
  * ├── box.emoji-searchbar
  * │   ╰── entry.search
@@ -51,9 +54,9 @@ private import std.algorithm;
  * ├── button.image-button.emoji-section
  * ├── ...
  * ╰── button.image-button.emoji-section
- * ]|
+ * ```
  * 
- * Every #GtkEmojiChooser consists of a main node called popover.
+ * Every `GtkEmojiChooser` consists of a main node called popover.
  * The contents of the popover are largely implementation defined
  * and supposed to inherit general styles.
  * The top searchbar used to search emoji and gets the .emoji-searchbar
@@ -98,9 +101,9 @@ public class EmojiChooser : Popover
 	}
 
 	/**
-	 * Creates a new #GtkEmojiChooser.
+	 * Creates a new `GtkEmojiChooser`.
 	 *
-	 * Returns: a new #GtkEmojiChooser
+	 * Returns: a new `GtkEmojiChooser`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -117,8 +120,7 @@ public class EmojiChooser : Popover
 	}
 
 	/**
-	 * The ::emoji-picked signal is emitted when the user selects an
-	 * Emoji.
+	 * Emitted when the user selects an Emoji.
 	 *
 	 * Params:
 	 *     text = the Unicode sequence for the picked Emoji, in UTF-8

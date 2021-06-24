@@ -26,10 +26,10 @@ module gstreamer.CapsFeatures;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -85,7 +85,7 @@ public class CapsFeatures
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			gst_caps_features_free(gstCapsFeatures);
 	}
 

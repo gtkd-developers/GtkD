@@ -27,6 +27,7 @@ module gstreamer.ObjectGst;
 private import glib.ErrorG;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Signals;

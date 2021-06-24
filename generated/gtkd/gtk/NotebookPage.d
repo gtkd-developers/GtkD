@@ -31,9 +31,7 @@ public  import gtk.c.types;
 
 
 /**
- * A page in the #GtkNotebook.
- * 
- * The `GtkNotebookPage` structure only contains private data.
+ * `GtkNotebookPage` is an auxiliary object used by `GtkNotebook`.
  */
 public class NotebookPage : ObjectG
 {

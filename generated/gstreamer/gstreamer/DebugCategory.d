@@ -25,9 +25,9 @@
 module gstreamer.DebugCategory;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -65,7 +65,7 @@ public class DebugCategory
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( ownedRef )
 			gst_debug_category_free(gstDebugCategory);
 	}
 

@@ -85,11 +85,14 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Creates a new icon for a bytes.
 	 *
+	 * This cannot fail, but loading and interpreting the bytes may fail later on
+	 * (for example, if g_loadable_icon_load() is called) if the image is invalid.
+	 *
 	 * Params:
 	 *     bytes = a #GBytes.
 	 *
 	 * Returns: a #GIcon for the given
-	 *     @bytes, or %NULL on error.
+	 *     @bytes.
 	 *
 	 * Since: 2.38
 	 *
@@ -110,7 +113,7 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Gets the #GBytes associated with the given @icon.
 	 *
-	 * Returns: a #GBytes, or %NULL.
+	 * Returns: a #GBytes.
 	 *
 	 * Since: 2.38
 	 */

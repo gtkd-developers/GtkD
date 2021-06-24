@@ -42,6 +42,8 @@ public  import gtk.c.types;
 
 
 /**
+ * A widget displaying a single row of a GtkTreeModel
+ * 
  * A #GtkCellView displays a single row of a #GtkTreeModel using a #GtkCellArea
  * and #GtkCellAreaContext. A #GtkCellAreaContext can be provided to the
  * #GtkCellView at construction time in order to keep the cellview in context

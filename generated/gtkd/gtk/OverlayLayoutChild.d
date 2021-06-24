@@ -29,7 +29,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkLayoutChild` subclass for children in a `GtkOverlayLayout`.
+ */
 public class OverlayLayoutChild : LayoutChild
 {
 	/** the main Gtk struct */

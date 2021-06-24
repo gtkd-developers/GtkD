@@ -35,17 +35,20 @@ public  import gtk.c.types;
 
 
 /**
- * GtkVideo is a widget to show a #GtkMediaStream with media controls
- * as provided by #GtkMediaControls. If you just want to display a
- * video without controls, you can treat it like any other paintable
- * and for example put it into a #GtkPicture.
+ * `GtkVideo` is a widget to show a `GtkMediaStream` with media controls.
  * 
- * GtkVideo aims to cover use cases such as previews, embedded animations,
+ * ![An example GtkVideo](video.png)
+ * 
+ * The controls are available separately as [class@Gtk.MediaControls].
+ * If you just want to display a video without controls, you can treat it
+ * like any other paintable and for example put it into a [class@Gtk.Picture].
+ * 
+ * `GtkVideo` aims to cover use cases such as previews, embedded animations,
  * etc. It supports autoplay, looping, and simple media controls. It does
  * not have support for video overlays, multichannel audio, device
  * selection, or input. If you are writing a full-fledged video player,
- * you may want to use the #GdkPaintable API and a media framework such
- * as Gstreamer directly.
+ * you may want to use the [class@Gdk.Paintable] API and a media framework
+ * such as Gstreamer directly.
  */
 public class Video : Widget
 {
@@ -83,9 +86,9 @@ public class Video : Widget
 	}
 
 	/**
-	 * Creates a new empty #GtkVideo.
+	 * Creates a new empty `GtkVideo`.
 	 *
-	 * Returns: a new #GtkVideo
+	 * Returns: a new `GtkVideo`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -102,12 +105,12 @@ public class Video : Widget
 	}
 
 	/**
-	 * Creates a #GtkVideo to play back the given @file.
+	 * Creates a `GtkVideo` to play back the given @file.
 	 *
 	 * Params:
-	 *     file = a #GFile
+	 *     file = a `GFile`
 	 *
-	 * Returns: a new #GtkVideo
+	 * Returns: a new `GtkVideo`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -124,15 +127,15 @@ public class Video : Widget
 	}
 
 	/**
-	 * Creates a #GtkVideo to play back the given @filename.
+	 * Creates a `GtkVideo` to play back the given @filename.
 	 *
-	 * This is a utility function that calls gtk_video_new_for_file(),
+	 * This is a utility function that calls [ctor@Gtk.Video.new_for_file],
 	 * See that function for details.
 	 *
 	 * Params:
 	 *     filename = filename to play back
 	 *
-	 * Returns: a new #GtkVideo
+	 * Returns: a new `GtkVideo`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -149,12 +152,12 @@ public class Video : Widget
 	}
 
 	/**
-	 * Creates a #GtkVideo to play back the given @stream.
+	 * Creates a `GtkVideo` to play back the given @stream.
 	 *
 	 * Params:
-	 *     stream = a #GtkMediaStream
+	 *     stream = a `GtkMediaStream`
 	 *
-	 * Returns: a new #GtkVideo
+	 * Returns: a new `GtkVideo`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -171,7 +174,7 @@ public class Video : Widget
 	}
 
 	/**
-	 * Returns %TRUE if videos have been set to loop via gtk_video_set_loop().
+	 * Returns %TRUE if videos have been set to loop.
 	 *
 	 * Returns: %TRUE if streams should autoplay
 	 */
@@ -199,7 +202,7 @@ public class Video : Widget
 	}
 
 	/**
-	 * Returns %TRUE if videos have been set to loop via gtk_video_set_loop().
+	 * Returns %TRUE if videos have been set to loop.
 	 *
 	 * Returns: %TRUE if streams should loop
 	 */
@@ -226,8 +229,8 @@ public class Video : Widget
 	}
 
 	/**
-	 * Sets whether @self automatically starts playback when it becomes visible
-	 * or when a new file gets loaded.
+	 * Sets whether @self automatically starts playback when it
+	 * becomes visible or when a new file gets loaded.
 	 *
 	 * Params:
 	 *     autoplay = whether media streams should autoplay
@@ -273,11 +276,13 @@ public class Video : Widget
 	}
 
 	/**
-	 * Sets the media stream to be played back. @self will take full control
-	 * of managing the media stream. If you want to manage a media stream
-	 * yourself, consider using a #GtkImage for display.
+	 * Sets the media stream to be played back.
 	 *
-	 * If you want to display a file, consider using gtk_video_set_file()
+	 * @self will take full control of managing the media stream. If you
+	 * want to manage a media stream yourself, consider using a
+	 * [class@Gtk.Picture] for display.
+	 *
+	 * If you want to display a file, consider using [method@Gtk.Video.set_file]
 	 * instead.
 	 *
 	 * Params:
@@ -291,7 +296,7 @@ public class Video : Widget
 	/**
 	 * Makes @self play the resource at the given @resource_path.
 	 *
-	 * This is a utility function that calls gtk_video_set_file(),
+	 * This is a utility function that calls [method@Gtk.Video.set_file].
 	 *
 	 * Params:
 	 *     resourcePath = the resource to set

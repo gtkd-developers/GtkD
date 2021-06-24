@@ -28,7 +28,6 @@ private import glib.ByteArray;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
-private import gtkd.Loader;
 
 
 /**
@@ -90,7 +89,7 @@ public class Bytes
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_bytes_unref(gBytes);
 	}
 
@@ -322,6 +321,10 @@ public class Bytes
 	 * if this was the last reference to bytes and bytes was created with
 	 * g_bytes_new(), g_bytes_new_take() or g_byte_array_free_to_bytes(). In all
 	 * other cases the data is copied.
+	 *
+	 * Do not use it if @bytes contains more than %G_MAXUINT
+	 * bytes. #GByteArray stores the length of its data in #guint, which
+	 * may be shorter than #gsize, that @bytes is using.
 	 *
 	 * Returns: a new mutable #GByteArray containing the same byte data
 	 *

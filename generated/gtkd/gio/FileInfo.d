@@ -33,6 +33,7 @@ private import glib.DateTime;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.TimeVal;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -537,9 +538,11 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets the file's size.
+	 * Gets the file's size (in bytes). The size is retrieved through the value of
+	 * the %G_FILE_ATTRIBUTE_STANDARD_SIZE attribute and is converted
+	 * from #guint64 to #goffset before returning the result.
 	 *
-	 * Returns: a #goffset containing the file's size.
+	 * Returns: a #goffset containing the file's size (in bytes).
 	 */
 	public long getSize()
 	{

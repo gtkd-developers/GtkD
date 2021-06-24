@@ -1544,6 +1544,11 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * notified of a %G_IO_OUT condition. (On Windows in particular, this is
 	 * very common due to the way the underlying APIs work.)
 	 *
+	 * The sum of the sizes of each #GOutputVector in vectors must not be
+	 * greater than %G_MAXSSIZE. If the message can be larger than this,
+	 * then it is mandatory to use the g_socket_send_message_with_timeout()
+	 * function.
+	 *
 	 * On error -1 is returned and @error is set accordingly.
 	 *
 	 * Params:

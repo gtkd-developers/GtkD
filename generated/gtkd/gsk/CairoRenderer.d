@@ -31,7 +31,12 @@ private import gsk.c.functions;
 public  import gsk.c.types;
 
 
-/** */
+/**
+ * A GSK renderer that is using cairo.
+ * 
+ * Since it is using cairo, this renderer cannot support
+ * 3D transformations.
+ */
 public class CairoRenderer : Renderer
 {
 	/** the main Gtk struct */

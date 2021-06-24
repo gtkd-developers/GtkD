@@ -31,6 +31,8 @@ private import gobject.ObjectG;
 
 /**
  * Base type for snapshot operations.
+ * 
+ * The subclass of `GdkSnapshot` used by GTK is [class@Gtk.Snapshot].
  */
 public class Snapshot : ObjectG
 {

@@ -70,7 +70,7 @@ public class CrossFadeNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will do a cross-fade between @start and @end.
+	 * Creates a `GskRenderNode` that will do a cross-fade between @start and @end.
 	 *
 	 * Params:
 	 *     start = The start node to be drawn
@@ -78,7 +78,7 @@ public class CrossFadeNode : RenderNode
 	 *     progress = How far the fade has progressed from start to end. The value will
 	 *         be clamped to the range [0 ... 1]
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -95,9 +95,9 @@ public class CrossFadeNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the child #GskRenderNode at the end of the cross-fade.
+	 * Retrieves the child `GskRenderNode` at the end of the cross-fade.
 	 *
-	 * Returns: a #GskRenderNode
+	 * Returns: a `GskRenderNode`
 	 */
 	public RenderNode getEndChild()
 	{
@@ -122,9 +122,9 @@ public class CrossFadeNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the child #GskRenderNode at the beginning of the cross-fade.
+	 * Retrieves the child `GskRenderNode` at the beginning of the cross-fade.
 	 *
-	 * Returns: a #GskRenderNode
+	 * Returns: a `GskRenderNode`
 	 */
 	public RenderNode getStartChild()
 	{

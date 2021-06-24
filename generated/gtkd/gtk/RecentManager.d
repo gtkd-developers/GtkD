@@ -38,37 +38,37 @@ private import std.algorithm;
 
 
 /**
- * #GtkRecentManager provides a facility for adding, removing and
- * looking up recently used files. Each recently used file is
- * identified by its URI, and has meta-data associated to it, like
- * the names and command lines of the applications that have
- * registered it, the number of time each application has registered
- * the same file, the mime type of the file and whether the file
- * should be displayed only by the applications that have
+ * `GtkRecentManager` manages and looks up recently used files.
+ * 
+ * Each recently used file is identified by its URI, and has meta-data
+ * associated to it, like the names and command lines of the applications
+ * that have registered it, the number of time each application has
+ * registered the same file, the mime type of the file and whether
+ * the file should be displayed only by the applications that have
  * registered it.
  * 
  * The recently used files list is per user.
  * 
- * The #GtkRecentManager acts like a database of all the recently
- * used files. You can create new #GtkRecentManager objects, but
- * it is more efficient to use the default manager created by GTK
+ * `GtkRecentManager` acts like a database of all the recently
+ * used files. You can create new `GtkRecentManager` objects, but
+ * it is more efficient to use the default manager created by GTK.
  * 
  * Adding a new recently used file is as simple as:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * GtkRecentManager *manager;
  * 
  * manager = gtk_recent_manager_get_default ();
  * gtk_recent_manager_add_item (manager, file_uri);
- * ]|
+ * ```
  * 
- * The #GtkRecentManager will try to gather all the needed information
+ * The `GtkRecentManager` will try to gather all the needed information
  * from the file itself through GIO.
  * 
  * Looking up the meta-data associated with a recently used file
- * given its URI requires calling gtk_recent_manager_lookup_item():
+ * given its URI requires calling [method@Gtk.RecentManager.lookup_item]:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * GtkRecentManager *manager;
  * GtkRecentInfo *info;
  * GError *error = NULL;
@@ -85,16 +85,14 @@ private import std.algorithm;
  * // Use the info object
  * gtk_recent_info_unref (info);
  * }
- * ]|
+ * ```
  * 
  * In order to retrieve the list of recently used files, you can use
- * gtk_recent_manager_get_items(), which returns a list of #GtkRecentInfo.
- * 
- * A #GtkRecentManager is the model used to populate the contents of
- * one, or more #GtkRecentChooser implementations.
+ * [method@Gtk.RecentManager.get_items], which returns a list of
+ * [struct@Gtk.RecentInfo].
  * 
  * Note that the maximum age of the recently used files list is
- * controllable through the #GtkSettings:gtk-recent-files-max-age
+ * controllable through the [property@Gtk.Settings:gtk-recent-files-max-age]
  * property.
  */
 public class RecentManager : ObjectG
@@ -133,15 +131,18 @@ public class RecentManager : ObjectG
 	}
 
 	/**
-	 * Creates a new recent manager object. Recent manager objects are used to
-	 * handle the list of recently used resources. A #GtkRecentManager object
-	 * monitors the recently used resources list, and emits the “changed” signal
-	 * each time something inside the list changes.
+	 * Creates a new recent manager object.
 	 *
-	 * #GtkRecentManager objects are expensive: be sure to create them only when
-	 * needed. You should use gtk_recent_manager_get_default() instead.
+	 * Recent manager objects are used to handle the list of recently used
+	 * resources. A `GtkRecentManager` object monitors the recently used
+	 * resources list, and emits the [signal@Gtk.RecentManager::changed]
+	 * signal each time something inside the list changes.
 	 *
-	 * Returns: A newly created #GtkRecentManager object
+	 * `GtkRecentManager` objects are expensive: be sure to create them
+	 * only when needed. You should use [type_func@Gtk.RecentManager.get_default]
+	 * instead.
+	 *
+	 * Returns: A newly created `GtkRecentManager` object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -158,10 +159,10 @@ public class RecentManager : ObjectG
 	}
 
 	/**
-	 * Gets a unique instance of #GtkRecentManager, that you can share
+	 * Gets a unique instance of `GtkRecentManager` that you can share
 	 * in your application without caring about memory management.
 	 *
-	 * Returns: A unique #GtkRecentManager. Do not ref or
+	 * Returns: A unique `GtkRecentManager`. Do not ref or
 	 *     unref it.
 	 */
 	public static RecentManager getDefault()
@@ -179,19 +180,19 @@ public class RecentManager : ObjectG
 	/**
 	 * Adds a new resource, pointed by @uri, into the recently used
 	 * resources list, using the metadata specified inside the
-	 * #GtkRecentData passed in @recent_data.
+	 * `GtkRecentData` passed in @recent_data.
 	 *
 	 * The passed URI will be used to identify this resource inside the
 	 * list.
 	 *
 	 * In order to register the new recently used resource, metadata about
 	 * the resource must be passed as well as the URI; the metadata is
-	 * stored in a #GtkRecentData, which must contain the MIME
+	 * stored in a `GtkRecentData`, which must contain the MIME
 	 * type of the resource pointed by the URI; the name of the application
 	 * that is registering the item, and a command line to be used when
 	 * launching the item.
 	 *
-	 * Optionally, a #GtkRecentData might contain a UTF-8 string
+	 * Optionally, a `GtkRecentData` might contain a UTF-8 string
 	 * to be used when viewing the item instead of the last component of
 	 * the URI; a short description of the item; whether the item should
 	 * be considered private - that is, should be displayed only by the
@@ -215,9 +216,9 @@ public class RecentManager : ObjectG
 	 *
 	 * This function automatically retrieves some of the needed
 	 * metadata and setting other metadata to common default values;
-	 * it then feeds the data to gtk_recent_manager_add_full().
+	 * it then feeds the data to [method@Gtk.RecentManager.add_full].
 	 *
-	 * See gtk_recent_manager_add_full() if you want to explicitly
+	 * See [method@Gtk.RecentManager.add_full] if you want to explicitly
 	 * define the metadata for the resource pointed by @uri.
 	 *
 	 * Params:
@@ -235,8 +236,8 @@ public class RecentManager : ObjectG
 	 * Gets the list of recently used resources.
 	 *
 	 * Returns: a list of
-	 *     newly allocated #GtkRecentInfo objects. Use
-	 *     gtk_recent_info_unref() on each item inside the list, and then
+	 *     newly allocated `GtkRecentInfo objects`. Use
+	 *     [method@Gtk.RecentInfo.unref] on each item inside the list, and then
 	 *     free the list itself using g_list_free().
 	 */
 	public ListG getItems()
@@ -267,16 +268,16 @@ public class RecentManager : ObjectG
 
 	/**
 	 * Searches for a URI inside the recently used resources list, and
-	 * returns a #GtkRecentInfo containing information about the resource
+	 * returns a `GtkRecentInfo` containing information about the resource
 	 * like its MIME type, or its display name.
 	 *
 	 * Params:
 	 *     uri = a URI
 	 *
-	 * Returns: a #GtkRecentInfo containing information
+	 * Returns: a `GtkRecentInfo` containing information
 	 *     about the resource pointed by @uri, or %NULL if the URI was
 	 *     not registered in the recently used resources list. Free with
-	 *     gtk_recent_info_unref().
+	 *     [method@Gtk.RecentInfo.unref].
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -378,8 +379,10 @@ public class RecentManager : ObjectG
 
 	/**
 	 * Emitted when the current recently used resources manager changes
-	 * its contents, either by calling gtk_recent_manager_add_item() or
-	 * by another application.
+	 * its contents.
+	 *
+	 * This can happen either by calling [method@Gtk.RecentManager.add_item]
+	 * or by another application.
 	 */
 	gulong addOnChanged(void delegate(RecentManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

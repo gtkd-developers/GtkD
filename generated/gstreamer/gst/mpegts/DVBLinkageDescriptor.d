@@ -30,7 +30,6 @@ private import gst.mpegts.DVBLinkageEvent;
 private import gst.mpegts.DVBLinkageMobileHandOver;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
-private import gtkd.Loader;
 
 
 /** */
@@ -65,7 +64,7 @@ public class DVBLinkageDescriptor
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
+		if ( ownedRef )
 			gst_mpegts_dvb_linkage_descriptor_free(gstMpegtsDVBLinkageDescriptor);
 	}
 

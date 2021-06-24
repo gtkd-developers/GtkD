@@ -30,7 +30,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkAssistantPage` is an auxiliary object used by `GtkAssistant.
+ */
 public class AssistantPage : ObjectG
 {
 	/** the main Gtk struct */

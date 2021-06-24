@@ -28,8 +28,8 @@ private import atk.c.functions;
 public  import atk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +70,7 @@ public class Range
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_ATK) && ownedRef )
+		if ( ownedRef )
 			atk_range_free(atkRange);
 	}
 
