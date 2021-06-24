@@ -190,9 +190,6 @@ move: markup_parser_finish Attribute
 move: markup_parser_new Attribute
 move: parse_markup Attribute
 
-move: find_map Map
-move: module_register Map
-
 move: gravity_get_for_matrix PgVertical
 move: gravity_get_for_script PgVertical
 move: gravity_get_for_script_and_width PgVertical
