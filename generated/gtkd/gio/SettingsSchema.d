@@ -30,6 +30,7 @@ public  import gio.c.types;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -157,7 +158,7 @@ public class SettingsSchema
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_settings_schema_unref(gSettingsSchema);
 	}
 

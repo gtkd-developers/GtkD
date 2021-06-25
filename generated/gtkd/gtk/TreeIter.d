@@ -27,6 +27,7 @@ module gtk.TreeIter;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -67,7 +68,7 @@ public class TreeIter
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_tree_iter_free(gtkTreeIter);
 	}
 

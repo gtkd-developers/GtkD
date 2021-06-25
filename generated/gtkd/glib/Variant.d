@@ -34,6 +34,7 @@ private import glib.VariantIter;
 private import glib.VariantType;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -313,7 +314,7 @@ public class Variant
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_variant_unref(gVariant);
 	}
 

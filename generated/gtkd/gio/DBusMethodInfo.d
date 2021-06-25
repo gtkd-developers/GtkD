@@ -32,6 +32,7 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -70,7 +71,7 @@ public final class DBusMethodInfo
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_dbus_method_info_unref(gDBusMethodInfo);
 	}
 

@@ -37,6 +37,7 @@ private import graphene.Rect;
 private import graphene.Vec3;
 private import gsk.c.functions;
 public  import gsk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -81,7 +82,7 @@ public class Transform
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSK) && ownedRef )
 			gsk_transform_unref(gskTransform);
 	}
 

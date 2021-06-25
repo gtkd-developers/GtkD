@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -66,7 +67,7 @@ public class BitReader
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTBASE) && ownedRef )
 			gst_bit_reader_free(gstBitReader);
 	}
 

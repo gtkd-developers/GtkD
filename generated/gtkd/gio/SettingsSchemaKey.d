@@ -31,6 +31,7 @@ private import glib.Variant;
 private import glib.VariantType;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -68,7 +69,7 @@ public class SettingsSchemaKey
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_settings_schema_key_unref(gSettingsSchemaKey);
 	}
 

@@ -27,6 +27,7 @@ module gst.mpegts.CableDeliverySystemDescriptor;
 private import glib.MemorySlice;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -63,7 +64,7 @@ public final class CableDeliverySystemDescriptor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			gst_mpegts_dvb_cable_delivery_system_descriptor_free(gstMpegtsCableDeliverySystemDescriptor);
 	}
 

@@ -30,6 +30,7 @@ private import glib.Str;
 private import glib.TimeVal;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -76,7 +77,7 @@ public final class Date
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_date_free(gDate);
 	}
 

@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -71,7 +72,7 @@ public class PgFontDescription
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_font_description_free(pangoFontDescription);
 	}
 

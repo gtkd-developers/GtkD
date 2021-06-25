@@ -26,6 +26,8 @@ module gthread.c.functions;
 
 import std.stdio;
 import gthread.c.types;
+import gtkd.Loader;
+
 version (Windows)
 	static immutable LIBRARY_GTHREAD = [];
 else version (OSX)
@@ -33,6 +35,10 @@ else version (OSX)
 else
 	static immutable LIBRARY_GTHREAD = [""];
 
+shared static this()
+{}
+
 __gshared extern(C)
 {
 }
+

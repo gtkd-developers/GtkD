@@ -28,6 +28,7 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.PgGlyphItem;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -108,7 +109,7 @@ public final class PgGlyphItemIter
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_glyph_item_iter_free(pangoGlyphItemIter);
 	}
 

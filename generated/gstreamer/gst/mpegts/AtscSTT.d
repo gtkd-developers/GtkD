@@ -31,6 +31,7 @@ private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gstreamer.DateTime;
+private import gtkd.Loader;
 
 
 /**
@@ -67,7 +68,7 @@ public final class AtscSTT
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			sliceFree(gstMpegtsAtscSTT);
 	}
 

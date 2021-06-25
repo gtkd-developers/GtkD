@@ -25,6 +25,7 @@
 module pango.PgLayoutIter;
 
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
 private import pango.c.functions;
@@ -70,7 +71,7 @@ public class PgLayoutIter
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_layout_iter_free(pangoLayoutIter);
 	}
 

@@ -34,6 +34,7 @@ private import gobject.ObjectG;
 private import graphene.Rect;
 private import gsk.c.functions;
 public  import gsk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -82,7 +83,7 @@ public class RenderNode
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSK) && ownedRef )
 			gsk_render_node_unref(gskRenderNode);
 	}
 

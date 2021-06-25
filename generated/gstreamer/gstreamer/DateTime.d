@@ -31,6 +31,7 @@ private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -72,7 +73,7 @@ public class DateTime
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_date_time_unref(gstDateTime);
 	}
 
@@ -207,31 +208,6 @@ public class DateTime
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_iso8601_string");
-		}
-
-		this(cast(GstDateTime*) __p);
-	}
-
-	/**
-	 * Creates a new #GstDateTime using the time since Jan 1, 1970 specified by
-	 * @usecs. The #GstDateTime is in the local timezone.
-	 *
-	 * Params:
-	 *     usecs = microseconds from the Unix epoch
-	 *
-	 * Returns: a newly created #GstDateTime
-	 *
-	 * Since: 1.18
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(long usecs)
-	{
-		auto __p = gst_date_time_new_from_unix_epoch_local_time_usecs(usecs);
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_unix_epoch_local_time_usecs");
 		}
 
 		this(cast(GstDateTime*) __p);

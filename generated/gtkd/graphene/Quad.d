@@ -31,6 +31,7 @@ private import graphene.Point;
 private import graphene.Rect;
 private import graphene.c.functions;
 public  import graphene.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -72,7 +73,7 @@ public class Quad
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
 			graphene_quad_free(graphene_quad);
 	}
 

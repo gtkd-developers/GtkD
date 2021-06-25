@@ -27,6 +27,7 @@ module pango.PgLayoutLine;
 private import glib.ListSG;
 private import glib.MemorySlice;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.PgLayout;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -71,7 +72,7 @@ public final class PgLayoutLine
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_layout_line_unref(pangoLayoutLine);
 	}
 

@@ -30,6 +30,7 @@ private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -66,7 +67,7 @@ public class TreePath
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_tree_path_free(gtkTreePath);
 	}
 

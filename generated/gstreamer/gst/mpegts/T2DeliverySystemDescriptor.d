@@ -28,6 +28,7 @@ private import glib.MemorySlice;
 private import glib.PtrArray;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -64,7 +65,7 @@ public final class T2DeliverySystemDescriptor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			gst_mpegts_t2_delivery_system_descriptor_free(gstMpegtsT2DeliverySystemDescriptor);
 	}
 

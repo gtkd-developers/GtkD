@@ -31,6 +31,7 @@ private import glib.ListG;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -80,7 +81,7 @@ public class SrvTarget
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_srv_target_free(gSrvTarget);
 	}
 

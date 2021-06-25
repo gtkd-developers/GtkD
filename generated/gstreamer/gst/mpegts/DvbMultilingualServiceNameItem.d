@@ -29,6 +29,7 @@ private import glib.Str;
 private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -65,7 +66,7 @@ public final class DvbMultilingualServiceNameItem
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			sliceFree(gstMpegtsDvbMultilingualServiceNameItem);
 	}
 

@@ -30,6 +30,7 @@ private import glib.PtrArray;
 private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -66,7 +67,7 @@ public final class PMTStream
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			sliceFree(gstMpegtsPMTStream);
 	}
 

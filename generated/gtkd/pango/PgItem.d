@@ -27,6 +27,7 @@ module pango.PgItem;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.PgAttributeIterator;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -69,7 +70,7 @@ public final class PgItem
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_item_free(pangoItem);
 	}
 

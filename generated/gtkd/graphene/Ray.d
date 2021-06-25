@@ -35,6 +35,7 @@ private import graphene.Triangle;
 private import graphene.Vec3;
 private import graphene.c.functions;
 public  import graphene.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -76,7 +77,7 @@ public class Ray
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
 			graphene_ray_free(graphene_ray);
 	}
 

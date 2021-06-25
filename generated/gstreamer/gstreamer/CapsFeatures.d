@@ -30,6 +30,7 @@ private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -85,7 +86,7 @@ public class CapsFeatures
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_caps_features_free(gstCapsFeatures);
 	}
 

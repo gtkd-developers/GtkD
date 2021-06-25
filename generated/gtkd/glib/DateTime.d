@@ -30,6 +30,7 @@ private import glib.TimeVal;
 private import glib.TimeZone;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -69,7 +70,7 @@ public class DateTime
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_date_time_unref(gDateTime);
 	}
 
@@ -158,7 +159,7 @@ public class DateTime
 		if ( date is null )
 			return false;
 
-		return equal(this, date) != 0;
+		return equal(date) != 0;
 	}
 
 	/** */
@@ -169,7 +170,7 @@ public class DateTime
 		if ( date is null )
 			return int.min;
 
-		return compare(this, date);
+		return compare(date);
 	}
 
 	/** */

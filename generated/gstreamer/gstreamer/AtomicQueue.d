@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -65,7 +66,7 @@ public class AtomicQueue
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_atomic_queue_unref(gstAtomicQueue);
 	}
 

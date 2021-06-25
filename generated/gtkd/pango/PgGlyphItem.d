@@ -28,6 +28,7 @@ private import glib.ListSG;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.PgAttributeList;
 private import pango.PgGlyphString;
 private import pango.PgItem;
@@ -74,7 +75,7 @@ public final class PgGlyphItem
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_glyph_item_free(pangoGlyphItem);
 	}
 

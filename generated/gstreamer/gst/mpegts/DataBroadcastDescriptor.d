@@ -29,6 +29,7 @@ private import glib.Str;
 private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /** */
@@ -63,7 +64,7 @@ public final class DataBroadcastDescriptor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			gst_mpegts_dvb_data_broadcast_descriptor_free(gstMpegtsDataBroadcastDescriptor);
 	}
 

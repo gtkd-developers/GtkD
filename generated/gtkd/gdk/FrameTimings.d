@@ -27,6 +27,7 @@ module gdk.FrameTimings;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -70,7 +71,7 @@ public class FrameTimings
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_frame_timings_unref(gdkFrameTimings);
 	}
 

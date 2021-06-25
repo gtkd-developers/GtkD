@@ -30,6 +30,7 @@ private import gobject.Value;
 private import gtk.ExpressionWatch;
 private import gtk.c.functions;
 public  import gtk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -192,7 +193,7 @@ public class Expression
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_expression_unref(gtkExpression);
 	}
 

@@ -28,6 +28,7 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -67,7 +68,7 @@ public final class PgColor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_color_free(pangoColor);
 	}
 

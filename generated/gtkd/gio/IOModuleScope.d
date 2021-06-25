@@ -29,6 +29,7 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -71,7 +72,7 @@ public class IOModuleScope
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_io_module_scope_free(gIOModuleScope);
 	}
 

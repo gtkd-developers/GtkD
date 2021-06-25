@@ -25,7 +25,6 @@
 module gdkpixbuf.Pixbuf;
 
 private import gdkpixbuf.PixbufFormat;
-private import gdkpixbuf.Pixdata;
 private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
 private import gio.AsyncResultIF;
@@ -1853,42 +1852,5 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public bool setOption(string key, string value)
 	{
 		return gdk_pixbuf_set_option(gdkPixbuf, Str.toStringz(key), Str.toStringz(value)) != 0;
-	}
-
-	/**
-	 * Converts a `GdkPixdata` to a `GdkPixbuf`.
-	 *
-	 * If `copy_pixels` is `TRUE` or if the pixel data is run-length-encoded,
-	 * the pixel data is copied into newly-allocated memory; otherwise it is
-	 * reused.
-	 *
-	 * Deprecated: Use `GResource` instead.
-	 *
-	 * Params:
-	 *     pixdata = a #GdkPixdata to convert into a `GdkPixbuf`.
-	 *     copyPixels = whether to copy raw pixel data; run-length encoded
-	 *         pixel data is always copied.
-	 *
-	 * Returns: a new pixbuf
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static Pixbuf fromPixdata(Pixdata pixdata, bool copyPixels)
-	{
-		GError* err = null;
-
-		auto __p = gdk_pixbuf_from_pixdata((pixdata is null) ? null : pixdata.getPixdataStruct(), copyPixels, &err);
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 }

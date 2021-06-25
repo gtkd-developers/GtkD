@@ -30,6 +30,7 @@ private import glib.Variant;
 private import glib.VariantType;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -156,7 +157,7 @@ public class VariantDict
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_variant_dict_unref(gVariantDict);
 	}
 

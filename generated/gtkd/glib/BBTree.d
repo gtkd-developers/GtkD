@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.TreeNode;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -66,7 +67,7 @@ public class BBTree
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_tree_unref(gTree);
 	}
 

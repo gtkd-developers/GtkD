@@ -27,6 +27,7 @@ module gst.mpegts.SatelliteDeliverySystemDescriptor;
 private import glib.MemorySlice;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -63,7 +64,7 @@ public final class SatelliteDeliverySystemDescriptor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			sliceFree(gstMpegtsSatelliteDeliverySystemDescriptor);
 	}
 

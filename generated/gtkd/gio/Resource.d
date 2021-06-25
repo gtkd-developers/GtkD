@@ -34,6 +34,7 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -207,7 +208,7 @@ public class Resource
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_resource_unref(gResource);
 	}
 

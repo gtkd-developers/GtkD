@@ -30,6 +30,7 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -72,7 +73,7 @@ public final class PixbufFormat
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
 			gdk_pixbuf_format_free(gdkPixbufFormat);
 	}
 

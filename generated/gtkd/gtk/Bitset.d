@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -78,7 +79,7 @@ public class Bitset
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_bitset_unref(gtkBitset);
 	}
 

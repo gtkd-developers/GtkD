@@ -32,6 +32,7 @@ private import graphene.Sphere;
 private import graphene.Vec3;
 private import graphene.c.functions;
 public  import graphene.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -71,7 +72,7 @@ public class Box
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
 			graphene_box_free(graphene_box);
 	}
 

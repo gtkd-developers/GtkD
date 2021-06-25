@@ -27,6 +27,7 @@ module pango.PgAttributeList;
 private import glib.ConstructionException;
 private import glib.ListSG;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.PgAttribute;
 private import pango.PgAttributeIterator;
 private import pango.c.functions;
@@ -77,7 +78,7 @@ public class PgAttributeList
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_attr_list_unref(pangoAttrList);
 	}
 

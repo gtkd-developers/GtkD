@@ -26,6 +26,7 @@ module pango.PgMatrix;
 
 private import glib.MemorySlice;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -74,7 +75,7 @@ public final class PgMatrix
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_matrix_free(pangoMatrix);
 	}
 

@@ -30,6 +30,7 @@ private import glib.Mutex;
 private import glib.Source;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -67,7 +68,7 @@ public class MainContext
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_main_context_unref(gMainContext);
 	}
 

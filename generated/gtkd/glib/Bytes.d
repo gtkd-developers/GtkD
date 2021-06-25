@@ -28,6 +28,7 @@ private import glib.ByteArray;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -89,7 +90,7 @@ public class Bytes
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_bytes_unref(gBytes);
 	}
 

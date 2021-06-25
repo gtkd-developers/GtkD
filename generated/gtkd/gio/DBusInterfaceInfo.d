@@ -35,6 +35,7 @@ private import glib.Str;
 private import glib.StringG;
 private import glib.c.functions;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -73,7 +74,7 @@ public final class DBusInterfaceInfo
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_dbus_interface_info_unref(gDBusInterfaceInfo);
 	}
 

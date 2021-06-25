@@ -782,6 +782,8 @@ public alias extern(C) void function(GdkPixbuf* pixbuf, int x, int y, int width,
  */
 public alias extern(C) int function(char* buf, size_t count, GError** error, void* data) GdkPixbufSaveFunc;
 
+import core.stdc.stdio;
+
 /**
  * Major version of gdk-pixbuf library, that is the "0" in
  * "0.8.2" for example.

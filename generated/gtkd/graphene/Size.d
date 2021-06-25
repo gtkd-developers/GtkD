@@ -29,6 +29,7 @@ private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import graphene.c.functions;
 public  import graphene.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -67,7 +68,7 @@ public final class Size
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
 			graphene_size_free(graphene_size);
 	}
 

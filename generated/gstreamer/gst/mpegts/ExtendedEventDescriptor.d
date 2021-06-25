@@ -30,6 +30,7 @@ private import glib.Str;
 private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -66,7 +67,7 @@ public final class ExtendedEventDescriptor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			gst_mpegts_extended_event_descriptor_free(gstMpegtsExtendedEventDescriptor);
 	}
 

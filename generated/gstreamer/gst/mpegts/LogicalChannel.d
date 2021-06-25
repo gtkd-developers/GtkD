@@ -27,6 +27,7 @@ module gst.mpegts.LogicalChannel;
 private import glib.MemorySlice;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /** */
@@ -61,7 +62,7 @@ public final class LogicalChannel
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			sliceFree(gstMpegtsLogicalChannel);
 	}
 

@@ -34,6 +34,7 @@ private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -71,7 +72,7 @@ public class RecentInfo
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_recent_info_unref(gtkRecentInfo);
 	}
 

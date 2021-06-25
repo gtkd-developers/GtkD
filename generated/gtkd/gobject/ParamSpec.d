@@ -30,6 +30,7 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -78,7 +79,7 @@ public class ParamSpec
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
 			g_param_spec_unref(gParamSpec);
 	}
 

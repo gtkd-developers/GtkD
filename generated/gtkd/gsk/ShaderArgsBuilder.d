@@ -33,6 +33,7 @@ private import graphene.Vec4;
 private import gsk.GLShader;
 private import gsk.c.functions;
 public  import gsk.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -69,7 +70,7 @@ public class ShaderArgsBuilder
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSK) && ownedRef )
 			gsk_shader_args_builder_unref(gskShaderArgsBuilder);
 	}
 

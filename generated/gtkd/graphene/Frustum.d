@@ -34,6 +34,7 @@ private import graphene.Point3D;
 private import graphene.Sphere;
 private import graphene.c.functions;
 public  import graphene.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -75,7 +76,7 @@ public class Frustum
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
 			graphene_frustum_free(graphene_frustum);
 	}
 

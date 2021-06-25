@@ -28,6 +28,7 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -96,7 +97,7 @@ public class PopupLayout
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_popup_layout_unref(gdkPopupLayout);
 	}
 

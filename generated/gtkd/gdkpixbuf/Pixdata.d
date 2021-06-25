@@ -32,6 +32,7 @@ private import glib.GException;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
+private import gtkd.Loader;
 
 
 /**
@@ -80,10 +81,35 @@ public final class Pixdata
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
 			sliceFree(gdkPixdata);
 	}
 
+	/**
+	 * Converts a `GdkPixbuf` to a `GdkPixdata`.
+	 *
+	 * If `use_rle` is `TRUE`, the pixel data is run-length encoded into
+	 * newly-allocated memory and a pointer to that memory is returned.
+	 *
+	 * Deprecated: Use #GResource instead.
+	 *
+	 * Params:
+	 *     pixbuf = the data to fill `pixdata` with.
+	 *     useRle = whether to use run-length encoding for the pixel data.
+	 *
+	 * Returns: If `use_rle` is
+	 *     `TRUE`, a pointer to the newly-allocated memory for the run-length
+	 *     encoded pixel data, otherwise `NULL`.
+	 */
+	public ubyte[] fromPixbuf(Pixbuf pixbuf, bool useRle)
+	{
+		auto __p = gdk_pixdata_from_pixbuf(gdkPixdata, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), useRle);
+
+		return cast(ubyte[])__p[0 .. getArrayLength(cast(ubyte *)__p)];
+	}
+
+	/**
+	 */
 
 	/**
 	 * magic number. A valid `GdkPixdata` structure must have
@@ -209,29 +235,6 @@ public final class Pixdata
 		}
 
 		return __p;
-	}
-
-	/**
-	 * Converts a `GdkPixbuf` to a `GdkPixdata`.
-	 *
-	 * If `use_rle` is `TRUE`, the pixel data is run-length encoded into
-	 * newly-allocated memory and a pointer to that memory is returned.
-	 *
-	 * Deprecated: Use #GResource instead.
-	 *
-	 * Params:
-	 *     pixbuf = the data to fill `pixdata` with.
-	 *     useRle = whether to use run-length encoding for the pixel data.
-	 *
-	 * Returns: If `use_rle` is
-	 *     `TRUE`, a pointer to the newly-allocated memory for the run-length
-	 *     encoded pixel data, otherwise `NULL`.
-	 */
-	public ubyte[] fromPixbuf(Pixbuf pixbuf, bool useRle)
-	{
-		auto __p = gdk_pixdata_from_pixbuf(gdkPixdata, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), useRle);
-
-		return cast(ubyte[])__p[0 .. getArrayLength(__p)];
 	}
 
 	/**

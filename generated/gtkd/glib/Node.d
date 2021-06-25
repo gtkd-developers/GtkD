@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -64,7 +65,7 @@ public final class Node
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			sliceFree(gNode);
 	}
 

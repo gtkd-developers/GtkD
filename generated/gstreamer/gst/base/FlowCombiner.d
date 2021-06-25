@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
 private import gstreamer.Pad;
+private import gtkd.Loader;
 
 
 /**
@@ -97,7 +98,7 @@ public class FlowCombiner
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTBASE) && ownedRef )
 			gst_flow_combiner_unref(gstFlowCombiner);
 	}
 

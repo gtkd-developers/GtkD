@@ -26,6 +26,7 @@ module harfbuzz.variation_t;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import gtkd.Loader;
 private import harfbuzz.c.functions;
 public  import harfbuzz.c.types;
 
@@ -68,7 +69,7 @@ public final class variation_t
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_HARFBUZZ) && ownedRef )
 			sliceFree(hb_variation);
 	}
 

@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gstreamer.PollFD;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -87,7 +88,7 @@ public class Poll
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_poll_free(gstPoll);
 	}
 

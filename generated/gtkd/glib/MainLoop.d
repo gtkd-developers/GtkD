@@ -29,6 +29,7 @@ private import glib.MainContext;
 private import glib.Source;
 private import glib.c.functions;
 public  import glib.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -66,7 +67,7 @@ public class MainLoop
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_main_loop_unref(gMainLoop);
 	}
 

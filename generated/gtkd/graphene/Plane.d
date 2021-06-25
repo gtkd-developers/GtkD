@@ -33,6 +33,7 @@ private import graphene.Vec3;
 private import graphene.Vec4;
 private import graphene.c.functions;
 public  import graphene.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -74,7 +75,7 @@ public class Plane
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
 			graphene_plane_free(graphene_plane);
 	}
 

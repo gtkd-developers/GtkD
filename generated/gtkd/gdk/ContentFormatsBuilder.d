@@ -30,6 +30,7 @@ public  import gdk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -67,7 +68,7 @@ public class ContentFormatsBuilder
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_content_formats_builder_unref(gdkContentFormatsBuilder);
 	}
 

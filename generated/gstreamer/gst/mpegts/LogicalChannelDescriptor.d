@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gst.mpegts.LogicalChannel;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /** */
@@ -63,7 +64,7 @@ public final class LogicalChannelDescriptor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			sliceFree(gstMpegtsLogicalChannelDescriptor);
 	}
 

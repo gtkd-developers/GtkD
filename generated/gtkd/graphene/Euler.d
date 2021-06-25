@@ -32,6 +32,7 @@ private import graphene.Quaternion;
 private import graphene.Vec3;
 private import graphene.c.functions;
 public  import graphene.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -73,7 +74,7 @@ public class Euler
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE) && ownedRef )
 			graphene_euler_free(graphene_euler);
 	}
 

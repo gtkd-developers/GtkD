@@ -30,6 +30,7 @@ private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -67,7 +68,7 @@ public final class FileAttributeInfoList
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_file_attribute_info_list_unref(gFileAttributeInfoList);
 	}
 

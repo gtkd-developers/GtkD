@@ -34,6 +34,7 @@ private import gobject.ValueArray;
 private import gstreamer.DateTime;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -168,7 +169,7 @@ public class Structure
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_structure_free(gstStructure);
 	}
 

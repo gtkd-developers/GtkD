@@ -49,6 +49,7 @@ private import gst.mpegts.T2DeliverySystemDescriptor;
 private import gst.mpegts.TerrestrialDeliverySystemDescriptor;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -88,7 +89,7 @@ public class Descriptor
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
 			gst_mpegts_descriptor_free(gstMpegtsDescriptor);
 	}
 

@@ -29,6 +29,7 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -73,7 +74,7 @@ public class ToplevelLayout
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_toplevel_layout_unref(gdkToplevelLayout);
 	}
 

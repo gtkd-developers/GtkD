@@ -31,6 +31,7 @@ private import gtk.Dialog;
 private import gtk.PageSetup;
 private import gtk.PrintSettings;
 private import gtk.Printer;
+private import gtk.Settings;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
@@ -123,6 +124,29 @@ public class PrintUnixDialog : Dialog
 		super(cast(GtkDialog*)gtkPrintUnixDialog, ownedRef);
 	}
 
+	/**
+	 * Gets a new `GtkPrintSettings` object that represents the
+	 * current values in the print dialog.
+	 *
+	 * Note that this creates a new object, and you need to unref
+	 * it if don’t want to keep it.
+	 *
+	 * Returns: a new `GtkPrintSettings` object with the values from @dialog
+	 */
+	public override Settings getSettings()
+	{
+		auto __p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return cast(Settings)ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) __p, true);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
@@ -247,27 +271,6 @@ public class PrintUnixDialog : Dialog
 		}
 
 		return ObjectG.getDObject!(Printer)(cast(GtkPrinter*) __p);
-	}
-
-	/**
-	 * Gets a new `GtkPrintSettings` object that represents the
-	 * current values in the print dialog.
-	 *
-	 * Note that this creates a new object, and you need to unref
-	 * it if don’t want to keep it.
-	 *
-	 * Returns: a new `GtkPrintSettings` object with the values from @dialog
-	 */
-	public override PrintSettings getSettings()
-	{
-		auto __p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) __p, true);
 	}
 
 	/**

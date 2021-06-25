@@ -27,6 +27,7 @@ module pango.PgGlyphString;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.PgFont;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -70,7 +71,7 @@ public class PgGlyphString
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_glyph_string_free(pangoGlyphString);
 	}
 

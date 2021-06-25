@@ -32,6 +32,7 @@ private import gdk.Surface;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 
 
 /**
@@ -73,7 +74,7 @@ public class Event
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_event_unref(gdkEvent);
 	}
 

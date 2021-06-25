@@ -25,6 +25,7 @@
 module pango.PgFontMetrics;
 
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -69,7 +70,7 @@ public class PgFontMetrics
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_font_metrics_unref(pangoFontMetrics);
 	}
 

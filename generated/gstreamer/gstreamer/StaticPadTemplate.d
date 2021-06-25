@@ -33,6 +33,7 @@ private import gstreamer.PadTemplate;
 private import gstreamer.StaticCaps;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+private import gtkd.Loader;
 
 
 /**
@@ -69,7 +70,7 @@ public final class StaticPadTemplate
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			sliceFree(gstStaticPadTemplate);
 	}
 

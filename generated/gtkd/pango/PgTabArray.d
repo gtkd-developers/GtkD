@@ -26,6 +26,7 @@ module pango.PgTabArray;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -67,7 +68,7 @@ public class PgTabArray
 
 	~this ()
 	{
-		if ( ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_tab_array_free(pangoTabArray);
 	}
 
