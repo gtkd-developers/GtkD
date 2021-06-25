@@ -1,5 +1,6 @@
 {
     "name": "gtk-d",
+    "version": "4.0.0",
     "targetType": "none",
     "description": "GtkD is the Digital Mars D programing language OO wrapper for Gtk+.",
     "homepage": "https://gtkd.org",
