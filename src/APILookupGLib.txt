@@ -320,7 +320,7 @@ code: start
 		if ( date is null )
 			return false;
 
-		return equal(this, date) != 0;
+		return equal(date) != 0;
 	}
 
 	/** */
@@ -331,7 +331,7 @@ code: start
 		if ( date is null )
 			return int.min;
 
-		return compare(this, date);
+		return compare(date);
 	}
 
 	/** */
@@ -1489,6 +1489,7 @@ code: end
 struct: TimeZone
 noCode: new_local
 noCode: new_utc
+noCode: new_identifier
 
 struct: Tree
 class: BBTree

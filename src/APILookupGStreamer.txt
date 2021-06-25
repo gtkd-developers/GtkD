@@ -224,6 +224,7 @@ struct: DateTime
 import: glib.DateTime : GLibDateTime = DateTime
 structWrap: GLib.DateTime GLibDateTime
 noCode: new_now_utc
+noCode: new_from_unix_epoch_local_time_usecs
 noCode: new_now_local_time
 noCode: new_from_unix_epoch_utc
 noCode: new_from_unix_epoch_local_time
