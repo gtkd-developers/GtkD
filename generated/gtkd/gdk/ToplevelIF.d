@@ -39,12 +39,11 @@ private import std.algorithm;
 
 
 /**
- * A #GdkToplevel is a freestanding toplevel surface.
+ * A `GdkToplevel` is a freestanding toplevel surface.
  * 
- * The #GdkToplevel interface provides useful APIs for
- * interacting with the windowing system, such as controlling
- * maximization and size of the surface, setting icons and
- * transient parents for dialogs.
+ * The `GdkToplevel` interface provides useful APIs for interacting with
+ * the windowing system, such as controlling maximization and size of the
+ * surface, setting icons and transient parents for dialogs.
  */
 public interface ToplevelIF{
 	/** Get the main Gtk struct */
@@ -61,7 +60,8 @@ public interface ToplevelIF{
 	}
 
 	/**
-	 * Begins an interactive move operation (for a toplevel surface).
+	 * Begins an interactive move operation.
+	 *
 	 * You might use this function to implement draggable titlebars.
 	 *
 	 * Params:
@@ -69,12 +69,14 @@ public interface ToplevelIF{
 	 *     button = the button being used to drag, or 0 for a keyboard-initiated drag
 	 *     x = surface X coordinate of mouse click that began the drag
 	 *     y = surface Y coordinate of mouse click that began the drag
-	 *     timestamp = timestamp of mouse click that began the drag
+	 *     timestamp = timestamp of mouse click that began the drag (use
+	 *         [method@Gdk.Event.get_time])
 	 */
 	public void beginMove(Device device, int button, double x, double y, uint timestamp);
 
 	/**
-	 * Begins an interactive resize operation (for a toplevel surface).
+	 * Begins an interactive resize operation.
+	 *
 	 * You might use this function to implement a “window resize grip.”
 	 *
 	 * Params:
@@ -83,15 +85,16 @@ public interface ToplevelIF{
 	 *     button = the button being used to drag, or 0 for a keyboard-initiated drag
 	 *     x = surface X coordinate of mouse click that began the drag
 	 *     y = surface Y coordinate of mouse click that began the drag
-	 *     timestamp = timestamp of mouse click that began the drag (use gdk_event_get_time())
+	 *     timestamp = timestamp of mouse click that began the drag (use
+	 *         [method@Gdk.Event.get_time])
 	 */
 	public void beginResize(GdkSurfaceEdge edge, Device device, int button, double x, double y, uint timestamp);
 
 	/**
 	 * Sets keyboard focus to @surface.
 	 *
-	 * In most cases, gtk_window_present_with_time() should be used
-	 * on a #GtkWindow, rather than calling this function.
+	 * In most cases, [method@Gtk.Window.present_with_time] should be
+	 * used on a [class@Gtk.Window], rather than calling this function.
 	 *
 	 * Params:
 	 *     timestamp = timestamp of the event triggering the surface focus
@@ -99,21 +102,22 @@ public interface ToplevelIF{
 	public void focus(uint timestamp);
 
 	/**
-	 * Gets the bitwise OR of the currently active surface state flags,
-	 * from the #GdkToplevelState enumeration.
+	 * Gets the bitwise or of the currently active surface state flags,
+	 * from the `GdkToplevelState` enumeration.
 	 *
 	 * Returns: surface state bitfield
 	 */
 	public GdkToplevelState getState();
 
 	/**
-	 * Requests that the @toplevel inhibit the system shortcuts, asking the
-	 * desktop environment/windowing system to let all keyboard events reach
-	 * the surface, as long as it is focused, instead of triggering system
-	 * actions.
+	 * Requests that the @toplevel inhibit the system shortcuts.
+	 *
+	 * This is asking the desktop environment/windowing system to let all
+	 * keyboard events reach the surface, as long as it is focused, instead
+	 * of triggering system actions.
 	 *
 	 * If granted, the rerouting remains active until the default shortcuts
-	 * processing is restored with gdk_toplevel_restore_system_shortcuts(),
+	 * processing is restored with [method@Gdk.Toplevel.restore_system_shortcuts],
 	 * or the request is revoked by the desktop environment, windowing system
 	 * or the user.
 	 *
@@ -126,11 +130,11 @@ public interface ToplevelIF{
 	 * or deny the request or even choose to ignore the request entirely.
 	 *
 	 * The caller can be notified whenever the request is granted or revoked
-	 * by listening to the GdkToplevel::shortcuts-inhibited property.
+	 * by listening to the [property@Gdk.Toplevel:shortcuts-inhibited] property.
 	 *
 	 * Params:
-	 *     event = the #GdkEvent that is triggering the inhibit
-	 *         request, or %NULL if none is available.
+	 *     event = the `GdkEvent` that is triggering the inhibit
+	 *         request, or %NULL if none is available
 	 */
 	public void inhibitSystemShortcuts(Event event);
 
@@ -153,29 +157,34 @@ public interface ToplevelIF{
 	public bool minimize();
 
 	/**
-	 * Present @toplevel after having processed the #GdkToplevelLayout rules.
+	 * Present @toplevel after having processed the `GdkToplevelLayout` rules.
+	 *
 	 * If the toplevel was previously not showing, it will be showed,
 	 * otherwise it will change layout according to @layout.
 	 *
-	 * GDK may emit the 'compute-size' signal to let the user of this toplevel
-	 * compute the preferred size of the toplevel surface. See
-	 * #GdkToplevel::compute-size for details.
+	 * GDK may emit the [signal@Gdk.Toplevel::compute-size] signal to let
+	 * the user of this toplevel compute the preferred size of the toplevel
+	 * surface.
 	 *
 	 * Presenting is asynchronous and the specified layout parameters are not
 	 * guaranteed to be respected.
 	 *
 	 * Params:
-	 *     layout = the #GdkToplevelLayout object used to layout
+	 *     layout = the `GdkToplevelLayout` object used to layout
 	 */
 	public void present(ToplevelLayout layout);
 
 	/**
 	 * Restore default system keyboard shortcuts which were previously
-	 * requested to be inhibited by gdk_toplevel_inhibit_system_shortcuts().
+	 * inhibited.
+	 *
+	 * This undoes the effect of [method@Gdk.Toplevel.inhibit_system_shortcuts].
 	 */
 	public void restoreSystemShortcuts();
 
 	/**
+	 * Sets the toplevel to be decorated.
+	 *
 	 * Setting @decorated to %FALSE hints the desktop environment
 	 * that the surface has its own, client-side decorations and
 	 * does not need to have window decorations added.
@@ -186,6 +195,8 @@ public interface ToplevelIF{
 	public void setDecorated(bool decorated);
 
 	/**
+	 * Sets the toplevel to be deletable.
+	 *
 	 * Setting @deletable to %TRUE hints the desktop environment
 	 * that it should offer the user a way to close the surface.
 	 *
@@ -211,13 +222,15 @@ public interface ToplevelIF{
 	public void setIconList(ListG surfaces);
 
 	/**
+	 * Sets the toplevel to be modal.
+	 *
 	 * The application can use this hint to tell the
 	 * window manager that a certain surface has modal
 	 * behaviour. The window manager can use this information
 	 * to handle modal surfaces in a special way.
 	 *
 	 * You should only use this on surfaces for which you have
-	 * previously called gdk_toplevel_set_transient_for().
+	 * previously called [method@Gdk.Toplevel.set_transient_for].
 	 *
 	 * Params:
 	 *     modal = %TRUE if the surface is modal, %FALSE otherwise.
@@ -225,8 +238,11 @@ public interface ToplevelIF{
 	public void setModal(bool modal);
 
 	/**
-	 * When using GTK, typically you should use gtk_window_set_startup_id()
-	 * instead of this low-level function.
+	 * Sets the startup notification ID.
+	 *
+	 * When using GTK, typically you should use
+	 * [method@Gtk.Window.set_startup_id] instead of this
+	 * low-level function.
 	 *
 	 * Params:
 	 *     startupId = a string with startup-notification identifier
@@ -234,7 +250,9 @@ public interface ToplevelIF{
 	public void setStartupId(string startupId);
 
 	/**
-	 * Sets the title of a toplevel surface, to be displayed in the titlebar,
+	 * Sets the title of a toplevel surface.
+	 *
+	 * The title maybe be displayed in the titlebar,
 	 * in lists of windows, etc.
 	 *
 	 * Params:
@@ -243,16 +261,18 @@ public interface ToplevelIF{
 	public void setTitle(string title);
 
 	/**
-	 * Indicates to the window manager that @surface is a transient dialog
-	 * associated with the application surface @parent. This allows the
-	 * window manager to do things like center @surface on @parent and
-	 * keep @surface above @parent.
+	 * Sets a transient-for parent.
 	 *
-	 * See gtk_window_set_transient_for() if you’re using #GtkWindow or
-	 * #GtkDialog.
+	 * Indicates to the window manager that @surface is a transient
+	 * dialog associated with the application surface @parent. This
+	 * allows the window manager to do things like center @surface
+	 * on @parent and keep @surface above @parent.
+	 *
+	 * See [method@Gtk.Window.set_transient_for] if you’re using
+	 * [class@Gtk.Window] or [class@Gtk.Dialog].
 	 *
 	 * Params:
-	 *     parent = another toplevel #GdkSurface
+	 *     parent = another toplevel `GdkSurface`
 	 */
 	public void setTransientFor(Surface parent);
 
@@ -265,7 +285,7 @@ public interface ToplevelIF{
 	 * right-click on the window decorations.
 	 *
 	 * Params:
-	 *     event = a #GdkEvent to show the menu for
+	 *     event = a `GdkEvent` to show the menu for
 	 *
 	 * Returns: %TRUE if the window menu was shown and %FALSE otherwise.
 	 */
@@ -281,19 +301,21 @@ public interface ToplevelIF{
 	public bool supportsEdgeConstraints();
 
 	/**
-	 * Compute the desired size of the toplevel, given the information passed via
-	 * the #GdkToplevelSize object.
+	 * Emitted when the size for the surface needs to be computed, when
+	 * it is present.
 	 *
-	 * It will normally be emitted during or after gdk_toplevel_present(),
-	 * depending on the configuration received by the windowing system. It may
-	 * also be emitted at any other point in time, in response to the windowing
-	 * system spontaneously changing the configuration.
+	 * It will normally be emitted during or after [method@Gdk.Toplevel.present],
+	 * depending on the configuration received by the windowing system.
+	 * It may also be emitted at any other point in time, in response
+	 * to the windowing system spontaneously changing the configuration.
 	 *
-	 * It is the responsibility of the GdkToplevel user to handle this signal;
-	 * failing to do so will result in an arbitrary size being used as a result.
+	 * It is the responsibility of the toplevel user to handle this signal
+	 * and compute the desired size of the toplevel, given the information
+	 * passed via the [struct@Gdk.ToplevelSize] object. Failing to do so
+	 * will result in an arbitrary size being used as a result.
 	 *
 	 * Params:
-	 *     size = a #GdkToplevelSize
+	 *     size = a `GdkToplevelSize`
 	 */
 	gulong addOnComputeSize(void delegate(ToplevelSize, ToplevelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

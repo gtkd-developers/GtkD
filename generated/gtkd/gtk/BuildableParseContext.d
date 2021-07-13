@@ -26,11 +26,14 @@ module gtk.BuildableParseContext;
 
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * An opaque context struct for `GtkBuildableParser`.
+ */
 public class BuildableParseContext
 {
 	/** the main Gtk struct */

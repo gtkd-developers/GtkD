@@ -31,17 +31,18 @@ private import gdk.Surface;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import std.algorithm;
 
 
 /**
- * The #GdkDevice object represents a single input device, such
- * as a keyboard, a mouse, a touchpad, etc.
+ * The `GdkDevice` object represents an input device, such
+ * as a keyboard, a mouse, or a touchpad.
  * 
- * See the #GdkSeat documentation for more information about the
- * various kinds of devices, and their relationships.
+ * See the [class@Gdk.Seat] documentation for more information
+ * about the various kinds of devices, and their relationships.
  */
 public class Device : ObjectG
 {
@@ -79,8 +80,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Retrieves whether the Caps Lock modifier of the
-	 * keyboard is locked, if @device is a keyboard device.
+	 * Retrieves whether the Caps Lock modifier of the keyboard is locked.
+	 *
+	 * This is only relevant for keyboard devices.
 	 *
 	 * Returns: %TRUE if Caps Lock is on for @device
 	 */
@@ -90,9 +92,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Retrieves the #GdkDeviceTool associated to @device.
+	 * Retrieves the current tool for @device.
 	 *
-	 * Returns: the #GdkDeviceTool
+	 * Returns: the `GdkDeviceTool`, or %NULL
 	 */
 	public DeviceTool getDeviceTool()
 	{
@@ -107,11 +109,12 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Returns the direction of effective layout of the keyboard,
-	 * if @device is a keyboard device.
+	 * Returns the direction of effective layout of the keyboard.
+	 *
+	 * This is only relevant for keyboard devices.
 	 *
 	 * The direction of a layout is the direction of the majority
-	 * of its symbols. See pango_unichar_direction().
+	 * of its symbols. See [func@Pango.unichar_direction].
 	 *
 	 * Returns: %PANGO_DIRECTION_LTR or %PANGO_DIRECTION_RTL
 	 *     if it can determine the direction. %PANGO_DIRECTION_NEUTRAL
@@ -123,10 +126,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkDisplay to which @device pertains.
+	 * Returns the `GdkDisplay` to which @device pertains.
 	 *
-	 * Returns: a #GdkDisplay. This memory is owned
-	 *     by GTK, and must not be freed or unreffed.
+	 * Returns: a `GdkDisplay`
 	 */
 	public Display getDisplay()
 	{
@@ -142,6 +144,7 @@ public class Device : ObjectG
 
 	/**
 	 * Determines whether the pointer follows device motion.
+	 *
 	 * This is not meaningful for keyboard devices, which
 	 * don't have a pointer.
 	 *
@@ -153,8 +156,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Retrieves the current modifier state of the keyboard,
-	 * if @device is a keyboard device.
+	 * Retrieves the current modifier state of the keyboard.
+	 *
+	 * This is only relevant for keyboard devices.
 	 *
 	 * Returns: the current modifier state
 	 */
@@ -164,8 +168,7 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Determines the name of the device, suitable
-	 * for showing in a user interface.
+	 * The name of the device, suitable for showing in a user interface.
 	 *
 	 * Returns: a name
 	 */
@@ -175,8 +178,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Retrieves whether the Num Lock modifier of the
-	 * keyboard is locked, if @device is a keyboard device.
+	 * Retrieves whether the Num Lock modifier of the keyboard is locked.
+	 *
+	 * This is only relevant for keyboard devices.
 	 *
 	 * Returns: %TRUE if Num Lock is on for @device
 	 */
@@ -196,9 +200,10 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Returns the product ID of this device, or %NULL if this information couldn't
-	 * be obtained. This ID is retrieved from the device, and is thus constant for
-	 * it. See gdk_device_get_vendor_id() for more information.
+	 * Returns the product ID of this device.
+	 *
+	 * This ID is retrieved from the device, and does not change.
+	 * See [method@Gdk.Device.get_vendor_id] for more information.
 	 *
 	 * Returns: the product ID, or %NULL
 	 */
@@ -208,8 +213,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Retrieves whether the Scroll Lock modifier of the
-	 * keyboard is locked, if @device is a keyboard device.
+	 * Retrieves whether the Scroll Lock modifier of the keyboard is locked.
+	 *
+	 * This is only relevant for keyboard devices.
 	 *
 	 * Returns: %TRUE if Scroll Lock is on for @device
 	 */
@@ -219,9 +225,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkSeat the device belongs to.
+	 * Returns the `GdkSeat` the device belongs to.
 	 *
-	 * Returns: a #GdkSeat
+	 * Returns: a `GdkSeat`
 	 */
 	public Seat getSeat()
 	{
@@ -238,7 +244,7 @@ public class Device : ObjectG
 	/**
 	 * Determines the type of the device.
 	 *
-	 * Returns: a #GdkInputSource
+	 * Returns: a `GdkInputSource`
 	 */
 	public GdkInputSource getSource()
 	{
@@ -246,9 +252,11 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Obtains the surface underneath @device, returning the location of the device in @win_x and @win_y in
-	 * double precision. Returns %NULL if the surface tree under @device is not known to GDK (for example,
-	 * belongs to another application).
+	 * Obtains the surface underneath @device, returning the location of the
+	 * device in @win_x and @win_y
+	 *
+	 * Returns %NULL if the surface tree under @device is not known to GDK
+	 * (for example, belongs to another application).
 	 *
 	 * Params:
 	 *     winX = return location for the X coordinate of the device location,
@@ -256,8 +264,8 @@ public class Device : ObjectG
 	 *     winY = return location for the Y coordinate of the device location,
 	 *         relative to the surface origin, or %NULL.
 	 *
-	 * Returns: the #GdkSurface under the
-	 *     device position, or %NULL.
+	 * Returns: the `GdkSurface` under the
+	 *     device position, or %NULL
 	 */
 	public Surface getSurfaceAtPosition(out double winX, out double winY)
 	{
@@ -272,14 +280,32 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Returns the vendor ID of this device, or %NULL if this information couldn't
-	 * be obtained. This ID is retrieved from the device, and is thus constant for
-	 * it.
+	 * Returns the timestamp of the last activity for this device.
 	 *
-	 * This function, together with gdk_device_get_product_id(), can be used to eg.
-	 * compose #GSettings paths to store settings for this device.
+	 * In practice, this means the timestamp of the last event that was
+	 * received from the OS for this device. (GTK may occasionally produce
+	 * events for a device that are not received from the OS, and will not
+	 * update the timestamp).
 	 *
-	 * |[<!-- language="C" -->
+	 * Returns: the timestamp of the last activity for this device
+	 *
+	 * Since: 4.2
+	 */
+	public uint getTimestamp()
+	{
+		return gdk_device_get_timestamp(gdkDevice);
+	}
+
+	/**
+	 * Returns the vendor ID of this device.
+	 *
+	 * This ID is retrieved from the device, and does not change.
+	 *
+	 * This function, together with [method@Gdk.Device.get_product_id],
+	 * can be used to eg. compose `GSettings` paths to store settings
+	 * for this device.
+	 *
+	 * ```c
 	 * static GSettings *
 	 * get_device_settings (GdkDevice *device)
 	 * {
@@ -297,7 +323,7 @@ public class Device : ObjectG
 	 *
 	 * return settings;
 	 * }
-	 * ]|
+	 * ```
 	 *
 	 * Returns: the vendor ID, or %NULL
 	 */
@@ -307,9 +333,10 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Determines if keyboard layouts for both right-to-left and
-	 * left-to-right languages are in use on the keyboard, if
-	 * @device is a keyboard device.
+	 * Determines if layouts for both right-to-left and
+	 * left-to-right languages are in use on the keyboard.
+	 *
+	 * This is only relevant for keyboard devices.
 	 *
 	 * Returns: %TRUE if there are layouts with both directions,
 	 *     %FALSE otherwise
@@ -320,9 +347,9 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * The ::changed signal is emitted either when the #GdkDevice
-	 * has changed the number of either axes or keys. For example
-	 * on X11 this will normally happen when the physical device
+	 * Emitted either when the the number of either axes or keys changes.
+	 *
+	 * On X11 this will normally happen when the physical device
 	 * routing events through the logical device changes (for
 	 * example, user switches from the USB mouse to a tablet); in
 	 * that case the logical device will change to reflect the axes
@@ -334,8 +361,7 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * The ::tool-changed signal is emitted on pen/eraser
-	 * #GdkDevices whenever tools enter or leave proximity.
+	 * Emitted on pen/eraser devices whenever tools enter or leave proximity.
 	 *
 	 * Params:
 	 *     tool = The new current tool

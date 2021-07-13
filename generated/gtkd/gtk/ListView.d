@@ -37,24 +37,26 @@ private import std.algorithm;
 
 
 /**
- * GtkListView is a widget to present a view into a large dynamic list of items.
+ * `GtkListView` presents a large dynamic list of items.
  * 
- * GtkListView uses its factory to generate one row widget for each visible item
- * and shows them in a linear display, either vertically or horizontally. The
- * #GtkListView:show-separators property offers a simple way to display separators
- * between the rows.
+ * `GtkListView` uses its factory to generate one row widget for each visible
+ * item and shows them in a linear display, either vertically or horizontally.
  * 
- * GtkListView allows the user to select items according to the selection
+ * The [property@Gtk.ListView:show-separators] property offers a simple way to
+ * display separators between the rows.
+ * 
+ * `GtkListView` allows the user to select items according to the selection
  * characteristics of the model. For models that allow multiple selected items,
  * it is possible to turn on _rubberband selection_, using
- * #GtkListView:enable-rubberband.
+ * [property@Gtk.ListView:enable-rubberband].
  * 
- * If you need multiple columns with headers, see #GtkColumnView.
+ * If you need multiple columns with headers, see [class@Gtk.ColumnView].
  * 
- * To learn more about the list widget framework, see the [overview](#ListWidget).
+ * To learn more about the list widget framework, see the
+ * [overview](section-list-widget.html).
  * 
- * An example of using GtkListView:
- * |[
+ * An example of using `GtkListView`:
+ * ```c
  * static void
  * setup_listitem_cb (GtkListItemFactory *factory,
  * GtkListItem        *list_item)
@@ -103,11 +105,11 @@ private import std.algorithm;
  * g_signal_connect (list, "activate", G_CALLBACK (activate_cb), NULL);
  * 
  * gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (sw), list);
- * ]|
+ * ```
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * listview[.separators][.rich-list][.navigation-sidebar][.data-table]
  * ├── row
  * │
@@ -115,11 +117,10 @@ private import std.algorithm;
  * │
  * ┊
  * ╰── [rubberband]
+ * ```
  * 
- * ]|
- * 
- * GtkListView uses a single CSS node named listview. It may carry the
- * .separators style class, when #GtkListView:show-separators property
+ * `GtkListView` uses a single CSS node named listview. It may carry the
+ * .separators style class, when `GtkListView`:show-separators property
  * is set. Each child widget uses a single CSS node named row. For
  * rubberband selection, a node with name rubberband is used.
  * 
@@ -129,8 +130,8 @@ private import std.algorithm;
  * 
  * # Accessibility
  * 
- * GtkListView uses the #GTK_ACCESSIBLE_ROLE_LIST role, and the list
- * items use the #GTK_ACCESSIBLE_ROLE_LIST_ITEM role.
+ * `GtkListView` uses the %GTK_ACCESSIBLE_ROLE_LIST role, and the list
+ * items use the %GTK_ACCESSIBLE_ROLE_LIST_ITEM role.
  */
 public class ListView : ListBase
 {
@@ -168,12 +169,12 @@ public class ListView : ListBase
 	}
 
 	/**
-	 * Creates a new #GtkListView that uses the given @factory for
+	 * Creates a new `GtkListView` that uses the given @factory for
 	 * mapping items to widgets.
 	 *
 	 * The function takes ownership of the
 	 * arguments, so you can write code like
-	 * ```
+	 * ```c
 	 * list_view = gtk_list_view_new (create_model (),
 	 * gtk_builder_list_item_factory_new_from_resource ("/resource.ui"));
 	 * ```
@@ -182,7 +183,7 @@ public class ListView : ListBase
 	 *     model = the model to use, or %NULL
 	 *     factory = The factory to populate items with, or %NULL
 	 *
-	 * Returns: a new #GtkListView using the given @model and @factory
+	 * Returns: a new `GtkListView` using the given @model and @factory
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -276,7 +277,7 @@ public class ListView : ListBase
 	}
 
 	/**
-	 * Sets the #GtkListItemFactory to use for populating list items.
+	 * Sets the `GtkListItemFactory` to use for populating list items.
 	 *
 	 * Params:
 	 *     factory = the factory to use or %NULL for none
@@ -287,7 +288,9 @@ public class ListView : ListBase
 	}
 
 	/**
-	 * Sets the #GtkSelectionModel to use.
+	 * Sets the model to use.
+	 *
+	 * This must be a [iface@Gtk.SelectionModel] to use.
 	 *
 	 * Params:
 	 *     model = the model to use or %NULL for none
@@ -322,11 +325,12 @@ public class ListView : ListBase
 	}
 
 	/**
-	 * The ::activate signal is emitted when a row has been activated by the user,
+	 * Emitted when a row has been activated by the user,
 	 * usually via activating the GtkListView|list.activate-item action.
 	 *
 	 * This allows for a convenient way to handle activation in a listview.
-	 * See gtk_list_item_set_activatable() for details on how to use this signal.
+	 * See [method@Gtk.ListItem.set_activatable] for details on how to use
+	 * this signal.
 	 *
 	 * Params:
 	 *     position = position of item to activate

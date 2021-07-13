@@ -34,18 +34,21 @@ private import std.algorithm;
 
 
 /**
- * The #GtkDrawingArea widget is used for creating custom user interface
- * elements. It’s essentially a blank widget; you can draw on it. After
+ * `GtkDrawingArea` is a widget that allows drawing with cairo.
+ * 
+ * ![An example GtkDrawingArea](drawingarea.png)
+ * 
+ * It’s essentially a blank widget; you can draw on it. After
  * creating a drawing area, the application may want to connect to:
  * 
- * - The #GtkWidget::realize signal to take any necessary actions
+ * - The [signal@Gtk.Widget::realize] signal to take any necessary actions
  * when the widget is instantiated on a particular display.
  * (Create GDK resources in response to this signal.)
  * 
- * - The #GtkDrawingArea::resize signal to take any necessary
+ * - The [signal@Gtk.DrawingArea::resize] signal to take any necessary
  * actions when the widget changes size.
  * 
- * - Call gtk_drawing_area_set_draw_func() to handle redrawing the
+ * - Call [method@Gtk.DrawingArea.set_draw_func] to handle redrawing the
  * contents of the widget.
  * 
  * The following code portion demonstrates using a drawing
@@ -54,7 +57,7 @@ private import std.algorithm;
  * 
  * ## Simple GtkDrawingArea usage
  * 
- * |[<!-- language="C" -->
+ * ```c
  * static void
  * draw_function (GtkDrawingArea *area,
  * cairo_t        *cr,
@@ -92,12 +95,12 @@ private import std.algorithm;
  * NULL, NULL);
  * return 0;
  * }
- * ]|
+ * ```
  * 
  * The draw function is normally called when a drawing area first comes
  * onscreen, or when it’s covered by another window and then uncovered.
  * You can also force a redraw by adding to the “damage region” of the
- * drawing area’s window using gtk_widget_queue_draw().
+ * drawing area’s window using [method@Gtk.Widget.queue_draw].
  * This will cause the drawing area to call the draw function again.
  * 
  * The available routines for drawing are documented on the
@@ -110,7 +113,7 @@ private import std.algorithm;
  * draw some user-visible indication that the drawing area is focused.
  * 
  * If you need more complex control over your widget, you should consider
- * creating your own #GtkWidget subclass.
+ * creating your own `GtkWidget` subclass.
  */
 public class DrawingArea : Widget
 {
@@ -150,7 +153,7 @@ public class DrawingArea : Widget
 	/**
 	 * Creates a new drawing area.
 	 *
-	 * Returns: a new #GtkDrawingArea
+	 * Returns: a new `GtkDrawingArea`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -167,7 +170,7 @@ public class DrawingArea : Widget
 	}
 
 	/**
-	 * Retrieves the value previously set via gtk_drawing_area_set_content_height().
+	 * Retrieves the content height of the `GtkDrawingArea`.
 	 *
 	 * Returns: The height requested for content of the drawing area
 	 */
@@ -177,7 +180,7 @@ public class DrawingArea : Widget
 	}
 
 	/**
-	 * Retrieves the value previously set via gtk_drawing_area_set_content_width().
+	 * Retrieves the content width of the `GtkDrawingArea`.
 	 *
 	 * Returns: The width requested for content of the drawing area
 	 */
@@ -187,11 +190,12 @@ public class DrawingArea : Widget
 	}
 
 	/**
-	 * Sets the desired height of the contents of the drawing area. Note that
-	 * because widgets may be allocated larger sizes than they requested, it is
-	 * possible that the actual height passed to your draw function is larger
-	 * than the height set here. You can use gtk_widget_set_valign() to avoid
-	 * that.
+	 * Sets the desired height of the contents of the drawing area.
+	 *
+	 * Note that because widgets may be allocated larger sizes than they
+	 * requested, it is possible that the actual height passed to your draw
+	 * function is larger than the height set here. You can use
+	 * [method@Gtk.Widget.set_valign] to avoid that.
 	 *
 	 * If the height is set to 0 (the default), the drawing area may disappear.
 	 *
@@ -204,11 +208,12 @@ public class DrawingArea : Widget
 	}
 
 	/**
-	 * Sets the desired width of the contents of the drawing area. Note that
-	 * because widgets may be allocated larger sizes than they requested, it is
-	 * possible that the actual width passed to your draw function is larger
-	 * than the width set here. You can use gtk_widget_set_halign() to avoid
-	 * that.
+	 * Sets the desired width of the contents of the drawing area.
+	 *
+	 * Note that because widgets may be allocated larger sizes than they
+	 * requested, it is possible that the actual width passed to your draw
+	 * function is larger than the width set here. You can use
+	 * [method@Gtk.Widget.set_halign] to avoid that.
 	 *
 	 * If the width is set to 0 (the default), the drawing area may disappear.
 	 *
@@ -221,18 +226,20 @@ public class DrawingArea : Widget
 	}
 
 	/**
-	 * Setting a draw function is the main thing you want to do when using a drawing
-	 * area. It is called whenever GTK needs to draw the contents of the drawing area
-	 * to the screen.
+	 * Setting a draw function is the main thing you want to do when using
+	 * a drawing area.
 	 *
-	 * The draw function will be called during the drawing stage of GTK. In the
-	 * drawing stage it is not allowed to change properties of any GTK widgets or call
-	 * any functions that would cause any properties to be changed.
-	 * You should restrict yourself exclusively to drawing your contents in the draw
-	 * function.
+	 * The draw function is called whenever GTK needs to draw the contents
+	 * of the drawing area to the screen.
 	 *
-	 * If what you are drawing does change, call gtk_widget_queue_draw() on the
-	 * drawing area. This will cause a redraw and will call @draw_func again.
+	 * The draw function will be called during the drawing stage of GTK.
+	 * In the drawing stage it is not allowed to change properties of any
+	 * GTK widgets or call any functions that would cause any properties
+	 * to be changed. You should restrict yourself exclusively to drawing
+	 * your contents in the draw function.
+	 *
+	 * If what you are drawing does change, call [method@Gtk.Widget.queue_draw]
+	 * on the drawing area. This will cause a redraw and will call @draw_func again.
 	 *
 	 * Params:
 	 *     drawFunc = callback that lets you draw
@@ -246,10 +253,11 @@ public class DrawingArea : Widget
 	}
 
 	/**
-	 * The ::resize signal is emitted once when the widget is realized, and
-	 * then each time the widget is changed while realized. This is useful
-	 * in order to keep state up to date with the widget size, like for
-	 * instance a backing surface.
+	 * Emitted once when the widget is realized, and then each time the widget
+	 * is changed while realized.
+	 *
+	 * This is useful in order to keep state up to date with the widget size,
+	 * like for instance a backing surface.
 	 *
 	 * Params:
 	 *     width = the width of the viewport

@@ -41,6 +41,7 @@ private import glib.GException;
 private import glib.OptionGroup;
 private import glib.Str;
 private import glib.VariantDict;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import std.algorithm;

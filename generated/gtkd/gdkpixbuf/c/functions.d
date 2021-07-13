@@ -105,7 +105,6 @@ shared static this()
 	Linker.link(gdk_pixbuf_scale_simple, "gdk_pixbuf_scale_simple", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_set_option, "gdk_pixbuf_set_option", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_unref, "gdk_pixbuf_unref", LIBRARY_GDKPIXBUF);
-	Linker.link(gdk_pixbuf_from_pixdata, "gdk_pixbuf_from_pixdata", LIBRARY_GDKPIXBUF);
 
 	// gdkpixbuf.PixbufAnimation
 
@@ -160,6 +159,11 @@ shared static this()
 	Linker.link(gdk_pixbuf_loader_set_size, "gdk_pixbuf_loader_set_size", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_loader_write, "gdk_pixbuf_loader_write", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_loader_write_bytes, "gdk_pixbuf_loader_write_bytes", LIBRARY_GDKPIXBUF);
+
+	// gdkpixbuf.PixbufNonAnim
+
+	Linker.link(gdk_pixbuf_non_anim_get_type, "gdk_pixbuf_non_anim_get_type", LIBRARY_GDKPIXBUF);
+	Linker.link(gdk_pixbuf_non_anim_new, "gdk_pixbuf_non_anim_new", LIBRARY_GDKPIXBUF);
 
 	// gdkpixbuf.PixbufSimpleAnimation
 
@@ -252,7 +256,6 @@ __gshared extern(C)
 	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType) c_gdk_pixbuf_scale_simple;
 	int function(GdkPixbuf* pixbuf, const(char)* key, const(char)* value) c_gdk_pixbuf_set_option;
 	void function(GdkPixbuf* pixbuf) c_gdk_pixbuf_unref;
-	GdkPixbuf* function(GdkPixdata* pixdata, int copyPixels, GError** err) c_gdk_pixbuf_from_pixdata;
 
 	// gdkpixbuf.PixbufAnimation
 
@@ -307,6 +310,11 @@ __gshared extern(C)
 	void function(GdkPixbufLoader* loader, int width, int height) c_gdk_pixbuf_loader_set_size;
 	int function(GdkPixbufLoader* loader, char* buf, size_t count, GError** err) c_gdk_pixbuf_loader_write;
 	int function(GdkPixbufLoader* loader, GBytes* buffer, GError** err) c_gdk_pixbuf_loader_write_bytes;
+
+	// gdkpixbuf.PixbufNonAnim
+
+	GType function() c_gdk_pixbuf_non_anim_get_type;
+	GdkPixbufAnimation* function(GdkPixbuf* pixbuf) c_gdk_pixbuf_non_anim_new;
 
 	// gdkpixbuf.PixbufSimpleAnimation
 
@@ -397,7 +405,6 @@ alias c_gdk_pixbuf_scale gdk_pixbuf_scale;
 alias c_gdk_pixbuf_scale_simple gdk_pixbuf_scale_simple;
 alias c_gdk_pixbuf_set_option gdk_pixbuf_set_option;
 alias c_gdk_pixbuf_unref gdk_pixbuf_unref;
-alias c_gdk_pixbuf_from_pixdata gdk_pixbuf_from_pixdata;
 
 // gdkpixbuf.PixbufAnimation
 
@@ -452,6 +459,11 @@ alias c_gdk_pixbuf_loader_get_pixbuf gdk_pixbuf_loader_get_pixbuf;
 alias c_gdk_pixbuf_loader_set_size gdk_pixbuf_loader_set_size;
 alias c_gdk_pixbuf_loader_write gdk_pixbuf_loader_write;
 alias c_gdk_pixbuf_loader_write_bytes gdk_pixbuf_loader_write_bytes;
+
+// gdkpixbuf.PixbufNonAnim
+
+alias c_gdk_pixbuf_non_anim_get_type gdk_pixbuf_non_anim_get_type;
+alias c_gdk_pixbuf_non_anim_new gdk_pixbuf_non_anim_new;
 
 // gdkpixbuf.PixbufSimpleAnimation
 

@@ -35,11 +35,11 @@ public  import gtk.c.types;
 
 
 /**
- * GtkNoSelection is an implementation of the #GtkSelectionModel interface
- * that does not allow selecting anything.
+ * `GtkNoSelection` is a `GtkSelectionModel` that does not allow selecting
+ * anything.
  * 
- * This model is meant to be used as a simple wrapper to #GListModels when a
- * #GtkSelectionModel is required.
+ * This model is meant to be used as a simple wrapper around a `GListModel`
+ * when a `GtkSelectionModel` is required.
  */
 public class NoSelection : ObjectG, ListModelIF, SelectionModelIF
 {
@@ -86,9 +86,9 @@ public class NoSelection : ObjectG, ListModelIF, SelectionModelIF
 	 * Creates a new selection to handle @model.
 	 *
 	 * Params:
-	 *     model = the #GListModel to manage, or %NULL
+	 *     model = the `GListModel` to manage, or %NULL
 	 *
-	 * Returns: a new #GtkNoSelection
+	 * Returns: a new `GtkNoSelection`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -123,10 +123,11 @@ public class NoSelection : ObjectG, ListModelIF, SelectionModelIF
 
 	/**
 	 * Sets the model that @self should wrap.
+	 *
 	 * If @model is %NULL, this model will be empty.
 	 *
 	 * Params:
-	 *     model = A #GListModel to wrap
+	 *     model = A `GListModel` to wrap
 	 */
 	public void setModel(ListModelIF model)
 	{

@@ -29,38 +29,44 @@ public  import gdk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtkd.Loader;
 
 
 /**
- * This section describes the #GdkContentFormats structure that is used to
- * advertise and negotiate the format of content passed between different
- * widgets, windows or applications using for example the clipboard or
- * drag'n'drop.
+ * The `GdkContentFormats` structure is used to advertise and negotiate the
+ * format of content.
  * 
- * GDK supports content in 2 forms: #GType and mime type.
- * Using #GTypes is meant only for in-process content transfers. Mime types
+ * You will encounter `GdkContentFormats` when interacting with objects
+ * controlling operations that pass data between different widgets, window
+ * or application, like [class@Gdk.Drag], [class@Gdk.Drop],
+ * [class@Gdk.Clipboard] or [class@Gdk.ContentProvider].
+ * 
+ * GDK supports content in 2 forms: `GType` and mime type.
+ * Using `GTypes` is meant only for in-process content transfers. Mime types
  * are meant to be used for data passing both in-process and out-of-process.
  * The details of how data is passed is described in the documentation of
- * the actual implementations.
+ * the actual implementations. To transform between the two forms,
+ * [class@Gdk.ContentSerializer] and [class@Gdk.ContentDeserializer] are used.
  * 
- * A #GdkContentFormats describes a set of possible formats content can be
- * exchanged in. It is assumed that this set is ordered. #GTypes are more
- * important than mime types. Order between different #GTypes or mime types
+ * A `GdkContentFormats` describes a set of possible formats content can be
+ * exchanged in. It is assumed that this set is ordered. `GTypes` are more
+ * important than mime types. Order between different `GTypes` or mime types
  * is the order they were added in, most important first. Functions that
- * care about order, such as gdk_content_formats_union() will describe in
- * their documentation how they interpret that order, though in general the
+ * care about order, such as [method@Gdk.ContentFormats.union], will describe
+ * in their documentation how they interpret that order, though in general the
  * order of the first argument is considered the primary order of the result,
  * followed by the order of further arguments.
  * 
- * For debugging purposes, the function gdk_content_formats_to_string() exists.
- * It will print a comma-seperated formats of formats from most important to least
- * important.
+ * For debugging purposes, the function [method@Gdk.ContentFormats.to_string]
+ * exists. It will print a comma-separated list of formats from most important
+ * to least important.
  * 
- * #GdkContentFormats is an immutable struct. After creation, you cannot change
- * the types it represents. Instead, new #GdkContentFormats have to be created.
- * The #GdkContentFormatsBuilder structure is meant to help in this endeavor.
+ * `GdkContentFormats` is an immutable struct. After creation, you cannot change
+ * the types it represents. Instead, new `GdkContentFormats` have to be created.
+ * The [struct@Gdk.ContentFormatsBuilder]` structure is meant to help in this
+ * endeavor.
  */
 public class ContentFormats
 {
@@ -105,17 +111,17 @@ public class ContentFormats
 	}
 
 	/**
-	 * Creates a new #GdkContentFormats from an array of mime types.
+	 * Creates a new `GdkContentFormats` from an array of mime types.
 	 *
 	 * The mime types must be valid and different from each other or the
 	 * behavior of the return value is undefined. If you cannot guarantee
-	 * this, use #GdkContentFormatsBuilder instead.
+	 * this, use `GdkContentFormatsBuilder` instead.
 	 *
 	 * Params:
 	 *     mimeTypes = Pointer to an
 	 *         array of mime types
 	 *
-	 * Returns: the new #GdkContentFormats.
+	 * Returns: the new `GdkContentFormats`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -132,12 +138,12 @@ public class ContentFormats
 	}
 
 	/**
-	 * Creates a new #GdkContentFormats for a given #GType.
+	 * Creates a new `GdkContentFormats` for a given `GType`.
 	 *
 	 * Params:
-	 *     type = a $GType
+	 *     type = a `GType`
 	 *
-	 * Returns: a new #GdkContentFormats
+	 * Returns: a new `GdkContentFormats`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -154,10 +160,10 @@ public class ContentFormats
 	}
 
 	/**
-	 * Checks if a given #GType is part of the given @formats.
+	 * Checks if a given `GType` is part of the given @formats.
 	 *
 	 * Params:
-	 *     type = the #GType to search for
+	 *     type = the `GType` to search for
 	 *
 	 * Returns: %TRUE if the #GType was found
 	 */
@@ -180,9 +186,10 @@ public class ContentFormats
 	}
 
 	/**
-	 * Gets the #GTypes included in @formats. Note that @formats may not
-	 * contain any #GTypes, in particular when they are empty. In that
-	 * case %NULL will be returned.
+	 * Gets the `GTypes` included in @formats.
+	 *
+	 * Note that @formats may not contain any #GTypes, in particular when
+	 * they are empty. In that case %NULL will be returned.
 	 *
 	 * Returns: %G_TYPE_INVALID-terminated array of types included in @formats or
 	 *     %NULL if none.
@@ -197,20 +204,19 @@ public class ContentFormats
 	}
 
 	/**
-	 * Gets the mime types included in @formats. Note that @formats may not
-	 * contain any mime types, in particular when they are empty. In that
-	 * case %NULL will be returned.
+	 * Gets the mime types included in @formats.
 	 *
-	 * Params:
-	 *     nMimeTypes = optional pointer to take the
-	 *         number of mime types contained in the return value
+	 * Note that @formats may not contain any mime types, in particular
+	 * when they are empty. In that case %NULL will be returned.
 	 *
 	 * Returns: %NULL-terminated array of
 	 *     interned strings of mime types included in @formats or %NULL
 	 *     if none.
 	 */
-	public string[] getMimeTypes(out size_t nMimeTypes)
+	public string[] getMimeTypes()
 	{
+		size_t nMimeTypes;
+
 		return Str.toStringArray(gdk_content_formats_get_mime_types(gdkContentFormats, &nMimeTypes));
 	}
 
@@ -218,7 +224,7 @@ public class ContentFormats
 	 * Checks if @first and @second have any matching formats.
 	 *
 	 * Params:
-	 *     second = the #GdkContentFormats to intersect with
+	 *     second = the `GdkContentFormats` to intersect with
 	 *
 	 * Returns: %TRUE if a matching format was found.
 	 */
@@ -228,14 +234,15 @@ public class ContentFormats
 	}
 
 	/**
-	 * Finds the first #GType from @first that is also contained
-	 * in @second. If no matching #GType is found, %G_TYPE_INVALID
-	 * is returned.
+	 * Finds the first `GType` from @first that is also contained
+	 * in @second.
+	 *
+	 * If no matching `GType` is found, %G_TYPE_INVALID is returned.
 	 *
 	 * Params:
-	 *     second = the #GdkContentFormats to intersect with
+	 *     second = the `GdkContentFormats` to intersect with
 	 *
-	 * Returns: The first common #GType or %G_TYPE_INVALID if none.
+	 * Returns: The first common `GType` or %G_TYPE_INVALID if none.
 	 */
 	public GType matchGtype(ContentFormats second)
 	{
@@ -244,11 +251,12 @@ public class ContentFormats
 
 	/**
 	 * Finds the first mime type from @first that is also contained
-	 * in @second. If no matching mime type is found, %NULL is
-	 * returned.
+	 * in @second.
+	 *
+	 * If no matching mime type is found, %NULL is returned.
 	 *
 	 * Params:
-	 *     second = the #GdkContentFormats to intersect with
+	 *     second = the `GdkContentFormats` to intersect with
 	 *
 	 * Returns: The first common mime type or %NULL if none.
 	 */
@@ -259,13 +267,14 @@ public class ContentFormats
 
 	/**
 	 * Prints the given @formats into a string for human consumption.
+	 *
 	 * This is meant for debugging and logging.
 	 *
 	 * The form of the representation may change at any time and is
 	 * not guaranteed to stay identical.
 	 *
 	 * Params:
-	 *     string_ = a #GString to print into
+	 *     string_ = a `GString` to print into
 	 */
 	public void print(StringG string_)
 	{
@@ -274,9 +283,9 @@ public class ContentFormats
 
 	alias doref = ref_;
 	/**
-	 * Increases the reference count of a #GdkContentFormats by one.
+	 * Increases the reference count of a `GdkContentFormats` by one.
 	 *
-	 * Returns: the passed in #GdkContentFormats.
+	 * Returns: the passed in `GdkContentFormats`.
 	 */
 	public ContentFormats ref_()
 	{
@@ -292,8 +301,9 @@ public class ContentFormats
 
 	/**
 	 * Prints the given @formats into a human-readable string.
-	 * This is a small wrapper around gdk_content_formats_print() to help
-	 * when debugging.
+	 *
+	 * This is a small wrapper around [method@Gdk.ContentFormats.print]
+	 * to help when debugging.
 	 *
 	 * Returns: a new string
 	 */
@@ -311,9 +321,9 @@ public class ContentFormats
 	 * they had in @second.
 	 *
 	 * Params:
-	 *     second = the #GdkContentFormats to merge from
+	 *     second = the `GdkContentFormats` to merge from
 	 *
-	 * Returns: a new #GdkContentFormats
+	 * Returns: a new `GdkContentFormats`
 	 */
 	public ContentFormats union_(ContentFormats second)
 	{
@@ -331,7 +341,7 @@ public class ContentFormats
 	 * Add GTypes for mime types in @formats for which deserializers are
 	 * registered.
 	 *
-	 * Returns: a new #GdkContentFormats
+	 * Returns: a new `GdkContentFormats`
 	 */
 	public ContentFormats unionDeserializeGtypes()
 	{
@@ -349,7 +359,7 @@ public class ContentFormats
 	 * Add mime types for GTypes in @formats for which deserializers are
 	 * registered.
 	 *
-	 * Returns: a new #GdkContentFormats
+	 * Returns: a new `GdkContentFormats`
 	 */
 	public ContentFormats unionDeserializeMimeTypes()
 	{
@@ -367,7 +377,7 @@ public class ContentFormats
 	 * Add GTypes for the mime types in @formats for which serializers are
 	 * registered.
 	 *
-	 * Returns: a new #GdkContentFormats
+	 * Returns: a new `GdkContentFormats`
 	 */
 	public ContentFormats unionSerializeGtypes()
 	{
@@ -385,7 +395,7 @@ public class ContentFormats
 	 * Add mime types for GTypes in @formats for which serializers are
 	 * registered.
 	 *
-	 * Returns: a new #GdkContentFormats
+	 * Returns: a new `GdkContentFormats`
 	 */
 	public ContentFormats unionSerializeMimeTypes()
 	{
@@ -400,7 +410,8 @@ public class ContentFormats
 	}
 
 	/**
-	 * Decreases the reference count of a #GdkContentFormats by one.
+	 * Decreases the reference count of a `GdkContentFormats` by one.
+	 *
 	 * If the resulting reference count is zero, frees the formats.
 	 */
 	public void unref()

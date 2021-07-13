@@ -25,6 +25,7 @@
 module gstreamer.PresetT;
 
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
 

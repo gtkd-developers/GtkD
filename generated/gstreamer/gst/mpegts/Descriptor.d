@@ -28,6 +28,7 @@ private import glib.ArrayG;
 private import glib.MemorySlice;
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gst.mpegts.CableDeliverySystemDescriptor;
 private import gst.mpegts.ComponentDescriptor;

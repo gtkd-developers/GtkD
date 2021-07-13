@@ -3614,6 +3614,13 @@ public enum GUriFlags
 	 * fragment only.
 	 */
 	ENCODED_FRAGMENT = 128,
+	/**
+	 * A scheme-based normalization will be applied.
+	 * For example, when parsing an HTTP URI changing omitted path to `/` and
+	 * omitted port to `80`; and when building a URI, changing empty path to `/`
+	 * and default port `80`). This only supports a subset of known schemes. (Since: 2.68)
+	 */
+	SCHEME_NORMALIZE = 256,
 }
 alias GUriFlags UriFlags;
 
@@ -4786,6 +4793,8 @@ struct GString
 
 struct GStringChunk;
 
+struct GStrvBuilder;
+
 /**
  * An opaque structure representing a test case.
  */
@@ -4927,6 +4936,8 @@ struct GTrashStack
 }
 
 struct GTree;
+
+struct GTreeNode;
 
 struct GUri;
 
@@ -5101,6 +5112,55 @@ public alias extern(C) void* function(void* data, void* userData) GDuplicateFunc
  * Returns: %TRUE if @a = @b; %FALSE otherwise
  */
 public alias extern(C) int function(void* a, void* b) GEqualFunc;
+
+/**
+ * Specifies the type of function which is called when an extended
+ * error instance is freed. It is passed the error pointer about to be
+ * freed, and should free the error's private data fields.
+ *
+ * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+ * already takes care of getting the private data from @error.
+ *
+ * Params:
+ *     error = extended error to clear
+ *
+ * Since: 2.68
+ */
+public alias extern(C) void function(GError* error) GErrorClearFunc;
+
+/**
+ * Specifies the type of function which is called when an extended
+ * error instance is copied. It is passed the pointer to the
+ * destination error and source error, and should copy only the fields
+ * of the private data from @src_error to @dest_error.
+ *
+ * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+ * already takes care of getting the private data from @src_error and
+ * @dest_error.
+ *
+ * Params:
+ *     srcError = source extended error
+ *     destError = destination extended error
+ *
+ * Since: 2.68
+ */
+public alias extern(C) void function(GError* srcError, GError* destError) GErrorCopyFunc;
+
+/**
+ * Specifies the type of function which is called just after an
+ * extended error instance is created and its fields filled. It should
+ * only initialize the fields in the private data, which can be
+ * received with the generated `*_get_private()` function.
+ *
+ * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+ * already takes care of getting the private data from @error.
+ *
+ * Params:
+ *     error = extended error
+ *
+ * Since: 2.68
+ */
+public alias extern(C) void function(GError* error) GErrorInitFunc;
 
 /**
  * Declares a type of function which takes an arbitrary
@@ -5637,6 +5697,22 @@ public alias extern(C) const(char)* function(const(char)* str, void* data) GTran
  * Returns: %TRUE to stop the traversal
  */
 public alias extern(C) int function(void* key, void* value, void* data) GTraverseFunc;
+
+/**
+ * Specifies the type of function passed to g_tree_foreach_node(). It is
+ * passed each node, together with the @user_data parameter passed to
+ * g_tree_foreach_node(). If the function returns %TRUE, the traversal is
+ * stopped.
+ *
+ * Params:
+ *     node = a #GTreeNode
+ *     data = user data passed to g_tree_foreach_node()
+ *
+ * Returns: %TRUE to stop the traversal
+ *
+ * Since: 2.68
+ */
+public alias extern(C) int function(GTreeNode* node, void* data) GTraverseNodeFunc;
 
 /**
  * The type of functions to be called when a UNIX fd watch source
@@ -6280,7 +6356,7 @@ alias G_MAXUINT8 = MAXUINT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MICRO_VERSION = 2;
+enum MICRO_VERSION = 0;
 alias GLIB_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -6314,7 +6390,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 66;
+enum MINOR_VERSION = 68;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";

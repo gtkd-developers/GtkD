@@ -39,15 +39,16 @@ private import std.algorithm;
 
 
 /**
- * #GtkScaleButton provides a button which pops up a scale widget.
+ * `GtkScaleButton` provides a button which pops up a scale widget.
+ * 
  * This kind of widget is commonly used for volume controls in multimedia
- * applications, and GTK provides a #GtkVolumeButton subclass that
+ * applications, and GTK provides a [class@Gtk.VolumeButton] subclass that
  * is tailored for this use case.
  * 
  * # CSS nodes
  * 
- * GtkScaleButton has a single CSS node with name button. To differentiate
- * it from a plain #GtkButton, it gets the .scale style class.
+ * `GtkScaleButton` has a single CSS node with name button. To differentiate
+ * it from a plain `GtkButton`, it gets the .scale style class.
  */
 public class ScaleButton : Widget, OrientableIF
 {
@@ -88,8 +89,10 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * Creates a #GtkScaleButton, with a range between @min and @max, with
-	 * a stepping of @step.
+	 * Creates a `GtkScaleButton`.
+	 *
+	 * The new scale button has a range between @min and @max,
+	 * with a stepping of @step.
 	 *
 	 * Params:
 	 *     min = the minimum value of the scale (usually 0)
@@ -100,7 +103,7 @@ public class ScaleButton : Widget, OrientableIF
 	 *         array of icon names, or %NULL if you want to set the list
 	 *         later with gtk_scale_button_set_icons()
 	 *
-	 * Returns: a new #GtkScaleButton
+	 * Returns: a new `GtkScaleButton`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -117,8 +120,9 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * Gets the #GtkAdjustment associated with the #GtkScaleButton’s scale.
-	 * See gtk_range_get_adjustment() for details.
+	 * Gets the `GtkAdjustment` associated with the `GtkScaleButton`’s scale.
+	 *
+	 * See [method@Gtk.Range.get_adjustment] for details.
 	 *
 	 * Returns: the adjustment associated with the scale
 	 */
@@ -135,9 +139,10 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * Retrieves the minus button of the #GtkScaleButton.
+	 * Retrieves the minus button of the `GtkScaleButton`.
 	 *
-	 * Returns: the minus button of the #GtkScaleButton as a #GtkButton
+	 * Returns: the minus button
+	 *     of the `GtkScaleButton`
 	 */
 	public Button getMinusButton()
 	{
@@ -152,9 +157,10 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * Retrieves the plus button of the #GtkScaleButton.
+	 * Retrieves the plus button of the `GtkScaleButton.`
 	 *
-	 * Returns: the plus button of the #GtkScaleButton as a #GtkButton
+	 * Returns: the plus button
+	 *     of the `GtkScaleButton`
 	 */
 	public Button getPlusButton()
 	{
@@ -169,9 +175,9 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * Retrieves the popup of the #GtkScaleButton.
+	 * Retrieves the popup of the `GtkScaleButton`.
 	 *
-	 * Returns: the popup of the #GtkScaleButton
+	 * Returns: the popup of the `GtkScaleButton`
 	 */
 	public Widget getPopup()
 	{
@@ -196,12 +202,13 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkAdjustment to be used as a model
-	 * for the #GtkScaleButton’s scale.
-	 * See gtk_range_set_adjustment() for details.
+	 * Sets the `GtkAdjustment` to be used as a model
+	 * for the `GtkScaleButton`’s scale.
+	 *
+	 * See [method@Gtk.Range.set_adjustment] for details.
 	 *
 	 * Params:
-	 *     adjustment = a #GtkAdjustment
+	 *     adjustment = a `GtkAdjustment`
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -210,7 +217,6 @@ public class ScaleButton : Widget, OrientableIF
 
 	/**
 	 * Sets the icons to be used by the scale button.
-	 * For details, see the #GtkScaleButton:icons property.
 	 *
 	 * Params:
 	 *     icons = a %NULL-terminated array of icon names
@@ -221,9 +227,12 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the current value of the scale; if the value is outside
-	 * the minimum or maximum range values, it will be clamped to fit
-	 * inside them. The scale button emits the #GtkScaleButton::value-changed
+	 * Sets the current value of the scale.
+	 *
+	 * If the value is outside the minimum or maximum range values,
+	 * it will be clamped to fit inside them.
+	 *
+	 * The scale button emits the [signal@Gtk.ScaleButton::value-changed]
 	 * signal if the value changes.
 	 *
 	 * Params:
@@ -235,11 +244,11 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::popdown signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to popdown the scale widget.
+	 * Emitted to dismiss the popup.
 	 *
-	 * The default binding for this signal is Escape.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default binding for this signal is <kbd>Escape</kbd>.
 	 */
 	gulong addOnPopdown(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -247,11 +256,12 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::popup signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to popup the scale widget.
+	 * Emitted to popup the scale widget.
 	 *
-	 * The default bindings for this signal are Space, Enter and Return.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default bindings for this signal are <kbd>Space</kbd>,
+	 * <kbd>Enter</kbd> and <kbd>Return</kbd>.
 	 */
 	gulong addOnPopup(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -259,8 +269,7 @@ public class ScaleButton : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::value-changed signal is emitted when the value field has
-	 * changed.
+	 * Emitted when the value field has changed.
 	 *
 	 * Params:
 	 *     value = the new value

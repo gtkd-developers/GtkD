@@ -28,18 +28,21 @@ private import gio.ListModelIF;
 private import gio.ListModelT;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
 /**
- * #GtkBookmarkList is a list model that wraps GBookmarkFile.
- * It presents a #GListModel and fills it asynchronously with the #GFileInfos
- * returned from that function.
+ * `GtkBookmarkList` is a list model that wraps `GBookmarkFile`.
  * 
- * The #GFileInfos in the list have some attributes in the recent namespace
- * added: recent::private (boolean) and recent:applications (stringv).
+ * It presents a `GListModel` and fills it asynchronously with the
+ * `GFileInfo`s returned from that function.
+ * 
+ * The `GFileInfo`s in the list have some attributes in the recent
+ * namespace added: `recent::private` (boolean) and `recent:applications`
+ * (stringv).
  */
 public class BookmarkList : ObjectG, ListModelIF
 {
@@ -80,13 +83,13 @@ public class BookmarkList : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Creates a new #GtkBookmarkList with the given @attributes.
+	 * Creates a new `GtkBookmarkList` with the given @attributes.
 	 *
 	 * Params:
 	 *     filename = The bookmark file to load
 	 *     attributes = The attributes to query
 	 *
-	 * Returns: a new #GtkBookmarkList
+	 * Returns: a new `GtkBookmarkList`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -124,7 +127,7 @@ public class BookmarkList : ObjectG, ListModelIF
 	}
 
 	/**
-	 * Gets the IO priority set via gtk_bookmark_list_set_io_priority().
+	 * Gets the IO priority to use while loading file.
 	 *
 	 * Returns: The IO priority.
 	 */

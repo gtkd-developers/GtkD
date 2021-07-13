@@ -36,6 +36,7 @@ private import gio.InputStream;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
@@ -43,21 +44,23 @@ private import std.algorithm;
 
 
 /**
- * The #GdkClipboard object represents a clipboard of data shared
- * between different applications or between different parts of
- * the same application.
+ * The `GdkClipboard` object represents data shared between applications or
+ * inside an application.
  * 
- * To get a GdkClipboard object, use gdk_display_get_clipboard() or
- * gdk_display_get_primary_clipboard(). You can find out about the data that
- * is currently available in a clipboard using gdk_clipboard_get_formats().
+ * To get a `GdkClipboard` object, use [method@Gdk.Display.get_clipboard] or
+ * [method@Gdk.Display.get_primary_clipboard]. You can find out about the data
+ * that is currently available in a clipboard using
+ * [method@Gdk.Clipboard.get_formats].
  * 
- * To make text or image data available in a clipboard, use gdk_clipboard_set_text() or
- * gdk_clipboard_set_texture(). For other data, you can use gdk_clipboard_set_content(),
- * which takes a #GdkContentProvider object.
+ * To make text or image data available in a clipboard, use
+ * [method@Gdk.Clipboard.set_text] or [method@Gdk.Clipboard.set_texture].
+ * For other data, you can use [method@Gdk.Clipboard.set_content], which
+ * takes a [class@Gdk.ContentProvider] object.
  * 
- * To read textual or image data from a clipboard, use gdk_clipboard_read_text_async() or
- * gdk_clipboard_read_texture_async(). For other data, use gdk_clipboard_read_async(),
- * which provides a #GInputStream object.
+ * To read textual or image data from a clipboard, use
+ * [method@Gdk.Clipboard.read_text_async] or
+ * [method@Gdk.Clipboard.read_texture_async]. For other data, use
+ * [method@Gdk.Clipboard.read_async], which provides a `GInputStream` object.
  */
 public class Clipboard : ObjectG
 {
@@ -95,9 +98,10 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkContentProvider currently set on @clipboard. If the
-	 * @clipboard is empty or its contents are not owned by the current process,
-	 * %NULL will be returned.
+	 * Returns the `GdkContentProvider` currently set on @clipboard.
+	 *
+	 * If the @clipboard is empty or its contents are not owned by the
+	 * current process, %NULL will be returned.
 	 *
 	 * Returns: The content of a clipboard or %NULL
 	 *     if the clipboard does not maintain any content.
@@ -115,9 +119,9 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Gets the #GdkDisplay that the clipboard was created for.
+	 * Gets the `GdkDisplay` that the clipboard was created for.
 	 *
-	 * Returns: a #GdkDisplay
+	 * Returns: a `GdkDisplay`
 	 */
 	public Display getDisplay()
 	{
@@ -149,11 +153,13 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Returns if the clipboard is local. A clipboard is considered local if it was
-	 * last claimed by the running application.
+	 * Returns if the clipboard is local.
 	 *
-	 * Note that gdk_clipboard_get_content() may return %NULL even on a local
-	 * clipboard. In this case the clipboard is empty.
+	 * A clipboard is considered local if it was last claimed
+	 * by the running application.
+	 *
+	 * Note that [method@Gdk.Clipboard.get_content] may return %NULL
+	 * even on a local clipboard. In this case the clipboard is empty.
 	 *
 	 * Returns: %TRUE if the clipboard is local
 	 */
@@ -164,18 +170,18 @@ public class Clipboard : ObjectG
 
 	/**
 	 * Asynchronously requests an input stream to read the @clipboard's
-	 * contents from. When the operation is finished @callback will be called.
-	 * You can then call gdk_clipboard_read_finish() to get the result of the
-	 * operation.
+	 * contents from.
+	 *
+	 * When the operation is finished @callback will be called. You must then
+	 * call [method@Gdk.Clipboard.read_finish] to get the result of the operation.
 	 *
 	 * The clipboard will choose the most suitable mime type from the given list
 	 * to fulfill the request, preferring the ones listed first.
 	 *
 	 * Params:
 	 *     mimeTypes = a %NULL-terminated array of mime types to choose from
-	 *     ioPriority = the [I/O priority][io-priority]
-	 *         of the request.
-	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *     ioPriority = the I/O priority of the request
+	 *     cancellable = optional `GCancellable` object, %NULL to ignore.
 	 *     callback = callback to call when the request is satisfied
 	 *     userData = the data to pass to callback function
 	 */
@@ -185,14 +191,16 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Finishes an asynchronous clipboard read started with gdk_clipboard_read_async().
+	 * Finishes an asynchronous clipboard read.
+	 *
+	 * See [method@Gdk.Clipboard.read_async].
 	 *
 	 * Params:
-	 *     result = a #GAsyncResult
+	 *     result = a `GAsyncResult`
 	 *     outMimeType = pointer to store
 	 *         the chosen mime type in or %NULL
 	 *
-	 * Returns: a #GInputStream or %NULL on error.
+	 * Returns: a `GInputStream` or %NULL on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -220,15 +228,16 @@ public class Clipboard : ObjectG
 
 	/**
 	 * Asynchronously request the @clipboard contents converted to a string.
-	 * When the operation is finished @callback will be called. You can then
-	 * call gdk_clipboard_read_text_finish() to get the result.
 	 *
-	 * This is a simple wrapper around gdk_clipboard_read_value_async(). Use
-	 * that function or gdk_clipboard_read_async() directly if you need more
-	 * control over the operation.
+	 * When the operation is finished @callback will be called. You must then
+	 * call [method@Gdk.Clipboard.read_text_finish] to get the result.
+	 *
+	 * This is a simple wrapper around [method@Gdk.Clipboard.read_value_async].
+	 * Use that function or [method@Gdk.Clipboard.read_async] directly if you
+	 * need more control over the operation.
 	 *
 	 * Params:
-	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *     cancellable = optional `GCancellable` object, %NULL to ignore
 	 *     callback = callback to call when the request is satisfied
 	 *     userData = the data to pass to callback function
 	 */
@@ -238,13 +247,14 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Finishes an asynchronous clipboard read started with
-	 * gdk_clipboard_read_text_async().
+	 * Finishes an asynchronous clipboard read.
+	 *
+	 * See [method@Gdk.Clipboard.read_text_async].
 	 *
 	 * Params:
-	 *     result = a #GAsyncResult
+	 *     result = a `GAsyncResult`
 	 *
-	 * Returns: a new string or %NULL on error.
+	 * Returns: a new string or %NULL on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -264,16 +274,17 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Asynchronously request the @clipboard contents converted to a #GdkPixbuf.
-	 * When the operation is finished @callback will be called. You can then
-	 * call gdk_clipboard_read_texture_finish() to get the result.
+	 * Asynchronously request the @clipboard contents converted to a `GdkPixbuf`.
 	 *
-	 * This is a simple wrapper around gdk_clipboard_read_value_async(). Use
-	 * that function or gdk_clipboard_read_async() directly if you need more
-	 * control over the operation.
+	 * When the operation is finished @callback will be called. You must then
+	 * call [method@Gdk.Clipboard.read_texture_finish] to get the result.
+	 *
+	 * This is a simple wrapper around [method@Gdk.Clipboard.read_value_async].
+	 * Use that function or [methos@Gdk.Clipboard.read_async] directly if you
+	 * need more control over the operation.
 	 *
 	 * Params:
-	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *     cancellable = optional `GCancellable` object, %NULL to ignore.
 	 *     callback = callback to call when the request is satisfied
 	 *     userData = the data to pass to callback function
 	 */
@@ -283,13 +294,14 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Finishes an asynchronous clipboard read started with
-	 * gdk_clipboard_read_texture_async().
+	 * Finishes an asynchronous clipboard read.
+	 *
+	 * See [method@Gdk.Clipboard.read_texture_async].
 	 *
 	 * Params:
-	 *     result = a #GAsyncResult
+	 *     result = a `GAsyncResult`
 	 *
-	 * Returns: a new #GdkTexture or %NULL on error.
+	 * Returns: a new `GdkTexture` or %NULL on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -314,18 +326,18 @@ public class Clipboard : ObjectG
 
 	/**
 	 * Asynchronously request the @clipboard contents converted to the given
-	 * @type. When the operation is finished @callback will be called.
-	 * You can then call gdk_clipboard_read_value_finish() to get the resulting
-	 * #GValue.
+	 * @type.
 	 *
-	 * For local clipboard contents that are available in the given #GType, the
-	 * value will be copied directly. Otherwise, GDK will try to use
-	 * gdk_content_deserialize_async() to convert the clipboard's data.
+	 * When the operation is finished @callback will be called. You must then call
+	 * [method@Gdk.Clipboard.read_value_finish] to get the resulting `GValue`.
+	 *
+	 * For local clipboard contents that are available in the given `GType`,
+	 * the value will be copied directly. Otherwise, GDK will try to use
+	 * [func@content_deserialize_async] to convert the clipboard's data.
 	 *
 	 * Params:
-	 *     type = a #GType to read
-	 *     ioPriority = the [I/O priority][io-priority]
-	 *         of the request.
+	 *     type = a `GType` to read
+	 *     ioPriority = the I/O priority of the request
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *     callback = callback to call when the request is satisfied
 	 *     userData = the data to pass to callback function
@@ -336,13 +348,14 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Finishes an asynchronous clipboard read started with
-	 * gdk_clipboard_read_value_async().
+	 * Finishes an asynchronous clipboard read.
+	 *
+	 * See [method@Gdk.Clipboard.read_value_async].
 	 *
 	 * Params:
-	 *     result = a #GAsyncResult
+	 *     result = a `GAsyncResult`
 	 *
-	 * Returns: a #GValue containing the result.
+	 * Returns: a `GValue` containing the result.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -366,9 +379,10 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Sets a new content provider on @clipboard. The clipboard will claim the
-	 * #GdkDisplay's resources and advertise these new contents to other
-	 * applications.
+	 * Sets a new content provider on @clipboard.
+	 *
+	 * The clipboard will claim the `GdkDisplay`'s resources and advertise
+	 * these new contents to other applications.
 	 *
 	 * In the rare case of a failure, this function will return %FALSE. The
 	 * clipboard will then continue reporting its old contents and ignore
@@ -404,7 +418,7 @@ public class Clipboard : ObjectG
 	 * Puts the given @texture into the clipboard.
 	 *
 	 * Params:
-	 *     texture = a #GdkTexture to put into the clipboard
+	 *     texture = a `GdkTexture` to put into the clipboard
 	 */
 	public void setTexture(Texture texture)
 	{
@@ -412,8 +426,7 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Sets the clipboard to contain the value collected from the given
-	 * @args.
+	 * Sets the clipboard to contain the value collected from the given @args.
 	 *
 	 * Params:
 	 *     type = type of value to set
@@ -428,7 +441,7 @@ public class Clipboard : ObjectG
 	 * Sets the @clipboard to contain the given @value.
 	 *
 	 * Params:
-	 *     value = a #GValue to set
+	 *     value = a `GValue` to set
 	 */
 	public void setValue(Value value)
 	{
@@ -436,17 +449,23 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Asynchronously instructs the @clipboard to store its contents remotely to
-	 * preserve them for later usage. If the clipboard is not local, this function
-	 * does nothing but report success.
+	 * Asynchronously instructs the @clipboard to store its contents remotely.
 	 *
-	 * This function is called automatically when gtk_main() or #GtkApplication
-	 * exit, so you likely don't need to call it.
+	 * If the clipboard is not local, this function does nothing but report success.
+	 *
+	 * The @callback must call [method@Gdk.Clipboard.store_finish].
+	 *
+	 * The purpose of this call is to preserve clipboard contents beyond the
+	 * lifetime of an application, so this function is typically called on
+	 * exit. Depending on the platform, the functionality may not be available
+	 * unless a "clipboard manager" is running.
+	 *
+	 * This function is called automatically when a [class@Gtk.Application] is
+	 * shut down, so you likely don't need to call it.
 	 *
 	 * Params:
-	 *     ioPriority = the [I/O priority][io-priority]
-	 *         of the request.
-	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *     ioPriority = the I/O priority of the request.
+	 *     cancellable = optional `GCancellable` object, %NULL to ignore.
 	 *     callback = callback to call when the request is satisfied
 	 *     userData = the data to pass to callback function
 	 */
@@ -456,10 +475,12 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * Finishes an asynchronous clipboard store started with gdk_clipboard_store_async().
+	 * Finishes an asynchronous clipboard store.
+	 *
+	 * See [method@Gdk.Clipboard.store_async].
 	 *
 	 * Params:
-	 *     result = a #GAsyncResult
+	 *     result = a `GAsyncResult`
 	 *
 	 * Returns: %TRUE if storing was successful.
 	 *
@@ -480,7 +501,7 @@ public class Clipboard : ObjectG
 	}
 
 	/**
-	 * The ::changed signal is emitted when the clipboard changes ownership.
+	 * Emitted when the clipboard changes ownership.
 	 */
 	gulong addOnChanged(void delegate(Clipboard) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

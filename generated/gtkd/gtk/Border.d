@@ -33,8 +33,9 @@ private import gtkd.Loader;
 
 
 /**
- * A struct that specifies a border around a rectangular area
- * that can be of different width on each side.
+ * A struct that specifies a border around a rectangular area.
+ * 
+ * Each side can have different width.
  */
 public final class Border
 {

@@ -35,19 +35,23 @@ private import pango.PgLayout;
 
 
 /**
- * A GtkPrintContext encapsulates context information that is required when
- * drawing pages for printing, such as the cairo context and important
- * parameters like page size and resolution. It also lets you easily
- * create #PangoLayout and #PangoContext objects that match the font metrics
- * of the cairo surface.
+ * A `GtkPrintContext` encapsulates context information that is required when
+ * drawing pages for printing.
  * 
- * GtkPrintContext objects gets passed to the #GtkPrintOperation::begin-print,
- * #GtkPrintOperation::end-print, #GtkPrintOperation::request-page-setup and
- * #GtkPrintOperation::draw-page signals on the #GtkPrintOperation.
+ * This includes the cairo context and important parameters like page size
+ * and resolution. It also lets you easily create [class@Pango.Layout] and
+ * [class@Pango.Context] objects that match the font metrics of the cairo surface.
  * 
- * ## Using GtkPrintContext in a #GtkPrintOperation::draw-page callback
+ * `GtkPrintContext` objects get passed to the
+ * [signal@Gtk.PrintOperation::begin-print],
+ * [signal@Gtk.PrintOperation::end-print],
+ * [signal@Gtk.PrintOperation::request-page-setup] and
+ * [signal@Gtk.PrintOperation::draw-page] signals on the
+ * [class@Gtk.PrintOperation] object.
  * 
- * |[<!-- language="C" -->
+ * ## Using GtkPrintContext in a ::draw-page callback
+ * 
+ * ```c
  * static void
  * draw_page (GtkPrintOperation *operation,
  * GtkPrintContext   *context,
@@ -99,7 +103,7 @@ private import pango.PgLayout;
  * 
  * g_object_unref (layout);
  * }
- * ]|
+ * ```
  */
 public class PrintContext : ObjectG
 {
@@ -137,8 +141,8 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Creates a new #PangoContext that can be used with the
-	 * #GtkPrintContext.
+	 * Creates a new `PangoContext` that can be used with the
+	 * `GtkPrintContext`.
 	 *
 	 * Returns: a new Pango context for @context
 	 */
@@ -155,8 +159,8 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Creates a new #PangoLayout that is suitable for use
-	 * with the #GtkPrintContext.
+	 * Creates a new `PangoLayout` that is suitable for use
+	 * with the `GtkPrintContext`.
 	 *
 	 * Returns: a new Pango layout for @context
 	 */
@@ -174,7 +178,7 @@ public class PrintContext : ObjectG
 
 	/**
 	 * Obtains the cairo context that is associated with the
-	 * #GtkPrintContext.
+	 * `GtkPrintContext`.
 	 *
 	 * Returns: the cairo context of @context
 	 */
@@ -191,7 +195,7 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Obtains the horizontal resolution of the #GtkPrintContext,
+	 * Obtains the horizontal resolution of the `GtkPrintContext`,
 	 * in dots per inch.
 	 *
 	 * Returns: the horizontal resolution of @context
@@ -202,7 +206,7 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Obtains the vertical resolution of the #GtkPrintContext,
+	 * Obtains the vertical resolution of the `GtkPrintContext`,
 	 * in dots per inch.
 	 *
 	 * Returns: the vertical resolution of @context
@@ -213,7 +217,8 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Obtains the hardware printer margins of the #GtkPrintContext, in units.
+	 * Obtains the hardware printer margins of the `GtkPrintContext`,
+	 * in units.
 	 *
 	 * Params:
 	 *     top = top hardware printer margin
@@ -229,7 +234,7 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Obtains the height of the #GtkPrintContext, in pixels.
+	 * Obtains the height of the `GtkPrintContext`, in pixels.
 	 *
 	 * Returns: the height of @context
 	 */
@@ -239,8 +244,8 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Obtains the #GtkPageSetup that determines the page
-	 * dimensions of the #GtkPrintContext.
+	 * Obtains the `GtkPageSetup` that determines the page
+	 * dimensions of the `GtkPrintContext`.
 	 *
 	 * Returns: the page setup of @context
 	 */
@@ -257,8 +262,8 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Returns a #PangoFontMap that is suitable for use
-	 * with the #GtkPrintContext.
+	 * Returns a `PangoFontMap` that is suitable for use
+	 * with the `GtkPrintContext`.
 	 *
 	 * Returns: the font map of @context
 	 */
@@ -275,7 +280,7 @@ public class PrintContext : ObjectG
 	}
 
 	/**
-	 * Obtains the width of the #GtkPrintContext, in pixels.
+	 * Obtains the width of the `GtkPrintContext`, in pixels.
 	 *
 	 * Returns: the width of @context
 	 */

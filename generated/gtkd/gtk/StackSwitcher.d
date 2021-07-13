@@ -33,31 +33,33 @@ public  import gtk.c.types;
 
 
 /**
- * The GtkStackSwitcher widget acts as a controller for a
- * #GtkStack; it shows a row of buttons to switch between
- * the various pages of the associated stack widget.
+ * The `GtkStackSwitcher` shows a row of buttons to switch between `GtkStack`
+ * pages.
  * 
- * All the content for the buttons comes from the child properties
- * of the #GtkStack; the button visibility in a #GtkStackSwitcher
- * widget is controlled by the visibility of the child in the
- * #GtkStack.
+ * ![An example GtkStackSwitcher](stackswitcher.png)
  * 
- * It is possible to associate multiple #GtkStackSwitcher widgets
- * with the same #GtkStack widget.
+ * It acts as a controller for the associated `GtkStack`.
+ * 
+ * All the content for the buttons comes from the properties of the stacks
+ * [class@Gtk.StackPage] objects; the button visibility in a `GtkStackSwitcher`
+ * widget is controlled by the visibility of the child in the `GtkStack`.
+ * 
+ * It is possible to associate multiple `GtkStackSwitcher` widgets
+ * with the same `GtkStack` widget.
  * 
  * # CSS nodes
  * 
- * GtkStackSwitcher has a single CSS node named stackswitcher and
+ * `GtkStackSwitcher` has a single CSS node named stackswitcher and
  * style class .stack-switcher.
  * 
- * When circumstances require it, GtkStackSwitcher adds the
+ * When circumstances require it, `GtkStackSwitcher` adds the
  * .needs-attention style class to the widgets representing the
  * stack pages.
  * 
  * # Accessibility
  * 
- * GtkStackSwitcher uses the #GTK_ACCESSIBLE_ROLE_TAB_LIST role
- * and uses the #GTK_ACCESSIBLE_ROLE_TAB for its buttons.
+ * `GtkStackSwitcher` uses the %GTK_ACCESSIBLE_ROLE_TAB_LIST role
+ * and uses the %GTK_ACCESSIBLE_ROLE_TAB for its buttons.
  */
 public class StackSwitcher : Widget
 {
@@ -95,9 +97,9 @@ public class StackSwitcher : Widget
 	}
 
 	/**
-	 * Create a new #GtkStackSwitcher.
+	 * Create a new `GtkStackSwitcher`.
 	 *
-	 * Returns: a new #GtkStackSwitcher.
+	 * Returns: a new `GtkStackSwitcher`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -115,7 +117,6 @@ public class StackSwitcher : Widget
 
 	/**
 	 * Retrieves the stack.
-	 * See gtk_stack_switcher_set_stack().
 	 *
 	 * Returns: the stack, or %NULL if
 	 *     none has been set explicitly.
@@ -136,7 +137,7 @@ public class StackSwitcher : Widget
 	 * Sets the stack to control.
 	 *
 	 * Params:
-	 *     stack = a #GtkStack
+	 *     stack = a `GtkStack`
 	 */
 	public void setStack(Stack stack)
 	{

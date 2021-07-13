@@ -32,13 +32,24 @@ private import gio.Cancellable;
 private import gio.OutputStream;
 private import glib.ErrorG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 
 
 /**
- * A GdkContentSerializer is used to serialize content for inter-application
- * data transfers.
+ * A `GdkContentSerializer` is used to serialize content for
+ * inter-application data transfers.
+ * 
+ * The `GdkContentSerializer` transforms an object that is identified
+ * by a GType into a serialized form (i.e. a byte stream) that is
+ * identified by a mime type.
+ * 
+ * GTK provides serializers and deserializers for common data types
+ * such as text, colors, images or file lists. To register your own
+ * serialization functions, use [func@content_register_serializer].
+ * 
+ * Also see [class@Gdk.ContentDeserializer].
  */
 public class ContentSerializer : ObjectG, AsyncResultIF
 {
@@ -79,7 +90,9 @@ public class ContentSerializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the cancellable that was passed to gdk_content_serialize_async().
+	 * Gets the cancellable for the current operation.
+	 *
+	 * This is the `GCancellable` that was passed to [content_serialize_async].
 	 *
 	 * Returns: the cancellable for the current operation
 	 */
@@ -96,9 +109,9 @@ public class ContentSerializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the GType to of the object to serialize.
+	 * Gets the `GType` to of the object to serialize.
 	 *
-	 * Returns: the GType for the current operation
+	 * Returns: the `GType` for the current operation
 	 */
 	public GType getGtype()
 	{
@@ -116,7 +129,9 @@ public class ContentSerializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the output stream that was passed to gdk_content_serialize_async().
+	 * Gets the output stream for the current operation.
+	 *
+	 * This is the stream that was passed to [func@content_serialize_async].
 	 *
 	 * Returns: the output stream for the current operation
 	 */
@@ -133,9 +148,11 @@ public class ContentSerializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the io priority that was passed to gdk_content_serialize_async().
+	 * Gets the I/O priority for the current operation.
 	 *
-	 * Returns: the io priority for the current operation
+	 * This is the priority that was passed to [func@content_serialize_async].
+	 *
+	 * Returns: the I/O priority for the current operation
 	 */
 	public int getPriority()
 	{
@@ -143,7 +160,9 @@ public class ContentSerializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the data that was associated with @serializer via gdk_content_serializer_set_task_data().
+	 * Gets the data that was associated with the current operation.
+	 *
+	 * See [method@Gdk.ContentSerializer.set_task_data].
 	 *
 	 * Returns: the task data for @serializer
 	 */
@@ -163,9 +182,9 @@ public class ContentSerializer : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Gets the #GValue to read the object to serialize from.
+	 * Gets the `GValue` to read the object to serialize from.
 	 *
-	 * Returns: the #GValue for the current operation
+	 * Returns: the `GValue` for the current operation
 	 */
 	public Value getValue()
 	{
@@ -181,10 +200,11 @@ public class ContentSerializer : ObjectG, AsyncResultIF
 
 	/**
 	 * Indicate that the serialization has ended with an error.
+	 *
 	 * This function consumes @error.
 	 *
 	 * Params:
-	 *     error = a #GError
+	 *     error = a `GError`
 	 */
 	public void returnError(ErrorG error)
 	{

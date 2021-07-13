@@ -27,6 +27,7 @@ module pango.PgMiscellaneous;
 private import core.stdc.stdio;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -36,11 +37,11 @@ public struct PgMiscellaneous
 {
 
 	/**
-	 * Checks @ch to see if it is a character that should not be
-	 * normally rendered on the screen.  This includes all Unicode characters
-	 * with "ZERO WIDTH" in their name, as well as <firstterm>bidi</firstterm> formatting characters, and
-	 * a few other ones.  This is totally different from g_unichar_iszerowidth()
-	 * and is at best misnamed.
+	 * Checks if a character that should not be normally rendered.
+	 *
+	 * This includes all Unicode characters with "ZERO WIDTH" in their name,
+	 * as well as *bidi* formatting characters, and a few other ones.  This is
+	 * totally different from g_unichar_iszerowidth() and is at best misnamed.
 	 *
 	 * Params:
 	 *     ch = a Unicode character
@@ -55,8 +56,10 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * This will return the bidirectional embedding levels of the input paragraph
-	 * as defined by the Unicode Bidirectional Algorithm available at:
+	 * Return the bidirectional embedding levels of the input paragraph.
+	 *
+	 * The bidirectional embedding levels are defined by the Unicode Bidirectional
+	 * Algorithm available at:
 	 *
 	 * http://www.unicode.org/reports/tr9/
 	 *
@@ -70,7 +73,7 @@ public struct PgMiscellaneous
 	 *     pbaseDir = input base direction, and output resolved direction.
 	 *
 	 * Returns: a newly allocated array of embedding levels, one item per
-	 *     character (not byte), that should be freed using g_free.
+	 *     character (not byte), that should be freed using g_free().
 	 *
 	 * Since: 1.4
 	 */
@@ -113,7 +116,9 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Parses a font stretch. The allowed values are
+	 * Parses a font stretch.
+	 *
+	 * The allowed values are
 	 * "ultra_condensed", "extra_condensed", "condensed",
 	 * "semi_condensed", "normal", "semi_expanded", "expanded",
 	 * "extra_expanded" and "ultra_expanded". Case variations are
@@ -121,8 +126,7 @@ public struct PgMiscellaneous
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     stretch = a #PangoStretch to store the
-	 *         result in.
+	 *     stretch = a `PangoStretch` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -133,14 +137,15 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Parses a font style. The allowed values are "normal",
-	 * "italic" and "oblique", case variations being
+	 * Parses a font style.
+	 *
+	 * The allowed values are "normal", "italic" and "oblique", case
+	 * variations being
 	 * ignored.
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     style = a #PangoStyle to store the result
-	 *         in.
+	 *     style = a `PangoStyle` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -151,14 +156,14 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Parses a font variant. The allowed values are "normal"
-	 * and "smallcaps" or "small_caps", case variations being
-	 * ignored.
+	 * Parses a font variant.
+	 *
+	 * The allowed values are "normal" and "smallcaps" or "small_caps",
+	 * case variations being ignored.
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     variant = a #PangoVariant to store the
-	 *         result in.
+	 *     variant = a `PangoVariant` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -169,14 +174,15 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Parses a font weight. The allowed values are "heavy",
+	 * Parses a font weight.
+	 *
+	 * The allowed values are "heavy",
 	 * "ultrabold", "bold", "normal", "light", "ultraleight"
 	 * and integers. Case variations are ignored.
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     weight = a #PangoWeight to store the result
-	 *         in.
+	 *     weight = a `PangoWeight` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -187,10 +193,10 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Quantizes the thickness and position of a line, typically an
-	 * underline or strikethrough, to whole device pixels, that is integer
-	 * multiples of %PANGO_SCALE. The purpose of this function is to avoid
-	 * such lines looking blurry.
+	 * Quantizes the thickness and position of a line to whole device pixels.
+	 *
+	 * This is typically used for underline or strikethrough. The purpose of
+	 * this function is to avoid such lines looking blurry.
 	 *
 	 * Care is taken to make sure @thickness is at least one pixel when this
 	 * function returns, but returned @position may become zero as a result
@@ -209,6 +215,7 @@ public struct PgMiscellaneous
 
 	/**
 	 * Scans an integer.
+	 *
 	 * Leading white space is skipped.
 	 *
 	 * Params:
@@ -229,9 +236,10 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Scans a string into a #GString buffer. The string may either
-	 * be a sequence of non-white-space characters, or a quoted
-	 * string with '"'. Instead a quoted string, '\"' represents
+	 * Scans a string into a #GString buffer.
+	 *
+	 * The string may either be a sequence of non-white-space characters,
+	 * or a quoted string with '"'. Instead a quoted string, '\"' represents
 	 * a literal quote. Leading white space outside of quotes is skipped.
 	 *
 	 * Params:
@@ -252,9 +260,10 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Scans a word into a #GString buffer. A word consists
-	 * of [A-Za-z_] followed by zero or more [A-Za-z_0-9]
-	 * Leading white space is skipped.
+	 * Scans a word into a #GString buffer.
+	 *
+	 * A word consists of [A-Za-z_] followed by zero or more
+	 * [A-Za-z_0-9]. Leading white space is skipped.
 	 *
 	 * Params:
 	 *     pos = in/out string position
@@ -328,8 +337,9 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Reads an entire line from a file into a buffer. Lines may
-	 * be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
+	 * Reads an entire line from a file into a buffer.
+	 *
+	 * Lines may be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
 	 * is not written into the buffer. Text after a '#' character is treated as
 	 * a comment and skipped. '\' can be used to escape a # character.
 	 * '\' proceeding a line delimiter combines adjacent lines. A '\' proceeding
@@ -340,8 +350,8 @@ public struct PgMiscellaneous
 	 *     stream = a stdio stream
 	 *     str = #GString buffer into which to write the result
 	 *
-	 * Returns: 0 if the stream was already at an %EOF character, otherwise
-	 *     the number of lines read (this is useful for maintaining
+	 * Returns: 0 if the stream was already at an %EOF character,
+	 *     otherwise the number of lines read (this is useful for maintaining
 	 *     a line number counter which doesn't combine lines with '\')
 	 */
 	public static int readLine(FILE* stream, StringG str)

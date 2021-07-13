@@ -35,13 +35,13 @@ private import std.algorithm;
 
 
 /**
- * #GtkDropControllerMotion is an event controller meant for tracking
- * the pointer hovering over a widget during a drag and drop operation.
+ * `GtkDropControllerMotion` is an event controller tracking
+ * the pointer during Drag-and-Drop operations.
  * 
- * It is modeled after #GtkEventControllerMotion so if you have used
- * that, this should feel really familiar.
+ * It is modeled after [class@Gtk.EventControllerMotion] so if you
+ * have used that, this should feel really familiar.
  * 
- * The drop controller is not able to accept drops, use #GtkDropTarget
+ * This controller is not able to accept drops, use [class@Gtk.DropTarget]
  * for that purpose.
  */
 public class DropControllerMotion : EventController
@@ -83,7 +83,7 @@ public class DropControllerMotion : EventController
 	 * Creates a new event controller that will handle pointer motion
 	 * events during drag and drop.
 	 *
-	 * Returns: a new #GtkDropControllerMotion
+	 * Returns: a new `GtkDropControllerMotion`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -100,7 +100,8 @@ public class DropControllerMotion : EventController
 	}
 
 	/**
-	 * Returns the value of the GtkDropControllerMotion:contains-pointer property.
+	 * Returns if a Drag-and-Drop operation is within the widget
+	 * @self or one of its children.
 	 *
 	 * Returns: %TRUE if a dragging pointer is within @self or one of its children.
 	 */
@@ -110,10 +111,11 @@ public class DropControllerMotion : EventController
 	}
 
 	/**
-	 * Returns the value of the GtkDropControllerMotion:drop property.
+	 * Returns the `GdkDrop` of a current Drag-and-Drop operation
+	 * over the widget of @self.
 	 *
-	 * Returns: The #GdkDrop currently happening
-	 *     within @self or %NULL if none
+	 * Returns: The `GdkDrop` currently
+	 *     happening within @self or %NULL if none
 	 */
 	public Drop getDrop()
 	{
@@ -128,9 +130,11 @@ public class DropControllerMotion : EventController
 	}
 
 	/**
-	 * Returns the value of the GtkDropControllerMotion:is-pointer property.
+	 * Returns if a Drag-and-Drop operation is within the widget
+	 * @self, not one of its children.
 	 *
-	 * Returns: %TRUE if a dragging pointer is within @self but not one of its children
+	 * Returns: %TRUE if a dragging pointer is within @self but
+	 *     not one of its children
 	 */
 	public bool isPointer()
 	{

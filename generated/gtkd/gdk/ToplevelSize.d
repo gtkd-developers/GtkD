@@ -29,9 +29,8 @@ public  import gdk.c.types;
 
 
 /**
- * The GdkToplevelSIze struct contains information that may be useful
- * for users of GdkToplevel to compute a surface size. It also carries
- * information back with the computational result.
+ * The `GdkToplevelSize` struct contains information that is useful
+ * to compute the size of a toplevel.
  */
 public class ToplevelSize
 {
@@ -82,13 +81,15 @@ public class ToplevelSize
 	}
 
 	/**
+	 * Sets the minimum size of the toplevel.
+	 *
 	 * The minimum size corresponds to the limitations the toplevel can be shrunk
-	 * to, without resulting in incorrect painting. A user of a #GdkToplevel should
+	 * to, without resulting in incorrect painting. A user of a `GdkToplevel` should
 	 * calculate these given both the existing size, and the bounds retrieved from
-	 * the #GdkToplevelSize object.
+	 * the `GdkToplevelSize` object.
 	 *
 	 * The minimum size should be within the bounds (see
-	 * gdk_toplevel_size_get_bounds()).
+	 * [method@Gdk.ToplevelSize.get_bounds]).
 	 *
 	 * Params:
 	 *     minWidth = the minimum width
@@ -100,6 +101,8 @@ public class ToplevelSize
 	}
 
 	/**
+	 * Sets the shadows size of the toplevel.
+	 *
 	 * The shadow width corresponds to the part of the computed surface size
 	 * that would consist of the shadow margin surrounding the window, would
 	 * there be any.
@@ -116,10 +119,12 @@ public class ToplevelSize
 	}
 
 	/**
-	 * Sets the size the toplevel prefers to be resized to. The size should be
-	 * within the bounds (see gdk_toplevel_size_get_bounds()). The set size should
-	 * be considered as a hint, and should not be assumed to be respected by the
-	 * windowing system, or backend.
+	 * Sets the size the toplevel prefers to be resized to.
+	 *
+	 * The size should be within the bounds (see
+	 * [method@Gdk.ToplevelSize.get_bounds]). The set size should
+	 * be considered as a hint, and should not be assumed to be
+	 * respected by the windowing system, or backend.
 	 *
 	 * Params:
 	 *     width = the width

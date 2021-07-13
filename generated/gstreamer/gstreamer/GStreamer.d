@@ -28,6 +28,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.OptionGroup;
 private import glib.Str;
+private import glib.c.functions;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 

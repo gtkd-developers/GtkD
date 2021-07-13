@@ -25,6 +25,7 @@
 module gtk.StackPage;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.AccessibleIF;
 private import gtk.AccessibleT;
@@ -33,7 +34,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkStackPage` is an auxiliary class used by `GtkStack`.
+ */
 public class StackPage : ObjectG, AccessibleIF
 {
 	/** the main Gtk struct */
@@ -90,10 +93,9 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Returns the current value of the #GtkStackPage:icon-name property.
+	 * Returns the icon name of the page.
 	 *
-	 * Returns: The value of the #GtkStackPage:icon-name property.
-	 *     See gtk_stack_page_set_icon_name() for details on how to set a new value.
+	 * Returns: The value of the [property@Gtk.StackPage:icon-name] property
 	 */
 	public string getIconName()
 	{
@@ -101,10 +103,9 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Returns the current value of the #GtkStackPage:name property.
+	 * Returns the name of the page.
 	 *
-	 * Returns: The value of the #GtkStackPage:name property.
-	 *     See gtk_stack_page_set_name() for details on how to set a new value.
+	 * Returns: The value of the [property@Gtk.StackPage:name] property
 	 */
 	public string getName()
 	{
@@ -112,10 +113,10 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Returns the current value of the #GtkStackPage:needs-attention property.
+	 * Returns whether the page is marked as “needs attention”.
 	 *
-	 * Returns: The value of the #GtkStackPage:needs-attention property.
-	 *     See gtk_stack_page_set_needs_attention() for details on how to set a new value.
+	 * Returns: The value of the [property@Gtk.StackPage:needs-attention]
+	 *     property.
 	 */
 	public bool getNeedsAttention()
 	{
@@ -123,10 +124,9 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Returns the current value of the #GtkStackPage:title property.
+	 * Gets the page title.
 	 *
-	 * Returns: The value of the #GtkStackPage:title property.
-	 *     See gtk_stack_page_set_title() for details on how to set a new value.
+	 * Returns: The value of the [property@Gtk.StackPage:title] property
 	 */
 	public string getTitle()
 	{
@@ -134,10 +134,9 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Returns the current value of the #GtkStackPage:use-underline property.
+	 * Gets whether underlines in the page title indicate mnemonics.
 	 *
-	 * Returns: The value of the #GtkStackPage:use-underline property.
-	 *     See gtk_stack_page_set_use_underline() for details on how to set a new value.
+	 * Returns: The value of the [property@Gtk.StackPage:use-underline] property
 	 */
 	public bool getUseUnderline()
 	{
@@ -145,9 +144,10 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Returns whether @page is visible in its #GtkStack.
-	 * This is independent from the #GtkWidget:visible value of its
-	 * #GtkWidget.
+	 * Returns whether @page is visible in its `GtkStack`.
+	 *
+	 * This is independent from the [property@Gtk.Widget:visible]
+	 * property of its widget.
 	 *
 	 * Returns: %TRUE if @page is visible
 	 */
@@ -157,8 +157,7 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Sets the new value of the #GtkStackPage:icon-name property.
-	 * See also gtk_stack_page_get_icon_name()
+	 * Sets the icon name of the page.
 	 *
 	 * Params:
 	 *     setting = the new value to set
@@ -169,8 +168,7 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Sets the new value of the #GtkStackPage:name property.
-	 * See also gtk_stack_page_get_name()
+	 * Sets the name of the page.
 	 *
 	 * Params:
 	 *     setting = the new value to set
@@ -181,8 +179,7 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Sets the new value of the #GtkStackPage:needs-attention property.
-	 * See also gtk_stack_page_get_needs_attention()
+	 * Sets whether the page is marked as “needs attention”.
 	 *
 	 * Params:
 	 *     setting = the new value to set
@@ -193,8 +190,7 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Sets the new value of the #GtkStackPage:title property.
-	 * See also gtk_stack_page_get_title()
+	 * Sets the page title.
 	 *
 	 * Params:
 	 *     setting = the new value to set
@@ -205,8 +201,7 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Sets the new value of the #GtkStackPage:use-underline property.
-	 * See also gtk_stack_page_get_use_underline()
+	 * Sets whether underlines in the page title indicate mnemonics.
 	 *
 	 * Params:
 	 *     setting = the new value to set
@@ -217,8 +212,7 @@ public class StackPage : ObjectG, AccessibleIF
 	}
 
 	/**
-	 * Sets the new value of the #GtkStackPage:visible property
-	 * to @visible.
+	 * Sets whether @page is visible in its `GtkStack`.
 	 *
 	 * Params:
 	 *     visible = The new property value

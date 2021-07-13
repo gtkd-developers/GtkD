@@ -42,15 +42,15 @@ private import std.algorithm;
 
 
 /**
- * A GdkContentProvider is used to provide content for the clipboard in
- * a number of formats.
+ * A `GdkContentProvider` is used to provide content for the clipboard or
+ * for drag-and-drop operations in a number of formats.
  * 
- * To create a GdkContentProvider, use gdk_content_provider_new_for_value() or
- * gdk_content_provider_new_for_bytes().
+ * To create a `GdkContentProvider`, use [ctor@Gdk.ContentProvider.new_for_value]
+ * or [ctor@Gdk.ContentProvider.new_for_bytes].
  * 
  * GDK knows how to handle common text and image formats out-of-the-box. See
- * #GdkContentSerializer and #GdkContentDeserializer if you want to add support
- * for application-specific data formats.
+ * [class@Gdk.ContentSerializer] and [class@Gdk.ContentDeserializer] if you want
+ * to add support for application-specific data formats.
  */
 public class ContentProvider : ObjectG
 {
@@ -93,9 +93,9 @@ public class ContentProvider : ObjectG
 	 *
 	 * Params:
 	 *     mimeType = the mime type
-	 *     bytes = a #GBytes with the data for @mime_type
+	 *     bytes = a `GBytes` with the data for @mime_type
 	 *
-	 * Returns: a new #GdkContentProvider
+	 * Returns: a new `GdkContentProvider`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -115,9 +115,9 @@ public class ContentProvider : ObjectG
 	 * Create a content provider that provides the given @value.
 	 *
 	 * Params:
-	 *     value = a #GValue
+	 *     value = a `GValue`
 	 *
-	 * Returns: a new #GdkContentProvider
+	 * Returns: a new `GdkContentProvider`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -143,17 +143,17 @@ public class ContentProvider : ObjectG
 	 * This allows an easy way to support providing data in different formats.
 	 * For example, an image may be provided by its file and by the image
 	 * contents with a call such as
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * gdk_content_provider_new_union ((GdkContentProvider *[2]) {
 	 * gdk_content_provider_new_typed (G_TYPE_FILE, file),
 	 * gdk_content_provider_new_typed (G_TYPE_TEXTURE, texture)
 	 * }, 2);
-	 * ]|
+	 * ```
 	 *
 	 * Params:
 	 *     providers = The #GdkContentProviders to present the union of
 	 *
-	 * Returns: a new #GdkContentProvider
+	 * Returns: a new `GdkContentProvider`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -176,7 +176,7 @@ public class ContentProvider : ObjectG
 	}
 
 	/**
-	 * Emits the #GdkContentProvider::content-changed signal.
+	 * Emits the ::content-changed signal.
 	 */
 	public void contentChanged()
 	{
@@ -186,14 +186,14 @@ public class ContentProvider : ObjectG
 	/**
 	 * Gets the contents of @provider stored in @value.
 	 *
-	 * The @value will have been initialized to the #GType the value should be
-	 * provided in. This given #GType does not need to be listed in the formats
-	 * returned by gdk_content_provider_ref_formats(). However, if the given
-	 * #GType is not supported, this operation can fail and
+	 * The @value will have been initialized to the `GType` the value should be
+	 * provided in. This given `GType` does not need to be listed in the formats
+	 * returned by [method@Gdk.ContentProvider.ref_formats]. However, if the
+	 * given `GType` is not supported, this operation can fail and
 	 * #G_IO_ERROR_NOT_SUPPORTED will be reported.
 	 *
 	 * Params:
-	 *     value = the #GValue to fill
+	 *     value = the `GValue` to fill
 	 *
 	 * Returns: %TRUE if the value was set successfully. Otherwise
 	 *     @error will be set to describe the failure.
@@ -234,9 +234,10 @@ public class ContentProvider : ObjectG
 	/**
 	 * Gets the formats that the provider suggests other applications to store
 	 * the data in.
+	 *
 	 * An example of such an application would be a clipboard manager.
 	 *
-	 * This can be assumed to be a subset of gdk_content_provider_ref_formats().
+	 * This can be assumed to be a subset of [method@Gdk.ContentProvider.ref_formats].
 	 *
 	 * Returns: The storable formats of the provider
 	 */
@@ -254,22 +255,23 @@ public class ContentProvider : ObjectG
 
 	/**
 	 * Asynchronously writes the contents of @provider to @stream in the given
-	 * @mime_type. When the operation is finished @callback will be called. You
-	 * can then call gdk_content_provider_write_mime_type_finish() to get the
-	 * result of the operation.
+	 * @mime_type.
+	 *
+	 * When the operation is finished @callback will be called. You must then call
+	 * [method@Gdk.ContentProvider.write_mime_type_finish] to get the result
+	 * of the operation.
 	 *
 	 * The given mime type does not need to be listed in the formats returned by
-	 * gdk_content_provider_ref_formats(). However, if the given #GType is not
-	 * supported, #G_IO_ERROR_NOT_SUPPORTED will be reported.
+	 * [method@Gdk.ContentProvider.ref_formats]. However, if the given `GType` is
+	 * not supported, #G_IO_ERROR_NOT_SUPPORTED will be reported.
 	 *
 	 * The given @stream will not be closed.
 	 *
 	 * Params:
 	 *     mimeType = the mime type to provide the data in
-	 *     stream = the #GOutputStream to write to
-	 *     ioPriority = the [I/O priority][io-priority]
-	 *         of the request.
-	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *     stream = the `GOutputStream` to write to
+	 *     ioPriority = I/O priority of the request.
+	 *     cancellable = optional `GCancellable` object, %NULL to ignore.
 	 *     callback = callback to call when the request is satisfied
 	 *     userData = the data to pass to callback function
 	 */
@@ -279,11 +281,12 @@ public class ContentProvider : ObjectG
 	}
 
 	/**
-	 * Finishes an asynchronous write operation started with
-	 * gdk_content_provider_write_mime_type_async().
+	 * Finishes an asynchronous write operation.
+	 *
+	 * See [method@Gdk.ContentProvider.write_mime_type_async].
 	 *
 	 * Params:
-	 *     result = a #GAsyncResult
+	 *     result = a `GAsyncResult`
 	 *
 	 * Returns: %TRUE if the operation was completed successfully. Otherwise
 	 *     @error will be set to describe the failure.

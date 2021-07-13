@@ -36,7 +36,7 @@ private import std.algorithm;
 
 
 /**
- * The #GdkSeat object represents a collection of input devices
+ * The `GdkSeat` object represents a collection of input devices
  * that belong to a user.
  */
 public class Seat : ObjectG
@@ -75,7 +75,7 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * Returns the capabilities this #GdkSeat currently has.
+	 * Returns the capabilities this `GdkSeat` currently has.
 	 *
 	 * Returns: the seat capabilities
 	 */
@@ -90,9 +90,9 @@ public class Seat : ObjectG
 	 * Params:
 	 *     capabilities = capabilities to get devices for
 	 *
-	 * Returns: A list of #GdkDevices.
-	 *     The list must be freed with g_list_free(), the elements are owned
-	 *     by GTK and must not be freed.
+	 * Returns: A list
+	 *     of `GdkDevices`. The list must be freed with g_list_free(),
+	 *     the elements are owned by GTK and must not be freed.
 	 */
 	public ListG getDevices(GdkSeatCapabilities capabilities)
 	{
@@ -107,10 +107,10 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * Returns the #GdkDisplay this seat belongs to.
+	 * Returns the `GdkDisplay` this seat belongs to.
 	 *
-	 * Returns: a #GdkDisplay. This object is owned by GTK
-	 *     and must not be freed.
+	 * Returns: a `GdkDisplay`. This object
+	 *     is owned by GTK and must not be freed.
 	 */
 	public Display getDisplay()
 	{
@@ -127,7 +127,7 @@ public class Seat : ObjectG
 	/**
 	 * Returns the device that routes keyboard events.
 	 *
-	 * Returns: a #GdkDevice with keyboard
+	 * Returns: a `GdkDevice` with keyboard
 	 *     capabilities. This object is owned by GTK and must not be freed.
 	 */
 	public Device getKeyboard()
@@ -145,7 +145,7 @@ public class Seat : ObjectG
 	/**
 	 * Returns the device that routes pointer events.
 	 *
-	 * Returns: a #GdkDevice with pointer
+	 * Returns: a `GdkDevice` with pointer
 	 *     capabilities. This object is owned by GTK and must not be freed.
 	 */
 	public Device getPointer()
@@ -161,8 +161,7 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * Returns all #GdkDeviceTools that are known to the
-	 * application.
+	 * Returns all `GdkDeviceTools` that are known to the application.
 	 *
 	 * Returns: A list of tools. Free with g_list_free().
 	 */
@@ -179,11 +178,10 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * The ::device-added signal is emitted when a new input
-	 * device is related to this seat.
+	 * Emitted when a new input device is related to this seat.
 	 *
 	 * Params:
-	 *     device = the newly added #GdkDevice.
+	 *     device = the newly added `GdkDevice`.
 	 */
 	gulong addOnDeviceAdded(void delegate(Device, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -191,11 +189,10 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * The ::device-removed signal is emitted when an
-	 * input device is removed (e.g. unplugged).
+	 * Emitted when an input device is removed (e.g. unplugged).
 	 *
 	 * Params:
-	 *     device = the just removed #GdkDevice.
+	 *     device = the just removed `GdkDevice`.
 	 */
 	gulong addOnDeviceRemoved(void delegate(Device, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -203,15 +200,16 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * The ::tool-added signal is emitted whenever a new tool
-	 * is made known to the seat. The tool may later be assigned
-	 * to a device (i.e. on proximity with a tablet). The device
-	 * will emit the #GdkDevice::tool-changed signal accordingly.
+	 * Emitted whenever a new tool is made known to the seat.
+	 *
+	 * The tool may later be assigned to a device (i.e. on
+	 * proximity with a tablet). The device will emit the
+	 * [signalGdkDevice::tool-changed] signal accordingly.
 	 *
 	 * A same tool may be used by several devices.
 	 *
 	 * Params:
-	 *     tool = the new #GdkDeviceTool known to the seat
+	 *     tool = the new `GdkDeviceTool` known to the seat
 	 */
 	gulong addOnToolAdded(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -219,11 +217,10 @@ public class Seat : ObjectG
 	}
 
 	/**
-	 * This signal is emitted whenever a tool is no longer known
-	 * to this @seat.
+	 * Emitted whenever a tool is no longer known to this @seat.
 	 *
 	 * Params:
-	 *     tool = the just removed #GdkDeviceTool
+	 *     tool = the just removed `GdkDeviceTool`
 	 */
 	gulong addOnToolRemoved(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

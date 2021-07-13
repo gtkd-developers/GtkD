@@ -27,6 +27,7 @@ module gtk.Assistant;
 private import gio.ListModelIF;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AssistantPage;
@@ -38,39 +39,41 @@ private import std.algorithm;
 
 
 /**
- * A #GtkAssistant is a widget used to represent a generally complex
- * operation split up into several steps. Each step consists of one or more
- * pages. GtkAssistant guides the user through the pages, and controls
- * the page flow to collect the data needed for the operation.
+ * `GtkAssistant` is used to represent a complex as a series of steps.
  * 
- * GtkAssistant handles which buttons to show and to make sensitive based
- * on page sequence knowledge and the [type][GtkAssistantPageType]
- * of each page in addition to state information like the
- * [completion][gtk-assistant-set-page-complete]
- * and [committed][gtk-assistant-commit] page statuses.
+ * ![An example GtkAssistant](assistant.png)
  * 
- * If you have a case that doesn’t quite fit in #GtkAssistants way of
- * handling buttons, you can use the #GTK_ASSISTANT_PAGE_CUSTOM page
+ * Each step consists of one or more pages. `GtkAssistant` guides the user
+ * through the pages, and controls the page flow to collect the data needed
+ * for the operation.
+ * 
+ * `GtkAssistant` handles which buttons to show and to make sensitive based
+ * on page sequence knowledge and the [enum@Gtk.AssistantPageType] of each
+ * page in addition to state information like the *completed* and *committed*
+ * page statuses.
+ * 
+ * If you have a case that doesn’t quite fit in `GtkAssistant`s way of
+ * handling buttons, you can use the %GTK_ASSISTANT_PAGE_CUSTOM page
  * type and handle buttons yourself.
  * 
- * GtkAssistant maintains a #GtkAssistantPage object for each added
+ * `GtkAssistant` maintains a `GtkAssistantPage` object for each added
  * child, which holds additional per-child properties. You
- * obtain the #GtkAssistantPage for a child with gtk_assistant_get_page().
+ * obtain the `GtkAssistantPage` for a child with [method@Gtk.Assistant.get_page].
  * 
  * # GtkAssistant as GtkBuildable
  * 
- * The GtkAssistant implementation of the #GtkBuildable interface
+ * The `GtkAssistant` implementation of the `GtkBuildable` interface
  * exposes the @action_area as internal children with the name
  * “action_area”.
  * 
- * To add pages to an assistant in #GtkBuilder, simply add it as a
- * child to the GtkAssistant object. If you need to set per-object
- * properties, create a #GtkAssistantPage object explicitly, and
+ * To add pages to an assistant in `GtkBuilder`, simply add it as a
+ * child to the `GtkAssistant` object. If you need to set per-object
+ * properties, create a `GtkAssistantPage` object explicitly, and
  * set the child widget as a property on it.
  * 
  * # CSS nodes
  * 
- * GtkAssistant has a single CSS node with the name window and style
+ * `GtkAssistant` has a single CSS node with the name window and style
  * class .assistant.
  */
 public class Assistant : Window
@@ -109,9 +112,9 @@ public class Assistant : Window
 	}
 
 	/**
-	 * Creates a new #GtkAssistant.
+	 * Creates a new `GtkAssistant`.
 	 *
-	 * Returns: a newly created #GtkAssistant
+	 * Returns: a newly created `GtkAssistant`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -128,10 +131,10 @@ public class Assistant : Window
 	}
 
 	/**
-	 * Adds a widget to the action area of a #GtkAssistant.
+	 * Adds a widget to the action area of a `GtkAssistant`.
 	 *
 	 * Params:
-	 *     child = a #GtkWidget
+	 *     child = a `GtkWidget`
 	 */
 	public void addActionWidget(Widget child)
 	{
@@ -142,7 +145,7 @@ public class Assistant : Window
 	 * Appends a page to the @assistant.
 	 *
 	 * Params:
-	 *     page = a #GtkWidget
+	 *     page = a `GtkWidget`
 	 *
 	 * Returns: the index (starting at 0) of the inserted page
 	 */
@@ -152,9 +155,10 @@ public class Assistant : Window
 	}
 
 	/**
-	 * Erases the visited page history so the back button is not
-	 * shown on the current page, and removes the cancel button
-	 * from subsequent pages.
+	 * Erases the visited page history.
+	 *
+	 * GTK will then hide the back button on the current page,
+	 * and removes the cancel button from subsequent pages.
 	 *
 	 * Use this when the information provided up to the current
 	 * page is hereafter deemed permanent and cannot be modified
@@ -212,12 +216,12 @@ public class Assistant : Window
 	}
 
 	/**
-	 * Returns the #GtkAssistantPage object for @child.
+	 * Returns the `GtkAssistantPage` object for @child.
 	 *
 	 * Params:
 	 *     child = a child of @assistant
 	 *
-	 * Returns: the #GtkAssistantPage for @child
+	 * Returns: the `GtkAssistantPage` for @child
 	 */
 	public AssistantPage getPage(Widget child)
 	{
@@ -291,7 +295,7 @@ public class Assistant : Window
 	 * Inserts a page in the @assistant at a given position.
 	 *
 	 * Params:
-	 *     page = a #GtkWidget
+	 *     page = a `GtkWidget`
 	 *     position = the index (starting at 0) at which to insert the page,
 	 *         or -1 to append the page to the @assistant
 	 *
@@ -309,7 +313,7 @@ public class Assistant : Window
 	 * there is no next page.
 	 *
 	 * This function is for use when creating pages of the
-	 * #GTK_ASSISTANT_PAGE_CUSTOM type.
+	 * %GTK_ASSISTANT_PAGE_CUSTOM type.
 	 */
 	public void nextPage()
 	{
@@ -320,7 +324,7 @@ public class Assistant : Window
 	 * Prepends a page to the @assistant.
 	 *
 	 * Params:
-	 *     page = a #GtkWidget
+	 *     page = a `GtkWidget`
 	 *
 	 * Returns: the index (starting at 0) of the inserted page
 	 */
@@ -336,7 +340,7 @@ public class Assistant : Window
 	 * no previous page is available.
 	 *
 	 * This function is for use when creating pages of the
-	 * #GTK_ASSISTANT_PAGE_CUSTOM type.
+	 * %GTK_ASSISTANT_PAGE_CUSTOM type.
 	 */
 	public void previousPage()
 	{
@@ -344,10 +348,10 @@ public class Assistant : Window
 	}
 
 	/**
-	 * Removes a widget from the action area of a #GtkAssistant.
+	 * Removes a widget from the action area of a `GtkAssistant`.
 	 *
 	 * Params:
-	 *     child = a #GtkWidget
+	 *     child = a `GtkWidget`
 	 */
 	public void removeActionWidget(Widget child)
 	{
@@ -394,7 +398,7 @@ public class Assistant : Window
 	 * next visible page.
 	 *
 	 * Params:
-	 *     pageFunc = the #GtkAssistantPageFunc, or %NULL
+	 *     pageFunc = the `GtkAssistant`PageFunc, or %NULL
 	 *         to use the default one
 	 *     data = user data for @page_func
 	 *     destroy = destroy notifier for @data
@@ -465,17 +469,17 @@ public class Assistant : Window
 	}
 
 	/**
-	 * The ::apply signal is emitted when the apply button is clicked.
+	 * Emitted when the apply button is clicked.
 	 *
-	 * The default behavior of the #GtkAssistant is to switch to the page
+	 * The default behavior of the `GtkAssistant` is to switch to the page
 	 * after the current page, unless the current page is the last one.
 	 *
 	 * A handler for the ::apply signal should carry out the actions for
 	 * which the wizard has collected data. If the action takes a long time
 	 * to complete, you might consider putting a page of type
 	 * %GTK_ASSISTANT_PAGE_PROGRESS after the confirmation page and handle
-	 * this operation within the #GtkAssistant::prepare signal of the progress
-	 * page.
+	 * this operation within the [signal@Gtk.Assistant::prepare] signal of
+	 * the progress page.
 	 */
 	gulong addOnApply(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -483,7 +487,7 @@ public class Assistant : Window
 	}
 
 	/**
-	 * The ::cancel signal is emitted when then the cancel button is clicked.
+	 * Emitted when then the cancel button is clicked.
 	 */
 	gulong addOnCancel(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -491,9 +495,9 @@ public class Assistant : Window
 	}
 
 	/**
-	 * The ::close signal is emitted either when the close button of
-	 * a summary page is clicked, or when the apply button in the last
-	 * page in the flow (of type %GTK_ASSISTANT_PAGE_CONFIRM) is clicked.
+	 * Emitted either when the close button of a summary page is clicked,
+	 * or when the apply button in the last page in the flow (of type
+	 * %GTK_ASSISTANT_PAGE_CONFIRM) is clicked.
 	 */
 	gulong addOnClose(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -509,8 +513,8 @@ public class Assistant : Window
 	}
 
 	/**
-	 * The ::prepare signal is emitted when a new page is set as the
-	 * assistant's current page, before making the new page visible.
+	 * Emitted when a new page is set as the assistant's current page,
+	 * before making the new page visible.
 	 *
 	 * A handler for this signal can do any preparations which are
 	 * necessary before showing @page.

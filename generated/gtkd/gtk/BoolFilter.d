@@ -33,7 +33,7 @@ public  import gtk.c.types;
 
 
 /**
- * GtkBoolFilter is a simple filter that takes a boolean #GtkExpression
+ * `GtkBoolFilter` evaluates a boolean `GtkExpression`
  * to determine whether to include items.
  */
 public class BoolFilter : Filter
@@ -78,7 +78,7 @@ public class BoolFilter : Filter
 	 *     expression = The expression to evaluate
 	 *         or %NULL for none
 	 *
-	 * Returns: a new #GtkBoolFilter
+	 * Returns: a new `GtkBoolFilter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -98,7 +98,7 @@ public class BoolFilter : Filter
 	 * Gets the expression that the filter uses to evaluate if
 	 * an item should be filtered.
 	 *
-	 * Returns: a #GtkExpression
+	 * Returns: a `GtkExpression`
 	 */
 	public Expression getExpression()
 	{
@@ -123,12 +123,13 @@ public class BoolFilter : Filter
 	}
 
 	/**
-	 * Sets the expression that the filter uses to
-	 * check if items should be filtered. The expression must have
-	 * a value type of #G_TYPE_BOOLEAN.
+	 * Sets the expression that the filter uses to check if items
+	 * should be filtered.
+	 *
+	 * The expression must have a value type of %G_TYPE_BOOLEAN.
 	 *
 	 * Params:
-	 *     expression = a #GtkExpression
+	 *     expression = a `GtkExpression`
 	 */
 	public void setExpression(Expression expression)
 	{

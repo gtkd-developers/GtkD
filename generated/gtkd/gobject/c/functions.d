@@ -40,6 +40,8 @@ shared static this()
 	// gobject.Binding
 
 	Linker.link(g_binding_get_type, "g_binding_get_type", LIBRARY_GOBJECT);
+	Linker.link(g_binding_dup_source, "g_binding_dup_source", LIBRARY_GOBJECT);
+	Linker.link(g_binding_dup_target, "g_binding_dup_target", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_flags, "g_binding_get_flags", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_source, "g_binding_get_source", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_source_property, "g_binding_get_source_property", LIBRARY_GOBJECT);
@@ -239,6 +241,7 @@ shared static this()
 	Linker.link(g_type_interface_peek_parent, "g_type_interface_peek_parent", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_add_prerequisite, "g_type_interface_add_prerequisite", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_get_plugin, "g_type_interface_get_plugin", LIBRARY_GOBJECT);
+	Linker.link(g_type_interface_instantiatable_prerequisite, "g_type_interface_instantiatable_prerequisite", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_peek, "g_type_interface_peek", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_prerequisites, "g_type_interface_prerequisites", LIBRARY_GOBJECT);
 
@@ -513,6 +516,8 @@ __gshared extern(C)
 	// gobject.Binding
 
 	GType function() c_g_binding_get_type;
+	GObject* function(GBinding* binding) c_g_binding_dup_source;
+	GObject* function(GBinding* binding) c_g_binding_dup_target;
 	GBindingFlags function(GBinding* binding) c_g_binding_get_flags;
 	GObject* function(GBinding* binding) c_g_binding_get_source;
 	const(char)* function(GBinding* binding) c_g_binding_get_source_property;
@@ -712,6 +717,7 @@ __gshared extern(C)
 	void* function(void* gIface) c_g_type_interface_peek_parent;
 	void function(GType interfaceType, GType prerequisiteType) c_g_type_interface_add_prerequisite;
 	GTypePlugin* function(GType instanceType, GType interfaceType) c_g_type_interface_get_plugin;
+	GType function(GType interfaceType) c_g_type_interface_instantiatable_prerequisite;
 	void* function(void* instanceClass, GType ifaceType) c_g_type_interface_peek;
 	GType* function(GType interfaceType, uint* nPrerequisites) c_g_type_interface_prerequisites;
 
@@ -984,6 +990,8 @@ __gshared extern(C)
 // gobject.Binding
 
 alias c_g_binding_get_type g_binding_get_type;
+alias c_g_binding_dup_source g_binding_dup_source;
+alias c_g_binding_dup_target g_binding_dup_target;
 alias c_g_binding_get_flags g_binding_get_flags;
 alias c_g_binding_get_source g_binding_get_source;
 alias c_g_binding_get_source_property g_binding_get_source_property;
@@ -1183,6 +1191,7 @@ alias c_g_type_instance_get_private g_type_instance_get_private;
 alias c_g_type_interface_peek_parent g_type_interface_peek_parent;
 alias c_g_type_interface_add_prerequisite g_type_interface_add_prerequisite;
 alias c_g_type_interface_get_plugin g_type_interface_get_plugin;
+alias c_g_type_interface_instantiatable_prerequisite g_type_interface_instantiatable_prerequisite;
 alias c_g_type_interface_peek g_type_interface_peek;
 alias c_g_type_interface_prerequisites g_type_interface_prerequisites;
 

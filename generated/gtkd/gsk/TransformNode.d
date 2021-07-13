@@ -33,7 +33,7 @@ public  import gsk.c.types;
 
 
 /**
- * A render node applying a #GskTransform to its single child node.
+ * A render node applying a `GskTransform` to its single child node.
  */
 public class TransformNode : RenderNode
 {
@@ -71,14 +71,14 @@ public class TransformNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will transform the given @child
+	 * Creates a `GskRenderNode` that will transform the given @child
 	 * with the given @transform.
 	 *
 	 * Params:
 	 *     child = The node to transform
 	 *     transform = The transform to apply
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -112,9 +112,9 @@ public class TransformNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the #GskTransform used by the @node.
+	 * Retrieves the `GskTransform` used by the @node.
 	 *
-	 * Returns: a #GskTransform
+	 * Returns: a `GskTransform`
 	 */
 	public Transform getTransform()
 	{

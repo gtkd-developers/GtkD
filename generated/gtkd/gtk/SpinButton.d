@@ -41,25 +41,29 @@ private import std.algorithm;
 
 
 /**
- * A #GtkSpinButton is an ideal way to allow the user to set the value of
- * some attribute. Rather than having to directly type a number into a
- * #GtkEntry, GtkSpinButton allows the user to click on one of two arrows
+ * A `GtkSpinButton` is an ideal way to allow the user to set the
+ * value of some attribute.
+ * 
+ * ![An example GtkSpinButton](spinbutton.png)
+ * 
+ * Rather than having to directly type a number into a `GtkEntry`,
+ * `GtkSpinButton` allows the user to click on one of two arrows
  * to increment or decrement the displayed value. A value can still be
  * typed in, with the bonus that it can be checked to ensure it is in a
  * given range.
  * 
- * The main properties of a GtkSpinButton are through an adjustment.
- * See the #GtkAdjustment section for more details about an adjustment's
- * properties.
+ * The main properties of a `GtkSpinButton` are through an adjustment.
+ * See the [class@Gtk.Adjustment] documentation for more details about
+ * an adjustment's properties.
  * 
- * Note that GtkSpinButton will by default make its entry large enough to
- * accommodate the lower and upper bounds of the adjustment. If this is
- * not desired, the automatic sizing can be turned off by explicitly
- * setting #GtkEditable::width-chars to a value != -1.
+ * Note that `GtkSpinButton` will by default make its entry large enough
+ * to accommodate the lower and upper bounds of the adjustment. If this
+ * is not desired, the automatic sizing can be turned off by explicitly
+ * setting [property@Gtk.Editable:width-chars] to a value != -1.
  * 
  * ## Using a GtkSpinButton to get an integer
  * 
- * |[<!-- language="C" -->
+ * ```c
  * // Provides a function to retrieve an integer value from a GtkSpinButton
  * // and creates a spin button to model percentage values.
  * 
@@ -87,11 +91,11 @@ private import std.algorithm;
  * 
  * gtk_widget_show (window);
  * }
- * ]|
+ * ```
  * 
  * ## Using a GtkSpinButton to get a floating point value
  * 
- * |[<!-- language="C" -->
+ * ```c
  * // Provides a function to retrieve a floating point value from a
  * // GtkSpinButton, and creates a high precision spin button.
  * 
@@ -118,37 +122,37 @@ private import std.algorithm;
  * 
  * gtk_widget_show (window);
  * }
- * ]|
+ * ```
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * spinbutton.horizontal
  * ├── text
  * │    ├── undershoot.left
  * │    ╰── undershoot.right
  * ├── button.down
  * ╰── button.up
- * ]|
+ * ```
  * 
- * |[<!-- language="plain" -->
+ * ```
  * spinbutton.vertical
  * ├── button.up
  * ├── text
  * │    ├── undershoot.left
  * │    ╰── undershoot.right
  * ╰── button.down
- * ]|
+ * ```
  * 
- * GtkSpinButtons main CSS node has the name spinbutton. It creates subnodes
+ * `GtkSpinButton`s main CSS node has the name spinbutton. It creates subnodes
  * for the entry and the two buttons, with these names. The button nodes have
- * the style classes .up and .down. The GtkText subnodes (if present) are put
+ * the style classes .up and .down. The `GtkText` subnodes (if present) are put
  * below the text node. The orientation of the spin button is reflected in
  * the .vertical or .horizontal style class on the main node.
  * 
  * # Accessiblity
  * 
- * GtkSpinButton uses the #GTK_ACCESSIBLE_ROLE_SPIN_BUTTON role.
+ * `GtkSpinButton` uses the %GTK_ACCESSIBLE_ROLE_SPIN_BUTTON role.
  */
 public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 {
@@ -195,16 +199,16 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Creates a new #GtkSpinButton.
+	 * Creates a new `GtkSpinButton`.
 	 *
 	 * Params:
-	 *     adjustment = the #GtkAdjustment object that this spin
+	 *     adjustment = the `GtkAdjustment` that this spin
 	 *         button should use, or %NULL
 	 *     climbRate = specifies by how much the rate of change in the value will
 	 *         accelerate if you continue to hold down an up/down button or arrow key
 	 *     digits = the number of decimal places to display
 	 *
-	 * Returns: The new spin button as a #GtkWidget
+	 * Returns: The new `GtkSpinButton`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -221,22 +225,26 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * This is a convenience constructor that allows creation of a numeric
-	 * #GtkSpinButton without manually creating an adjustment. The value is
-	 * initially set to the minimum value and a page increment of 10 * @step
-	 * is the default. The precision of the spin button is equivalent to the
+	 * Creates a new `GtkSpinButton` with the given properties.
+	 *
+	 * This is a convenience constructor that allows creation
+	 * of a numeric `GtkSpinButton` without manually creating
+	 * an adjustment. The value is initially set to the minimum
+	 * value and a page increment of 10 * @step is the default.
+	 * The precision of the spin button is equivalent to the
 	 * precision of @step.
 	 *
-	 * Note that the way in which the precision is derived works best if @step
-	 * is a power of ten. If the resulting precision is not suitable for your
-	 * needs, use gtk_spin_button_set_digits() to correct it.
+	 * Note that the way in which the precision is derived works
+	 * best if @step is a power of ten. If the resulting precision
+	 * is not suitable for your needs, use
+	 * [method@Gtk.SpinButton.set_digits] to correct it.
 	 *
 	 * Params:
 	 *     min = Minimum allowable value
 	 *     max = Maximum allowable value
 	 *     step = Increment added or subtracted by spinning the widget
 	 *
-	 * Returns: The new spin button as a #GtkWidget
+	 * Returns: The new `GtkSpinButton`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -253,11 +261,13 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Changes the properties of an existing spin button. The adjustment,
-	 * climb rate, and number of decimal places are updated accordingly.
+	 * Changes the properties of an existing spin button.
+	 *
+	 * The adjustment, climb rate, and number of decimal places
+	 * are updated accordingly.
 	 *
 	 * Params:
-	 *     adjustment = a #GtkAdjustment to replace the spin button’s
+	 *     adjustment = a `GtkAdjustment` to replace the spin button’s
 	 *         existing adjustment, or %NULL to leave its current adjustment unchanged
 	 *     climbRate = the new climb rate
 	 *     digits = the number of decimal places to display in the spin button
@@ -268,9 +278,9 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Get the adjustment associated with a #GtkSpinButton
+	 * Get the adjustment associated with a `GtkSpinButton`.
 	 *
-	 * Returns: the #GtkAdjustment of @spin_button
+	 * Returns: the `GtkAdjustment` of @spin_button
 	 */
 	public Adjustment getAdjustment()
 	{
@@ -295,7 +305,7 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Fetches the precision of @spin_button. See gtk_spin_button_set_digits().
+	 * Fetches the precision of @spin_button.
 	 *
 	 * Returns: the current precision
 	 */
@@ -305,8 +315,10 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Gets the current step and page the increments used by @spin_button. See
-	 * gtk_spin_button_set_increments().
+	 * Gets the current step and page the increments
+	 * used by @spin_button.
+	 *
+	 * See [method@Gtk.SpinButton.set_increments].
 	 *
 	 * Params:
 	 *     step = location to store step increment, or %NULL
@@ -319,7 +331,6 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 
 	/**
 	 * Returns whether non-numeric text can be typed into the spin button.
-	 * See gtk_spin_button_set_numeric().
 	 *
 	 * Returns: %TRUE if only numeric text can be entered
 	 */
@@ -330,7 +341,8 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 
 	/**
 	 * Gets the range allowed for @spin_button.
-	 * See gtk_spin_button_set_range().
+	 *
+	 * See [method@Gtk.SpinButton.set_range].
 	 *
 	 * Params:
 	 *     min = location to store minimum allowed value, or %NULL
@@ -343,7 +355,6 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 
 	/**
 	 * Returns whether the values are corrected to the nearest step.
-	 * See gtk_spin_button_set_snap_to_ticks().
 	 *
 	 * Returns: %TRUE if values are snapped to the nearest step
 	 */
@@ -354,7 +365,8 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 
 	/**
 	 * Gets the update behavior of a spin button.
-	 * See gtk_spin_button_set_update_policy().
+	 *
+	 * See [method@Gtk.SpinButton.set_update_policy].
 	 *
 	 * Returns: the current update policy
 	 */
@@ -386,7 +398,7 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	/**
 	 * Returns whether the spin button’s value wraps around to the
 	 * opposite limit when the upper or lower limit of the range is
-	 * exceeded. See gtk_spin_button_set_wrap().
+	 * exceeded.
 	 *
 	 * Returns: %TRUE if the spin button wraps around
 	 */
@@ -396,10 +408,10 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Replaces the #GtkAdjustment associated with @spin_button.
+	 * Replaces the `GtkAdjustment` associated with @spin_button.
 	 *
 	 * Params:
-	 *     adjustment = a #GtkAdjustment to replace the existing adjustment
+	 *     adjustment = a `GtkAdjustment` to replace the existing adjustment
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -419,11 +431,13 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Set the precision to be displayed by @spin_button. Up to 20 digit precision
-	 * is allowed.
+	 * Set the precision to be displayed by @spin_button.
+	 *
+	 * Up to 20 digit precision is allowed.
 	 *
 	 * Params:
-	 *     digits = the number of digits after the decimal point to be displayed for the spin button’s value
+	 *     digits = the number of digits after the decimal point to be
+	 *         displayed for the spin button’s value
 	 */
 	public void setDigits(uint digits)
 	{
@@ -431,8 +445,10 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * Sets the step and page increments for spin_button.  This affects how
-	 * quickly the value changes when the spin button’s arrows are activated.
+	 * Sets the step and page increments for spin_button.
+	 *
+	 * This affects how quickly the value changes when
+	 * the spin button’s arrows are activated.
 	 *
 	 * Params:
 	 *     step = increment applied for a button 1 press.
@@ -485,11 +501,12 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 
 	/**
 	 * Sets the update behavior of a spin button.
-	 * This determines whether the spin button is always updated
-	 * or only when a valid value is set.
+	 *
+	 * This determines whether the spin button is always
+	 * updated or only when a valid value is set.
 	 *
 	 * Params:
-	 *     policy = a #GtkSpinButtonUpdatePolicy value
+	 *     policy = a `GtkSpinButtonUpdatePolicy` value
 	 */
 	public void setUpdatePolicy(GtkSpinButtonUpdatePolicy policy)
 	{
@@ -525,7 +542,7 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	 * direction by a specified amount.
 	 *
 	 * Params:
-	 *     direction = a #GtkSpinType indicating the direction to spin
+	 *     direction = a `GtkSpinType` indicating the direction to spin
 	 *     increment = step increment to apply in the specified direction
 	 */
 	public void spin(GtkSpinType direction, double increment)
@@ -542,14 +559,15 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * The ::change-value signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates a value change.
+	 * Emitted when the user initiates a value change.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * Applications should not connect to it, but may emit it with
 	 * g_signal_emit_by_name() if they need to control the cursor
 	 * programmatically.
 	 *
-	 * The default bindings for this signal are Up/Down and PageUp and/PageDown.
+	 * The default bindings for this signal are Up/Down and PageUp/PageDown.
 	 *
 	 * Params:
 	 *     scroll = a #GtkScrollType to specify the speed and amount of change
@@ -560,10 +578,11 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * The ::input signal can be used to influence the conversion of
-	 * the users input into a double value. The signal handler is
-	 * expected to use gtk_editable_get_text() to retrieve the text of
-	 * the spinbutton and set @new_value to the new value.
+	 * Emitted to convert the users input into a double value.
+	 *
+	 * The signal handler is expected to use [method@Gtk.Editable.get_text]
+	 * to retrieve the text of the spinbutton and set @new_value to the
+	 * new value.
 	 *
 	 * The default conversion uses g_strtod().
 	 *
@@ -579,9 +598,9 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * The ::output signal can be used to change to formatting
-	 * of the value that is displayed in the spin buttons entry.
-	 * |[<!-- language="C" -->
+	 * Emitted to tweak the formatting of the value for display.
+	 *
+	 * ```c
 	 * // show leading zeros
 	 * static gboolean
 	 * on_output (GtkSpinButton *spin,
@@ -599,7 +618,7 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	 *
 	 * return TRUE;
 	 * }
-	 * ]|
+	 * ```
 	 *
 	 * Returns: %TRUE if the value has been displayed
 	 */
@@ -609,8 +628,9 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * The ::value-changed signal is emitted when the value represented by
-	 * @spinbutton changes. Also see the #GtkSpinButton::output signal.
+	 * Emitted when the value is changed.
+	 *
+	 * Also see the [signal@Gtk.SpinButton::output] signal.
 	 */
 	gulong addOnValueChanged(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -618,8 +638,8 @@ public class SpinButton : Widget, CellEditableIF, EditableIF, OrientableIF
 	}
 
 	/**
-	 * The ::wrapped signal is emitted right after the spinbutton wraps
-	 * from its maximum to minimum value or vice-versa.
+	 * Emitted right after the spinbutton wraps from its maximum
+	 * to its minimum value or vice-versa.
 	 */
 	gulong addOnWrapped(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

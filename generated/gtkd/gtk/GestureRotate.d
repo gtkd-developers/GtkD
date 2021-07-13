@@ -34,9 +34,10 @@ private import std.algorithm;
 
 
 /**
- * #GtkGestureRotate is a #GtkGesture implementation able to recognize
- * 2-finger rotations, whenever the angle between both handled sequences
- * changes, the #GtkGestureRotate::angle-changed signal is emitted.
+ * `GtkGestureRotate` is a `GtkGesture` for 2-finger rotations.
+ * 
+ * Whenever the angle between both handled sequences changes, the
+ * [signal@Gtk.GestureRotate::angle-changed] signal is emitted.
  */
 public class GestureRotate : Gesture
 {
@@ -74,10 +75,10 @@ public class GestureRotate : Gesture
 	}
 
 	/**
-	 * Returns a newly created #GtkGesture that recognizes 2-touch
+	 * Returns a newly created `GtkGesture` that recognizes 2-touch
 	 * rotation gestures.
 	 *
-	 * Returns: a newly created #GtkGestureRotate
+	 * Returns: a newly created `GtkGestureRotate`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -94,6 +95,8 @@ public class GestureRotate : Gesture
 	}
 
 	/**
+	 * Gets the angle delta in radians.
+	 *
 	 * If @gesture is active, this function returns the angle difference
 	 * in radians since the gesture was first recognized. If @gesture is
 	 * not active, 0 is returned.
@@ -106,8 +109,7 @@ public class GestureRotate : Gesture
 	}
 
 	/**
-	 * This signal is emitted when the angle between both tracked points
-	 * changes.
+	 * Emitted when the angle between both tracked points changes.
 	 *
 	 * Params:
 	 *     angle = Current angle in radians

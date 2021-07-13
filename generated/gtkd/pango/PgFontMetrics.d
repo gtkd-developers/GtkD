@@ -31,11 +31,13 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoFontMetrics structure holds the overall metric information
- * for a font (possibly restricted to a script). The fields of this
- * structure are private to implementations of a font backend. See
- * the documentation of the corresponding getters for documentation
- * of their meaning.
+ * A `PangoFontMetrics` structure holds the overall metric information
+ * for a font.
+ * 
+ * The information in a `PangoFontMetrics` structure may be restricted
+ * to a script. The fields of this structure are private to implementations
+ * of a font backend. See the documentation of the corresponding getters
+ * for documentation of their meaning.
  */
 public class PgFontMetrics
 {
@@ -81,6 +83,7 @@ public class PgFontMetrics
 
 	/**
 	 * Gets the approximate character width for a font metrics structure.
+	 *
 	 * This is merely a representative value useful, for example, for
 	 * determining the initial size for a window. Actual characters in
 	 * text will be wider and narrower than this.
@@ -94,6 +97,7 @@ public class PgFontMetrics
 
 	/**
 	 * Gets the approximate digit width for a font metrics structure.
+	 *
 	 * This is merely a representative value useful, for example, for
 	 * determining the initial size for a window. Actual digits in
 	 * text can be wider or narrower than this, though this value
@@ -108,11 +112,12 @@ public class PgFontMetrics
 	}
 
 	/**
-	 * Gets the ascent from a font metrics structure. The ascent is
-	 * the distance from the baseline to the logical top of a line
-	 * of text. (The logical top may be above or below the top of the
-	 * actual drawn ink. It is necessary to lay out the text to figure
-	 * where the ink will be.)
+	 * Gets the ascent from a font metrics structure.
+	 *
+	 * The ascent is the distance from the baseline to the logical top
+	 * of a line of text. (The logical top may be above or below the top
+	 * of the actual drawn ink. It is necessary to lay out the text to
+	 * figure where the ink will be.)
 	 *
 	 * Returns: the ascent, in Pango units.
 	 */
@@ -122,11 +127,12 @@ public class PgFontMetrics
 	}
 
 	/**
-	 * Gets the descent from a font metrics structure. The descent is
-	 * the distance from the baseline to the logical bottom of a line
-	 * of text. (The logical bottom may be above or below the bottom of the
-	 * actual drawn ink. It is necessary to lay out the text to figure
-	 * where the ink will be.)
+	 * Gets the descent from a font metrics structure.
+	 *
+	 * The descent is the distance from the baseline to the logical bottom
+	 * of a line of text. (The logical bottom may be above or below the
+	 * bottom of the actual drawn ink. It is necessary to lay out the text
+	 * to figure where the ink will be.)
 	 *
 	 * Returns: the descent, in Pango units.
 	 */
@@ -136,8 +142,9 @@ public class PgFontMetrics
 	}
 
 	/**
-	 * Gets the line height from a font metrics structure. The
-	 * line height is the distance between successive baselines
+	 * Gets the line height from a font metrics structure.
+	 *
+	 * The line height is the distance between successive baselines
 	 * in wrapped text.
 	 *
 	 * If the line height is not available, 0 is returned.
@@ -153,7 +160,8 @@ public class PgFontMetrics
 
 	/**
 	 * Gets the suggested position to draw the strikethrough.
-	 * The value returned is the distance <emphasis>above</emphasis> the
+	 *
+	 * The value returned is the distance *above* the
 	 * baseline of the top of the strikethrough.
 	 *
 	 * Returns: the suggested strikethrough position, in Pango units.
@@ -179,10 +187,10 @@ public class PgFontMetrics
 
 	/**
 	 * Gets the suggested position to draw the underline.
-	 * The value returned is the distance <emphasis>above</emphasis> the
-	 * baseline of the top of the underline. Since most fonts have
-	 * underline positions beneath the baseline, this value is typically
-	 * negative.
+	 *
+	 * The value returned is the distance *above* the baseline of the top
+	 * of the underline. Since most fonts have underline positions beneath
+	 * the baseline, this value is typically negative.
 	 *
 	 * Returns: the suggested underline position, in Pango units.
 	 *
@@ -224,9 +232,8 @@ public class PgFontMetrics
 	}
 
 	/**
-	 * Decrease the reference count of a font metrics structure by one. If
-	 * the result is zero, frees the structure and any associated
-	 * memory.
+	 * Decrease the reference count of a font metrics structure by one.
+	 * If the result is zero, frees the structure and any associated memory.
 	 */
 	public void unref()
 	{

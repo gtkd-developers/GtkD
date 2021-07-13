@@ -27,6 +27,7 @@ module gstreamer.URIHandlerT;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
 

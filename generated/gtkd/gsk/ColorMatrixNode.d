@@ -72,14 +72,12 @@ public class ColorMatrixNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will drawn the @child with reduced
+	 * Creates a `GskRenderNode` that will drawn the @child with
 	 * @color_matrix.
 	 *
 	 * In particular, the node will transform the operation
 	 *
-	 * |[<!-- language="plain" -->
 	 * pixel = color_matrix * pixel + color_offset
-	 * ]|
 	 *
 	 * for every pixel.
 	 *
@@ -88,7 +86,7 @@ public class ColorMatrixNode : RenderNode
 	 *     colorMatrix = The matrix to apply
 	 *     colorOffset = Values to add to the color
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

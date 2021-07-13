@@ -35,11 +35,13 @@ public  import gtk.c.types;
 
 
 /**
- * A GtkEditableLabel is a #GtkLabel that allows users to
- * edit the text by switching the widget to an “edit mode”.
+ * A `GtkEditableLabel` is a label that allows users to
+ * edit the text by switching to an “edit mode”.
  * 
- * GtkEditableLabel does not have API of its own, but it
- * implements the #GtkEditable interface.
+ * ![An example GtkEditableLabel](editable-label.png)
+ * 
+ * `GtkEditableLabel` does not have API of its own, but it
+ * implements the [iface@Gtk.Editable] interface.
  * 
  * The default bindings for activating the edit mode is
  * to click or press the Enter key. The default bindings
@@ -48,19 +50,19 @@ public  import gtk.c.types;
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * editablelabel[.editing]
  * ╰── stack
  * ├── label
  * ╰── text
- * ]|
+ * ```
  * 
- * GtkEditableLabel has a main node with the name editablelabel.
+ * `GtkEditableLabel` has a main node with the name editablelabel.
  * When the entry is in editing mode, it gets the .editing style
  * class.
  * 
  * For all the subnodes added to the text node in various situations,
- * see #GtkText.
+ * see [class@Gtk.Text].
  */
 public class EditableLabel : Widget, EditableIF
 {
@@ -101,12 +103,12 @@ public class EditableLabel : Widget, EditableIF
 	}
 
 	/**
-	 * Creates a new #GtkEditableLabel widget.
+	 * Creates a new `GtkEditableLabel` widget.
 	 *
 	 * Params:
 	 *     str = the text for the label
 	 *
-	 * Returns: the new #GtkEditableLabel
+	 * Returns: the new `GtkEditableLabel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -141,10 +143,12 @@ public class EditableLabel : Widget, EditableIF
 	}
 
 	/**
-	 * Switches the label out of “editing mode”. If @commit is %TRUE,
-	 * the resulting text is kept as the #GtkEditable:text property
-	 * value, otherwise the resulting text is discarded and the label
-	 * will keep its previous #GtkEditable:text property value.
+	 * Switches the label out of “editing mode”.
+	 *
+	 * If @commit is %TRUE, the resulting text is kept as the
+	 * [property@Gtk.Editable:text] property value, otherwise the
+	 * resulting text is discarded and the label will keep its
+	 * previous [property@Gtk.Editable:text] property value.
 	 *
 	 * Params:
 	 *     commit = whether to set the edited text on the label

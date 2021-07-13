@@ -25,6 +25,7 @@
 module pango.PgFontFace;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import pango.PgFontDescription;
 private import pango.PgFontFamily;
@@ -33,8 +34,8 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoFontFace structure is used to represent a group of fonts with
- * the same family, slant, weight, width, but varying sizes.
+ * A `PangoFontFace` is used to represent a group of fonts with
+ * the same family, slant, weight, and width, but varying sizes.
  */
 public class PgFontFace : ObjectG
 {
@@ -73,11 +74,11 @@ public class PgFontFace : ObjectG
 
 	/**
 	 * Returns the family, style, variant, weight and stretch of
-	 * a #PangoFontFace. The size field of the resulting font description
+	 * a `PangoFontFace`. The size field of the resulting font description
 	 * will be unset.
 	 *
-	 * Returns: a newly-created #PangoFontDescription structure
-	 *     holding the description of the face. Use pango_font_description_free()
+	 * Returns: a newly-created `PangoFontDescription` structure
+	 *     holding the description of the face. Use [method@Pango.FontDescription.free]
 	 *     to free the result.
 	 */
 	public PgFontDescription describe()
@@ -94,7 +95,7 @@ public class PgFontFace : ObjectG
 
 	/**
 	 * Gets a name representing the style of this face among the
-	 * different faces in the #PangoFontFamily for the face. The
+	 * different faces in the `PangoFontFamily` for the face. The
 	 * name is suitable for displaying to users.
 	 *
 	 * Returns: the face name for the face. This string is
@@ -106,10 +107,9 @@ public class PgFontFace : ObjectG
 	}
 
 	/**
-	 * Gets the #PangoFontFamily that @face
-	 * belongs to.
+	 * Gets the `PangoFontFamily` that @face belongs to.
 	 *
-	 * Returns: the #PangoFontFamily
+	 * Returns: the `PangoFontFamily`
 	 *
 	 * Since: 1.46
 	 */
@@ -126,7 +126,7 @@ public class PgFontFace : ObjectG
 	}
 
 	/**
-	 * Returns whether a #PangoFontFace is synthesized by the underlying
+	 * Returns whether a `PangoFontFace` is synthesized by the underlying
 	 * font rendering engine from another face, perhaps by shearing, emboldening,
 	 * or lightening it.
 	 *
@@ -140,10 +140,12 @@ public class PgFontFace : ObjectG
 	}
 
 	/**
-	 * List the available sizes for a font. This is only applicable to bitmap
-	 * fonts. For scalable fonts, stores %NULL at the location pointed to by
-	 * @sizes and 0 at the location pointed to by @n_sizes. The sizes returned
-	 * are in Pango units and are sorted in ascending order.
+	 * List the available sizes for a font.
+	 *
+	 * This is only applicable to bitmap fonts. For scalable fonts, stores
+	 * %NULL at the location pointed to by @sizes and 0 at the location pointed
+	 * to by @n_sizes. The sizes returned are in Pango units and are sorted
+	 * in ascending order.
 	 *
 	 * Params:
 	 *     sizes = location to store a pointer to an array of int. This array

@@ -32,12 +32,12 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoFontset represents a set of #PangoFont to use
- * when rendering text. It is the result of resolving a
- * #PangoFontDescription against a particular #PangoContext.
- * It has operations for finding the component font for
- * a particular Unicode character, and for finding a composite
- * set of metrics for the entire fontset.
+ * A `PangoFontset` represents a set of `PangoFont` to use when rendering text.
+ * 
+ * A `PAngoFontset` is the result of resolving a `PangoFontDescription`
+ * against a particular `PangoContext`. It has operations for finding the
+ * component font for a particular Unicode character, and for finding a
+ * composite set of metrics for the entire fontset.
  */
 public class PgFontset : ObjectG
 {
@@ -77,7 +77,9 @@ public class PgFontset : ObjectG
 	alias foreac = foreach_;
 	/**
 	 * Iterates through all the fonts in a fontset, calling @func for
-	 * each one. If @func returns %TRUE, that stops the iteration.
+	 * each one.
+	 *
+	 * If @func returns %TRUE, that stops the iteration.
 	 *
 	 * Params:
 	 *     func = Callback function
@@ -91,14 +93,14 @@ public class PgFontset : ObjectG
 	}
 
 	/**
-	 * Returns the font in the fontset that contains the best glyph for the
-	 * Unicode character @wc.
+	 * Returns the font in the fontset that contains the best glyph for a
+	 * Unicode character.
 	 *
 	 * Params:
 	 *     wc = a Unicode character
 	 *
-	 * Returns: a #PangoFont. The caller must call
-	 *     g_object_unref when finished with the font.
+	 * Returns: a `PangoFont`. The caller must call
+	 *     g_object_unref() when finished with the font.
 	 */
 	public PgFont getFont(uint wc)
 	{

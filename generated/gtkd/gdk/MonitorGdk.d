@@ -28,16 +28,20 @@ private import gdk.Display;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import std.algorithm;
 
 
 /**
- * GdkMonitor objects represent the individual outputs that are
- * associated with a #GdkDisplay. GdkDisplay keeps a #GListModel to enumerate
- * and monitor monitors with gdk_display_get_monitors().
- * You can use gdk_display_get_monitor_at_surface() to find a particular monitor.
+ * `GdkMonitor` objects represent the individual outputs that are
+ * associated with a `GdkDisplay`.
+ * 
+ * `GdkDisplay` keeps a `GListModel` to enumerate and monitor
+ * monitors with [method@Gdk.Display.get_monitors]. You can use
+ * [method@Gdk.Display.get_monitor_at_surface] to find a particular
+ * monitor.
  */
 public class MonitorGdk : ObjectG
 {
@@ -102,12 +106,14 @@ public class MonitorGdk : ObjectG
 	}
 
 	/**
-	 * Retrieves the size and position of an individual monitor within the
-	 * display coordinate space. The returned geometry is in  ”application pixels”,
-	 * not in ”device pixels” (see gdk_monitor_get_scale_factor()).
+	 * Retrieves the size and position of the monitor within the
+	 * display coordinate space.
+	 *
+	 * The returned geometry is in  ”application pixels”, not in
+	 * ”device pixels” (see [method@Gdk.Monitor.get_scale_factor]).
 	 *
 	 * Params:
-	 *     geometry = a #GdkRectangle to be filled with the monitor geometry
+	 *     geometry = a `GdkRectangle` to be filled with the monitor geometry
 	 */
 	public void getGeometry(out GdkRectangle geometry)
 	{
@@ -125,14 +131,16 @@ public class MonitorGdk : ObjectG
 	}
 
 	/**
-	 * Gets the name or PNP ID of the monitor's manufacturer, if available.
+	 * Gets the name or PNP ID of the monitor's manufacturer.
 	 *
 	 * Note that this value might also vary depending on actual
 	 * display backend.
 	 *
-	 * PNP ID registry is located at https://uefi.org/pnp_id_list
+	 * The PNP ID registry is located at
+	 * [https://uefi.org/pnp_id_list](https://uefi.org/pnp_id_list).
 	 *
-	 * Returns: the name of the manufacturer, or %NULL
+	 * Returns: the name of the manufacturer,
+	 *     or %NULL
 	 */
 	public string getManufacturer()
 	{
@@ -164,12 +172,14 @@ public class MonitorGdk : ObjectG
 
 	/**
 	 * Gets the internal scale factor that maps from monitor coordinates
-	 * to the actual device pixels. On traditional systems this is 1, but
-	 * on very high density outputs this can be a higher value (often 2).
+	 * to device pixels.
+	 *
+	 * On traditional systems this is 1, but on very high density outputs
+	 * it can be a higher value (often 2).
 	 *
 	 * This can be used if you want to create pixel based data for a
 	 * particular monitor, but most of the time you’re drawing to a surface
-	 * where it is better to use gdk_surface_get_scale_factor() instead.
+	 * where it is better to use [method@Gdk.Surface.get_scale_factor] instead.
 	 *
 	 * Returns: the scale factor
 	 */
@@ -180,7 +190,7 @@ public class MonitorGdk : ObjectG
 
 	/**
 	 * Gets information about the layout of red, green and blue
-	 * primaries for each pixel in this monitor, if available.
+	 * primaries for pixels.
 	 *
 	 * Returns: the subpixel layout
 	 */
@@ -201,8 +211,10 @@ public class MonitorGdk : ObjectG
 
 	/**
 	 * Returns %TRUE if the @monitor object corresponds to a
-	 * physical monitor. The @monitor becomes invalid when the
-	 * physical monitor is unplugged or removed.
+	 * physical monitor.
+	 *
+	 * The @monitor becomes invalid when the physical monitor
+	 * is unplugged or removed.
 	 *
 	 * Returns: %TRUE if the object corresponds to a physical monitor
 	 */
@@ -212,8 +224,7 @@ public class MonitorGdk : ObjectG
 	}
 
 	/**
-	 * The ::invalidate signal gets emitted when the output represented
-	 * by @monitor gets disconnected.
+	 * Emitted when the output represented by @monitor gets disconnected.
 	 */
 	gulong addOnInvalidate(void delegate(MonitorGdk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

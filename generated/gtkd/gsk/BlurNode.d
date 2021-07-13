@@ -76,7 +76,7 @@ public class BlurNode : RenderNode
 	 *     child = the child node to blur
 	 *     radius = the blur radius
 	 *
-	 * Returns: a new #GskRenderNode
+	 * Returns: a new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -93,7 +93,7 @@ public class BlurNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the child #GskRenderNode of the blur @node.
+	 * Retrieves the child `GskRenderNode` of the blur @node.
 	 *
 	 * Returns: the blurred child node
 	 */

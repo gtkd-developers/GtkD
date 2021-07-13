@@ -31,7 +31,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * A `GObject` value in a `GtkExpression`.
+ */
 public class ObjectExpression : Expression
 {
 	/** the main Gtk struct */
@@ -68,16 +70,18 @@ public class ObjectExpression : Expression
 	}
 
 	/**
-	 * Creates an expression evaluating to the given @object with a weak reference.
-	 * Once the @object is disposed, it will fail to evaluate.
+	 * Creates an expression evaluating to the given `object` with a weak reference.
+	 *
+	 * Once the `object` is disposed, it will fail to evaluate.
+	 *
 	 * This expression is meant to break reference cycles.
 	 *
-	 * If you want to keep a reference to @object, use gtk_constant_expression_new().
+	 * If you want to keep a reference to `object`, use [ctor@Gtk.ConstantExpression.new].
 	 *
 	 * Params:
 	 *     object = object to watch
 	 *
-	 * Returns: a new #GtkExpression
+	 * Returns: a new `GtkExpression`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -96,7 +100,7 @@ public class ObjectExpression : Expression
 	/**
 	 * Gets the object that the expression evaluates to.
 	 *
-	 * Returns: the object, or %NULL
+	 * Returns: the object, or `NULL`
 	 */
 	public ObjectG getObject()
 	{

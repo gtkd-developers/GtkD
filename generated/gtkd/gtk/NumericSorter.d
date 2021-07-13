@@ -33,9 +33,10 @@ public  import gtk.c.types;
 
 
 /**
- * GtkNumericSorter is a #GtkSorter that compares numbers.
+ * `GtkNumericSorter` is a `GtkSorter` that compares numbers.
  * 
- * To obtain the numbers to compare, this sorter evaluates a #GtkExpression.
+ * To obtain the numbers to compare, this sorter evaluates a
+ * [class@Gtk.Expression].
  */
 public class NumericSorter : Sorter
 {
@@ -76,12 +77,12 @@ public class NumericSorter : Sorter
 	 * Creates a new numeric sorter using the given @expression.
 	 *
 	 * Smaller numbers will be sorted first. You can call
-	 * gtk_numeric_sorter_set_sort_order() to change this.
+	 * [method@Gtk.NumericSorter.set_sort_order] to change this.
 	 *
 	 * Params:
 	 *     expression = The expression to evaluate
 	 *
-	 * Returns: a new #GtkNumericSorter
+	 * Returns: a new `GtkNumericSorter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -100,7 +101,7 @@ public class NumericSorter : Sorter
 	/**
 	 * Gets the expression that is evaluated to obtain numbers from items.
 	 *
-	 * Returns: a #GtkExpression, or %NULL
+	 * Returns: a `GtkExpression`, or %NULL
 	 */
 	public Expression getExpression()
 	{
@@ -131,10 +132,10 @@ public class NumericSorter : Sorter
 	 * compare items as invalid.
 	 *
 	 * The expression must have a return type that can be compared
-	 * numerically, such as #G_TYPE_INT or #G_TYPE_DOUBLE.
+	 * numerically, such as %G_TYPE_INT or %G_TYPE_DOUBLE.
 	 *
 	 * Params:
-	 *     expression = a #GtkExpression, or %NULL
+	 *     expression = a `GtkExpression`, or %NULL
 	 */
 	public void setExpression(Expression expression)
 	{

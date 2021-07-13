@@ -26,6 +26,7 @@ module gstreamer.DeviceProviderFactory;
 
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.DeviceProvider;
 private import gstreamer.PluginFeature;

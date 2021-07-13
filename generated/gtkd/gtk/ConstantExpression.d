@@ -32,7 +32,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * A constant value in a `GtkExpression`.
+ */
 public class ConstantExpression : Expression
 {
 	/** the main Gtk struct */
@@ -69,12 +71,12 @@ public class ConstantExpression : Expression
 	}
 
 	/**
-	 * Creates an expression that always evaluates to the given @value.
+	 * Creates an expression that always evaluates to the given `value`.
 	 *
 	 * Params:
-	 *     value = a #GValue
+	 *     value = a `GValue`
 	 *
-	 * Returns: a new #GtkExpression
+	 * Returns: a new `GtkExpression`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

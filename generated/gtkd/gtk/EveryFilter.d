@@ -31,7 +31,11 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkEveryFilter` matches an item when each of its filters matches.
+ * 
+ * To add filters to a `GtkEveryFilter`, use [method@Gtk.MultiFilter.append].
+ */
 public class EveryFilter : MultiFilter
 {
 	/** the main Gtk struct */
@@ -69,14 +73,14 @@ public class EveryFilter : MultiFilter
 
 	/**
 	 * Creates a new empty "every" filter.
-	 * Use gtk_multi_filter_append() to add filters to it.
+	 *
+	 * Use [method@Gtk.MultiFilter.append] to add filters to it.
 	 *
 	 * This filter matches an item if each of the filters added to it
-	 * matches the item.
-	 * In particular, this means that if no filter has been added to
-	 * it, the filter matches every item.
+	 * matches the item. In particular, this means that if no filter
+	 * has been added to it, the filter matches every item.
 	 *
-	 * Returns: a new #GtkEveryFilter
+	 * Returns: a new `GtkEveryFilter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -31,7 +31,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutAction that calls gtk_widget_activate().
+ * A `GtkShortcutAction` that calls gtk_widget_activate().
  */
 public class ActivateAction : ShortcutAction
 {
@@ -69,7 +69,9 @@ public class ActivateAction : ShortcutAction
 	}
 
 	/**
-	 * Gets the activate action. This is an action that calls gtk_widget_activate()
+	 * Gets the activate action.
+	 *
+	 * This is an action that calls gtk_widget_activate()
 	 * on the given widget upon activation.
 	 *
 	 * Returns: The activate action

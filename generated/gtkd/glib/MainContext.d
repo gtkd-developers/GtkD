@@ -130,7 +130,10 @@ public class MainContext
 	}
 
 	/**
-	 * Passes the results of polling back to the main loop.
+	 * Passes the results of polling back to the main loop. You should be
+	 * careful to pass @fds and its length @n_fds as received from
+	 * g_main_context_query(), as this functions relies on assumptions
+	 * on how @fds is filled.
 	 *
 	 * You must have successfully acquired the context with
 	 * g_main_context_acquire() before you may call this function.
@@ -429,7 +432,10 @@ public class MainContext
 	}
 
 	/**
-	 * Determines information necessary to poll this main loop.
+	 * Determines information necessary to poll this main loop. You should
+	 * be careful to pass the resulting @fds array and its length @n_fds
+	 * as is when calling g_main_context_check(), as this function relies
+	 * on assumptions made when the array is filled.
 	 *
 	 * You must have successfully acquired the context with
 	 * g_main_context_acquire() before you may call this function.
@@ -552,7 +558,7 @@ public class MainContext
 	 *
 	 * |[<!-- language="C" -->
 	 * #define NUM_TASKS 10
-	 * static volatile gint tasks_remaining = NUM_TASKS;
+	 * static gint tasks_remaining = NUM_TASKS;  // (atomic)
 	 * ...
 	 *
 	 * while (g_atomic_int_get (&tasks_remaining) != 0)

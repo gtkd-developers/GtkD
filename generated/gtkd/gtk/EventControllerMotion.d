@@ -34,8 +34,15 @@ private import std.algorithm;
 
 
 /**
- * #GtkEventControllerMotion is an event controller meant for situations
- * where you need to track the position of the pointer.
+ * `GtkEventControllerMotion` is an event controller tracking the pointer
+ * position.
+ * 
+ * The event controller offers [signal@Gtk.EventControllerMotion::enter]
+ * and [signal@Gtk.EventControllerMotion::leave] signals, as well as
+ * [property@Gtk.EventControllerMotion:is-pointer] and
+ * [property@Gtk.EventControllerMotion:contains-pointer] properties
+ * which are updated to reflect changes in the pointer position as it
+ * moves over the widget.
  */
 public class EventControllerMotion : EventController
 {
@@ -75,7 +82,7 @@ public class EventControllerMotion : EventController
 	/**
 	 * Creates a new event controller that will handle motion events.
 	 *
-	 * Returns: a new #GtkEventControllerMotion
+	 * Returns: a new `GtkEventControllerMotion`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -92,7 +99,7 @@ public class EventControllerMotion : EventController
 	}
 
 	/**
-	 * Returns the value of the GtkEventControllerMotion:contains-pointer property.
+	 * Returns if a pointer is within @self or one of its children.
 	 *
 	 * Returns: %TRUE if a pointer is within @self or one of its children
 	 */
@@ -102,7 +109,7 @@ public class EventControllerMotion : EventController
 	}
 
 	/**
-	 * Returns the value of the GtkEventControllerMotion:is-pointer property.
+	 * Returns if a pointer is within @self, but not one of its children.
 	 *
 	 * Returns: %TRUE if a pointer is within @self but not one of its children
 	 */

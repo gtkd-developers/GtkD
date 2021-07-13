@@ -33,7 +33,24 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * A `GtkBuilderScope` implementation for the C language.
+ * 
+ * `GtkBuilderCScope` instances use symbols explicitly added to @builder
+ * with prior calls to [method@Gtk.BuilderCScope.add_callback_symbol].
+ * If developers want to do that, they are encouraged to create their
+ * own scopes for that purpose.
+ * 
+ * In the case that symbols are not explicitly added; GTK will uses
+ * `GModule`’s introspective features (by opening the module %NULL) to
+ * look at the application’s symbol table. From here it tries to match
+ * the signal function names given in the interface description with
+ * symbols in the application.
+ * 
+ * Note that unless [method@Gtk.BuilderCScope.add_callback_symbol] is
+ * called for all signal callbacks which are referenced by the loaded XML,
+ * this functionality will require that `GModule` be supported on the platform.
+ */
 public class BuilderCScope : ObjectG, BuilderScopeIF
 {
 	/** the main Gtk struct */
@@ -73,13 +90,13 @@ public class BuilderCScope : ObjectG, BuilderScopeIF
 	}
 
 	/**
-	 * Creates a new #GtkBuilderCScope object to use with future #GtkBuilder
-	 * instances.
+	 * Creates a new `GtkBuilderCScope` object to use with future
+	 * `GtkBuilder` instances.
 	 *
-	 * Calling this function is only necessary if you want to add custom
-	 * callbacks via gtk_builder_cscope_add_callback_symbol().
+	 * Calling this function is only necessary if you want to add
+	 * custom callbacks via [method@Gtk.BuilderCScope.add_callback_symbol].
 	 *
-	 * Returns: a new #GtkBuilderCScope
+	 * Returns: a new `GtkBuilderCScope`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -96,12 +113,14 @@ public class BuilderCScope : ObjectG, BuilderScopeIF
 	}
 
 	/**
-	 * Adds the @callback_symbol to the scope of @builder under the given @callback_name.
+	 * Adds the @callback_symbol to the scope of @builder under the
+	 * given @callback_name.
 	 *
-	 * Using this function overrides the behavior of gtk_builder_create_closure()
-	 * for any callback symbols that are added. Using this method allows for better
-	 * encapsulation as it does not require that callback symbols be declared in
-	 * the global namespace.
+	 * Using this function overrides the behavior of
+	 * [method@Gtk.Builder.create_closure] for any callback symbols that
+	 * are added. Using this method allows for better encapsulation as it
+	 * does not require that callback symbols be declared in the global
+	 * namespace.
 	 *
 	 * Params:
 	 *     callbackName = The name of the callback, as expected in the XML
@@ -113,13 +132,14 @@ public class BuilderCScope : ObjectG, BuilderScopeIF
 	}
 
 	/**
-	 * Fetches a symbol previously added to @self
-	 * with gtk_builder_cscope_add_callback_symbol().
+	 * Fetches a symbol previously added with
+	 * gtk_builder_cscope_add_callback_symbol().
 	 *
 	 * Params:
 	 *     callbackName = The name of the callback
 	 *
-	 * Returns: The callback symbol in @builder for @callback_name, or %NULL
+	 * Returns: The callback symbol
+	 *     in @builder for @callback_name, or %NULL
 	 */
 	public GCallback lookupCallbackSymbol(string callbackName)
 	{

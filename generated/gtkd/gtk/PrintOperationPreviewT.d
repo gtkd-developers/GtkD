@@ -32,7 +32,14 @@ public  import gtk.c.types;
 public  import std.algorithm;
 
 
-/** */
+/**
+ * `GtkPrintOperationPreview` is the interface that is used to
+ * implement print preview.
+ * 
+ * A `GtkPrintOperationPreview` object is passed to the
+ * [signal@Gtk.PrintOperation::preview] signal by
+ * [class@Gtk.PrintOperation].
+ */
 public template PrintOperationPreviewT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -69,12 +76,14 @@ public template PrintOperationPreviewT(TStruct)
 	}
 
 	/**
-	 * Renders a page to the preview, using the print context that
-	 * was passed to the #GtkPrintOperation::preview handler together
+	 * Renders a page to the preview.
+	 *
+	 * This is using the print context that was passed to the
+	 * [signal@Gtk.PrintOperation::preview] handler together
 	 * with @preview.
 	 *
-	 * A custom iprint preview should use this function in its ::expose
-	 * handler to render the currently selected page.
+	 * A custom print preview should use this function to render
+	 * the currently selected page.
 	 *
 	 * Note that this function requires a suitable cairo context to
 	 * be associated with the print context.
@@ -88,16 +97,15 @@ public template PrintOperationPreviewT(TStruct)
 	}
 
 	/**
-	 * The ::got-page-size signal is emitted once for each page
-	 * that gets rendered to the preview.
+	 * Emitted once for each page that gets rendered to the preview.
 	 *
 	 * A handler for this signal should update the @context
 	 * according to @page_setup and set up a suitable cairo
-	 * context, using gtk_print_context_set_cairo_context().
+	 * context, using [method@Gtk.PrintContext.set_cairo_context].
 	 *
 	 * Params:
-	 *     context = the current #GtkPrintContext
-	 *     pageSetup = the #GtkPageSetup for the current page
+	 *     context = the current `GtkPrintContext`
+	 *     pageSetup = the `GtkPageSetup` for the current page
 	 */
 	gulong addOnGotPageSize(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

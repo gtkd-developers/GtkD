@@ -27,6 +27,7 @@ module gobject.Value;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Type;
@@ -290,8 +291,8 @@ public class Value
 	 * Get the contents of a %G_TYPE_PARAM #GValue, increasing its
 	 * reference count.
 	 *
-	 * Returns: #GParamSpec content of @value, should be unreferenced when
-	 *     no longer needed.
+	 * Returns: #GParamSpec content of @value, should be
+	 *     unreferenced when no longer needed.
 	 */
 	public ParamSpec dupParam()
 	{
@@ -302,7 +303,7 @@ public class Value
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**

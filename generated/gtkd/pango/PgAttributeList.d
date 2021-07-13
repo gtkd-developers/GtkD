@@ -35,16 +35,17 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoAttrList structure represents a list of attributes
- * that apply to a section of text. The attributes are, in general,
- * allowed to overlap in an arbitrary fashion, however, if the
- * attributes are manipulated only through pango_attr_list_change(),
- * the overlap between properties will meet stricter criteria.
+ * A `PangoAttrList` represents a list of attributes that apply to a section
+ * of text.
  * 
- * Since the #PangoAttrList structure is stored as a linear list,
- * it is not suitable for storing attributes for large amounts
- * of text. In general, you should not use a single #PangoAttrList
- * for more than one paragraph of text.
+ * The attributes in a `PangoAttrList` are, in general, allowed to overlap in
+ * an arbitrary fashion. However, if the attributes are manipulated only through
+ * [method@Pango.AttrList.change], the overlap between properties will meet
+ * stricter criteria.
+ * 
+ * Since the `PangoAttrList` structure is stored as a linear list, it is not
+ * suitable for storing attributes for large amounts of text. In general, you
+ * should not use a single `PangoAttrList` for more than one paragraph of text.
  */
 public class PgAttributeList
 {
@@ -91,8 +92,8 @@ public class PgAttributeList
 	/**
 	 * Create a new empty attribute list with a reference count of one.
 	 *
-	 * Returns: the newly allocated #PangoAttrList,
-	 *     which should be freed with pango_attr_list_unref().
+	 * Returns: the newly allocated `PangoAttrList`,
+	 *     which should be freed with [method@Pango.AttrList.unref].
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -109,15 +110,16 @@ public class PgAttributeList
 	}
 
 	/**
-	 * Insert the given attribute into the #PangoAttrList. It will
-	 * replace any attributes of the same type on that segment
+	 * Insert the given attribute into the `PangoAttrList`.
+	 *
+	 * It will replace any attributes of the same type on that segment
 	 * and be merged with any adjoining attributes that are identical.
 	 *
-	 * This function is slower than pango_attr_list_insert() for
-	 * creating an attribute list in order (potentially much slower
-	 * for large lists). However, pango_attr_list_insert() is not
-	 * suitable for continually changing a set of attributes
-	 * since it never removes or combines existing attributes.
+	 * This function is slower than [method@Pango.AttrList.insert] for
+	 * creating an attribute list in order (potentially much slower for
+	 * large lists). However, [method@Pango.AttrList.insert] is not
+	 * suitable for continually changing a set of attributes since it
+	 * never removes or combines existing attributes.
 	 *
 	 * Params:
 	 *     attr = the attribute to insert. Ownership of this
@@ -131,10 +133,9 @@ public class PgAttributeList
 	/**
 	 * Copy @list and return an identical new list.
 	 *
-	 * Returns: the newly allocated #PangoAttrList, with a
-	 *     reference count of one, which should
-	 *     be freed with pango_attr_list_unref().
-	 *     Returns %NULL if @list was %NULL.
+	 * Returns: the newly allocated `PangoAttrList`,
+	 *     with a reference count of one, which should be freed with
+	 *     [method@Pango.AttrList.unref]. Returns %NULL if @list was %NULL.
 	 */
 	public PgAttributeList copy()
 	{
@@ -154,7 +155,7 @@ public class PgAttributeList
 	 * will return wrong values if any list contains duplicates.
 	 *
 	 * Params:
-	 *     otherList = the other #PangoAttrList
+	 *     otherList = the other `PangoAttrList`
 	 *
 	 * Returns: %TRUE if the lists are equal, %FALSE if they aren't.
 	 *
@@ -166,16 +167,15 @@ public class PgAttributeList
 	}
 
 	/**
-	 * Given a #PangoAttrList and callback function, removes any elements
-	 * of @list for which @func returns %TRUE and inserts them into
-	 * a new list.
+	 * Given a `PangoAttrList` and callback function, removes any elements
+	 * of @list for which @func returns %TRUE and inserts them into a new list.
 	 *
 	 * Params:
 	 *     func = callback function; returns %TRUE
 	 *         if an attribute should be filtered out.
 	 *     data = Data to be passed to @func
 	 *
-	 * Returns: the new #PangoAttrList or
+	 * Returns: the new `PangoAttrList` or
 	 *     %NULL if no attributes of the given types were found.
 	 *
 	 * Since: 1.2
@@ -196,7 +196,7 @@ public class PgAttributeList
 	 * Gets a list of all attributes in @list.
 	 *
 	 * Returns: a list of all attributes in @list. To free this value, call
-	 *     pango_attribute_destroy() on each value and g_slist_free()
+	 *     [mehod@Pango.Attribute.destroy] on each value and g_slist_free()
 	 *     on the list.
 	 *
 	 * Since: 1.44
@@ -217,8 +217,8 @@ public class PgAttributeList
 	 * Create a iterator initialized to the beginning of the list.
 	 * @list must not be modified until this iterator is freed.
 	 *
-	 * Returns: the newly allocated #PangoAttrIterator, which should
-	 *     be freed with pango_attr_iterator_destroy().
+	 * Returns: the newly allocated `PangoAttrIterator`,
+	 *     which should be freed with [method@Pango.AttrIterator.destroy].
 	 */
 	public PgAttributeIterator getIterator()
 	{
@@ -233,9 +233,10 @@ public class PgAttributeList
 	}
 
 	/**
-	 * Insert the given attribute into the #PangoAttrList. It will
-	 * be inserted after all other attributes with a matching
-	 * @start_index.
+	 * Insert the given attribute into the `PangoAttrList`.
+	 *
+	 * It will be inserted after all other attributes with a
+	 * matching @start_index.
 	 *
 	 * Params:
 	 *     attr = the attribute to insert. Ownership of this
@@ -247,9 +248,10 @@ public class PgAttributeList
 	}
 
 	/**
-	 * Insert the given attribute into the #PangoAttrList. It will
-	 * be inserted before all other attributes with a matching
-	 * @start_index.
+	 * Insert the given attribute into the `PangoAttrList`.
+	 *
+	 * It will be inserted before all other attributes with a
+	 * matching @start_index.
 	 *
 	 * Params:
 	 *     attr = the attribute to insert. Ownership of this
@@ -281,23 +283,24 @@ public class PgAttributeList
 	}
 
 	/**
-	 * This function opens up a hole in @list, fills it in with attributes from
-	 * the left, and then merges @other on top of the hole.
+	 * This function opens up a hole in @list, fills it in with attributes
+	 * from the left, and then merges @other on top of the hole.
 	 *
 	 * This operation is equivalent to stretching every attribute
 	 * that applies at position @pos in @list by an amount @len,
-	 * and then calling pango_attr_list_change() with a copy
-	 * of each attribute in @other in sequence (offset in position by @pos).
+	 * and then calling [method@Pango.AttrList.change] with a copy
+	 * of each attribute in @other in sequence (offset in position
+	 * by @pos).
 	 *
 	 * This operation proves useful for, for instance, inserting
 	 * a pre-edit string in the middle of an edit buffer.
 	 *
 	 * Params:
-	 *     other = another #PangoAttrList
+	 *     other = another `PangoAttrList`
 	 *     pos = the position in @list at which to insert @other
 	 *     len = the length of the spliced segment. (Note that this
-	 *         must be specified since the attributes in @other
-	 *         may only be present at some subsection of this range)
+	 *         must be specified since the attributes in @other may only
+	 *         be present at some subsection of this range)
 	 */
 	public void splice(PgAttributeList other, int pos, int len)
 	{
@@ -315,22 +318,20 @@ public class PgAttributeList
 	}
 
 	/**
-	 * Update indices of attributes in @list for
-	 * a change in the text they refer to.
+	 * Update indices of attributes in @list for a change in the
+	 * text they refer to.
 	 *
-	 * The change that this function applies is
-	 * removing @remove bytes at position @pos
-	 * and inserting @add bytes instead.
+	 * The change that this function applies is removing @remove
+	 * bytes at position @pos and inserting @add bytes instead.
 	 *
-	 * Attributes that fall entirely in the
-	 * (@pos, @pos + @remove) range are removed.
+	 * Attributes that fall entirely in the (@pos, @pos + @remove)
+	 * range are removed.
 	 *
-	 * Attributes that start or end inside the
-	 * (@pos, @pos + @remove) range are shortened to
-	 * reflect the removal.
+	 * Attributes that start or end inside the (@pos, @pos + @remove)
+	 * range are shortened to reflect the removal.
 	 *
-	 * Attributes start and end positions are updated
-	 * if they are behind @pos + @remove.
+	 * Attributes start and end positions are updated if they are
+	 * behind @pos + @remove.
 	 *
 	 * Params:
 	 *     pos = the position of the change

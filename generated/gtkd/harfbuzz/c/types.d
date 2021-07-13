@@ -48,7 +48,7 @@ public alias uint hb_color_t;
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
  *
- * This method should retrieve the extents for a font, in horizontal-direction
+ * This method should retrieve the extents for a font, for horizontal-direction
  * text segments. Extents must be returned in an #hb_glyph_extents output
  * parameter.
  */
@@ -57,7 +57,7 @@ public alias hb_font_get_font_extents_func_t hb_font_get_font_h_extents_func_t;
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
  *
- * This method should retrieve the extents for a font, in vertical-direction
+ * This method should retrieve the extents for a font, for vertical-direction
  * text segments. Extents must be returned in an #hb_glyph_extents output
  * parameter.
  */
@@ -80,13 +80,19 @@ public alias hb_font_get_glyph_advance_func_t hb_font_get_glyph_h_advance_func_t
  */
 public alias hb_font_get_glyph_advances_func_t hb_font_get_glyph_h_advances_func_t;
 
+/**
+ * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
+ *
+ * This method should retrieve the kerning-adjustment value for a glyph-pair in
+ * the specified font, for horizontal text segments.
+ */
 public alias hb_font_get_glyph_kerning_func_t hb_font_get_glyph_h_kerning_func_t;
 
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
  *
  * This method should retrieve the (X,Y) coordinates (in font units) of the
- * origin for a glyph, in horizontal-direction text segments. Each
+ * origin for a glyph, for horizontal-direction text segments. Each
  * coordinate must be returned in an #hb_position_t output parameter.
  */
 public alias hb_font_get_glyph_origin_func_t hb_font_get_glyph_h_origin_func_t;
@@ -108,13 +114,19 @@ public alias hb_font_get_glyph_advance_func_t hb_font_get_glyph_v_advance_func_t
  */
 public alias hb_font_get_glyph_advances_func_t hb_font_get_glyph_v_advances_func_t;
 
+/**
+ * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
+ *
+ * This method should retrieve the kerning-adjustment value for a glyph-pair in
+ * the specified font, for vertical text segments.
+ */
 public alias hb_font_get_glyph_kerning_func_t hb_font_get_glyph_v_kerning_func_t;
 
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
  *
  * This method should retrieve the (X,Y) coordinates (in font units) of the
- * origin for a glyph, in vertical-direction text segments. Each coordinate
+ * origin for a glyph, for vertical-direction text segments. Each coordinate
  * must be returned in an #hb_position_t output parameter.
  */
 public alias hb_font_get_glyph_origin_func_t hb_font_get_glyph_v_origin_func_t;
@@ -138,6 +150,14 @@ public alias uint hb_ot_name_id_t;
  */
 public alias int hb_position_t;
 
+/**
+ * Data type for tag identifiers. Tags are four
+ * byte integers, each byte representing a character.
+ *
+ * Tags are used to identify tables, design-variation axes,
+ * scripts, languages, font features, and baselines with
+ * human-readable names.
+ */
 public alias uint hb_tag_t;
 
 /**
@@ -1155,7 +1175,7 @@ public enum hb_aat_layout_feature_selector_t
 alias hb_aat_layout_feature_selector_t aat_layout_feature_selector_t;
 
 /**
- * The possible feature types defined for AAT shaping.
+ * The possible feature types defined for AAT shaping, from Apple [Font Feature Registry](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html).
  *
  * Since: 2.2.0
  */
@@ -1165,44 +1185,161 @@ public enum hb_aat_layout_feature_type_t
 	 * Initial, unset feature type
 	 */
 	INVALID = 65535,
+	/**
+	 * [All Typographic Features](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type0)
+	 */
 	ALL_TYPOGRAPHIC = 0,
+	/**
+	 * [Ligatures](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type1)
+	 */
 	LIGATURES = 1,
+	/**
+	 * [Cursive Connection](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type2)
+	 */
 	CURISVE_CONNECTION = 2,
+	/**
+	 * [Letter Case](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type3)
+	 */
 	LETTER_CASE = 3,
+	/**
+	 * [Vertical Substitution](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type4)
+	 */
 	VERTICAL_SUBSTITUTION = 4,
+	/**
+	 * [Linguistic Rearrangement](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type5)
+	 */
 	LINGUISTIC_REARRANGEMENT = 5,
+	/**
+	 * [Number Spacing](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type6)
+	 */
 	NUMBER_SPACING = 6,
+	/**
+	 * [Smart Swash](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type8)
+	 */
 	SMART_SWASH_TYPE = 8,
+	/**
+	 * [Diacritics](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type9)
+	 */
 	DIACRITICS_TYPE = 9,
+	/**
+	 * [Vertical Position](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type10)
+	 */
 	VERTICAL_POSITION = 10,
+	/**
+	 * [Fractions](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type11)
+	 */
 	FRACTIONS = 11,
+	/**
+	 * [Overlapping Characters](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type13)
+	 */
 	OVERLAPPING_CHARACTERS_TYPE = 13,
+	/**
+	 * [Typographic Extras](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type14)
+	 */
 	TYPOGRAPHIC_EXTRAS = 14,
+	/**
+	 * [Mathematical Extras](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type15)
+	 */
 	MATHEMATICAL_EXTRAS = 15,
+	/**
+	 * [Ornament Sets](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type16)
+	 */
 	ORNAMENT_SETS_TYPE = 16,
+	/**
+	 * [Character Alternatives](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type17)
+	 */
 	CHARACTER_ALTERNATIVES = 17,
+	/**
+	 * [Design Complexity](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type18)
+	 */
 	DESIGN_COMPLEXITY_TYPE = 18,
+	/**
+	 * [Style Options](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type19)
+	 */
 	STYLE_OPTIONS = 19,
+	/**
+	 * [Character Shape](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type20)
+	 */
 	CHARACTER_SHAPE = 20,
+	/**
+	 * [Number Case](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type21)
+	 */
 	NUMBER_CASE = 21,
+	/**
+	 * [Text Spacing](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type22)
+	 */
 	TEXT_SPACING = 22,
+	/**
+	 * [Transliteration](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type23)
+	 */
 	TRANSLITERATION = 23,
+	/**
+	 * [Annotation](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type24)
+	 */
 	ANNOTATION_TYPE = 24,
+	/**
+	 * [Kana Spacing](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type25)
+	 */
 	KANA_SPACING_TYPE = 25,
+	/**
+	 * [Ideographic Spacing](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type26)
+	 */
 	IDEOGRAPHIC_SPACING_TYPE = 26,
+	/**
+	 * [Unicode Decomposition](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type27)
+	 */
 	UNICODE_DECOMPOSITION_TYPE = 27,
+	/**
+	 * [Ruby Kana](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type28)
+	 */
 	RUBY_KANA = 28,
+	/**
+	 * [CJK Symbol Alternatives](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type29)
+	 */
 	CJK_SYMBOL_ALTERNATIVES_TYPE = 29,
+	/**
+	 * [Ideographic Alternatives](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type30)
+	 */
 	IDEOGRAPHIC_ALTERNATIVES_TYPE = 30,
+	/**
+	 * [CJK Vertical Roman Placement](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type31)
+	 */
 	CJK_VERTICAL_ROMAN_PLACEMENT_TYPE = 31,
+	/**
+	 * [Italic CJK Roman](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type32)
+	 */
 	ITALIC_CJK_ROMAN = 32,
+	/**
+	 * [Case Sensitive Layout](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type33)
+	 */
 	CASE_SENSITIVE_LAYOUT = 33,
+	/**
+	 * [Alternate Kana](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type34)
+	 */
 	ALTERNATE_KANA = 34,
+	/**
+	 * [Stylistic Alternatives](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type35)
+	 */
 	STYLISTIC_ALTERNATIVES = 35,
+	/**
+	 * [Contextual Alternatives](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type36)
+	 */
 	CONTEXTUAL_ALTERNATIVES = 36,
+	/**
+	 * [Lower Case](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type37)
+	 */
 	LOWER_CASE = 37,
+	/**
+	 * [Upper Case](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type38)
+	 */
 	UPPER_CASE = 38,
+	/**
+	 * [Language Tag](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type39)
+	 */
 	LANGUAGE_TAG_TYPE = 39,
+	/**
+	 * [CJK Roman Spacing](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html#Type103)
+	 */
 	CJK_ROMAN_SPACING_TYPE = 103,
 }
 alias hb_aat_layout_feature_type_t aat_layout_feature_type_t;
@@ -1250,6 +1387,9 @@ public enum hb_buffer_cluster_level_t
 }
 alias hb_buffer_cluster_level_t buffer_cluster_level_t;
 
+/**
+ * The type of #hb_buffer_t contents.
+ */
 public enum hb_buffer_content_type_t
 {
 	/**
@@ -1267,20 +1407,70 @@ public enum hb_buffer_content_type_t
 }
 alias hb_buffer_content_type_t buffer_content_type_t;
 
+/**
+ * Flags from comparing two #hb_buffer_t's.
+ *
+ * Buffer with different #hb_buffer_content_type_t cannot be meaningfully
+ * compared in any further detail.
+ *
+ * For buffers with differing length, the per-glyph comparison is not
+ * attempted, though we do still scan reference buffer for dotted circle and
+ * `.notdef` glyphs.
+ *
+ * If the buffers have the same length, we compare them glyph-by-glyph and
+ * report which aspect(s) of the glyph info/position are different.
+ *
+ * Since: 1.5.0
+ */
 public enum hb_buffer_diff_flags_t
 {
+	/**
+	 * equal buffers.
+	 */
 	EQUAL = 0,
+	/**
+	 * buffers with different
+	 * #hb_buffer_content_type_t.
+	 */
 	CONTENT_TYPE_MISMATCH = 1,
+	/**
+	 * buffers with differing length.
+	 */
 	LENGTH_MISMATCH = 2,
+	/**
+	 * `.notdef` glyph is present in the
+	 * reference buffer.
+	 */
 	NOTDEF_PRESENT = 4,
+	/**
+	 * dotted circle glyph is present
+	 * in the reference buffer.
+	 */
 	DOTTED_CIRCLE_PRESENT = 8,
+	/**
+	 * difference in #hb_glyph_info_t.codepoint
+	 */
 	CODEPOINT_MISMATCH = 16,
+	/**
+	 * difference in #hb_glyph_info_t.cluster
+	 */
 	CLUSTER_MISMATCH = 32,
+	/**
+	 * difference in #hb_glyph_flags_t.
+	 */
 	GLYPH_FLAGS_MISMATCH = 64,
+	/**
+	 * difference in #hb_glyph_position_t.
+	 */
 	POSITION_MISMATCH = 128,
 }
 alias hb_buffer_diff_flags_t buffer_diff_flags_t;
 
+/**
+ * Flags for #hb_buffer_t.
+ *
+ * Since: 0.9.20
+ */
 public enum hb_buffer_flags_t
 {
 	/**
@@ -1421,6 +1611,11 @@ public enum hb_direction_t
 }
 alias hb_direction_t direction_t;
 
+/**
+ * Flags for #hb_glyph_info_t.
+ *
+ * Since: 1.5.0
+ */
 public enum hb_glyph_flags_t
 {
 	/**
@@ -1449,10 +1644,6 @@ public enum hb_glyph_flags_t
 alias hb_glyph_flags_t glyph_flags_t;
 
 /**
- * @HB_MEMORY_MODE_DUPLICATE
- * @HB_MEMORY_MODE_READONLY
- * @HB_MEMORY_MODE_WRITABLE
- * @HB_MEMORY_MODE_READONLY_MAY_MAKE_WRITABLE
  * Data type holding the memory modes available to
  * client programs.
  *
@@ -1476,13 +1667,32 @@ alias hb_glyph_flags_t glyph_flags_t;
  */
 public enum hb_memory_mode_t
 {
+	/**
+	 * HarfBuzz immediately makes a copy of the data.
+	 */
 	DUPLICATE = 0,
+	/**
+	 * HarfBuzz client will never modify the data,
+	 * and HarfBuzz will never modify the data.
+	 */
 	READONLY = 1,
+	/**
+	 * HarfBuzz client made a copy of the data solely
+	 * for HarfBuzz, so HarfBuzz may modify the data.
+	 */
 	WRITABLE = 2,
+	/**
+	 * See above
+	 */
 	READONLY_MAY_MAKE_WRITABLE = 3,
 }
 alias hb_memory_mode_t memory_mode_t;
 
+/**
+ * Flags that describe the properties of color palette.
+ *
+ * Since: 2.1.0
+ */
 public enum hb_ot_color_palette_flags_t
 {
 	/**
@@ -1504,7 +1714,7 @@ public enum hb_ot_color_palette_flags_t
 alias hb_ot_color_palette_flags_t ot_color_palette_flags_t;
 
 /**
- * Baseline tags from https://docs.microsoft.com/en-us/typography/opentype/spec/baselinetags
+ * Baseline tags from [Baseline Tags](https://docs.microsoft.com/en-us/typography/opentype/spec/baselinetags) registry.
  *
  * Since: 2.6.0
  */
@@ -1580,68 +1790,237 @@ public enum hb_ot_layout_glyph_class_t
 alias hb_ot_layout_glyph_class_t ot_layout_glyph_class_t;
 
 /**
- * The 'MATH' table constants specified at
- * https://docs.microsoft.com/en-us/typography/opentype/spec/math
+ * The 'MATH' table constants, refer to
+ * [OpenType documentation](https://docs.microsoft.com/en-us/typography/opentype/spec/math#mathconstants-table)
+ * For more explanations.
  *
  * Since: 1.3.3
  */
 public enum hb_ot_math_constant_t
 {
+	/**
+	 * scriptPercentScaleDown
+	 */
 	SCRIPT_PERCENT_SCALE_DOWN = 0,
+	/**
+	 * scriptScriptPercentScaleDown
+	 */
 	SCRIPT_SCRIPT_PERCENT_SCALE_DOWN = 1,
+	/**
+	 * delimitedSubFormulaMinHeight
+	 */
 	DELIMITED_SUB_FORMULA_MIN_HEIGHT = 2,
+	/**
+	 * displayOperatorMinHeight
+	 */
 	DISPLAY_OPERATOR_MIN_HEIGHT = 3,
+	/**
+	 * mathLeading
+	 */
 	MATH_LEADING = 4,
+	/**
+	 * axisHeight
+	 */
 	AXIS_HEIGHT = 5,
+	/**
+	 * accentBaseHeight
+	 */
 	ACCENT_BASE_HEIGHT = 6,
+	/**
+	 * flattenedAccentBaseHeight
+	 */
 	FLATTENED_ACCENT_BASE_HEIGHT = 7,
+	/**
+	 * subscriptShiftDown
+	 */
 	SUBSCRIPT_SHIFT_DOWN = 8,
+	/**
+	 * subscriptTopMax
+	 */
 	SUBSCRIPT_TOP_MAX = 9,
+	/**
+	 * subscriptBaselineDropMin
+	 */
 	SUBSCRIPT_BASELINE_DROP_MIN = 10,
+	/**
+	 * superscriptShiftUp
+	 */
 	SUPERSCRIPT_SHIFT_UP = 11,
+	/**
+	 * superscriptShiftUpCramped
+	 */
 	SUPERSCRIPT_SHIFT_UP_CRAMPED = 12,
+	/**
+	 * superscriptBottomMin
+	 */
 	SUPERSCRIPT_BOTTOM_MIN = 13,
+	/**
+	 * superscriptBaselineDropMax
+	 */
 	SUPERSCRIPT_BASELINE_DROP_MAX = 14,
+	/**
+	 * subSuperscriptGapMin
+	 */
 	SUB_SUPERSCRIPT_GAP_MIN = 15,
+	/**
+	 * superscriptBottomMaxWithSubscript
+	 */
 	SUPERSCRIPT_BOTTOM_MAX_WITH_SUBSCRIPT = 16,
+	/**
+	 * spaceAfterScript
+	 */
 	SPACE_AFTER_SCRIPT = 17,
+	/**
+	 * upperLimitGapMin
+	 */
 	UPPER_LIMIT_GAP_MIN = 18,
+	/**
+	 * upperLimitBaselineRiseMin
+	 */
 	UPPER_LIMIT_BASELINE_RISE_MIN = 19,
+	/**
+	 * lowerLimitGapMin
+	 */
 	LOWER_LIMIT_GAP_MIN = 20,
+	/**
+	 * lowerLimitBaselineDropMin
+	 */
 	LOWER_LIMIT_BASELINE_DROP_MIN = 21,
+	/**
+	 * stackTopShiftUp
+	 */
 	STACK_TOP_SHIFT_UP = 22,
+	/**
+	 * stackTopDisplayStyleShiftUp
+	 */
 	STACK_TOP_DISPLAY_STYLE_SHIFT_UP = 23,
+	/**
+	 * stackBottomShiftDown
+	 */
 	STACK_BOTTOM_SHIFT_DOWN = 24,
+	/**
+	 * stackBottomDisplayStyleShiftDown
+	 */
 	STACK_BOTTOM_DISPLAY_STYLE_SHIFT_DOWN = 25,
+	/**
+	 * stackGapMin
+	 */
 	STACK_GAP_MIN = 26,
+	/**
+	 * stackDisplayStyleGapMin
+	 */
 	STACK_DISPLAY_STYLE_GAP_MIN = 27,
+	/**
+	 * stretchStackTopShiftUp
+	 */
 	STRETCH_STACK_TOP_SHIFT_UP = 28,
+	/**
+	 * stretchStackBottomShiftDown
+	 */
 	STRETCH_STACK_BOTTOM_SHIFT_DOWN = 29,
+	/**
+	 * stretchStackGapAboveMin
+	 */
 	STRETCH_STACK_GAP_ABOVE_MIN = 30,
+	/**
+	 * stretchStackGapBelowMin
+	 */
 	STRETCH_STACK_GAP_BELOW_MIN = 31,
+	/**
+	 * fractionNumeratorShiftUp
+	 */
 	FRACTION_NUMERATOR_SHIFT_UP = 32,
+	/**
+	 * fractionNumeratorDisplayStyleShiftUp
+	 */
 	FRACTION_NUMERATOR_DISPLAY_STYLE_SHIFT_UP = 33,
+	/**
+	 * fractionDenominatorShiftDown
+	 */
 	FRACTION_DENOMINATOR_SHIFT_DOWN = 34,
+	/**
+	 * fractionDenominatorDisplayStyleShiftDown
+	 */
 	FRACTION_DENOMINATOR_DISPLAY_STYLE_SHIFT_DOWN = 35,
+	/**
+	 * fractionNumeratorGapMin
+	 */
 	FRACTION_NUMERATOR_GAP_MIN = 36,
+	/**
+	 * fractionNumDisplayStyleGapMin
+	 */
 	FRACTION_NUM_DISPLAY_STYLE_GAP_MIN = 37,
+	/**
+	 * fractionRuleThickness
+	 */
 	FRACTION_RULE_THICKNESS = 38,
+	/**
+	 * fractionDenominatorGapMin
+	 */
 	FRACTION_DENOMINATOR_GAP_MIN = 39,
+	/**
+	 * fractionDenomDisplayStyleGapMin
+	 */
 	FRACTION_DENOM_DISPLAY_STYLE_GAP_MIN = 40,
+	/**
+	 * skewedFractionHorizontalGap
+	 */
 	SKEWED_FRACTION_HORIZONTAL_GAP = 41,
+	/**
+	 * skewedFractionVerticalGap
+	 */
 	SKEWED_FRACTION_VERTICAL_GAP = 42,
+	/**
+	 * overbarVerticalGap
+	 */
 	OVERBAR_VERTICAL_GAP = 43,
+	/**
+	 * overbarRuleThickness
+	 */
 	OVERBAR_RULE_THICKNESS = 44,
+	/**
+	 * overbarExtraAscender
+	 */
 	OVERBAR_EXTRA_ASCENDER = 45,
+	/**
+	 * underbarVerticalGap
+	 */
 	UNDERBAR_VERTICAL_GAP = 46,
+	/**
+	 * underbarRuleThickness
+	 */
 	UNDERBAR_RULE_THICKNESS = 47,
+	/**
+	 * underbarExtraDescender
+	 */
 	UNDERBAR_EXTRA_DESCENDER = 48,
+	/**
+	 * radicalVerticalGap
+	 */
 	RADICAL_VERTICAL_GAP = 49,
+	/**
+	 * radicalDisplayStyleVerticalGap
+	 */
 	RADICAL_DISPLAY_STYLE_VERTICAL_GAP = 50,
+	/**
+	 * radicalRuleThickness
+	 */
 	RADICAL_RULE_THICKNESS = 51,
+	/**
+	 * radicalExtraAscender
+	 */
 	RADICAL_EXTRA_ASCENDER = 52,
+	/**
+	 * radicalKernBeforeDegree
+	 */
 	RADICAL_KERN_BEFORE_DEGREE = 53,
+	/**
+	 * radicalKernAfterDegree
+	 */
 	RADICAL_KERN_AFTER_DEGREE = 54,
+	/**
+	 * radicalDegreeBottomRaisePercent
+	 */
 	RADICAL_DEGREE_BOTTOM_RAISE_PERCENT = 55,
 }
 alias hb_ot_math_constant_t ot_math_constant_t;
@@ -1653,6 +2032,10 @@ alias hb_ot_math_constant_t ot_math_constant_t;
  */
 public enum hb_ot_math_glyph_part_flags_t
 {
+	/**
+	 * This is an extender glyph part that
+	 * can be repeated to reach the desired length.
+	 */
 	EXTENDER = 1,
 }
 alias hb_ot_math_glyph_part_flags_t ot_math_glyph_part_flags_t;
@@ -1665,9 +2048,21 @@ alias hb_ot_math_glyph_part_flags_t ot_math_glyph_part_flags_t;
  */
 public enum hb_ot_math_kern_t
 {
+	/**
+	 * The top right corner of the glyph.
+	 */
 	TOP_RIGHT = 0,
+	/**
+	 * The top left corner of the glyph.
+	 */
 	TOP_LEFT = 1,
+	/**
+	 * The bottom right corner of the glyph.
+	 */
 	BOTTOM_RIGHT = 2,
+	/**
+	 * The bottom left corner of the glyph.
+	 */
 	BOTTOM_LEFT = 3,
 }
 alias hb_ot_math_kern_t ot_math_kern_t;
@@ -1695,7 +2090,8 @@ public enum hb_ot_meta_tag_t
 alias hb_ot_meta_tag_t ot_meta_tag_t;
 
 /**
- * From https://docs.microsoft.com/en-us/typography/opentype/spec/mvar#value-tags
+ * Metric tags corresponding to [MVAR Value
+ * Tags](https://docs.microsoft.com/en-us/typography/opentype/spec/mvar#value-tags)
  *
  * Since: 2.6.0
  */
@@ -1816,6 +2212,11 @@ public enum hb_ot_metrics_tag_t
 }
 alias hb_ot_metrics_tag_t ot_metrics_tag_t;
 
+/**
+ * Flags for #hb_ot_var_axis_info_t.
+ *
+ * Since: 2.2.0
+ */
 public enum hb_ot_var_axis_flags_t
 {
 	/**
@@ -1834,323 +2235,635 @@ alias hb_ot_var_axis_flags_t ot_var_axis_flags_t;
 public enum hb_script_t
 {
 	/**
-	 * HB_TAG ('Z','y','y','y')
+	 * `Zyyy`
 	 */
 	COMMON = 1517910393,
 	/**
-	 * HB_TAG ('Z','i','n','h')
+	 * `Zinh`
 	 */
 	INHERITED = 1516858984,
 	/**
-	 * HB_TAG ('Z','z','z','z')
-	 * @HB_SCRIPT_ARABIC
-	 * @HB_SCRIPT_ARMENIAN
-	 * @HB_SCRIPT_BENGALI
-	 * @HB_SCRIPT_CYRILLIC
-	 * @HB_SCRIPT_DEVANAGARI
-	 * @HB_SCRIPT_GEORGIAN
-	 * @HB_SCRIPT_GREEK
-	 * @HB_SCRIPT_GUJARATI
-	 * @HB_SCRIPT_GURMUKHI
-	 * @HB_SCRIPT_HANGUL
-	 * @HB_SCRIPT_HAN
-	 * @HB_SCRIPT_HEBREW
-	 * @HB_SCRIPT_HIRAGANA
-	 * @HB_SCRIPT_KANNADA
-	 * @HB_SCRIPT_KATAKANA
-	 * @HB_SCRIPT_LAO
-	 * @HB_SCRIPT_LATIN
-	 * @HB_SCRIPT_MALAYALAM
-	 * @HB_SCRIPT_ORIYA
-	 * @HB_SCRIPT_TAMIL
-	 * @HB_SCRIPT_TELUGU
-	 * @HB_SCRIPT_THAI
-	 * @HB_SCRIPT_TIBETAN
-	 * @HB_SCRIPT_BOPOMOFO
-	 * @HB_SCRIPT_BRAILLE
-	 * @HB_SCRIPT_CANADIAN_SYLLABICS
-	 * @HB_SCRIPT_CHEROKEE
-	 * @HB_SCRIPT_ETHIOPIC
-	 * @HB_SCRIPT_KHMER
-	 * @HB_SCRIPT_MONGOLIAN
-	 * @HB_SCRIPT_MYANMAR
-	 * @HB_SCRIPT_OGHAM
-	 * @HB_SCRIPT_RUNIC
-	 * @HB_SCRIPT_SINHALA
-	 * @HB_SCRIPT_SYRIAC
-	 * @HB_SCRIPT_THAANA
-	 * @HB_SCRIPT_YI
-	 * @HB_SCRIPT_DESERET
-	 * @HB_SCRIPT_GOTHIC
-	 * @HB_SCRIPT_OLD_ITALIC
-	 * @HB_SCRIPT_BUHID
-	 * @HB_SCRIPT_HANUNOO
-	 * @HB_SCRIPT_TAGALOG
-	 * @HB_SCRIPT_TAGBANWA
-	 * @HB_SCRIPT_CYPRIOT
-	 * @HB_SCRIPT_LIMBU
-	 * @HB_SCRIPT_LINEAR_B
-	 * @HB_SCRIPT_OSMANYA
-	 * @HB_SCRIPT_SHAVIAN
-	 * @HB_SCRIPT_TAI_LE
-	 * @HB_SCRIPT_UGARITIC
-	 * @HB_SCRIPT_BUGINESE
-	 * @HB_SCRIPT_COPTIC
-	 * @HB_SCRIPT_GLAGOLITIC
-	 * @HB_SCRIPT_KHAROSHTHI
-	 * @HB_SCRIPT_NEW_TAI_LUE
-	 * @HB_SCRIPT_OLD_PERSIAN
-	 * @HB_SCRIPT_SYLOTI_NAGRI
-	 * @HB_SCRIPT_TIFINAGH
-	 * @HB_SCRIPT_BALINESE
-	 * @HB_SCRIPT_CUNEIFORM
-	 * @HB_SCRIPT_NKO
-	 * @HB_SCRIPT_PHAGS_PA
-	 * @HB_SCRIPT_PHOENICIAN
-	 * @HB_SCRIPT_CARIAN
-	 * @HB_SCRIPT_CHAM
-	 * @HB_SCRIPT_KAYAH_LI
-	 * @HB_SCRIPT_LEPCHA
-	 * @HB_SCRIPT_LYCIAN
-	 * @HB_SCRIPT_LYDIAN
-	 * @HB_SCRIPT_OL_CHIKI
-	 * @HB_SCRIPT_REJANG
-	 * @HB_SCRIPT_SAURASHTRA
-	 * @HB_SCRIPT_SUNDANESE
-	 * @HB_SCRIPT_VAI
-	 * @HB_SCRIPT_AVESTAN
-	 * @HB_SCRIPT_BAMUM
-	 * @HB_SCRIPT_EGYPTIAN_HIEROGLYPHS
-	 * @HB_SCRIPT_IMPERIAL_ARAMAIC
-	 * @HB_SCRIPT_INSCRIPTIONAL_PAHLAVI
-	 * @HB_SCRIPT_INSCRIPTIONAL_PARTHIAN
-	 * @HB_SCRIPT_JAVANESE
-	 * @HB_SCRIPT_KAITHI
-	 * @HB_SCRIPT_LISU
-	 * @HB_SCRIPT_MEETEI_MAYEK
-	 * @HB_SCRIPT_OLD_SOUTH_ARABIAN
-	 * @HB_SCRIPT_OLD_TURKIC
-	 * @HB_SCRIPT_SAMARITAN
-	 * @HB_SCRIPT_TAI_THAM
-	 * @HB_SCRIPT_TAI_VIET
-	 * @HB_SCRIPT_BATAK
-	 * @HB_SCRIPT_BRAHMI
-	 * @HB_SCRIPT_MANDAIC
-	 * @HB_SCRIPT_CHAKMA
-	 * @HB_SCRIPT_MEROITIC_CURSIVE
-	 * @HB_SCRIPT_MEROITIC_HIEROGLYPHS
-	 * @HB_SCRIPT_MIAO
-	 * @HB_SCRIPT_SHARADA
-	 * @HB_SCRIPT_SORA_SOMPENG
-	 * @HB_SCRIPT_TAKRI
-	 * @HB_SCRIPT_BASSA_VAH
-	 * @HB_SCRIPT_CAUCASIAN_ALBANIAN
-	 * @HB_SCRIPT_DUPLOYAN
-	 * @HB_SCRIPT_ELBASAN
-	 * @HB_SCRIPT_GRANTHA
-	 * @HB_SCRIPT_KHOJKI
-	 * @HB_SCRIPT_KHUDAWADI
-	 * @HB_SCRIPT_LINEAR_A
-	 * @HB_SCRIPT_MAHAJANI
-	 * @HB_SCRIPT_MANICHAEAN
-	 * @HB_SCRIPT_MENDE_KIKAKUI
-	 * @HB_SCRIPT_MODI
-	 * @HB_SCRIPT_MRO
-	 * @HB_SCRIPT_NABATAEAN
-	 * @HB_SCRIPT_OLD_NORTH_ARABIAN
-	 * @HB_SCRIPT_OLD_PERMIC
-	 * @HB_SCRIPT_PAHAWH_HMONG
-	 * @HB_SCRIPT_PALMYRENE
-	 * @HB_SCRIPT_PAU_CIN_HAU
-	 * @HB_SCRIPT_PSALTER_PAHLAVI
-	 * @HB_SCRIPT_SIDDHAM
-	 * @HB_SCRIPT_TIRHUTA
-	 * @HB_SCRIPT_WARANG_CITI
-	 * @HB_SCRIPT_AHOM
-	 * @HB_SCRIPT_ANATOLIAN_HIEROGLYPHS
-	 * @HB_SCRIPT_HATRAN
-	 * @HB_SCRIPT_MULTANI
-	 * @HB_SCRIPT_OLD_HUNGARIAN
-	 * @HB_SCRIPT_SIGNWRITING
-	 * @HB_SCRIPT_ADLAM
-	 * @HB_SCRIPT_BHAIKSUKI
-	 * @HB_SCRIPT_MARCHEN
-	 * @HB_SCRIPT_OSAGE
-	 * @HB_SCRIPT_TANGUT
-	 * @HB_SCRIPT_NEWA
-	 * @HB_SCRIPT_MASARAM_GONDI
-	 * @HB_SCRIPT_NUSHU
-	 * @HB_SCRIPT_SOYOMBO
-	 * @HB_SCRIPT_ZANABAZAR_SQUARE
-	 * @HB_SCRIPT_DOGRA
-	 * @HB_SCRIPT_GUNJALA_GONDI
-	 * @HB_SCRIPT_HANIFI_ROHINGYA
-	 * @HB_SCRIPT_MAKASAR
-	 * @HB_SCRIPT_MEDEFAIDRIN
-	 * @HB_SCRIPT_OLD_SOGDIAN
-	 * @HB_SCRIPT_SOGDIAN
-	 * @HB_SCRIPT_ELYMAIC
-	 * @HB_SCRIPT_NANDINAGARI
-	 * @HB_SCRIPT_NYIAKENG_PUACHUE_HMONG
-	 * @HB_SCRIPT_WANCHO
+	 * `Zzzz`
 	 */
 	UNKNOWN = 1517976186,
+	/**
+	 * `Arab`
+	 */
 	ARABIC = 1098015074,
+	/**
+	 * `Armn`
+	 */
 	ARMENIAN = 1098018158,
+	/**
+	 * `Beng`
+	 */
 	BENGALI = 1113943655,
+	/**
+	 * `Cyrl`
+	 */
 	CYRILLIC = 1132032620,
+	/**
+	 * `Deva`
+	 */
 	DEVANAGARI = 1147500129,
+	/**
+	 * `Geor`
+	 */
 	GEORGIAN = 1197830002,
+	/**
+	 * `Grek`
+	 */
 	GREEK = 1198679403,
+	/**
+	 * `Gujr`
+	 */
 	GUJARATI = 1198877298,
+	/**
+	 * `Guru`
+	 */
 	GURMUKHI = 1198879349,
+	/**
+	 * `Hang`
+	 */
 	HANGUL = 1214344807,
+	/**
+	 * `Hani`
+	 */
 	HAN = 1214344809,
+	/**
+	 * `Hebr`
+	 */
 	HEBREW = 1214603890,
+	/**
+	 * `Hira`
+	 */
 	HIRAGANA = 1214870113,
+	/**
+	 * `Knda`
+	 */
 	KANNADA = 1265525857,
+	/**
+	 * `Kana`
+	 */
 	KATAKANA = 1264676449,
+	/**
+	 * `Laoo`
+	 */
 	LAO = 1281453935,
+	/**
+	 * `Latn`
+	 */
 	LATIN = 1281455214,
+	/**
+	 * `Mlym`
+	 */
 	MALAYALAM = 1298954605,
+	/**
+	 * `Orya`
+	 */
 	ORIYA = 1332902241,
+	/**
+	 * `Taml`
+	 */
 	TAMIL = 1415671148,
+	/**
+	 * `Telu`
+	 */
 	TELUGU = 1415933045,
+	/**
+	 * `Thai`
+	 */
 	THAI = 1416126825,
+	/**
+	 * `Tibt`
+	 */
 	TIBETAN = 1416192628,
+	/**
+	 * `Bopo`
+	 */
 	BOPOMOFO = 1114599535,
+	/**
+	 * `Brai`
+	 */
 	BRAILLE = 1114792297,
+	/**
+	 * `Cans`
+	 */
 	CANADIAN_SYLLABICS = 1130458739,
+	/**
+	 * `Cher`
+	 */
 	CHEROKEE = 1130915186,
+	/**
+	 * `Ethi`
+	 */
 	ETHIOPIC = 1165256809,
+	/**
+	 * `Khmr`
+	 */
 	KHMER = 1265134962,
+	/**
+	 * `Mong`
+	 */
 	MONGOLIAN = 1299148391,
+	/**
+	 * `Mymr`
+	 */
 	MYANMAR = 1299803506,
+	/**
+	 * `Ogam`
+	 */
 	OGHAM = 1332175213,
+	/**
+	 * `Runr`
+	 */
 	RUNIC = 1383427698,
+	/**
+	 * `Sinh`
+	 */
 	SINHALA = 1399418472,
+	/**
+	 * `Syrc`
+	 */
 	SYRIAC = 1400468067,
+	/**
+	 * `Thaa`
+	 */
 	THAANA = 1416126817,
+	/**
+	 * `Yiii`
+	 */
 	YI = 1500080489,
+	/**
+	 * `Dsrt`
+	 */
 	DESERET = 1148416628,
+	/**
+	 * `Goth`
+	 */
 	GOTHIC = 1198486632,
+	/**
+	 * `Ital`
+	 */
 	OLD_ITALIC = 1232363884,
+	/**
+	 * `Buhd`
+	 */
 	BUHID = 1114990692,
+	/**
+	 * `Hano`
+	 */
 	HANUNOO = 1214344815,
+	/**
+	 * `Tglg`
+	 */
 	TAGALOG = 1416064103,
+	/**
+	 * `Tagb`
+	 */
 	TAGBANWA = 1415669602,
+	/**
+	 * `Cprt`
+	 */
 	CYPRIOT = 1131442804,
+	/**
+	 * `Limb`
+	 */
 	LIMBU = 1281977698,
+	/**
+	 * `Linb`
+	 */
 	LINEAR_B = 1281977954,
+	/**
+	 * `Osma`
+	 */
 	OSMANYA = 1332964705,
+	/**
+	 * `Shaw`
+	 */
 	SHAVIAN = 1399349623,
+	/**
+	 * `Tale`
+	 */
 	TAI_LE = 1415670885,
+	/**
+	 * `Ugar`
+	 */
 	UGARITIC = 1432838514,
+	/**
+	 * `Bugi`
+	 */
 	BUGINESE = 1114990441,
+	/**
+	 * `Copt`
+	 */
 	COPTIC = 1131376756,
+	/**
+	 * `Glag`
+	 */
 	GLAGOLITIC = 1198285159,
+	/**
+	 * `Khar`
+	 */
 	KHAROSHTHI = 1265131890,
+	/**
+	 * `Talu`
+	 */
 	NEW_TAI_LUE = 1415670901,
+	/**
+	 * `Xpeo`
+	 */
 	OLD_PERSIAN = 1483761007,
+	/**
+	 * `Sylo`
+	 */
 	SYLOTI_NAGRI = 1400466543,
+	/**
+	 * `Tfng`
+	 */
 	TIFINAGH = 1415999079,
+	/**
+	 * `Bali`
+	 */
 	BALINESE = 1113681001,
+	/**
+	 * `Xsux`
+	 */
 	CUNEIFORM = 1483961720,
+	/**
+	 * `Nkoo`
+	 */
 	NKO = 1315663727,
+	/**
+	 * `Phag`
+	 */
 	PHAGS_PA = 1349017959,
+	/**
+	 * `Phnx`
+	 */
 	PHOENICIAN = 1349021304,
+	/**
+	 * `Cari`
+	 */
 	CARIAN = 1130459753,
+	/**
+	 * `Cham`
+	 */
 	CHAM = 1130914157,
+	/**
+	 * `Kali`
+	 */
 	KAYAH_LI = 1264675945,
+	/**
+	 * `Lepc`
+	 */
 	LEPCHA = 1281716323,
+	/**
+	 * `Lyci`
+	 */
 	LYCIAN = 1283023721,
+	/**
+	 * `Lydi`
+	 */
 	LYDIAN = 1283023977,
+	/**
+	 * `Olck`
+	 */
 	OL_CHIKI = 1332503403,
+	/**
+	 * `Rjng`
+	 */
 	REJANG = 1382706791,
+	/**
+	 * `Saur`
+	 */
 	SAURASHTRA = 1398895986,
+	/**
+	 * `Sund`
+	 */
 	SUNDANESE = 1400204900,
+	/**
+	 * `Vaii`
+	 */
 	VAI = 1449224553,
+	/**
+	 * `Avst`
+	 */
 	AVESTAN = 1098281844,
+	/**
+	 * `Bamu`
+	 */
 	BAMUM = 1113681269,
+	/**
+	 * `Egyp`
+	 */
 	EGYPTIAN_HIEROGLYPHS = 1164409200,
+	/**
+	 * `Armi`
+	 */
 	IMPERIAL_ARAMAIC = 1098018153,
+	/**
+	 * `Phli`
+	 */
 	INSCRIPTIONAL_PAHLAVI = 1349020777,
+	/**
+	 * `Prti`
+	 */
 	INSCRIPTIONAL_PARTHIAN = 1349678185,
+	/**
+	 * `Java`
+	 */
 	JAVANESE = 1247901281,
+	/**
+	 * `Kthi`
+	 */
 	KAITHI = 1265920105,
+	/**
+	 * `Lisu`
+	 */
 	LISU = 1281979253,
+	/**
+	 * `Mtei`
+	 */
 	MEETEI_MAYEK = 1299473769,
+	/**
+	 * `Sarb`
+	 */
 	OLD_SOUTH_ARABIAN = 1398895202,
+	/**
+	 * `Orkh`
+	 */
 	OLD_TURKIC = 1332898664,
+	/**
+	 * `Samr`
+	 */
 	SAMARITAN = 1398893938,
+	/**
+	 * `Lana`
+	 */
 	TAI_THAM = 1281453665,
+	/**
+	 * `Tavt`
+	 */
 	TAI_VIET = 1415673460,
+	/**
+	 * `Batk`
+	 */
 	BATAK = 1113683051,
+	/**
+	 * `Brah`
+	 */
 	BRAHMI = 1114792296,
+	/**
+	 * `Mand`
+	 */
 	MANDAIC = 1298230884,
+	/**
+	 * `Cakm`
+	 */
 	CHAKMA = 1130457965,
+	/**
+	 * `Merc`
+	 */
 	MEROITIC_CURSIVE = 1298494051,
+	/**
+	 * `Mero`
+	 */
 	MEROITIC_HIEROGLYPHS = 1298494063,
+	/**
+	 * `Plrd`
+	 */
 	MIAO = 1349284452,
+	/**
+	 * `Shrd`
+	 */
 	SHARADA = 1399353956,
+	/**
+	 * `Sora`
+	 */
 	SORA_SOMPENG = 1399812705,
+	/**
+	 * `Takr`
+	 */
 	TAKRI = 1415670642,
+	/**
+	 * `Bass`, Since: 0.9.30
+	 */
 	BASSA_VAH = 1113682803,
+	/**
+	 * `Aghb`, Since: 0.9.30
+	 */
 	CAUCASIAN_ALBANIAN = 1097295970,
+	/**
+	 * `Dupl`, Since: 0.9.30
+	 */
 	DUPLOYAN = 1148547180,
+	/**
+	 * `Elba`, Since: 0.9.30
+	 */
 	ELBASAN = 1164730977,
+	/**
+	 * `Gran`, Since: 0.9.30
+	 */
 	GRANTHA = 1198678382,
+	/**
+	 * `Khoj`, Since: 0.9.30
+	 */
 	KHOJKI = 1265135466,
+	/**
+	 * `Sind`, Since: 0.9.30
+	 */
 	KHUDAWADI = 1399418468,
+	/**
+	 * `Lina`, Since: 0.9.30
+	 */
 	LINEAR_A = 1281977953,
+	/**
+	 * `Mahj`, Since: 0.9.30
+	 */
 	MAHAJANI = 1298229354,
+	/**
+	 * `Mani`, Since: 0.9.30
+	 */
 	MANICHAEAN = 1298230889,
+	/**
+	 * `Mend`, Since: 0.9.30
+	 */
 	MENDE_KIKAKUI = 1298493028,
+	/**
+	 * `Modi`, Since: 0.9.30
+	 */
 	MODI = 1299145833,
+	/**
+	 * `Mroo`, Since: 0.9.30
+	 */
 	MRO = 1299345263,
+	/**
+	 * `Nbat`, Since: 0.9.30
+	 */
 	NABATAEAN = 1315070324,
+	/**
+	 * `Narb`, Since: 0.9.30
+	 */
 	OLD_NORTH_ARABIAN = 1315009122,
+	/**
+	 * `Perm`, Since: 0.9.30
+	 */
 	OLD_PERMIC = 1348825709,
+	/**
+	 * `Hmng`, Since: 0.9.30
+	 */
 	PAHAWH_HMONG = 1215131239,
+	/**
+	 * `Palm`, Since: 0.9.30
+	 */
 	PALMYRENE = 1348562029,
+	/**
+	 * `Pauc`, Since: 0.9.30
+	 */
 	PAU_CIN_HAU = 1348564323,
+	/**
+	 * `Phlp`, Since: 0.9.30
+	 */
 	PSALTER_PAHLAVI = 1349020784,
+	/**
+	 * `Sidd`, Since: 0.9.30
+	 */
 	SIDDHAM = 1399415908,
+	/**
+	 * `Tirh`, Since: 0.9.30
+	 */
 	TIRHUTA = 1416196712,
+	/**
+	 * `Wara`, Since: 0.9.30
+	 */
 	WARANG_CITI = 1466004065,
+	/**
+	 * `Ahom`, Since: 0.9.30
+	 */
 	AHOM = 1097363309,
+	/**
+	 * `Hluw`, Since: 0.9.30
+	 */
 	ANATOLIAN_HIEROGLYPHS = 1215067511,
+	/**
+	 * `Hatr`, Since: 0.9.30
+	 */
 	HATRAN = 1214346354,
+	/**
+	 * `Mult`, Since: 0.9.30
+	 */
 	MULTANI = 1299541108,
+	/**
+	 * `Hung`, Since: 0.9.30
+	 */
 	OLD_HUNGARIAN = 1215655527,
+	/**
+	 * `Sgnw`, Since: 0.9.30
+	 */
 	SIGNWRITING = 1399287415,
+	/**
+	 * `Adlm`, Since: 1.3.0
+	 */
 	ADLAM = 1097100397,
+	/**
+	 * `Bhks`, Since: 1.3.0
+	 */
 	BHAIKSUKI = 1114139507,
+	/**
+	 * `Marc`, Since: 1.3.0
+	 */
 	MARCHEN = 1298231907,
+	/**
+	 * `Osge`, Since: 1.3.0
+	 */
 	OSAGE = 1332963173,
+	/**
+	 * `Tang`, Since: 1.3.0
+	 */
 	TANGUT = 1415671399,
+	/**
+	 * `Newa`, Since: 1.3.0
+	 */
 	NEWA = 1315272545,
+	/**
+	 * `Gonm`, Since: 1.6.0
+	 */
 	MASARAM_GONDI = 1198485101,
+	/**
+	 * `Nshu`, Since: 1.6.0
+	 */
 	NUSHU = 1316186229,
+	/**
+	 * `Soyo`, Since: 1.6.0
+	 */
 	SOYOMBO = 1399814511,
+	/**
+	 * `Zanb`, Since: 1.6.0
+	 */
 	ZANABAZAR_SQUARE = 1516334690,
+	/**
+	 * `Dogr`, Since: 1.8.0
+	 */
 	DOGRA = 1148151666,
+	/**
+	 * `Gong`, Since: 1.8.0
+	 */
 	GUNJALA_GONDI = 1198485095,
+	/**
+	 * `Rohg`, Since: 1.8.0
+	 */
 	HANIFI_ROHINGYA = 1383032935,
+	/**
+	 * `Maka`, Since: 1.8.0
+	 */
 	MAKASAR = 1298230113,
+	/**
+	 * `Medf`, Since: 1.8.0
+	 */
 	MEDEFAIDRIN = 1298490470,
+	/**
+	 * `Sogo`, Since: 1.8.0
+	 */
 	OLD_SOGDIAN = 1399809903,
+	/**
+	 * `Sogd`, Since: 1.8.0
+	 */
 	SOGDIAN = 1399809892,
+	/**
+	 * `Elym`, Since: 2.4.0
+	 */
 	ELYMAIC = 1164736877,
+	/**
+	 * `Nand`, Since: 2.4.0
+	 */
 	NANDINAGARI = 1315008100,
+	/**
+	 * `Hmnp`, Since: 2.4.0
+	 */
 	NYIAKENG_PUACHUE_HMONG = 1215131248,
+	/**
+	 * `Wcho`, Since: 2.4.0
+	 */
 	WANCHO = 1466132591,
+	/**
+	 * `Chrs`, Since: 2.6.7
+	 */
 	CHORASMIAN = 1130918515,
+	/**
+	 * `Diak`, Since: 2.6.7
+	 */
 	DIVES_AKURU = 1147756907,
+	/**
+	 * `Kits`, Since: 2.6.7
+	 */
 	KHITAN_SMALL_SCRIPT = 1265202291,
+	/**
+	 * `Yezi`, Since: 2.6.7
+	 */
 	YEZIDI = 1499822697,
 	/**
-	 * #HB_TAG_NONE
+	 * No script set
 	 */
 	INVALID = 0,
 }
@@ -2527,6 +3240,26 @@ public enum hb_unicode_general_category_t
 alias hb_unicode_general_category_t unicode_general_category_t;
 
 /**
+ * Structure representing a setting for an #hb_aat_layout_feature_type_t.
+ */
+struct hb_aat_layout_feature_selector_info_t
+{
+	/**
+	 * The selector's name identifier
+	 */
+	hb_ot_name_id_t nameId;
+	/**
+	 * The value to turn the selector on
+	 */
+	hb_aat_layout_feature_selector_t enable;
+	/**
+	 * The value to turn the selector off
+	 */
+	hb_aat_layout_feature_selector_t disable;
+	uint reserved;
+}
+
+/**
  * Data type for blobs. A blob wraps a chunk of binary
  * data and facilitates its lifecycle management between
  * a client program and HarfBuzz.
@@ -2609,6 +3342,9 @@ struct hb_font_extents_t
  */
 struct hb_font_funcs_t;
 
+/**
+ * Data type for holding fonts.
+ */
 struct hb_font_t;
 
 /**
@@ -2708,7 +3444,13 @@ struct hb_map_t;
  */
 struct hb_ot_color_layer_t
 {
+	/**
+	 * the glyph ID of the layer
+	 */
 	hb_codepoint_t glyph;
+	/**
+	 * the palette color index of the layer
+	 */
 	uint colorIndex;
 }
 
@@ -2821,12 +3563,32 @@ struct hb_ot_var_axis_info_t
 	uint reserved;
 }
 
+/**
+ * Use #hb_ot_var_axis_info_t instead.
+ *
+ * Since: 1.4.2
+ */
 struct hb_ot_var_axis_t
 {
+	/**
+	 * axis tag
+	 */
 	hb_tag_t tag;
+	/**
+	 * axis name identifier
+	 */
 	hb_ot_name_id_t nameId;
+	/**
+	 * minimum value of the axis
+	 */
 	float minValue;
+	/**
+	 * default value of the axis
+	 */
 	float defaultValue;
+	/**
+	 * maximum value of the axis
+	 */
 	float maxValue;
 }
 
@@ -2919,13 +3681,42 @@ struct hb_variation_t
 	float value;
 }
 
-/** */
+/**
+ * A callback method for #hb_buffer_t. The method gets called with the
+ * #hb_buffer_t it was set on, the #hb_font_t the buffer is shaped with and a
+ * message describing what step of the shaping process will be performed.
+ * Returning %false from this method will skip this shaping step and move to
+ * the next one.
+ *
+ * Params:
+ *     buffer = An #hb_buffer_t to work upon
+ *     font = The #hb_font_t the @buffer is shaped with
+ *     message = %NULL-terminated message passed to the function
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true to perform the shaping step, %false to skip it.
+ *
+ * Since: 1.1.3
+ */
 public alias extern(C) hb_bool_t function(hb_buffer_t* buffer, hb_font_t* font, const(char)* message, void* userData) hb_buffer_message_func_t;
 
-/** */
+/**
+ * A virtual method for destroy user-data callbacks.
+ *
+ * Params:
+ *     userData = the data to be destroyed
+ */
 public alias extern(C) void function(void* userData) hb_destroy_func_t;
 
-/** */
+/**
+ * This method should retrieve the extents for a font.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     extents = The font extents retrieved
+ *     userData = User data pointer passed by the caller
+ */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_font_extents_t* extents, void* userData) hb_font_get_font_extents_func_t;
 
 /**
@@ -2933,6 +3724,14 @@ public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_fo
  *
  * This method should retrieve the advance for a specified glyph. The
  * method must return an #hb_position_t.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     glyph = The glyph ID to query
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: The advance of @glyph within @font
  */
 public alias extern(C) hb_position_t function(hb_font_t* font, void* fontData, hb_codepoint_t glyph, void* userData) hb_font_get_glyph_advance_func_t;
 
@@ -2940,6 +3739,16 @@ public alias extern(C) hb_position_t function(hb_font_t* font, void* fontData, h
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
  *
  * This method should retrieve the advances for a sequence of glyphs.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     count = The number of glyph IDs in the sequence queried
+ *     firstGlyph = The first glyph ID to query
+ *     glyphStride = The stride between successive glyph IDs
+ *     firstAdvance = The first advance retrieved
+ *     advanceStride = The stride between successive advances
+ *     userData = User data pointer passed by the caller
  */
 public alias extern(C) void function(hb_font_t* font, void* fontData, uint count, hb_codepoint_t* firstGlyph, uint glyphStride, hb_position_t* firstAdvance, uint advanceStride, void* userData) hb_font_get_glyph_advances_func_t;
 
@@ -2949,6 +3758,17 @@ public alias extern(C) void function(hb_font_t* font, void* fontData, uint count
  * This method should retrieve the (X,Y) coordinates (in font units) for a
  * specified contour point in a glyph. Each coordinate must be returned as
  * an #hb_position_t output parameter.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     glyph = The glyph ID to query
+ *     pointIndex = The contour-point index to query
+ *     x = The X value retrieved for the contour point
+ *     y = The Y value retrieved for the contour point
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t glyph, uint pointIndex, hb_position_t* x, hb_position_t* y, void* userData) hb_font_get_glyph_contour_point_func_t;
 
@@ -2957,6 +3777,15 @@ public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_co
  *
  * This method should retrieve the extents for a specified glyph. Extents must be
  * returned in an #hb_glyph_extents output parameter.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     glyph = The glyph ID to query
+ *     extents = The #hb_glyph_extents_t retrieved
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t glyph, hb_glyph_extents_t* extents, void* userData) hb_font_get_glyph_extents_func_t;
 
@@ -2965,13 +3794,48 @@ public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_co
  *
  * This method should retrieve the glyph ID that corresponds to a glyph-name
  * string.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     name = The name string to query
+ *     len = The length of the name queried
+ *     glyph = The glyph ID retrieved
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
  */
-public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, const(char)* name, int len, hb_codepoint_t* glyph, void* userData) hb_font_get_glyph_from_name_func_t;
+public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, char* name, int len, hb_codepoint_t* glyph, void* userData) hb_font_get_glyph_from_name_func_t;
 
-/** */
+/**
+ * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
+ *
+ * This method should retrieve the glyph ID for a specified Unicode code point
+ * font, with an optional variation selector.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     unicode = The Unicode code point to query
+ *     variationSelector = The  variation-selector code point to query
+ *     glyph = The glyph ID retrieved
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
+ */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t unicode, hb_codepoint_t variationSelector, hb_codepoint_t* glyph, void* userData) hb_font_get_glyph_func_t;
 
-/** */
+/**
+ * This method should retrieve the kerning-adjustment value for a glyph-pair in
+ * the specified font, for horizontal text segments.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     firstGlyph = The glyph ID of the first glyph in the glyph pair
+ *     secondGlyph = The glyph ID of the second glyph in the glyph pair
+ *     userData = User data pointer passed by the caller
+ */
 public alias extern(C) hb_position_t function(hb_font_t* font, void* fontData, hb_codepoint_t firstGlyph, hb_codepoint_t secondGlyph, void* userData) hb_font_get_glyph_kerning_func_t;
 
 /**
@@ -2979,6 +3843,16 @@ public alias extern(C) hb_position_t function(hb_font_t* font, void* fontData, h
  *
  * This method should retrieve the glyph name that corresponds to a
  * glyph ID. The name should be returned in a string output parameter.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     glyph = The glyph ID to query
+ *     name = Name string retrieved for the glyph ID
+ *     size = Length of the glyph-name string retrieved
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t glyph, char* name, uint size, void* userData) hb_font_get_glyph_name_func_t;
 
@@ -2988,6 +3862,16 @@ public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_co
  * This method should retrieve the (X,Y) coordinates (in font units) of the
  * origin for a glyph. Each coordinate must be returned in an #hb_position_t
  * output parameter.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     glyph = The glyph ID to query
+ *     x = The X coordinate of the origin
+ *     y = The Y coordinate of the origin
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t glyph, hb_position_t* x, hb_position_t* y, void* userData) hb_font_get_glyph_origin_func_t;
 
@@ -2996,6 +3880,15 @@ public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_co
  *
  * This method should retrieve the nominal glyph ID for a specified Unicode code
  * point. Glyph IDs must be returned in a #hb_codepoint_t output parameter.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     unicode = The Unicode code point to query
+ *     glyph = The glyph ID retrieved
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t unicode, hb_codepoint_t* glyph, void* userData) hb_font_get_nominal_glyph_func_t;
 
@@ -3005,6 +3898,18 @@ public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_co
  * This method should retrieve the nominal glyph IDs for a sequence of
  * Unicode code points. Glyph IDs must be returned in a #hb_codepoint_t
  * output parameter.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     count = number of code points to query
+ *     firstUnicode = The first Unicode code point to query
+ *     unicodeStride = The stride between successive code points
+ *     firstGlyph = The first glyph ID retrieved
+ *     glyphStride = The stride between successive glyph IDs
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: the number of code points processed
  */
 public alias extern(C) uint function(hb_font_t* font, void* fontData, uint count, hb_codepoint_t* firstUnicode, uint unicodeStride, hb_codepoint_t* firstGlyph, uint glyphStride, void* userData) hb_font_get_nominal_glyphs_func_t;
 
@@ -3014,10 +3919,31 @@ public alias extern(C) uint function(hb_font_t* font, void* fontData, uint count
  * This method should retrieve the glyph ID for a specified Unicode code point
  * followed by a specified Variation Selector code point. Glyph IDs must be
  * returned in a #hb_codepoint_t output parameter.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     unicode = The Unicode code point to query
+ *     variationSelector = The  variation-selector code point to query
+ *     glyph = The glyph ID retrieved
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: %true if data found, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t unicode, hb_codepoint_t variationSelector, hb_codepoint_t* glyph, void* userData) hb_font_get_variation_glyph_func_t;
 
-/** */
+/**
+ * Callback function for hb_face_create_for_tables().
+ *
+ * Params:
+ *     face = an #hb_face_t to reference table for
+ *     tag = the tag of the table to reference
+ *     userData = User data pointer passed by the caller
+ *
+ * Returns: A pointer to the @tag table within @face
+ *
+ * Since: 0.9.2
+ */
 public alias extern(C) hb_blob_t* function(hb_face_t* face, hb_tag_t tag, void* userData) hb_reference_table_func_t;
 
 /**
@@ -3051,7 +3977,7 @@ public alias extern(C) hb_unicode_combining_class_t function(hb_unicode_funcs_t*
  *     ab = The composed code point
  *     userData = user data pointer passed by the caller
  *
- * Returns: True is @a,@b composed, false otherwise
+ * Returns: %true is @a,@b composed, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_unicode_funcs_t* ufuncs, hb_codepoint_t a, hb_codepoint_t b, hb_codepoint_t* ab, void* userData) hb_unicode_compose_func_t;
 
@@ -3061,14 +3987,14 @@ public alias extern(C) hb_bool_t function(hb_unicode_funcs_t* ufuncs, hb_codepoi
  *
  * If @u has no compatibility decomposition, zero should be returned.
  *
- * The Unicode standard guarantees that a buffer of length %HB_UNICODE_MAX_DECOMPOSITION_LEN codepoints will always be sufficient for any
+ * The Unicode standard guarantees that a buffer of length #HB_UNICODE_MAX_DECOMPOSITION_LEN codepoints will always be sufficient for any
  * compatibility decomposition plus an terminating value of 0.  Consequently, @decompose must be allocated by the caller to be at least this length.  Implementations
  * of this function type must ensure that they do not write past the provided array.
  *
  * Params:
  *     ufuncs = a Unicode function structure
  *     u = codepoint to decompose
- *     decomposed = address of codepoint array (of length %HB_UNICODE_MAX_DECOMPOSITION_LEN) to write decomposition into
+ *     decomposed = address of codepoint array (of length #HB_UNICODE_MAX_DECOMPOSITION_LEN) to write decomposition into
  *     userData = user data pointer as passed to hb_unicode_funcs_set_decompose_compatibility_func()
  *
  * Returns: number of codepoints in the full compatibility decomposition of @u, or 0 if no decomposition available.
@@ -3090,11 +4016,18 @@ public alias extern(C) uint function(hb_unicode_funcs_t* ufuncs, hb_codepoint_t 
  *     b = The second decomposed code point
  *     userData = user data pointer passed by the caller
  *
- * Returns: True if @ab decomposed, false otherwise
+ * Returns: %true if @ab decomposed, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_unicode_funcs_t* ufuncs, hb_codepoint_t ab, hb_codepoint_t* a, hb_codepoint_t* b, void* userData) hb_unicode_decompose_func_t;
 
-/** */
+/**
+ * A virtual method for the #hb_unicode_funcs_t structure.
+ *
+ * Params:
+ *     ufuncs = A Unicode-functions structure
+ *     unicode = The code point to query
+ *     userData = User data pointer passed by the caller
+ */
 public alias extern(C) uint function(hb_unicode_funcs_t* ufuncs, hb_codepoint_t unicode, void* userData) hb_unicode_eastasian_width_func_t;
 
 /**
@@ -3160,39 +4093,76 @@ alias HB_AAT_LAYOUT_NO_SELECTOR_INDEX = AAT_LAYOUT_NO_SELECTOR_INDEX;
 enum BUFFER_REPLACEMENT_CODEPOINT_DEFAULT = 65533;
 alias HB_BUFFER_REPLACEMENT_CODEPOINT_DEFAULT = BUFFER_REPLACEMENT_CODEPOINT_DEFAULT;
 
+/**
+ * Special setting for #hb_feature_t.start to apply the feature from the start
+ * of the buffer.
+ */
 enum FEATURE_GLOBAL_START = 0;
 alias HB_FEATURE_GLOBAL_START = FEATURE_GLOBAL_START;
 
+/**
+ * An unset #hb_language_t.
+ */
 enum LANGUAGE_INVALID = 0;
 alias HB_LANGUAGE_INVALID = LANGUAGE_INVALID;
 
+/**
+ * Unset #hb_map_t value.
+ */
 enum MAP_VALUE_INVALID = 4294967295;
 alias HB_MAP_VALUE_INVALID = MAP_VALUE_INVALID;
 
+/**
+ * Special value for language index indicating default or unsupported language.
+ */
 enum OT_LAYOUT_DEFAULT_LANGUAGE_INDEX = 65535;
 alias HB_OT_LAYOUT_DEFAULT_LANGUAGE_INDEX = OT_LAYOUT_DEFAULT_LANGUAGE_INDEX;
 
+/**
+ * Special value for feature index indicating unsupported feature.
+ */
 enum OT_LAYOUT_NO_FEATURE_INDEX = 65535;
 alias HB_OT_LAYOUT_NO_FEATURE_INDEX = OT_LAYOUT_NO_FEATURE_INDEX;
 
+/**
+ * Special value for script index indicating unsupported script.
+ */
 enum OT_LAYOUT_NO_SCRIPT_INDEX = 65535;
 alias HB_OT_LAYOUT_NO_SCRIPT_INDEX = OT_LAYOUT_NO_SCRIPT_INDEX;
 
+/**
+ * Special value for variations index indicating unsupported variation.
+ */
 enum OT_LAYOUT_NO_VARIATIONS_INDEX = 4294967295;
 alias HB_OT_LAYOUT_NO_VARIATIONS_INDEX = OT_LAYOUT_NO_VARIATIONS_INDEX;
 
+/**
+ * Maximum number of OpenType tags that can correspond to a give #hb_language_t.
+ */
 enum OT_MAX_TAGS_PER_LANGUAGE = 3;
 alias HB_OT_MAX_TAGS_PER_LANGUAGE = OT_MAX_TAGS_PER_LANGUAGE;
 
+/**
+ * Maximum number of OpenType tags that can correspond to a give #hb_script_t.
+ */
 enum OT_MAX_TAGS_PER_SCRIPT = 3;
 alias HB_OT_MAX_TAGS_PER_SCRIPT = OT_MAX_TAGS_PER_SCRIPT;
 
+/**
+ * Do not use.
+ */
 enum OT_VAR_NO_AXIS_INDEX = 4294967295;
 alias HB_OT_VAR_NO_AXIS_INDEX = OT_VAR_NO_AXIS_INDEX;
 
+/**
+ * Unset #hb_set_t value.
+ */
 enum SET_VALUE_INVALID = 4294967295;
 alias HB_SET_VALUE_INVALID = SET_VALUE_INVALID;
 
+/**
+ * Maximum valid Unicode code point.
+ */
 enum UNICODE_MAX = 1114111;
 alias HB_UNICODE_MAX = UNICODE_MAX;
 
@@ -3205,11 +4175,11 @@ alias HB_UNICODE_MAX_DECOMPOSITION_LEN = UNICODE_MAX_DECOMPOSITION_LEN;
 enum VERSION_MAJOR = 2;
 alias HB_VERSION_MAJOR = VERSION_MAJOR;
 
-enum VERSION_MICRO = 4;
+enum VERSION_MICRO = 1;
 alias HB_VERSION_MICRO = VERSION_MICRO;
 
-enum VERSION_MINOR = 7;
+enum VERSION_MINOR = 8;
 alias HB_VERSION_MINOR = VERSION_MINOR;
 
-enum VERSION_STRING = "2.7.4";
+enum VERSION_STRING = "2.8.1";
 alias HB_VERSION_STRING = VERSION_STRING;

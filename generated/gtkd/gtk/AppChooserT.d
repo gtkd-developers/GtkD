@@ -26,29 +26,32 @@ module gtk.AppChooserT;
 
 public  import gio.AppInfoIF;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gtk.c.functions;
 public  import gtk.c.types;
 
 
 /**
- * #GtkAppChooser is an interface that can be implemented by widgets which
- * allow the user to choose an application (typically for the purpose of
- * opening a file). The main objects that implement this interface are
- * #GtkAppChooserWidget, #GtkAppChooserDialog and #GtkAppChooserButton.
+ * `GtkAppChooser` is an interface for widgets which allow the user to
+ * choose an application.
  * 
- * Applications are represented by GIO #GAppInfo objects here.
+ * The main objects that implement this interface are
+ * [class@Gtk.AppChooserWidget],
+ * [class@Gtk.AppChooserDialog] and [class@Gtk.AppChooserButton].
+ * 
+ * Applications are represented by GIO `GAppInfo` objects here.
  * GIO has a concept of recommended and fallback applications for a
  * given content type. Recommended applications are those that claim
  * to handle the content type itself, while fallback also includes
  * applications that handle a more generic content type. GIO also
  * knows the default and last-used application for a given content
- * type. The #GtkAppChooserWidget provides detailed control over
+ * type. The `GtkAppChooserWidget` provides detailed control over
  * whether the shown list of applications should include default,
  * recommended or fallback applications.
  * 
- * To obtain the application that has been selected in a #GtkAppChooser,
- * use gtk_app_chooser_get_app_info().
+ * To obtain the application that has been selected in a `GtkAppChooser`,
+ * use [method@Gtk.AppChooser.get_app_info].
  */
 public template AppChooserT(TStruct)
 {
@@ -64,8 +67,9 @@ public template AppChooserT(TStruct)
 	/**
 	 * Returns the currently selected application.
 	 *
-	 * Returns: a #GAppInfo for the currently selected
-	 *     application, or %NULL if none is selected. Free with g_object_unref()
+	 * Returns: a `GAppInfo` for the
+	 *     currently selected application, or %NULL if none is selected.
+	 *     Free with g_object_unref()
 	 */
 	public AppInfoIF getAppInfo()
 	{
@@ -80,7 +84,8 @@ public template AppChooserT(TStruct)
 	}
 
 	/**
-	 * Returns the current value of the #GtkAppChooser:content-type property.
+	 * Returns the content type for which the `GtkAppChooser`
+	 * shows applications.
 	 *
 	 * Returns: the content type of @self. Free with g_free()
 	 */

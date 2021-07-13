@@ -36,12 +36,15 @@ private import std.algorithm;
 
 
 /**
- * #GtkRange is the common base class for widgets which visualize an
- * adjustment, e.g #GtkScale or #GtkScrollbar.
+ * `GtkRange` is the common base class for widgets which visualize an
+ * adjustment.
+ * 
+ * Widgets that are derived from `GtkRange` include
+ * [class@Gtk.Scale] and [class@Gtk.Scrollbar].
  * 
  * Apart from signals for monitoring the parameters of the adjustment,
- * #GtkRange provides properties and methods for setting a
- * “fill level” on range widgets. See gtk_range_set_fill_level().
+ * `GtkRange` provides properties and methods for setting a
+ * “fill level” on range widgets. See [method@Gtk.Range.set_fill_level].
  */
 public class Range : Widget, OrientableIF
 {
@@ -82,12 +85,9 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Get the #GtkAdjustment which is the “model” object for #GtkRange.
-	 * See gtk_range_set_adjustment() for details.
-	 * The return value does not have a reference added, so should not
-	 * be unreferenced.
+	 * Get the adjustment which is the “model” object for `GtkRange`.
 	 *
-	 * Returns: a #GtkAdjustment
+	 * Returns: a `GtkAdjustment`
 	 */
 	public Adjustment getAdjustment()
 	{
@@ -112,7 +112,9 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Gets the value set by gtk_range_set_flippable().
+	 * Gets whether the `GtkRange` respects text direction.
+	 *
+	 * See [method@Gtk.Range.set_flippable].
 	 *
 	 * Returns: %TRUE if the range is flippable
 	 */
@@ -122,7 +124,9 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Gets the value set by gtk_range_set_inverted().
+	 * Gets whether the range is inverted.
+	 *
+	 * See [method@Gtk.Range.set_inverted].
 	 *
 	 * Returns: %TRUE if the range is inverted
 	 */
@@ -135,7 +139,7 @@ public class Range : Widget, OrientableIF
 	 * This function returns the area that contains the range’s trough,
 	 * in coordinates relative to @range's origin.
 	 *
-	 * This function is useful mainly for #GtkRange subclasses.
+	 * This function is useful mainly for `GtkRange` subclasses.
 	 *
 	 * Params:
 	 *     rangeRect = return location for the range rectangle
@@ -157,7 +161,9 @@ public class Range : Widget, OrientableIF
 
 	/**
 	 * Gets the number of digits to round the value to when
-	 * it changes. See #GtkRange::change-value.
+	 * it changes.
+	 *
+	 * See [signal@Gtk.Range::change-value].
 	 *
 	 * Returns: the number of digits to round to
 	 */
@@ -180,7 +186,7 @@ public class Range : Widget, OrientableIF
 	 * This function returns sliders range along the long dimension,
 	 * in widget->window coordinates.
 	 *
-	 * This function is useful mainly for #GtkRange subclasses.
+	 * This function is useful mainly for `GtkRange` subclasses.
 	 *
 	 * Params:
 	 *     sliderStart = return location for the slider's
@@ -194,9 +200,9 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * This function is useful mainly for #GtkRange subclasses.
+	 * This function is useful mainly for `GtkRange` subclasses.
 	 *
-	 * See gtk_range_set_slider_size_fixed().
+	 * See [method@Gtk.Range.set_slider_size_fixed].
 	 *
 	 * Returns: whether the range’s slider has a fixed size.
 	 */
@@ -216,16 +222,18 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the adjustment to be used as the “model” object for this range
-	 * widget. The adjustment indicates the current range value, the
-	 * minimum and maximum range values, the step/page increments used
-	 * for keybindings and scrolling, and the page size. The page size
-	 * is normally 0 for #GtkScale and nonzero for #GtkScrollbar, and
-	 * indicates the size of the visible area of the widget being scrolled.
+	 * Sets the adjustment to be used as the “model” object for the `GtkRange`
+	 *
+	 * The adjustment indicates the current range value, the minimum and
+	 * maximum range values, the step/page increments used for keybindings
+	 * and scrolling, and the page size.
+	 *
+	 * The page size is normally 0 for `GtkScale` and nonzero for `GtkScrollbar`,
+	 * and indicates the size of the visible area of the widget being scrolled.
 	 * The page size affects the size of the scrollbar slider.
 	 *
 	 * Params:
-	 *     adjustment = a #GtkAdjustment
+	 *     adjustment = a `GtkAdjustment`
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -243,12 +251,12 @@ public class Range : Widget, OrientableIF
 	 *
 	 * This amount of prebuffering can be displayed on the range’s trough
 	 * and is themeable separately from the trough. To enable fill level
-	 * display, use gtk_range_set_show_fill_level(). The range defaults
+	 * display, use [method@Gtk.Range.set_show_fill_level]. The range defaults
 	 * to not showing the fill level.
 	 *
 	 * Additionally, it’s possible to restrict the range’s slider position
-	 * to values which are smaller than the fill level. This is controller
-	 * by gtk_range_set_restrict_to_fill_level() and is by default
+	 * to values which are smaller than the fill level. This is controlled
+	 * by [method@Gtk.Range.set_restrict_to_fill_level] and is by default
 	 * enabled.
 	 *
 	 * Params:
@@ -260,10 +268,12 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * If a range is flippable, it will switch its direction if it is
-	 * horizontal and its direction is %GTK_TEXT_DIR_RTL.
+	 * Sets whether the `GtkRange` respects text direction.
 	 *
-	 * See gtk_widget_get_direction().
+	 * If a range is flippable, it will switch its direction
+	 * if it is horizontal and its direction is %GTK_TEXT_DIR_RTL.
+	 *
+	 * See [method@Gtk.Widget.get_direction].
 	 *
 	 * Params:
 	 *     flippable = %TRUE to make the range flippable
@@ -275,8 +285,9 @@ public class Range : Widget, OrientableIF
 
 	/**
 	 * Sets the step and page sizes for the range.
-	 * The step size is used when the user clicks the #GtkScrollbar
-	 * arrows or moves #GtkScale via arrow keys. The page size
+	 *
+	 * The step size is used when the user clicks the `GtkScrollbar`
+	 * arrows or moves a `GtkScale` via arrow keys. The page size
 	 * is used for example when moving via Page Up or Page Down keys.
 	 *
 	 * Params:
@@ -289,10 +300,12 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
+	 * Sets whether to invert the range.
+	 *
 	 * Ranges normally move from lower to higher values as the
 	 * slider moves from top to bottom or left to right. Inverted
-	 * ranges have higher values at the top or on the right rather than
-	 * on the bottom or left.
+	 * ranges have higher values at the top or on the right rather
+	 * than on the bottom or left.
 	 *
 	 * Params:
 	 *     setting = %TRUE to invert the range
@@ -303,9 +316,11 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the allowable values in the #GtkRange, and clamps the range
-	 * value to be between @min and @max. (If the range has a non-zero
-	 * page size, it is clamped between @min and @max - page-size.)
+	 * Sets the allowable values in the `GtkRange`.
+	 *
+	 * The range value is clamped to be between @min and @max.
+	 * (If the range has a non-zero page size, it is clamped
+	 * between @min and @max - page-size.)
 	 *
 	 * Params:
 	 *     min = minimum range value
@@ -317,9 +332,10 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets whether the slider is restricted to the fill level. See
-	 * gtk_range_set_fill_level() for a general description of the fill
-	 * level concept.
+	 * Sets whether the slider is restricted to the fill level.
+	 *
+	 * See [method@Gtk.Range.set_fill_level] for a general description
+	 * of the fill level concept.
 	 *
 	 * Params:
 	 *     restrictToFillLevel = Whether the fill level restricts slider movement.
@@ -331,7 +347,9 @@ public class Range : Widget, OrientableIF
 
 	/**
 	 * Sets the number of digits to round the value to when
-	 * it changes. See #GtkRange::change-value.
+	 * it changes.
+	 *
+	 * See [signal@Gtk.Range::change-value].
 	 *
 	 * Params:
 	 *     roundDigits = the precision in digits, or -1
@@ -342,9 +360,10 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets whether a graphical fill level is show on the trough. See
-	 * gtk_range_set_fill_level() for a general description of the fill
-	 * level concept.
+	 * Sets whether a graphical fill level is show on the trough.
+	 *
+	 * See [method@Gtk.Range.set_fill_level] for a general description
+	 * of the fill level concept.
 	 *
 	 * Params:
 	 *     showFillLevel = Whether a fill level indicator graphics is shown.
@@ -358,7 +377,7 @@ public class Range : Widget, OrientableIF
 	 * Sets whether the range’s slider has a fixed size, or a size that
 	 * depends on its adjustment’s page size.
 	 *
-	 * This function is useful mainly for #GtkRange subclasses.
+	 * This function is useful mainly for `GtkRange` subclasses.
 	 *
 	 * Params:
 	 *     sizeFixed = %TRUE to make the slider size constant
@@ -369,10 +388,11 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the current value of the range; if the value is outside the
-	 * minimum or maximum range values, it will be clamped to fit inside
-	 * them. The range emits the #GtkRange::value-changed signal if the
-	 * value changes.
+	 * Sets the current value of the range.
+	 *
+	 * If the value is outside the minimum or maximum range values,
+	 * it will be clamped to fit inside them. The range emits the
+	 * [signal@Gtk.Range::value-changed] signal if the value changes.
 	 *
 	 * Params:
 	 *     value = new value of the range
@@ -395,18 +415,18 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * The #GtkRange::change-value signal is emitted when a scroll action is
-	 * performed on a range.  It allows an application to determine the
-	 * type of scroll event that occurred and the resultant new value.
-	 * The application can handle the event itself and return %TRUE to
-	 * prevent further processing.  Or, by returning %FALSE, it can pass
-	 * the event to other handlers until the default GTK handler is
-	 * reached.
+	 * Emitted when a scroll action is performed on a range.
 	 *
-	 * The value parameter is unrounded.  An application that overrides
-	 * the GtkRange::change-value signal is responsible for clamping the
-	 * value to the desired number of decimal digits; the default GTK
-	 * handler clamps the value based on #GtkRange:round-digits.
+	 * It allows an application to determine the type of scroll event
+	 * that occurred and the resultant new value. The application can
+	 * handle the event itself and return %TRUE to prevent further
+	 * processing. Or, by returning %FALSE, it can pass the event to
+	 * other handlers until the default GTK handler is reached.
+	 *
+	 * The value parameter is unrounded. An application that overrides
+	 * the ::change-value signal is responsible for clamping the value
+	 * to the desired number of decimal digits; the default GTK
+	 * handler clamps the value based on [property@Gtk.Range:round-digits].
 	 *
 	 * Params:
 	 *     scroll = the type of scroll action that was performed
@@ -421,7 +441,9 @@ public class Range : Widget, OrientableIF
 	}
 
 	/**
-	 * Virtual function that moves the slider. Used for keybindings.
+	 * Virtual function that moves the slider.
+	 *
+	 * Used for keybindings.
 	 *
 	 * Params:
 	 *     step = how to move the slider

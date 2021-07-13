@@ -72,6 +72,63 @@ public class TlsCertificate : ObjectG
 		super(cast(GObject*)gTlsCertificate, ownedRef);
 	}
 
+	/**
+	 * Creates a #GTlsCertificate from a PKCS \#11 URI.
+	 *
+	 * An example @pkcs11_uri would be `pkcs11:model=Model;manufacturer=Manufacture;serial=1;token=My%20Client%20Certificate;id=%01`
+	 *
+	 * Where the token’s layout is:
+	 *
+	 * ```
+	 * Object 0:
+	 * URL: pkcs11:model=Model;manufacturer=Manufacture;serial=1;token=My%20Client%20Certificate;id=%01;object=private%20key;type=private
+	 * Type: Private key (RSA-2048)
+	 * ID: 01
+	 *
+	 * Object 1:
+	 * URL: pkcs11:model=Model;manufacturer=Manufacture;serial=1;token=My%20Client%20Certificate;id=%01;object=Certificate%20for%20Authentication;type=cert
+	 * Type: X.509 Certificate (RSA-2048)
+	 * ID: 01
+	 * ```
+	 *
+	 * In this case the certificate and private key would both be detected and used as expected.
+	 * @pkcs_uri may also just reference an X.509 certificate object and then optionally
+	 * @private_key_pkcs11_uri allows using a private key exposed under a different URI.
+	 *
+	 * Note that the private key is not accessed until usage and may fail or require a PIN later.
+	 *
+	 * Params:
+	 *     pkcs11Uri = A PKCS \#11 URI
+	 *     privateKeyPkcs11Uri = A PKCS \#11 URI
+	 *
+	 * Returns: the new certificate, or %NULL on error
+	 *
+	 * Since: 2.68
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static TlsCertificate newFromPkcs11Uris(string pkcs11Uri, string privateKeyPkcs11Uri)
+	{
+		GError* err = null;
+
+		auto __p = g_tls_certificate_new_from_pkcs11_uris(Str.toStringz(pkcs11Uri), Str.toStringz(privateKeyPkcs11Uri), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_pkcs11_uris");
+		}
+
+		return new TlsCertificate(cast(GTlsCertificate*) __p, true);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()

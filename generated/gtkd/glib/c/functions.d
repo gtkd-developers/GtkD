@@ -275,7 +275,9 @@ shared static this()
 	Linker.link(g_date_time_add_seconds, "g_date_time_add_seconds", LIBRARY_GLIB);
 	Linker.link(g_date_time_add_weeks, "g_date_time_add_weeks", LIBRARY_GLIB);
 	Linker.link(g_date_time_add_years, "g_date_time_add_years", LIBRARY_GLIB);
+	Linker.link(g_date_time_compare, "g_date_time_compare", LIBRARY_GLIB);
 	Linker.link(g_date_time_difference, "g_date_time_difference", LIBRARY_GLIB);
+	Linker.link(g_date_time_equal, "g_date_time_equal", LIBRARY_GLIB);
 	Linker.link(g_date_time_format, "g_date_time_format", LIBRARY_GLIB);
 	Linker.link(g_date_time_format_iso8601, "g_date_time_format_iso8601", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_day_of_month, "g_date_time_get_day_of_month", LIBRARY_GLIB);
@@ -294,6 +296,7 @@ shared static this()
 	Linker.link(g_date_time_get_week_of_year, "g_date_time_get_week_of_year", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_year, "g_date_time_get_year", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_ymd, "g_date_time_get_ymd", LIBRARY_GLIB);
+	Linker.link(g_date_time_hash, "g_date_time_hash", LIBRARY_GLIB);
 	Linker.link(g_date_time_is_daylight_savings, "g_date_time_is_daylight_savings", LIBRARY_GLIB);
 	Linker.link(g_date_time_ref, "g_date_time_ref", LIBRARY_GLIB);
 	Linker.link(g_date_time_to_local, "g_date_time_to_local", LIBRARY_GLIB);
@@ -302,9 +305,6 @@ shared static this()
 	Linker.link(g_date_time_to_unix, "g_date_time_to_unix", LIBRARY_GLIB);
 	Linker.link(g_date_time_to_utc, "g_date_time_to_utc", LIBRARY_GLIB);
 	Linker.link(g_date_time_unref, "g_date_time_unref", LIBRARY_GLIB);
-	Linker.link(g_date_time_compare, "g_date_time_compare", LIBRARY_GLIB);
-	Linker.link(g_date_time_equal, "g_date_time_equal", LIBRARY_GLIB);
-	Linker.link(g_date_time_hash, "g_date_time_hash", LIBRARY_GLIB);
 
 	// glib.Directory
 
@@ -322,6 +322,8 @@ shared static this()
 	Linker.link(g_error_copy, "g_error_copy", LIBRARY_GLIB);
 	Linker.link(g_error_free, "g_error_free", LIBRARY_GLIB);
 	Linker.link(g_error_matches, "g_error_matches", LIBRARY_GLIB);
+	Linker.link(g_error_domain_register, "g_error_domain_register", LIBRARY_GLIB);
+	Linker.link(g_error_domain_register_static, "g_error_domain_register_static", LIBRARY_GLIB);
 	Linker.link(g_propagate_error, "g_propagate_error", LIBRARY_GLIB);
 	Linker.link(g_set_error_literal, "g_set_error_literal", LIBRARY_GLIB);
 	Linker.link(g_prefix_error, "g_prefix_error", LIBRARY_GLIB);
@@ -1050,6 +1052,7 @@ shared static this()
 	Linker.link(g_string_prepend_len, "g_string_prepend_len", LIBRARY_GLIB);
 	Linker.link(g_string_prepend_unichar, "g_string_prepend_unichar", LIBRARY_GLIB);
 	Linker.link(g_string_printf, "g_string_printf", LIBRARY_GLIB);
+	Linker.link(g_string_replace, "g_string_replace", LIBRARY_GLIB);
 	Linker.link(g_string_set_size, "g_string_set_size", LIBRARY_GLIB);
 	Linker.link(g_string_truncate, "g_string_truncate", LIBRARY_GLIB);
 	Linker.link(g_string_up, "g_string_up", LIBRARY_GLIB);
@@ -1066,6 +1069,14 @@ shared static this()
 	Linker.link(g_string_chunk_insert_const, "g_string_chunk_insert_const", LIBRARY_GLIB);
 	Linker.link(g_string_chunk_insert_len, "g_string_chunk_insert_len", LIBRARY_GLIB);
 	Linker.link(g_string_chunk_new, "g_string_chunk_new", LIBRARY_GLIB);
+
+	// glib.StrvBuilder
+
+	Linker.link(g_strv_builder_add, "g_strv_builder_add", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_end, "g_strv_builder_end", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_ref, "g_strv_builder_ref", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_unref, "g_strv_builder_unref", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_new, "g_strv_builder_new", LIBRARY_GLIB);
 
 	// glib.TestLogBuffer
 
@@ -1133,6 +1144,7 @@ shared static this()
 	// glib.TimeZone
 
 	Linker.link(g_time_zone_new, "g_time_zone_new", LIBRARY_GLIB);
+	Linker.link(g_time_zone_new_identifier, "g_time_zone_new_identifier", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_local, "g_time_zone_new_local", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_offset, "g_time_zone_new_offset", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_utc, "g_time_zone_new_utc", LIBRARY_GLIB);
@@ -1165,23 +1177,39 @@ shared static this()
 
 	// glib.BBTree
 
-	Linker.link(g_tree_destroy, "g_tree_destroy", LIBRARY_GLIB);
-	Linker.link(g_tree_foreach, "g_tree_foreach", LIBRARY_GLIB);
-	Linker.link(g_tree_height, "g_tree_height", LIBRARY_GLIB);
-	Linker.link(g_tree_insert, "g_tree_insert", LIBRARY_GLIB);
-	Linker.link(g_tree_lookup, "g_tree_lookup", LIBRARY_GLIB);
-	Linker.link(g_tree_lookup_extended, "g_tree_lookup_extended", LIBRARY_GLIB);
-	Linker.link(g_tree_nnodes, "g_tree_nnodes", LIBRARY_GLIB);
-	Linker.link(g_tree_ref, "g_tree_ref", LIBRARY_GLIB);
-	Linker.link(g_tree_remove, "g_tree_remove", LIBRARY_GLIB);
-	Linker.link(g_tree_replace, "g_tree_replace", LIBRARY_GLIB);
-	Linker.link(g_tree_search, "g_tree_search", LIBRARY_GLIB);
-	Linker.link(g_tree_steal, "g_tree_steal", LIBRARY_GLIB);
-	Linker.link(g_tree_traverse, "g_tree_traverse", LIBRARY_GLIB);
-	Linker.link(g_tree_unref, "g_tree_unref", LIBRARY_GLIB);
 	Linker.link(g_tree_new, "g_tree_new", LIBRARY_GLIB);
 	Linker.link(g_tree_new_full, "g_tree_new_full", LIBRARY_GLIB);
 	Linker.link(g_tree_new_with_data, "g_tree_new_with_data", LIBRARY_GLIB);
+	Linker.link(g_tree_destroy, "g_tree_destroy", LIBRARY_GLIB);
+	Linker.link(g_tree_foreach, "g_tree_foreach", LIBRARY_GLIB);
+	Linker.link(g_tree_foreach_node, "g_tree_foreach_node", LIBRARY_GLIB);
+	Linker.link(g_tree_height, "g_tree_height", LIBRARY_GLIB);
+	Linker.link(g_tree_insert, "g_tree_insert", LIBRARY_GLIB);
+	Linker.link(g_tree_insert_node, "g_tree_insert_node", LIBRARY_GLIB);
+	Linker.link(g_tree_lookup, "g_tree_lookup", LIBRARY_GLIB);
+	Linker.link(g_tree_lookup_extended, "g_tree_lookup_extended", LIBRARY_GLIB);
+	Linker.link(g_tree_lookup_node, "g_tree_lookup_node", LIBRARY_GLIB);
+	Linker.link(g_tree_lower_bound, "g_tree_lower_bound", LIBRARY_GLIB);
+	Linker.link(g_tree_nnodes, "g_tree_nnodes", LIBRARY_GLIB);
+	Linker.link(g_tree_node_first, "g_tree_node_first", LIBRARY_GLIB);
+	Linker.link(g_tree_node_last, "g_tree_node_last", LIBRARY_GLIB);
+	Linker.link(g_tree_ref, "g_tree_ref", LIBRARY_GLIB);
+	Linker.link(g_tree_remove, "g_tree_remove", LIBRARY_GLIB);
+	Linker.link(g_tree_replace, "g_tree_replace", LIBRARY_GLIB);
+	Linker.link(g_tree_replace_node, "g_tree_replace_node", LIBRARY_GLIB);
+	Linker.link(g_tree_search, "g_tree_search", LIBRARY_GLIB);
+	Linker.link(g_tree_search_node, "g_tree_search_node", LIBRARY_GLIB);
+	Linker.link(g_tree_steal, "g_tree_steal", LIBRARY_GLIB);
+	Linker.link(g_tree_traverse, "g_tree_traverse", LIBRARY_GLIB);
+	Linker.link(g_tree_unref, "g_tree_unref", LIBRARY_GLIB);
+	Linker.link(g_tree_upper_bound, "g_tree_upper_bound", LIBRARY_GLIB);
+
+	// glib.TreeNode
+
+	Linker.link(g_tree_node_key, "g_tree_node_key", LIBRARY_GLIB);
+	Linker.link(g_tree_node_next, "g_tree_node_next", LIBRARY_GLIB);
+	Linker.link(g_tree_node_previous, "g_tree_node_previous", LIBRARY_GLIB);
+	Linker.link(g_tree_node_value, "g_tree_node_value", LIBRARY_GLIB);
 
 	// glib.URI
 
@@ -2082,7 +2110,9 @@ __gshared extern(C)
 	GDateTime* function(GDateTime* datetime, double seconds) c_g_date_time_add_seconds;
 	GDateTime* function(GDateTime* datetime, int weeks) c_g_date_time_add_weeks;
 	GDateTime* function(GDateTime* datetime, int years) c_g_date_time_add_years;
+	int function(void* dt1, void* dt2) c_g_date_time_compare;
 	GTimeSpan function(GDateTime* end, GDateTime* begin) c_g_date_time_difference;
+	int function(void* dt1, void* dt2) c_g_date_time_equal;
 	char* function(GDateTime* datetime, const(char)* format) c_g_date_time_format;
 	char* function(GDateTime* datetime) c_g_date_time_format_iso8601;
 	int function(GDateTime* datetime) c_g_date_time_get_day_of_month;
@@ -2101,6 +2131,7 @@ __gshared extern(C)
 	int function(GDateTime* datetime) c_g_date_time_get_week_of_year;
 	int function(GDateTime* datetime) c_g_date_time_get_year;
 	void function(GDateTime* datetime, int* year, int* month, int* day) c_g_date_time_get_ymd;
+	uint function(void* datetime) c_g_date_time_hash;
 	int function(GDateTime* datetime) c_g_date_time_is_daylight_savings;
 	GDateTime* function(GDateTime* datetime) c_g_date_time_ref;
 	GDateTime* function(GDateTime* datetime) c_g_date_time_to_local;
@@ -2109,9 +2140,6 @@ __gshared extern(C)
 	long function(GDateTime* datetime) c_g_date_time_to_unix;
 	GDateTime* function(GDateTime* datetime) c_g_date_time_to_utc;
 	void function(GDateTime* datetime) c_g_date_time_unref;
-	int function(void* dt1, void* dt2) c_g_date_time_compare;
-	int function(void* dt1, void* dt2) c_g_date_time_equal;
-	uint function(void* datetime) c_g_date_time_hash;
 
 	// glib.Directory
 
@@ -2129,6 +2157,8 @@ __gshared extern(C)
 	GError* function(GError* error) c_g_error_copy;
 	void function(GError* error) c_g_error_free;
 	int function(GError* error, GQuark domain, int code) c_g_error_matches;
+	GQuark function(const(char)* errorTypeName, size_t errorTypePrivateSize, GErrorInitFunc errorTypeInit, GErrorCopyFunc errorTypeCopy, GErrorClearFunc errorTypeClear) c_g_error_domain_register;
+	GQuark function(const(char)* errorTypeName, size_t errorTypePrivateSize, GErrorInitFunc errorTypeInit, GErrorCopyFunc errorTypeCopy, GErrorClearFunc errorTypeClear) c_g_error_domain_register_static;
 	void function(GError** dest, GError* src) c_g_propagate_error;
 	void function(GError** err, GQuark domain, int code, const(char)* message) c_g_set_error_literal;
 	void function(GError** err, const(char)* format, ... ) c_g_prefix_error;
@@ -2857,6 +2887,7 @@ __gshared extern(C)
 	GString* function(GString* string_, const(char)* val, ptrdiff_t len) c_g_string_prepend_len;
 	GString* function(GString* string_, dchar wc) c_g_string_prepend_unichar;
 	void function(GString* string_, const(char)* format, ... ) c_g_string_printf;
+	uint function(GString* string_, const(char)* find, const(char)* replace, uint limit) c_g_string_replace;
 	GString* function(GString* string_, size_t len) c_g_string_set_size;
 	GString* function(GString* string_, size_t len) c_g_string_truncate;
 	GString* function(GString* string_) c_g_string_up;
@@ -2873,6 +2904,14 @@ __gshared extern(C)
 	char* function(GStringChunk* chunk, const(char)* string_) c_g_string_chunk_insert_const;
 	char* function(GStringChunk* chunk, const(char)* string_, ptrdiff_t len) c_g_string_chunk_insert_len;
 	GStringChunk* function(size_t size) c_g_string_chunk_new;
+
+	// glib.StrvBuilder
+
+	void function(GStrvBuilder* builder, const(char)* value) c_g_strv_builder_add;
+	GStrv function(GStrvBuilder* builder) c_g_strv_builder_end;
+	GStrvBuilder* function(GStrvBuilder* builder) c_g_strv_builder_ref;
+	void function(GStrvBuilder* builder) c_g_strv_builder_unref;
+	GStrvBuilder* function() c_g_strv_builder_new;
 
 	// glib.TestLogBuffer
 
@@ -2940,6 +2979,7 @@ __gshared extern(C)
 	// glib.TimeZone
 
 	GTimeZone* function(const(char)* identifier) c_g_time_zone_new;
+	GTimeZone* function(const(char)* identifier) c_g_time_zone_new_identifier;
 	GTimeZone* function() c_g_time_zone_new_local;
 	GTimeZone* function(int seconds) c_g_time_zone_new_offset;
 	GTimeZone* function() c_g_time_zone_new_utc;
@@ -2972,23 +3012,39 @@ __gshared extern(C)
 
 	// glib.BBTree
 
-	void function(GTree* tree) c_g_tree_destroy;
-	void function(GTree* tree, GTraverseFunc func, void* userData) c_g_tree_foreach;
-	int function(GTree* tree) c_g_tree_height;
-	void function(GTree* tree, void* key, void* value) c_g_tree_insert;
-	void* function(GTree* tree, void* key) c_g_tree_lookup;
-	int function(GTree* tree, void* lookupKey, void** origKey, void** value) c_g_tree_lookup_extended;
-	int function(GTree* tree) c_g_tree_nnodes;
-	GTree* function(GTree* tree) c_g_tree_ref;
-	int function(GTree* tree, void* key) c_g_tree_remove;
-	void function(GTree* tree, void* key, void* value) c_g_tree_replace;
-	void* function(GTree* tree, GCompareFunc searchFunc, void* userData) c_g_tree_search;
-	int function(GTree* tree, void* key) c_g_tree_steal;
-	void function(GTree* tree, GTraverseFunc traverseFunc, GTraverseType traverseType, void* userData) c_g_tree_traverse;
-	void function(GTree* tree) c_g_tree_unref;
 	GTree* function(GCompareFunc keyCompareFunc) c_g_tree_new;
 	GTree* function(GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_tree_new_full;
 	GTree* function(GCompareDataFunc keyCompareFunc, void* keyCompareData) c_g_tree_new_with_data;
+	void function(GTree* tree) c_g_tree_destroy;
+	void function(GTree* tree, GTraverseFunc func, void* userData) c_g_tree_foreach;
+	void function(GTree* tree, GTraverseNodeFunc func, void* userData) c_g_tree_foreach_node;
+	int function(GTree* tree) c_g_tree_height;
+	void function(GTree* tree, void* key, void* value) c_g_tree_insert;
+	GTreeNode* function(GTree* tree, void* key, void* value) c_g_tree_insert_node;
+	void* function(GTree* tree, void* key) c_g_tree_lookup;
+	int function(GTree* tree, void* lookupKey, void** origKey, void** value) c_g_tree_lookup_extended;
+	GTreeNode* function(GTree* tree, void* key) c_g_tree_lookup_node;
+	GTreeNode* function(GTree* tree, void* key) c_g_tree_lower_bound;
+	int function(GTree* tree) c_g_tree_nnodes;
+	GTreeNode* function(GTree* tree) c_g_tree_node_first;
+	GTreeNode* function(GTree* tree) c_g_tree_node_last;
+	GTree* function(GTree* tree) c_g_tree_ref;
+	int function(GTree* tree, void* key) c_g_tree_remove;
+	void function(GTree* tree, void* key, void* value) c_g_tree_replace;
+	GTreeNode* function(GTree* tree, void* key, void* value) c_g_tree_replace_node;
+	void* function(GTree* tree, GCompareFunc searchFunc, void* userData) c_g_tree_search;
+	GTreeNode* function(GTree* tree, GCompareFunc searchFunc, void* userData) c_g_tree_search_node;
+	int function(GTree* tree, void* key) c_g_tree_steal;
+	void function(GTree* tree, GTraverseFunc traverseFunc, GTraverseType traverseType, void* userData) c_g_tree_traverse;
+	void function(GTree* tree) c_g_tree_unref;
+	GTreeNode* function(GTree* tree, void* key) c_g_tree_upper_bound;
+
+	// glib.TreeNode
+
+	void* function(GTreeNode* node) c_g_tree_node_key;
+	GTreeNode* function(GTreeNode* node) c_g_tree_node_next;
+	GTreeNode* function(GTreeNode* node) c_g_tree_node_previous;
+	void* function(GTreeNode* node) c_g_tree_node_value;
 
 	// glib.URI
 
@@ -3881,7 +3937,9 @@ alias c_g_date_time_add_months g_date_time_add_months;
 alias c_g_date_time_add_seconds g_date_time_add_seconds;
 alias c_g_date_time_add_weeks g_date_time_add_weeks;
 alias c_g_date_time_add_years g_date_time_add_years;
+alias c_g_date_time_compare g_date_time_compare;
 alias c_g_date_time_difference g_date_time_difference;
+alias c_g_date_time_equal g_date_time_equal;
 alias c_g_date_time_format g_date_time_format;
 alias c_g_date_time_format_iso8601 g_date_time_format_iso8601;
 alias c_g_date_time_get_day_of_month g_date_time_get_day_of_month;
@@ -3900,6 +3958,7 @@ alias c_g_date_time_get_week_numbering_year g_date_time_get_week_numbering_year;
 alias c_g_date_time_get_week_of_year g_date_time_get_week_of_year;
 alias c_g_date_time_get_year g_date_time_get_year;
 alias c_g_date_time_get_ymd g_date_time_get_ymd;
+alias c_g_date_time_hash g_date_time_hash;
 alias c_g_date_time_is_daylight_savings g_date_time_is_daylight_savings;
 alias c_g_date_time_ref g_date_time_ref;
 alias c_g_date_time_to_local g_date_time_to_local;
@@ -3908,9 +3967,6 @@ alias c_g_date_time_to_timezone g_date_time_to_timezone;
 alias c_g_date_time_to_unix g_date_time_to_unix;
 alias c_g_date_time_to_utc g_date_time_to_utc;
 alias c_g_date_time_unref g_date_time_unref;
-alias c_g_date_time_compare g_date_time_compare;
-alias c_g_date_time_equal g_date_time_equal;
-alias c_g_date_time_hash g_date_time_hash;
 
 // glib.Directory
 
@@ -3928,6 +3984,8 @@ alias c_g_error_new_valist g_error_new_valist;
 alias c_g_error_copy g_error_copy;
 alias c_g_error_free g_error_free;
 alias c_g_error_matches g_error_matches;
+alias c_g_error_domain_register g_error_domain_register;
+alias c_g_error_domain_register_static g_error_domain_register_static;
 alias c_g_propagate_error g_propagate_error;
 alias c_g_set_error_literal g_set_error_literal;
 alias c_g_prefix_error g_prefix_error;
@@ -4656,6 +4714,7 @@ alias c_g_string_prepend_c g_string_prepend_c;
 alias c_g_string_prepend_len g_string_prepend_len;
 alias c_g_string_prepend_unichar g_string_prepend_unichar;
 alias c_g_string_printf g_string_printf;
+alias c_g_string_replace g_string_replace;
 alias c_g_string_set_size g_string_set_size;
 alias c_g_string_truncate g_string_truncate;
 alias c_g_string_up g_string_up;
@@ -4672,6 +4731,14 @@ alias c_g_string_chunk_insert g_string_chunk_insert;
 alias c_g_string_chunk_insert_const g_string_chunk_insert_const;
 alias c_g_string_chunk_insert_len g_string_chunk_insert_len;
 alias c_g_string_chunk_new g_string_chunk_new;
+
+// glib.StrvBuilder
+
+alias c_g_strv_builder_add g_strv_builder_add;
+alias c_g_strv_builder_end g_strv_builder_end;
+alias c_g_strv_builder_ref g_strv_builder_ref;
+alias c_g_strv_builder_unref g_strv_builder_unref;
+alias c_g_strv_builder_new g_strv_builder_new;
 
 // glib.TestLogBuffer
 
@@ -4739,6 +4806,7 @@ alias c_g_usleep g_usleep;
 // glib.TimeZone
 
 alias c_g_time_zone_new g_time_zone_new;
+alias c_g_time_zone_new_identifier g_time_zone_new_identifier;
 alias c_g_time_zone_new_local g_time_zone_new_local;
 alias c_g_time_zone_new_offset g_time_zone_new_offset;
 alias c_g_time_zone_new_utc g_time_zone_new_utc;
@@ -4771,23 +4839,39 @@ alias c_g_trash_stack_push g_trash_stack_push;
 
 // glib.BBTree
 
-alias c_g_tree_destroy g_tree_destroy;
-alias c_g_tree_foreach g_tree_foreach;
-alias c_g_tree_height g_tree_height;
-alias c_g_tree_insert g_tree_insert;
-alias c_g_tree_lookup g_tree_lookup;
-alias c_g_tree_lookup_extended g_tree_lookup_extended;
-alias c_g_tree_nnodes g_tree_nnodes;
-alias c_g_tree_ref g_tree_ref;
-alias c_g_tree_remove g_tree_remove;
-alias c_g_tree_replace g_tree_replace;
-alias c_g_tree_search g_tree_search;
-alias c_g_tree_steal g_tree_steal;
-alias c_g_tree_traverse g_tree_traverse;
-alias c_g_tree_unref g_tree_unref;
 alias c_g_tree_new g_tree_new;
 alias c_g_tree_new_full g_tree_new_full;
 alias c_g_tree_new_with_data g_tree_new_with_data;
+alias c_g_tree_destroy g_tree_destroy;
+alias c_g_tree_foreach g_tree_foreach;
+alias c_g_tree_foreach_node g_tree_foreach_node;
+alias c_g_tree_height g_tree_height;
+alias c_g_tree_insert g_tree_insert;
+alias c_g_tree_insert_node g_tree_insert_node;
+alias c_g_tree_lookup g_tree_lookup;
+alias c_g_tree_lookup_extended g_tree_lookup_extended;
+alias c_g_tree_lookup_node g_tree_lookup_node;
+alias c_g_tree_lower_bound g_tree_lower_bound;
+alias c_g_tree_nnodes g_tree_nnodes;
+alias c_g_tree_node_first g_tree_node_first;
+alias c_g_tree_node_last g_tree_node_last;
+alias c_g_tree_ref g_tree_ref;
+alias c_g_tree_remove g_tree_remove;
+alias c_g_tree_replace g_tree_replace;
+alias c_g_tree_replace_node g_tree_replace_node;
+alias c_g_tree_search g_tree_search;
+alias c_g_tree_search_node g_tree_search_node;
+alias c_g_tree_steal g_tree_steal;
+alias c_g_tree_traverse g_tree_traverse;
+alias c_g_tree_unref g_tree_unref;
+alias c_g_tree_upper_bound g_tree_upper_bound;
+
+// glib.TreeNode
+
+alias c_g_tree_node_key g_tree_node_key;
+alias c_g_tree_node_next g_tree_node_next;
+alias c_g_tree_node_previous g_tree_node_previous;
+alias c_g_tree_node_value g_tree_node_value;
 
 // glib.URI
 

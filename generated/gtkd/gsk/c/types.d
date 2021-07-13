@@ -138,8 +138,10 @@ public enum GskCorner
 alias GskCorner Corner;
 
 /**
- * This defines the types of the uniforms that #GskGLShaders
- * declare. It defines both what the type is called in the GLSL shader
+ * This defines the types of the uniforms that `GskGLShaders`
+ * declare.
+ *
+ * It defines both what the type is called in the GLSL shader
  * code, and what the corresponding C type is on the Gtk side.
  */
 public enum GskGLUniformType
@@ -340,14 +342,15 @@ public enum GskSerializationError
 alias GskSerializationError SerializationError;
 
 /**
- * The categories of matrices relevant for GSK and GTK. Note that any
- * category includes matrices of all later categories. So if you want
- * to for example check if a matrix is a 2D matrix,
+ * The categories of matrices relevant for GSK and GTK.
+ *
+ * Note that any category includes matrices of all later categories.
+ * So if you want to for example check if a matrix is a 2D matrix,
  * `category >= GSK_TRANSFORM_CATEGORY_2D` is the way to do this.
  *
  * Also keep in mind that rounding errors may cause matrices to not
  * conform to their categories. Otherwise, matrix operations done via
- * mutliplication will not worsen categories. So for the matrix
+ * multiplication will not worsen categories. So for the matrix
  * multiplication `C = A * B`, `category(C) = MIN (category(A), category(B))`.
  */
 public enum GskTransformCategory
@@ -395,6 +398,10 @@ struct GskBlendNode;
 struct GskBlurNode;
 
 struct GskBorderNode;
+
+struct GskBroadwayRenderer;
+
+struct GskBroadwayRendererClass;
 
 struct GskCairoNode;
 
@@ -447,6 +454,10 @@ struct GskGLShaderNode;
 struct GskInsetShadowNode;
 
 struct GskLinearGradientNode;
+
+struct GskNglRenderer;
+
+struct GskNglRendererClass;
 
 struct GskOpacityNode;
 
@@ -547,8 +558,8 @@ struct GskVulkanRenderer;
 struct GskVulkanRendererClass;
 
 /**
- * The type of callback that is called when a parse error occurs
- * during deserialization of node data.
+ * Type of callback that is called when an error occurs
+ * during node deserialization.
  *
  * Params:
  *     start = start of the error location

@@ -70,14 +70,14 @@ public class ShadowNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will draw a @child with the given
+	 * Creates a `GskRenderNode` that will draw a @child with the given
 	 * @shadows below it.
 	 *
 	 * Params:
 	 *     child = The node to draw
 	 *     shadows = The shadows to apply
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -94,7 +94,7 @@ public class ShadowNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the child #GskRenderNode of the shadow @node.
+	 * Retrieves the child `GskRenderNode` of the shadow @node.
 	 *
 	 * Returns: the child render node
 	 */

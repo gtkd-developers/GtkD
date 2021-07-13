@@ -33,6 +33,8 @@ public  import gtk.c.types;
 
 
 /**
+ * Renders a spin button in a cell
+ * 
  * #GtkCellRendererSpin renders text in a cell like #GtkCellRendererText from
  * which it is derived. But while #GtkCellRendererText offers a simple entry to
  * edit the text, #GtkCellRendererSpin offers a #GtkSpinButton widget. Of course,

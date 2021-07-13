@@ -26,6 +26,7 @@ module gtk.StringFilter;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Expression;
 private import gtk.Filter;
@@ -34,12 +35,19 @@ public  import gtk.c.types;
 
 
 /**
- * GtkStringFilter determines whether to include items by looking
- * at strings and comparing them to a fixed search term. The strings
- * are obtained from the items by evaluating a #GtkExpression.
+ * `GtkStringFilter` determines whether to include items by comparing
+ * strings to a fixed search term.
  * 
- * GtkStringFilter has several different modes of comparison - it
- * can match the whole string, just a prefix, or any substring.
+ * The strings are obtained from the items by evaluating a `GtkExpression`
+ * set with [method@Gtk.StringFilter.set_expression], and they are
+ * compared against a search term set with [method@Gtk.StringFilter.set_search].
+ * 
+ * `GtkStringFilter` has several different modes of comparison - it
+ * can match the whole string, just a prefix, or any substring. Use
+ * [method@Gtk.StringFilter.set_match_mode] choose a mode.
+ * 
+ * It is also possible to make case-insensitive comparisons, with
+ * [method@Gtk.StringFilter.set_ignore_case].
  */
 public class StringFilter : Filter
 {
@@ -86,7 +94,7 @@ public class StringFilter : Filter
 	 *     expression = The expression to evaluate
 	 *         or %NULL for none
 	 *
-	 * Returns: a new #GtkStringFilter
+	 * Returns: a new `GtkStringFilter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -106,7 +114,7 @@ public class StringFilter : Filter
 	 * Gets the expression that the string filter uses to
 	 * obtain strings from items.
 	 *
-	 * Returns: a #GtkExpression
+	 * Returns: a `GtkExpression`
 	 */
 	public Expression getExpression()
 	{
@@ -141,9 +149,9 @@ public class StringFilter : Filter
 	}
 
 	/**
-	 * Gets the search string set via gtk_string_filter_set_search().
+	 * Gets the search term.
 	 *
-	 * Returns: The search string
+	 * Returns: The search term
 	 */
 	public string getSearch()
 	{
@@ -152,11 +160,12 @@ public class StringFilter : Filter
 
 	/**
 	 * Sets the expression that the string filter uses to
-	 * obtain strings from items. The expression must have
-	 * a value type of #G_TYPE_STRING.
+	 * obtain strings from items.
+	 *
+	 * The expression must have a value type of %G_TYPE_STRING.
 	 *
 	 * Params:
-	 *     expression = a #GtkExpression
+	 *     expression = a `GtkExpression`
 	 */
 	public void setExpression(Expression expression)
 	{

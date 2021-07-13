@@ -33,7 +33,7 @@ private import gobject.ObjectG;
 
 
 /**
- * A #GdkTexture representing a GL texture object.
+ * A GdkTexture representing a GL texture object.
  */
 public class GLTexture : Texture
 {
@@ -75,10 +75,10 @@ public class GLTexture : Texture
 	 *
 	 * Note that the GL texture must not be modified until @destroy is called,
 	 * which will happen when the GdkTexture object is finalized, or due to
-	 * an explicit call of gdk_gl_texture_release().
+	 * an explicit call of [method@Gdk.GLTexture.release].
 	 *
 	 * Params:
-	 *     context = a #GdkGLContext
+	 *     context = a `GdkGLContext`
 	 *     id = the ID of a texture that was created with @context
 	 *     width = the nominal width of the texture
 	 *     height = the nominal height of the texture
@@ -86,7 +86,7 @@ public class GLTexture : Texture
 	 *         are released
 	 *     data = data that gets passed to @destroy
 	 *
-	 * Returns: A newly-created #GdkTexture
+	 * Returns: A newly-created `GdkTexture`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -103,12 +103,11 @@ public class GLTexture : Texture
 	}
 
 	/**
-	 * Releases the GL resources held by a #GdkGLTexture that
-	 * was created with gdk_gl_texture_new().
+	 * Releases the GL resources held by a `GdkGLTexture`.
 	 *
 	 * The texture contents are still available via the
-	 * gdk_texture_download() function, after this function
-	 * has been called.
+	 * [method@Gdk.Texture.download] function, after this
+	 * function has been called.
 	 */
 	public void release()
 	{

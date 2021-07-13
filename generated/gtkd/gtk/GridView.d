@@ -37,22 +37,23 @@ private import std.algorithm;
 
 
 /**
- * GtkGridView is a widget to present a view into a large dynamic grid of items.
+ * `GtkGridView` presents a large dynamic grid of items.
  * 
- * GtkGridView uses its factory to generate one child widget for each visible item
- * and shows them in a grid. The orientation of the grid view determines if the
- * grid reflows vertically or horizontally.
+ * `GtkGridView` uses its factory to generate one child widget for each
+ * visible item and shows them in a grid. The orientation of the grid view
+ * determines if the grid reflows vertically or horizontally.
  * 
- * GtkGridView allows the user to select items according to the selection
+ * `GtkGridView` allows the user to select items according to the selection
  * characteristics of the model. For models that allow multiple selected items,
  * it is possible to turn on _rubberband selection_, using
- * #GtkGridView:enable-rubberband.
+ * [property@Gtk.GridView:enable-rubberband].
  * 
- * To learn more about the list widget framework, see the [overview](#ListWidget).
+ * To learn more about the list widget framework, see the
+ * [overview](section-list-widget.html).
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * gridview
  * ├── child
  * │
@@ -60,16 +61,16 @@ private import std.algorithm;
  * │
  * ┊
  * ╰── [rubberband]
- * ]|
+ * ```
  * 
- * GtkGridView uses a single CSS node with name gridview. Each child
+ * `GtkGridView` uses a single CSS node with name gridview. Each child
  * uses a single CSS node with name child. For rubberband selection,
  * a subnode with name rubberband is used.
  * 
  * # Accessibility
  * 
- * GtkGridView uses the #GTK_ACCESSIBLE_ROLE_GRID role, and the items
- * use the #GTK_ACCESSIBLE_ROLE_GRID_CELL role.
+ * `GtkGridView` uses the %GTK_ACCESSIBLE_ROLE_GRID role, and the items
+ * use the %GTK_ACCESSIBLE_ROLE_GRID_CELL role.
  */
 public class GridView : ListBase
 {
@@ -107,12 +108,12 @@ public class GridView : ListBase
 	}
 
 	/**
-	 * Creates a new #GtkGridView that uses the given @factory for
+	 * Creates a new `GtkGridView` that uses the given @factory for
 	 * mapping items to widgets.
 	 *
 	 * The function takes ownership of the
 	 * arguments, so you can write code like
-	 * ```
+	 * ```c
 	 * grid_view = gtk_grid_view_new (create_model (),
 	 * gtk_builder_list_item_factory_new_from_resource ("/resource.ui"));
 	 * ```
@@ -121,7 +122,7 @@ public class GridView : ListBase
 	 *     model = the model to use, or %NULL
 	 *     factory = The factory to populate items with, or %NULL
 	 *
-	 * Returns: a new #GtkGridView using the given @model and @factory
+	 * Returns: a new `GtkGridView` using the given @model and @factory
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -224,7 +225,7 @@ public class GridView : ListBase
 	}
 
 	/**
-	 * Sets the #GtkListItemFactory to use for populating list items.
+	 * Sets the `GtkListItemFactory` to use for populating list items.
 	 *
 	 * Params:
 	 *     factory = the factory to use or %NULL for none
@@ -235,10 +236,12 @@ public class GridView : ListBase
 	}
 
 	/**
-	 * Sets the maximum number of columns to use. This number must be at least 1.
+	 * Sets the maximum number of columns to use.
+	 *
+	 * This number must be at least 1.
 	 *
 	 * If @max_columns is smaller than the minimum set via
-	 * gtk_grid_view_set_min_columns(), that value is used instead.
+	 * [method@Gtk.GridView.set_min_columns], that value is used instead.
 	 *
 	 * Params:
 	 *     maxColumns = The maximum number of columns
@@ -249,10 +252,12 @@ public class GridView : ListBase
 	}
 
 	/**
-	 * Sets the minimum number of columns to use. This number must be at least 1.
+	 * Sets the minimum number of columns to use.
+	 *
+	 * This number must be at least 1.
 	 *
 	 * If @min_columns is smaller than the minimum set via
-	 * gtk_grid_view_set_max_columns(), that value is ignored.
+	 * [method@Gtk.GridView.set_max_columns], that value is ignored.
 	 *
 	 * Params:
 	 *     minColumns = The minimum number of columns
@@ -263,7 +268,9 @@ public class GridView : ListBase
 	}
 
 	/**
-	 * Sets the #GtkSelectionModel to use for
+	 * Sets the imodel to use.
+	 *
+	 * This must be a [iface@Gtk.SelectionModel].
 	 *
 	 * Params:
 	 *     model = the model to use or %NULL for none
@@ -286,11 +293,12 @@ public class GridView : ListBase
 	}
 
 	/**
-	 * The ::activate signal is emitted when a cell has been activated by the user,
+	 * Emitted when a cell has been activated by the user,
 	 * usually via activating the GtkGridView|list.activate-item action.
 	 *
 	 * This allows for a convenient way to handle activation in a gridview.
-	 * See GtkListItem:activatable for details on how to use this signal.
+	 * See [property@Gtk.ListItem:activatable] for details on how to use
+	 * this signal.
 	 *
 	 * Params:
 	 *     position = position of item to activate

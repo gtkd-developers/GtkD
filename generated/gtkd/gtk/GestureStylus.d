@@ -36,8 +36,9 @@ private import std.algorithm;
 
 
 /**
- * #GtkGestureStylus is a #GtkGesture implementation specific to stylus
- * input. The provided signals just relay the basic information of the
+ * `GtkGestureStylus` is a `GtkGesture` specific to stylus input.
+ * 
+ * The provided signals just relay the basic information of the
  * stylus events.
  */
 public class GestureStylus : GestureSingle
@@ -76,7 +77,7 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * Creates a new #GtkGestureStylus.
+	 * Creates a new `GtkGestureStylus`.
 	 *
 	 * Returns: a newly created stylus gesture
 	 *
@@ -95,13 +96,15 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * Returns the current values for the requested @axes. This function
-	 * must be called from either the #GtkGestureStylus::down,
-	 * #GtkGestureStylus::motion, #GtkGestureStylus::up or #GtkGestureStylus::proximity
+	 * Returns the current values for the requested @axes.
+	 *
+	 * This function must be called from the handler of one of the
+	 * [signal@Gtk.GestureStylus::down], [signal@Gtk.GestureStylus::motion],
+	 * [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
 	 * signals.
 	 *
 	 * Params:
-	 *     axes = array of requested axes, terminated with #GDK_AXIS_IGNORE
+	 *     axes = array of requested axes, terminated with %GDK_AXIS_IGNORE
 	 *     values = return location for the axis values
 	 *
 	 * Returns: %TRUE if there is a current value for the axes
@@ -121,8 +124,9 @@ public class GestureStylus : GestureSingle
 	 * Returns the current value for the requested @axis.
 	 *
 	 * This function must be called from the handler of one of the
-	 * #GtkGestureStylus::down, #GtkGestureStylus::motion,
-	 * #GtkGestureStylus::up or #GtkGestureStylus::proximity signals.
+	 * [signal@Gtk.GestureStylus::down], [signal@Gtk.GestureStylus::motion],
+	 * [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
+	 * signals.
 	 *
 	 * Params:
 	 *     axis = requested device axis
@@ -136,14 +140,16 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * By default, GTK will limit rate of input events. On stylus input where
-	 * accuracy of strokes is paramount, this function returns the accumulated
-	 * coordinate/timing state before the emission of the current
-	 * #GtkGestureStylus::motion signal.
+	 * Returns the accumulated backlog of tracking information.
 	 *
-	 * This function may only be called within a #GtkGestureStylus::motion
+	 * By default, GTK will limit rate of input events. On stylus input
+	 * where accuracy of strokes is paramount, this function returns the
+	 * accumulated coordinate/timing state before the emission of the
+	 * current [Gtk.GestureStylus::motion] signal.
+	 *
+	 * This function may only be called within a [signal@Gtk.GestureStylus::motion]
 	 * signal handler, the state given in this signal and obtainable through
-	 * gtk_gesture_stylus_get_axis() call express the latest (most up-to-date)
+	 * [method@Gtk.GestureStylus.get_axis] express the latest (most up-to-date)
 	 * state in motion history.
 	 *
 	 * The @backlog is provided in chronological order.
@@ -166,10 +172,12 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * Returns the #GdkDeviceTool currently driving input through this gesture.
-	 * This function must be called from either the #GtkGestureStylus::down,
-	 * #GtkGestureStylus::motion, #GtkGestureStylus::up or #GtkGestureStylus::proximity
-	 * signal handlers.
+	 * Returns the `GdkDeviceTool` currently driving input through this gesture.
+	 *
+	 * This function must be called from the handler of one of the
+	 * [signal@Gtk.GestureStylus::down], [signal@Gtk.GestureStylus::motion],
+	 * [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
+	 * signals.
 	 *
 	 * Returns: The current stylus tool
 	 */
@@ -186,7 +194,7 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * A signal emitted when the stylus touches the device.
+	 * Emitted when the stylus touches the device.
 	 *
 	 * Params:
 	 *     x = the X coordinate of the stylus event
@@ -198,7 +206,7 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * A signal emitted when the stylus moves while touching the device.
+	 * Emitted when the stylus moves while touching the device.
 	 *
 	 * Params:
 	 *     x = the X coordinate of the stylus event
@@ -210,7 +218,7 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * A signal emitted when the stylus is in proximity of the device.
+	 * Emitted when the stylus is in proximity of the device.
 	 *
 	 * Params:
 	 *     x = the X coordinate of the stylus event
@@ -222,7 +230,7 @@ public class GestureStylus : GestureSingle
 	}
 
 	/**
-	 * A signal emitted when the stylus no longer touches the device.
+	 * Emitted when the stylus no longer touches the device.
 	 *
 	 * Params:
 	 *     x = the X coordinate of the stylus event

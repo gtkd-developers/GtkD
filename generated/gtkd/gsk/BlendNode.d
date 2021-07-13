@@ -70,7 +70,7 @@ public class BlendNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will use @blend_mode to blend the @top
+	 * Creates a `GskRenderNode` that will use @blend_mode to blend the @top
 	 * node onto the @bottom node.
 	 *
 	 * Params:
@@ -78,7 +78,7 @@ public class BlendNode : RenderNode
 	 *     top = The node to be blended onto the @bottom node
 	 *     blendMode = The blend mode to use
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,7 +105,7 @@ public class BlendNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the bottom #GskRenderNode child of the @node.
+	 * Retrieves the bottom `GskRenderNode` child of the @node.
 	 *
 	 * Returns: the bottom child node
 	 */
@@ -122,7 +122,7 @@ public class BlendNode : RenderNode
 	}
 
 	/**
-	 * Retrieves the top #GskRenderNode child of the @node.
+	 * Retrieves the top `GskRenderNode` child of the @node.
 	 *
 	 * Returns: the top child node
 	 */

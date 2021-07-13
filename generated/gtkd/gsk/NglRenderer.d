@@ -22,55 +22,69 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module pango.PgEngineShape;
+module gsk.NglRenderer;
 
-private import pango.PgEngine;
-private import pango.c.functions;
-public  import pango.c.types;
+private import glib.ConstructionException;
+private import gobject.ObjectG;
+private import gsk.Renderer;
+private import gsk.c.functions;
+public  import gsk.c.types;
 
 
-/**
- * The #PangoEngineShape class is implemented by engines that
- * customize the rendering-system dependent part of the
- * Pango pipeline for a particular script or language.
- * A #PangoEngineShape implementation is then specific to both
- * a particular rendering system or group of rendering systems
- * and to a particular script. For instance, there is one
- * #PangoEngineShape implementation to handle shaping Arabic
- * for Fontconfig-based backends.
- */
-public class PgEngineShape : PgEngine
+/** */
+public class NglRenderer : Renderer
 {
 	/** the main Gtk struct */
-	protected PangoEngineShape* pangoEngineShape;
+	protected GskNglRenderer* gskNglRenderer;
 
 	/** Get the main Gtk struct */
-	public PangoEngineShape* getPgEngineShapeStruct(bool transferOwnership = false)
+	public GskNglRenderer* getNglRendererStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;
-		return pangoEngineShape;
+		return gskNglRenderer;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)pangoEngineShape;
+		return cast(void*)gskNglRenderer;
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoEngineShape* pangoEngineShape, bool ownedRef = false)
+	public this (GskNglRenderer* gskNglRenderer, bool ownedRef = false)
 	{
-		this.pangoEngineShape = pangoEngineShape;
-		super(cast(PangoEngine*)pangoEngineShape, ownedRef);
+		this.gskNglRenderer = gskNglRenderer;
+		super(cast(GskRenderer*)gskNglRenderer, ownedRef);
 	}
 
 
 	/** */
 	public static GType getType()
 	{
-		return pango_engine_shape_get_type();
+		return gsk_ngl_renderer_get_type();
+	}
+
+	/**
+	 * Creates a new #GskRenderer using the new OpenGL renderer.
+	 *
+	 * Returns: a new NGL renderer
+	 *
+	 * Since: 4.2
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto __p = gsk_ngl_renderer_new();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GskNglRenderer*) __p, true);
 	}
 }

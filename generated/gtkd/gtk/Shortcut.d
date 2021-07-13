@@ -35,20 +35,19 @@ public  import gtk.c.types;
 
 
 /**
- * GtkShortcut is the low level object used for managing keyboard
- * shortcuts.
+ * A `GtkShortcut` describes a keyboard shortcut.
  * 
  * It contains a description of how to trigger the shortcut via a
- * #GtkShortcutTrigger and a way to activate the shortcut on a widget
- * via #GtkShortcutAction.
+ * [class@Gtk.ShortcutTrigger] and a way to activate the shortcut
+ * on a widget via a [class@Gtk.ShortcutAction].
  * 
- * The actual work is usually done via #GtkShortcutController, which
- * decides if and when to activate a shortcut. Using that controller
+ * The actual work is usually done via [class@Gtk.ShortcutController],
+ * which decides if and when to activate a shortcut. Using that controller
  * directly however is rarely necessary as various higher level
  * convenience APIs exist on #GtkWidgets that make it easier to use
  * shortcuts in GTK.
  * 
- * #GtkShortcut does provide functionality to make it easy for users
+ * `GtkShortcut` does provide functionality to make it easy for users
  * to work with shortcuts, either by providing informational strings
  * for display purposes or by allowing shortcuts to be configured.
  */
@@ -88,15 +87,15 @@ public class Shortcut : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkShortcut that is triggered by @trigger and then activates
-	 * @action.
+	 * Creates a new `GtkShortcut` that is triggered by
+	 * @trigger and then activates @action.
 	 *
 	 * Params:
 	 *     trigger = The trigger that will trigger the shortcut
 	 *     action = The action that will be activated upon
 	 *         triggering
 	 *
-	 * Returns: a new #GtkShortcut
+	 * Returns: a new `GtkShortcut`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

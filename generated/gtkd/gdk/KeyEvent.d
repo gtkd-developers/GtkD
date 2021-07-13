@@ -118,8 +118,10 @@ public class KeyEvent : Event
 	}
 
 	/**
-	 * Gets a keyval and modifier combination that will cause
-	 * gdk_key_event_matches() to successfully match the given event.
+	 * Gets a keyval and modifier combination that will match
+	 * the event.
+	 *
+	 * See [method@Gdk.KeyEvent.matches].
 	 *
 	 * Params:
 	 *     keyval = return location for a keyval
@@ -143,9 +145,12 @@ public class KeyEvent : Event
 	}
 
 	/**
-	 * Matches a key event against a keyboard shortcut that is specified
-	 * as a keyval and modifiers. Partial matches are possible where the
-	 * combination matches if the currently active group is ignored.
+	 * Matches a key event against a keyval and modifiers.
+	 *
+	 * This is typically used to trigger keyboard shortcuts such as Ctrl-C.
+	 *
+	 * Partial matches are possible where the combination matches
+	 * if the currently active group is ignored.
 	 *
 	 * Note that we ignore Caps Lock for matching.
 	 *
@@ -153,7 +158,7 @@ public class KeyEvent : Event
 	 *     keyval = the keyval to match
 	 *     modifiers = the modifiers to match
 	 *
-	 * Returns: a GdkKeyMatch value describing whether @event matches
+	 * Returns: a `GdkKeyMatch` value describing whether @event matches
 	 */
 	public GdkKeyMatch matches(uint keyval, GdkModifierType modifiers)
 	{

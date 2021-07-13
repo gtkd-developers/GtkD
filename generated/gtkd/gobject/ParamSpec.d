@@ -25,6 +25,7 @@
 module gobject.ParamSpec;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
@@ -103,7 +104,8 @@ public class ParamSpec
 	 *     blurb = a short description of the property
 	 *     flags = a combination of #GParamFlags
 	 *
-	 * Returns: a newly allocated #GParamSpec instance
+	 * Returns: (transfer floating): a newly allocated
+	 *     #GParamSpec instance, which is initially floating
 	 */
 	public static ParamSpec internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
@@ -257,7 +259,7 @@ public class ParamSpec
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -276,7 +278,7 @@ public class ParamSpec
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**

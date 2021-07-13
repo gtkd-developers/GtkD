@@ -70,14 +70,14 @@ public class OpacityNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will drawn the @child with reduced
+	 * Creates a `GskRenderNode` that will drawn the @child with reduced
 	 * @opacity.
 	 *
 	 * Params:
 	 *     child = The node to draw
 	 *     opacity = The opacity to apply
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

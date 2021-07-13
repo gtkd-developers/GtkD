@@ -27,6 +27,7 @@ module gtk.FileFilter;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
@@ -36,33 +37,36 @@ public  import gtk.c.types;
 
 
 /**
- * A GtkFileFilter can be used to restrict the files being shown in a
- * #GtkFileChooser. Files can be filtered based on their name (with
- * gtk_file_filter_add_pattern()) or on their mime type (with
- * gtk_file_filter_add_mime_type()).
+ * `GtkFileFilter` filters files by name or mime type.
+ * 
+ * `GtkFileFilter` can be used to restrict the files being shown in a
+ * `GtkFileChooser`. Files can be filtered based on their name (with
+ * [method@Gtk.FileFilter.add_pattern]) or on their mime type (with
+ * [method@Gtk.FileFilter.add_mime_type]).
  * 
  * Filtering by mime types handles aliasing and subclassing of mime
  * types; e.g. a filter for text/plain also matches a file with mime
  * type application/rtf, since application/rtf is a subclass of
- * text/plain. Note that #GtkFileFilter allows wildcards for the
+ * text/plain. Note that `GtkFileFilter` allows wildcards for the
  * subtype of a mime type, so you can e.g. filter for image/\*.
  * 
- * Normally, file filters are used by adding them to a #GtkFileChooser
- * (see gtk_file_chooser_add_filter()), but it is also possible to
- * manually use a file filter on any #GtkFilterListModel containing
- * #GFileInfo objects.
+ * Normally, file filters are used by adding them to a `GtkFileChooser`
+ * (see [method@Gtk.FileChooser.add_filter]), but it is also possible to
+ * manually use a file filter on any [class@Gtk.FilterListModel] containing
+ * `GFileInfo` objects.
  * 
  * # GtkFileFilter as GtkBuildable
  * 
- * The GtkFileFilter implementation of the GtkBuildable interface
+ * The `GtkFileFilter` implementation of the `GtkBuildable` interface
  * supports adding rules using the <mime-types> and <patterns>
  * elements and listing the rules within. Specifying a <mime-type>
  * or <pattern> has the same effect as as calling
- * gtk_file_filter_add_mime_type() or gtk_file_filter_add_pattern().
+ * [method@Gtk.FileFilter.add_mime_type] or
+ * [method@Gtk.FileFilter.add_pattern].
  * 
- * An example of a UI definition fragment specifying GtkFileFilter
+ * An example of a UI definition fragment specifying `GtkFileFilter`
  * rules:
- * |[
+ * ```xml
  * <object class="GtkFileFilter">
  * <property name="name" translatable="yes">Text and Images</property>
  * <mime-types>
@@ -74,7 +78,7 @@ public  import gtk.c.types;
  * <pattern>*.png</pattern>
  * </patterns>
  * </object>
- * ]|
+ * ```
  */
 public class FileFilter : Filter, BuildableIF
 {
@@ -115,20 +119,21 @@ public class FileFilter : Filter, BuildableIF
 	}
 
 	/**
-	 * Creates a new #GtkFileFilter with no rules added to it.
+	 * Creates a new `GtkFileFilter` with no rules added to it.
 	 *
 	 * Such a filter doesn’t accept any files, so is not
 	 * particularly useful until you add rules with
-	 * gtk_file_filter_add_mime_type(), gtk_file_filter_add_pattern(),
-	 * or gtk_file_filter_add_pixbuf_formats().
+	 * [method@Gtk.FileFilter.add_mime_type],
+	 * [method@Gtk.FileFilter.add_pattern], or
+	 * [method@Gtk.FileFilter.add_pixbuf_formats].
 	 *
 	 * To create a filter that accepts any file, use:
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * GtkFileFilter *filter = gtk_file_filter_new ();
 	 * gtk_file_filter_add_pattern (filter, "*");
-	 * ]|
+	 * ```
 	 *
-	 * Returns: a new #GtkFileFilter
+	 * Returns: a new `GtkFileFilter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -145,13 +150,15 @@ public class FileFilter : Filter, BuildableIF
 	}
 
 	/**
-	 * Deserialize a file filter from an a{sv} variant in
-	 * the format produced by gtk_file_filter_to_gvariant().
+	 * Deserialize a file filter from a `GVariant`.
+	 *
+	 * The variant must be in the format produced by
+	 * [method@Gtk.FileFilter.to_gvariant].
 	 *
 	 * Params:
-	 *     variant = an a{sv} #GVariant
+	 *     variant = an `a{sv}` `GVariant`
 	 *
-	 * Returns: a new #GtkFileFilter object
+	 * Returns: a new `GtkFileFilter` object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -193,7 +200,7 @@ public class FileFilter : Filter, BuildableIF
 	 * Adds a rule allowing image files in the formats supported
 	 * by GdkPixbuf.
 	 *
-	 * This is equivalent to calling gtk_file_filter_add_mime_type()
+	 * This is equivalent to calling [method@Gtk.FileFilter.add_mime_type]
 	 * for all the supported mime types.
 	 */
 	public void addPixbufFormats()
@@ -202,12 +209,12 @@ public class FileFilter : Filter, BuildableIF
 	}
 
 	/**
-	 * Gets the attributes that need to be filled in for the #GFileInfo
+	 * Gets the attributes that need to be filled in for the `GFileInfo`
 	 * passed to this filter.
 	 *
 	 * This function will not typically be used by applications;
 	 * it is intended principally for use in the implementation
-	 * of #GtkFileChooser.
+	 * of `GtkFileChooser`.
 	 *
 	 * Returns: the attributes
 	 */
@@ -217,7 +224,9 @@ public class FileFilter : Filter, BuildableIF
 	}
 
 	/**
-	 * Gets the human-readable name for the filter. See gtk_file_filter_set_name().
+	 * Gets the human-readable name for the filter.
+	 *
+	 * See [method@Gtk.FileFilter.set_name].
 	 *
 	 * Returns: The human-readable name of the filter,
 	 *     or %NULL. This value is owned by GTK and must not
@@ -229,9 +238,10 @@ public class FileFilter : Filter, BuildableIF
 	}
 
 	/**
-	 * Sets a human-readable name of the filter; this is the string
-	 * that will be displayed in the file chooser if there is a selectable
-	 * list of filters.
+	 * Sets a human-readable name of the filter.
+	 *
+	 * This is the string that will be displayed in the file chooser
+	 * if there is a selectable list of filters.
 	 *
 	 * Params:
 	 *     name = the human-readable-name for the filter, or %NULL
@@ -243,9 +253,9 @@ public class FileFilter : Filter, BuildableIF
 	}
 
 	/**
-	 * Serialize a file filter to an a{sv} variant.
+	 * Serialize a file filter to an `a{sv}` variant.
 	 *
-	 * Returns: a new, floating, #GVariant
+	 * Returns: a new, floating, `GVariant`
 	 */
 	public Variant toGvariant()
 	{

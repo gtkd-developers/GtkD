@@ -806,6 +806,7 @@ shared static this()
 	Linker.link(g_file_append_to, "g_file_append_to", LIBRARY_GIO);
 	Linker.link(g_file_append_to_async, "g_file_append_to_async", LIBRARY_GIO);
 	Linker.link(g_file_append_to_finish, "g_file_append_to_finish", LIBRARY_GIO);
+	Linker.link(g_file_build_attribute_list_for_copy, "g_file_build_attribute_list_for_copy", LIBRARY_GIO);
 	Linker.link(g_file_copy, "g_file_copy", LIBRARY_GIO);
 	Linker.link(g_file_copy_async, "g_file_copy_async", LIBRARY_GIO);
 	Linker.link(g_file_copy_attributes, "g_file_copy_attributes", LIBRARY_GIO);
@@ -2026,6 +2027,7 @@ shared static this()
 
 	Linker.link(g_subprocess_launcher_get_type, "g_subprocess_launcher_get_type", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_new, "g_subprocess_launcher_new", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_close, "g_subprocess_launcher_close", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_getenv, "g_subprocess_launcher_getenv", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_set_child_setup, "g_subprocess_launcher_set_child_setup", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_set_cwd, "g_subprocess_launcher_set_cwd", LIBRARY_GIO);
@@ -2142,6 +2144,7 @@ shared static this()
 	Linker.link(g_tls_certificate_new_from_file, "g_tls_certificate_new_from_file", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_files, "g_tls_certificate_new_from_files", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_pem, "g_tls_certificate_new_from_pem", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_pkcs11_uris, "g_tls_certificate_new_from_pkcs11_uris", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_list_new_from_file, "g_tls_certificate_list_new_from_file", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_get_issuer, "g_tls_certificate_get_issuer", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_is_same, "g_tls_certificate_is_same", LIBRARY_GIO);
@@ -3266,6 +3269,7 @@ __gshared extern(C)
 	GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) c_g_file_append_to;
 	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_append_to_async;
 	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** err) c_g_file_append_to_finish;
+	char* function(GFile* file, GFileCopyFlags flags, GCancellable* cancellable, GError** err) c_g_file_build_attribute_list_for_copy;
 	int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) c_g_file_copy;
 	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) c_g_file_copy_async;
 	int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GError** err) c_g_file_copy_attributes;
@@ -4486,6 +4490,7 @@ __gshared extern(C)
 
 	GType function() c_g_subprocess_launcher_get_type;
 	GSubprocessLauncher* function(GSubprocessFlags flags) c_g_subprocess_launcher_new;
+	void function(GSubprocessLauncher* self) c_g_subprocess_launcher_close;
 	char* function(GSubprocessLauncher* self, char* variable) c_g_subprocess_launcher_getenv;
 	void function(GSubprocessLauncher* self, GSpawnChildSetupFunc childSetup, void* userData, GDestroyNotify destroyNotify) c_g_subprocess_launcher_set_child_setup;
 	void function(GSubprocessLauncher* self, char* cwd) c_g_subprocess_launcher_set_cwd;
@@ -4602,6 +4607,7 @@ __gshared extern(C)
 	GTlsCertificate* function(char* file, GError** err) c_g_tls_certificate_new_from_file;
 	GTlsCertificate* function(char* certFile, char* keyFile, GError** err) c_g_tls_certificate_new_from_files;
 	GTlsCertificate* function(const(char)* data, ptrdiff_t length, GError** err) c_g_tls_certificate_new_from_pem;
+	GTlsCertificate* function(const(char)* pkcs11Uri, const(char)* privateKeyPkcs11Uri, GError** err) c_g_tls_certificate_new_from_pkcs11_uris;
 	GList* function(char* file, GError** err) c_g_tls_certificate_list_new_from_file;
 	GTlsCertificate* function(GTlsCertificate* cert) c_g_tls_certificate_get_issuer;
 	int function(GTlsCertificate* certOne, GTlsCertificate* certTwo) c_g_tls_certificate_is_same;
@@ -5724,6 +5730,7 @@ alias c_g_file_parse_name g_file_parse_name;
 alias c_g_file_append_to g_file_append_to;
 alias c_g_file_append_to_async g_file_append_to_async;
 alias c_g_file_append_to_finish g_file_append_to_finish;
+alias c_g_file_build_attribute_list_for_copy g_file_build_attribute_list_for_copy;
 alias c_g_file_copy g_file_copy;
 alias c_g_file_copy_async g_file_copy_async;
 alias c_g_file_copy_attributes g_file_copy_attributes;
@@ -6944,6 +6951,7 @@ alias c_g_subprocess_wait_finish g_subprocess_wait_finish;
 
 alias c_g_subprocess_launcher_get_type g_subprocess_launcher_get_type;
 alias c_g_subprocess_launcher_new g_subprocess_launcher_new;
+alias c_g_subprocess_launcher_close g_subprocess_launcher_close;
 alias c_g_subprocess_launcher_getenv g_subprocess_launcher_getenv;
 alias c_g_subprocess_launcher_set_child_setup g_subprocess_launcher_set_child_setup;
 alias c_g_subprocess_launcher_set_cwd g_subprocess_launcher_set_cwd;
@@ -7060,6 +7068,7 @@ alias c_g_tls_certificate_get_type g_tls_certificate_get_type;
 alias c_g_tls_certificate_new_from_file g_tls_certificate_new_from_file;
 alias c_g_tls_certificate_new_from_files g_tls_certificate_new_from_files;
 alias c_g_tls_certificate_new_from_pem g_tls_certificate_new_from_pem;
+alias c_g_tls_certificate_new_from_pkcs11_uris g_tls_certificate_new_from_pkcs11_uris;
 alias c_g_tls_certificate_list_new_from_file g_tls_certificate_list_new_from_file;
 alias c_g_tls_certificate_get_issuer g_tls_certificate_get_issuer;
 alias c_g_tls_certificate_is_same g_tls_certificate_is_same;

@@ -28,6 +28,7 @@ private import gdk.Device;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CellEditableIF;
@@ -43,33 +44,35 @@ private import std.algorithm;
 
 
 /**
- * A GtkComboBox is a widget that allows the user to choose from a list of
- * valid choices. The GtkComboBox displays the selected choice. When
- * activated, the GtkComboBox displays a popup which allows the user to
- * make a new choice. The style in which the selected value is displayed,
- * and the style of the popup is determined by the current theme. It may
- * be similar to a Windows-style combo box.
+ * A `GtkComboBox` is a widget that allows the user to choose from a list of
+ * valid choices.
  * 
- * The GtkComboBox uses the model-view pattern; the list of valid choices
+ * ![An example GtkComboBox](combo-box.png)
+ * 
+ * The `GtkComboBox` displays the selected choice; when activated, the
+ * `GtkComboBox` displays a popup which allows the user to make a new choice.
+ * 
+ * The `GtkComboBox` uses the model-view pattern; the list of valid choices
  * is specified in the form of a tree model, and the display of the choices
  * can be adapted to the data in the model by using cell renderers, as you
- * would in a tree view. This is possible since GtkComboBox implements the
- * #GtkCellLayout interface. The tree model holding the valid choices is
- * not restricted to a flat list, it can be a real tree, and the popup will
- * reflect the tree structure.
+ * would in a tree view. This is possible since `GtkComboBox` implements the
+ * [interface@Gtk.CellLayout] interface. The tree model holding the valid
+ * choices is not restricted to a flat list, it can be a real tree, and the
+ * popup will reflect the tree structure.
  * 
- * To allow the user to enter values not in the model, the “has-entry”
- * property allows the GtkComboBox to contain a #GtkEntry. This entry
- * can be accessed by calling gtk_combo_box_get_child() on the combo box.
+ * To allow the user to enter values not in the model, the
+ * [property@Gtk.ComboBox:has-entry] property allows the `GtkComboBox` to
+ * contain a [class@Gtk.Entry]. This entry can be accessed by calling
+ * [method@Gtk.ComboBox.get_child] on the combo box.
  * 
- * For a simple list of textual choices, the model-view API of GtkComboBox
- * can be a bit overwhelming. In this case, #GtkComboBoxText offers a
- * simple alternative. Both GtkComboBox and #GtkComboBoxText can contain
+ * For a simple list of textual choices, the model-view API of `GtkComboBox`
+ * can be a bit overwhelming. In this case, [class@Gtk.ComboBoxText] offers
+ * a simple alternative. Both `GtkComboBox` and `GtkComboBoxText` can contain
  * an entry.
  * 
- * # CSS nodes
+ * ## CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * combobox
  * ├── box.linked
  * │   ╰── button.combo
@@ -77,13 +80,13 @@ private import std.algorithm;
  * │           ├── cellview
  * │           ╰── arrow
  * ╰── window.popup
- * ]|
+ * ```
  * 
  * A normal combobox contains a box with the .linked class, a button
  * with the .combo class and inside those buttons, there are a cellview and
  * an arrow.
  * 
- * |[<!-- language="plain" -->
+ * ```
  * combobox
  * ├── box.linked
  * │   ├── entry.combo
@@ -91,16 +94,16 @@ private import std.algorithm;
  * │       ╰── box
  * │           ╰── arrow
  * ╰── window.popup
- * ]|
+ * ```
  * 
- * A GtkComboBox with an entry has a single CSS node with name combobox. It
- * contains a box with the .linked class. That box contains an entry and a
- * button, both with the .combo class added.
- * The button also contains another node with name arrow.
+ * A `GtkComboBox` with an entry has a single CSS node with name combobox.
+ * It contains a box with the .linked class. That box contains an entry and
+ * a button, both with the .combo class added. The button also contains another
+ * node with name arrow.
  * 
  * # Accessibility
  * 
- * GtkComboBox uses the #GTK_ACCESSIBLE_ROLE_COMBO_BOX role.
+ * `GtkComboBox` uses the %GTK_ACCESSIBLE_ROLE_COMBO_BOX role.
  */
 public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 {
@@ -204,11 +207,12 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Returns the index of the currently active item, or -1 if there’s no
-	 * active item. If the model is a non-flat treemodel, and the active item
-	 * is not an immediate child of the root of the tree, this function returns
-	 * `gtk_tree_path_get_indices (path)[0]`, where
-	 * `path` is the #GtkTreePath of the active item.
+	 * Returns the index of the currently active item.
+	 *
+	 * If the model is a non-flat treemodel, and the active item is not
+	 * an immediate child of the root of the tree, this function returns
+	 * `gtk_tree_path_get_indices (path)[0]`, where `path` is the
+	 * [struct@Gtk.TreePath] of the active item.
 	 *
 	 * Returns: An integer which is the index of the currently active item,
 	 *     or -1 if there’s no active item.
@@ -219,17 +223,19 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Returns the ID of the active row of @combo_box.  This value is taken
-	 * from the active row and the column specified by the #GtkComboBox:id-column
-	 * property of @combo_box (see gtk_combo_box_set_id_column()).
+	 * Returns the ID of the active row of @combo_box.
+	 *
+	 * This value is taken from the active row and the column specified
+	 * by the [property@Gtk.ComboBox:id-column] property of @combo_box
+	 * (see [method@Gtk.ComboBox.set_id_column]).
 	 *
 	 * The returned value is an interned string which means that you can
 	 * compare the pointer by value to other interned strings and that you
 	 * must not free it.
 	 *
-	 * If the #GtkComboBox:id-column property of @combo_box is not set, or if
-	 * no row is active, or if the active row has a %NULL ID value, then %NULL
-	 * is returned.
+	 * If the [property@Gtk.ComboBox:id-column] property of @combo_box is
+	 * not set, or if no row is active, or if the active row has a %NULL
+	 * ID value, then %NULL is returned.
 	 *
 	 * Returns: the ID of the active row, or %NULL
 	 */
@@ -239,11 +245,12 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Sets @iter to point to the currently active item, if any item is active.
-	 * Otherwise, @iter is left unchanged.
+	 * Sets @iter to point to the currently active item.
+	 *
+	 * If no item is active, @iter is left unchanged.
 	 *
 	 * Params:
-	 *     iter = A #GtkTreeIter
+	 *     iter = A `GtkTreeIter`
 	 *
 	 * Returns: %TRUE if @iter was set, %FALSE otherwise
 	 */
@@ -264,9 +271,9 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	 *
 	 * Returns: %GTK_SENSITIVITY_ON if the dropdown button
 	 *     is sensitive when the model is empty, %GTK_SENSITIVITY_OFF
-	 *     if the button is always insensitive or
-	 *     %GTK_SENSITIVITY_AUTO if it is only sensitive as long as
-	 *     the model has one item to be selected.
+	 *     if the button is always insensitive or %GTK_SENSITIVITY_AUTO
+	 *     if it is only sensitive as long as the model has one item to
+	 *     be selected.
 	 */
 	public GtkSensitivityType getButtonSensitivity()
 	{
@@ -323,9 +330,9 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Returns the #GtkTreeModel which is acting as data source for @combo_box.
+	 * Returns the `GtkTreeModel` of @combo_box.
 	 *
-	 * Returns: A #GtkTreeModel which was passed
+	 * Returns: A `GtkTreeModel` which was passed
 	 *     during construction.
 	 */
 	public TreeModelIF getModel()
@@ -341,8 +348,7 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Gets whether the popup uses a fixed width matching
-	 * the allocated width of the combo box.
+	 * Gets whether the popup uses a fixed width.
 	 *
 	 * Returns: %TRUE if the popup uses a fixed width
 	 */
@@ -386,13 +392,15 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Pops up the menu of @combo_box. Note that currently this does not do anything
-	 * with the device, as it was previously only used for list-mode combo boxes,
-	 * and those were removed in GTK 4. However, it is retained in case similar
-	 * functionality is added back later.
+	 * Pops up the menu of @combo_box.
+	 *
+	 * Note that currently this does not do anything with the device, as it was
+	 * previously only used for list-mode combo boxes, and those were removed
+	 * in GTK 4. However, it is retained in case similar functionality is added
+	 * back later.
 	 *
 	 * Params:
-	 *     device = a #GdkDevice
+	 *     device = a `GdkDevice`
 	 */
 	public void popupForDevice(Device device)
 	{
@@ -403,8 +411,8 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	 * Sets the active item of @combo_box to be the item at @index.
 	 *
 	 * Params:
-	 *     index = An index in the model passed during construction, or -1 to have
-	 *         no active item
+	 *     index = An index in the model passed during construction,
+	 *         or -1 to have no active item
 	 */
 	public void setActive(int index)
 	{
@@ -413,16 +421,19 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 
 	/**
 	 * Changes the active row of @combo_box to the one that has an ID equal to
-	 * @active_id, or unsets the active row if @active_id is %NULL.  Rows having
+	 * @active_id.
+	 *
+	 * If @active_id is %NULL, the active row is unset. Rows having
 	 * a %NULL ID string cannot be made active by this function.
 	 *
-	 * If the #GtkComboBox:id-column property of @combo_box is unset or if no
-	 * row has the given ID then the function does nothing and returns %FALSE.
+	 * If the [property@Gtk.ComboBox:id-column] property of @combo_box is
+	 * unset or if no row has the given ID then the function does nothing
+	 * and returns %FALSE.
 	 *
 	 * Params:
 	 *     activeId = the ID of the row to select, or %NULL
 	 *
-	 * Returns: %TRUE if a row with a matching ID was found.  If a %NULL
+	 * Returns: %TRUE if a row with a matching ID was found. If a %NULL
 	 *     @active_id was given to unset the active row, the function
 	 *     always returns %TRUE.
 	 */
@@ -432,11 +443,12 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Sets the current active item to be the one referenced by @iter, or
-	 * unsets the active item if @iter is %NULL.
+	 * Sets the current active item to be the one referenced by @iter.
+	 *
+	 * If @iter is %NULL, the active item is unset.
 	 *
 	 * Params:
-	 *     iter = The #GtkTreeIter, or %NULL
+	 *     iter = The `GtkTreeIter`, or %NULL
 	 */
 	public void setActiveIter(TreeIter iter)
 	{
@@ -444,9 +456,8 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Sets whether the dropdown button of the combo box should be
-	 * always sensitive (%GTK_SENSITIVITY_ON), never sensitive (%GTK_SENSITIVITY_OFF)
-	 * or only if there is at least one item to display (%GTK_SENSITIVITY_AUTO).
+	 * Sets whether the dropdown button of the combo box should update
+	 * its sensitivity depending on the model contents.
 	 *
 	 * Params:
 	 *     sensitivity = specify the sensitivity of the dropdown button
@@ -468,12 +479,14 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Sets the model column which @combo_box should use to get strings from
-	 * to be @text_column. The column @text_column in the model of @combo_box
-	 * must be of type %G_TYPE_STRING.
+	 * Sets the model column which @combo_box should use to get strings
+	 * from to be @text_column.
+	 *
+	 * The column @text_column in the model of @combo_box must be of
+	 * type %G_TYPE_STRING.
 	 *
 	 * This is only relevant if @combo_box has been created with
-	 * #GtkComboBox:has-entry as %TRUE.
+	 * [property@Gtk.ComboBox:has-entry] as %TRUE.
 	 *
 	 * Params:
 	 *     textColumn = A column in @model to get the strings from for
@@ -486,8 +499,10 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 
 	/**
 	 * Sets the model column which @combo_box should use to get string IDs
-	 * for values from. The column @id_column in the model of @combo_box
-	 * must be of type %G_TYPE_STRING.
+	 * for values from.
+	 *
+	 * The column @id_column in the model of @combo_box must be of type
+	 * %G_TYPE_STRING.
 	 *
 	 * Params:
 	 *     idColumn = A column in @model to get string IDs for values from
@@ -498,15 +513,17 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Sets the model used by @combo_box to be @model. Will unset a previously set
-	 * model (if applicable). If model is %NULL, then it will unset the model.
+	 * Sets the model used by @combo_box to be @model.
+	 *
+	 * Will unset a previously set model (if applicable). If model is %NULL,
+	 * then it will unset the model.
 	 *
 	 * Note that this function does not clear the cell renderers, you have to
-	 * call gtk_cell_layout_clear() yourself if you need to set up different
+	 * call [method@Gtk.CellLayout.clear] yourself if you need to set up different
 	 * cell renderers for the new model.
 	 *
 	 * Params:
-	 *     model = A #GtkTreeModel
+	 *     model = A `GtkTreeModel`
 	 */
 	public void setModel(TreeModelIF model)
 	{
@@ -514,8 +531,10 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Specifies whether the popup’s width should be a fixed width
-	 * matching the allocated width of the combo box.
+	 * Specifies whether the popup’s width should be a fixed width.
+	 *
+	 * If @fixed is %TRUE, the popup's width is set to match the
+	 * allocated width of the combo box.
 	 *
 	 * Params:
 	 *     fixed = whether to use a fixed popup width
@@ -527,11 +546,13 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 
 	/**
 	 * Sets the row separator function, which is used to determine
-	 * whether a row should be drawn as a separator. If the row separator
-	 * function is %NULL, no separators are drawn. This is the default value.
+	 * whether a row should be drawn as a separator.
+	 *
+	 * If the row separator function is %NULL, no separators are drawn.
+	 * This is the default value.
 	 *
 	 * Params:
-	 *     func = a #GtkTreeViewRowSeparatorFunc
+	 *     func = a `GtkTreeViewRowSeparatorFunc`
 	 *     data = user data to pass to @func, or %NULL
 	 *     destroy = destroy notifier for @data, or %NULL
 	 */
@@ -541,12 +562,11 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * The changed signal is emitted when the active
-	 * item is changed. The can be due to the user selecting
-	 * a different item from the list, or due to a
-	 * call to gtk_combo_box_set_active_iter().
-	 * It will also be emitted while typing into the entry of a combo box
-	 * with an entry.
+	 * Emitted when the active item is changed.
+	 *
+	 * The can be due to the user selecting a different item from the list,
+	 * or due to a call to [method@Gtk.ComboBox.set_active_iter]. It will
+	 * also be emitted while typing into the entry of a combo box with an entry.
 	 */
 	gulong addOnChanged(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -554,19 +574,18 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
+	 * Emitted to allow changing how the text in a combo box's entry is displayed.
 	 *
-	 * A signal which allows you to change how the text displayed in a combo box's
-	 * entry is displayed.
+	 * See [property@Gtk.ComboBox:has-entry].
 	 *
 	 * Connect a signal handler which returns an allocated string representing
-	 * @path. That string will then be used to set the text in the combo box's entry.
-	 * The default signal handler uses the text from the GtkComboBox::entry-text-column
-	 * model column.
+	 * @path. That string will then be used to set the text in the combo box's
+	 * entry. The default signal handler uses the text from the
+	 * [property@Gtk.ComboBox:entry-text-column] model column.
 	 *
 	 * Here's an example signal handler which fetches data from the model and
 	 * displays it in the entry.
-	 * |[<!-- language="C" -->
+	 * ```c
 	 * static char *
 	 * format_entry_text_callback (GtkComboBox *combo,
 	 * const char *path,
@@ -585,13 +604,14 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	 *
 	 * return g_strdup_printf ("%g", value);
 	 * }
-	 * ]|
+	 * ```
 	 *
 	 * Params:
-	 *     path = the GtkTreePath string from the combo box's current model to format text for
+	 *     path = the [struct@Gtk.TreePath] string from the combo box's current model
+	 *         to format text for
 	 *
 	 * Returns: a newly allocated string representing @path
-	 *     for the current GtkComboBox model.
+	 *     for the current `GtkComboBox` model.
 	 */
 	gulong addOnFormatEntryText(string delegate(string, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -599,12 +619,12 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * The ::move-active signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to move the active selection.
+	 * Emitted to move the active selection.
+	 *
+	 * This is an [keybinding signal](class.SignalAction.html).
 	 *
 	 * Params:
-	 *     scrollType = a #GtkScrollType
+	 *     scrollType = a `GtkScrollType`
 	 */
 	gulong addOnMoveActive(void delegate(GtkScrollType, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -612,9 +632,9 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * The ::popdown signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to popdown the combo box list.
+	 * Emitted to popdown the combo box list.
+	 *
+	 * This is an [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are Alt+Up and Escape.
 	 */
@@ -624,9 +644,9 @@ public class ComboBox : Widget, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * The ::popup signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to popup the combo box list.
+	 * Emitted to popup the combo box list.
+	 *
+	 * This is an [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default binding for this signal is Alt+Down.
 	 */

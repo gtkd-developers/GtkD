@@ -37,6 +37,8 @@ private import std.algorithm;
 
 
 /**
+ * Renders a combobox in a cell
+ * 
  * #GtkCellRendererCombo renders text in a cell like #GtkCellRendererText from
  * which it is derived. But while #GtkCellRendererText offers a simple entry to
  * edit the text, #GtkCellRendererCombo offers a #GtkComboBox

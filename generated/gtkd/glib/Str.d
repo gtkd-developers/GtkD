@@ -1268,7 +1268,8 @@ public struct Str
 	 *
 	 * Params:
 	 *     haystack = a nul-terminated string
-	 *     haystackLen = the maximum length of @haystack
+	 *     haystackLen = the maximum length of @haystack in bytes. A length of -1
+	 *         can be used to mean "search the entire string", like g_strrstr().
 	 *     needle = the nul-terminated string to search for
 	 *
 	 * Returns: a pointer to the found occurrence, or
@@ -1378,10 +1379,9 @@ public struct Str
 	 * to @haystack_len.
 	 *
 	 * Params:
-	 *     haystack = a string
-	 *     haystackLen = the maximum length of @haystack. Note that -1 is
-	 *         a valid length, if @haystack is nul-terminated, meaning it will
-	 *         search through the whole string.
+	 *     haystack = a nul-terminated string
+	 *     haystackLen = the maximum length of @haystack in bytes. A length of -1
+	 *         can be used to mean "search the entire string", like `strstr()`.
 	 *     needle = the string to search for
 	 *
 	 * Returns: a pointer to the found occurrence, or
@@ -1556,7 +1556,7 @@ public struct Str
 	 *     n = the maximum number of bytes to produce (including the
 	 *         terminating nul character).
 	 *     format = a standard printf() format string, but notice
-	 *         string precision pitfalls][string-precision]
+	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
 	 * Returns: the number of bytes which would be produced if the buffer

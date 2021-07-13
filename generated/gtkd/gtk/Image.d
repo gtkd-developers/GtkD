@@ -29,6 +29,7 @@ private import gdkpixbuf.Pixbuf;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
@@ -36,40 +37,45 @@ public  import gtk.c.types;
 
 
 /**
- * The #GtkImage widget displays an image. Various kinds of object
- * can be displayed as an image; most typically, you would load a
- * #GdkTexture from a file, and then display that.
- * There’s a convenience function to do this, gtk_image_new_from_file(),
- * used as follows:
- * |[<!-- language="C" -->
- * GtkWidget *image;
- * image = gtk_image_new_from_file ("myfile.png");
- * ]|
+ * The `GtkImage` widget displays an image.
+ * 
+ * ![An example GtkImage](image.png)
+ * 
+ * Various kinds of object can be displayed as an image; most typically,
+ * you would load a `GdkTexture` from a file, using the convenience function
+ * [ctor@Gtk.Image.new_from_file], for instance:
+ * 
+ * ```c
+ * GtkWidget *image = gtk_image_new_from_file ("myfile.png");
+ * ```
+ * 
  * If the file isn’t loaded successfully, the image will contain a
  * “broken image” icon similar to that used in many web browsers.
+ * 
  * If you want to handle errors in loading the file yourself,
  * for example by displaying an error message, then load the image with
- * gdk_texture_new_from_file(), then create the #GtkImage with
- * gtk_image_new_from_paintable().
+ * [ctor@Gdk.Texture.new_from_file], then create the `GtkImage` with
+ * [ctor@Gtk.Image.new_from_paintable].
  * 
  * Sometimes an application will want to avoid depending on external data
- * files, such as image files. See the documentation of #GResource for details.
- * In this case, the #GtkImage:resource, gtk_image_new_from_resource() and
- * gtk_image_set_from_resource() should be used.
+ * files, such as image files. See the documentation of `GResource` inside
+ * GIO, for details. In this case, [property@Gtk.Image:resource],
+ * [ctor@Gtk.Image.new_from_resource], and [method@Gtk.Image.set_from_resource]
+ * should be used.
  * 
- * GtkImage displays its image as an icon, with a size that is determined
- * by the application. See #GtkPicture if you want to show an image at is
- * actual size.
+ * `GtkImage` displays its image as an icon, with a size that is determined
+ * by the application. See [class@Gtk.Picture] if you want to show an image
+ * at is actual size.
  * 
- * # CSS nodes
+ * ## CSS nodes
  * 
- * GtkImage has a single CSS node with the name image. The style classes
- * .normal-icons or .large-icons may appear, depending on the #GtkImage:icon-size
- * property.
+ * `GtkImage` has a single CSS node with the name `image`. The style classes
+ * `.normal-icons` or `.large-icons` may appear, depending on the
+ * [property@Gtk.Image:icon-size] property.
  * 
- * # Accessibility
+ * ## Accessibility
  * 
- * GtkImage uses the #GTK_ACCESSIBLE_ROLE_IMG role.
+ * `GtkImage` uses the `GTK_ACCESSIBLE_ROLE_IMG` role.
  */
 public class Image : Widget
 {
@@ -107,9 +113,9 @@ public class Image : Widget
 	}
 
 	/**
-	 * Creates a new empty #GtkImage widget.
+	 * Creates a new empty `GtkImage` widget.
 	 *
-	 * Returns: a newly created #GtkImage widget.
+	 * Returns: a newly created `GtkImage` widget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -126,23 +132,24 @@ public class Image : Widget
 	}
 
 	/**
-	 * Creates a new #GtkImage displaying the file @filename. If the file
-	 * isn’t found or can’t be loaded, the resulting #GtkImage will
-	 * display a “broken image” icon. This function never returns %NULL,
-	 * it always returns a valid #GtkImage widget.
+	 * Creates a new `GtkImage` displaying the file @filename.
+	 *
+	 * If the file isn’t found or can’t be loaded, the resulting `GtkImage`
+	 * will display a “broken image” icon. This function never returns %NULL,
+	 * it always returns a valid `GtkImage` widget.
 	 *
 	 * If you need to detect failures to load the file, use
-	 * gdk_texture_new_from_file() to load the file yourself, then create
-	 * the #GtkImage from the texture.
+	 * [ctor@Gdk.Texture.new_from_file] to load the file yourself,
+	 * then create the `GtkImage` from the texture.
 	 *
-	 * The storage type (gtk_image_get_storage_type()) of the returned
-	 * image is not defined, it will be whatever is appropriate for
-	 * displaying the file.
+	 * The storage type (see [method@Gtk.Image.get_storage_type])
+	 * of the returned image is not defined, it will be whatever
+	 * is appropriate for displaying the file.
 	 *
 	 * Params:
 	 *     filename = a filename
 	 *
-	 * Returns: a new #GtkImage
+	 * Returns: a new `GtkImage`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -159,19 +166,16 @@ public class Image : Widget
 	}
 
 	/**
-	 * Creates a #GtkImage displaying an icon from the current icon theme.
-	 * If the icon name isn’t known, a “broken image” icon will be
-	 * displayed instead.  If the current icon theme is changed, the icon
-	 * will be updated appropriately.
+	 * Creates a `GtkImage` displaying an icon from the current icon theme.
 	 *
-	 * Note: Before 3.94, this function was taking an extra icon size
-	 * argument. See gtk_image_set_icon_size() for another way to set
-	 * the icon size.
+	 * If the icon name isn’t known, a “broken image” icon will be
+	 * displayed instead. If the current icon theme is changed, the icon
+	 * will be updated appropriately.
 	 *
 	 * Params:
 	 *     icon = an icon
 	 *
-	 * Returns: a new #GtkImage displaying the themed icon
+	 * Returns: a new `GtkImage` displaying the themed icon
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -188,18 +192,19 @@ public class Image : Widget
 	}
 
 	/**
-	 * Creates a new #GtkImage displaying @paintable.
-	 * The #GtkImage does not assume a reference to the
-	 * paintable; you still need to unref it if you own references.
-	 * #GtkImage will add its own reference rather than adopting yours.
+	 * Creates a new `GtkImage` displaying @paintable.
 	 *
-	 * The #GtkImage will track changes to the @paintable and update
+	 * The `GtkImage` does not assume a reference to the paintable; you still
+	 * need to unref it if you own references. `GtkImage` will add its own
+	 * reference rather than adopting yours.
+	 *
+	 * The `GtkImage` will track changes to the @paintable and update
 	 * its size and contents in response to it.
 	 *
 	 * Params:
-	 *     paintable = a #GdkPaintable, or %NULL
+	 *     paintable = a `GdkPaintable`, or %NULL
 	 *
-	 * Returns: a new #GtkImage
+	 * Returns: a new `GtkImage`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -216,22 +221,23 @@ public class Image : Widget
 	}
 
 	/**
-	 * Creates a new #GtkImage displaying @pixbuf.
-	 * The #GtkImage does not assume a reference to the
-	 * pixbuf; you still need to unref it if you own references.
-	 * #GtkImage will add its own reference rather than adopting yours.
+	 * Creates a new `GtkImage` displaying @pixbuf.
 	 *
-	 * This is a helper for gtk_image_new_from_paintable(), and you can't
+	 * The `GtkImage` does not assume a reference to the pixbuf; you still
+	 * need to unref it if you own references. `GtkImage` will add its own
+	 * reference rather than adopting yours.
+	 *
+	 * This is a helper for [ctor@Gtk.Image.new_from_paintable], and you can't
 	 * get back the exact pixbuf once this is called, only a texture.
 	 *
-	 * Note that this function just creates an #GtkImage from the pixbuf. The
-	 * #GtkImage created will not react to state changes. Should you want that,
-	 * you should use gtk_image_new_from_icon_name().
+	 * Note that this function just creates an `GtkImage` from the pixbuf.
+	 * The `GtkImage` created will not react to state changes. Should you
+	 * want that, you should use [ctor@Gtk.Image.new_from_icon_name].
 	 *
 	 * Params:
-	 *     pixbuf = a #GdkPixbuf, or %NULL
+	 *     pixbuf = a `GdkPixbuf`, or %NULL
 	 *
-	 * Returns: a new #GtkImage
+	 * Returns: a new `GtkImage`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -256,17 +262,14 @@ public class Image : Widget
 	}
 
 	/**
-	 * Gets the #GIcon and size being displayed by the #GtkImage.
+	 * Gets the `GIcon` being displayed by the `GtkImage`.
+	 *
 	 * The storage type of the image must be %GTK_IMAGE_EMPTY or
-	 * %GTK_IMAGE_GICON (see gtk_image_get_storage_type()).
+	 * %GTK_IMAGE_GICON (see [method@Gtk.Image.get_storage_type]).
 	 * The caller of this function does not own a reference to the
-	 * returned #GIcon.
+	 * returned `GIcon`.
 	 *
-	 * Note: This function was changed in 3.94 not to use out parameters
-	 * anymore, but return the GIcon directly. See gtk_image_get_icon_size()
-	 * for a way to get the icon size.
-	 *
-	 * Returns: a #GIcon, or %NULL
+	 * Returns: a `GIcon`, or %NULL
 	 */
 	public IconIF getGicon()
 	{
@@ -281,15 +284,12 @@ public class Image : Widget
 	}
 
 	/**
-	 * Gets the icon name and size being displayed by the #GtkImage.
-	 * The storage type of the image must be %GTK_IMAGE_EMPTY or
-	 * %GTK_IMAGE_ICON_NAME (see gtk_image_get_storage_type()).
-	 * The returned string is owned by the #GtkImage and should not
-	 * be freed.
+	 * Gets the icon name and size being displayed by the `GtkImage`.
 	 *
-	 * Note: This function was changed in 3.94 not to use out parameters
-	 * anymore, but return the icon name directly. See gtk_image_get_icon_size()
-	 * for a way to get the icon size.
+	 * The storage type of the image must be %GTK_IMAGE_EMPTY or
+	 * %GTK_IMAGE_ICON_NAME (see [method@Gtk.Image.get_storage_type]).
+	 * The returned string is owned by the `GtkImage` and should not
+	 * be freed.
 	 *
 	 * Returns: the icon name, or %NULL
 	 */
@@ -309,14 +309,15 @@ public class Image : Widget
 	}
 
 	/**
-	 * Gets the image #GdkPaintable being displayed by the #GtkImage.
+	 * Gets the image `GdkPaintable` being displayed by the `GtkImage`.
+	 *
 	 * The storage type of the image must be %GTK_IMAGE_EMPTY or
-	 * %GTK_IMAGE_PAINTABLE (see gtk_image_get_storage_type()).
+	 * %GTK_IMAGE_PAINTABLE (see [method@Gtk.Image.get_storage_type]).
 	 * The caller of this function does not own a reference to the
 	 * returned paintable.
 	 *
-	 * Returns: the displayed paintable, or %NULL if
-	 *     the image is empty
+	 * Returns: the displayed paintable,
+	 *     or %NULL if the image is empty
 	 */
 	public PaintableIF getPaintable()
 	{
@@ -341,9 +342,11 @@ public class Image : Widget
 	}
 
 	/**
-	 * Gets the type of representation being used by the #GtkImage
-	 * to store image data. If the #GtkImage has no image data,
-	 * the return value will be %GTK_IMAGE_EMPTY.
+	 * Gets the type of representation being used by the `GtkImage`
+	 * to store image data.
+	 *
+	 * If the `GtkImage` has no image data, the return value will
+	 * be %GTK_IMAGE_EMPTY.
 	 *
 	 * Returns: image representation being used
 	 */
@@ -353,7 +356,9 @@ public class Image : Widget
 	}
 
 	/**
-	 * See gtk_image_new_from_file() for details.
+	 * Sets a `GtkImage` to show a file.
+	 *
+	 * See [ctor@Gtk.Image.new_from_file] for details.
 	 *
 	 * Params:
 	 *     filename = a filename or %NULL
@@ -364,11 +369,9 @@ public class Image : Widget
 	}
 
 	/**
-	 * See gtk_image_new_from_gicon() for details.
+	 * Sets a `GtkImage` to show a `GIcon`.
 	 *
-	 * Note: Before 3.94, this function was taking an extra icon size
-	 * argument. See gtk_image_set_icon_size() for another way to set
-	 * the icon size.
+	 * See [ctor@Gtk.Image.new_from_gicon] for details.
 	 *
 	 * Params:
 	 *     icon = an icon
@@ -379,11 +382,9 @@ public class Image : Widget
 	}
 
 	/**
-	 * See gtk_image_new_from_icon_name() for details.
+	 * Sets a `GtkImage` to show a named icon.
 	 *
-	 * Note: Before 3.94, this function was taking an extra icon size
-	 * argument. See gtk_image_set_icon_size() for another way to set
-	 * the icon size.
+	 * See [ctor@Gtk.Image.new_from_icon_name] for details.
 	 *
 	 * Params:
 	 *     iconName = an icon name or %NULL
@@ -394,10 +395,12 @@ public class Image : Widget
 	}
 
 	/**
-	 * See gtk_image_new_from_paintable() for details.
+	 * Sets a `GtkImage` to show a `GdkPaintable`.
+	 *
+	 * See [ctor@Gtk.Image.new_from_paintable] for details.
 	 *
 	 * Params:
-	 *     paintable = a #GdkPaintable or %NULL
+	 *     paintable = a `GdkPaintable` or %NULL
 	 */
 	public void setFromPaintable(PaintableIF paintable)
 	{
@@ -405,13 +408,16 @@ public class Image : Widget
 	}
 
 	/**
-	 * See gtk_image_new_from_pixbuf() for details.
+	 * Sets a `GtkImage` to show a `GdkPixbuf`.
 	 *
-	 * Note: This is a helper for gtk_image_set_from_paintable(), and you can't
-	 * get back the exact pixbuf once this is called, only a paintable.
+	 * See [ctor@Gtk.Image.new_from_pixbuf] for details.
+	 *
+	 * Note: This is a helper for [method@Gtk.Image.set_from_paintable],
+	 * and you can't get back the exact pixbuf once this is called,
+	 * only a paintable.
 	 *
 	 * Params:
-	 *     pixbuf = a #GdkPixbuf or %NULL
+	 *     pixbuf = a `GdkPixbuf` or `NULL`
 	 */
 	public void setFromPixbuf(Pixbuf pixbuf)
 	{
@@ -419,7 +425,9 @@ public class Image : Widget
 	}
 
 	/**
-	 * See gtk_image_new_from_resource() for details.
+	 * Sets a `GtkImage` to show a resource.
+	 *
+	 * See [ctor@Gtk.Image.new_from_resource] for details.
 	 *
 	 * Params:
 	 *     resourcePath = a resource path or %NULL
@@ -441,9 +449,10 @@ public class Image : Widget
 	}
 
 	/**
-	 * Sets the pixel size to use for named icons. If the pixel size is set
-	 * to a value != -1, it is used instead of the icon size set by
-	 * gtk_image_set_from_icon_name().
+	 * Sets the pixel size to use for named icons.
+	 *
+	 * If the pixel size is set to a value != -1, it is used instead
+	 * of the icon size set by [method@Gtk.Image.set_from_icon_name].
 	 *
 	 * Params:
 	 *     pixelSize = the new pixel size

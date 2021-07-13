@@ -32,8 +32,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutTrigger that triggers when a specific keyval
- * and (optionally) modifiers are pressed.
+ * A `GtkShortcutTrigger` that triggers when a specific keyval and modifiers are pressed.
  */
 public class KeyvalTrigger : ShortcutTrigger
 {
@@ -71,14 +70,14 @@ public class KeyvalTrigger : ShortcutTrigger
 	}
 
 	/**
-	 * Creates a #GtkShortcutTrigger that will trigger whenever
+	 * Creates a `GtkShortcutTrigger` that will trigger whenever
 	 * the key with the given @keyval and @modifiers is pressed.
 	 *
 	 * Params:
 	 *     keyval = The keyval to trigger for
 	 *     modifiers = the modifiers that need to be present
 	 *
-	 * Returns: A new #GtkShortcutTrigger
+	 * Returns: A new `GtkShortcutTrigger`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -40,7 +40,19 @@ private import gobject.ObjectG;
 
 
 /**
- * An opaque struct representing an animation.
+ * An opaque object representing an animation.
+ * 
+ * The GdkPixBuf library provides a simple mechanism to load and
+ * represent animations. An animation is conceptually a series of
+ * frames to be displayed over time.
+ * 
+ * The animation may not be represented as a series of frames
+ * internally; for example, it may be stored as a sprite and
+ * instructions for moving the sprite around a background.
+ * 
+ * To display an animation you don't need to understand its
+ * representation, however; you just ask `GdkPixbuf` what should
+ * be displayed at a given point in time.
  */
 public class PixbufAnimation : ObjectG
 {
@@ -78,19 +90,20 @@ public class PixbufAnimation : ObjectG
 	}
 
 	/**
-	 * Creates a new animation by loading it from a file. The file format is
-	 * detected automatically. If the file's format does not support multi-frame
-	 * images, then an animation with a single frame will be created. Possible errors
-	 * are in the #GDK_PIXBUF_ERROR and #G_FILE_ERROR domains.
+	 * Creates a new animation by loading it from a file.
+	 *
+	 * The file format is detected automatically.
+	 *
+	 * If the file's format does not support multi-frame images, then an animation
+	 * with a single frame will be created.
+	 *
+	 * Possible errors are in the `GDK_PIXBUF_ERROR` and `G_FILE_ERROR` domains.
 	 *
 	 * Params:
 	 *     filename = Name of file to load, in the GLib file
 	 *         name encoding
 	 *
-	 * Returns: A newly-created animation with a reference count of 1, or %NULL
-	 *     if any of several error conditions ocurred:  the file could not be opened,
-	 *     there was no loader for the file's format, there was not enough memory to
-	 *     allocate the image buffer, or the image file contained invalid data.
+	 * Returns: A newly-created animation
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -117,22 +130,22 @@ public class PixbufAnimation : ObjectG
 	/**
 	 * Creates a new animation by loading it from an input stream.
 	 *
-	 * The file format is detected automatically. If %NULL is returned, then
-	 * @error will be set. The @cancellable can be used to abort the operation
-	 * from another thread. If the operation was cancelled, the error
-	 * %G_IO_ERROR_CANCELLED will be returned. Other possible errors are in
-	 * the #GDK_PIXBUF_ERROR and %G_IO_ERROR domains.
+	 * The file format is detected automatically.
+	 *
+	 * If `NULL` is returned, then @error will be set.
+	 *
+	 * The @cancellable can be used to abort the operation from another thread.
+	 * If the operation was cancelled, the error `G_IO_ERROR_CANCELLED` will be
+	 * returned. Other possible errors are in the `GDK_PIXBUF_ERROR` and
+	 * `G_IO_ERROR` domains.
 	 *
 	 * The stream is not closed.
 	 *
 	 * Params:
-	 *     stream = a #GInputStream to load the pixbuf from
-	 *     cancellable = optional #GCancellable object, %NULL to ignore
+	 *     stream = a `GInputStream` to load the pixbuf from
+	 *     cancellable = optional `GCancellable` object
 	 *
-	 * Returns: A newly-created pixbuf, or %NULL if any of several error
-	 *     conditions occurred: the file could not be opened, the image format is
-	 *     not supported, there was not enough memory to allocate the image buffer,
-	 *     the stream contained invalid data, or the operation was cancelled.
+	 * Returns: A newly-created animation
 	 *
 	 * Since: 2.28
 	 *
@@ -160,13 +173,12 @@ public class PixbufAnimation : ObjectG
 
 	/**
 	 * Finishes an asynchronous pixbuf animation creation operation started with
-	 * gdk_pixbuf_animation_new_from_stream_async().
+	 * [func@GdkPixbuf.PixbufAnimation.new_from_stream_async].
 	 *
 	 * Params:
 	 *     asyncResult = a #GAsyncResult
 	 *
-	 * Returns: a #GdkPixbufAnimation or %NULL on error. Free the returned
-	 *     object with g_object_unref().
+	 * Returns: the newly created animation
 	 *
 	 * Since: 2.28
 	 *
@@ -198,14 +210,14 @@ public class PixbufAnimation : ObjectG
 	 * For more details see gdk_pixbuf_new_from_stream(), which is the synchronous
 	 * version of this function.
 	 *
-	 * When the operation is finished, @callback will be called in the main thread.
+	 * When the operation is finished, `callback` will be called in the main thread.
 	 * You can then call gdk_pixbuf_animation_new_from_stream_finish() to get the
 	 * result of the operation.
 	 *
 	 * Params:
 	 *     stream = a #GInputStream from which to load the animation
-	 *     cancellable = optional #GCancellable object, %NULL to ignore
-	 *     callback = a #GAsyncReadyCallback to call when the pixbuf is loaded
+	 *     cancellable = optional #GCancellable object
+	 *     callback = a `GAsyncReadyCallback` to call when the pixbuf is loaded
 	 *     userData = the data to pass to the callback function
 	 *
 	 * Since: 2.28
@@ -226,9 +238,10 @@ public class PixbufAnimation : ObjectG
 	}
 
 	/**
-	 * Get an iterator for displaying an animation. The iterator provides
-	 * the frames that should be displayed at a given time. It should be
-	 * freed after use with g_object_unref().
+	 * Get an iterator for displaying an animation.
+	 *
+	 * The iterator provides the frames that should be displayed at a
+	 * given time.
 	 *
 	 * @start_time would normally come from g_get_current_time(), and marks
 	 * the beginning of animation playback. After creating an iterator, you
@@ -240,7 +253,7 @@ public class PixbufAnimation : ObjectG
 	 * the image is updated, you should reinstall the timeout with the new,
 	 * possibly-changed delay time.
 	 *
-	 * As a shortcut, if @start_time is %NULL, the result of
+	 * As a shortcut, if @start_time is `NULL`, the result of
 	 * g_get_current_time() will be used automatically.
 	 *
 	 * To update the image (i.e. possibly change the result of
@@ -251,14 +264,14 @@ public class PixbufAnimation : ObjectG
 	 * after the delay time, you should also update it whenever you
 	 * receive the area_updated signal and
 	 * gdk_pixbuf_animation_iter_on_currently_loading_frame() returns
-	 * %TRUE. In this case, the frame currently being fed into the loader
+	 * `TRUE`. In this case, the frame currently being fed into the loader
 	 * has received new data, so needs to be refreshed. The delay time for
 	 * a frame may also be modified after an area_updated signal, for
 	 * example if the delay time for a frame is encoded in the data after
 	 * the frame itself. So your timeout should be reinstalled after any
 	 * area_updated signal.
 	 *
-	 * A delay time of -1 is possible, indicating "infinite."
+	 * A delay time of -1 is possible, indicating "infinite".
 	 *
 	 * Params:
 	 *     startTime = time when the animation starts playing
@@ -278,12 +291,17 @@ public class PixbufAnimation : ObjectG
 	}
 
 	/**
+	 * Retrieves a static image for the animation.
+	 *
 	 * If an animation is really just a plain image (has only one frame),
-	 * this function returns that image. If the animation is an animation,
-	 * this function returns a reasonable thing to display as a static
-	 * unanimated image, which might be the first frame, or something more
-	 * sophisticated. If an animation hasn't loaded any frames yet, this
-	 * function will return %NULL.
+	 * this function returns that image.
+	 *
+	 * If the animation is an animation, this function returns a reasonable
+	 * image to use as a static unanimated image, which might be the first
+	 * frame, or something more sophisticated depending on the file format.
+	 *
+	 * If an animation hasn't loaded any frames yet, this function will
+	 * return `NULL`.
 	 *
 	 * Returns: unanimated image representing the animation
 	 */
@@ -310,12 +328,14 @@ public class PixbufAnimation : ObjectG
 	}
 
 	/**
+	 * Checks whether the animation is a static image.
+	 *
 	 * If you load a file with gdk_pixbuf_animation_new_from_file() and it
 	 * turns out to be a plain, unanimated image, then this function will
-	 * return %TRUE. Use gdk_pixbuf_animation_get_static_image() to retrieve
+	 * return `TRUE`. Use gdk_pixbuf_animation_get_static_image() to retrieve
 	 * the image.
 	 *
-	 * Returns: %TRUE if the "animation" was really just an image
+	 * Returns: `TRUE` if the "animation" was really just an image
 	 */
 	public bool isStaticImage()
 	{

@@ -36,8 +36,10 @@ public  import gtk.c.types;
 
 
 /**
- * GtkMultiSorter combines multiple sorters by trying them
- * in turn. If the first sorter compares two items as equal,
+ * `GtkMultiSorter` combines multiple sorters by trying them
+ * in turn.
+ * 
+ * If the first sorter compares two items as equal,
  * the second is tried next, and so on.
  */
 public class MultiSorter : Sorter, ListModelIF, BuildableIF
@@ -89,7 +91,7 @@ public class MultiSorter : Sorter, ListModelIF, BuildableIF
 	 * no sorter has been added to it, it will always compare
 	 * items as equal.
 	 *
-	 * Returns: a new #GtkMultiSorter
+	 * Returns: a new `GtkMultiSorter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -106,9 +108,10 @@ public class MultiSorter : Sorter, ListModelIF, BuildableIF
 	}
 
 	/**
-	 * Add @sorter to @self to use for sorting at the end. @self
-	 * will consult all existing sorters before it will sort with
-	 * the given @sorter.
+	 * Add @sorter to @self to use for sorting at the end.
+	 *
+	 * @self will consult all existing sorters before it will
+	 * sort with the given @sorter.
 	 *
 	 * Params:
 	 *     sorter = a sorter to add

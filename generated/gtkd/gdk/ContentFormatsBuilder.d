@@ -34,9 +34,8 @@ private import gtkd.Loader;
 
 
 /**
- * A #GdkContentFormatsBuilder struct is an opaque struct. It is meant to
- * not be kept around and only be used to create new #GdkContentFormats
- * objects.
+ * A `GdkContentFormatsBuilder` is an auxiliary struct used to create
+ * new `GdkContentFormats`, and should not be kept around.
  */
 public class ContentFormatsBuilder
 {
@@ -81,11 +80,12 @@ public class ContentFormatsBuilder
 	}
 
 	/**
-	 * Create a new #GdkContentFormatsBuilder object. The resulting builder
-	 * would create an empty #GdkContentFormats. Use addition functions to add
-	 * types to it.
+	 * Create a new `GdkContentFormatsBuilder` object.
 	 *
-	 * Returns: a new #GdkContentFormatsBuilder
+	 * The resulting builder would create an empty `GdkContentFormats`.
+	 * Use addition functions to add types to it.
+	 *
+	 * Returns: a new `GdkContentFormatsBuilder`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -114,10 +114,10 @@ public class ContentFormatsBuilder
 	}
 
 	/**
-	 * Appends @gtype to @builder if it has not already been added.
+	 * Appends @type to @builder if it has not already been added.
 	 *
 	 * Params:
-	 *     type = a #GType
+	 *     type = a `GType`
 	 */
 	public void addGtype(GType type)
 	{
@@ -136,10 +136,10 @@ public class ContentFormatsBuilder
 	}
 
 	/**
-	 * Creates a new #GdkContentFormats from the current state of the
+	 * Creates a new `GdkContentFormats` from the current state of the
 	 * given @builder, and frees the @builder instance.
 	 *
-	 * Returns: the newly created #GdkContentFormats
+	 * Returns: the newly created `GdkContentFormats`
 	 *     with all the formats added to @builder
 	 */
 	public ContentFormats freeToFormats()
@@ -158,11 +158,11 @@ public class ContentFormatsBuilder
 	/**
 	 * Acquires a reference on the given @builder.
 	 *
-	 * This function is intended primarily for bindings. #GdkContentFormatsBuilder objects
-	 * should not be kept around.
+	 * This function is intended primarily for bindings.
+	 * `GdkContentFormatsBuilder` objects should not be kept around.
 	 *
-	 * Returns: the given #GdkContentFormatsBuilder with
-	 *     its reference count increased
+	 * Returns: the given `GdkContentFormatsBuilder`
+	 *     with its reference count increased
 	 */
 	public ContentFormatsBuilder ref_()
 	{
@@ -177,15 +177,15 @@ public class ContentFormatsBuilder
 	}
 
 	/**
-	 * Creates a new #GdkContentFormats from the given @builder.
+	 * Creates a new `GdkContentFormats` from the given @builder.
 	 *
-	 * The given #GdkContentFormatsBuilder is reset once this function returns;
+	 * The given `GdkContentFormatsBuilder` is reset once this function returns;
 	 * you cannot call this function multiple times on the same @builder instance.
 	 *
 	 * This function is intended primarily for bindings. C code should use
-	 * gdk_content_formats_builder_free_to_formats().
+	 * [method@Gdk.ContentFormatsBuilder.free_to_formats].
 	 *
-	 * Returns: the newly created #GdkContentFormats
+	 * Returns: the newly created `GdkContentFormats`
 	 *     with all the formats added to @builder
 	 */
 	public ContentFormats toFormats()

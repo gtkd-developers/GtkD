@@ -39,6 +39,8 @@ private import std.algorithm;
 
 
 /**
+ * An object for rendering a single cell
+ * 
  * The #GtkCellRenderer is a base class of a set of objects used for
  * rendering a cell to a #cairo_t.  These objects are used primarily by
  * the #GtkTreeView widget, though they aren’t tied to them in any

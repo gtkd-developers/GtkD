@@ -29,6 +29,7 @@ public  import gio.c.types;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtkd.Loader;
 

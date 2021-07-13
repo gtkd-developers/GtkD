@@ -33,10 +33,21 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkNative is the interface implemented by all widgets that can provide
- * a GdkSurface for widgets to render on.
+ * `GtkNative` is the interface implemented by all widgets that have
+ * their own `GdkSurface`.
  * 
- * The obvious example of a #GtkNative is #GtkWindow.
+ * The obvious example of a `GtkNative` is `GtkWindow`.
+ * 
+ * Every widget that is not itself a `GtkNative` is contained in one,
+ * and you can get it with [method@Gtk.Widget.get_native].
+ * 
+ * To get the surface of a `GtkNative`, use [method@Gtk.Native.get_surface].
+ * It is also possible to find the `GtkNative` to which a surface
+ * belongs, with [func@Gtk.Native.get_for_surface].
+ * 
+ * In addition to a [class@Gdk.Surface], a `GtkNative` also provides
+ * a [class@Gsk.Renderer] for rendering on that surface. To get the
+ * renderer, use [method@Gtk.Native.get_renderer].
  */
 public template NativeT(TStruct)
 {
@@ -50,7 +61,7 @@ public template NativeT(TStruct)
 
 
 	/**
-	 * Returns the renderer that is used for this #GtkNative.
+	 * Returns the renderer that is used for this `GtkNative`.
 	 *
 	 * Returns: the renderer for @self
 	 */
@@ -67,7 +78,7 @@ public template NativeT(TStruct)
 	}
 
 	/**
-	 * Returns the surface of this #GtkNative.
+	 * Returns the surface of this `GtkNative`.
 	 *
 	 * Returns: the surface of @self
 	 */
@@ -84,8 +95,10 @@ public template NativeT(TStruct)
 	}
 
 	/**
-	 * Retrieves the surface transform of @self. This is the translation
-	 * from @self's surface coordinates into @self's widget coordinates.
+	 * Retrieves the surface transform of @self.
+	 *
+	 * This is the translation from @self's surface coordinates into
+	 * @self's widget coordinates.
 	 *
 	 * Params:
 	 *     x = return location for the x coordinate
@@ -97,7 +110,9 @@ public template NativeT(TStruct)
 	}
 
 	/**
-	 * Realizes a #GtkNative.
+	 * Realizes a `GtkNative`.
+	 *
+	 * This should only be used by subclasses.
 	 */
 	public void realizeNative()
 	{
@@ -105,7 +120,9 @@ public template NativeT(TStruct)
 	}
 
 	/**
-	 * Unrealizes a #GtkNative.
+	 * Unrealizes a `GtkNative`.
+	 *
+	 * This should only be used by subclasses.
 	 */
 	public void unrealizeNative()
 	{

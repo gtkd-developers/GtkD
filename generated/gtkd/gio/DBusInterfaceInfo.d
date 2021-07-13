@@ -33,6 +33,7 @@ public  import gio.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtkd.Loader;
 

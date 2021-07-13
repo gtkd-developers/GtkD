@@ -38,15 +38,15 @@ public  import gtk.c.types;
 
 
 /**
- * GtkDragIcon is a #GtkRoot implementation with the sole purpose
- * to serve as a drag icon during DND operations. A drag icon moves
- * with the pointer during a drag operation and is destroyed when
- * the drag ends.
+ * `GtkDragIcon` is a `GtkRoot` implementation for drag icons.
+ * 
+ * A drag icon moves with the pointer during a Drag-and-Drop operation
+ * and is destroyed when the drag ends.
  * 
  * To set up a drag icon and associate it with an ongoing drag operation,
- * use gtk_drag_icon_get_for_drag() to get the icon for a drag. You can
- * then use it like any other widget and use gtk_drag_icon_set_child() to
- * set whatever widget should be used for the drag icon.
+ * use [func@Gtk.DragIcon.get_for_drag] to get the icon for a drag. You can
+ * then use it like any other widget and use [method@Gtk.DragIcon.set_child]
+ * to set whatever widget should be used for the drag icon.
  * 
  * Keep in mind that drag icons do not allow user input.
  */
@@ -95,18 +95,18 @@ public class DragIcon : Widget, NativeIF, RootIF
 	 * Creates a widget that can be used as a drag icon for the given
 	 * @value.
 	 *
-	 * Supported types include strings, #GdkRGBA and #GtkTextBuffer.
+	 * Supported types include strings, `GdkRGBA` and `GtkTextBuffer`.
 	 * If GTK does not know how to create a widget for a given value,
 	 * it will return %NULL.
 	 *
 	 * This method is used to set the default drag icon on drag'n'drop
-	 * operations started by #GtkDragSource, so you don't need to set
+	 * operations started by `GtkDragSource`, so you don't need to set
 	 * a drag icon using this function there.
 	 *
 	 * Params:
-	 *     value = a #GValue
+	 *     value = a `GValue`
 	 *
-	 * Returns: A new #GtkWidget
+	 * Returns: A new `GtkWidget`
 	 *     for displaying @value as a drag icon.
 	 */
 	public static Widget createWidgetForValue(Value value)
@@ -122,15 +122,15 @@ public class DragIcon : Widget, NativeIF, RootIF
 	}
 
 	/**
-	 * Gets the #GtkDragIcon in use with @drag.
+	 * Gets the `GtkDragIcon` in use with @drag.
 	 *
 	 * If no drag icon exists yet, a new one will be created
 	 * and shown.
 	 *
 	 * Params:
-	 *     drag = a #GdkDrag
+	 *     drag = a `GdkDrag`
 	 *
-	 * Returns: the #GtkDragIcon
+	 * Returns: the `GtkDragIcon`
 	 */
 	public static Widget getForDrag(Drag drag)
 	{
@@ -145,13 +145,15 @@ public class DragIcon : Widget, NativeIF, RootIF
 	}
 
 	/**
-	 * Creates a #GtkDragIcon that shows @paintable, and associates
-	 * it with the drag operation. The hotspot position on the paintable
-	 * is aligned with the hotspot of the cursor.
+	 * Creates a `GtkDragIcon` that shows @paintable, and associates
+	 * it with the drag operation.
+	 *
+	 * The hotspot position on the paintable is aligned with the
+	 * hotspot of the cursor.
 	 *
 	 * Params:
-	 *     drag = a #GdkDrag
-	 *     paintable = a #GdkPaintable to display
+	 *     drag = a `GdkDrag`
+	 *     paintable = a `GdkPaintable` to display
 	 *     hotX = X coordinate of the hotspot
 	 *     hotY = Y coordinate of the hotspot
 	 */
@@ -181,7 +183,7 @@ public class DragIcon : Widget, NativeIF, RootIF
 	 * Sets the widget to display as the drag icon.
 	 *
 	 * Params:
-	 *     child = a #GtkWidget or %NULL
+	 *     child = a `GtkWidget` or %NULL
 	 */
 	public void setChild(Widget child)
 	{

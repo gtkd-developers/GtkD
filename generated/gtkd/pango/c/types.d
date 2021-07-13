@@ -32,13 +32,15 @@ public import harfbuzz.c.types;
 alias void* FTLibrary;
 
 /**
- * A #PangoGlyph represents a single glyph in the output form of a string.
+ * A `PangoGlyph` represents a single glyph in the output form of a string.
  */
 public alias uint PangoGlyph;
 
 /**
- * The #PangoGlyphUnit type is used to store dimensions within
- * Pango. Dimensions are stored in 1/%PANGO_SCALE of a device unit.
+ * The `PangoGlyphUnit` type is used to store dimensions within
+ * Pango.
+ *
+ * Dimensions are stored in 1/%PANGO_SCALE of a device unit.
  * (A device unit might be a pixel for screen display, or
  * a point on a printer.) %PANGO_SCALE is currently 1024, and
  * may change in the future (unlikely though), but you should not
@@ -48,17 +50,19 @@ public alias uint PangoGlyph;
 public alias int PangoGlyphUnit;
 
 /**
- * The #PangoLayoutRun structure represents a single run within
- * a #PangoLayoutLine; it is simply an alternate name for
- * #PangoGlyphItem.
- * See the #PangoGlyphItem docs for details on the fields.
+ * A `PangoLayoutRun` represents a single run within a `PangoLayoutLine`.
+ *
+ * It is simply an alternate name for [struct@Pango.GlyphItem].
+ * See the [struct@Pango.GlyphItem] docs for details on the fields.
  */
 public alias PangoGlyphItem PangoLayoutRun;
 
 /**
- * A #PangoAlignment describes how to align the lines of a #PangoLayout within the
- * available space. If the #PangoLayout is set to justify
- * using pango_layout_set_justify(), this only has effect for partial lines.
+ * `PangoAlignment` describes how to align the lines of a `PangoLayout`
+ * within the available space.
+ *
+ * If the `PangoLayout` is set to justify using [method@Pango.Layout.set_justify],
+ * this only has effect for partial lines.
  */
 public enum PangoAlignment
 {
@@ -77,12 +81,12 @@ public enum PangoAlignment
 }
 
 /**
- * The #PangoAttrType
- * distinguishes between different types of attributes. Along with the
- * predefined values, it is possible to allocate additional values
- * for custom attributes using pango_attr_type_register(). The predefined
- * values are given below. The type of structure used to store the
- * attribute is listed in parentheses after the description.
+ * The `PangoAttrType` distinguishes between different types of attributes.
+ *
+ * Along with the predefined values, it is possible to allocate additional
+ * values for custom attributes using [type_func@attr_type_register]. The predefined
+ * values are given below. The type of structure used to store the attribute is
+ * listed in parentheses after the description.
  */
 public enum PangoAttrType
 {
@@ -91,129 +95,129 @@ public enum PangoAttrType
 	 */
 	INVALID = 0,
 	/**
-	 * language (#PangoAttrLanguage)
+	 * language ([struct@Pango.AttrLanguage])
 	 */
 	LANGUAGE = 1,
 	/**
-	 * font family name list (#PangoAttrString)
+	 * font family name list ([struct@Pango.AttrString])
 	 */
 	FAMILY = 2,
 	/**
-	 * font slant style (#PangoAttrInt)
+	 * font slant style ([struct@Pango.AttrInt])
 	 */
 	STYLE = 3,
 	/**
-	 * font weight (#PangoAttrInt)
+	 * font weight ([struct@Pango.AttrInt])
 	 */
 	WEIGHT = 4,
 	/**
-	 * font variant (normal or small caps) (#PangoAttrInt)
+	 * font variant (normal or small caps) ([struct@Pango.AttrInt])
 	 */
 	VARIANT = 5,
 	/**
-	 * font stretch (#PangoAttrInt)
+	 * font stretch ([struct@Pango.AttrInt])
 	 */
 	STRETCH = 6,
 	/**
-	 * font size in points scaled by %PANGO_SCALE (#PangoAttrInt)
+	 * font size in points scaled by %PANGO_SCALE ([struct@Pango.AttrInt])
 	 */
 	SIZE = 7,
 	/**
-	 * font description (#PangoAttrFontDesc)
+	 * font description ([struct@Pango.AttrFontDesc])
 	 */
 	FONT_DESC = 8,
 	/**
-	 * foreground color (#PangoAttrColor)
+	 * foreground color ([struct@Pango.AttrColor])
 	 */
 	FOREGROUND = 9,
 	/**
-	 * background color (#PangoAttrColor)
+	 * background color ([struct@Pango.AttrColor])
 	 */
 	BACKGROUND = 10,
 	/**
-	 * whether the text has an underline (#PangoAttrInt)
+	 * whether the text has an underline ([struct@Pango.AttrInt])
 	 */
 	UNDERLINE = 11,
 	/**
-	 * whether the text is struck-through (#PangoAttrInt)
+	 * whether the text is struck-through ([struct@Pango.AttrInt])
 	 */
 	STRIKETHROUGH = 12,
 	/**
-	 * baseline displacement (#PangoAttrInt)
+	 * baseline displacement ([struct@Pango.AttrInt])
 	 */
 	RISE = 13,
 	/**
-	 * shape (#PangoAttrShape)
+	 * shape ([struct@Pango.AttrShape])
 	 */
 	SHAPE = 14,
 	/**
-	 * font size scale factor (#PangoAttrFloat)
+	 * font size scale factor ([struct@Pango.AttrFloat])
 	 */
 	SCALE = 15,
 	/**
-	 * whether fallback is enabled (#PangoAttrInt)
+	 * whether fallback is enabled ([struct@Pango.AttrInt])
 	 */
 	FALLBACK = 16,
 	/**
-	 * letter spacing (#PangoAttrInt)
+	 * letter spacing ([struct@PangoAttrInt])
 	 */
 	LETTER_SPACING = 17,
 	/**
-	 * underline color (#PangoAttrColor)
+	 * underline color ([struct@Pango.AttrColor])
 	 */
 	UNDERLINE_COLOR = 18,
 	/**
-	 * strikethrough color (#PangoAttrColor)
+	 * strikethrough color ([struct@Pango.AttrColor])
 	 */
 	STRIKETHROUGH_COLOR = 19,
 	/**
-	 * font size in pixels scaled by %PANGO_SCALE (#PangoAttrInt)
+	 * font size in pixels scaled by %PANGO_SCALE ([struct@Pango.AttrInt])
 	 */
 	ABSOLUTE_SIZE = 20,
 	/**
-	 * base text gravity (#PangoAttrInt)
+	 * base text gravity ([struct@Pango.AttrInt])
 	 */
 	GRAVITY = 21,
 	/**
-	 * gravity hint (#PangoAttrInt)
+	 * gravity hint ([struct@Pango.AttrInt])
 	 */
 	GRAVITY_HINT = 22,
 	/**
-	 * OpenType font features (#PangoAttrString). Since 1.38
+	 * OpenType font features ([struct@Pango.AttrString]). Since 1.38
 	 */
 	FONT_FEATURES = 23,
 	/**
-	 * foreground alpha (#PangoAttrInt). Since 1.38
+	 * foreground alpha ([struct@Pango.AttrInt]). Since 1.38
 	 */
 	FOREGROUND_ALPHA = 24,
 	/**
-	 * background alpha (#PangoAttrInt). Since 1.38
+	 * background alpha ([struct@Pango.AttrInt]). Since 1.38
 	 */
 	BACKGROUND_ALPHA = 25,
 	/**
-	 * whether breaks are allowed (#PangoAttrInt). Since 1.44
+	 * whether breaks are allowed ([struct@Pango.AttrInt]). Since 1.44
 	 */
 	ALLOW_BREAKS = 26,
 	/**
-	 * how to render invisible characters (#PangoAttrInt). Since 1.44
+	 * how to render invisible characters ([struct@Pango.AttrInt]). Since 1.44
 	 */
 	SHOW = 27,
 	/**
-	 * whether to insert hyphens at intra-word line breaks (#PangoAttrInt). Since 1.44
+	 * whether to insert hyphens at intra-word line breaks ([struct@Pango.AttrInt]). Since 1.44
 	 */
 	INSERT_HYPHENS = 28,
 	/**
-	 * whether the text has an overline (#PangoAttrInt). Since 1.46
+	 * whether the text has an overline ([struct@Pango.AttrInt]). Since 1.46
 	 */
 	OVERLINE = 29,
 	/**
-	 * overline color (#PangoAttrColor). Since 1.46
+	 * overline color ([struct@Pango.AttrColor]). Since 1.46
 	 */
 	OVERLINE_COLOR = 30,
 }
 
 /**
- * The #PangoBidiType type represents the bidirectional character
+ * `PangoBidiType` represents the bidirectional character
  * type of a Unicode character as specified by the
  * <ulink url="http://www.unicode.org/reports/tr9/">Unicode bidirectional algorithm</ulink>.
  *
@@ -302,8 +306,8 @@ public enum PangoBidiType
 }
 
 /**
- * Used to indicate how well a font can represent a particular Unicode
- * character point for a particular script.
+ * `PangoCoverageLevel` is used to indicate how well a font can represent
+ * a particular Unicode character for a particular script.
  *
  * Since 1.44, only %PANGO_COVERAGE_NONE and %PANGO_COVERAGE_EXACT
  * will be returned.
@@ -334,25 +338,24 @@ public enum PangoCoverageLevel
 }
 
 /**
- * The #PangoDirection type represents a direction in the
- * Unicode bidirectional algorithm; not every value in this
- * enumeration makes sense for every usage of #PangoDirection;
- * for example, the return value of pango_unichar_direction()
- * and pango_find_base_dir() cannot be %PANGO_DIRECTION_WEAK_LTR
- * or %PANGO_DIRECTION_WEAK_RTL, since every character is either
- * neutral or has a strong direction; on the other hand
- * %PANGO_DIRECTION_NEUTRAL doesn't make sense to pass
- * to pango_itemize_with_base_dir().
+ * `PangoDirection` represents a direction in the Unicode bidirectional
+ * algorithm.
  *
- * The %PANGO_DIRECTION_TTB_LTR, %PANGO_DIRECTION_TTB_RTL
- * values come from an earlier interpretation of this
- * enumeration as the writing direction of a block of
- * text and are no longer used; See #PangoGravity for how
+ * Not every value in this enumeration makes sense for every usage of
+ * `PangoDirection`; for example, the return value of [func@unichar_direction]
+ * and [func@find_base_dir] cannot be %PANGO_DIRECTION_WEAK_LTR or
+ * %PANGO_DIRECTION_WEAK_RTL, since every character is either neutral
+ * or has a strong direction; on the other hand %PANGO_DIRECTION_NEUTRAL
+ * doesn't make sense to pass to [func@itemize_with_base_dir].
+ *
+ * The %PANGO_DIRECTION_TTB_LTR, %PANGO_DIRECTION_TTB_RTL values come from
+ * an earlier interpretation of this enumeration as the writing direction
+ * of a block of text and are no longer used; See `PangoGravity` for how
  * vertical text is handled in Pango.
  *
- * If you are interested in text direction, you should
- * really use fribidi directly. PangoDirection is only
- * retained because it is used in some public apis.
+ * If you are interested in text direction, you should really use fribidi
+ * directly. `PangoDirection` is only retained because it is used in some
+ * public apis.
  */
 public enum PangoDirection
 {
@@ -389,9 +392,10 @@ public enum PangoDirection
 }
 
 /**
- * The #PangoEllipsizeMode type describes what sort of (if any)
- * ellipsization should be applied to a line of text. In
- * the ellipsization process characters are removed from the
+ * `PangoEllipsizeMode` describes what sort of ellipsization
+ * should be applied to text.
+ *
+ * In the ellipsization process characters are removed from the
  * text in order to make it fit to a given width and replaced
  * with an ellipsis.
  */
@@ -416,8 +420,8 @@ public enum PangoEllipsizeMode
 }
 
 /**
- * The bits in a #PangoFontMask correspond to fields in a
- * #PangoFontDescription that have been set.
+ * The bits in a `PangoFontMask` correspond to the set fields in a
+ * `PangoFontDescription`.
  */
 public enum PangoFontMask
 {
@@ -456,16 +460,19 @@ public enum PangoFontMask
 }
 
 /**
- * The #PangoGravity type represents the orientation of glyphs in a segment
- * of text.  This is useful when rendering vertical text layouts.  In
- * those situations, the layout is rotated using a non-identity PangoMatrix,
- * and then glyph orientation is controlled using #PangoGravity.
- * Not every value in this enumeration makes sense for every usage of
- * #PangoGravity; for example, %PANGO_GRAVITY_AUTO only can be passed to
- * pango_context_set_base_gravity() and can only be returned by
- * pango_context_get_base_gravity().
+ * `PangoGravity` represents the orientation of glyphs in a segment
+ * of text.
  *
- * See also: #PangoGravityHint
+ * This is useful when rendering vertical text layouts. In those situations,
+ * the layout is rotated using a non-identity [struct@Pango.Matrix], and then
+ * glyph orientation is controlled using `PangoGravity`.
+ *
+ * Not every value in this enumeration makes sense for every usage of
+ * `PangoGravity`; for example, %PANGO_GRAVITY_AUTO only can be passed to
+ * [method@Pango.Context.set_base_gravity] and can only be returned by
+ * [method@Pango.Context.get_base_gravity].
+ *
+ * See also: [enum@Pango.GravityHint]
  *
  * Since: 1.16
  */
@@ -494,11 +501,12 @@ public enum PangoGravity
 }
 
 /**
- * The #PangoGravityHint defines how horizontal scripts should behave in a
- * vertical context.  That is, English excerpt in a vertical paragraph for
- * example.
+ * `PangoGravityHint` defines how horizontal scripts should behave in a
+ * vertical context.
  *
- * See #PangoGravity.
+ * That is, English excerpts in a vertical paragraph for example.
+ *
+ * See also [enum@Pango.Gravity]
  *
  * Since: 1.16
  */
@@ -524,9 +532,8 @@ public enum PangoGravityHint
 }
 
 /**
- * The #PangoOverline enumeration is used to specify
- * whether text should be overlined, and if so, the type
- * of line.
+ * The `PangoOverline` enumeration is used to specify whether text
+ * should be overlined, and if so, the type of line.
  *
  * Since: 1.46
  */
@@ -574,16 +581,16 @@ public enum PangoRenderPart
 }
 
 /**
- * The #PangoScript enumeration identifies different writing
- * systems. The values correspond to the names as defined in the
- * Unicode standard. See <ulink
- * url="http://www.unicode.org/reports/tr24/">Unicode Standard Annex
- * #24: Script names</ulink>.
+ * The `PangoScript` enumeration identifies different writing
+ * systems.
+ *
+ * The values correspond to the names as defined in the Unicode standard. See
+ * [Unicode Standard Annex 24: Script names](http://www.unicode.org/reports/tr24/)
  *
  * Note that this enumeration is deprecated and will not be updated
  * to include values in newer versions of the Unicode standard.
- * Applications should use the GUnicodeScript enumeration instead,
- * whose values are interchangeable with PangoScript.
+ * Applications should use the `GUnicodeScript` enumeration instead,
+ * whose values are interchangeable with `PangoScript`.
  */
 public enum PangoScript
 {
@@ -1064,7 +1071,8 @@ public enum PangoScript
 
 /**
  * Flags influencing the shaping process.
- * These can be passed to pango_shape_with_flags().
+ *
+ * `PangoShapeFlags` can be passed to pango_shape_with_flags().
  */
 public enum PangoShapeFlags
 {
@@ -1170,7 +1178,7 @@ public enum PangoStyle
 }
 
 /**
- * A #PangoTabAlign specifies where a tab stop appears relative to the text.
+ * `PangoTabAlign` specifies where a tab stop appears relative to the text.
  */
 public enum PangoTabAlign
 {
@@ -1181,9 +1189,8 @@ public enum PangoTabAlign
 }
 
 /**
- * The #PangoUnderline enumeration is used to specify
- * whether text should be underlined, and if so, the type
- * of underlining.
+ * The `PangoUnderline` enumeration is used to specify whether text
+ * should be underlined, and if so, the type of underlining.
  */
 public enum PangoUnderline
 {
@@ -1209,7 +1216,10 @@ public enum PangoUnderline
 	 */
 	LOW = 3,
 	/**
-	 * a wavy underline should be drawn below.
+	 * an underline indicating an error should
+	 * be drawn below. The exact style of rendering is up to the
+	 * `PangoRenderer` in use, but typical styles include wavy
+	 * or dotted lines.
 	 * This underline is typically used to indicate an error such
 	 * as a possible mispelling; in some cases a contrasting color
 	 * may automatically be used. This type of underlining is
@@ -1253,8 +1263,10 @@ public enum PangoVariant
 }
 
 /**
- * An enumeration specifying the weight (boldness) of a font. This is a numerical
- * value ranging from 100 to 1000, but there are some predefined values:
+ * An enumeration specifying the weight (boldness) of a font.
+ *
+ * This is a numerical value ranging from 100 to 1000, but there
+ * are some predefined values.
  */
 public enum PangoWeight
 {
@@ -1309,7 +1321,8 @@ public enum PangoWeight
 }
 
 /**
- * A #PangoWrapMode describes how to wrap the lines of a #PangoLayout to the desired width.
+ * `PangoWrapMode` describes how to wrap the lines of a `PangoLayout`
+ * to the desired width.
  */
 public enum PangoWrapMode
 {
@@ -1322,8 +1335,8 @@ public enum PangoWrapMode
 	 */
 	CHAR = 1,
 	/**
-	 * wrap lines at word boundaries, but fall back to character boundaries if there is not
-	 * enough space for a full word.
+	 * wrap lines at word boundaries, but fall back to
+	 * character boundaries if there is not enough space for a full word.
 	 */
 	WORD_CHAR = 2,
 }
@@ -1338,7 +1351,7 @@ struct PangoCairoFont;
 
 
 /**
- * The #PangoAnalysis structure stores information about
+ * The `PangoAnalysis` structure stores information about
  * the properties of a segment of text.
  */
 struct PangoAnalysis
@@ -1346,11 +1359,11 @@ struct PangoAnalysis
 	/**
 	 * unused
 	 */
-	PangoEngineShape* shapeEngine;
+	void* shapeEngine;
 	/**
 	 * unused
 	 */
-	PangoEngineLang* langEngine;
+	void* langEngine;
 	/**
 	 * the font for this segment.
 	 */
@@ -1360,7 +1373,7 @@ struct PangoAnalysis
 	 */
 	ubyte level;
 	/**
-	 * the glyph orientation for this segment (A #PangoGravity).
+	 * the glyph orientation for this segment (A `PangoGravity`).
 	 */
 	ubyte gravity;
 	/**
@@ -1368,7 +1381,7 @@ struct PangoAnalysis
 	 */
 	ubyte flags;
 	/**
-	 * the detected script for this segment (A #PangoScript) (Since: 1.18).
+	 * the detected script for this segment (A `PangoScript`) (Since: 1.18).
 	 */
 	ubyte script;
 	/**
@@ -1382,10 +1395,11 @@ struct PangoAnalysis
 }
 
 /**
- * The #PangoAttrClass structure stores the type and operations for
- * a particular type of attribute. The functions in this structure should
- * not be called directly. Instead, one should use the wrapper functions
- * provided for #PangoAttribute.
+ * The `PangoAttrClass` structure stores the type and operations for
+ * a particular type of attribute.
+ *
+ * The functions in this structure should not be called directly. Instead,
+ * one should use the wrapper functions provided for `PangoAttribute`.
  */
 struct PangoAttrClass
 {
@@ -1402,7 +1416,7 @@ struct PangoAttrClass
 }
 
 /**
- * The #PangoAttrColor structure is used to represent attributes that
+ * The `PangoAttrColor` structure is used to represent attributes that
  * are colors.
  */
 struct PangoAttrColor
@@ -1412,13 +1426,13 @@ struct PangoAttrColor
 	 */
 	PangoAttribute attr;
 	/**
-	 * the #PangoColor which is the value of the attribute
+	 * the `PangoColor` which is the value of the attribute
 	 */
 	PangoColor color;
 }
 
 /**
- * The #PangoAttrFloat structure is used to represent attributes with
+ * The `PangoAttrFloat` structure is used to represent attributes with
  * a float or double value.
  */
 struct PangoAttrFloat
@@ -1434,7 +1448,7 @@ struct PangoAttrFloat
 }
 
 /**
- * The #PangoAttrFontDesc structure is used to store an attribute that
+ * The `PangoAttrFontDesc` structure is used to store an attribute that
  * sets all aspects of the font description at once.
  */
 struct PangoAttrFontDesc
@@ -1450,7 +1464,7 @@ struct PangoAttrFontDesc
 }
 
 /**
- * The #PangoAttrFontFeatures structure is used to represent OpenType
+ * The `PangoAttrFontFeatures` structure is used to represent OpenType
  * font features as an attribute.
  *
  * Since: 1.38
@@ -1468,7 +1482,7 @@ struct PangoAttrFontFeatures
 }
 
 /**
- * The #PangoAttrInt structure is used to represent attributes with
+ * The `PangoAttrInt` structure is used to represent attributes with
  * an integer or enumeration value.
  */
 struct PangoAttrInt
@@ -1486,7 +1500,7 @@ struct PangoAttrInt
 struct PangoAttrIterator;
 
 /**
- * The #PangoAttrLanguage structure is used to represent attributes that
+ * The `PangoAttrLanguage` structure is used to represent attributes that
  * are languages.
  */
 struct PangoAttrLanguage
@@ -1496,7 +1510,7 @@ struct PangoAttrLanguage
 	 */
 	PangoAttribute attr;
 	/**
-	 * the #PangoLanguage which is the value of the attribute
+	 * the `PangoLanguage` which is the value of the attribute
 	 */
 	PangoLanguage* value;
 }
@@ -1504,7 +1518,7 @@ struct PangoAttrLanguage
 struct PangoAttrList;
 
 /**
- * The #PangoAttrShape structure is used to represent attributes which
+ * The `PangoAttrShape` structure is used to represent attributes which
  * impose shape restrictions.
  */
 struct PangoAttrShape
@@ -1522,7 +1536,7 @@ struct PangoAttrShape
 	 */
 	PangoRectangle logicalRect;
 	/**
-	 * user data set (see pango_attr_shape_new_with_data())
+	 * user data set (see [type_func@Pango.AttrShape.new_with_data])
 	 */
 	void* data;
 	/**
@@ -1536,7 +1550,7 @@ struct PangoAttrShape
 }
 
 /**
- * The #PangoAttrSize structure is used to represent attributes which
+ * The `PangoAttrSize` structure is used to represent attributes which
  * set font size.
  */
 struct PangoAttrSize
@@ -1547,7 +1561,7 @@ struct PangoAttrSize
 	PangoAttribute attr;
 	/**
 	 * size of font, in units of 1/%PANGO_SCALE of a point (for
-	 * %PANGO_ATTR_SIZE) or of a device uni (for %PANGO_ATTR_ABSOLUTE_SIZE)
+	 * %PANGO_ATTR_SIZE) or of a device unit (for %PANGO_ATTR_ABSOLUTE_SIZE)
 	 */
 	int size;
 	import std.bitmanip: bitfields;
@@ -1558,7 +1572,7 @@ struct PangoAttrSize
 }
 
 /**
- * The #PangoAttrString structure is used to represent attributes with
+ * The `PangoAttrString` structure is used to represent attributes with
  * a string value.
  */
 struct PangoAttrString
@@ -1612,104 +1626,6 @@ struct PangoContextClass;
 
 struct PangoCoverage;
 
-struct PangoEngine
-{
-	GObject parentInstance;
-}
-
-/**
- * Class structure for #PangoEngine
- */
-struct PangoEngineClass
-{
-	GObjectClass parentClass;
-}
-
-/**
- * The #PangoEngineInfo structure contains information about a particular
- * engine. It contains the following fields:
- */
-struct PangoEngineInfo
-{
-	/**
-	 * a unique string ID for the engine.
-	 */
-	const(char)* id;
-	/**
-	 * a string identifying the engine type.
-	 */
-	const(char)* engineType;
-	/**
-	 * a string identifying the render type.
-	 */
-	const(char)* renderType;
-	/**
-	 * array of scripts this engine supports.
-	 */
-	PangoEngineScriptInfo* scripts;
-	/**
-	 * number of items in @scripts.
-	 */
-	int nScripts;
-}
-
-struct PangoEngineLang
-{
-	PangoEngine parentInstance;
-}
-
-/**
- * Class structure for #PangoEngineLang
- */
-struct PangoEngineLangClass
-{
-	PangoEngineClass parentClass;
-	/** */
-	extern(C) void function(PangoEngineLang* engine, const(char)* text, int len, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen) scriptBreak;
-}
-
-/**
- * The #PangoEngineScriptInfo structure contains
- * information about how the shaper covers a particular script.
- */
-struct PangoEngineScriptInfo
-{
-	/**
-	 * a #PangoScript. The value %PANGO_SCRIPT_COMMON has
-	 * the special meaning here of "all scripts"
-	 */
-	PangoScript script;
-	/**
-	 * a semicolon separated list of languages that this
-	 * engine handles for this script. This may be empty,
-	 * in which case the engine is saying that it is a
-	 * fallback choice for all languages for this range,
-	 * but should not be used if another engine
-	 * indicates that it is specific for the language for
-	 * a given code point. An entry in this list of "*"
-	 * indicates that this engine is specific to all
-	 * languages for this range.
-	 */
-	const(char)* langs;
-}
-
-struct PangoEngineShape
-{
-	PangoEngine parentInstance;
-}
-
-/**
- * Class structure for #PangoEngineShape
- */
-struct PangoEngineShapeClass
-{
-	PangoEngineClass parentClass;
-	/** */
-	extern(C) void function(PangoEngineShape* engine, PangoFont* font, const(char)* itemText, uint itemLength, PangoAnalysis* analysis, PangoGlyphString* glyphs, const(char)* paragraphText, uint paragraphLength) scriptShape;
-	/** */
-	extern(C) PangoCoverageLevel function(PangoEngineShape* engine, PangoFont* font, PangoLanguage* language, dchar wc) covers;
-}
-
 struct PangoFont
 {
 	GObject parentInstance;
@@ -1721,16 +1637,16 @@ struct PangoFontClass
 	/**
 	 *
 	 * Params:
-	 *     font = a #PangoFont
-	 * Returns: a newly-allocated #PangoFontDescription object.
+	 *     font = a `PangoFont`
+	 * Returns: a newly-allocated `PangoFontDescription` object.
 	 */
 	extern(C) PangoFontDescription* function(PangoFont* font) describe;
 	/**
 	 *
 	 * Params:
-	 *     font = a #PangoFont
+	 *     font = a `PangoFont`
 	 *     language = the language tag
-	 * Returns: a newly-allocated #PangoCoverage
+	 * Returns: a newly-allocated `PangoCoverage`
 	 *     object.
 	 */
 	extern(C) PangoCoverage* function(PangoFont* font, PangoLanguage* language) getCoverage;
@@ -1739,18 +1655,19 @@ struct PangoFontClass
 	/**
 	 *
 	 * Params:
-	 *     font = a #PangoFont
-	 *     language = language tag used to determine which script to get the metrics
-	 *         for, or %NULL to indicate to get the metrics for the entire font.
-	 * Returns: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
-	 *     when finished using the object.
+	 *     font = a `PangoFont`
+	 *     language = language tag used to determine which script
+	 *         to get the metrics for, or %NULL to indicate to get the metrics for
+	 *         the entire font.
+	 * Returns: a `PangoFontMetrics` object. The caller must call
+	 *     [method@Pango.FontMetrics.unref] when finished using the object.
 	 */
 	extern(C) PangoFontMetrics* function(PangoFont* font, PangoLanguage* language) getMetrics;
 	/**
 	 *
 	 * Params:
-	 *     font = a #PangoFont, or %NULL
-	 * Returns: the #PangoFontMap for the
+	 *     font = a `PangoFont`, or %NULL
+	 * Returns: the `PangoFontMap` for the
 	 *     font, or %NULL if @font is %NULL.
 	 */
 	extern(C) PangoFontMap* function(PangoFont* font) getFontMap;
@@ -1775,7 +1692,7 @@ struct PangoFontFaceClass
 	/**
 	 *
 	 * Params:
-	 *     face = a #PangoFontFace.
+	 *     face = a `PangoFontFace`.
 	 * Returns: the face name for the face. This string is
 	 *     owned by the face object and must not be modified or freed.
 	 */
@@ -1783,9 +1700,9 @@ struct PangoFontFaceClass
 	/**
 	 *
 	 * Params:
-	 *     face = a #PangoFontFace
-	 * Returns: a newly-created #PangoFontDescription structure
-	 *     holding the description of the face. Use pango_font_description_free()
+	 *     face = a `PangoFontFace`
+	 * Returns: a newly-created `PangoFontDescription` structure
+	 *     holding the description of the face. Use [method@Pango.FontDescription.free]
 	 *     to free the result.
 	 */
 	extern(C) PangoFontDescription* function(PangoFontFace* face) describe;
@@ -1794,15 +1711,15 @@ struct PangoFontFaceClass
 	/**
 	 *
 	 * Params:
-	 *     face = a #PangoFontFace
+	 *     face = a `PangoFontFace`
 	 * Returns: whether @face is synthesized.
 	 */
 	extern(C) int function(PangoFontFace* face) isSynthesized;
 	/**
 	 *
 	 * Params:
-	 *     face = a #PangoFontFace
-	 * Returns: the #PangoFontFamily
+	 *     face = a `PangoFontFace`
+	 * Returns: the `PangoFontFamily`
 	 */
 	extern(C) PangoFontFamily* function(PangoFontFace* face) getFamily;
 	/** */
@@ -1824,7 +1741,7 @@ struct PangoFontFamilyClass
 	/**
 	 *
 	 * Params:
-	 *     family = a #PangoFontFamily
+	 *     family = a `PangoFontFamily`
 	 * Returns: the name of the family. This string is owned
 	 *     by the family object and must not be modified or freed.
 	 */
@@ -1832,25 +1749,25 @@ struct PangoFontFamilyClass
 	/**
 	 *
 	 * Params:
-	 *     family = a #PangoFontFamily
+	 *     family = a `PangoFontFamily`
 	 * Returns: %TRUE if the family is monospace.
 	 */
 	extern(C) int function(PangoFontFamily* family) isMonospace;
 	/**
 	 *
 	 * Params:
-	 *     family = a #PangoFontFamily
+	 *     family = a `PangoFontFamily`
 	 * Returns: %TRUE if the family is variable
 	 */
 	extern(C) int function(PangoFontFamily* family) isVariable;
 	/**
 	 *
 	 * Params:
-	 *     family = a #PangoFontFamily
+	 *     family = a `PangoFontFamily`
 	 *     name = the name of a face. If the name is %NULL,
 	 *         the family's default face (fontconfig calls it "Regular")
 	 *         will be returned.
-	 * Returns: the #PangoFontFace,
+	 * Returns: the `PangoFontFace`,
 	 *     or %NULL if no face with the given name exists.
 	 */
 	extern(C) PangoFontFace* function(PangoFontFamily* family, const(char)* name) getFace;
@@ -1876,10 +1793,10 @@ struct PangoFontMapClass
 	/**
 	 *
 	 * Params:
-	 *     fontmap = a #PangoFontMap
-	 *     context = the #PangoContext the font will be used with
-	 *     desc = a #PangoFontDescription describing the font to load
-	 * Returns: the newly allocated #PangoFont
+	 *     fontmap = a `PangoFontMap`
+	 *     context = the `PangoContext` the font will be used with
+	 *     desc = a `PangoFontDescription` describing the font to load
+	 * Returns: the newly allocated `PangoFont`
 	 *     loaded, or %NULL if no font matched.
 	 */
 	extern(C) PangoFont* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc) loadFont;
@@ -1888,12 +1805,12 @@ struct PangoFontMapClass
 	/**
 	 *
 	 * Params:
-	 *     fontmap = a #PangoFontMap
-	 *     context = the #PangoContext the font will be used with
-	 *     desc = a #PangoFontDescription describing the font to load
-	 *     language = a #PangoLanguage the fonts will be used for
+	 *     fontmap = a `PangoFontMap`
+	 *     context = the `PangoContext` the font will be used with
+	 *     desc = a `PangoFontDescription` describing the font to load
+	 *     language = a `PangoLanguage` the fonts will be used for
 	 * Returns: the newly allocated
-	 *     #PangoFontset loaded, or %NULL if no font matched.
+	 *     `PangoFontset` loaded, or %NULL if no font matched.
 	 */
 	extern(C) PangoFontset* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc, PangoLanguage* language) loadFontset;
 	/**
@@ -1904,7 +1821,7 @@ struct PangoFontMapClass
 	/**
 	 *
 	 * Params:
-	 *     fontmap = a #PangoFontMap
+	 *     fontmap = a `PangoFontMap`
 	 * Returns: The current serial number of @fontmap.
 	 */
 	extern(C) uint function(PangoFontMap* fontmap) getSerial;
@@ -1913,9 +1830,9 @@ struct PangoFontMapClass
 	/**
 	 *
 	 * Params:
-	 *     fontmap = a #PangoFontMap
+	 *     fontmap = a `PangoFontMap`
 	 *     name = a family name
-	 * Returns: the #PangoFontFamily
+	 * Returns: the `PangoFontFamily`
 	 */
 	extern(C) PangoFontFamily* function(PangoFontMap* fontmap, const(char)* name) getFamily;
 	/** */
@@ -1954,10 +1871,10 @@ struct PangoFontsetClass
 	/**
 	 *
 	 * Params:
-	 *     fontset = a #PangoFontset
+	 *     fontset = a `PangoFontset`
 	 *     wc = a Unicode character
-	 * Returns: a #PangoFont. The caller must call
-	 *     g_object_unref when finished with the font.
+	 * Returns: a `PangoFont`. The caller must call
+	 *     g_object_unref() when finished with the font.
 	 */
 	extern(C) PangoFont* function(PangoFontset* fontset, uint wc) getFont;
 	/**
@@ -1987,7 +1904,7 @@ struct PangoFontsetSimple;
 struct PangoFontsetSimpleClass;
 
 /**
- * The #PangoGlyphGeometry structure contains width and positioning
+ * The `PangoGlyphGeometry` structure contains width and positioning
  * information for a single glyph.
  */
 struct PangoGlyphGeometry
@@ -2007,9 +1924,8 @@ struct PangoGlyphGeometry
 }
 
 /**
- * The #PangoGlyphInfo structure represents a single glyph together with
+ * A `PangoGlyphInfo` structure represents a single glyph with
  * positioning information and visual attributes.
- * It contains the following fields.
  */
 struct PangoGlyphInfo
 {
@@ -2030,11 +1946,11 @@ struct PangoGlyphInfo
 struct PangoGlyphItem
 {
 	/**
-	 * corresponding #PangoItem.
+	 * corresponding `PangoItem`
 	 */
 	PangoItem* item;
 	/**
-	 * corresponding #PangoGlyphString.
+	 * corresponding `PangoGlyphString`
 	 */
 	PangoGlyphString* glyphs;
 }
@@ -2071,9 +1987,11 @@ struct PangoGlyphString
 }
 
 /**
- * The PangoGlyphVisAttr is used to communicate information between
- * the shaping phase and the rendering phase.  More attributes may be
- * added in the future.
+ * A `PangoGlyphVisAttr` structure communicates information between
+ * the shaping and rendering phases.
+ *
+ * Currently, it contains only cluster start information. yMore attributes
+ * may be added in the future.
  */
 struct PangoGlyphVisAttr
 {
@@ -2082,23 +2000,6 @@ struct PangoGlyphVisAttr
 		uint, "isClusterStart", 1,
 		uint, "", 31
 	));
-}
-
-/**
- * The #PangoIncludedModule structure for a statically linked module
- * contains the functions that would otherwise be loaded from a dynamically
- * loaded module.
- */
-struct PangoIncludedModule
-{
-	/** */
-	extern(C) void function(PangoEngineInfo** engines, int* nEngines) list;
-	/** */
-	extern(C) void function(GTypeModule* module_) init;
-	/** */
-	extern(C) void function() exit;
-	/** */
-	extern(C) PangoEngine* function(const(char)* id) create;
 }
 
 struct PangoItem
@@ -2157,8 +2058,8 @@ struct PangoLayoutLine
 }
 
 /**
- * The #PangoLogAttr structure stores information
- * about the attributes of a single character.
+ * The `PangoLogAttr` structure stores information about the attributes of a
+ * single character.
  */
 struct PangoLogAttr
 {
@@ -2180,10 +2081,6 @@ struct PangoLogAttr
 		uint, "", 19
 	));
 }
-
-struct PangoMap;
-
-struct PangoMapEntry;
 
 struct PangoMatrix
 {
@@ -2214,9 +2111,11 @@ struct PangoMatrix
 }
 
 /**
- * The #PangoRectangle structure represents a rectangle. It is frequently
- * used to represent the logical or ink extents of a single glyph or section
- * of text. (See, for instance, pango_font_get_glyph_extents())
+ * The `PangoRectangle` structure represents a rectangle.
+ *
+ * `PangoRectangle` is frequently used to represent the logical or ink
+ * extents of a single glyph or section of text. (See, for instance,
+ * [method@Pango.Font.get_glyph_extents].)
  */
 struct PangoRectangle
 {
@@ -2337,11 +2236,11 @@ public alias extern(C) void* function(void* userData) PangoAttrDataCopyFunc;
 public alias extern(C) int function(PangoAttribute* attribute, void* userData) PangoAttrFilterFunc;
 
 /**
- * A callback function used by pango_fontset_foreach() when enumerating
- * the fonts in a fontset.
+ * Callback used by pango_fontset_foreach() when enumerating
+ * fonts in a fontset.
  *
  * Params:
- *     fontset = a #PangoFontset
+ *     fontset = a `PangoFontset`
  *     font = a font from @fontset
  *     userData = callback data
  *
@@ -2378,88 +2277,74 @@ enum PANGO_SCALE_XX_LARGE = 1.728;            /// The scale factor for three mag
 
 /**
  * Whether the segment should be shifted to center around the baseline.
- * Used in vertical writing directions mostly.
+ *
+ * This is mainly used in vertical writing directions.
  */
 enum ANALYSIS_FLAG_CENTERED_BASELINE = 1;
 alias PANGO_ANALYSIS_FLAG_CENTERED_BASELINE = ANALYSIS_FLAG_CENTERED_BASELINE;
 
 /**
- * This flag is used to mark runs that hold ellipsized text,
- * in an ellipsized layout.
+ * Whether this run holds ellipsized text.
  */
 enum ANALYSIS_FLAG_IS_ELLIPSIS = 2;
 alias PANGO_ANALYSIS_FLAG_IS_ELLIPSIS = ANALYSIS_FLAG_IS_ELLIPSIS;
 
 /**
- * This flag tells Pango to add a hyphen at the end of the
- * run during shaping.
+ * Whether to add a hyphen at the end of the run during shaping.
  */
 enum ANALYSIS_FLAG_NEED_HYPHEN = 4;
 alias PANGO_ANALYSIS_FLAG_NEED_HYPHEN = ANALYSIS_FLAG_NEED_HYPHEN;
 
 /**
- * This value can be used to set the start_index member of a #PangoAttribute
- * such that the attribute covers from the beginning of the text.
+ * Value for @start_index in `PangoAttribute` that indicates
+ * the beginning of the text.
  */
 enum ATTR_INDEX_FROM_TEXT_BEGINNING = 0;
 alias PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING = ATTR_INDEX_FROM_TEXT_BEGINNING;
 
 /**
- * A string constant defining the engine type for language engines.
- * These engines derive from #PangoEngineLang.
+ * Value for @end_index in `PangoAttribute` that indicates
+ * the end of the text.
  */
-enum ENGINE_TYPE_LANG = "PangoEngineLang";
-alias PANGO_ENGINE_TYPE_LANG = ENGINE_TYPE_LANG;
+enum ATTR_INDEX_TO_TEXT_END = 4294967295;
+alias PANGO_ATTR_INDEX_TO_TEXT_END = ATTR_INDEX_TO_TEXT_END;
 
 /**
- * A string constant defining the engine type for shaping engines.
- * These engines derive from #PangoEngineShape.
- */
-enum ENGINE_TYPE_SHAPE = "PangoEngineShape";
-alias PANGO_ENGINE_TYPE_SHAPE = ENGINE_TYPE_SHAPE;
-
-/**
- * The %PANGO_GLYPH_EMPTY macro represents a #PangoGlyph value that has a
- * special meaning, which is a zero-width empty glyph.  This is useful for
- * example in shaper modules, to use as the glyph for various zero-width
- * Unicode characters (those passing pango_is_zero_width()).
+ * A `PangoGlyph` value that indicates a zero-width empty glpyh.
+ *
+ * This is useful for example in shaper modules, to use as the glyph for
+ * various zero-width Unicode characters (those passing [func@is_zero_width]).
  */
 enum GLYPH_EMPTY = 268435455;
 alias PANGO_GLYPH_EMPTY = GLYPH_EMPTY;
 
 /**
- * The %PANGO_GLYPH_INVALID_INPUT macro represents a #PangoGlyph value that has a
- * special meaning of invalid input.  #PangoLayout produces one such glyph
- * per invalid input UTF-8 byte and such a glyph is rendered as a crossed
- * box.
+ * A `PangoGlyph` value for invalid input.
+ *
+ * `PangoLayout` produces one such glyph per invalid input UTF-8 byte and such
+ * a glyph is rendered as a crossed box.
  *
  * Note that this value is defined such that it has the %PANGO_GLYPH_UNKNOWN_FLAG
- * on.
+ * set.
  */
 enum GLYPH_INVALID_INPUT = 4294967295;
 alias PANGO_GLYPH_INVALID_INPUT = GLYPH_INVALID_INPUT;
 
 /**
- * The %PANGO_GLYPH_UNKNOWN_FLAG macro is a flag value that can be added to
- * a #gunichar value of a valid Unicode character, to produce a #PangoGlyph
- * value, representing an unknown-character glyph for the respective #gunichar.
+ * Flag used in `PangoGlyph` to turn a `gunichar` value of a valid Unicode
+ * character into an unknown-character glyph for that `gunichar`.
+ *
+ * Such unknown-character glyphs may be rendered as a 'hex box'.
  */
 enum GLYPH_UNKNOWN_FLAG = 268435456;
 alias PANGO_GLYPH_UNKNOWN_FLAG = GLYPH_UNKNOWN_FLAG;
 
 /**
- * A string constant defining the render type
- * for engines that are not rendering-system specific.
- */
-enum RENDER_TYPE_NONE = "PangoRenderNone";
-alias PANGO_RENDER_TYPE_NONE = RENDER_TYPE_NONE;
-
-/**
- * The %PANGO_SCALE macro represents the scale between dimensions used
- * for Pango distances and device units. (The definition of device
- * units is dependent on the output device; it will typically be pixels
- * for a screen, and points for a printer.) %PANGO_SCALE is currently
- * 1024, but this may be changed in the future.
+ * The scale between dimensions used for Pango distances and device units.
+ *
+ * The definition of device units is dependent on the output device; it will
+ * typically be pixels for a screen, and points for a printer. %PANGO_SCALE is
+ * currently 1024, but this may be changed in the future.
  *
  * When setting font sizes, device units are always considered to be
  * points (as in "12 point font"), rather than pixels.
@@ -2467,25 +2352,26 @@ alias PANGO_RENDER_TYPE_NONE = RENDER_TYPE_NONE;
 enum SCALE = 1024;
 alias PANGO_SCALE = SCALE;
 
-enum UNKNOWN_GLYPH_HEIGHT = 14;
-alias PANGO_UNKNOWN_GLYPH_HEIGHT = UNKNOWN_GLYPH_HEIGHT;
-
-enum UNKNOWN_GLYPH_WIDTH = 10;
-alias PANGO_UNKNOWN_GLYPH_WIDTH = UNKNOWN_GLYPH_WIDTH;
+/**
+ * The major component of the version of Pango available at compile-time.
+ */
+enum VERSION_MAJOR = 1;
+alias PANGO_VERSION_MAJOR = VERSION_MAJOR;
 
 /**
- * A macro that should be defined by the user prior to including
- * the pango.h header.
- * The definition should be one of the predefined Pango version
- * macros: %PANGO_VERSION_1_2, %PANGO_VERSION_1_4,...
- *
- * This macro defines the earliest version of Pango that the package is
- * required to be able to compile against.
- *
- * If the compiler is configured to warn about the use of deprecated
- * functions, then using functions that were deprecated in version
- * %PANGO_VERSION_MIN_REQUIRED or earlier will cause warnings (but
- * using functions deprecated in later releases will not).
+ * The micro component of the version of Pango available at compile-time.
  */
-enum VERSION_MIN_REQUIRED = 2;
-alias PANGO_VERSION_MIN_REQUIRED = VERSION_MIN_REQUIRED;
+enum VERSION_MICRO = 5;
+alias PANGO_VERSION_MICRO = VERSION_MICRO;
+
+/**
+ * The minor component of the version of Pango available at compile-time.
+ */
+enum VERSION_MINOR = 48;
+alias PANGO_VERSION_MINOR = VERSION_MINOR;
+
+/**
+ * A string literal containing the version of Pango available at compile-time.
+ */
+enum VERSION_STRING = "1.48.5";
+alias PANGO_VERSION_STRING = VERSION_STRING;

@@ -30,6 +30,7 @@ private import glib.DateTime;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -37,11 +38,8 @@ private import gtkd.Loader;
 
 
 /**
- * #GtkRecentInfo contains private data only, and should be accessed using the
- * provided API.
- * 
- * #GtkRecentInfo contains all the meta-data
- * associated with an entry in the recently used files list.
+ * `GtkRecentInfo` contains the metadata associated with an item in the
+ * recently used files list.
  */
 public class RecentInfo
 {
@@ -86,15 +84,15 @@ public class RecentInfo
 	}
 
 	/**
-	 * Creates a #GAppInfo for the specified #GtkRecentInfo
+	 * Creates a `GAppInfo` for the specified `GtkRecentInfo`
 	 *
 	 * Params:
 	 *     appName = the name of the application that should
-	 *         be mapped to a #GAppInfo; if %NULL is used then the default
+	 *         be mapped to a `GAppInfo`; if %NULL is used then the default
 	 *         application for the MIME type is used
 	 *
-	 * Returns: the newly created #GAppInfo, or %NULL.
-	 *     In case of error, @error will be set either with a
+	 * Returns: the newly created `GAppInfo`,
+	 *     or %NULL. In case of error, @error will be set either with a
 	 *     %GTK_RECENT_MANAGER_ERROR or a %G_IO_ERROR
 	 *
 	 * Throws: GException on failure.
@@ -178,7 +176,7 @@ public class RecentInfo
 	 *
 	 * Returns: %TRUE if an application with @app_name has registered this
 	 *     resource inside the recently used list, or %FALSE otherwise. The
-	 *     @app_exec string is owned by the #GtkRecentInfo and should not be
+	 *     @app_exec string is owned by the `GtkRecentInfo` and should not be
 	 *     modified or freed
 	 */
 	public bool getApplicationInfo(string appName, out string appExec, out uint count, out DateTime stamp)
@@ -197,8 +195,8 @@ public class RecentInfo
 	/**
 	 * Retrieves the list of applications that have registered this resource.
 	 *
-	 * Returns: a newly allocated %NULL-terminated array of strings.
-	 *     Use g_strfreev() to free it.
+	 * Returns: a newly
+	 *     allocated %NULL-terminated array of strings. Use g_strfreev() to free it.
 	 */
 	public string[] getApplications()
 	{
@@ -222,7 +220,9 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the name of the resource. If none has been defined, the basename
+	 * Gets the name of the resource.
+	 *
+	 * If none has been defined, the basename
 	 * of the resource is obtained.
 	 *
 	 * Returns: the display name of the resource. The returned string
@@ -253,6 +253,7 @@ public class RecentInfo
 
 	/**
 	 * Returns all groups registered for the recently used item @info.
+	 *
 	 * The array of returned group names will be %NULL terminated, so
 	 * length might optionally be %NULL.
 	 *
@@ -300,9 +301,11 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the value of the “private” flag. Resources in the recently used
-	 * list that have this flag set to %TRUE should only be displayed by the
-	 * applications that have registered them.
+	 * Gets the value of the “private” flag.
+	 *
+	 * Resources in the recently used list that have this flag
+	 * set to %TRUE should only be displayed by the applications
+	 * that have registered them.
 	 *
 	 * Returns: %TRUE if the private flag was found, %FALSE otherwise
 	 */
@@ -313,9 +316,10 @@ public class RecentInfo
 
 	/**
 	 * Computes a valid UTF-8 string that can be used as the
-	 * name of the item in a menu or list. For example, calling
-	 * this function on an item that refers to
-	 * “file:///foo/bar.txt” will yield “bar.txt”.
+	 * name of the item in a menu or list.
+	 *
+	 * For example, calling this function on an item that refers
+	 * to “file:///foo/bar.txt” will yield “bar.txt”.
 	 *
 	 * Returns: A newly-allocated string in UTF-8 encoding
 	 *     free it with g_free()
@@ -340,9 +344,11 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets a displayable version of the resource’s URI. If the resource
-	 * is local, it returns a local path; if the resource is not local,
-	 * it returns the UTF-8 encoded content of gtk_recent_info_get_uri().
+	 * Gets a displayable version of the resource’s URI.
+	 *
+	 * If the resource is local, it returns a local path; if the
+	 * resource is not local, it returns the UTF-8 encoded content
+	 * of [method@Gtk.RecentInfo.get_uri].
 	 *
 	 * Returns: a newly allocated UTF-8 string containing the
 	 *     resource’s URI or %NULL. Use g_free() when done using it.
@@ -428,12 +434,12 @@ public class RecentInfo
 	}
 
 	/**
-	 * Checks whether two #GtkRecentInfo point to the same resource.
+	 * Checks whether two `GtkRecentInfo` point to the same resource.
 	 *
 	 * Params:
-	 *     infoB = a #GtkRecentInfo
+	 *     infoB = a `GtkRecentInfo`
 	 *
-	 * Returns: %TRUE if both #GtkRecentInfo point to the same
+	 * Returns: %TRUE if both `GtkRecentInfo` point to the same
 	 *     resource, %FALSE otherwise
 	 */
 	public bool match(RecentInfo infoB)
@@ -461,8 +467,10 @@ public class RecentInfo
 	}
 
 	/**
-	 * Decreases the reference count of @info by one. If the reference
-	 * count reaches zero, @info is deallocated, and the memory freed.
+	 * Decreases the reference count of @info by one.
+	 *
+	 * If the reference count reaches zero, @info is
+	 * deallocated, and the memory freed.
 	 */
 	public void unref()
 	{

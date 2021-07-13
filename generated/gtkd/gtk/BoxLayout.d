@@ -34,18 +34,20 @@ public  import gtk.c.types;
 
 
 /**
- * A GtkBoxLayout is a layout manager that arranges the children of any
- * widget using it into a single row or column, depending on the value
- * of its #GtkOrientable:orientation property. Within the other dimension
- * all children all allocated the same size. The GtkBoxLayout will respect
- * the #GtkWidget:halign and #GtkWidget:valign properties of each child
- * widget.
+ * `GtkBoxLayout` is a layout manager that arranges children in a single
+ * row or column.
+ * 
+ * Whether it is a row or column depends on the value of its
+ * [property@Gtk.Orientable:orientation] property. Within the other dimension
+ * all children all allocated the same size. The `GtkBoxLayout` will respect
+ * the [property@Gtk.Widget:halign] and [property@Gtk.Widget:valign]
+ * properties of each child widget.
  * 
  * If you want all children to be assigned the same size, you can use
- * the #GtkBoxLayout:homogeneous property.
+ * the [property@Gtk.BoxLayout:homogeneous] property.
  * 
  * If you want to specify the amount of space placed between each child,
- * you can use the #GtkBoxLayout:spacing property.
+ * you can use the [property@Gtk.BoxLayout:spacing] property.
  */
 public class BoxLayout : LayoutManager, OrientableIF
 {
@@ -86,7 +88,7 @@ public class BoxLayout : LayoutManager, OrientableIF
 	}
 
 	/**
-	 * Creates a new box layout.
+	 * Creates a new `GtkBoxLayout`.
 	 *
 	 * Params:
 	 *     orientation = the orientation for the new layout
@@ -147,7 +149,7 @@ public class BoxLayout : LayoutManager, OrientableIF
 	 * space available.
 	 *
 	 * Params:
-	 *     position = a #GtkBaselinePosition
+	 *     position = a `GtkBaselinePosition`
 	 */
 	public void setBaselinePosition(GtkBaselinePosition position)
 	{

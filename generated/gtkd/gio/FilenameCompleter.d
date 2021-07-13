@@ -28,6 +28,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import std.algorithm;
@@ -98,9 +99,9 @@ public class FilenameCompleter : ObjectG
 	 * Params:
 	 *     initialText = text to be completed.
 	 *
-	 * Returns: a completed string, or %NULL if no completion exists.
-	 *     This string is not owned by GIO, so remember to g_free() it
-	 *     when finished.
+	 * Returns: a completed string, or %NULL if no
+	 *     completion exists. This string is not owned by GIO, so remember to g_free()
+	 *     it when finished.
 	 */
 	public string getCompletionSuffix(string initialText)
 	{

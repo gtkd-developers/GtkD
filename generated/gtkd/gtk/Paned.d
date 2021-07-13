@@ -36,26 +36,27 @@ private import std.algorithm;
 
 
 /**
- * #GtkPaned has two panes, arranged either
- * horizontally or vertically. The division between
- * the two panes is adjustable by the user by dragging
- * a handle.
+ * `GtkPaned` has two panes, arranged either horizontally or vertically.
+ * 
+ * ![An example GtkPaned](panes.png)
+ * 
+ * The division between the two panes is adjustable by the user
+ * by dragging a handle.
  * 
  * Child widgets are added to the panes of the widget with
- * gtk_paned_set_start_child() and gtk_paned_set_end_child().
- * The division between the two children is set by default
- * from the size requests of the children, but it can be adjusted by the
- * user.
+ * [method@Gtk.Paned.set_start_child] and [method@Gtk.Paned.set_end_child].
+ * The division between the two children is set by default from the size
+ * requests of the children, but it can be adjusted by the user.
  * 
  * A paned widget draws a separator between the two child widgets and a
  * small handle that the user can drag to adjust the division. It does not
  * draw any relief around the children or around the separator. (The space
  * in which the separator is called the gutter.) Often, it is useful to put
- * each child inside a #GtkFrame so that the gutter appears as a ridge.
- * No separator is drawn if one of the children is missing.
+ * each child inside a [class@Gtk.Frame] so that the gutter appears as a
+ * ridge. No separator is drawn if one of the children is missing.
  * 
  * Each child has two options that can be set, @resize and @shrink. If
- * @resize is true, then when the #GtkPaned is resized, that child will
+ * @resize is true, then when the `GtkPaned` is resized, that child will
  * expand or shrink along with the paned widget. If @shrink is true, then
  * that child can be made smaller than its requisition by the user.
  * Setting @shrink to %FALSE allows the application to set a minimum size.
@@ -63,18 +64,18 @@ private import std.algorithm;
  * @resize is true for both children.
  * 
  * The application can set the position of the slider as if it were set
- * by the user, by calling gtk_paned_set_position().
+ * by the user, by calling [method@Gtk.Paned.set_position].
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * paned
  * ├── <child>
  * ├── separator[.wide]
  * ╰── <child>
- * ]|
+ * ```
  * 
- * GtkPaned has a main CSS node with name paned, and a subnode for
+ * `GtkPaned` has a main CSS node with name paned, and a subnode for
  * the separator with name separator. The subnode gets a .wide style
  * class when the paned is supposed to be wide.
  * 
@@ -85,7 +86,7 @@ private import std.algorithm;
  * 
  * ## Creating a paned widget with minimum sizes.
  * 
- * |[<!-- language="C" -->
+ * ```c
  * GtkWidget *hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
  * GtkWidget *frame1 = gtk_frame_new (NULL);
  * GtkWidget *frame2 = gtk_frame_new (NULL);
@@ -101,7 +102,7 @@ private import std.algorithm;
  * gtk_paned_set_end_child_resize (GTK_PANED (hpaned), FALSE);
  * gtk_paned_set_end_child_shrink (GTK_PANED (hpaned), FALSE);
  * gtk_widget_set_size_request (frame2, 50, -1);
- * ]|
+ * ```
  */
 public class Paned : Widget, OrientableIF
 {
@@ -142,12 +143,12 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Creates a new #GtkPaned widget.
+	 * Creates a new `GtkPaned` widget.
 	 *
 	 * Params:
 	 *     orientation = the paned’s orientation.
 	 *
-	 * Returns: a new #GtkPaned.
+	 * Returns: a new `GtkPaned`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -164,9 +165,9 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Retrieves the end child of the given #GtkPaned.
+	 * Retrieves the end child of the given `GtkPaned`.
 	 *
-	 * See also: #GtkPaned:end-child
+	 * See also: `GtkPaned`:end-child
 	 *
 	 * Returns: the end child widget
 	 */
@@ -233,9 +234,9 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Retrieves the start child of the given #GtkPaned.
+	 * Retrieves the start child of the given `GtkPaned`.
 	 *
-	 * See also: #GtkPaned:start-child
+	 * See also: `GtkPaned`:start-child
 	 *
 	 * Returns: the start child widget
 	 */
@@ -252,7 +253,7 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Gets the #GtkPaned:wide-handle property.
+	 * Gets whether the separator should be wide.
 	 *
 	 * Returns: %TRUE if the paned should have a wide handle
 	 */
@@ -285,7 +286,7 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkPaned:resize-end-child property
+	 * Sets the `GtkPaned`:resize-end-child property
 	 *
 	 * Params:
 	 *     resize = %TRUE to let the end child be resized
@@ -296,7 +297,7 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkPaned:resize-start-child property
+	 * Sets the `GtkPaned`:resize-start-child property
 	 *
 	 * Params:
 	 *     resize = %TRUE to let the start child be resized
@@ -307,7 +308,7 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkPaned:shrink-end-child property
+	 * Sets the `GtkPaned`:shrink-end-child property
 	 *
 	 * Params:
 	 *     resize = %TRUE to let the end child be shrunk
@@ -318,7 +319,7 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkPaned:shrink-start-child property
+	 * Sets the `GtkPaned`:shrink-start-child property
 	 *
 	 * Params:
 	 *     resize = %TRUE to let the start child be shrunk
@@ -340,10 +341,10 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the #GtkPaned:wide-handle property.
+	 * Sets whether the separator should be wide.
 	 *
 	 * Params:
-	 *     wide = the new value for the #GtkPaned:wide-handle property
+	 *     wide = the new value for the [property@Gtk.Paned:wide-handle] property
 	 */
 	public void setWideHandle(bool wide)
 	{
@@ -351,10 +352,10 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::accept-position signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to accept the current position of the handle when
+	 * Emitted to accept the current position of the handle when
 	 * moving it using key bindings.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default binding for this signal is Return or Space.
 	 */
@@ -364,11 +365,13 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::cancel-position signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to cancel moving the position of the handle using key
-	 * bindings. The position of the handle will be reset to the value prior to
+	 * Emitted to cancel moving the position of the handle using key
+	 * bindings.
+	 *
+	 * The position of the handle will be reset to the value prior to
 	 * moving it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default binding for this signal is Escape.
 	 */
@@ -378,11 +381,11 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::cycle-child-focus signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to cycle the focus between the children of the paned.
+	 * Emitted to cycle the focus between the children of the paned.
 	 *
-	 * The default binding is f6.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default binding is F6.
 	 *
 	 * Params:
 	 *     reversed = whether cycling backward or forward
@@ -393,12 +396,12 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::cycle-handle-focus signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to cycle whether the paned should grab focus to allow
+	 * Emitted to cycle whether the paned should grab focus to allow
 	 * the user to change position of the handle by using key bindings.
 	 *
-	 * The default binding for this signal is f8.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default binding for this signal is F8.
 	 *
 	 * Params:
 	 *     reversed = whether cycling backward or forward
@@ -409,10 +412,9 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::move-handle signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to move the handle when the user is using key bindings
-	 * to move it.
+	 * Emitted to move the handle with key bindings.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * Params:
 	 *     scrollType = a #GtkScrollType
@@ -423,10 +425,10 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * The ::toggle-handle-focus is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to accept the current position of the handle and then
+	 * Emitted to accept the current position of the handle and then
 	 * move focus to the next widget in the focus chain.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default binding is Tab.
 	 */

@@ -33,8 +33,11 @@ public  import gtk.c.types;
 
 
 /**
- * GtkMediaControls is a widget to show controls for a #GtkMediaStream
- * and giving users a way to use it.
+ * `GtkMediaControls` is a widget to show controls for a video.
+ * 
+ * ![An example GtkMediaControls](media-controls.png)
+ * 
+ * Usually, `GtkMediaControls` is used as part of [class@Gtk.Video].
  */
 public class MediaControls : Widget
 {
@@ -72,13 +75,13 @@ public class MediaControls : Widget
 	}
 
 	/**
-	 * Creates a new #GtkMediaControls managing the @stream passed to it.
+	 * Creates a new `GtkMediaControls` managing the @stream passed to it.
 	 *
 	 * Params:
 	 *     stream = a #GtkMediaStream to
 	 *         manage or %NULL for none.
 	 *
-	 * Returns: a new #GtkMediaControls
+	 * Returns: a new `GtkMediaControls`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -115,7 +118,7 @@ public class MediaControls : Widget
 	 * Sets the stream that is controlled by @controls.
 	 *
 	 * Params:
-	 *     stream = a #GtkMediaStream, or %NULL
+	 *     stream = a `GtkMediaStream`, or %NULL
 	 */
 	public void setMediaStream(MediaStream stream)
 	{

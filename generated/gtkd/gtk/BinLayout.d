@@ -32,11 +32,13 @@ public  import gtk.c.types;
 
 
 /**
- * GtkBinLayout is a #GtkLayoutManager subclass useful for create "bins" of
- * widgets. GtkBinLayout will stack each child of a widget on top of each
- * other, using the #GtkWidget:hexpand, #GtkWidget:vexpand, #GtkWidget:halign,
- * and #GtkWidget:valign properties of each child to determine where they
- * should be positioned.
+ * `GtkBinLayout` is a `GtkLayoutManager` subclass useful for create "bins" of
+ * widgets.
+ * 
+ * `GtkBinLayout` will stack each child of a widget on top of each other,
+ * using the [property@Gtk.Widget:hexpand], [property@Gtk.Widget:vexpand],
+ * [property@Gtk.Widget:halign], and [property@Gtk.Widget:valign] properties
+ * of each child to determine where they should be positioned.
  */
 public class BinLayout : LayoutManager
 {
@@ -74,9 +76,9 @@ public class BinLayout : LayoutManager
 	}
 
 	/**
-	 * Creates a new #GtkBinLayout instance.
+	 * Creates a new `GtkBinLayout` instance.
 	 *
-	 * Returns: the newly created #GtkBinLayout
+	 * Returns: the newly created `GtkBinLayout`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -32,7 +32,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutAction that invokes a callback.
+ * A `GtkShortcutAction` that invokes a callback.
  */
 public class CallbackAction : ShortcutAction
 {

@@ -31,7 +31,7 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoAttrSize structure is used to represent attributes which
+ * The `PangoAttrSize` structure is used to represent attributes which
  * set font size.
  */
 public class PgAttributeSize : PgAttribute

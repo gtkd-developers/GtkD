@@ -32,14 +32,15 @@ public  import pango.c.types;
 
 
 /**
- * A structure specifying a transformation between user-space
- * coordinates and device coordinates. The transformation
- * is given by
+ * A `PangoMatrix` specifies a transformation between user-space
+ * and device coordinates.
  * 
- * <programlisting>
+ * The transformation is given by
+ * 
+ * ```
  * x_device = x_user * matrix->xx + y_user * matrix->xy + matrix->x0;
  * y_device = x_user * matrix->yx + y_user * matrix->yy + matrix->y0;
- * </programlisting>
+ * ```
  *
  * Since: 1.6
  */
@@ -175,7 +176,7 @@ public final class PgMatrix
 	 * given by @new_matrix then applying the original transformation.
 	 *
 	 * Params:
-	 *     newMatrix = a #PangoMatrix
+	 *     newMatrix = a `PangoMatrix`
 	 *
 	 * Since: 1.6
 	 */
@@ -185,10 +186,10 @@ public final class PgMatrix
 	}
 
 	/**
-	 * Copies a #PangoMatrix.
+	 * Copies a `PangoMatrix`.
 	 *
-	 * Returns: the newly allocated #PangoMatrix, which
-	 *     should be freed with pango_matrix_free(), or %NULL if
+	 * Returns: the newly allocated `PangoMatrix`, which
+	 *     should be freed with [method@Pango.Matrix.free], or %NULL if
 	 *     @matrix was %NULL.
 	 *
 	 * Since: 1.6
@@ -206,7 +207,7 @@ public final class PgMatrix
 	}
 
 	/**
-	 * Free a #PangoMatrix created with pango_matrix_copy().
+	 * Free a `PangoMatrix`.
 	 *
 	 * Since: 1.6
 	 */
@@ -218,9 +219,10 @@ public final class PgMatrix
 
 	/**
 	 * Returns the scale factor of a matrix on the height of the font.
+	 *
 	 * That is, the scale factor in the direction perpendicular to the
 	 * vector that the X coordinate is mapped to.  If the scale in the X
-	 * coordinate is needed as well, use pango_matrix_get_font_scale_factors().
+	 * coordinate is needed as well, use [method@Pango.Matrix.get_font_scale_factors].
 	 *
 	 * Returns: the scale factor of @matrix on the height of the font,
 	 *     or 1.0 if @matrix is %NULL.
@@ -234,6 +236,7 @@ public final class PgMatrix
 
 	/**
 	 * Calculates the scale factor of a matrix on the width and height of the font.
+	 *
 	 * That is, @xscale is the scale factor in the direction of the X coordinate,
 	 * and @yscale is the scale factor in the direction perpendicular to the
 	 * vector that the X coordinate is mapped to.
@@ -284,15 +287,16 @@ public final class PgMatrix
 	}
 
 	/**
-	 * Transforms the distance vector (@dx,@dy) by @matrix. This is
-	 * similar to pango_matrix_transform_point() except that the translation
-	 * components of the transformation are ignored. The calculation of
-	 * the returned vector is as follows:
+	 * Transforms the distance vector (@dx,@dy) by @matrix.
 	 *
-	 * <programlisting>
+	 * This is similar to [method@Pango.Matrix.transform_point],
+	 * except that the translation components of the transformation
+	 * are ignored. The calculation of the returned vector is as follows:
+	 *
+	 * ```
 	 * dx2 = dx1 * xx + dy1 * xy;
 	 * dy2 = dx1 * yx + dy1 * yy;
-	 * </programlisting>
+	 * ```
 	 *
 	 * Affine transformations are position invariant, so the same vector
 	 * always transforms to the same vector. If (@x1,@y1) transforms
@@ -312,16 +316,15 @@ public final class PgMatrix
 
 	/**
 	 * First transforms the @rect using @matrix, then calculates the bounding box
-	 * of the transformed rectangle.  The rectangle should be in device units
-	 * (pixels).
+	 * of the transformed rectangle.
 	 *
 	 * This function is useful for example when you want to draw a rotated
 	 * @PangoLayout to an image buffer, and want to know how large the image
 	 * should be and how much you should shift the layout when rendering.
 	 *
-	 * For better accuracy, you should use pango_matrix_transform_rectangle() on
-	 * original rectangle in Pango units and convert to pixels afterward
-	 * using pango_extents_to_pixels()'s first argument.
+	 * For better accuracy, you should use [method@Pango.Matrix.transform_rectangle]
+	 * on original rectangle in Pango units and convert to pixels afterward
+	 * using [func@extents_to_pixels]'s first argument.
 	 *
 	 * Params:
 	 *     rect = in/out bounding box in device units, or %NULL
@@ -349,14 +352,14 @@ public final class PgMatrix
 
 	/**
 	 * First transforms @rect using @matrix, then calculates the bounding box
-	 * of the transformed rectangle.  The rectangle should be in Pango units.
+	 * of the transformed rectangle.
 	 *
 	 * This function is useful for example when you want to draw a rotated
 	 * @PangoLayout to an image buffer, and want to know how large the image
 	 * should be and how much you should shift the layout when rendering.
 	 *
 	 * If you have a rectangle in device units (pixels), use
-	 * pango_matrix_transform_pixel_rectangle().
+	 * [method@Pango.Matrix.transform_pixel_rectangle].
 	 *
 	 * If you have the rectangle in Pango units and want to convert to
 	 * transformed pixel bounding box, it is more accurate to transform it first
@@ -394,19 +397,21 @@ public final class PgMatrix
 	}
 
 	/**
-	 * Converts extents from Pango units to device units, dividing by the
-	 * %PANGO_SCALE factor and performing rounding.
+	 * Converts extents from Pango units to device units.
 	 *
-	 * The @inclusive rectangle is converted by flooring the x/y coordinates and extending
-	 * width/height, such that the final rectangle completely includes the original
-	 * rectangle.
+	 * The conversion is done by dividing by the %PANGO_SCALE factor and
+	 * performing rounding.
+	 *
+	 * The @inclusive rectangle is converted by flooring the x/y coordinates
+	 * and extending width/height, such that the final rectangle completely
+	 * includes the original rectangle.
 	 *
 	 * The @nearest rectangle is converted by rounding the coordinates
 	 * of the rectangle to the nearest device unit (pixel).
 	 *
 	 * The rule to which argument to use is: if you want the resulting device-space
-	 * rectangle to completely contain the original rectangle, pass it in as @inclusive.
-	 * If you want two touching-but-not-overlapping rectangles stay
+	 * rectangle to completely contain the original rectangle, pass it in as
+	 * @inclusive. If you want two touching-but-not-overlapping rectangles stay
 	 * touching-but-not-overlapping after rounding to device units, pass them in
 	 * as @nearest.
 	 *
@@ -422,8 +427,10 @@ public final class PgMatrix
 	}
 
 	/**
-	 * Converts a floating-point number to Pango units: multiplies
-	 * it by %PANGO_SCALE and rounds to nearest integer.
+	 * Converts a floating-point number to Pango units.
+	 *
+	 * The conversion is done by multiplying @d by %PANGO_SCALE and
+	 * rounding the result to nearest integer.
 	 *
 	 * Params:
 	 *     d = double floating-point value
@@ -438,8 +445,9 @@ public final class PgMatrix
 	}
 
 	/**
-	 * Converts a number in Pango units to floating-point: divides
-	 * it by %PANGO_SCALE.
+	 * Converts a number in Pango units to floating-point.
+	 *
+	 * The conversion is done by dividing @i by %PANGO_SCALE.
 	 *
 	 * Params:
 	 *     i = value in Pango units

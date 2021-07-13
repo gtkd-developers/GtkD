@@ -26,6 +26,7 @@ module gtk.FileChooserNative;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
@@ -36,34 +37,36 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkFileChooserNative is an abstraction of a dialog box suitable
- * for use with “File Open” or “File Save as” commands. By default, this
- * just uses a #GtkFileChooserDialog to implement the actual dialog.
- * However, on certain platforms, such as Windows and macOS, the native platform
- * file chooser is used instead. When the application is running in a
- * sandboxed environment without direct filesystem access (such as Flatpak),
- * #GtkFileChooserNative may call the proper APIs (portals) to let the user
- * choose a file and make it available to the application.
+ * `GtkFileChooserNative` is an abstraction of a dialog suitable
+ * for use with “File Open” or “File Save as” commands.
  * 
- * While the API of #GtkFileChooserNative closely mirrors #GtkFileChooserDialog,
- * the main difference is that there is no access to any #GtkWindow or #GtkWidget
+ * By default, this just uses a `GtkFileChooserDialog` to implement
+ * the actual dialog. However, on some platforms, such as Windows and
+ * macOS, the native platform file chooser is used instead. When the
+ * application is running in a sandboxed environment without direct
+ * filesystem access (such as Flatpak), `GtkFileChooserNative` may call
+ * the proper APIs (portals) to let the user choose a file and make it
+ * available to the application.
+ * 
+ * While the API of `GtkFileChooserNative` closely mirrors `GtkFileChooserDialog`,
+ * the main difference is that there is no access to any `GtkWindow` or `GtkWidget`
  * for the dialog. This is required, as there may not be one in the case of a
  * platform native dialog.
  * 
- * Showing, hiding and running the dialog is handled by the #GtkNativeDialog
- * functions.
+ * Showing, hiding and running the dialog is handled by the
+ * [class@Gtk.NativeDialog] functions.
  * 
- * Note that unlike #GtkFileChooserDialog, #GtkFileChooserNative objects are
- * not toplevel widgets, and GTK does not keep them alive. It is your
+ * Note that unlike `GtkFileChooserDialog`, `GtkFileChooserNative` objects
+ * are not toplevel widgets, and GTK does not keep them alive. It is your
  * responsibility to keep a reference until you are done with the
  * object.
  * 
- * ## Typical usage ## {#gtkfilechoosernative-typical-usage}
+ * ## Typical usage
  * 
  * In the simplest of cases, you can the following code to use
- * #GtkFileChooserDialog to select a file for opening:
+ * `GtkFileChooserNative` to select a file for opening:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * static void
  * on_response (GtkNativeDialog *native,
  * int              response)
@@ -93,11 +96,11 @@ public  import gtk.c.types;
  * 
  * g_signal_connect (native, "response", G_CALLBACK (on_response), NULL);
  * gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));
- * ]|
+ * ```
  * 
- * To use a dialog for saving, you can use this:
+ * To use a `GtkFileChooserNative` for saving, you can use this:
  * 
- * |[<!-- language="C" -->
+ * ```c
  * static void
  * on_response (GtkNativeDialog *native,
  * int              response)
@@ -134,49 +137,50 @@ public  import gtk.c.types;
  * 
  * g_signal_connect (native, "response", G_CALLBACK (on_response), NULL);
  * gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));
- * ]|
+ * ```
  * 
- * For more information on how to best set up a file dialog, see #GtkFileChooserDialog.
+ * For more information on how to best set up a file dialog,
+ * see the [class@Gtk.FileChooserDialog] documentation.
  * 
- * ## Response Codes ## {#gtkfilechooserdialognative-responses}
+ * ## Response Codes
  * 
- * #GtkFileChooserNative inherits from #GtkNativeDialog, which means it
- * will return #GTK_RESPONSE_ACCEPT if the user accepted, and
- * #GTK_RESPONSE_CANCEL if he pressed cancel. It can also return
- * #GTK_RESPONSE_DELETE_EVENT if the window was unexpectedly closed.
+ * `GtkFileChooserNative` inherits from [class@Gtk.NativeDialog],
+ * which means it will return %GTK_RESPONSE_ACCEPT if the user accepted,
+ * and %GTK_RESPONSE_CANCEL if he pressed cancel. It can also return
+ * %GTK_RESPONSE_DELETE_EVENT if the window was unexpectedly closed.
  * 
- * ## Differences from #GtkFileChooserDialog ##  {#gtkfilechooserdialognative-differences}
+ * ## Differences from #GtkFileChooserDialog
  * 
- * There are a few things in the GtkFileChooser API that are not
- * possible to use with #GtkFileChooserNative, as such use would
+ * There are a few things in the [iface@Gtk.FileChooser] interface that
+ * are not possible to use with `GtkFileChooserNative`, as such use would
  * prohibit the use of a native dialog.
  * 
  * No operations that change the dialog work while the dialog is visible.
  * Set all the properties that are required before showing the dialog.
  * 
- * ## Win32 details ## {#gtkfilechooserdialognative-win32}
+ * ## Win32 details
  * 
- * On windows the IFileDialog implementation (added in Windows Vista) is
- * used. It supports many of the features that #GtkFileChooserDialog
- * does, but there are some things it does not handle:
+ * On windows the `IFileDialog` implementation (added in Windows Vista) is
+ * used. It supports many of the features that `GtkFileChooser` has, but
+ * there are some things it does not handle:
  * 
- * * Any #GtkFileFilter added using a mimetype
+ * * Any [class@Gtk.FileFilter] added using a mimetype
  * 
- * If any of these features are used the regular #GtkFileChooserDialog
+ * If any of these features are used the regular `GtkFileChooserDialog`
  * will be used in place of the native one.
  * 
- * ## Portal details ## {#gtkfilechooserdialognative-portal}
+ * ## Portal details
  * 
- * When the org.freedesktop.portal.FileChooser portal is available on the
- * session bus, it is used to bring up an out-of-process file chooser. Depending
- * on the kind of session the application is running in, this may or may not
- * be a GTK file chooser.
+ * When the `org.freedesktop.portal.FileChooser` portal is available on
+ * the session bus, it is used to bring up an out-of-process file chooser.
+ * Depending on the kind of session the application is running in, this may
+ * or may not be a GTK file chooser.
  * 
- * ## macOS details ## {#gtkfilechooserdialognative-macos}
+ * ## macOS details
  * 
- * On macOS the NSSavePanel and NSOpenPanel classes are used to provide native
- * file chooser dialogs. Some features provided by #GtkFileChooserDialog are
- * not supported:
+ * On macOS the `NSSavePanel` and `NSOpenPanel` classes are used to provide
+ * native file chooser dialogs. Some features provided by `GtkFileChooser`
+ * are not supported:
  * 
  * * Shortcut folders.
  */
@@ -219,7 +223,7 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	}
 
 	/**
-	 * Creates a new #GtkFileChooserNative.
+	 * Creates a new `GtkFileChooserNative`.
 	 *
 	 * Params:
 	 *     title = Title of the native, or %NULL
@@ -228,7 +232,7 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 *     acceptLabel = text to go in the accept button, or %NULL for the default
 	 *     cancelLabel = text to go in the cancel button, or %NULL for the default
 	 *
-	 * Returns: a new #GtkFileChooserNative
+	 * Returns: a new `GtkFileChooserNative`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -247,8 +251,8 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	/**
 	 * Retrieves the custom label text for the accept button.
 	 *
-	 * Returns: The custom label, or %NULL for the default. This string
-	 *     is owned by GTK+ and should not be modified or freed
+	 * Returns: The custom label, or %NULL for the default.
+	 *     This string is owned by GTK and should not be modified or freed
 	 */
 	public string getAcceptLabel()
 	{
@@ -258,8 +262,8 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	/**
 	 * Retrieves the custom label text for the cancel button.
 	 *
-	 * Returns: The custom label, or %NULL for the default. This string
-	 *     is owned by GTK+ and should not be modified or freed
+	 * Returns: The custom label, or %NULL for the default.
+	 *     This string is owned by GTK and should not be modified or freed
 	 */
 	public string getCancelLabel()
 	{
@@ -269,11 +273,12 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	/**
 	 * Sets the custom label text for the accept button.
 	 *
-	 * If characters in @label are preceded by an underscore, they are underlined.
-	 * If you need a literal underscore character in a label, use “__” (two
-	 * underscores). The first underlined character represents a keyboard
-	 * accelerator called a mnemonic.
-	 * Pressing Alt and that key activates the button.
+	 * If characters in @label are preceded by an underscore, they are
+	 * underlined. If you need a literal underscore character in a label,
+	 * use “__” (two underscores). The first underlined character represents
+	 * a keyboard accelerator called a mnemonic.
+	 *
+	 * Pressing Alt and that key should activate the button.
 	 *
 	 * Params:
 	 *     acceptLabel = custom label or %NULL for the default
@@ -286,11 +291,12 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	/**
 	 * Sets the custom label text for the cancel button.
 	 *
-	 * If characters in @label are preceded by an underscore, they are underlined.
-	 * If you need a literal underscore character in a label, use “__” (two
-	 * underscores). The first underlined character represents a keyboard
-	 * accelerator called a mnemonic.
-	 * Pressing Alt and that key activates the button.
+	 * If characters in @label are preceded by an underscore, they are
+	 * underlined. If you need a literal underscore character in a label,
+	 * use “__” (two underscores). The first underlined character represents
+	 * a keyboard accelerator called a mnemonic.
+	 *
+	 * Pressing Alt and that key should activate the button.
 	 *
 	 * Params:
 	 *     cancelLabel = custom label or %NULL for the default

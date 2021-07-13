@@ -356,10 +356,10 @@ public class Source
 	 * {
 	 * SomeWidget *self = data;
 	 *
-	 * GDK_THREADS_ENTER ();
+	 * g_mutex_lock (&self->idle_id_mutex);
 	 * // do stuff with self
 	 * self->idle_id = 0;
-	 * GDK_THREADS_LEAVE ();
+	 * g_mutex_unlock (&self->idle_id_mutex);
 	 *
 	 * return G_SOURCE_REMOVE;
 	 * }
@@ -367,7 +367,17 @@ public class Source
 	 * static void
 	 * some_widget_do_stuff_later (SomeWidget *self)
 	 * {
+	 * g_mutex_lock (&self->idle_id_mutex);
 	 * self->idle_id = g_idle_add (idle_callback, self);
+	 * g_mutex_unlock (&self->idle_id_mutex);
+	 * }
+	 *
+	 * static void
+	 * some_widget_init (SomeWidget *self)
+	 * {
+	 * g_mutex_init (&self->idle_id_mutex);
+	 *
+	 * // ...
 	 * }
 	 *
 	 * static void
@@ -377,6 +387,8 @@ public class Source
 	 *
 	 * if (self->idle_id)
 	 * g_source_remove (self->idle_id);
+	 *
+	 * g_mutex_clear (&self->idle_id_mutex);
 	 *
 	 * G_OBJECT_CLASS (parent_class)->finalize (object);
 	 * }
@@ -394,12 +406,12 @@ public class Source
 	 * {
 	 * SomeWidget *self = data;
 	 *
-	 * GDK_THREADS_ENTER ();
+	 * g_mutex_lock (&self->idle_id_mutex);
 	 * if (!g_source_is_destroyed (g_main_current_source ()))
 	 * {
 	 * // do stuff with self
 	 * }
-	 * GDK_THREADS_LEAVE ();
+	 * g_mutex_unlock (&self->idle_id_mutex);
 	 *
 	 * return FALSE;
 	 * }

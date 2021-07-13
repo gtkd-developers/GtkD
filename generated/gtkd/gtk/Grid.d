@@ -34,22 +34,88 @@ public  import gtk.c.types;
 
 
 /**
- * GtkGrid is a container which arranges its child widgets in
- * rows and columns, with arbitrary positions and horizontal/vertical spans.
+ * `GtkGrid` is a container which arranges its child widgets in
+ * rows and columns.
  * 
- * Children are added using gtk_grid_attach(). They can span multiple
- * rows or columns. It is also possible to add a child next to an
- * existing child, using gtk_grid_attach_next_to(). To remove a child
- * from the grid, use gtk_grid_remove(). The behaviour of GtkGrid when
- * several children occupy the same grid cell is undefined.
+ * ![An example GtkGrid](grid.png)
+ * 
+ * It supports arbitrary positions and horizontal/vertical spans.
+ * 
+ * Children are added using [method@Gtk.Grid.attach]. They can span multiple
+ * rows or columns. It is also possible to add a child next to an existing
+ * child, using [method@Gtk.Grid.attach_next_to]. To remove a child from the
+ * grid, use [method@Gtk.Grid.remove].
+ * 
+ * The behaviour of `GtkGrid` when several children occupy the same grid
+ * cell is undefined.
+ * 
+ * # GtkGrid as GtkBuildable
+ * 
+ * Every child in a `GtkGrid` has access to a custom [iface@Gtk.Buildable]
+ * element, called ´<layout>´. It can by used to specify a position in the
+ * grid and optionally spans. All properties that can be used in the ´<layout>´
+ * element are implemented by [class@Gtk.GridLayoutChild].
+ * 
+ * It is implemented by `GtkWidget` using [class@Gtk.LayoutManager].
+ * 
+ * To showcase it, here is a simple example:
+ * 
+ * ```xml
+ * <object class="GtkGrid" id="my_grid">
+ * <child>
+ * <object class="GtkButton" id="button1">
+ * <property name="label">Button 1</property>
+ * <layout>
+ * <property name="column">0</property>
+ * <property name="row">0</property>
+ * </layout>
+ * </object>
+ * </child>
+ * <child>
+ * <object class="GtkButton" id="button2">
+ * <property name="label">Button 2</property>
+ * <layout>
+ * <property name="column">1</property>
+ * <property name="row">0</property>
+ * </layout>
+ * </object>
+ * </child>
+ * <child>
+ * <object class="GtkButton" id="button3">
+ * <property name="label">Button 3</property>
+ * <layout>
+ * <property name="column">2</property>
+ * <property name="row">0</property>
+ * <property name="row-span">2</property>
+ * </layout>
+ * </object>
+ * </child>
+ * <child>
+ * <object class="GtkButton" id="button4">
+ * <property name="label">Button 4</property>
+ * <layout>
+ * <property name="column">0</property>
+ * <property name="row">1</property>
+ * <property name="column-span">2</property>
+ * </layout>
+ * </object>
+ * </child>
+ * </object>
+ * ```
+ * 
+ * It organizes the first two buttons side-by-side in one cell each.
+ * The third button is in the last column but spans across two rows.
+ * This is defined by the ´row-span´ property. The last button is
+ * located in the second row and spans across two columns, which is
+ * defined by the ´column-span´ property.
  * 
  * # CSS nodes
  * 
- * GtkGrid uses a single CSS node with name `grid`.
+ * `GtkGrid` uses a single CSS node with name `grid`.
  * 
  * # Accessibility
  * 
- * GtkGrid uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
+ * `GtkGrid` uses the %GTK_ACCESSIBLE_ROLE_GROUP role.
  */
 public class Grid : Widget, OrientableIF
 {
@@ -92,7 +158,7 @@ public class Grid : Widget, OrientableIF
 	/**
 	 * Creates a new grid widget.
 	 *
-	 * Returns: the new #GtkGrid
+	 * Returns: the new `GtkGrid`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -204,9 +270,9 @@ public class Grid : Widget, OrientableIF
 	}
 
 	/**
-	 * Returns the baseline position of @row as set
-	 * by gtk_grid_set_row_baseline_position() or the default value
-	 * %GTK_BASELINE_POSITION_CENTER.
+	 * Returns the baseline position of @row.
+	 *
+	 * See [method@Gtk.Grid.set_row_baseline_position].
 	 *
 	 * Params:
 	 *     row = a row index
@@ -287,10 +353,10 @@ public class Grid : Widget, OrientableIF
 	}
 
 	/**
-	 * Queries the attach points and spans of @child inside the given #GtkGrid.
+	 * Queries the attach points and spans of @child inside the given `GtkGrid`.
 	 *
 	 * Params:
-	 *     child = a #GtkWidget child of @grid
+	 *     child = a `GtkWidget` child of @grid
 	 *     column = the column used to attach the left side of @child
 	 *     row = the row used to attach the top side of @child
 	 *     width = the number of columns @child spans
@@ -302,8 +368,10 @@ public class Grid : Widget, OrientableIF
 	}
 
 	/**
-	 * Removes a child from @grid, after it has been added
-	 * with gtk_grid_attach() or gtk_grid_attach_next_to().
+	 * Removes a child from @grid.
+	 *
+	 * The child must have been added with
+	 * [method@Gtk.Grid.attach] or [method@Gtk.Grid.attach_next_to].
 	 *
 	 * Params:
 	 *     child = the child widget to remove
@@ -347,6 +415,7 @@ public class Grid : Widget, OrientableIF
 
 	/**
 	 * Sets which row defines the global baseline for the entire grid.
+	 *
 	 * Each row in the grid can have its own local baseline, but only
 	 * one of those is global, meaning it will be the baseline in the
 	 * parent of the @grid.
@@ -385,9 +454,11 @@ public class Grid : Widget, OrientableIF
 	 * Sets how the baseline should be positioned on @row of the
 	 * grid, in case that row is assigned more space than is requested.
 	 *
+	 * The default baseline position is %GTK_BASELINE_POSITION_CENTER.
+	 *
 	 * Params:
 	 *     row = a row index
-	 *     pos = a #GtkBaselinePosition
+	 *     pos = a `GtkBaselinePosition`
 	 */
 	public void setRowBaselinePosition(int row, GtkBaselinePosition pos)
 	{

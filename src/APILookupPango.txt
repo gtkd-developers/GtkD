@@ -148,9 +148,11 @@ code: end
 struct: Layout
 array: set_text text length
 
-struct: Map
-out: get_engines exact_engines
-out: get_engines fallback_engines
+version <1.38: start
+	struct: Map
+	out: get_engines exact_engines
+	out: get_engines fallback_engines
+version: end
 
 struct: PangoCairoFontMap
 class: PgCairoFontMap
@@ -193,9 +195,6 @@ move: attr_weight_new Attribute weight_new
 move: markup_parser_finish Attribute
 move: markup_parser_new Attribute
 move: parse_markup Attribute
-
-move: find_map Map
-move: module_register Map
 
 move: gravity_get_for_matrix PgVertical
 move: gravity_get_for_script PgVertical

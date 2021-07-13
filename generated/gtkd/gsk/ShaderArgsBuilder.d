@@ -86,11 +86,11 @@ public class ShaderArgsBuilder
 	 * chunk.
 	 *
 	 * Params:
-	 *     shader = a #GskGLShader
-	 *     initialValues = optional #Bytes with initial values
+	 *     shader = a `GskGLShader`
+	 *     initialValues = optional `GBytes` with initial values
 	 *
 	 * Returns: The newly allocated builder, free with
-	 *     gsk_shader_args_builder_unref()
+	 *     [method@Gsk.ShaderArgsBuilder.unref]
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -108,12 +108,13 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Creates a new #GBytes args from the current state of the
-	 * given @builder, and frees the @builder instance. Any uniforms
-	 * of the shader that have not been explicitly set on the @builder
-	 * are zero-initialized.
+	 * given @builder, and frees the @builder instance.
 	 *
-	 * Returns: the newly created #GBytes
-	 *     with all the args added to @builder
+	 * Any uniforms of the shader that have not been explicitly set
+	 * on the @builder are zero-initialized.
+	 *
+	 * Returns: the newly allocated buffer with
+	 *     all the args added to @builder
 	 */
 	public Bytes freeToArgs()
 	{
@@ -129,9 +130,9 @@ public class ShaderArgsBuilder
 
 	alias doref = ref_;
 	/**
-	 * Increases the reference count of a #GskShaderArgsBuilder by one.
+	 * Increases the reference count of a `GskShaderArgsBuilder` by one.
 	 *
-	 * Returns: the passed in #GskShaderArgsBuilder
+	 * Returns: the passed in `GskShaderArgsBuilder`
 	 */
 	public ShaderArgsBuilder ref_()
 	{
@@ -147,6 +148,7 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Sets the value of the uniform @idx.
+	 *
 	 * The uniform must be of bool type.
 	 *
 	 * Params:
@@ -160,6 +162,7 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Sets the value of the uniform @idx.
+	 *
 	 * The uniform must be of float type.
 	 *
 	 * Params:
@@ -173,6 +176,7 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Sets the value of the uniform @idx.
+	 *
 	 * The uniform must be of int type.
 	 *
 	 * Params:
@@ -186,6 +190,7 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Sets the value of the uniform @idx.
+	 *
 	 * The uniform must be of uint type.
 	 *
 	 * Params:
@@ -199,6 +204,7 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Sets the value of the uniform @idx.
+	 *
 	 * The uniform must be of vec2 type.
 	 *
 	 * Params:
@@ -212,6 +218,7 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Sets the value of the uniform @idx.
+	 *
 	 * The uniform must be of vec3 type.
 	 *
 	 * Params:
@@ -225,6 +232,7 @@ public class ShaderArgsBuilder
 
 	/**
 	 * Sets the value of the uniform @idx.
+	 *
 	 * The uniform must be of vec4 type.
 	 *
 	 * Params:
@@ -237,18 +245,20 @@ public class ShaderArgsBuilder
 	}
 
 	/**
-	 * Creates a new #GBytes args from the current state of the
-	 * given @builder. Any uniforms of the shader that have not
-	 * been explicitly set on the @builder are zero-initialized.
+	 * Creates a new `GBytes` args from the current state of the
+	 * given @builder.
 	 *
-	 * The given #GskShaderArgsBuilder is reset once this function returns;
+	 * Any uniforms of the shader that have not been explicitly set on
+	 * the @builder are zero-initialized.
+	 *
+	 * The given `GskShaderArgsBuilder` is reset once this function returns;
 	 * you cannot call this function multiple times on the same @builder instance.
 	 *
 	 * This function is intended primarily for bindings. C code should use
-	 * gsk_shader_args_builder_free_to_args().
+	 * [method@Gsk.ShaderArgsBuilder.free_to_args].
 	 *
-	 * Returns: the newly allocated builder, free with
-	 *     gsk_shader_args_builder_free()
+	 * Returns: the newly allocated buffer with
+	 *     all the args added to @builder
 	 */
 	public Bytes toArgs()
 	{
@@ -263,7 +273,8 @@ public class ShaderArgsBuilder
 	}
 
 	/**
-	 * Decreases the reference count of a #GskShaderArgBuilder by one.
+	 * Decreases the reference count of a `GskShaderArgBuilder` by one.
+	 *
 	 * If the resulting reference count is zero, frees the builder.
 	 */
 	public void unref()

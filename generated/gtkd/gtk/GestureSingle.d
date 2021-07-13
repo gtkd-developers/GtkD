@@ -30,18 +30,20 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkGestureSingle is a subclass of #GtkGesture, optimized (although
- * not restricted) for dealing with mouse and single-touch gestures. Under
- * interaction, these gestures stick to the first interacting sequence, which
- * is accessible through gtk_gesture_single_get_current_sequence() while the
- * gesture is being interacted with.
+ * `GtkGestureSingle` is a `GtkGestures` subclass optimized for singe-touch
+ * and mouse gestures.
  * 
- * By default gestures react to both %GDK_BUTTON_PRIMARY and touch
- * events, gtk_gesture_single_set_touch_only() can be used to change the
+ * Under interaction, these gestures stick to the first interacting sequence,
+ * which is accessible through [method@Gtk.GestureSingle.get_current_sequence]
+ * while the gesture is being interacted with.
+ * 
+ * By default gestures react to both %GDK_BUTTON_PRIMARY and touch events.
+ * [method@Gtk.GestureSingle.set_touch_only] can be used to change the
  * touch behavior. Callers may also specify a different mouse button number
- * to interact with through gtk_gesture_single_set_button(), or react to any
- * mouse button by setting 0. While the gesture is active, the button being
- * currently pressed can be known through gtk_gesture_single_get_current_button().
+ * to interact with through [method@Gtk.GestureSingle.set_button], or react
+ * to any mouse button by setting it to 0. While the gesture is active, the
+ * button being currently pressed can be known through
+ * [method@Gtk.GestureSingle.get_current_button].
  */
 public class GestureSingle : Gesture
 {
@@ -79,8 +81,9 @@ public class GestureSingle : Gesture
 	}
 
 	/**
-	 * Returns the button number @gesture listens for, or 0 if @gesture
-	 * reacts to any button press.
+	 * Returns the button number @gesture listens for.
+	 *
+	 * If this is 0, the gesture reacts to any button press.
 	 *
 	 * Returns: The button number, or 0 for any button
 	 */
@@ -90,8 +93,8 @@ public class GestureSingle : Gesture
 	}
 
 	/**
-	 * Returns the button number currently interacting with @gesture, or 0 if there
-	 * is none.
+	 * Returns the button number currently interacting
+	 * with @gesture, or 0 if there is none.
 	 *
 	 * Returns: The current button number
 	 */
@@ -102,7 +105,9 @@ public class GestureSingle : Gesture
 
 	/**
 	 * Returns the event sequence currently interacting with @gesture.
-	 * This is only meaningful if gtk_gesture_is_active() returns %TRUE.
+	 *
+	 * This is only meaningful if [method@Gtk.Gesture.is_active]
+	 * returns %TRUE.
 	 *
 	 * Returns: the current sequence
 	 */
@@ -112,8 +117,9 @@ public class GestureSingle : Gesture
 	}
 
 	/**
-	 * Gets whether a gesture is exclusive. For more information, see
-	 * gtk_gesture_single_set_exclusive().
+	 * Gets whether a gesture is exclusive.
+	 *
+	 * For more information, see [method@Gtk.GestureSingle.set_exclusive].
 	 *
 	 * Returns: Whether the gesture is exclusive
 	 */
@@ -133,9 +139,11 @@ public class GestureSingle : Gesture
 	}
 
 	/**
-	 * Sets the button number @gesture listens to. If non-0, every
-	 * button press from a different button number will be ignored.
-	 * Touch events implicitly match with button 1.
+	 * Sets the button number @gesture listens to.
+	 *
+	 * If non-0, every button press from a different button
+	 * number will be ignored. Touch events implicitly match
+	 * with button 1.
 	 *
 	 * Params:
 	 *     button = button number to listen to, or 0 for any button
@@ -146,10 +154,11 @@ public class GestureSingle : Gesture
 	}
 
 	/**
-	 * Sets whether @gesture is exclusive. An exclusive gesture will
-	 * only handle pointer and "pointer emulated" touch events, so at
-	 * any given time, there is only one sequence able to interact with
-	 * those.
+	 * Sets whether @gesture is exclusive.
+	 *
+	 * An exclusive gesture will only handle pointer and "pointer emulated"
+	 * touch events, so at any given time, there is only one sequence able
+	 * to interact with those.
 	 *
 	 * Params:
 	 *     exclusive = %TRUE to make @gesture exclusive
@@ -160,8 +169,10 @@ public class GestureSingle : Gesture
 	}
 
 	/**
+	 * Sets whether to handle only touch events.
+	 *
 	 * If @touch_only is %TRUE, @gesture will only handle events of type
-	 * #GDK_TOUCH_BEGIN, #GDK_TOUCH_UPDATE or #GDK_TOUCH_END. If %FALSE,
+	 * %GDK_TOUCH_BEGIN, %GDK_TOUCH_UPDATE or %GDK_TOUCH_END. If %FALSE,
 	 * mouse events will be handled too.
 	 *
 	 * Params:

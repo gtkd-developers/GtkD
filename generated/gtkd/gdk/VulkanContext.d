@@ -34,14 +34,14 @@ private import std.algorithm;
 
 
 /**
- * #GdkVulkanContext is an object representing the platform-specific
+ * `GdkVulkanContext` is an object representing the platform-specific
  * Vulkan draw context.
  * 
- * #GdkVulkanContexts are created for a #GdkSurface using
- * gdk_surface_create_vulkan_context(), and the context will match the
- * the characteristics of the surface.
+ * `GdkVulkanContext`s are created for a surface using
+ * [method@Gdk.Surface.create_vulkan_context], and the context will match
+ * the the characteristics of the surface.
  * 
- * Support for #GdkVulkanContext is platform-specific, context creation
+ * Support for `GdkVulkanContext` is platform-specific and context creation
  * can fail, returning %NULL context.
  */
 public class VulkanContext : DrawContext, InitableIF
@@ -83,8 +83,9 @@ public class VulkanContext : DrawContext, InitableIF
 	}
 
 	/**
-	 * This signal is emitted when the images managed by this context have
-	 * changed. Usually this means that the swapchain had to be recreated,
+	 * Emitted when the images managed by this context have changed.
+	 *
+	 * Usually this means that the swapchain had to be recreated,
 	 * for example in response to a change of the surface size.
 	 */
 	gulong addOnImagesUpdated(void delegate(VulkanContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

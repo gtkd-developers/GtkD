@@ -25,6 +25,7 @@
 module gobject.Enums;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.c.functions;
 public  import gobject.c.types;
 

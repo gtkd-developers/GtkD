@@ -35,10 +35,11 @@ private import std.algorithm;
 
 
 /**
- * #GtkEventControllerLegacy is an event controller that gives you
- * direct access to the event stream. It should only be used as a
- * last resort if none of the other event controllers or gestures
- * do the job.
+ * `GtkEventControllerLegacy` is an event controller that provides raw
+ * access to the event stream.
+ * 
+ * It should only be used as a last resort if none of the other event
+ * controllers or gestures do the job.
  */
 public class EventControllerLegacy : EventController
 {
@@ -98,7 +99,7 @@ public class EventControllerLegacy : EventController
 	 * Emitted for each GDK event delivered to @controller.
 	 *
 	 * Params:
-	 *     event = the #GdkEvent which triggered this signal
+	 *     event = the `GdkEvent` which triggered this signal
 	 *
 	 * Returns: %TRUE to stop other handlers from being invoked for the event
 	 *     and the emission of this signal. %FALSE to propagate the event further.

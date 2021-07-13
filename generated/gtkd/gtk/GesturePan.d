@@ -35,20 +35,20 @@ private import std.algorithm;
 
 
 /**
- * #GtkGesturePan is a #GtkGesture implementation able to recognize
- * pan gestures, those are drags that are locked to happen along one
- * axis. The axis that a #GtkGesturePan handles is defined at
- * construct time, and can be changed through
- * gtk_gesture_pan_set_orientation().
+ * `GtkGesturePan` is a `GtkGesture` for pan gestures.
  * 
- * When the gesture starts to be recognized, #GtkGesturePan will
+ * These are drags that are locked to happen along one axis. The axis
+ * that a `GtkGesturePan` handles is defined at construct time, and
+ * can be changed through [method@Gtk.GesturePan.set_orientation].
+ * 
+ * When the gesture starts to be recognized, `GtkGesturePan` will
  * attempt to determine as early as possible whether the sequence
  * is moving in the expected direction, and denying the sequence if
  * this does not happen.
  * 
  * Once a panning gesture along the expected axis is recognized,
- * the #GtkGesturePan::pan signal will be emitted as input events
- * are received, containing the offset in the given axis.
+ * the [signal@Gtk.GesturePan::pan] signal will be emitted as input
+ * events are received, containing the offset in the given axis.
  */
 public class GesturePan : GestureDrag
 {
@@ -86,12 +86,12 @@ public class GesturePan : GestureDrag
 	}
 
 	/**
-	 * Returns a newly created #GtkGesture that recognizes pan gestures.
+	 * Returns a newly created `GtkGesture` that recognizes pan gestures.
 	 *
 	 * Params:
 	 *     orientation = expected orientation
 	 *
-	 * Returns: a newly created #GtkGesturePan
+	 * Returns: a newly created `GtkGesturePan`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -129,8 +129,7 @@ public class GesturePan : GestureDrag
 	}
 
 	/**
-	 * This signal is emitted once a panning gesture along the
-	 * expected axis is detected.
+	 * Emitted once a panning gesture along the expected axis is detected.
 	 *
 	 * Params:
 	 *     direction = current direction of the pan gesture

@@ -25,6 +25,7 @@
 module gstreamer.Format;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.Iterator;
 private import gstreamer.c.functions;

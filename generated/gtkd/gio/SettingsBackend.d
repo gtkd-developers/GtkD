@@ -29,6 +29,7 @@ public  import gio.c.types;
 private import glib.BBTree;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 
 
@@ -136,7 +137,9 @@ public class SettingsBackend : ObjectG
 	 *
 	 * The user gets a reference to the backend.
 	 *
-	 * Returns: the default #GSettingsBackend
+	 * Returns: the default #GSettingsBackend,
+	 *     which will be a dummy (memory) settings backend if no other settings
+	 *     backend is available.
 	 *
 	 * Since: 2.28
 	 */

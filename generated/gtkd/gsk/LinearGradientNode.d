@@ -72,18 +72,19 @@ public class LinearGradientNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will create a linear gradient from the given
+	 * Creates a `GskRenderNode` that will create a linear gradient from the given
 	 * points and color stops, and render that into the area given by @bounds.
 	 *
 	 * Params:
 	 *     bounds = the rectangle to render the linear gradient into
 	 *     start = the point at which the linear gradient will begin
 	 *     end = the point at which the linear gradient will finish
-	 *     colorStops = a pointer to an array of #GskColorStop defining the gradient
-	 *         The offsets of all color steps must be increasing. The first stop's offset must be >= 0 and the last
+	 *     colorStops = a pointer to an array of
+	 *         `GskColorStop` defining the gradient. The offsets of all color stops
+	 *         must be increasing. The first stop's offset must be >= 0 and the last
 	 *         stop's offset must be <= 1.
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

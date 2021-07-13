@@ -27,6 +27,7 @@ module gtk.ColumnViewColumn;
 private import gio.MenuModel;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.ColumnView;
 private import gtk.ListItemFactory;
@@ -36,14 +37,18 @@ public  import gtk.c.types;
 
 
 /**
- * GtkColumnViewColumn represents the columns being added to #GtkColumnView.
+ * `GtkColumnViewColumn` represents the columns being added to `GtkColumnView`.
+ * 
+ * The main ingredient for a `GtkColumnViewColumn` is the `GtkListItemFactory`
+ * that tells the columnview how to create cells for this column from items in
+ * the model.
  * 
  * Columns have a title, and can optionally have a header menu set
- * with gtk_column_view_column_set_header_menu().
+ * with [method@Gtk.ColumnViewColumn.set_header_menu].
  * 
  * A sorter can be associated with a column using
- * gtk_column_view_column_set_sorter(), to let users influence sorting by
- * clicking on the column header.
+ * [method@Gtk.ColumnViewColumn.set_sorter], to let users influence sorting
+ * by clicking on the column header.
  */
 public class ColumnViewColumn : ObjectG
 {
@@ -81,14 +86,14 @@ public class ColumnViewColumn : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkColumnViewColumn that uses the given @factory for
+	 * Creates a new `GtkColumnViewColumn` that uses the given @factory for
 	 * mapping items to widgets.
 	 *
-	 * You most likely want to call gtk_column_add_column() next.
+	 * You most likely want to call [method@Gtk.ColumnView.append_column] next.
 	 *
-	 * The function takes ownership of the
-	 * argument, so you can write code like
-	 * ```
+	 * The function takes ownership of the argument, so you can write code like:
+	 *
+	 * ```c
 	 * column = gtk_column_view_column_new (_("Name"),
 	 * gtk_builder_list_item_factory_new_from_resource ("/name.ui"));
 	 * ```
@@ -97,7 +102,7 @@ public class ColumnViewColumn : ObjectG
 	 *     title = Title to use for this column
 	 *     factory = The factory to populate items with
 	 *
-	 * Returns: a new #GtkColumnViewColumn using the given @factory
+	 * Returns: a new `GtkColumnViewColumn` using the given @factory
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -201,7 +206,7 @@ public class ColumnViewColumn : ObjectG
 	/**
 	 * Returns the sorter that is associated with the column.
 	 *
-	 * Returns: the #GtkSorter of @self
+	 * Returns: the `GtkSorter` of @self
 	 */
 	public Sorter getSorter()
 	{
@@ -250,7 +255,7 @@ public class ColumnViewColumn : ObjectG
 	}
 
 	/**
-	 * Sets the #GtkListItemFactory to use for populating list items for this
+	 * Sets the `GtkListItemFactory` to use for populating list items for this
 	 * column.
 	 *
 	 * Params:
@@ -281,7 +286,7 @@ public class ColumnViewColumn : ObjectG
 	 * for the column header.
 	 *
 	 * Params:
-	 *     menu = a #GMenuModel, or %NULL
+	 *     menu = a `GMenuModel`, or %NULL
 	 */
 	public void setHeaderMenu(MenuModel menu)
 	{
@@ -306,13 +311,13 @@ public class ColumnViewColumn : ObjectG
 	 * the sorting by clicking on its header.
 	 *
 	 * This sorter can be made active by clicking on the column
-	 * header, or by calling gtk_column_view_sort_by_column().
+	 * header, or by calling [method@Gtk.ColumnView.sort_by_column].
 	 *
-	 * See gtk_column_view_get_sorter() for the necessary steps
-	 * for setting up customizable sorting for #GtkColumnView.
+	 * See [method@Gtk.ColumnView.get_sorter] for the necessary steps
+	 * for setting up customizable sorting for [class@Gtk.ColumnView].
 	 *
 	 * Params:
-	 *     sorter = the #GtkSorter to associate with @column
+	 *     sorter = the `GtkSorter` to associate with @column
 	 */
 	public void setSorter(Sorter sorter)
 	{
@@ -320,8 +325,10 @@ public class ColumnViewColumn : ObjectG
 	}
 
 	/**
-	 * Sets the title of this column. The title is displayed in the header of a
-	 * #GtkColumnView for this column and is therefore user-facing text that should
+	 * Sets the title of this column.
+	 *
+	 * The title is displayed in the header of a `GtkColumnView`
+	 * for this column and is therefore user-facing text that should
 	 * be translated.
 	 *
 	 * Params:

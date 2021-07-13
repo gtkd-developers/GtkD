@@ -70,13 +70,14 @@ public class ContainerNode : RenderNode
 	}
 
 	/**
-	 * Creates a new #GskRenderNode instance for holding the given @children.
+	 * Creates a new `GskRenderNode` instance for holding the given @children.
+	 *
 	 * The new node will acquire a reference to each of the children.
 	 *
 	 * Params:
 	 *     children = The children of the node
 	 *
-	 * Returns: the new #GskRenderNode
+	 * Returns: the new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -121,7 +122,7 @@ public class ContainerNode : RenderNode
 	/**
 	 * Retrieves the number of direct children of @node.
 	 *
-	 * Returns: the number of children of the #GskRenderNode
+	 * Returns: the number of children of the `GskRenderNode`
 	 */
 	public uint getNChildren()
 	{

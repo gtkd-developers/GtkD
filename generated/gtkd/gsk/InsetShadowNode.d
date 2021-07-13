@@ -72,7 +72,7 @@ public class InsetShadowNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will render an inset shadow
+	 * Creates a `GskRenderNode` that will render an inset shadow
 	 * into the box given by @outline.
 	 *
 	 * Params:
@@ -83,7 +83,7 @@ public class InsetShadowNode : RenderNode
 	 *     spread = how far the shadow spreads towards the inside
 	 *     blurRadius = how much blur to apply to the shadow
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

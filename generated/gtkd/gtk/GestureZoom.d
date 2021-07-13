@@ -34,10 +34,11 @@ private import std.algorithm;
 
 
 /**
- * #GtkGestureZoom is a #GtkGesture implementation able to recognize
- * pinch/zoom gestures, whenever the distance between both tracked
- * sequences changes, the #GtkGestureZoom::scale-changed signal is
- * emitted to report the scale factor.
+ * `GtkGestureZoom` is a `GtkGesture` for 2-finger pinch/zoom gestures.
+ * 
+ * Whenever the distance between both tracked sequences changes, the
+ * [signal@Gtk.GestureZoom::scale-changed] signal is emitted to report
+ * the scale factor.
  */
 public class GestureZoom : Gesture
 {
@@ -75,10 +76,10 @@ public class GestureZoom : Gesture
 	}
 
 	/**
-	 * Returns a newly created #GtkGesture that recognizes zoom
-	 * in/out gestures (usually known as pinch/zoom).
+	 * Returns a newly created `GtkGesture` that recognizes
+	 * pinch/zoom gestures.
 	 *
-	 * Returns: a newly created #GtkGestureZoom
+	 * Returns: a newly created `GtkGestureZoom`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -95,9 +96,12 @@ public class GestureZoom : Gesture
 	}
 
 	/**
-	 * If @gesture is active, this function returns the zooming difference
-	 * since the gesture was recognized (hence the starting point is
-	 * considered 1:1). If @gesture is not active, 1 is returned.
+	 * Gets the scale delta.
+	 *
+	 * If @gesture is active, this function returns the zooming
+	 * difference since the gesture was recognized (hence the
+	 * starting point is considered 1:1). If @gesture is not
+	 * active, 1 is returned.
 	 *
 	 * Returns: the scale delta
 	 */
@@ -107,8 +111,7 @@ public class GestureZoom : Gesture
 	}
 
 	/**
-	 * This signal is emitted whenever the distance between both tracked
-	 * sequences changes.
+	 * Emitted whenever the distance between both tracked sequences changes.
 	 *
 	 * Params:
 	 *     scale = Scale delta, taking the initial state as 1:1

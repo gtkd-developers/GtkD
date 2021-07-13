@@ -35,12 +35,12 @@ private import std.algorithm;
 
 
 /**
- * GtkATContext is an abstract class provided by GTK to communicate to
+ * `GtkATContext` is an abstract class provided by GTK to communicate to
  * platform-specific assistive technologies API.
  * 
- * Each platform supported by GTK implements a #GtkATContext subclass, and
+ * Each platform supported by GTK implements a `GtkATContext` subclass, and
  * is responsible for updating the accessible state in response to state
- * changes in #GtkAccessible.
+ * changes in `GtkAccessible`.
  */
 public class ATContext : ObjectG
 {
@@ -78,18 +78,18 @@ public class ATContext : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkATContext instance for the given accessible role,
+	 * Creates a new `GtkATContext` instance for the given accessible role,
 	 * accessible instance, and display connection.
 	 *
-	 * The #GtkATContext implementation being instantiated will depend on the
+	 * The `GtkATContext` implementation being instantiated will depend on the
 	 * platform.
 	 *
 	 * Params:
-	 *     accessibleRole = the accessible role used by the #GtkATContext
-	 *     accessible = the #GtkAccessible implementation using the #GtkATContext
-	 *     display = the #GdkDisplay used by the #GtkATContext
+	 *     accessibleRole = the accessible role used by the `GtkATContext`
+	 *     accessible = the `GtkAccessible` implementation using the `GtkATContext`
+	 *     display = the `GdkDisplay` used by the `GtkATContext`
 	 *
-	 * Returns: the #GtkATContext
+	 * Returns: the `GtkATContext`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -106,9 +106,9 @@ public class ATContext : ObjectG
 	}
 
 	/**
-	 * Retrieves the #GtkAccessible using this context.
+	 * Retrieves the `GtkAccessible` using this context.
 	 *
-	 * Returns: a #GtkAccessible
+	 * Returns: a `GtkAccessible`
 	 */
 	public AccessibleIF getAccessible()
 	{
@@ -125,7 +125,7 @@ public class ATContext : ObjectG
 	/**
 	 * Retrieves the accessible role of this context.
 	 *
-	 * Returns: a #GtkAccessibleRole
+	 * Returns: a `GtkAccessibleRole`
 	 */
 	public GtkAccessibleRole getAccessibleRole()
 	{
@@ -134,7 +134,7 @@ public class ATContext : ObjectG
 
 	/**
 	 * Emitted when the attributes of the accessible for the
-	 * #GtkATContext instance change.
+	 * `GtkATContext` instance change.
 	 */
 	gulong addOnStateChange(void delegate(ATContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

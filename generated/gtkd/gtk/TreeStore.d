@@ -44,6 +44,8 @@ public  import gtk.c.types;
 
 
 /**
+ * A tree-like data structure that can be used with the GtkTreeView
+ * 
  * The #GtkTreeStore object is a list model for use with a #GtkTreeView
  * widget.  It implements the #GtkTreeModel interface, and consequently,
  * can use all of the methods available there.  It also implements the

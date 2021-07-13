@@ -33,10 +33,11 @@ public  import gtk.c.types;
 
 /**
  * An opaque, stack-allocated struct for iterating
- * over the elements of a #GtkBitset. Before a GtkBitsetIter
- * can be used, it needs to be initialized with
- * gtk_bitset_iter_init_first(), gtk_bitset_iter_init_last()
- * or gtk_bitset_iter_init_at().
+ * over the elements of a `GtkBitset`.
+ * 
+ * Before a `GtkBitsetIter` can be used, it needs to be initialized with
+ * [func@Gtk.BitsetIter.init_first], [func@Gtk.BitsetIter.init_last]
+ * or [func@Gtk.BitsetIter.init_at].
  */
 public class BitsetIter
 {
@@ -71,8 +72,8 @@ public class BitsetIter
 	/**
 	 * Gets the current value that @iter points to.
 	 *
-	 * If @iter is not valid and gtk_bitset_iter_is_valid() returns
-	 * %FALSE, this function returns 0.
+	 * If @iter is not valid and [method@Gtk.BitsetIter.is_valid]
+	 * returns %FALSE, this function returns 0.
 	 *
 	 * Returns: The current value pointer to by @iter
 	 */
@@ -92,9 +93,10 @@ public class BitsetIter
 	}
 
 	/**
-	 * Moves @iter to the next value in the set. If it was already
-	 * pointing to the last value in the set, %FALSE is returned and
-	 * @iter is invalidated.
+	 * Moves @iter to the next value in the set.
+	 *
+	 * If it was already pointing to the last value in the set,
+	 * %FALSE is returned and @iter is invalidated.
 	 *
 	 * Params:
 	 *     value = Set to the next value
@@ -107,9 +109,10 @@ public class BitsetIter
 	}
 
 	/**
-	 * Moves @iter to the previous value in the set. If it was already
-	 * pointing to the first value in the set, %FALSE is returned and
-	 * @iter is invalidated.
+	 * Moves @iter to the previous value in the set.
+	 *
+	 * If it was already pointing to the first value in the set,
+	 * %FALSE is returned and @iter is invalidated.
 	 *
 	 * Params:
 	 *     value = Set to the previous value
@@ -122,13 +125,14 @@ public class BitsetIter
 	}
 
 	/**
-	 * Initializes @iter to point to @target. If @target is not found, finds
-	 * the next value after it. If no value >= @target exists in @set, this
-	 * function returns %FALSE.
+	 * Initializes @iter to point to @target.
+	 *
+	 * If @target is not found, finds the next value after it.
+	 * If no value >= @target exists in @set, this function returns %FALSE.
 	 *
 	 * Params:
-	 *     iter = a pointer to an uninitialized #GtkBitsetIter
-	 *     set = a #GtkBitset
+	 *     iter = a pointer to an uninitialized `GtkBitsetIter`
+	 *     set = a `GtkBitset`
 	 *     target = target value to start iterating at
 	 *     value = Set to the found value in @set
 	 *
@@ -147,12 +151,13 @@ public class BitsetIter
 
 	/**
 	 * Initializes an iterator for @set and points it to the first
-	 * value in @set. If @set is empty, %FALSE is returned and @value
-	 * is set to %G_MAXUINT.
+	 * value in @set.
+	 *
+	 * If @set is empty, %FALSE is returned and @value is set to %G_MAXUINT.
 	 *
 	 * Params:
-	 *     iter = a pointer to an uninitialized #GtkBitsetIter
-	 *     set = a #GtkBitset
+	 *     iter = a pointer to an uninitialized `GtkBitsetIter`
+	 *     set = a `GtkBitset`
 	 *     value = Set to the first value in @set
 	 *
 	 * Returns: %TRUE if @set isn't empty.
@@ -170,11 +175,13 @@ public class BitsetIter
 
 	/**
 	 * Initializes an iterator for @set and points it to the last
-	 * value in @set. If @set is empty, %FALSE is returned.
+	 * value in @set.
+	 *
+	 * If @set is empty, %FALSE is returned.
 	 *
 	 * Params:
-	 *     iter = a pointer to an uninitialized #GtkBitsetIter
-	 *     set = a #GtkBitset
+	 *     iter = a pointer to an uninitialized `GtkBitsetIter`
+	 *     set = a `GtkBitset`
 	 *     value = Set to the last value in @set
 	 *
 	 * Returns: %TRUE if @set isn't empty.

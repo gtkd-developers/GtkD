@@ -93,11 +93,13 @@ public class ScrollEvent : Event
 	}
 
 	/**
-	 * Check whether a scroll event is a stop scroll event. Scroll sequences
-	 * with smooth scroll information may provide a stop scroll event once the
-	 * interaction with the device finishes, e.g. by lifting a finger. This
-	 * stop scroll event is the signal that a widget may trigger kinetic
-	 * scrolling based on the current velocity.
+	 * Check whether a scroll event is a stop scroll event.
+	 *
+	 * Scroll sequences with smooth scroll information may provide
+	 * a stop scroll event once the interaction with the device finishes,
+	 * e.g. by lifting a finger. This stop scroll event is the signal
+	 * that a widget may trigger kinetic scrolling based on the current
+	 * velocity.
 	 *
 	 * Stop scroll events always have a delta of 0/0.
 	 *

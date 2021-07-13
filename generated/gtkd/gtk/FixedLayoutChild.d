@@ -31,7 +31,9 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkLayoutChild` subclass for children in a `GtkFixedLayout`.
+ */
 public class FixedLayoutChild : LayoutChild
 {
 	/** the main Gtk struct */
@@ -68,9 +70,9 @@ public class FixedLayoutChild : LayoutChild
 	}
 
 	/**
-	 * Retrieves the transformation of the child of a #GtkFixedLayout.
+	 * Retrieves the transformation of the child.
 	 *
-	 * Returns: a #GskTransform
+	 * Returns: a `GskTransform`
 	 */
 	public Transform getTransform()
 	{
@@ -85,10 +87,10 @@ public class FixedLayoutChild : LayoutChild
 	}
 
 	/**
-	 * Sets the transformation of the child of a #GtkFixedLayout.
+	 * Sets the transformation of the child of a `GtkFixedLayout`.
 	 *
 	 * Params:
-	 *     transform = a #GskTransform
+	 *     transform = a `GskTransform`
 	 */
 	public void setTransform(Transform transform)
 	{

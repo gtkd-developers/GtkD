@@ -38,8 +38,17 @@ public  import gsk.c.types;
 
 
 /**
- * Base type for the object managing the rendering pipeline
- * for a #GdkSurface.
+ * `GskRenderer` is a class that renders a scene graph defined via a
+ * tree of [class@Gsk.RenderNode] instances.
+ * 
+ * Typically you will use a `GskRenderer` instance to repeatedly call
+ * [method@Gsk.Renderer.render] to update the contents of its associated
+ * [class@Gdk.Surface].
+ * 
+ * It is necessary to realize a `GskRenderer` instance using
+ * [method@Gsk.Renderer.realize] before calling [method@Gsk.Renderer.render],
+ * in order to create the appropriate windowing system resources needed
+ * to render the scene.
  */
 public class Renderer : ObjectG
 {
@@ -77,7 +86,7 @@ public class Renderer : ObjectG
 	}
 
 	/**
-	 * Creates an appropriate #GskRenderer instance for the given @surface.
+	 * Creates an appropriate `GskRenderer` instance for the given @surface.
 	 *
 	 * If the `GSK_RENDERER` environment variable is set, GSK will
 	 * try that renderer first, before trying the backend-specific
@@ -86,9 +95,9 @@ public class Renderer : ObjectG
 	 * The renderer will be realized before it is returned.
 	 *
 	 * Params:
-	 *     surface = a #GdkSurface
+	 *     surface = a `GdkSurface`
 	 *
-	 * Returns: a #GskRenderer
+	 * Returns: a `GskRenderer`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,10 +114,11 @@ public class Renderer : ObjectG
 	}
 
 	/**
-	 * Retrieves the #GdkSurface set using gsk_renderer_realize(). If the renderer
-	 * has not been realized yet, %NULL will be returned.
+	 * Retrieves the `GdkSurface` set using gsk_enderer_realize().
 	 *
-	 * Returns: a #GdkSurface
+	 * If the renderer has not been realized yet, %NULL will be returned.
+	 *
+	 * Returns: a `GdkSurface`
 	 */
 	public Surface getSurface()
 	{
@@ -125,7 +135,7 @@ public class Renderer : ObjectG
 	/**
 	 * Checks whether the @renderer is realized or not.
 	 *
-	 * Returns: %TRUE if the #GskRenderer was realized, and %FALSE otherwise
+	 * Returns: %TRUE if the `GskRenderer` was realized, and %FALSE otherwise
 	 */
 	public bool isRealized()
 	{
@@ -137,7 +147,7 @@ public class Renderer : ObjectG
 	 * graph.
 	 *
 	 * Params:
-	 *     surface = the #GdkSurface renderer will be used on
+	 *     surface = the `GdkSurface` renderer will be used on
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -156,7 +166,7 @@ public class Renderer : ObjectG
 	}
 
 	/**
-	 * Renders the scene graph, described by a tree of #GskRenderNode instances,
+	 * Renders the scene graph, described by a tree of `GskRenderNode` instances,
 	 * ensuring that the given @region gets redrawn.
 	 *
 	 * Renderers must ensure that changes of the contents given by the @root
@@ -164,12 +174,12 @@ public class Renderer : ObjectG
 	 * free to not redraw any pixel outside of @region if they can guarantee that
 	 * it didn't change.
 	 *
-	 * The @renderer will acquire a reference on the #GskRenderNode tree while
+	 * The @renderer will acquire a reference on the `GskRenderNode` tree while
 	 * the rendering is in progress.
 	 *
 	 * Params:
-	 *     root = a #GskRenderNode
-	 *     region = the #cairo_region_t that must be redrawn or %NULL
+	 *     root = a `GskRenderNode`
+	 *     region = the `cairo_region_t` that must be redrawn or %NULL
 	 *         for the whole window
 	 */
 	public void render(RenderNode root, Region region)
@@ -178,20 +188,20 @@ public class Renderer : ObjectG
 	}
 
 	/**
-	 * Renders the scene graph, described by a tree of #GskRenderNode instances,
-	 * to a #GdkTexture.
+	 * Renders the scene graph, described by a tree of `GskRenderNode` instances,
+	 * to a `GdkTexture`.
 	 *
-	 * The @renderer will acquire a reference on the #GskRenderNode tree while
+	 * The @renderer will acquire a reference on the `GskRenderNode` tree while
 	 * the rendering is in progress.
 	 *
 	 * If you want to apply any transformations to @root, you should put it into a
 	 * transform node and pass that node instead.
 	 *
 	 * Params:
-	 *     root = a #GskRenderNode
+	 *     root = a `GskRenderNode`
 	 *     viewport = the section to draw or %NULL to use @root's bounds
 	 *
-	 * Returns: a #GdkTexture with the rendered contents of @root.
+	 * Returns: a `GdkTexture` with the rendered contents of @root.
 	 */
 	public Texture renderTexture(RenderNode root, Rect viewport)
 	{

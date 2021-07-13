@@ -36,6 +36,7 @@ public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import std.algorithm;

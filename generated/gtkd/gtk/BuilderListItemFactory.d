@@ -27,6 +27,7 @@ module gtk.BuilderListItemFactory;
 private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.BuilderScopeIF;
 private import gtk.ListItemFactory;
@@ -35,13 +36,14 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkBuilderListItemFactory is a #GtkListItemFactory that creates
- * widgets by instantiating #GtkBuilder UI templates. The templates
- * must be extending #GtkListItem, and typically use #GtkExpressions
- * to obtain data from the items in the model.
+ * `GtkBuilderListItemFactory` is a `GtkListItemFactory` that creates
+ * widgets by instantiating `GtkBuilder` UI templates.
+ * 
+ * The templates must be extending `GtkListItem`, and typically use
+ * `GtkExpression`s to obtain data from the items in the model.
  * 
  * Example:
- * |[
+ * ```xml
  * <interface>
  * <template class="GtkListItem">
  * <property name="child">
@@ -56,7 +58,7 @@ public  import gtk.c.types;
  * </property>
  * </template>
  * </interface>
- * ]|
+ * ```
  */
 public class BuilderListItemFactory : ListItemFactory
 {
@@ -94,14 +96,14 @@ public class BuilderListItemFactory : ListItemFactory
 	}
 
 	/**
-	 * Creates s new #GtkBuilderListItemFactory that instantiates widgets
-	 * using @bytes as the data to pass to #GtkBuilder.
+	 * Creates a new `GtkBuilderListItemFactory` that instantiates widgets
+	 * using @bytes as the data to pass to `GtkBuilder`.
 	 *
 	 * Params:
 	 *     scope_ = A scope to use when instantiating
-	 *     bytes = the bytes containing the ui file to instantiate
+	 *     bytes = the `GBytes` containing the ui file to instantiate
 	 *
-	 * Returns: a new #GtkBuilderListItemFactory
+	 * Returns: a new `GtkBuilderListItemFactory`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -118,14 +120,14 @@ public class BuilderListItemFactory : ListItemFactory
 	}
 
 	/**
-	 * Creates s new #GtkBuilderListItemFactory that instantiates widgets
-	 * using data read from the given @resource_path to pass to #GtkBuilder.
+	 * Creates a new `GtkBuilderListItemFactory` that instantiates widgets
+	 * using data read from the given @resource_path to pass to `GtkBuilder`.
 	 *
 	 * Params:
 	 *     scope_ = A scope to use when instantiating
 	 *     resourcePath = valid path to a resource that contains the data
 	 *
-	 * Returns: a new #GtkBuilderListItemFactory
+	 * Returns: a new `GtkBuilderListItemFactory`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -142,10 +144,10 @@ public class BuilderListItemFactory : ListItemFactory
 	}
 
 	/**
-	 * Gets the data used as the #GtkBuilder UI template for constructing
+	 * Gets the data used as the `GtkBuilder` UI template for constructing
 	 * listitems.
 	 *
-	 * Returns: The GtkBuilder data
+	 * Returns: The `GtkBuilder` data
 	 */
 	public Bytes getBytes()
 	{

@@ -47,7 +47,7 @@ private import gtkd.Loader;
  * its type nor its content can be modified further.
  * 
  * GVariant is useful whenever data needs to be serialized, for example when
- * sending method parameters in DBus, or when saving settings using GSettings.
+ * sending method parameters in D-Bus, or when saving settings using GSettings.
  * 
  * When creating a new #GVariant, you pass the data you want to store in it
  * along with a string representing the type of data you wish to pass to it.
@@ -1426,7 +1426,10 @@ public class Variant
 	{
 		size_t length;
 
-		return Str.toStringArray(g_variant_get_bytestring_array(gVariant, &length));
+		auto retStr = g_variant_get_bytestring_array(gVariant, &length);
+
+		scope(exit) g_free(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -1736,7 +1739,10 @@ public class Variant
 	{
 		size_t length;
 
-		return Str.toStringArray(g_variant_get_objv(gVariant, &length));
+		auto retStr = g_variant_get_objv(gVariant, &length);
+
+		scope(exit) g_free(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -1814,7 +1820,10 @@ public class Variant
 	{
 		size_t length;
 
-		return Str.toStringArray(g_variant_get_strv(gVariant, &length));
+		auto retStr = g_variant_get_strv(gVariant, &length);
+
+		scope(exit) g_free(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**

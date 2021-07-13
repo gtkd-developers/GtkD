@@ -142,8 +142,8 @@ public class Checksum
 	 * g_checksum_get_string() or g_checksum_get_digest(), the copied
 	 * checksum will be closed as well.
 	 *
-	 * Returns: the copy of the passed #GChecksum. Use g_checksum_free()
-	 *     when finished using it.
+	 * Returns: the copy of the passed #GChecksum. Use
+	 *     g_checksum_free() when finished using it.
 	 *
 	 * Since: 2.16
 	 */
@@ -241,8 +241,10 @@ public class Checksum
 	 *     checksumType = a #GChecksumType
 	 *     data = binary blob to compute the digest of
 	 *
-	 * Returns: the digest of the binary data as a string in hexadecimal.
-	 *     The returned string should be freed with g_free() when done using it.
+	 * Returns: the digest of the binary data as a
+	 *     string in hexadecimal, or %NULL if g_checksum_new() fails for
+	 *     @checksum_type. The returned string should be freed with g_free() when
+	 *     done using it.
 	 *
 	 * Since: 2.34
 	 */
@@ -265,8 +267,10 @@ public class Checksum
 	 *     checksumType = a #GChecksumType
 	 *     data = binary blob to compute the digest of
 	 *
-	 * Returns: the digest of the binary data as a string in hexadecimal.
-	 *     The returned string should be freed with g_free() when done using it.
+	 * Returns: the digest of the binary data as a
+	 *     string in hexadecimal, or %NULL if g_checksum_new() fails for
+	 *     @checksum_type. The returned string should be freed with g_free() when
+	 *     done using it.
 	 *
 	 * Since: 2.16
 	 */
@@ -288,7 +292,8 @@ public class Checksum
 	 *     str = the string to compute the checksum of
 	 *     length = the length of the string, or -1 if the string is null-terminated.
 	 *
-	 * Returns: the checksum as a hexadecimal string. The returned string
+	 * Returns: the checksum as a hexadecimal string,
+	 *     or %NULL if g_checksum_new() fails for @checksum_type. The returned string
 	 *     should be freed with g_free() when done using it.
 	 *
 	 * Since: 2.16

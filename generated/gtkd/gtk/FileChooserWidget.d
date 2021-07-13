@@ -37,14 +37,15 @@ private import std.algorithm;
 
 
 /**
- * #GtkFileChooserWidget is a widget for choosing files.
- * It exposes the #GtkFileChooser interface, and you should
+ * `GtkFileChooserWidget` is a widget for choosing files.
+ * 
+ * It exposes the [iface@Gtk.FileChooser] interface, and you should
  * use the methods of this interface to interact with the
  * widget.
  * 
  * # CSS nodes
  * 
- * GtkFileChooserWidget has a single CSS node with name filechooser.
+ * `GtkFileChooserWidget` has a single CSS node with name filechooser.
  */
 public class FileChooserWidget : Widget, FileChooserIF
 {
@@ -85,14 +86,16 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * Creates a new #GtkFileChooserWidget. This is a file chooser widget that can
-	 * be embedded in custom windows, and it is the same widget that is used by
-	 * #GtkFileChooserDialog.
+	 * Creates a new `GtkFileChooserWidget`.
+	 *
+	 * This is a file chooser widget that can be embedded in custom
+	 * windows, and it is the same widget that is used by
+	 * `GtkFileChooserDialog`.
 	 *
 	 * Params:
 	 *     action = Open or save mode for the widget
 	 *
-	 * Returns: a new #GtkFileChooserWidget
+	 * Returns: a new `GtkFileChooserWidget`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -109,13 +112,14 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::desktop-folder signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This is used to make the file chooser show the user's Desktop
 	 * folder in the file list.
 	 *
-	 * The default binding for this signal is `Alt + D`.
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>D</kbd>.
 	 */
 	gulong addOnDesktopFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -123,16 +127,18 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::down-folder signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser go to a child of the current folder
-	 * in the file hierarchy. The subfolder that will be used is displayed in the
-	 * path bar widget of the file chooser. For example, if the path bar is showing
-	 * "/foo/bar/baz", with bar currently displayed, then this will cause the file
-	 * chooser to switch to the "baz" subfolder.
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is `Alt + Down`.
+	 * This is used to make the file chooser go to a child of the
+	 * current folder in the file hierarchy. The subfolder that will
+	 * be used is displayed in the path bar widget of the file chooser.
+	 * For example, if the path bar is showing "/foo/bar/baz", with bar
+	 * currently displayed, then this will cause the file chooser to
+	 * switch to the "baz" subfolder.
+	 *
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>Down</kbd>.
 	 */
 	gulong addOnDownFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -140,13 +146,14 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::home-folder signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This is used to make the file chooser show the user's home
 	 * folder in the file list.
 	 *
-	 * The default binding for this signal is `Alt + Home`.
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>Home</kbd>.
 	 */
 	gulong addOnHomeFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -154,17 +161,19 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::location-popup signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This is used to make the file chooser show a "Location" prompt which
 	 * the user can use to manually type the name of the file he wishes to select.
 	 *
-	 * The default bindings for this signal are `Control + L` with a @path string
-	 * of "" (the empty string).  It is also bound to `/` with a @path string of
-	 * "`/`" (a slash):  this lets you type `/` and immediately type a path name.
-	 * On Unix systems, this is bound to `~` (tilde) with a @path string of "~"
-	 * itself for access to home directories.
+	 * The default bindings for this signal are <kbd>Control</kbd>-<kbd>L</kbd>
+	 * with a @path string of "" (the empty string). It is also bound to
+	 * <kbd>/</kbd> with a @path string of "`/`" (a slash):  this lets you
+	 * type `/` and immediately type a path name. On Unix systems, this is
+	 * bound to <kbd>~</kbd> (tilde) with a @path string of "~" itself for
+	 * access to home directories.
 	 *
 	 * Params:
 	 *     path = a string that gets put in the text entry for the file name
@@ -175,13 +184,14 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::location-popup-on-paste signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser show a "Location" prompt when the user
-	 * pastes into a #GtkFileChooserWidget.
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is `Control + V`.
+	 * This is used to make the file chooser show a "Location" prompt
+	 * when the user pastes into a `GtkFileChooserWidget`.
+	 *
+	 * The default binding for this signal is <kbd>Control</kbd>-<kbd>V</kbd>.
 	 */
 	gulong addOnLocationPopupOnPaste(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -189,13 +199,15 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::location-toggle-popup signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
 	 *
-	 * This is used to toggle the visibility of a "Location" prompt which the user
-	 * can use to manually type the name of the file he wishes to select.
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is `Control + L`.
+	 * This is used to toggle the visibility of a "Location" prompt
+	 * which the user can use to manually type the name of the file
+	 * he wishes to select.
+	 *
+	 * The default binding for this signal is <kbd>Control</kbd>-<kbd>L</kbd>.
 	 */
 	gulong addOnLocationTogglePopup(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -203,12 +215,13 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::places-shortcut signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This is used to move the focus to the places sidebar.
 	 *
-	 * The default binding for this signal is `Alt + P`.
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>P</kbd>.
 	 */
 	gulong addOnPlacesShortcut(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -216,18 +229,20 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::quick-bookmark signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser switch to the bookmark specified
-	 * in the @bookmark_index parameter. For example, if you have three bookmarks,
-	 * you can pass 0, 1, 2 to this signal to switch to each of them, respectively.
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is `Alt + 1`, `Alt + 2`,
-	 * etc. until `Alt + 0`.  Note that in the default binding, that
-	 * `Alt + 1` is actually defined to switch to the bookmark at index
-	 * 0, and so on successively; `Alt + 0` is defined to switch to the
-	 * bookmark at index 10.
+	 * This is used to make the file chooser switch to the bookmark
+	 * specified in the @bookmark_index parameter. For example, if
+	 * you have three bookmarks, you can pass 0, 1, 2 to this signal
+	 * to switch to each of them, respectively.
+	 *
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>1</kbd>,
+	 * <kbd>Alt</kbd>-<kbd>2</kbd>, etc. until <kbd>Alt</kbd>-<kbd>0</kbd>.
+	 * Note that in the default binding, that <kbd>Alt</kbd>-<kbd>1</kbd> is
+	 * actually defined to switch to the bookmark at index 0, and so on
+	 * successively.
 	 *
 	 * Params:
 	 *     bookmarkIndex = the number of the bookmark to switch to
@@ -238,12 +253,13 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::recent-shortcut signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This is used to make the file chooser show the Recent location.
 	 *
-	 * The default binding for this signal is `Alt + R`.
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>R</kbd>.
 	 */
 	gulong addOnRecentShortcut(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -251,12 +267,13 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::search-shortcut signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This is used to make the file chooser show the search entry.
 	 *
-	 * The default binding for this signal is `Alt + S`.
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>S</kbd>.
 	 */
 	gulong addOnSearchShortcut(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -264,12 +281,13 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::show-hidden signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This is used to make the file chooser display hidden files.
 	 *
-	 * The default binding for this signal is `Control + H`.
+	 * The default binding for this signal is <kbd>Control</kbd>-<kbd>H</kbd>.
 	 */
 	gulong addOnShowHidden(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -277,13 +295,14 @@ public class FileChooserWidget : Widget, FileChooserIF
 	}
 
 	/**
-	 * The ::up-folder signal is a [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser go to the parent of the current folder
-	 * in the file hierarchy.
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is `Alt + Up`.
+	 * This is used to make the file chooser go to the parent
+	 * of the current folder in the file hierarchy.
+	 *
+	 * The default binding for this signal is <kbd>Alt</kbd>-<kbd>Up</kbd>.
 	 */
 	gulong addOnUpFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

@@ -60,6 +60,11 @@ shared static this()
 	Linker.link(gsk_border_node_get_outline, "gsk_border_node_get_outline", LIBRARY_GSK);
 	Linker.link(gsk_border_node_get_widths, "gsk_border_node_get_widths", LIBRARY_GSK);
 
+	// gsk.BroadwayRenderer
+
+	Linker.link(gsk_broadway_renderer_get_type, "gsk_broadway_renderer_get_type", LIBRARY_GSK);
+	Linker.link(gsk_broadway_renderer_new, "gsk_broadway_renderer_new", LIBRARY_GSK);
+
 	// gsk.CairoNode
 
 	Linker.link(gsk_cairo_node_get_type, "gsk_cairo_node_get_type", LIBRARY_GSK);
@@ -97,6 +102,7 @@ shared static this()
 
 	Linker.link(gsk_conic_gradient_node_get_type, "gsk_conic_gradient_node_get_type", LIBRARY_GSK);
 	Linker.link(gsk_conic_gradient_node_new, "gsk_conic_gradient_node_new", LIBRARY_GSK);
+	Linker.link(gsk_conic_gradient_node_get_angle, "gsk_conic_gradient_node_get_angle", LIBRARY_GSK);
 	Linker.link(gsk_conic_gradient_node_get_center, "gsk_conic_gradient_node_get_center", LIBRARY_GSK);
 	Linker.link(gsk_conic_gradient_node_get_color_stops, "gsk_conic_gradient_node_get_color_stops", LIBRARY_GSK);
 	Linker.link(gsk_conic_gradient_node_get_n_color_stops, "gsk_conic_gradient_node_get_n_color_stops", LIBRARY_GSK);
@@ -182,6 +188,11 @@ shared static this()
 	Linker.link(gsk_linear_gradient_node_get_end, "gsk_linear_gradient_node_get_end", LIBRARY_GSK);
 	Linker.link(gsk_linear_gradient_node_get_n_color_stops, "gsk_linear_gradient_node_get_n_color_stops", LIBRARY_GSK);
 	Linker.link(gsk_linear_gradient_node_get_start, "gsk_linear_gradient_node_get_start", LIBRARY_GSK);
+
+	// gsk.NglRenderer
+
+	Linker.link(gsk_ngl_renderer_get_type, "gsk_ngl_renderer_get_type", LIBRARY_GSK);
+	Linker.link(gsk_ngl_renderer_new, "gsk_ngl_renderer_new", LIBRARY_GSK);
 
 	// gsk.OpacityNode
 
@@ -381,6 +392,11 @@ __gshared extern(C)
 	GskRoundedRect* function(GskRenderNode* node) c_gsk_border_node_get_outline;
 	float* function(GskRenderNode* node) c_gsk_border_node_get_widths;
 
+	// gsk.BroadwayRenderer
+
+	GType function() c_gsk_broadway_renderer_get_type;
+	GskRenderer* function() c_gsk_broadway_renderer_new;
+
 	// gsk.CairoNode
 
 	GType function() c_gsk_cairo_node_get_type;
@@ -418,6 +434,7 @@ __gshared extern(C)
 
 	GType function() c_gsk_conic_gradient_node_get_type;
 	GskRenderNode* function(graphene_rect_t* bounds, graphene_point_t* center, float rotation, GskColorStop* colorStops, size_t nColorStops) c_gsk_conic_gradient_node_new;
+	float function(GskRenderNode* node) c_gsk_conic_gradient_node_get_angle;
 	graphene_point_t* function(GskRenderNode* node) c_gsk_conic_gradient_node_get_center;
 	GskColorStop* function(GskRenderNode* node, size_t* nStops) c_gsk_conic_gradient_node_get_color_stops;
 	size_t function(GskRenderNode* node) c_gsk_conic_gradient_node_get_n_color_stops;
@@ -503,6 +520,11 @@ __gshared extern(C)
 	graphene_point_t* function(GskRenderNode* node) c_gsk_linear_gradient_node_get_end;
 	size_t function(GskRenderNode* node) c_gsk_linear_gradient_node_get_n_color_stops;
 	graphene_point_t* function(GskRenderNode* node) c_gsk_linear_gradient_node_get_start;
+
+	// gsk.NglRenderer
+
+	GType function() c_gsk_ngl_renderer_get_type;
+	GskRenderer* function() c_gsk_ngl_renderer_new;
 
 	// gsk.OpacityNode
 
@@ -700,6 +722,11 @@ alias c_gsk_border_node_get_colors gsk_border_node_get_colors;
 alias c_gsk_border_node_get_outline gsk_border_node_get_outline;
 alias c_gsk_border_node_get_widths gsk_border_node_get_widths;
 
+// gsk.BroadwayRenderer
+
+alias c_gsk_broadway_renderer_get_type gsk_broadway_renderer_get_type;
+alias c_gsk_broadway_renderer_new gsk_broadway_renderer_new;
+
 // gsk.CairoNode
 
 alias c_gsk_cairo_node_get_type gsk_cairo_node_get_type;
@@ -737,6 +764,7 @@ alias c_gsk_color_node_get_color gsk_color_node_get_color;
 
 alias c_gsk_conic_gradient_node_get_type gsk_conic_gradient_node_get_type;
 alias c_gsk_conic_gradient_node_new gsk_conic_gradient_node_new;
+alias c_gsk_conic_gradient_node_get_angle gsk_conic_gradient_node_get_angle;
 alias c_gsk_conic_gradient_node_get_center gsk_conic_gradient_node_get_center;
 alias c_gsk_conic_gradient_node_get_color_stops gsk_conic_gradient_node_get_color_stops;
 alias c_gsk_conic_gradient_node_get_n_color_stops gsk_conic_gradient_node_get_n_color_stops;
@@ -822,6 +850,11 @@ alias c_gsk_linear_gradient_node_get_color_stops gsk_linear_gradient_node_get_co
 alias c_gsk_linear_gradient_node_get_end gsk_linear_gradient_node_get_end;
 alias c_gsk_linear_gradient_node_get_n_color_stops gsk_linear_gradient_node_get_n_color_stops;
 alias c_gsk_linear_gradient_node_get_start gsk_linear_gradient_node_get_start;
+
+// gsk.NglRenderer
+
+alias c_gsk_ngl_renderer_get_type gsk_ngl_renderer_get_type;
+alias c_gsk_ngl_renderer_new gsk_ngl_renderer_new;
 
 // gsk.OpacityNode
 

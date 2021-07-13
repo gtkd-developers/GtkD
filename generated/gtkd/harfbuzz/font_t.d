@@ -28,7 +28,9 @@ private import harfbuzz.c.functions;
 public  import harfbuzz.c.types;
 
 
-/** */
+/**
+ * Data type for holding fonts.
+ */
 public struct font_t
 {
 

@@ -35,12 +35,13 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkMediaFile is the implementation for media file usage with #GtkMediaStream.
+ * `GtkMediaFile` implements `GtkMediaStream` for files.
  * 
  * This provides a simple way to play back video files with GTK.
  * 
- * GTK provides a GIO extension point for #GtkMediaFile implementations
+ * GTK provides a GIO extension point for `GtkMediaFile` implementations
  * to allow for external implementations using various media frameworks.
+ * 
  * GTK itself includes implementations using GStreamer and ffmpeg.
  */
 public class MediaFile : MediaStream
@@ -81,7 +82,7 @@ public class MediaFile : MediaStream
 	/**
 	 * Creates a new empty media file.
 	 *
-	 * Returns: a new #GtkMediaFile
+	 * Returns: a new `GtkMediaFile`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -103,7 +104,7 @@ public class MediaFile : MediaStream
 	 * Params:
 	 *     file = The file to play
 	 *
-	 * Returns: a new #GtkMediaFile playing @file
+	 * Returns: a new `GtkMediaFile` playing @file
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -120,13 +121,15 @@ public class MediaFile : MediaStream
 	}
 
 	/**
+	 * Creates a new media file for the given filename.
+	 *
 	 * This is a utility function that converts the given @filename
-	 * to a #GFile and calls gtk_media_file_new_for_file().
+	 * to a `GFile` and calls [ctor@Gtk.MediaFile.new_for_file].
 	 *
 	 * Params:
 	 *     filename = filename to open
 	 *
-	 * Returns: a new #GtkMediaFile playing @filename
+	 * Returns: a new `GtkMediaFile` playing @filename
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -143,14 +146,15 @@ public class MediaFile : MediaStream
 	}
 
 	/**
-	 * Creates a new media file to play @stream. If you want the
-	 * resulting media to be seekable, the stream should implement
-	 * the #GSeekable interface.
+	 * Creates a new media file to play @stream.
+	 *
+	 * If you want the resulting media to be seekable,
+	 * the stream should implement the `GSeekable` interface.
 	 *
 	 * Params:
 	 *     stream = The stream to play
 	 *
-	 * Returns: a new #GtkMediaFile
+	 * Returns: a new `GtkMediaFile`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -180,8 +184,8 @@ public class MediaFile : MediaStream
 	 * When @self is not playing or not playing from a file,
 	 * %NULL is returned.
 	 *
-	 * Returns: The currently playing file or %NULL if not
-	 *     playing from a file.
+	 * Returns: The currently playing file
+	 *     or %NULL if not playing from a file.
 	 */
 	public FileIF getFile()
 	{
@@ -201,8 +205,8 @@ public class MediaFile : MediaStream
 	 * When @self is not playing or not playing from a stream,
 	 * %NULL is returned.
 	 *
-	 * Returns: The currently playing stream or %NULL if not
-	 *     playing from a stream.
+	 * Returns: The currently playing
+	 *     stream or %NULL if not playing from a stream.
 	 */
 	public InputStream getInputStream()
 	{
@@ -217,9 +221,9 @@ public class MediaFile : MediaStream
 	}
 
 	/**
-	 * If any file is still playing, stop playing it.
+	 * Sets the `GtkMediaFile` to play the given file.
 	 *
-	 * Then start playing the given @file.
+	 * If any file is still playing, stop playing it.
 	 *
 	 * Params:
 	 *     file = the file to play
@@ -230,8 +234,10 @@ public class MediaFile : MediaStream
 	}
 
 	/**
+	 * Sets the `GtkMediaFile to play the given file.
+	 *
 	 * This is a utility function that converts the given @filename
-	 * to a #GFile and calls gtk_media_file_set_file().
+	 * to a `GFile` and calls [method@Gtk.MediaFile.set_file].
 	 *
 	 * Params:
 	 *     filename = name of file to play
@@ -242,11 +248,12 @@ public class MediaFile : MediaStream
 	}
 
 	/**
-	 * If anything is still playing, stop playing it. Then start
-	 * playing the given @stream.
+	 * Sets the `GtkMediaFile` to play the given stream.
+	 *
+	 * If anything is still playing, stop playing it.
 	 *
 	 * Full control about the @stream is assumed for the duration of
-	 * playback. The stream will not bt be closed.
+	 * playback. The stream will not be closed.
 	 *
 	 * Params:
 	 *     stream = the stream to play from
@@ -257,8 +264,10 @@ public class MediaFile : MediaStream
 	}
 
 	/**
+	 * Sets the `GtkMediaFile to play the given resource.
+	 *
 	 * This is a utility function that converts the given @resource_path
-	 * to a #GFile and calls gtk_media_file_set_file().
+	 * to a `GFile` and calls [method@Gtk.MediaFile.set_file].
 	 *
 	 * Params:
 	 *     resourcePath = path to resource to play

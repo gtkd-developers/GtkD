@@ -35,6 +35,7 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 
@@ -132,6 +133,9 @@ public struct DBusUtilities
 	/**
 	 * Finishes an operation started with g_dbus_address_get_stream().
 	 *
+	 * A server is not required to set a GUID, so @out_guid may be set to %NULL
+	 * even on success.
+	 *
 	 * Params:
 	 *     res = A #GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_address_get_stream().
 	 *     outGuid = %NULL or return location to store the GUID extracted from @address, if any.
@@ -169,6 +173,9 @@ public struct DBusUtilities
 	 * sets up the connection so it is in a state to run the client-side
 	 * of the D-Bus authentication conversation. @address must be in the
 	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
+	 *
+	 * A server is not required to set a GUID, so @out_guid may be set to %NULL
+	 * even on success.
 	 *
 	 * This is a synchronous failable function. See
 	 * g_dbus_address_get_stream() for the asynchronous version.
@@ -259,9 +266,9 @@ public struct DBusUtilities
 	 *     gvalue = A #GValue to convert to a #GVariant
 	 *     type = A #GVariantType
 	 *
-	 * Returns: A #GVariant (never floating) of #GVariantType @type holding
-	 *     the data from @gvalue or %NULL in case of failure. Free with
-	 *     g_variant_unref().
+	 * Returns: A #GVariant (never floating) of
+	 *     #GVariantType @type holding the data from @gvalue or an empty #GVariant
+	 *     in case of failure. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
 	 */

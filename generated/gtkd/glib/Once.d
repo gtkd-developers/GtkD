@@ -132,6 +132,9 @@ public final class Once
 	 * // use initialization_value here
 	 * ]|
 	 *
+	 * While @location has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     location = location of a static initializable variable
 	 *         containing 0
@@ -152,6 +155,9 @@ public final class Once
 	 * other than 0. Sets the variable to the initialization value, and
 	 * releases concurrent threads blocking in g_once_init_enter() on this
 	 * initialization variable.
+	 *
+	 * While @location has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     location = location of a static initializable variable

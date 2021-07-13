@@ -25,6 +25,7 @@
 module gobject.Type;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.TypeClass;
 private import gobject.TypeInstance;
@@ -128,12 +129,12 @@ public struct Type
 	}
 
 	/**
-	 * Adds @interface_type to the dynamic @instantiable_type. The information
+	 * Adds @interface_type to the dynamic @instance_type. The information
 	 * contained in the #GTypePlugin structure pointed to by @plugin
 	 * is used to manage the relationship.
 	 *
 	 * Params:
-	 *     instanceType = #GType value of an instantiable type
+	 *     instanceType = #GType value of an instantiatable type
 	 *     interfaceType = #GType value of an interface type
 	 *     plugin = #GTypePlugin structure to retrieve the #GInterfaceInfo from
 	 */
@@ -143,12 +144,12 @@ public struct Type
 	}
 
 	/**
-	 * Adds @interface_type to the static @instantiable_type.
+	 * Adds @interface_type to the static @instance_type.
 	 * The information contained in the #GInterfaceInfo structure
 	 * pointed to by @info is used to manage the relationship.
 	 *
 	 * Params:
-	 *     instanceType = #GType value of an instantiable type
+	 *     instanceType = #GType value of an instantiatable type
 	 *     interfaceType = #GType value of an interface type
 	 *     info = #GInterfaceInfo structure for this
 	 *         (@instance_type, @interface_type) combination
@@ -574,8 +575,8 @@ public struct Type
 	 * whether @type conforms to it.
 	 *
 	 * Params:
-	 *     type = type to check anchestry for
-	 *     isAType = possible anchestor of @type or interface that @type
+	 *     type = type to check ancestry for
+	 *     isAType = possible ancestor of @type or interface that @type
 	 *         could conform to
 	 *
 	 * Returns: %TRUE if @type is a @is_a_type
@@ -616,7 +617,7 @@ public struct Type
 
 	/**
 	 * Given a @leaf_type and a @root_type which is contained in its
-	 * anchestry, return the type that @root_type is the immediate parent
+	 * ancestry, return the type that @root_type is the immediate parent
 	 * of. In other words, this function determines the type that is
 	 * derived directly from @root_type which is also a base class of
 	 * @leaf_type.  Given a root type and a leaf type, this function can
@@ -627,7 +628,7 @@ public struct Type
 	 *     leafType = descendant of @root_type and the type to be returned
 	 *     rootType = immediate parent of the returned type
 	 *
-	 * Returns: immediate child of @root_type and anchestor of @leaf_type
+	 * Returns: immediate child of @root_type and ancestor of @leaf_type
 	 */
 	public static GType nextBase(GType leafType, GType rootType)
 	{

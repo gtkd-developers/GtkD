@@ -31,7 +31,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutAction that calls gtk_widget_mnemonic_activate().
+ * A `GtkShortcutAction` that calls gtk_widget_mnemonic_activate().
  */
 public class MnemonicAction : ShortcutAction
 {
@@ -69,8 +69,10 @@ public class MnemonicAction : ShortcutAction
 	}
 
 	/**
-	 * Gets the mnemonic action. This is an action that calls
-	 * gtk_widget_mnemonic_activate() on the given widget upon activation.
+	 * Gets the mnemonic action.
+	 *
+	 * This is an action that calls gtk_widget_mnemonic_activate()
+	 * on the given widget upon activation.
 	 *
 	 * Returns: The mnemonic action
 	 */

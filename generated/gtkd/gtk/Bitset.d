@@ -32,20 +32,21 @@ private import gtkd.Loader;
 
 
 /**
- * #GtkBitset is a data structure for representing a set of unsigned integers.
+ * A `GtkBitset` represents a set of unsigned integers.
+ * 
  * Another name for this data structure is "bitmap".
  * 
  * The current implementation is based on [roaring bitmaps](https://roaringbitmap.org/).
  * 
  * A bitset allows adding a set of integers and provides support for set operations
  * like unions, intersections and checks for equality or if a value is contained
- * in the set. #GtkBitset also contains various functions to query metadata about
+ * in the set. `GtkBitset` also contains various functions to query metadata about
  * the bitset, such as the minimum or maximum values or its size.
  * 
- * The fastest way to iterate values in a bitset is #GtkBitsetIter.
+ * The fastest way to iterate values in a bitset is [struct@Gtk.BitsetIter].
  * 
- * The main use case for #GtkBitset is implementing complex selections for
- * #GtkSelectionModel.
+ * The main use case for `GtkBitset` is implementing complex selections for
+ * [iface@Gtk.SelectionModel].
  */
 public class Bitset
 {
@@ -218,16 +219,17 @@ public class Bitset
 	}
 
 	/**
-	 * Sets @self to be the symmetric difference of @self and @other, that
-	 * is set @self to contain all values that were either contained in @self
-	 * or in @other, but not in both.
+	 * Sets @self to be the symmetric difference of @self and @other.
+	 *
+	 * The symmetric difference is set @self to contain all values that
+	 * were either contained in @self or in @other, but not in both.
 	 * This operation is also called an XOR.
 	 *
 	 * It is allowed for @self and @other to be the same bitset. The bitset
 	 * will be emptied in that case.
 	 *
 	 * Params:
-	 *     other = the #GtkBitset to compute the difference from
+	 *     other = the `GtkBitset` to compute the difference from
 	 */
 	public void difference(Bitset other)
 	{
@@ -238,7 +240,7 @@ public class Bitset
 	 * Returns %TRUE if @self and @other contain the same values.
 	 *
 	 * Params:
-	 *     other = another #GtkBitset
+	 *     other = another `GtkBitset`
 	 *
 	 * Returns: %TRUE if @self and @other contain the same values
 	 */
@@ -248,8 +250,9 @@ public class Bitset
 	}
 
 	/**
-	 * Returns the largest value in @self. If @self is empty,
-	 * 0 is returned.
+	 * Returns the largest value in @self.
+	 *
+	 * If @self is empty, 0 is returned.
 	 *
 	 * Returns: The largest value in @self
 	 */
@@ -259,8 +262,9 @@ public class Bitset
 	}
 
 	/**
-	 * Returns the smallest value in @self. If @self is empty,
-	 * G_MAXUINT is returned.
+	 * Returns the smallest value in @self.
+	 *
+	 * If @self is empty, `G_MAXUINT` is returned.
 	 *
 	 * Returns: The smallest value in @self
 	 */
@@ -286,11 +290,13 @@ public class Bitset
 
 	/**
 	 * Gets the number of values that were added to the set.
+	 *
 	 * For example, if the set is empty, 0 is returned.
 	 *
-	 * Note that this function returns a #guint64, because when all values are
-	 * set, the return value is #G_MAXUINT + 1. Unless you are sure this cannot
-	 * happen (it can't with #GListModel), be sure to use a 64bit type.
+	 * Note that this function returns a `guint64`, because when all
+	 * values are set, the return value is `G_MAXUINT + 1`. Unless you
+	 * are sure this cannot happen (it can't with `GListModel`), be sure
+	 * to use a 64bit type.
 	 *
 	 * Returns: The number of values in the set.
 	 */
@@ -303,9 +309,9 @@ public class Bitset
 	 * Gets the number of values that are part of the set from @first to @last
 	 * (inclusive).
 	 *
-	 * Note that this function returns a #guint64, because when all values are
-	 * set, the return value is #G_MAXUINT + 1. Unless you are sure this cannot
-	 * happen (it can't with #GListModel), be sure to use a 64bit type.
+	 * Note that this function returns a `guint64`, because when all values are
+	 * set, the return value is `G_MAXUINT + 1`. Unless you are sure this cannot
+	 * happen (it can't with `GListModel`), be sure to use a 64bit type.
 	 *
 	 * Params:
 	 *     first = the first element to include
@@ -319,14 +325,15 @@ public class Bitset
 	}
 
 	/**
-	 * Sets @self to be the intersection of @self and @other, that is remove
-	 * all values from @self that are not part of @other.
+	 * Sets @self to be the intersection of @self and @other.
+	 *
+	 * In other words, remove all values from @self that are not part of @other.
 	 *
 	 * It is allowed for @self and @other to be the same bitset. Nothing will
 	 * happen in that case.
 	 *
 	 * Params:
-	 *     other = the #GtkBitset to intersect with
+	 *     other = the `GtkBitset` to intersect with
 	 */
 	public void intersect(Bitset other)
 	{
@@ -345,9 +352,9 @@ public class Bitset
 
 	alias doref = ref_;
 	/**
-	 * Acquires a reference on the given #GtkBitset.
+	 * Acquires a reference on the given `GtkBitset`.
 	 *
-	 * Returns: the #GtkBitset with an additional reference
+	 * Returns: the `GtkBitset` with an additional reference
 	 */
 	public Bitset ref_()
 	{
@@ -425,8 +432,9 @@ public class Bitset
 	}
 
 	/**
-	 * Shifts all values in @self to the left by @amount. Values
-	 * smaller than @amount are discarded.
+	 * Shifts all values in @self to the left by @amount.
+	 *
+	 * Values smaller than @amount are discarded.
 	 *
 	 * Params:
 	 *     amount = amount to shift all values to the left
@@ -437,8 +445,9 @@ public class Bitset
 	}
 
 	/**
-	 * Shifts all values in @self to the right by @amount. Values
-	 * that end up too large to be held in a #guint are discarded.
+	 * Shifts all values in @self to the right by @amount.
+	 *
+	 * Values that end up too large to be held in a #guint are discarded.
 	 *
 	 * Params:
 	 *     amount = amount to shift all values to the right
@@ -449,8 +458,8 @@ public class Bitset
 	}
 
 	/**
-	 * This is a support function for #GListModel handling, by mirroring
-	 * the #GlistModel::items-changed signal.
+	 * This is a support function for `GListModel` handling, by mirroring
+	 * the `GlistModel::items-changed` signal.
 	 *
 	 * First, it "cuts" the values from @position to @removed from
 	 * the bitset. That is, it removes all those values and shifts
@@ -471,14 +480,15 @@ public class Bitset
 	}
 
 	/**
-	 * Sets @self to be the subtraction of @other from @self, that is remove
-	 * all values from @self that are part of @other.
+	 * Sets @self to be the subtraction of @other from @self.
+	 *
+	 * In other words, remove all values from @self that are part of @other.
 	 *
 	 * It is allowed for @self and @other to be the same bitset. The bitset
 	 * will be emptied in that case.
 	 *
 	 * Params:
-	 *     other = the #GtkBitset to subtract
+	 *     other = the `GtkBitset` to subtract
 	 */
 	public void subtract(Bitset other)
 	{
@@ -487,14 +497,15 @@ public class Bitset
 
 	alias unio = union_;
 	/**
-	 * Sets @self to be the union of @self and @other, that is add all values
-	 * from @other into @self that weren't part of it.
+	 * Sets @self to be the union of @self and @other.
+	 *
+	 * That is, add all values from @other into @self that weren't part of it.
 	 *
 	 * It is allowed for @self and @other to be the same bitset. Nothing will
 	 * happen in that case.
 	 *
 	 * Params:
-	 *     other = the #GtkBitset to union with
+	 *     other = the `GtkBitset` to union with
 	 */
 	public void union_(Bitset other)
 	{
@@ -502,7 +513,7 @@ public class Bitset
 	}
 
 	/**
-	 * Releases a reference on the given #GtkBitset.
+	 * Releases a reference on the given `GtkBitset`.
 	 *
 	 * If the reference was the last, the resources associated to the @self are
 	 * freed.

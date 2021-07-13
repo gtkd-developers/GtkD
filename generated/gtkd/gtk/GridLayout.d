@@ -32,21 +32,20 @@ public  import gtk.c.types;
 
 
 /**
- * GtkGridLayout is a layout manager which arranges child widgets in
- * rows and columns, with arbitrary positions and horizontal/vertical
- * spans.
+ * `GtkGridLayout` is a layout manager which arranges child widgets in
+ * rows and columns.
  * 
  * Children have an "attach point" defined by the horizontal and vertical
  * index of the cell they occupy; children can span multiple rows or columns.
  * The layout properties for setting the attach points and spans are set
- * using the #GtkGridLayoutChild associated to each child widget.
+ * using the [class@Gtk.GridLayoutChild] associated to each child widget.
  * 
- * The behaviour of GtkGrid when several children occupy the same grid cell
- * is undefined.
+ * The behaviour of `GtkGridLayout` when several children occupy the same
+ * grid cell is undefined.
  * 
- * GtkGridLayout can be used like a #GtkBoxLayout if all children are attached
- * to the same row or column; however, if you only ever need a single row or
- * column, you should consider using #GtkBoxLayout.
+ * `GtkGridLayout` can be used like a `GtkBoxLayout` if all children are
+ * attached to the same row or column; however, if you only ever need a
+ * single row or column, you should consider using `GtkBoxLayout`.
  */
 public class GridLayout : LayoutManager
 {
@@ -84,9 +83,9 @@ public class GridLayout : LayoutManager
 	}
 
 	/**
-	 * Creates a new #GtkGridLayout.
+	 * Creates a new `GtkGridLayout`.
 	 *
-	 * Returns: the newly created #GtkGridLayout
+	 * Returns: the newly created `GtkGridLayout`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -133,9 +132,12 @@ public class GridLayout : LayoutManager
 	}
 
 	/**
-	 * Returns the baseline position of @row as set by
-	 * gtk_grid_layout_set_row_baseline_position(), or the default value
-	 * of %GTK_BASELINE_POSITION_CENTER.
+	 * Returns the baseline position of @row.
+	 *
+	 * If no value has been set with
+	 * [method@Gtk.GridLayout.set_row_baseline_position],
+	 * the default value of %GTK_BASELINE_POSITION_CENTER
+	 * is returned.
 	 *
 	 * Params:
 	 *     row = a row index
@@ -210,7 +212,7 @@ public class GridLayout : LayoutManager
 	 *
 	 * Params:
 	 *     row = a row index
-	 *     pos = a #GtkBaselinePosition
+	 *     pos = a `GtkBaselinePosition`
 	 */
 	public void setRowBaselinePosition(int row, GtkBaselinePosition pos)
 	{

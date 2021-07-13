@@ -38,7 +38,19 @@ private import gtkd.Loader;
 
 
 /**
- * A node in the render tree.
+ * `GskRenderNode` is the basic block in a scene graph to be
+ * rendered using `GskRenderer`.
+ * 
+ * Each node has a parent, except the top-level node; each node may have
+ * children nodes.
+ * 
+ * Each node has an associated drawing surface, which has the size of
+ * the rectangle set when creating it.
+ * 
+ * Render nodes are meant to be transient; once they have been associated
+ * to a [class@Gsk.Renderer] it's safe to release any reference you have on
+ * them. All [class@Gsk.RenderNode]s are immutable, you can only specify their
+ * properties during construction.
  */
 public class RenderNode
 {
@@ -83,15 +95,16 @@ public class RenderNode
 	}
 
 	/**
-	 * Loads data previously created via gsk_render_node_serialize(). For a
-	 * discussion of the supported format, see that function.
+	 * Loads data previously created via gsk_render_node_serialize().
+	 *
+	 * For a discussion of the supported format, see that function.
 	 *
 	 * Params:
 	 *     bytes = the bytes containing the data
 	 *     errorFunc = Callback on parsing errors or %NULL
 	 *     userData = user_data for @error_func
 	 *
-	 * Returns: a new #GskRenderNode or %NULL on
+	 * Returns: a new `GskRenderNode` or %NULL on
 	 *     error.
 	 */
 	public static RenderNode deserialize(Bytes bytes, GskParseErrorFunc errorFunc, void* userData)
@@ -110,8 +123,8 @@ public class RenderNode
 	 * Draw the contents of @node to the given cairo context.
 	 *
 	 * Typically, you'll use this function to implement fallback rendering
-	 * of #GskRenderNodes on an intermediate Cairo context, instead of using
-	 * the drawing context associated to a #GdkSurface's rendering buffer.
+	 * of `GskRenderNode`s on an intermediate Cairo context, instead of using
+	 * the drawing context associated to a `GdkSurface`'s rendering buffer.
 	 *
 	 * For advanced nodes that cannot be supported using Cairo, in particular
 	 * for nodes doing 3D operations, this function may fail.
@@ -125,8 +138,9 @@ public class RenderNode
 	}
 
 	/**
-	 * Retrieves the boundaries of the @node. The node will not draw outside
-	 * of its boundaries.
+	 * Retrieves the boundaries of the @node.
+	 *
+	 * The node will not draw outside of its boundaries.
 	 *
 	 * Params:
 	 *     bounds = return location for the boundaries
@@ -143,7 +157,7 @@ public class RenderNode
 	/**
 	 * Returns the type of the @node.
 	 *
-	 * Returns: the type of the #GskRenderNode
+	 * Returns: the type of the `GskRenderNode`
 	 */
 	public GskRenderNodeType getNodeType()
 	{
@@ -152,9 +166,9 @@ public class RenderNode
 
 	alias doref = ref_;
 	/**
-	 * Acquires a reference on the given #GskRenderNode.
+	 * Acquires a reference on the given `GskRenderNode`.
 	 *
-	 * Returns: the #GskRenderNode with an additional reference
+	 * Returns: the `GskRenderNode` with an additional reference
 	 */
 	public RenderNode ref_()
 	{
@@ -194,7 +208,7 @@ public class RenderNode
 	}
 
 	/**
-	 * Releases a reference on the given #GskRenderNode.
+	 * Releases a reference on the given `GskRenderNode`.
 	 *
 	 * If the reference was the last, the resources associated to the @node are
 	 * freed.
@@ -206,8 +220,9 @@ public class RenderNode
 
 	/**
 	 * This function is equivalent to calling gsk_render_node_serialize()
-	 * followed by g_file_set_contents(). See those two functions for details
-	 * on the arguments.
+	 * followed by g_file_set_contents().
+	 *
+	 * See those two functions for details on the arguments.
 	 *
 	 * It is mostly intended for use inside a debugger to quickly dump a render
 	 * node to a file for later inspection.

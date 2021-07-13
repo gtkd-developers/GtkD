@@ -26,6 +26,7 @@ module gsk.DebugNode;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gsk.RenderNode;
 private import gsk.c.functions;
@@ -72,7 +73,7 @@ public class DebugNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will add debug information about
+	 * Creates a `GskRenderNode` that will add debug information about
 	 * the given @child.
 	 *
 	 * Adding this node has no visual effect.
@@ -81,7 +82,7 @@ public class DebugNode : RenderNode
 	 *     child = The child to add debug info for
 	 *     message = The debug message
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -100,7 +101,7 @@ public class DebugNode : RenderNode
 	/**
 	 * Gets the child node that is getting drawn by the given @node.
 	 *
-	 * Returns: the child #GskRenderNode
+	 * Returns: the child `GskRenderNode`
 	 */
 	public RenderNode getChild()
 	{

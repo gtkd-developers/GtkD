@@ -26,6 +26,7 @@ module gtk.NamedAction;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.ShortcutAction;
 private import gtk.c.functions;
@@ -33,7 +34,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutAction that activates an action by name.
+ * A `GtkShortcutAction` that activates an action by name.
  */
 public class NamedAction : ShortcutAction
 {
@@ -71,15 +72,18 @@ public class NamedAction : ShortcutAction
 	}
 
 	/**
-	 * Creates an action that when activated, activates the action given by
-	 * the detailed @name on the widget passing the given arguments to it.
+	 * Creates an action that when activated, activates
+	 * the named action on the widget.
 	 *
-	 * See gtk_widget_insert_action_group() for how to add actions to widgets.
+	 * It also passes the given arguments to it.
+	 *
+	 * See [method@Gtk.Widget.insert_action_group] for
+	 * how to add actions to widgets.
 	 *
 	 * Params:
 	 *     name = the detailed name of the action
 	 *
-	 * Returns: a new #GtkShortcutAction
+	 * Returns: a new `GtkShortcutAction`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

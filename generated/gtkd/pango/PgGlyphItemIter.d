@@ -26,6 +26,7 @@ module pango.PgGlyphItemIter;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtkd.Loader;
 private import pango.PgGlyphItem;
@@ -34,43 +35,46 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoGlyphItemIter is an iterator over the clusters in a
- * #PangoGlyphItem.  The <firstterm>forward direction</firstterm> of the
- * iterator is the logical direction of text.  That is, with increasing
- * @start_index and @start_char values.  If @glyph_item is right-to-left
- * (that is, if <literal>@glyph_item->item->analysis.level</literal> is odd),
+ * A `PangoGlyphItemIter` is an iterator over the clusters in a
+ * `PangoGlyphItem`.
+ * 
+ * The *forward direction* of the iterator is the logical direction of text.
+ * That is, with increasing @start_index and @start_char values. If @glyph_item
+ * is right-to-left (that is, if `glyph_item->item->analysis.level` is odd),
  * then @start_glyph decreases as the iterator moves forward.  Moreover,
  * in right-to-left cases, @start_glyph is greater than @end_glyph.
  * 
- * An iterator should be initialized using either of
- * pango_glyph_item_iter_init_start() and
+ * An iterator should be initialized using either
+ * pango_glyph_item_iter_init_start() or
  * pango_glyph_item_iter_init_end(), for forward and backward iteration
  * respectively, and walked over using any desired mixture of
  * pango_glyph_item_iter_next_cluster() and
- * pango_glyph_item_iter_prev_cluster().  A common idiom for doing a
- * forward iteration over the clusters is:
- * <programlisting>
+ * pango_glyph_item_iter_prev_cluster().
+ * 
+ * A common idiom for doing a forward iteration over the clusters is:
+ * 
+ * ```
  * PangoGlyphItemIter cluster_iter;
  * gboolean have_cluster;
  * 
- * for (have_cluster = pango_glyph_item_iter_init_start (&amp;cluster_iter,
+ * for (have_cluster = pango_glyph_item_iter_init_start (&cluster_iter,
  * glyph_item, text);
  * have_cluster;
- * have_cluster = pango_glyph_item_iter_next_cluster (&amp;cluster_iter))
+ * have_cluster = pango_glyph_item_iter_next_cluster (&cluster_iter))
  * {
  * ...
  * }
- * </programlisting>
+ * ```
  * 
  * Note that @text is the start of the text for layout, which is then
- * indexed by <literal>@glyph_item->item->offset</literal> to get to the
- * text of @glyph_item.  The @start_index and @end_index values can directly
- * index into @text.  The @start_glyph, @end_glyph, @start_char, and @end_char
- * values however are zero-based for the @glyph_item.  For each cluster, the
- * item pointed at by the start variables is included in the cluster while
- * the one pointed at by end variables is not.
+ * indexed by `glyph_item->item->offset` to get to the text of @glyph_item.
+ * The @start_index and @end_index values can directly index into @text. The
+ * @start_glyph, @end_glyph, @start_char, and @end_char values however are
+ * zero-based for the @glyph_item.  For each cluster, the item pointed at by
+ * the start variables is included in the cluster while the one pointed at by
+ * end variables is not.
  * 
- * None of the members of a #PangoGlyphItemIter should be modified manually.
+ * None of the members of a `PangoGlyphItemIter` should be modified manually.
  *
  * Since: 1.22
  */
@@ -213,10 +217,10 @@ public final class PgGlyphItemIter
 	}
 
 	/**
-	 * Make a shallow copy of an existing #PangoGlyphItemIter structure.
+	 * Make a shallow copy of an existing `PangoGlyphItemIter` structure.
 	 *
-	 * Returns: the newly allocated #PangoGlyphItemIter, which should
-	 *     be freed with pango_glyph_item_iter_free(), or %NULL
+	 * Returns: the newly allocated `PangoGlyphItemIter`,
+	 *     which should be freed with pango_glyph_item_iter_free(), or %NULL
 	 *     if @orig was %NULL.
 	 *
 	 * Since: 1.22
@@ -234,7 +238,7 @@ public final class PgGlyphItemIter
 	}
 
 	/**
-	 * Frees a #PangoGlyphItemIter created by pango_glyph_item_iter_copy().
+	 * Frees a `PangoGlyphItem`Iter.
 	 *
 	 * Since: 1.22
 	 */
@@ -245,9 +249,10 @@ public final class PgGlyphItemIter
 	}
 
 	/**
-	 * Initializes a #PangoGlyphItemIter structure to point to the
+	 * Initializes a `PangoGlyphItemIter` structure to point to the
 	 * last cluster in a glyph item.
-	 * See #PangoGlyphItemIter for details of cluster orders.
+	 *
+	 * See `PangoGlyphItemIter` for details of cluster orders.
 	 *
 	 * Params:
 	 *     glyphItem = the glyph item to iterate over
@@ -263,9 +268,10 @@ public final class PgGlyphItemIter
 	}
 
 	/**
-	 * Initializes a #PangoGlyphItemIter structure to point to the
+	 * Initializes a `PangoGlyphItemIter` structure to point to the
 	 * first cluster in a glyph item.
-	 * See #PangoGlyphItemIter for details of cluster orders.
+	 *
+	 * See `PangoGlyphItemIter` for details of cluster orders.
 	 *
 	 * Params:
 	 *     glyphItem = the glyph item to iterate over
@@ -282,10 +288,11 @@ public final class PgGlyphItemIter
 
 	/**
 	 * Advances the iterator to the next cluster in the glyph item.
-	 * See #PangoGlyphItemIter for details of cluster orders.
 	 *
-	 * Returns: %TRUE if the iterator was advanced, %FALSE if we were already on the
-	 *     last cluster.
+	 * See `PangoGlyphItemIter` for details of cluster orders.
+	 *
+	 * Returns: %TRUE if the iterator was advanced,
+	 *     %FALSE if we were already on the  last cluster.
 	 *
 	 * Since: 1.22
 	 */
@@ -296,10 +303,10 @@ public final class PgGlyphItemIter
 
 	/**
 	 * Moves the iterator to the preceding cluster in the glyph item.
-	 * See #PangoGlyphItemIter for details of cluster orders.
+	 * See `PangoGlyphItemIter` for details of cluster orders.
 	 *
-	 * Returns: %TRUE if the iterator was moved, %FALSE if we were already on the
-	 *     first cluster.
+	 * Returns: %TRUE if the iterator was moved,
+	 *     %FALSE if we were already on the first cluster.
 	 *
 	 * Since: 1.22
 	 */

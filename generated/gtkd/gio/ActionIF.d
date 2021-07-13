@@ -31,6 +31,7 @@ private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import glib.c.functions;
 
 
 /**

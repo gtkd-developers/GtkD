@@ -34,23 +34,25 @@ public  import gtk.c.types;
 
 
 /**
- * GtkPopoverMenuBar presents a horizontal bar of items that pop
+ * `GtkPopoverMenuBar` presents a horizontal bar of items that pop
  * up popover menus when clicked.
  * 
- * The only way to create instances of GtkPopoverMenuBar is
- * from a #GMenuModel.
+ * ![An example GtkPopoverMenuBar](menubar.png)
+ * 
+ * The only way to create instances of `GtkPopoverMenuBar` is
+ * from a `GMenuModel`.
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * menubar
  * ├── item[.active]
  * ┊   ╰── popover
  * ╰── item
  * ╰── popover
- * ]|
+ * ```
  * 
- * GtkPopoverMenuBar has a single CSS node with name menubar, below which
+ * `GtkPopoverMenuBar` has a single CSS node with name menubar, below which
  * each item has its CSS node, and below that the corresponding popover.
  * 
  * The item whose popover is currently open gets the .active
@@ -58,9 +60,9 @@ public  import gtk.c.types;
  * 
  * # Accessibility
  * 
- * GtkPopoverMenuBar uses the #GTK_ACCESSIBLE_ROLE_MENU_BAR role,
- * the menu items use the #GTK_ACCESSIBLE_ROLE_MENU_ITEM role and
- * the menus use the #GTK_ACCESSIBLE_ROLE_MENU role.
+ * `GtkPopoverMenuBar` uses the %GTK_ACCESSIBLE_ROLE_MENU_BAR role,
+ * the menu items use the %GTK_ACCESSIBLE_ROLE_MENU_ITEM role and
+ * the menus use the %GTK_ACCESSIBLE_ROLE_MENU role.
  */
 public class PopoverMenuBar : Widget
 {
@@ -98,12 +100,12 @@ public class PopoverMenuBar : Widget
 	}
 
 	/**
-	 * Creates a #GtkPopoverMenuBar from a #GMenuModel.
+	 * Creates a `GtkPopoverMenuBar` from a `GMenuModel`.
 	 *
 	 * Params:
-	 *     model = a #GMenuModel, or %NULL
+	 *     model = a `GMenuModel`, or %NULL
 	 *
-	 * Returns: a new #GtkPopoverMenuBar
+	 * Returns: a new `GtkPopoverMenuBar`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -126,7 +128,7 @@ public class PopoverMenuBar : Widget
 	 * item with a `custom` attribute that matches @id.
 	 *
 	 * Params:
-	 *     child = the #GtkWidget to add
+	 *     child = the `GtkWidget` to add
 	 *     id = the ID to insert @child at
 	 *
 	 * Returns: %TRUE if @id was found and the widget added
@@ -139,7 +141,7 @@ public class PopoverMenuBar : Widget
 	/**
 	 * Returns the model from which the contents of @bar are taken.
 	 *
-	 * Returns: a #GMenuModel
+	 * Returns: a `GMenuModel`
 	 */
 	public MenuModel getMenuModel()
 	{
@@ -172,7 +174,7 @@ public class PopoverMenuBar : Widget
 	 * its contents.
 	 *
 	 * Params:
-	 *     model = a #GMenuModel, or %NULL
+	 *     model = a `GMenuModel`, or %NULL
 	 */
 	public void setMenuModel(MenuModel model)
 	{

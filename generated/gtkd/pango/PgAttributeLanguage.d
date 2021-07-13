@@ -33,7 +33,7 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoAttrLanguage structure is used to represent attributes that
+ * The `PangoAttrLanguage` structure is used to represent attributes that
  * are languages.
  */
 public class PgAttributeLanguage : PgAttribute
@@ -71,8 +71,8 @@ public class PgAttributeLanguage : PgAttribute
 	 * Params:
 	 *     language = language tag
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -30,6 +30,7 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.ListG;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import std.algorithm;

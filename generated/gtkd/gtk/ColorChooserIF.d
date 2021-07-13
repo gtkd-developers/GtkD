@@ -34,12 +34,14 @@ private import std.algorithm;
 
 
 /**
- * #GtkColorChooser is an interface that is implemented by widgets
- * for choosing colors. Depending on the situation, colors may be
- * allowed to have alpha (translucency).
+ * `GtkColorChooser` is an interface that is implemented by widgets
+ * for choosing colors.
+ * 
+ * Depending on the situation, colors may be allowed to have alpha (translucency).
  * 
  * In GTK, the main widgets that implement this interface are
- * #GtkColorChooserWidget, #GtkColorChooserDialog and #GtkColorButton.
+ * [class@Gtk.ColorChooserWidget], [class@Gtk.ColorChooserDialog] and
+ * [class@Gtk.ColorButton].
  */
 public interface ColorChooserIF{
 	/** Get the main Gtk struct */
@@ -56,21 +58,21 @@ public interface ColorChooserIF{
 	}
 
 	/**
-	 * Adds a palette to the color chooser. If @orientation is horizontal,
-	 * the colors are grouped in rows, with @colors_per_line colors
-	 * in each row. If @horizontal is %FALSE, the colors are grouped
-	 * in columns instead.
+	 * Adds a palette to the color chooser.
 	 *
-	 * The default color palette of #GtkColorChooserWidget has
-	 * 27 colors, organized in columns of 3 colors. The default gray
-	 * palette has 9 grays in a single row.
+	 * If @orientation is horizontal, the colors are grouped in rows,
+	 * with @colors_per_line colors in each row. If @horizontal is %FALSE,
+	 * the colors are grouped in columns instead.
+	 *
+	 * The default color palette of [class@Gtk.ColorChooserWidget] has
+	 * 45 colors, organized in columns of 5 colors (this includes some
+	 * grays).
 	 *
 	 * The layout of the color chooser widget works best when the
 	 * palettes have 9-10 columns.
 	 *
-	 * Calling this function for the first time has the
-	 * side effect of removing the default color and gray palettes
-	 * from the color chooser.
+	 * Calling this function for the first time has the side effect
+	 * of removing the default color palette from the color chooser.
 	 *
 	 * If @colors is %NULL, removes all previously added palettes.
 	 *
@@ -86,7 +88,7 @@ public interface ColorChooserIF{
 	 * Gets the currently-selected color.
 	 *
 	 * Params:
-	 *     color = a #GdkRGBA to fill in with the current color
+	 *     color = a `GdkRGBA` to fill in with the current color
 	 */
 	public void getRgba(out RGBA color);
 
@@ -116,6 +118,7 @@ public interface ColorChooserIF{
 
 	/**
 	 * Emitted when a color is activated from the color chooser.
+	 *
 	 * This usually happens when the user clicks a color swatch,
 	 * or a color is selected and the user presses one of the keys
 	 * Space, Shift+Space, Return or Enter.

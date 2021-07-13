@@ -31,7 +31,11 @@ private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkAnyFilter` matches an item when at least one of its filters matches.
+ * 
+ * To add filters to a `GtkAnyFilter`, use [method@Gtk.MultiFilter.append].
+ */
 public class AnyFilter : MultiFilter
 {
 	/** the main Gtk struct */
@@ -69,14 +73,14 @@ public class AnyFilter : MultiFilter
 
 	/**
 	 * Creates a new empty "any" filter.
-	 * Use gtk_multi_filter_append() to add filters to it.
+	 *
+	 * Use [method@Gtk.MultiFilter.append] to add filters to it.
 	 *
 	 * This filter matches an item if any of the filters added to it
-	 * matches the item.
-	 * In particular, this means that if no filter has been added to
-	 * it, the filter matches no item.
+	 * matches the item. In particular, this means that if no filter
+	 * has been added to it, the filter matches no item.
 	 *
-	 * Returns: a new #GtkAnyFilter
+	 * Returns: a new `GtkAnyFilter`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -36,28 +36,32 @@ private import std.algorithm;
 
 
 /**
- * #GtkSwitch is a widget that has two states: on or off. The user can control
- * which state should be active by clicking the empty area, or by dragging the
- * handle.
+ * `GtkSwitch` is a "light switch" that has two states: on or off.
  * 
- * GtkSwitch can also handle situations where the underlying state changes with
- * a delay. See #GtkSwitch::state-set for details.
+ * ![An example GtkSwitch](switch.png)
+ * 
+ * The user can control which state should be active by clicking the
+ * empty area, or by dragging the handle.
+ * 
+ * `GtkSwitch` can also handle situations where the underlying state
+ * changes with a delay. See [signal@GtkSwitch::state-set] for details.
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * switch
  * ├── label
  * ├── label
  * ╰── slider
- * ]|
+ * ```
  * 
- * GtkSwitch has four css nodes, the main node with the name switch and subnodes
- * for the slider and the on and off labels. Neither of them is using any style classes.
+ * `GtkSwitch` has four css nodes, the main node with the name switch and
+ * subnodes for the slider and the on and off labels. Neither of them is
+ * using any style classes.
  * 
  * # Accessibility
  * 
- * GtkSwitch uses the #GTK_ACCESSIBLE_ROLE_SWITCH role.
+ * `GtkSwitch` uses the %GTK_ACCESSIBLE_ROLE_SWITCH role.
  */
 public class Switch : Widget, ActionableIF
 {
@@ -98,9 +102,9 @@ public class Switch : Widget, ActionableIF
 	}
 
 	/**
-	 * Creates a new #GtkSwitch widget.
+	 * Creates a new `GtkSwitch` widget.
 	 *
-	 * Returns: the newly created #GtkSwitch instance
+	 * Returns: the newly created `GtkSwitch` instance
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -117,9 +121,9 @@ public class Switch : Widget, ActionableIF
 	}
 
 	/**
-	 * Gets whether the #GtkSwitch is in its “on” or “off” state.
+	 * Gets whether the `GtkSwitch` is in its “on” or “off” state.
 	 *
-	 * Returns: %TRUE if the #GtkSwitch is active, and %FALSE otherwise
+	 * Returns: %TRUE if the `GtkSwitch` is active, and %FALSE otherwise
 	 */
 	public bool getActive()
 	{
@@ -127,7 +131,7 @@ public class Switch : Widget, ActionableIF
 	}
 
 	/**
-	 * Gets the underlying state of the #GtkSwitch.
+	 * Gets the underlying state of the `GtkSwitch`.
 	 *
 	 * Returns: the underlying state
 	 */
@@ -148,13 +152,13 @@ public class Switch : Widget, ActionableIF
 	}
 
 	/**
-	 * Sets the underlying state of the #GtkSwitch.
+	 * Sets the underlying state of the `GtkSwitch`.
 	 *
-	 * Normally, this is the same as #GtkSwitch:active, unless the switch
-	 * is set up for delayed state changes. This function is typically
-	 * called from a #GtkSwitch::state-set signal handler.
+	 * Normally, this is the same as [property@Gtk.Switch:active], unless
+	 * the switch is set up for delayed state changes. This function is
+	 * typically called from a [signal@Gtk.Switch`::state-set] signal handler.
 	 *
-	 * See #GtkSwitch::state-set for details.
+	 * See [signal@Gtk.Switch::state-set] for details.
 	 *
 	 * Params:
 	 *     state = the new state
@@ -165,10 +169,10 @@ public class Switch : Widget, ActionableIF
 	}
 
 	/**
-	 * The ::activate signal on GtkSwitch is an action signal and
-	 * emitting it causes the switch to animate.
-	 * Applications should never connect to this signal, but use the
-	 * notify::active signal.
+	 * Emitted to animate the switch.
+	 *
+	 * Applications should never connect to this signal,
+	 * but use the [property@Gtk.Switch:active] property.
 	 */
 	gulong addOnActivate(void delegate(Switch) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -176,19 +180,21 @@ public class Switch : Widget, ActionableIF
 	}
 
 	/**
-	 * The ::state-set signal on GtkSwitch is emitted to change the underlying
-	 * state. It is emitted when the user changes the switch position. The
-	 * default handler keeps the state in sync with the #GtkSwitch:active
-	 * property.
+	 * Emitted to change the underlying state.
 	 *
-	 * To implement delayed state change, applications can connect to this signal,
-	 * initiate the change of the underlying state, and call gtk_switch_set_state()
-	 * when the underlying state change is complete. The signal handler should
-	 * return %TRUE to prevent the default handler from running.
+	 * The ::state-set signal is emitted when the user changes the switch
+	 * position. The default handler keeps the state in sync with the
+	 * [property@Gtk.Switch:active] property.
+	 *
+	 * To implement delayed state change, applications can connect to this
+	 * signal, initiate the change of the underlying state, and call
+	 * [method@Gtk.Switch.set_state] when the underlying state change is
+	 * complete. The signal handler should return %TRUE to prevent the
+	 * default handler from running.
 	 *
 	 * Visually, the underlying state is represented by the trough color of
-	 * the switch, while the #GtkSwitch:active property is represented by the
-	 * position of the switch.
+	 * the switch, while the [property@Gtk.Switch`:active] property is
+	 * represented by the position of the switch.
 	 *
 	 * Params:
 	 *     state = the new state of the switch

@@ -27,6 +27,7 @@ module gtk.ColorButton;
 private import gdk.RGBA;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.ColorChooserIF;
@@ -38,20 +39,23 @@ private import std.algorithm;
 
 
 /**
- * The #GtkColorButton is a button which displays the currently selected
- * color and allows to open a color selection dialog to change the color.
+ * The `GtkColorButton` allows to open a color chooser dialog to change
+ * the color.
+ * 
+ * ![An example GtkColorButton](color-button.png)
+ * 
  * It is suitable widget for selecting a color in a preference dialog.
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * colorbutton
  * ╰── button.color
  * ╰── [content]
- * ]|
+ * ```
  * 
- * GtkColorButton has a single CSS node with name colorbutton which
- * contains a button node. To differentiate it from a plain #GtkButton,
+ * `GtkColorButton` has a single CSS node with name colorbutton which
+ * contains a button node. To differentiate it from a plain `GtkButton`,
  * it gets the .color style class.
  */
 public class ColorButton : Widget, ColorChooserIF
@@ -97,7 +101,7 @@ public class ColorButton : Widget, ColorChooserIF
 	 *
 	 * This returns a widget in the form of a small button containing
 	 * a swatch representing the current selected color. When the button
-	 * is clicked, a color-selection dialog will open, allowing the user
+	 * is clicked, a color chooser dialog will open, allowing the user
 	 * to select a color. The swatch will be updated to reflect the new
 	 * color when the user finishes.
 	 *
@@ -118,10 +122,10 @@ public class ColorButton : Widget, ColorChooserIF
 	}
 
 	/**
-	 * Creates a new color button.
+	 * Creates a new color button showing the given color.
 	 *
 	 * Params:
-	 *     rgba = A #GdkRGBA to set the current color with
+	 *     rgba = A `GdkRGBA` to set the current color with
 	 *
 	 * Returns: a new color button
 	 *
@@ -150,7 +154,7 @@ public class ColorButton : Widget, ColorChooserIF
 	}
 
 	/**
-	 * Gets the title of the color selection dialog.
+	 * Gets the title of the color chooser dialog.
 	 *
 	 * Returns: An internal string, do not free the return value
 	 */
@@ -171,7 +175,7 @@ public class ColorButton : Widget, ColorChooserIF
 	}
 
 	/**
-	 * Sets the title for the color selection dialog.
+	 * Sets the title for the color chooser dialog.
 	 *
 	 * Params:
 	 *     title = String containing new window title
@@ -182,13 +186,14 @@ public class ColorButton : Widget, ColorChooserIF
 	}
 
 	/**
-	 * The ::color-set signal is emitted when the user selects a color.
-	 * When handling this signal, use gtk_color_chooser_get_rgba() to
-	 * find out which color was just selected.
+	 * Emitted when the user selects a color.
 	 *
-	 * Note that this signal is only emitted when the user
-	 * changes the color. If you need to react to programmatic color changes
-	 * as well, use the notify::color signal.
+	 * When handling this signal, use [method@Gtk.ColorChooser.get_rgba]
+	 * to find out which color was just selected.
+	 *
+	 * Note that this signal is only emitted when the user changes the color.
+	 * If you need to react to programmatic color changes as well, use
+	 * the notify::color signal.
 	 */
 	gulong addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

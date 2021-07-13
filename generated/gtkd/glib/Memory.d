@@ -186,6 +186,10 @@ public struct Memory
 	 * Allocates @byte_size bytes of memory, and copies @byte_size bytes into it
 	 * from @mem. If @mem is %NULL it returns %NULL.
 	 *
+	 * Deprecated: Use g_memdup2() instead, as it accepts a #gsize argument
+	 * for @byte_size, avoiding the possibility of overflow in a #gsize → #guint
+	 * conversion
+	 *
 	 * Params:
 	 *     mem = the memory to copy.
 	 *     byteSize = the number of bytes to copy.

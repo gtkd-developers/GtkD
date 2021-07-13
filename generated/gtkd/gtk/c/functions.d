@@ -1308,6 +1308,7 @@ shared static this()
 
 	// gtk.ExpressionWatch
 
+	Linker.link(gtk_expression_watch_get_type, "gtk_expression_watch_get_type", LIBRARY_GTK);
 	Linker.link(gtk_expression_watch_evaluate, "gtk_expression_watch_evaluate", LIBRARY_GTK);
 	Linker.link(gtk_expression_watch_ref, "gtk_expression_watch_ref", LIBRARY_GTK);
 	Linker.link(gtk_expression_watch_unref, "gtk_expression_watch_unref", LIBRARY_GTK);
@@ -1733,10 +1734,12 @@ shared static this()
 	Linker.link(gtk_im_context_focus_out, "gtk_im_context_focus_out", LIBRARY_GTK);
 	Linker.link(gtk_im_context_get_preedit_string, "gtk_im_context_get_preedit_string", LIBRARY_GTK);
 	Linker.link(gtk_im_context_get_surrounding, "gtk_im_context_get_surrounding", LIBRARY_GTK);
+	Linker.link(gtk_im_context_get_surrounding_with_selection, "gtk_im_context_get_surrounding_with_selection", LIBRARY_GTK);
 	Linker.link(gtk_im_context_reset, "gtk_im_context_reset", LIBRARY_GTK);
 	Linker.link(gtk_im_context_set_client_widget, "gtk_im_context_set_client_widget", LIBRARY_GTK);
 	Linker.link(gtk_im_context_set_cursor_location, "gtk_im_context_set_cursor_location", LIBRARY_GTK);
 	Linker.link(gtk_im_context_set_surrounding, "gtk_im_context_set_surrounding", LIBRARY_GTK);
+	Linker.link(gtk_im_context_set_surrounding_with_selection, "gtk_im_context_set_surrounding_with_selection", LIBRARY_GTK);
 	Linker.link(gtk_im_context_set_use_preedit, "gtk_im_context_set_use_preedit", LIBRARY_GTK);
 
 	// gtk.IMContextSimple
@@ -1774,6 +1777,7 @@ shared static this()
 	Linker.link(gtk_icon_theme_get_resource_path, "gtk_icon_theme_get_resource_path", LIBRARY_GTK);
 	Linker.link(gtk_icon_theme_get_search_path, "gtk_icon_theme_get_search_path", LIBRARY_GTK);
 	Linker.link(gtk_icon_theme_get_theme_name, "gtk_icon_theme_get_theme_name", LIBRARY_GTK);
+	Linker.link(gtk_icon_theme_has_gicon, "gtk_icon_theme_has_gicon", LIBRARY_GTK);
 	Linker.link(gtk_icon_theme_has_icon, "gtk_icon_theme_has_icon", LIBRARY_GTK);
 	Linker.link(gtk_icon_theme_lookup_by_gicon, "gtk_icon_theme_lookup_by_gicon", LIBRARY_GTK);
 	Linker.link(gtk_icon_theme_lookup_icon, "gtk_icon_theme_lookup_icon", LIBRARY_GTK);
@@ -2444,6 +2448,15 @@ shared static this()
 	Linker.link(gtk_page_setup_to_gvariant, "gtk_page_setup_to_gvariant", LIBRARY_GTK);
 	Linker.link(gtk_page_setup_to_key_file, "gtk_page_setup_to_key_file", LIBRARY_GTK);
 
+	// gtk.PageSetupUnixDialog
+
+	Linker.link(gtk_page_setup_unix_dialog_get_type, "gtk_page_setup_unix_dialog_get_type", LIBRARY_GTK);
+	Linker.link(gtk_page_setup_unix_dialog_new, "gtk_page_setup_unix_dialog_new", LIBRARY_GTK);
+	Linker.link(gtk_page_setup_unix_dialog_get_page_setup, "gtk_page_setup_unix_dialog_get_page_setup", LIBRARY_GTK);
+	Linker.link(gtk_page_setup_unix_dialog_get_print_settings, "gtk_page_setup_unix_dialog_get_print_settings", LIBRARY_GTK);
+	Linker.link(gtk_page_setup_unix_dialog_set_page_setup, "gtk_page_setup_unix_dialog_set_page_setup", LIBRARY_GTK);
+	Linker.link(gtk_page_setup_unix_dialog_set_print_settings, "gtk_page_setup_unix_dialog_set_print_settings", LIBRARY_GTK);
+
 	// gtk.Paned
 
 	Linker.link(gtk_paned_get_type, "gtk_paned_get_type", LIBRARY_GTK);
@@ -2589,6 +2602,41 @@ shared static this()
 	Linker.link(gtk_print_context_get_width, "gtk_print_context_get_width", LIBRARY_GTK);
 	Linker.link(gtk_print_context_set_cairo_context, "gtk_print_context_set_cairo_context", LIBRARY_GTK);
 
+	// gtk.PrintJob
+
+	Linker.link(gtk_print_job_get_type, "gtk_print_job_get_type", LIBRARY_GTK);
+	Linker.link(gtk_print_job_new, "gtk_print_job_new", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_collate, "gtk_print_job_get_collate", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_n_up, "gtk_print_job_get_n_up", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_n_up_layout, "gtk_print_job_get_n_up_layout", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_num_copies, "gtk_print_job_get_num_copies", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_page_ranges, "gtk_print_job_get_page_ranges", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_page_set, "gtk_print_job_get_page_set", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_pages, "gtk_print_job_get_pages", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_printer, "gtk_print_job_get_printer", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_reverse, "gtk_print_job_get_reverse", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_rotate, "gtk_print_job_get_rotate", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_scale, "gtk_print_job_get_scale", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_settings, "gtk_print_job_get_settings", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_status, "gtk_print_job_get_status", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_surface, "gtk_print_job_get_surface", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_title, "gtk_print_job_get_title", LIBRARY_GTK);
+	Linker.link(gtk_print_job_get_track_print_status, "gtk_print_job_get_track_print_status", LIBRARY_GTK);
+	Linker.link(gtk_print_job_send, "gtk_print_job_send", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_collate, "gtk_print_job_set_collate", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_n_up, "gtk_print_job_set_n_up", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_n_up_layout, "gtk_print_job_set_n_up_layout", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_num_copies, "gtk_print_job_set_num_copies", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_page_ranges, "gtk_print_job_set_page_ranges", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_page_set, "gtk_print_job_set_page_set", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_pages, "gtk_print_job_set_pages", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_reverse, "gtk_print_job_set_reverse", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_rotate, "gtk_print_job_set_rotate", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_scale, "gtk_print_job_set_scale", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_source_fd, "gtk_print_job_set_source_fd", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_source_file, "gtk_print_job_set_source_file", LIBRARY_GTK);
+	Linker.link(gtk_print_job_set_track_print_status, "gtk_print_job_set_track_print_status", LIBRARY_GTK);
+
 	// gtk.PrintOperation
 
 	Linker.link(gtk_print_operation_get_type, "gtk_print_operation_get_type", LIBRARY_GTK);
@@ -2709,6 +2757,55 @@ shared static this()
 	Linker.link(gtk_print_settings_to_gvariant, "gtk_print_settings_to_gvariant", LIBRARY_GTK);
 	Linker.link(gtk_print_settings_to_key_file, "gtk_print_settings_to_key_file", LIBRARY_GTK);
 	Linker.link(gtk_print_settings_unset, "gtk_print_settings_unset", LIBRARY_GTK);
+
+	// gtk.PrintUnixDialog
+
+	Linker.link(gtk_print_unix_dialog_get_type, "gtk_print_unix_dialog_get_type", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_new, "gtk_print_unix_dialog_new", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_add_custom_tab, "gtk_print_unix_dialog_add_custom_tab", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_current_page, "gtk_print_unix_dialog_get_current_page", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_embed_page_setup, "gtk_print_unix_dialog_get_embed_page_setup", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_has_selection, "gtk_print_unix_dialog_get_has_selection", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_manual_capabilities, "gtk_print_unix_dialog_get_manual_capabilities", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_page_setup, "gtk_print_unix_dialog_get_page_setup", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_page_setup_set, "gtk_print_unix_dialog_get_page_setup_set", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_selected_printer, "gtk_print_unix_dialog_get_selected_printer", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_settings, "gtk_print_unix_dialog_get_settings", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_get_support_selection, "gtk_print_unix_dialog_get_support_selection", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_set_current_page, "gtk_print_unix_dialog_set_current_page", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_set_embed_page_setup, "gtk_print_unix_dialog_set_embed_page_setup", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_set_has_selection, "gtk_print_unix_dialog_set_has_selection", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_set_manual_capabilities, "gtk_print_unix_dialog_set_manual_capabilities", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_set_page_setup, "gtk_print_unix_dialog_set_page_setup", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_set_settings, "gtk_print_unix_dialog_set_settings", LIBRARY_GTK);
+	Linker.link(gtk_print_unix_dialog_set_support_selection, "gtk_print_unix_dialog_set_support_selection", LIBRARY_GTK);
+
+	// gtk.Printer
+
+	Linker.link(gtk_printer_get_type, "gtk_printer_get_type", LIBRARY_GTK);
+	Linker.link(gtk_printer_new, "gtk_printer_new", LIBRARY_GTK);
+	Linker.link(gtk_printer_accepts_pdf, "gtk_printer_accepts_pdf", LIBRARY_GTK);
+	Linker.link(gtk_printer_accepts_ps, "gtk_printer_accepts_ps", LIBRARY_GTK);
+	Linker.link(gtk_printer_compare, "gtk_printer_compare", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_backend, "gtk_printer_get_backend", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_capabilities, "gtk_printer_get_capabilities", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_default_page_size, "gtk_printer_get_default_page_size", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_description, "gtk_printer_get_description", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_hard_margins, "gtk_printer_get_hard_margins", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_hard_margins_for_paper_size, "gtk_printer_get_hard_margins_for_paper_size", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_icon_name, "gtk_printer_get_icon_name", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_job_count, "gtk_printer_get_job_count", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_location, "gtk_printer_get_location", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_name, "gtk_printer_get_name", LIBRARY_GTK);
+	Linker.link(gtk_printer_get_state_message, "gtk_printer_get_state_message", LIBRARY_GTK);
+	Linker.link(gtk_printer_has_details, "gtk_printer_has_details", LIBRARY_GTK);
+	Linker.link(gtk_printer_is_accepting_jobs, "gtk_printer_is_accepting_jobs", LIBRARY_GTK);
+	Linker.link(gtk_printer_is_active, "gtk_printer_is_active", LIBRARY_GTK);
+	Linker.link(gtk_printer_is_default, "gtk_printer_is_default", LIBRARY_GTK);
+	Linker.link(gtk_printer_is_paused, "gtk_printer_is_paused", LIBRARY_GTK);
+	Linker.link(gtk_printer_is_virtual, "gtk_printer_is_virtual", LIBRARY_GTK);
+	Linker.link(gtk_printer_list_papers, "gtk_printer_list_papers", LIBRARY_GTK);
+	Linker.link(gtk_printer_request_details, "gtk_printer_request_details", LIBRARY_GTK);
 
 	// gtk.ProgressBar
 
@@ -4313,6 +4410,7 @@ shared static this()
 	Linker.link(gtk_window_get_focus, "gtk_window_get_focus", LIBRARY_GTK);
 	Linker.link(gtk_window_get_focus_visible, "gtk_window_get_focus_visible", LIBRARY_GTK);
 	Linker.link(gtk_window_get_group, "gtk_window_get_group", LIBRARY_GTK);
+	Linker.link(gtk_window_get_handle_menubar_accel, "gtk_window_get_handle_menubar_accel", LIBRARY_GTK);
 	Linker.link(gtk_window_get_hide_on_close, "gtk_window_get_hide_on_close", LIBRARY_GTK);
 	Linker.link(gtk_window_get_icon_name, "gtk_window_get_icon_name", LIBRARY_GTK);
 	Linker.link(gtk_window_get_mnemonics_visible, "gtk_window_get_mnemonics_visible", LIBRARY_GTK);
@@ -4339,6 +4437,7 @@ shared static this()
 	Linker.link(gtk_window_set_display, "gtk_window_set_display", LIBRARY_GTK);
 	Linker.link(gtk_window_set_focus, "gtk_window_set_focus", LIBRARY_GTK);
 	Linker.link(gtk_window_set_focus_visible, "gtk_window_set_focus_visible", LIBRARY_GTK);
+	Linker.link(gtk_window_set_handle_menubar_accel, "gtk_window_set_handle_menubar_accel", LIBRARY_GTK);
 	Linker.link(gtk_window_set_hide_on_close, "gtk_window_set_hide_on_close", LIBRARY_GTK);
 	Linker.link(gtk_window_set_icon_name, "gtk_window_set_icon_name", LIBRARY_GTK);
 	Linker.link(gtk_window_set_mnemonics_visible, "gtk_window_set_mnemonics_visible", LIBRARY_GTK);
@@ -5652,6 +5751,7 @@ __gshared extern(C)
 
 	// gtk.ExpressionWatch
 
+	GType function() c_gtk_expression_watch_get_type;
 	int function(GtkExpressionWatch* watch, GValue* value) c_gtk_expression_watch_evaluate;
 	GtkExpressionWatch* function(GtkExpressionWatch* watch) c_gtk_expression_watch_ref;
 	void function(GtkExpressionWatch* watch) c_gtk_expression_watch_unref;
@@ -6077,10 +6177,12 @@ __gshared extern(C)
 	void function(GtkIMContext* context) c_gtk_im_context_focus_out;
 	void function(GtkIMContext* context, char** str, PangoAttrList** attrs, int* cursorPos) c_gtk_im_context_get_preedit_string;
 	int function(GtkIMContext* context, char** text, int* cursorIndex) c_gtk_im_context_get_surrounding;
+	int function(GtkIMContext* context, char** text, int* cursorIndex, int* anchorIndex) c_gtk_im_context_get_surrounding_with_selection;
 	void function(GtkIMContext* context) c_gtk_im_context_reset;
 	void function(GtkIMContext* context, GtkWidget* widget) c_gtk_im_context_set_client_widget;
 	void function(GtkIMContext* context, GdkRectangle* area) c_gtk_im_context_set_cursor_location;
 	void function(GtkIMContext* context, const(char)* text, int len, int cursorIndex) c_gtk_im_context_set_surrounding;
+	void function(GtkIMContext* context, const(char)* text, int len, int cursorIndex, int anchorIndex) c_gtk_im_context_set_surrounding_with_selection;
 	void function(GtkIMContext* context, int usePreedit) c_gtk_im_context_set_use_preedit;
 
 	// gtk.IMContextSimple
@@ -6118,6 +6220,7 @@ __gshared extern(C)
 	char** function(GtkIconTheme* self) c_gtk_icon_theme_get_resource_path;
 	char** function(GtkIconTheme* self) c_gtk_icon_theme_get_search_path;
 	char* function(GtkIconTheme* self) c_gtk_icon_theme_get_theme_name;
+	int function(GtkIconTheme* self, GIcon* gicon) c_gtk_icon_theme_has_gicon;
 	int function(GtkIconTheme* self, const(char)* iconName) c_gtk_icon_theme_has_icon;
 	GtkIconPaintable* function(GtkIconTheme* self, GIcon* icon, int size, int scale, GtkTextDirection direction, GtkIconLookupFlags flags) c_gtk_icon_theme_lookup_by_gicon;
 	GtkIconPaintable* function(GtkIconTheme* self, const(char)* iconName, char** fallbacks, int size, int scale, GtkTextDirection direction, GtkIconLookupFlags flags) c_gtk_icon_theme_lookup_icon;
@@ -6788,6 +6891,15 @@ __gshared extern(C)
 	GVariant* function(GtkPageSetup* setup) c_gtk_page_setup_to_gvariant;
 	void function(GtkPageSetup* setup, GKeyFile* keyFile, const(char)* groupName) c_gtk_page_setup_to_key_file;
 
+	// gtk.PageSetupUnixDialog
+
+	GType function() c_gtk_page_setup_unix_dialog_get_type;
+	GtkWidget* function(const(char)* title, GtkWindow* parent) c_gtk_page_setup_unix_dialog_new;
+	GtkPageSetup* function(GtkPageSetupUnixDialog* dialog) c_gtk_page_setup_unix_dialog_get_page_setup;
+	GtkPrintSettings* function(GtkPageSetupUnixDialog* dialog) c_gtk_page_setup_unix_dialog_get_print_settings;
+	void function(GtkPageSetupUnixDialog* dialog, GtkPageSetup* pageSetup) c_gtk_page_setup_unix_dialog_set_page_setup;
+	void function(GtkPageSetupUnixDialog* dialog, GtkPrintSettings* printSettings) c_gtk_page_setup_unix_dialog_set_print_settings;
+
 	// gtk.Paned
 
 	GType function() c_gtk_paned_get_type;
@@ -6933,6 +7045,41 @@ __gshared extern(C)
 	double function(GtkPrintContext* context) c_gtk_print_context_get_width;
 	void function(GtkPrintContext* context, cairo_t* cr, double dpiX, double dpiY) c_gtk_print_context_set_cairo_context;
 
+	// gtk.PrintJob
+
+	GType function() c_gtk_print_job_get_type;
+	GtkPrintJob* function(const(char)* title, GtkPrinter* printer, GtkPrintSettings* settings, GtkPageSetup* pageSetup) c_gtk_print_job_new;
+	int function(GtkPrintJob* job) c_gtk_print_job_get_collate;
+	uint function(GtkPrintJob* job) c_gtk_print_job_get_n_up;
+	GtkNumberUpLayout function(GtkPrintJob* job) c_gtk_print_job_get_n_up_layout;
+	int function(GtkPrintJob* job) c_gtk_print_job_get_num_copies;
+	GtkPageRange* function(GtkPrintJob* job, int* nRanges) c_gtk_print_job_get_page_ranges;
+	GtkPageSet function(GtkPrintJob* job) c_gtk_print_job_get_page_set;
+	GtkPrintPages function(GtkPrintJob* job) c_gtk_print_job_get_pages;
+	GtkPrinter* function(GtkPrintJob* job) c_gtk_print_job_get_printer;
+	int function(GtkPrintJob* job) c_gtk_print_job_get_reverse;
+	int function(GtkPrintJob* job) c_gtk_print_job_get_rotate;
+	double function(GtkPrintJob* job) c_gtk_print_job_get_scale;
+	GtkPrintSettings* function(GtkPrintJob* job) c_gtk_print_job_get_settings;
+	GtkPrintStatus function(GtkPrintJob* job) c_gtk_print_job_get_status;
+	cairo_surface_t* function(GtkPrintJob* job, GError** err) c_gtk_print_job_get_surface;
+	const(char)* function(GtkPrintJob* job) c_gtk_print_job_get_title;
+	int function(GtkPrintJob* job) c_gtk_print_job_get_track_print_status;
+	void function(GtkPrintJob* job, GtkPrintJobCompleteFunc callback, void* userData, GDestroyNotify dnotify) c_gtk_print_job_send;
+	void function(GtkPrintJob* job, int collate) c_gtk_print_job_set_collate;
+	void function(GtkPrintJob* job, uint nUp) c_gtk_print_job_set_n_up;
+	void function(GtkPrintJob* job, GtkNumberUpLayout layout) c_gtk_print_job_set_n_up_layout;
+	void function(GtkPrintJob* job, int numCopies) c_gtk_print_job_set_num_copies;
+	void function(GtkPrintJob* job, GtkPageRange* ranges, int nRanges) c_gtk_print_job_set_page_ranges;
+	void function(GtkPrintJob* job, GtkPageSet pageSet) c_gtk_print_job_set_page_set;
+	void function(GtkPrintJob* job, GtkPrintPages pages) c_gtk_print_job_set_pages;
+	void function(GtkPrintJob* job, int reverse) c_gtk_print_job_set_reverse;
+	void function(GtkPrintJob* job, int rotate) c_gtk_print_job_set_rotate;
+	void function(GtkPrintJob* job, double scale) c_gtk_print_job_set_scale;
+	int function(GtkPrintJob* job, int fd, GError** err) c_gtk_print_job_set_source_fd;
+	int function(GtkPrintJob* job, char* filename, GError** err) c_gtk_print_job_set_source_file;
+	void function(GtkPrintJob* job, int trackStatus) c_gtk_print_job_set_track_print_status;
+
 	// gtk.PrintOperation
 
 	GType function() c_gtk_print_operation_get_type;
@@ -7053,6 +7200,55 @@ __gshared extern(C)
 	GVariant* function(GtkPrintSettings* settings) c_gtk_print_settings_to_gvariant;
 	void function(GtkPrintSettings* settings, GKeyFile* keyFile, const(char)* groupName) c_gtk_print_settings_to_key_file;
 	void function(GtkPrintSettings* settings, const(char)* key) c_gtk_print_settings_unset;
+
+	// gtk.PrintUnixDialog
+
+	GType function() c_gtk_print_unix_dialog_get_type;
+	GtkWidget* function(const(char)* title, GtkWindow* parent) c_gtk_print_unix_dialog_new;
+	void function(GtkPrintUnixDialog* dialog, GtkWidget* child, GtkWidget* tabLabel) c_gtk_print_unix_dialog_add_custom_tab;
+	int function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_current_page;
+	int function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_embed_page_setup;
+	int function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_has_selection;
+	GtkPrintCapabilities function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_manual_capabilities;
+	GtkPageSetup* function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_page_setup;
+	int function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_page_setup_set;
+	GtkPrinter* function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_selected_printer;
+	GtkPrintSettings* function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_settings;
+	int function(GtkPrintUnixDialog* dialog) c_gtk_print_unix_dialog_get_support_selection;
+	void function(GtkPrintUnixDialog* dialog, int currentPage) c_gtk_print_unix_dialog_set_current_page;
+	void function(GtkPrintUnixDialog* dialog, int embed) c_gtk_print_unix_dialog_set_embed_page_setup;
+	void function(GtkPrintUnixDialog* dialog, int hasSelection) c_gtk_print_unix_dialog_set_has_selection;
+	void function(GtkPrintUnixDialog* dialog, GtkPrintCapabilities capabilities) c_gtk_print_unix_dialog_set_manual_capabilities;
+	void function(GtkPrintUnixDialog* dialog, GtkPageSetup* pageSetup) c_gtk_print_unix_dialog_set_page_setup;
+	void function(GtkPrintUnixDialog* dialog, GtkPrintSettings* settings) c_gtk_print_unix_dialog_set_settings;
+	void function(GtkPrintUnixDialog* dialog, int supportSelection) c_gtk_print_unix_dialog_set_support_selection;
+
+	// gtk.Printer
+
+	GType function() c_gtk_printer_get_type;
+	GtkPrinter* function(const(char)* name, GtkPrintBackend* backend, int virtual) c_gtk_printer_new;
+	int function(GtkPrinter* printer) c_gtk_printer_accepts_pdf;
+	int function(GtkPrinter* printer) c_gtk_printer_accepts_ps;
+	int function(GtkPrinter* a, GtkPrinter* b) c_gtk_printer_compare;
+	GtkPrintBackend* function(GtkPrinter* printer) c_gtk_printer_get_backend;
+	GtkPrintCapabilities function(GtkPrinter* printer) c_gtk_printer_get_capabilities;
+	GtkPageSetup* function(GtkPrinter* printer) c_gtk_printer_get_default_page_size;
+	const(char)* function(GtkPrinter* printer) c_gtk_printer_get_description;
+	int function(GtkPrinter* printer, double* top, double* bottom, double* left, double* right) c_gtk_printer_get_hard_margins;
+	int function(GtkPrinter* printer, GtkPaperSize* paperSize, double* top, double* bottom, double* left, double* right) c_gtk_printer_get_hard_margins_for_paper_size;
+	const(char)* function(GtkPrinter* printer) c_gtk_printer_get_icon_name;
+	int function(GtkPrinter* printer) c_gtk_printer_get_job_count;
+	const(char)* function(GtkPrinter* printer) c_gtk_printer_get_location;
+	const(char)* function(GtkPrinter* printer) c_gtk_printer_get_name;
+	const(char)* function(GtkPrinter* printer) c_gtk_printer_get_state_message;
+	int function(GtkPrinter* printer) c_gtk_printer_has_details;
+	int function(GtkPrinter* printer) c_gtk_printer_is_accepting_jobs;
+	int function(GtkPrinter* printer) c_gtk_printer_is_active;
+	int function(GtkPrinter* printer) c_gtk_printer_is_default;
+	int function(GtkPrinter* printer) c_gtk_printer_is_paused;
+	int function(GtkPrinter* printer) c_gtk_printer_is_virtual;
+	GList* function(GtkPrinter* printer) c_gtk_printer_list_papers;
+	void function(GtkPrinter* printer) c_gtk_printer_request_details;
 
 	// gtk.ProgressBar
 
@@ -8657,6 +8853,7 @@ __gshared extern(C)
 	GtkWidget* function(GtkWindow* window) c_gtk_window_get_focus;
 	int function(GtkWindow* window) c_gtk_window_get_focus_visible;
 	GtkWindowGroup* function(GtkWindow* window) c_gtk_window_get_group;
+	int function(GtkWindow* window) c_gtk_window_get_handle_menubar_accel;
 	int function(GtkWindow* window) c_gtk_window_get_hide_on_close;
 	const(char)* function(GtkWindow* window) c_gtk_window_get_icon_name;
 	int function(GtkWindow* window) c_gtk_window_get_mnemonics_visible;
@@ -8683,6 +8880,7 @@ __gshared extern(C)
 	void function(GtkWindow* window, GdkDisplay* display) c_gtk_window_set_display;
 	void function(GtkWindow* window, GtkWidget* focus) c_gtk_window_set_focus;
 	void function(GtkWindow* window, int setting) c_gtk_window_set_focus_visible;
+	void function(GtkWindow* window, int handleMenubarAccel) c_gtk_window_set_handle_menubar_accel;
 	void function(GtkWindow* window, int setting) c_gtk_window_set_hide_on_close;
 	void function(GtkWindow* window, const(char)* name) c_gtk_window_set_icon_name;
 	void function(GtkWindow* window, int setting) c_gtk_window_set_mnemonics_visible;
@@ -9994,6 +10192,7 @@ alias c_gtk_expression_watch gtk_expression_watch;
 
 // gtk.ExpressionWatch
 
+alias c_gtk_expression_watch_get_type gtk_expression_watch_get_type;
 alias c_gtk_expression_watch_evaluate gtk_expression_watch_evaluate;
 alias c_gtk_expression_watch_ref gtk_expression_watch_ref;
 alias c_gtk_expression_watch_unref gtk_expression_watch_unref;
@@ -10419,10 +10618,12 @@ alias c_gtk_im_context_focus_in gtk_im_context_focus_in;
 alias c_gtk_im_context_focus_out gtk_im_context_focus_out;
 alias c_gtk_im_context_get_preedit_string gtk_im_context_get_preedit_string;
 alias c_gtk_im_context_get_surrounding gtk_im_context_get_surrounding;
+alias c_gtk_im_context_get_surrounding_with_selection gtk_im_context_get_surrounding_with_selection;
 alias c_gtk_im_context_reset gtk_im_context_reset;
 alias c_gtk_im_context_set_client_widget gtk_im_context_set_client_widget;
 alias c_gtk_im_context_set_cursor_location gtk_im_context_set_cursor_location;
 alias c_gtk_im_context_set_surrounding gtk_im_context_set_surrounding;
+alias c_gtk_im_context_set_surrounding_with_selection gtk_im_context_set_surrounding_with_selection;
 alias c_gtk_im_context_set_use_preedit gtk_im_context_set_use_preedit;
 
 // gtk.IMContextSimple
@@ -10460,6 +10661,7 @@ alias c_gtk_icon_theme_get_icon_sizes gtk_icon_theme_get_icon_sizes;
 alias c_gtk_icon_theme_get_resource_path gtk_icon_theme_get_resource_path;
 alias c_gtk_icon_theme_get_search_path gtk_icon_theme_get_search_path;
 alias c_gtk_icon_theme_get_theme_name gtk_icon_theme_get_theme_name;
+alias c_gtk_icon_theme_has_gicon gtk_icon_theme_has_gicon;
 alias c_gtk_icon_theme_has_icon gtk_icon_theme_has_icon;
 alias c_gtk_icon_theme_lookup_by_gicon gtk_icon_theme_lookup_by_gicon;
 alias c_gtk_icon_theme_lookup_icon gtk_icon_theme_lookup_icon;
@@ -11130,6 +11332,15 @@ alias c_gtk_page_setup_to_file gtk_page_setup_to_file;
 alias c_gtk_page_setup_to_gvariant gtk_page_setup_to_gvariant;
 alias c_gtk_page_setup_to_key_file gtk_page_setup_to_key_file;
 
+// gtk.PageSetupUnixDialog
+
+alias c_gtk_page_setup_unix_dialog_get_type gtk_page_setup_unix_dialog_get_type;
+alias c_gtk_page_setup_unix_dialog_new gtk_page_setup_unix_dialog_new;
+alias c_gtk_page_setup_unix_dialog_get_page_setup gtk_page_setup_unix_dialog_get_page_setup;
+alias c_gtk_page_setup_unix_dialog_get_print_settings gtk_page_setup_unix_dialog_get_print_settings;
+alias c_gtk_page_setup_unix_dialog_set_page_setup gtk_page_setup_unix_dialog_set_page_setup;
+alias c_gtk_page_setup_unix_dialog_set_print_settings gtk_page_setup_unix_dialog_set_print_settings;
+
 // gtk.Paned
 
 alias c_gtk_paned_get_type gtk_paned_get_type;
@@ -11275,6 +11486,41 @@ alias c_gtk_print_context_get_pango_fontmap gtk_print_context_get_pango_fontmap;
 alias c_gtk_print_context_get_width gtk_print_context_get_width;
 alias c_gtk_print_context_set_cairo_context gtk_print_context_set_cairo_context;
 
+// gtk.PrintJob
+
+alias c_gtk_print_job_get_type gtk_print_job_get_type;
+alias c_gtk_print_job_new gtk_print_job_new;
+alias c_gtk_print_job_get_collate gtk_print_job_get_collate;
+alias c_gtk_print_job_get_n_up gtk_print_job_get_n_up;
+alias c_gtk_print_job_get_n_up_layout gtk_print_job_get_n_up_layout;
+alias c_gtk_print_job_get_num_copies gtk_print_job_get_num_copies;
+alias c_gtk_print_job_get_page_ranges gtk_print_job_get_page_ranges;
+alias c_gtk_print_job_get_page_set gtk_print_job_get_page_set;
+alias c_gtk_print_job_get_pages gtk_print_job_get_pages;
+alias c_gtk_print_job_get_printer gtk_print_job_get_printer;
+alias c_gtk_print_job_get_reverse gtk_print_job_get_reverse;
+alias c_gtk_print_job_get_rotate gtk_print_job_get_rotate;
+alias c_gtk_print_job_get_scale gtk_print_job_get_scale;
+alias c_gtk_print_job_get_settings gtk_print_job_get_settings;
+alias c_gtk_print_job_get_status gtk_print_job_get_status;
+alias c_gtk_print_job_get_surface gtk_print_job_get_surface;
+alias c_gtk_print_job_get_title gtk_print_job_get_title;
+alias c_gtk_print_job_get_track_print_status gtk_print_job_get_track_print_status;
+alias c_gtk_print_job_send gtk_print_job_send;
+alias c_gtk_print_job_set_collate gtk_print_job_set_collate;
+alias c_gtk_print_job_set_n_up gtk_print_job_set_n_up;
+alias c_gtk_print_job_set_n_up_layout gtk_print_job_set_n_up_layout;
+alias c_gtk_print_job_set_num_copies gtk_print_job_set_num_copies;
+alias c_gtk_print_job_set_page_ranges gtk_print_job_set_page_ranges;
+alias c_gtk_print_job_set_page_set gtk_print_job_set_page_set;
+alias c_gtk_print_job_set_pages gtk_print_job_set_pages;
+alias c_gtk_print_job_set_reverse gtk_print_job_set_reverse;
+alias c_gtk_print_job_set_rotate gtk_print_job_set_rotate;
+alias c_gtk_print_job_set_scale gtk_print_job_set_scale;
+alias c_gtk_print_job_set_source_fd gtk_print_job_set_source_fd;
+alias c_gtk_print_job_set_source_file gtk_print_job_set_source_file;
+alias c_gtk_print_job_set_track_print_status gtk_print_job_set_track_print_status;
+
 // gtk.PrintOperation
 
 alias c_gtk_print_operation_get_type gtk_print_operation_get_type;
@@ -11395,6 +11641,55 @@ alias c_gtk_print_settings_to_file gtk_print_settings_to_file;
 alias c_gtk_print_settings_to_gvariant gtk_print_settings_to_gvariant;
 alias c_gtk_print_settings_to_key_file gtk_print_settings_to_key_file;
 alias c_gtk_print_settings_unset gtk_print_settings_unset;
+
+// gtk.PrintUnixDialog
+
+alias c_gtk_print_unix_dialog_get_type gtk_print_unix_dialog_get_type;
+alias c_gtk_print_unix_dialog_new gtk_print_unix_dialog_new;
+alias c_gtk_print_unix_dialog_add_custom_tab gtk_print_unix_dialog_add_custom_tab;
+alias c_gtk_print_unix_dialog_get_current_page gtk_print_unix_dialog_get_current_page;
+alias c_gtk_print_unix_dialog_get_embed_page_setup gtk_print_unix_dialog_get_embed_page_setup;
+alias c_gtk_print_unix_dialog_get_has_selection gtk_print_unix_dialog_get_has_selection;
+alias c_gtk_print_unix_dialog_get_manual_capabilities gtk_print_unix_dialog_get_manual_capabilities;
+alias c_gtk_print_unix_dialog_get_page_setup gtk_print_unix_dialog_get_page_setup;
+alias c_gtk_print_unix_dialog_get_page_setup_set gtk_print_unix_dialog_get_page_setup_set;
+alias c_gtk_print_unix_dialog_get_selected_printer gtk_print_unix_dialog_get_selected_printer;
+alias c_gtk_print_unix_dialog_get_settings gtk_print_unix_dialog_get_settings;
+alias c_gtk_print_unix_dialog_get_support_selection gtk_print_unix_dialog_get_support_selection;
+alias c_gtk_print_unix_dialog_set_current_page gtk_print_unix_dialog_set_current_page;
+alias c_gtk_print_unix_dialog_set_embed_page_setup gtk_print_unix_dialog_set_embed_page_setup;
+alias c_gtk_print_unix_dialog_set_has_selection gtk_print_unix_dialog_set_has_selection;
+alias c_gtk_print_unix_dialog_set_manual_capabilities gtk_print_unix_dialog_set_manual_capabilities;
+alias c_gtk_print_unix_dialog_set_page_setup gtk_print_unix_dialog_set_page_setup;
+alias c_gtk_print_unix_dialog_set_settings gtk_print_unix_dialog_set_settings;
+alias c_gtk_print_unix_dialog_set_support_selection gtk_print_unix_dialog_set_support_selection;
+
+// gtk.Printer
+
+alias c_gtk_printer_get_type gtk_printer_get_type;
+alias c_gtk_printer_new gtk_printer_new;
+alias c_gtk_printer_accepts_pdf gtk_printer_accepts_pdf;
+alias c_gtk_printer_accepts_ps gtk_printer_accepts_ps;
+alias c_gtk_printer_compare gtk_printer_compare;
+alias c_gtk_printer_get_backend gtk_printer_get_backend;
+alias c_gtk_printer_get_capabilities gtk_printer_get_capabilities;
+alias c_gtk_printer_get_default_page_size gtk_printer_get_default_page_size;
+alias c_gtk_printer_get_description gtk_printer_get_description;
+alias c_gtk_printer_get_hard_margins gtk_printer_get_hard_margins;
+alias c_gtk_printer_get_hard_margins_for_paper_size gtk_printer_get_hard_margins_for_paper_size;
+alias c_gtk_printer_get_icon_name gtk_printer_get_icon_name;
+alias c_gtk_printer_get_job_count gtk_printer_get_job_count;
+alias c_gtk_printer_get_location gtk_printer_get_location;
+alias c_gtk_printer_get_name gtk_printer_get_name;
+alias c_gtk_printer_get_state_message gtk_printer_get_state_message;
+alias c_gtk_printer_has_details gtk_printer_has_details;
+alias c_gtk_printer_is_accepting_jobs gtk_printer_is_accepting_jobs;
+alias c_gtk_printer_is_active gtk_printer_is_active;
+alias c_gtk_printer_is_default gtk_printer_is_default;
+alias c_gtk_printer_is_paused gtk_printer_is_paused;
+alias c_gtk_printer_is_virtual gtk_printer_is_virtual;
+alias c_gtk_printer_list_papers gtk_printer_list_papers;
+alias c_gtk_printer_request_details gtk_printer_request_details;
 
 // gtk.ProgressBar
 
@@ -12999,6 +13294,7 @@ alias c_gtk_window_get_destroy_with_parent gtk_window_get_destroy_with_parent;
 alias c_gtk_window_get_focus gtk_window_get_focus;
 alias c_gtk_window_get_focus_visible gtk_window_get_focus_visible;
 alias c_gtk_window_get_group gtk_window_get_group;
+alias c_gtk_window_get_handle_menubar_accel gtk_window_get_handle_menubar_accel;
 alias c_gtk_window_get_hide_on_close gtk_window_get_hide_on_close;
 alias c_gtk_window_get_icon_name gtk_window_get_icon_name;
 alias c_gtk_window_get_mnemonics_visible gtk_window_get_mnemonics_visible;
@@ -13025,6 +13321,7 @@ alias c_gtk_window_set_destroy_with_parent gtk_window_set_destroy_with_parent;
 alias c_gtk_window_set_display gtk_window_set_display;
 alias c_gtk_window_set_focus gtk_window_set_focus;
 alias c_gtk_window_set_focus_visible gtk_window_set_focus_visible;
+alias c_gtk_window_set_handle_menubar_accel gtk_window_set_handle_menubar_accel;
 alias c_gtk_window_set_hide_on_close gtk_window_set_hide_on_close;
 alias c_gtk_window_set_icon_name gtk_window_set_icon_name;
 alias c_gtk_window_set_mnemonics_visible gtk_window_set_mnemonics_visible;

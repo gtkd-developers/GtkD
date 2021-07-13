@@ -27,7 +27,6 @@ module pango.PgFont;
 private import gobject.ObjectG;
 private import harfbuzz.feature_t;
 private import pango.PgCoverage;
-private import pango.PgEngineShape;
 private import pango.PgFontDescription;
 private import pango.PgFontFace;
 private import pango.PgFontMap;
@@ -38,18 +37,8 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoFont structure is used to represent
- * a font in a rendering-system-independent matter.
- * To create an implementation of a #PangoFont,
- * the rendering-system specific code should allocate
- * a larger structure that contains a nested
- * #PangoFont, fill in the <structfield>klass</structfield> member of
- * the nested #PangoFont with a pointer to
- * a appropriate #PangoFontClass, then call
- * pango_font_init() on the structure.
- * 
- * The #PangoFont structure contains one member
- * which the implementation fills in.
+ * A `PangoFont` is used to represent a font in a
+ * rendering-system-independent manner.
  */
 public class PgFont : ObjectG
 {
@@ -91,7 +80,7 @@ public class PgFont : ObjectG
 	 *
 	 * Params:
 	 *     descs = a pointer
-	 *         to an array of #PangoFontDescription, may be %NULL
+	 *         to an array of `PangoFontDescription`, may be %NULL
 	 */
 	public static void descriptionsFree(PgFontDescription[] descs)
 	{
@@ -106,10 +95,11 @@ public class PgFont : ObjectG
 
 	/**
 	 * Returns a description of the font, with font size set in points.
-	 * Use pango_font_describe_with_absolute_size() if you want the font
-	 * size in device units.
 	 *
-	 * Returns: a newly-allocated #PangoFontDescription object.
+	 * Use [method@Pango.Font.describe_with_absolute_size] if you want
+	 * the font size in device units.
+	 *
+	 * Returns: a newly-allocated `PangoFontDescription` object.
 	 */
 	public PgFontDescription describe()
 	{
@@ -125,10 +115,11 @@ public class PgFont : ObjectG
 
 	/**
 	 * Returns a description of the font, with absolute font size set
-	 * (in device units). Use pango_font_describe() if you want the font
-	 * size in points.
+	 * in device units.
 	 *
-	 * Returns: a newly-allocated #PangoFontDescription object.
+	 * Use [method@Pango.Font.describe] if you want the font size in points.
+	 *
+	 * Returns: a newly-allocated `PangoFontDescription` object.
 	 *
 	 * Since: 1.14
 	 */
@@ -145,36 +136,12 @@ public class PgFont : ObjectG
 	}
 
 	/**
-	 * Finds the best matching shaper for a font for a particular
-	 * language tag and character point.
-	 *
-	 * Deprecated: Shape engines are no longer used
-	 *
-	 * Params:
-	 *     language = the language tag
-	 *     ch = a Unicode character.
-	 *
-	 * Returns: the best matching shaper.
-	 */
-	public PgEngineShape findShaper(PgLanguage language, uint ch)
-	{
-		auto __p = pango_font_find_shaper(pangoFont, (language is null) ? null : language.getPgLanguageStruct(), ch);
-
-		if(__p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(PgEngineShape)(cast(PangoEngineShape*) __p);
-	}
-
-	/**
 	 * Computes the coverage map for a given font and language tag.
 	 *
 	 * Params:
 	 *     language = the language tag
 	 *
-	 * Returns: a newly-allocated #PangoCoverage
+	 * Returns: a newly-allocated `PangoCoverage`
 	 *     object.
 	 */
 	public PgCoverage getCoverage(PgLanguage language)
@@ -190,9 +157,9 @@ public class PgFont : ObjectG
 	}
 
 	/**
-	 * Gets the #PangoFontFace to which @font belongs.
+	 * Gets the `PangoFontFace` to which @font belongs.
 	 *
-	 * Returns: the #PangoFontFace
+	 * Returns: the `PangoFontFace`
 	 *
 	 * Since: 1.46
 	 */
@@ -210,6 +177,7 @@ public class PgFont : ObjectG
 
 	/**
 	 * Obtain the OpenType features that are provided by the font.
+	 *
 	 * These are passed to the rendering system, together with features
 	 * that have been explicitly set via attributes.
 	 *
@@ -238,15 +206,16 @@ public class PgFont : ObjectG
 	/**
 	 * Gets the font map for which the font was created.
 	 *
-	 * Note that the font maintains a <firstterm>weak</firstterm> reference
-	 * to the font map, so if all references to font map are dropped, the font
-	 * map will be finalized even if there are fonts created with the font
-	 * map that are still alive.  In that case this function will return %NULL.
+	 * Note that the font maintains a *weak* reference to the font map, so if
+	 * all references to font map are dropped, the font map will be finalized
+	 * even if there are fonts created with the font map that are still alive.
+	 * In that case this function will return %NULL.
+	 *
 	 * It is the responsibility of the user to ensure that the font map is kept
-	 * alive.  In most uses this is not an issue as a #PangoContext holds
+	 * alive. In most uses this is not an issue as a #PangoContext holds
 	 * a reference to the font map.
 	 *
-	 * Returns: the #PangoFontMap for the
+	 * Returns: the `PangoFontMap` for the
 	 *     font, or %NULL if @font is %NULL.
 	 *
 	 * Since: 1.10
@@ -264,8 +233,9 @@ public class PgFont : ObjectG
 	}
 
 	/**
-	 * Gets the logical and ink extents of a glyph within a font. The
-	 * coordinate system for each rectangle has its origin at the
+	 * Gets the logical and ink extents of a glyph within a font.
+	 *
+	 * The coordinate system for each rectangle has its origin at the
 	 * base line and horizontal origin of the character with increasing
 	 * coordinates extending to the right and down. The macros PANGO_ASCENT(),
 	 * PANGO_DESCENT(), PANGO_LBEARING(), and PANGO_RBEARING() can be used to convert
@@ -288,13 +258,12 @@ public class PgFont : ObjectG
 	}
 
 	/**
-	 * Get a hb_font_t object backing this font.
+	 * Get a `hb_font_t` object backing this font.
 	 *
-	 * Note that the objects returned by this function
-	 * are cached and immutable. If you need to make
-	 * changes to the hb_font_t, use hb_font_create_sub_font().
+	 * Note that the objects returned by this function are cached and immutable.
+	 * If you need to make changes to the `hb_font_t`, use hb_font_create_sub_font().
 	 *
-	 * Returns: the hb_font_t object backing the
+	 * Returns: the `hb_font_t` object backing the
 	 *     font, or %NULL if the font does not have one
 	 *
 	 * Since: 1.44
@@ -305,20 +274,22 @@ public class PgFont : ObjectG
 	}
 
 	/**
-	 * Gets overall metric information for a font. Since the metrics may be
-	 * substantially different for different scripts, a language tag can
-	 * be provided to indicate that the metrics should be retrieved that
-	 * correspond to the script(s) used by that language.
+	 * Gets overall metric information for a font.
+	 *
+	 * Since the metrics may be substantially different for different scripts,
+	 * a language tag can be provided to indicate that the metrics should be
+	 * retrieved that correspond to the script(s) used by that language.
 	 *
 	 * If @font is %NULL, this function gracefully sets some sane values in the
 	 * output variables and returns.
 	 *
 	 * Params:
-	 *     language = language tag used to determine which script to get the metrics
-	 *         for, or %NULL to indicate to get the metrics for the entire font.
+	 *     language = language tag used to determine which script
+	 *         to get the metrics for, or %NULL to indicate to get the metrics for
+	 *         the entire font.
 	 *
-	 * Returns: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
-	 *     when finished using the object.
+	 * Returns: a `PangoFontMetrics` object. The caller must call
+	 *     [method@Pango.FontMetrics.unref] when finished using the object.
 	 */
 	public PgFontMetrics getMetrics(PgLanguage language)
 	{

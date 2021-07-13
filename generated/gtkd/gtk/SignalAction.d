@@ -26,6 +26,7 @@ module gtk.SignalAction;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.ShortcutAction;
 private import gtk.c.functions;
@@ -33,7 +34,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutAction that emits a signal.
+ * A `GtkShortcut`Action that emits a signal.
  * 
  * Signals that are used in this way are referred to as keybinding signals,
  * and they are expected to be defined with the %G_SIGNAL_ACTION flag.
@@ -75,13 +76,14 @@ public class SignalAction : ShortcutAction
 
 	/**
 	 * Creates an action that when activated, emits the given action signal
-	 * on the provided widget unpacking the given args into arguments passed
-	 * to the signal.
+	 * on the provided widget.
+	 *
+	 * It will also unpack the args into arguments passed to the signal.
 	 *
 	 * Params:
 	 *     signalName = name of the signal to emit
 	 *
-	 * Returns: a new #GtkShortcutAction
+	 * Returns: a new `GtkShortcutAction`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

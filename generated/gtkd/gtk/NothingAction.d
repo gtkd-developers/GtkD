@@ -31,7 +31,7 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkShortcutAction that does nothing.
+ * A `GtkShortcutAction` that does nothing.
  */
 public class NothingAction : ShortcutAction
 {
@@ -69,7 +69,9 @@ public class NothingAction : ShortcutAction
 	}
 
 	/**
-	 * Gets the nothing action. This is an action that does nothing and where
+	 * Gets the nothing action.
+	 *
+	 * This is an action that does nothing and where
 	 * activating it always fails.
 	 *
 	 * Returns: The nothing action

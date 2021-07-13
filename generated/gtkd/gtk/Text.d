@@ -27,6 +27,7 @@ module gtk.Text;
 private import gio.MenuModel;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.EditableIF;
@@ -41,27 +42,33 @@ private import std.algorithm;
 
 
 /**
- * The #GtkText widget is a single line text entry widget.
+ * The `GtkText` widget is a single-line text entry widget.
+ * 
+ * `GtkText` is the common implementation of single-line text editing
+ * that is shared between `GtkEntry`, `GtkPasswordEntry, `GtkSpinButton`
+ * and other widgets. In all of these, `GtkText` is used as the delegate
+ * for the [iface@Gtk.Editable] implementation.
  * 
  * A fairly large set of key bindings are supported by default. If the
  * entered text is longer than the allocation of the widget, the widget
  * will scroll so that the cursor position is visible.
  * 
  * When using an entry for passwords and other sensitive information,
- * it can be put into “password mode” using gtk_text_set_visibility().
+ * it can be put into “password mode” using [method@Gtk.Text.set_visibility].
  * In this mode, entered text is displayed using a “invisible” character.
  * By default, GTK picks the best invisible character that is available
- * in the current font, but it can be changed with gtk_text_set_invisible_char().
+ * in the current font, but it can be changed with
+ * [method@Gtk.Text.set_invisible_char].
  * 
  * If you are looking to add icons or progress display in an entry, look
- * at #GtkEntry. There other alternatives for more specialized use cases,
- * such as #GtkSearchEntry.
+ * at `GtkEntry`. There other alternatives for more specialized use cases,
+ * such as `GtkSearchEntry`.
  * 
- * If you need multi-line editable text, look at #GtkTextView.
+ * If you need multi-line editable text, look at `GtkTextView`.
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * text[.read-only]
  * ├── placeholder
  * ├── undershoot.left
@@ -69,15 +76,15 @@ private import std.algorithm;
  * ├── [selection]
  * ├── [block-cursor]
  * ╰── [window.popup]
- * ]|
+ * ```
  * 
- * GtkText has a main node with the name text. Depending on the properties
+ * `GtkText` has a main node with the name text. Depending on the properties
  * of the widget, the .read-only style class may appear.
  * 
  * When the entry has a selection, it adds a subnode with the name selection.
  * 
- * When the entry is in overwrite mode, it adds a subnode with the name block-cursor
- * that determines how the block cursor is drawn.
+ * When the entry is in overwrite mode, it adds a subnode with the name
+ * block-cursor that determines how the block cursor is drawn.
  * 
  * The CSS node for a context menu is added as a subnode below text as well.
  * 
@@ -88,13 +95,15 @@ private import std.algorithm;
  * When touch is used and touch selection handles are shown, they are using
  * CSS nodes with name cursor-handle. They get the .top or .bottom style class
  * depending on where they are shown in relation to the selection. If there is
- * just a single handle for the text cursor, it gets the style class .insertion-cursor.
+ * just a single handle for the text cursor, it gets the style class
+ * .insertion-cursor.
  * 
  * # Accessibility
  * 
- * GtkText uses the #GTK_ACCESSIBLE_ROLE_NONE role, which causes it to be skipped
- * for accessibility. This is because GtkText is expected to be used as a delegate
- * for a #GtkEditable implementation that will be represented to accessibility.
+ * `GtkText` uses the %GTK_ACCESSIBLE_ROLE_NONE role, which causes it to be
+ * skipped for accessibility. This is because `GtkText` is expected to be used
+ * as a delegate for a `GtkEditable` implementation that will be represented
+ * to accessibility.
  */
 public class Text : Widget, EditableIF
 {
@@ -135,9 +144,9 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Creates a new self.
+	 * Creates a new `GtkText`.
 	 *
-	 * Returns: a new #GtkText.
+	 * Returns: a new `GtkText`.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -154,12 +163,12 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Creates a new self with the specified text buffer.
+	 * Creates a new `GtkText` with the specified text buffer.
 	 *
 	 * Params:
-	 *     buffer = The buffer to use for the new #GtkText.
+	 *     buffer = The buffer to use for the new `GtkText`.
 	 *
-	 * Returns: a new #GtkText
+	 * Returns: a new `GtkText`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -178,7 +187,7 @@ public class Text : Widget, EditableIF
 	/**
 	 * Retrieves the value set by gtk_text_set_activates_default().
 	 *
-	 * Returns: %TRUE if the self will activate the default widget
+	 * Returns: %TRUE if the `GtkText` will activate the default widget
 	 */
 	public bool getActivatesDefault()
 	{
@@ -186,11 +195,11 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Gets the attribute list that was set on the self using
-	 * gtk_text_set_attributes(), if any.
+	 * Gets the attribute list that was set on the `GtkText`
+	 * using gtk_text_set_attributes().
 	 *
-	 * Returns: the attribute list, or %NULL
-	 *     if none was set.
+	 * Returns: the attribute list,
+	 *     or %NULL if none was set.
 	 */
 	public PgAttributeList getAttributes()
 	{
@@ -205,10 +214,10 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Get the #GtkEntryBuffer object which holds the text for
+	 * Get the `GtkEntryBuffer` object which holds the text for
 	 * this self.
 	 *
-	 * Returns: A #GtkEntryBuffer object.
+	 * Returns: A `GtkEntryBuffer` object.
 	 */
 	public EntryBuffer getBuffer()
 	{
@@ -224,7 +233,7 @@ public class Text : Widget, EditableIF
 
 	/**
 	 * Returns whether Emoji completion is enabled for this
-	 * GtkText widget.
+	 * `GtkText` widget.
 	 *
 	 * Returns: %TRUE if Emoji completion is enabled
 	 */
@@ -251,7 +260,7 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Gets the value of the #GtkText:input-hints property.
+	 * Gets the input hints of the `GtkText`.
 	 */
 	public GtkInputHints getInputHints()
 	{
@@ -259,7 +268,7 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Gets the value of the #GtkText:input-purpose property.
+	 * Gets the input purpose of the `GtkText`.
 	 */
 	public GtkInputPurpose getInputPurpose()
 	{
@@ -268,10 +277,11 @@ public class Text : Widget, EditableIF
 
 	/**
 	 * Retrieves the character displayed in place of the real characters
-	 * for entries with visibility set to false. Note that GTK does not
-	 * compute this value unless it needs it, so the value returned by
-	 * this function is not very useful unless it has been explicitly
-	 * set with gtk_text_set_invisible_char()
+	 * for entries with visibility set to false.
+	 *
+	 * Note that GTK does not compute this value unless it needs it,
+	 * so the value returned by this function is not very useful unless
+	 * it has been explicitly set with [method@Gtk.Text.set_invisible_char].
 	 *
 	 * Returns: the current invisible char, or 0, if @text does not
 	 *     show invisible text at all.
@@ -282,14 +292,15 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Retrieves the maximum allowed length of the text in
-	 * @self. See gtk_text_set_max_length().
+	 * Retrieves the maximum allowed length of the text in @self.
 	 *
-	 * This is equivalent to getting @self's #GtkEntryBuffer and
-	 * calling gtk_entry_buffer_get_max_length() on it.
+	 * See [method@Gtk.Text.set_max_length].
+	 *
+	 * This is equivalent to getting @self's `GtkEntryBuffer` and
+	 * calling [method@Gtk.EntryBuffer.get_max_length] on it.
 	 *
 	 * Returns: the maximum allowed number of characters
-	 *     in #GtkText, or 0 if there is no maximum.
+	 *     in `GtkText`, or 0 if there is no maximum.
 	 */
 	public int getMaxLength()
 	{
@@ -307,12 +318,14 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Retrieves the text that will be displayed when @self is empty and unfocused
+	 * Retrieves the text that will be displayed when
+	 * @self is empty and unfocused
 	 *
-	 * Returns: a pointer to the placeholder text as a string.
-	 *     This string points to internally allocated storage in the widget and must
-	 *     not be freed, modified or stored. If no placeholder text has been set,
-	 *     %NULL will be returned.
+	 * Returns: a pointer
+	 *     to the placeholder text as a string. This string
+	 *     points to internally allocated storage in the widget
+	 *     and must not be freed, modified or stored. If no placeholder
+	 *     text has been set, %NULL will be returned.
 	 */
 	public string getPlaceholderText()
 	{
@@ -320,7 +333,7 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Returns whether the #GtkText will grow and shrink
+	 * Returns whether the `GtkText` will grow and shrink
 	 * with the content.
 	 *
 	 * Returns: %TRUE if @self will propagate the text width
@@ -331,10 +344,11 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Gets the tabstops that were set on the self using gtk_text_set_tabs(), if
-	 * any.
+	 * Gets the tabstops that were set on the `GtkText`
+	 * using gtk_text_set_tabs().
 	 *
-	 * Returns: the tabstops, or %NULL if none was set.
+	 * Returns: the tabstops,
+	 *     or %NULL if none was set.
 	 */
 	public PgTabArray getTabs()
 	{
@@ -349,14 +363,13 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Retrieves the current length of the text in
-	 * @self.
+	 * Retrieves the current length of the text in @self.
 	 *
-	 * This is equivalent to getting @self's #GtkEntryBuffer and
-	 * calling gtk_entry_buffer_get_length() on it.
+	 * This is equivalent to getting @self's `GtkEntryBuffer`
+	 * and calling [method@Gtk.EntryBuffer.get_length] on it.
 	 *
 	 * Returns: the current number of characters
-	 *     in #GtkText, or 0 if there are none.
+	 *     in `GtkText`, or 0 if there are none.
 	 */
 	public ushort getTextLength()
 	{
@@ -364,7 +377,7 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Returns whether the #GtkText will truncate multi-line text
+	 * Returns whether the `GtkText` will truncate multi-line text
 	 * that is pasted into the widget
 	 *
 	 * Returns: %TRUE if @self will truncate multi-line text
@@ -376,7 +389,6 @@ public class Text : Widget, EditableIF
 
 	/**
 	 * Retrieves whether the text in @self is visible.
-	 * See gtk_text_set_visibility().
 	 *
 	 * Returns: %TRUE if the text is currently visible
 	 */
@@ -388,7 +400,7 @@ public class Text : Widget, EditableIF
 	/**
 	 * Causes @self to have keyboard focus.
 	 *
-	 * It behaves like gtk_widget_grab_focus(),
+	 * It behaves like [method@Gtk.Widget.grab_focus],
 	 * except that it doesn't select the contents of @self.
 	 * You only want to call this on some special entries
 	 * which the user usually doesn't want to replace all text in,
@@ -402,10 +414,12 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * If @activates is %TRUE, pressing Enter in the @self will activate the default
-	 * widget for the window containing the self. This usually means that
-	 * the dialog box containing the self will be closed, since the default
-	 * widget is usually one of the dialog buttons.
+	 * If @activates is %TRUE, pressing Enter in the @self will
+	 * activate the default widget for the window containing @self.
+	 *
+	 * This usually means that the dialog containing the `GtkText`
+	 * will be closed, since the default widget is usually one of
+	 * the dialog buttons.
 	 *
 	 * Params:
 	 *     activates = %TRUE to activate window’s default widget on Enter keypress
@@ -416,11 +430,10 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets a #PangoAttrList; the attributes in the list are applied to the
-	 * text.
+	 * Sets attributes that are applied to the text.
 	 *
 	 * Params:
-	 *     attrs = a #PangoAttrList or %NULL to unset
+	 *     attrs = a `PangoAttrList` or %NULL to unset
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{
@@ -428,11 +441,11 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Set the #GtkEntryBuffer object which holds the text for
+	 * Set the `GtkEntryBuffer` object which holds the text for
 	 * this widget.
 	 *
 	 * Params:
-	 *     buffer = a #GtkEntryBuffer
+	 *     buffer = a `GtkEntryBuffer`
 	 */
 	public void setBuffer(EntryBuffer buffer)
 	{
@@ -440,9 +453,11 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets whether Emoji completion is enabled. If it is,
-	 * typing ':', followed by a recognized keyword, will pop
-	 * up a window with suggested Emojis matching the keyword.
+	 * Sets whether Emoji completion is enabled.
+	 *
+	 * If it is, typing ':', followed by a recognized keyword,
+	 * will pop up a window with suggested Emojis matching the
+	 * keyword.
 	 *
 	 * Params:
 	 *     enableEmojiCompletion = %TRUE to enable Emoji completion
@@ -457,7 +472,7 @@ public class Text : Widget, EditableIF
 	 * the context menu for @self.
 	 *
 	 * Params:
-	 *     model = a #GMenuModel
+	 *     model = a `GMenuModel`
 	 */
 	public void setExtraMenu(MenuModel model)
 	{
@@ -465,8 +480,8 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets the #GtkText:input-hints property, which
-	 * allows input methods to fine-tune their behaviour.
+	 * Sets input hints that allow input methods
+	 * to fine-tune their behaviour.
 	 *
 	 * Params:
 	 *     hints = the hints
@@ -477,9 +492,10 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets the #GtkText:input-purpose property which
-	 * can be used by on-screen keyboards and other input
-	 * methods to adjust their behaviour.
+	 * Sets the input purpose of the `GtkText`.
+	 *
+	 * This can be used by on-screen keyboards and other
+	 * input methods to adjust their behaviour.
 	 *
 	 * Params:
 	 *     purpose = the purpose
@@ -491,9 +507,7 @@ public class Text : Widget, EditableIF
 
 	/**
 	 * Sets the character to use in place of the actual text when
-	 * gtk_text_set_visibility() has been called to set text visibility
-	 * to %FALSE. i.e. this is the character used in “password mode” to
-	 * show the user how many characters have been typed.
+	 * in “password mode”.
 	 *
 	 * By default, GTK picks the best invisible char available in the
 	 * current font. If you set the invisible char to 0, then the user
@@ -514,14 +528,13 @@ public class Text : Widget, EditableIF
 	 * If the current contents are longer than the given length, then
 	 * they will be truncated to fit.
 	 *
-	 * This is equivalent to getting @self's #GtkEntryBuffer and
-	 * calling gtk_entry_buffer_set_max_length() on it.
-	 * ]|
+	 * This is equivalent to getting @self's `GtkEntryBuffer` and
+	 * calling [method@Gtk.EntryBuffer.set_max_length] on it.
 	 *
 	 * Params:
-	 *     length = the maximum length of the self, or 0 for no maximum.
-	 *         (other than the maximum length of entries.) The value passed in will
-	 *         be clamped to the range 0-65536.
+	 *     length = the maximum length of the `GtkText`, or 0 for no maximum.
+	 *         (other than the maximum length of entries.) The value passed
+	 *         in will be clamped to the range 0-65536.
 	 */
 	public void setMaxLength(int length)
 	{
@@ -529,7 +542,8 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets whether the text is overwritten when typing in the #GtkText.
+	 * Sets whether the text is overwritten when typing
+	 * in the `GtkText`.
 	 *
 	 * Params:
 	 *     overwrite = new value
@@ -543,10 +557,11 @@ public class Text : Widget, EditableIF
 	 * Sets text to be displayed in @self when it is empty.
 	 *
 	 * This can be used to give a visual hint of the expected
-	 * contents of the self.
+	 * contents of the `GtkText`.
 	 *
 	 * Params:
-	 *     text = a string to be displayed when @self is empty and unfocused, or %NULL
+	 *     text = a string to be displayed when @self
+	 *         is empty and unfocused, or %NULL
 	 */
 	public void setPlaceholderText(string text)
 	{
@@ -554,7 +569,7 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets whether the GtkText should grow and shrink with the content.
+	 * Sets whether the `GtkText` should grow and shrink with the content.
 	 *
 	 * Params:
 	 *     propagateTextWidth = %TRUE to propagate the text width
@@ -565,11 +580,10 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets a #PangoTabArray; the tabstops in the array are applied to the self
-	 * text.
+	 * Sets tabstops that are applied to the text.
 	 *
 	 * Params:
-	 *     tabs = a #PangoTabArray
+	 *     tabs = a `PangoTabArray`
 	 */
 	public void setTabs(PgTabArray tabs)
 	{
@@ -577,7 +591,7 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets whether the GtkText should truncate multi-line text
+	 * Sets whether the `GtkText` should truncate multi-line text
 	 * that is pasted into the widget.
 	 *
 	 * Params:
@@ -589,22 +603,23 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Sets whether the contents of the self are visible or not.
+	 * Sets whether the contents of the `GtkText` are visible or not.
+	 *
 	 * When visibility is set to %FALSE, characters are displayed
 	 * as the invisible char, and will also appear that way when
-	 * the text in the self widget is copied to the clipboard.
+	 * the text in the widget is copied to the clipboard.
 	 *
 	 * By default, GTK picks the best invisible character available
 	 * in the current font, but it can be changed with
-	 * gtk_text_set_invisible_char().
+	 * [method@Gtk.Text.set_invisible_char].
 	 *
-	 * Note that you probably want to set #GtkText:input-purpose
+	 * Note that you probably want to set [property@Gtk.Text:input-purpose]
 	 * to %GTK_INPUT_PURPOSE_PASSWORD or %GTK_INPUT_PURPOSE_PIN to
 	 * inform input methods about the purpose of this self,
 	 * in addition to setting visibility to %FALSE.
 	 *
 	 * Params:
-	 *     visible = %TRUE if the contents of the self are displayed
+	 *     visible = %TRUE if the contents of the `GtkText` are displayed
 	 *         as plaintext
 	 */
 	public void setVisibility(bool visible)
@@ -613,9 +628,10 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * Unsets the invisible char previously set with
-	 * gtk_text_set_invisible_char(). So that the
-	 * default invisible char is used again.
+	 * Unsets the invisible char.
+	 *
+	 * After calling this, the default invisible
+	 * char is used again.
 	 */
 	public void unsetInvisibleChar()
 	{
@@ -623,10 +639,10 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::activate signal is emitted when the user hits
-	 * the Enter key.
+	 * Emitted when the user hits the Enter key.
 	 *
-	 * The default bindings for this signal are all forms of the Enter key.
+	 * The default bindings for this signal are all forms
+	 * of the <kbd>Enter</kbd> key.
 	 */
 	gulong addOnActivate(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -634,12 +650,12 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::backspace signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user asks for it.
+	 * Emitted when the user asks for it.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are
-	 * Backspace and Shift-Backspace.
+	 * <kbd>Backspace</kbd> and <kbd>Shift</kbd>-<kbd>Backspace</kbd>.
 	 */
 	gulong addOnBackspace(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -647,12 +663,13 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::copy-clipboard signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to copy the selection to the clipboard.
+	 * Emitted to copy the selection to the clipboard.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are
-	 * Ctrl-c and Ctrl-Insert.
+	 * <kbd>Ctrl</kbd>-<kbd>c</kbd> and
+	 * <kbd>Ctrl</kbd>-<kbd>Insert</kbd>.
 	 */
 	gulong addOnCopyClipboard(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -660,12 +677,13 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::cut-clipboard signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to cut the selection to the clipboard.
+	 * Emitted to cut the selection to the clipboard.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are
-	 * Ctrl-x and Shift-Delete.
+	 * <kbd>Ctrl</kbd>-<kbd>x</kbd> and
+	 * <kbd>Shift</kbd>-<kbd>Delete</kbd>.
 	 */
 	gulong addOnCutClipboard(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -673,17 +691,17 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::delete-from-cursor signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates a text deletion.
+	 * Emitted when the user initiates a text deletion.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * If the @type is %GTK_DELETE_CHARS, GTK deletes the selection
 	 * if there is one, otherwise it deletes the requested number
 	 * of characters.
 	 *
-	 * The default bindings for this signal are
-	 * Delete for deleting a character and Ctrl-Delete for
-	 * deleting a word.
+	 * The default bindings for this signal are <kbd>Delete</kbd>
+	 * for deleting a character and <kbd>Ctrl</kbd>-<kbd>Delete</kbd>
+	 * for deleting a word.
 	 *
 	 * Params:
 	 *     type = the granularity of the deletion, as a #GtkDeleteType
@@ -695,10 +713,10 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::insert-at-cursor signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates the insertion of a
+	 * Emitted when the user initiates the insertion of a
 	 * fixed string at the cursor.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * This signal has no default bindings.
 	 *
@@ -711,11 +729,13 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::insert-emoji signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to present the Emoji chooser for the @self.
+	 * Emitted to present the Emoji chooser for the @self.
 	 *
-	 * The default bindings for this signal are Ctrl-. and Ctrl-;
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default bindings for this signal are
+	 * <kbd>Ctrl</kbd>-<kbd>.</kbd> and
+	 * <kbd>Ctrl</kbd>-<kbd>;</kbd>
 	 */
 	gulong addOnInsertEmoji(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -723,23 +743,26 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::move-cursor signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted when the user initiates a cursor movement.
+	 * Emitted when the user initiates a cursor movement.
+	 *
 	 * If the cursor is not visible in @self, this signal causes
 	 * the viewport to be moved instead.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * Applications should not connect to it, but may emit it with
 	 * g_signal_emit_by_name() if they need to control the cursor
 	 * programmatically.
 	 *
 	 * The default bindings for this signal come in two variants,
-	 * the variant with the Shift modifier extends the selection,
-	 * the variant without the Shift modifier does not.
+	 * the variant with the <kbd>Shift</kbd> modifier extends the
+	 * selection, the variant without it does not.
 	 * There are too many key combinations to list them all here.
-	 * - Arrow keys move by individual characters/lines
-	 * - Ctrl-arrow key combinations move by words/paragraphs
-	 * - Home/End keys move to the ends of the buffer
+	 *
+	 * - <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd>
+	 * move by individual characters/lines
+	 * - <kbd>Ctrl</kbd>-<kbd>→</kbd>, etc. move by words/paragraphs
+	 * - <kbd>Home</kbd>, <kbd>End</kbd> move to the ends of the buffer
 	 *
 	 * Params:
 	 *     step = the granularity of the move, as a #GtkMovementStep
@@ -752,13 +775,12 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::paste-clipboard signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to paste the contents of the clipboard
-	 * into the text view.
+	 * Emitted to paste the contents of the clipboard.
+	 *
+	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
 	 * The default bindings for this signal are
-	 * Ctrl-v and Shift-Insert.
+	 * <kbd>Ctrl</kbd>-<kbd>v</kbd> and <kbd>Shift</kbd>-<kbd>Insert</kbd>.
 	 */
 	gulong addOnPasteClipboard(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -766,6 +788,8 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
+	 * Emitted when the preedit text changes.
+	 *
 	 * If an input method is used, the typed text will not immediately
 	 * be committed to the buffer. So if you are interested in the text,
 	 * connect to this signal.
@@ -779,11 +803,11 @@ public class Text : Widget, EditableIF
 	}
 
 	/**
-	 * The ::toggle-overwrite signal is a
-	 * [keybinding signal][GtkSignalAction]
-	 * which gets emitted to toggle the overwrite mode of the self.
+	 * Emitted to toggle the overwrite mode of the `GtkText`.
 	 *
-	 * The default bindings for this signal is Insert.
+	 * This is a [keybinding signal](class.SignalAction.html).
+	 *
+	 * The default bindings for this signal is <kbd>Insert</kbd>.
 	 */
 	gulong addOnToggleOverwrite(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

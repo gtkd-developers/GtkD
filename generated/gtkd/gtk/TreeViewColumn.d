@@ -26,6 +26,7 @@ module gtk.TreeViewColumn;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.BuildableIF;
@@ -43,13 +44,16 @@ private import std.algorithm;
 
 
 /**
+ * A visible column in a GtkTreeView widget
+ * 
  * The GtkTreeViewColumn object represents a visible column in a #GtkTreeView widget.
- * It allows to set properties of the column header, and functions as a holding pen for
- * the cell renderers which determine how the data in the column is displayed.
+ * It allows to set properties of the column header, and functions as a holding pen
+ * for the cell renderers which determine how the data in the column is displayed.
  * 
  * Please refer to the [tree widget conceptual overview][TreeWidget]
- * for an overview of all the objects and data types related to the tree widget and how
- * they work together.
+ * for an overview of all the objects and data types related to the tree widget and
+ * how they work together, and to the #GtkTreeView documentation for specifics about
+ * the CSS node structure for treeviews and their headers.
  */
 public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 {

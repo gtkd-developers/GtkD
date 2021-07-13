@@ -30,7 +30,7 @@ public  import gdk.c.types;
 
 
 /**
- * An event related to a button on a pointer device/
+ * An event related to a button on a pointer device.
  */
 public class ButtonEvent : Event
 {

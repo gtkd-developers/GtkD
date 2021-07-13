@@ -32,22 +32,26 @@ private import std.algorithm;
 
 
 /**
- * #GtkSorter is the way to describe sorting criteria.
- * Its primary user is #GtkSortListModel.
+ * `GtkSorter` is an object to describe sorting criteria.
  * 
- * The model will use a sorter to determine the order in which its items should appear
- * by calling gtk_sorter_compare() for pairs of items.
+ * Its primary user is [class@Gtk.SortListModel]
  * 
- * Sorters may change their sorting behavior through their lifetime. In that case,
- * they will emit the #GtkSorter::changed signal to notify that the sort order is
- * no longer valid and should be updated by calling gtk_sorter_compare() again.
+ * The model will use a sorter to determine the order in which
+ * its items should appear by calling [method@Gtk.Sorter.compare]
+ * for pairs of items.
  * 
- * GTK provides various pre-made sorter implementations for common sorting operations.
- * #GtkColumnView has built-in support for sorting lists via the #GtkColumnViewColumn:sorter
- * property, where the user can change the sorting by clicking on list headers.
+ * Sorters may change their sorting behavior through their lifetime.
+ * In that case, they will emit the [signal@Gtk.Sorter::changed] signal
+ * to notify that the sort order is no longer valid and should be updated
+ * by calling gtk_sorter_compare() again.
  * 
- * Of course, in particular for large lists, it is also possible to subclass #GtkSorter
- * and provide one's own sorter.
+ * GTK provides various pre-made sorter implementations for common sorting
+ * operations. [class@Gtk.ColumnView] has built-in support for sorting lists
+ * via the [property@Gtk.ColumnViewColumn:sorter] property, where the user can
+ * change the sorting by clicking on list headers.
+ * 
+ * Of course, in particular for large lists, it is also possible to subclass
+ * `GtkSorter` and provide one's own sorter.
  */
 public class Sorter : ObjectG
 {
@@ -85,16 +89,18 @@ public class Sorter : ObjectG
 	}
 
 	/**
-	 * Emits the #GtkSorter::changed signal to notify all users of the sorter
-	 * that it has changed. Users of the sorter should then update the sort
-	 * order via gtk_sorter_compare().
+	 * Emits the [signal@Gtk.Sorter::changed] signal to notify all users
+	 * of the sorter that it has changed.
+	 *
+	 * Users of the sorter should then update the sort order via
+	 * gtk_sorter_compare().
 	 *
 	 * Depending on the @change parameter, it may be possible to update
-	 * the sort order without a full resorting. Refer to the #GtkSorterChange
-	 * documentation for details.
+	 * the sort order without a full resorting. Refer to the
+	 * [enum@Gtk.SorterChange] documentation for details.
 	 *
-	 * This function is intended for implementors of #GtkSorter subclasses and
-	 * should not be called from other functions.
+	 * This function is intended for implementors of `GtkSorter`
+	 * subclasses and should not be called from other functions.
 	 *
 	 * Params:
 	 *     change = How the sorter changed
@@ -109,13 +115,14 @@ public class Sorter : ObjectG
 	 * by the sorter.
 	 *
 	 * Sorters implement a partial order:
+	 *
 	 * * It is reflexive, ie a = a
 	 * * It is antisymmetric, ie if a < b and b < a, then a = b
 	 * * It is transitive, ie given any 3 items with a ≤ b and b ≤ c,
 	 * then a ≤ c
 	 *
-	 * The sorter  may signal it conforms to additional constraints
-	 * via the return value of gtk_sorter_get_order().
+	 * The sorter may signal it conforms to additional constraints
+	 * via the return value of [method@Gtk.Sorter.get_order].
 	 *
 	 * Params:
 	 *     item1 = first item to compare
@@ -131,7 +138,9 @@ public class Sorter : ObjectG
 	}
 
 	/**
-	 * Gets the order that @self conforms to. See #GtkSorterOrder for details
+	 * Gets the order that @self conforms to.
+	 *
+	 * See [enum@Gtk.SorterOrder] for details
 	 * of the possible return values.
 	 *
 	 * This function is intended to allow optimizations.
@@ -144,14 +153,16 @@ public class Sorter : ObjectG
 	}
 
 	/**
-	 * This signal is emitted whenever the sorter changed. Users of the sorter
-	 * should then update the sort order again via gtk_sorter_compare().
+	 * Emitted whenever the sorter changed.
 	 *
-	 * #GtkSortListModel handles this signal automatically.
+	 * Users of the sorter should then update the sort order
+	 * again via gtk_sorter_compare().
+	 *
+	 * [class@Gtk.SortListModel] handles this signal automatically.
 	 *
 	 * Depending on the @change parameter, it may be possible to update
-	 * the sort order without a full resorting. Refer to the #GtkSorterChange
-	 * documentation for details.
+	 * the sort order without a full resorting. Refer to the
+	 * [enum@Gtk.SorterChange] documentation for details.
 	 *
 	 * Params:
 	 *     change = how the sorter changed

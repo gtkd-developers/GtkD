@@ -183,25 +183,12 @@ shared static this()
 	Linker.link(pango_coverage_to_bytes, "pango_coverage_to_bytes", LIBRARY_PANGO);
 	Linker.link(pango_coverage_unref, "pango_coverage_unref", LIBRARY_PANGO);
 
-	// pango.PgEngine
-
-	Linker.link(pango_engine_get_type, "pango_engine_get_type", LIBRARY_PANGO);
-
-	// pango.PgEngineLang
-
-	Linker.link(pango_engine_lang_get_type, "pango_engine_lang_get_type", LIBRARY_PANGO);
-
-	// pango.PgEngineShape
-
-	Linker.link(pango_engine_shape_get_type, "pango_engine_shape_get_type", LIBRARY_PANGO);
-
 	// pango.PgFont
 
 	Linker.link(pango_font_get_type, "pango_font_get_type", LIBRARY_PANGO);
 	Linker.link(pango_font_descriptions_free, "pango_font_descriptions_free", LIBRARY_PANGO);
 	Linker.link(pango_font_describe, "pango_font_describe", LIBRARY_PANGO);
 	Linker.link(pango_font_describe_with_absolute_size, "pango_font_describe_with_absolute_size", LIBRARY_PANGO);
-	Linker.link(pango_font_find_shaper, "pango_font_find_shaper", LIBRARY_PANGO);
 	Linker.link(pango_font_get_coverage, "pango_font_get_coverage", LIBRARY_PANGO);
 	Linker.link(pango_font_get_face, "pango_font_get_face", LIBRARY_PANGO);
 	Linker.link(pango_font_get_features, "pango_font_get_features", LIBRARY_PANGO);
@@ -461,13 +448,6 @@ shared static this()
 	Linker.link(pango_layout_line_ref, "pango_layout_line_ref", LIBRARY_PANGO);
 	Linker.link(pango_layout_line_unref, "pango_layout_line_unref", LIBRARY_PANGO);
 	Linker.link(pango_layout_line_x_to_index, "pango_layout_line_x_to_index", LIBRARY_PANGO);
-
-	// pango.PgMap
-
-	Linker.link(pango_map_get_engine, "pango_map_get_engine", LIBRARY_PANGO);
-	Linker.link(pango_map_get_engines, "pango_map_get_engines", LIBRARY_PANGO);
-	Linker.link(pango_find_map, "pango_find_map", LIBRARY_PANGO);
-	Linker.link(pango_module_register, "pango_module_register", LIBRARY_PANGO);
 
 	// pango.PgMatrix
 
@@ -753,25 +733,12 @@ __gshared extern(C)
 	void function(PangoCoverage* coverage, char** bytes, int* nBytes) c_pango_coverage_to_bytes;
 	void function(PangoCoverage* coverage) c_pango_coverage_unref;
 
-	// pango.PgEngine
-
-	GType function() c_pango_engine_get_type;
-
-	// pango.PgEngineLang
-
-	GType function() c_pango_engine_lang_get_type;
-
-	// pango.PgEngineShape
-
-	GType function() c_pango_engine_shape_get_type;
-
 	// pango.PgFont
 
 	GType function() c_pango_font_get_type;
 	void function(PangoFontDescription** descs, int nDescs) c_pango_font_descriptions_free;
 	PangoFontDescription* function(PangoFont* font) c_pango_font_describe;
 	PangoFontDescription* function(PangoFont* font) c_pango_font_describe_with_absolute_size;
-	PangoEngineShape* function(PangoFont* font, PangoLanguage* language, uint ch) c_pango_font_find_shaper;
 	PangoCoverage* function(PangoFont* font, PangoLanguage* language) c_pango_font_get_coverage;
 	PangoFontFace* function(PangoFont* font) c_pango_font_get_face;
 	void function(PangoFont* font, hb_feature_t* features, uint len, uint* numFeatures) c_pango_font_get_features;
@@ -1031,13 +998,6 @@ __gshared extern(C)
 	PangoLayoutLine* function(PangoLayoutLine* line) c_pango_layout_line_ref;
 	void function(PangoLayoutLine* line) c_pango_layout_line_unref;
 	int function(PangoLayoutLine* line, int xPos, int* index, int* trailing) c_pango_layout_line_x_to_index;
-
-	// pango.PgMap
-
-	PangoEngine* function(PangoMap* map, PangoScript script) c_pango_map_get_engine;
-	void function(PangoMap* map, PangoScript script, GSList** exactEngines, GSList** fallbackEngines) c_pango_map_get_engines;
-	PangoMap* function(PangoLanguage* language, uint engineTypeId, uint renderTypeId) c_pango_find_map;
-	void function(PangoIncludedModule* module_) c_pango_module_register;
 
 	// pango.PgMatrix
 
@@ -1321,25 +1281,12 @@ alias c_pango_coverage_set pango_coverage_set;
 alias c_pango_coverage_to_bytes pango_coverage_to_bytes;
 alias c_pango_coverage_unref pango_coverage_unref;
 
-// pango.PgEngine
-
-alias c_pango_engine_get_type pango_engine_get_type;
-
-// pango.PgEngineLang
-
-alias c_pango_engine_lang_get_type pango_engine_lang_get_type;
-
-// pango.PgEngineShape
-
-alias c_pango_engine_shape_get_type pango_engine_shape_get_type;
-
 // pango.PgFont
 
 alias c_pango_font_get_type pango_font_get_type;
 alias c_pango_font_descriptions_free pango_font_descriptions_free;
 alias c_pango_font_describe pango_font_describe;
 alias c_pango_font_describe_with_absolute_size pango_font_describe_with_absolute_size;
-alias c_pango_font_find_shaper pango_font_find_shaper;
 alias c_pango_font_get_coverage pango_font_get_coverage;
 alias c_pango_font_get_face pango_font_get_face;
 alias c_pango_font_get_features pango_font_get_features;
@@ -1599,13 +1546,6 @@ alias c_pango_layout_line_index_to_x pango_layout_line_index_to_x;
 alias c_pango_layout_line_ref pango_layout_line_ref;
 alias c_pango_layout_line_unref pango_layout_line_unref;
 alias c_pango_layout_line_x_to_index pango_layout_line_x_to_index;
-
-// pango.PgMap
-
-alias c_pango_map_get_engine pango_map_get_engine;
-alias c_pango_map_get_engines pango_map_get_engines;
-alias c_pango_find_map pango_find_map;
-alias c_pango_module_register pango_module_register;
 
 // pango.PgMatrix
 

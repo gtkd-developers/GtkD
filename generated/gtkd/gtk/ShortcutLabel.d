@@ -26,6 +26,7 @@ module gtk.ShortcutLabel;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
@@ -33,8 +34,9 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkShortcutLabel is a widget that represents a single keyboard shortcut or gesture
- * in the user interface.
+ * `GtkShortcutLabel` displays a single keyboard shortcut or gesture.
+ * 
+ * The main use case for `GtkShortcutLabel` is inside a [class@Gtk.ShortcutsWindow].
  */
 public class ShortcutLabel : Widget
 {
@@ -72,12 +74,12 @@ public class ShortcutLabel : Widget
 	}
 
 	/**
-	 * Creates a new #GtkShortcutLabel with @accelerator set.
+	 * Creates a new `GtkShortcutLabel` with @accelerator set.
 	 *
 	 * Params:
 	 *     accelerator = the initial accelerator
 	 *
-	 * Returns: a newly-allocated #GtkShortcutLabel
+	 * Returns: a newly-allocated `GtkShortcutLabel`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -90,7 +92,7 @@ public class ShortcutLabel : Widget
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkShortcutLabel*) __p, true);
+		this(cast(GtkShortcutLabel*) __p);
 	}
 
 	/**

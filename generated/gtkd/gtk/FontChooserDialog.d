@@ -37,12 +37,18 @@ public  import gtk.c.types;
 
 
 /**
- * The #GtkFontChooserDialog widget is a dialog for selecting a font.
- * It implements the #GtkFontChooser interface.
+ * The `GtkFontChooserDialog` widget is a dialog for selecting a font.
+ * 
+ * ![An example GtkFontChooserDialog](fontchooser.png)
+ * 
+ * `GtkFontChooserDialog` implements the [iface@Gtk.FontChooser] interface
+ * and does not provide much API of its own.
+ * 
+ * To create a `GtkFontChooserDialog`, use [ctor@Gtk.FontChooserDialog.new].
  * 
  * # GtkFontChooserDialog as GtkBuildable
  * 
- * The GtkFontChooserDialog implementation of the #GtkBuildable
+ * The `GtkFontChooserDialog` implementation of the `GtkBuildable`
  * interface exposes the buttons with the names “select_button”
  * and “cancel_button”.
  */
@@ -85,13 +91,13 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	}
 
 	/**
-	 * Creates a new #GtkFontChooserDialog.
+	 * Creates a new `GtkFontChooserDialog`.
 	 *
 	 * Params:
 	 *     title = Title of the dialog, or %NULL
 	 *     parent = Transient parent of the dialog, or %NULL
 	 *
-	 * Returns: a new #GtkFontChooserDialog
+	 * Returns: a new `GtkFontChooserDialog`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

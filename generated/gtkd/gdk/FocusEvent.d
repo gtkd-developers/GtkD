@@ -30,7 +30,7 @@ public  import gdk.c.types;
 
 
 /**
- * An event related to a focus change.
+ * An event related to a keyboard focus change.
  */
 public class FocusEvent : Event
 {

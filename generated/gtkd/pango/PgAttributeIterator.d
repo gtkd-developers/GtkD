@@ -34,13 +34,13 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoAttrIterator structure is used to represent an
- * iterator through a #PangoAttrList. A new iterator is created
- * with pango_attr_list_get_iterator(). Once the iterator
- * is created, it can be advanced through the style changes
- * in the text using pango_attr_iterator_next(). At each
- * style change, the range of the current style segment and the
- * attributes currently in effect can be queried.
+ * A `PangoAttrIterator` is used to iterate through a `PangoAttrList`.
+ * 
+ * A new iterator is created with [method@Pango.AttrList.get_iterator].
+ * Once the iterator is created, it can be advanced through the style
+ * changes in the text using [method@Pango.AttrIterator.next]. At each
+ * style change, the range of the current style segment and the attributes
+ * currently in effect can be queried.
  */
 public class PgAttributeIterator
 {
@@ -79,11 +79,10 @@ public class PgAttributeIterator
 	}
 
 	/**
-	 * Copy a #PangoAttrIterator
+	 * Copy a `PangoAttrIterator`.
 	 *
-	 * Returns: the newly allocated
-	 *     #PangoAttrIterator, which should be freed with
-	 *     pango_attr_iterator_destroy().
+	 * Returns: the newly allocated `PangoAttrIterator`,
+	 *     which should be freed with [method@Pango.AttrIterator.destroy].
 	 */
 	public PgAttributeIterator copy()
 	{
@@ -98,7 +97,7 @@ public class PgAttributeIterator
 	}
 
 	/**
-	 * Destroy a #PangoAttrIterator and free all associated memory.
+	 * Destroy a `PangoAttrIterator` and free all associated memory.
 	 */
 	public void destroy()
 	{
@@ -112,11 +111,11 @@ public class PgAttributeIterator
 	 * is used.
 	 *
 	 * Params:
-	 *     type = the type of attribute to find.
+	 *     type = the type of attribute to find
 	 *
-	 * Returns: the current attribute of the given type,
-	 *     or %NULL if no attribute of that type applies to the
-	 *     current location.
+	 * Returns: the current attribute of
+	 *     the given type, or %NULL if no attribute of that type applies to
+	 *     the current location.
 	 */
 	public PgAttribute get(PangoAttrType type)
 	{
@@ -134,10 +133,9 @@ public class PgAttributeIterator
 	 * Gets a list of all attributes at the current position of the
 	 * iterator.
 	 *
-	 * Returns: a list of
-	 *     all attributes for the current range.
-	 *     To free this value, call pango_attribute_destroy() on
-	 *     each value and g_slist_free() on the list.
+	 * Returns: a list of all attributes for the current range. To free this value,
+	 *     call [method@Pango.Attribute.destroy] on each value and g_slist_free()
+	 *     on the list.
 	 *
 	 * Since: 1.2
 	 */
@@ -157,20 +155,18 @@ public class PgAttributeIterator
 	 * Get the font and other attributes at the current iterator position.
 	 *
 	 * Params:
-	 *     desc = a #PangoFontDescription to fill in with the current values.
+	 *     desc = a `PangoFontDescription` to fill in with the current values.
 	 *         The family name in this structure will be set using
-	 *         pango_font_description_set_family_static() using values from
-	 *         an attribute in the #PangoAttrList associated with the iterator,
+	 *         [method@Pango.FontDescription.set_family_static] using values from
+	 *         an attribute in the `PangoAttrList` associated with the iterator,
 	 *         so if you plan to keep it around, you must call:
-	 *         <literal>pango_font_description_set_family (desc, pango_font_description_get_family (desc))</literal>.
-	 *     language = if non-%NULL, location to store language tag for item, or %NULL
-	 *         if none is found.
-	 *     extraAttrs = if non-%NULL,
-	 *         location in which to store a list of non-font
-	 *         attributes at the the current position; only the highest priority
-	 *         value of each attribute will be added to this list. In order
-	 *         to free this value, you must call pango_attribute_destroy() on
-	 *         each member.
+	 *         pango_font_description_set_family (desc, pango_font_description_get_family (desc)).
+	 *     language = if non-%NULL, location to store language tag
+	 *         for item, or %NULL if none is found.
+	 *     extraAttrs = if non-%NULL, location in which to store a list of non-font attributes
+	 *         at the the current position; only the highest priority value of each
+	 *         attribute will be added to this list. In order to free this value, you
+	 *         must call [method@Pango.Attribute.destroy] on each member.
 	 */
 	public void getFont(PgFontDescription desc, out PgLanguage language, out ListSG extraAttrs)
 	{
@@ -186,7 +182,8 @@ public class PgAttributeIterator
 	/**
 	 * Advance the iterator until the next change of style.
 	 *
-	 * Returns: %FALSE if the iterator is at the end of the list, otherwise %TRUE
+	 * Returns: %FALSE if the iterator is at the end of the list,
+	 *     otherwise %TRUE
 	 */
 	public bool next()
 	{
@@ -196,7 +193,7 @@ public class PgAttributeIterator
 	/**
 	 * Get the range of the current segment. Note that the
 	 * stored return values are signed, not unsigned like
-	 * the values in #PangoAttribute. To deal with this API
+	 * the values in `PangoAttribute`. To deal with this API
 	 * oversight, stored return values that wouldn't fit into
 	 * a signed integer are clamped to %G_MAXINT.
 	 *

@@ -33,10 +33,21 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkNative is the interface implemented by all widgets that can provide
- * a GdkSurface for widgets to render on.
+ * `GtkNative` is the interface implemented by all widgets that have
+ * their own `GdkSurface`.
  * 
- * The obvious example of a #GtkNative is #GtkWindow.
+ * The obvious example of a `GtkNative` is `GtkWindow`.
+ * 
+ * Every widget that is not itself a `GtkNative` is contained in one,
+ * and you can get it with [method@Gtk.Widget.get_native].
+ * 
+ * To get the surface of a `GtkNative`, use [method@Gtk.Native.get_surface].
+ * It is also possible to find the `GtkNative` to which a surface
+ * belongs, with [func@Gtk.Native.get_for_surface].
+ * 
+ * In addition to a [class@Gdk.Surface], a `GtkNative` also provides
+ * a [class@Gsk.Renderer] for rendering on that surface. To get the
+ * renderer, use [method@Gtk.Native.get_renderer].
  */
 public interface NativeIF{
 	/** Get the main Gtk struct */
@@ -53,12 +64,12 @@ public interface NativeIF{
 	}
 
 	/**
-	 * Finds the GtkNative associated with the surface.
+	 * Finds the `GtkNative` associated with the surface.
 	 *
 	 * Params:
-	 *     surface = a #GdkSurface
+	 *     surface = a `GdkSurface`
 	 *
-	 * Returns: the #GtkNative that is associated with @surface
+	 * Returns: the `GtkNative` that is associated with @surface
 	 */
 	public static NativeIF getForSurface(Surface surface)
 	{
@@ -73,22 +84,24 @@ public interface NativeIF{
 	}
 
 	/**
-	 * Returns the renderer that is used for this #GtkNative.
+	 * Returns the renderer that is used for this `GtkNative`.
 	 *
 	 * Returns: the renderer for @self
 	 */
 	public Renderer getRenderer();
 
 	/**
-	 * Returns the surface of this #GtkNative.
+	 * Returns the surface of this `GtkNative`.
 	 *
 	 * Returns: the surface of @self
 	 */
 	public Surface getSurface();
 
 	/**
-	 * Retrieves the surface transform of @self. This is the translation
-	 * from @self's surface coordinates into @self's widget coordinates.
+	 * Retrieves the surface transform of @self.
+	 *
+	 * This is the translation from @self's surface coordinates into
+	 * @self's widget coordinates.
 	 *
 	 * Params:
 	 *     x = return location for the x coordinate
@@ -97,12 +110,16 @@ public interface NativeIF{
 	public void getSurfaceTransform(out double x, out double y);
 
 	/**
-	 * Realizes a #GtkNative.
+	 * Realizes a `GtkNative`.
+	 *
+	 * This should only be used by subclasses.
 	 */
 	public void realizeNative();
 
 	/**
-	 * Unrealizes a #GtkNative.
+	 * Unrealizes a `GtkNative`.
+	 *
+	 * This should only be used by subclasses.
 	 */
 	public void unrealizeNative();
 }

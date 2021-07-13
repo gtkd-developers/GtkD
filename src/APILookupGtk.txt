@@ -572,3 +572,29 @@ code: end
 
 struct: Video
 noCode: new_for_resource
+
+struct: PrintUnixDialog
+import: gtk.Settings
+noCode: get_settings
+code: start
+	/**
+	 * Gets a new `GtkPrintSettings` object that represents the
+	 * current values in the print dialog.
+	 *
+	 * Note that this creates a new object, and you need to unref
+	 * it if don’t want to keep it.
+	 *
+	 * Returns: a new `GtkPrintSettings` object with the values from @dialog
+	 */
+	public override Settings getSettings()
+	{
+		auto __p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return cast(Settings)ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) __p, true);
+	}
+code: end

@@ -28,6 +28,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.SimpleXML;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import pango.PgAttributeList;
 private import pango.c.functions;
@@ -35,12 +36,14 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoAttribute structure represents the common portions of all
- * attributes. Particular types of attributes include this structure
- * as their initial portion. The common portion of the attribute holds
- * the range to which the value in the type-specific part of the attribute
- * applies and should be initialized using pango_attribute_init().
- * By default an attribute will have an all-inclusive range of [0,%G_MAXUINT].
+ * The `PangoAttribute` structure represents the common portions of all
+ * attributes.
+ * 
+ * Particular types of attributes include this structure as their initial
+ * portion. The common portion of the attribute holds the range to which
+ * the value in the type-specific part of the attribute applies and should
+ * be initialized using [method@Pango.Attribute.init]. By default, an attribute
+ * will have an all-inclusive range of [0,%G_MAXUINT].
  */
 public class PgAttribute
 {
@@ -81,8 +84,8 @@ public class PgAttribute
 	/**
 	 * Make a copy of an attribute.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public PgAttribute copy()
 	{
@@ -97,7 +100,7 @@ public class PgAttribute
 	}
 
 	/**
-	 * Destroy a #PangoAttribute and free all associated memory.
+	 * Destroy a `PangoAttribute` and free all associated memory.
 	 */
 	public void destroy()
 	{
@@ -110,7 +113,7 @@ public class PgAttribute
 	 * attributes apply to.
 	 *
 	 * Params:
-	 *     attr2 = another #PangoAttribute
+	 *     attr2 = another `PangoAttribute`
 	 *
 	 * Returns: %TRUE if the two attributes have the same value.
 	 */
@@ -120,14 +123,13 @@ public class PgAttribute
 	}
 
 	/**
-	 * Initializes @attr's klass to @klass,
-	 * it's start_index to %PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING
-	 * and end_index to %PANGO_ATTR_INDEX_TO_TEXT_END
-	 * such that the attribute applies
+	 * Initializes @attr's klass to @klass, it's start_index to
+	 * %PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING and end_index to
+	 * %PANGO_ATTR_INDEX_TO_TEXT_END such that the attribute applies
 	 * to the entire text by default.
 	 *
 	 * Params:
-	 *     klass = a #PangoAttrClass
+	 *     klass = a `PangoAttrClass`
 	 *
 	 * Since: 1.20
 	 */
@@ -144,8 +146,8 @@ public class PgAttribute
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute backgroundNew(ushort red, ushort green, ushort blue)
 	{
@@ -165,8 +167,8 @@ public class PgAttribute
 	 * Params:
 	 *     alpha = the alpha value, between 1 and 65536
 	 *
-	 * Returns: the new allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.38
 	 */
@@ -194,8 +196,8 @@ public class PgAttribute
 	 *     enableFallback = %TRUE if we should fall back on other fonts
 	 *         for characters the active font is missing.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.4
 	 */
@@ -217,8 +219,8 @@ public class PgAttribute
 	 * Params:
 	 *     family = the family or comma separated list of families
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute familyNew(string family)
 	{
@@ -240,8 +242,8 @@ public class PgAttribute
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute foregroundNew(ushort red, ushort green, ushort blue)
 	{
@@ -261,8 +263,8 @@ public class PgAttribute
 	 * Params:
 	 *     alpha = the alpha value, between 1 and 65536
 	 *
-	 * Returns: the new allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.38
 	 */
@@ -284,8 +286,8 @@ public class PgAttribute
 	 * Params:
 	 *     hint = the gravity hint value.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.16
 	 */
@@ -307,8 +309,8 @@ public class PgAttribute
 	 * Params:
 	 *     gravity = the gravity value; should not be %PANGO_GRAVITY_AUTO.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.16
 	 */
@@ -331,8 +333,8 @@ public class PgAttribute
 	 *     letterSpacing = amount of extra space to add between graphemes
 	 *         of the text, in Pango units.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.6
 	 */
@@ -355,8 +357,8 @@ public class PgAttribute
 	 *     rise = the amount that the text should be displaced vertically,
 	 *         in Pango units. Positive values displace the text upwards.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute riseNew(int rise)
 	{
@@ -371,14 +373,16 @@ public class PgAttribute
 	}
 
 	/**
-	 * Create a new font size scale attribute. The base font for the
-	 * affected text will have its size multiplied by @scale_factor.
+	 * Create a new font size scale attribute.
+	 *
+	 * The base font for the affected text will have its size multiplied
+	 * by @scale_factor.
 	 *
 	 * Params:
 	 *     scaleFactor = factor to scale the font
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute scaleNew(double scaleFactor)
 	{
@@ -393,13 +397,13 @@ public class PgAttribute
 	}
 
 	/**
-	 * Create a new font stretch attribute
+	 * Create a new font stretch attribute.
 	 *
 	 * Params:
 	 *     stretch = the stretch
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute stretchNew(PangoStretch stretch)
 	{
@@ -414,17 +418,18 @@ public class PgAttribute
 	}
 
 	/**
-	 * Create a new strikethrough color attribute. This attribute
-	 * modifies the color of strikethrough lines. If not set, strikethrough
-	 * lines will use the foreground color.
+	 * Create a new strikethrough color attribute.
+	 *
+	 * This attribute modifies the color of strikethrough lines. If not set,
+	 * strikethrough lines will use the foreground color.
 	 *
 	 * Params:
 	 *     red = the red value (ranging from 0 to 65535)
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.8
 	 */
@@ -446,8 +451,8 @@ public class PgAttribute
 	 * Params:
 	 *     strikethrough = %TRUE if the text should be struck-through.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute strikethroughNew(bool strikethrough)
 	{
@@ -467,8 +472,8 @@ public class PgAttribute
 	 * Params:
 	 *     style = the slant style
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute styleNew(PangoStyle style)
 	{
@@ -483,8 +488,10 @@ public class PgAttribute
 	}
 
 	/**
-	 * Fetches the attribute type name passed in when registering the type using
-	 * pango_attr_type_register().
+	 * Fetches the attribute type name.
+	 *
+	 * The attribute type name is the string passed in when registering the type
+	 * using [type_func@attr_type_register].
 	 *
 	 * The returned value is an interned string (see g_intern_string() for what
 	 * that means) that should not be modified or freed.
@@ -503,8 +510,9 @@ public class PgAttribute
 	}
 
 	/**
-	 * Allocate a new attribute type ID.  The attribute type name can be accessed
-	 * later by using pango_attr_type_get_name().
+	 * Allocate a new attribute type ID.
+	 *
+	 * The attribute type name can be accessed later by using [type_func@Pango.AttrType.get_name].
 	 *
 	 * Params:
 	 *     name = an identifier for the type
@@ -517,8 +525,9 @@ public class PgAttribute
 	}
 
 	/**
-	 * Create a new underline color attribute. This attribute
-	 * modifies the color of underlines. If not set, underlines
+	 * Create a new underline color attribute.
+	 *
+	 * This attribute modifies the color of underlines. If not set, underlines
 	 * will use the foreground color.
 	 *
 	 * Params:
@@ -526,8 +535,8 @@ public class PgAttribute
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 *
 	 * Since: 1.8
 	 */
@@ -549,8 +558,8 @@ public class PgAttribute
 	 * Params:
 	 *     underline = the underline style.
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute underlineNew(PangoUnderline underline)
 	{
@@ -565,13 +574,13 @@ public class PgAttribute
 	}
 
 	/**
-	 * Create a new font variant attribute (normal or small caps)
+	 * Create a new font variant attribute (normal or small caps).
 	 *
 	 * Params:
 	 *     variant = the variant
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute variantNew(PangoVariant variant)
 	{
@@ -591,8 +600,8 @@ public class PgAttribute
 	 * Params:
 	 *     weight = the weight
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated `PangoAttribute`,
+	 *     which should be freed with [method@Pango.Attribute.destroy].
 	 */
 	public static PgAttribute weightNew(PangoWeight weight)
 	{
@@ -607,14 +616,16 @@ public class PgAttribute
 	}
 
 	/**
-	 * After feeding a pango markup parser some data with g_markup_parse_context_parse(),
-	 * use this function to get the list of pango attributes and text out of the
+	 * Finishes parsing markup.
+	 *
+	 * After feeding a Pango markup parser some data with g_markup_parse_context_parse(),
+	 * use this function to get the list of attributes and text out of the
 	 * markup. This function will not free @context, use g_markup_parse_context_free()
 	 * to do so.
 	 *
 	 * Params:
-	 *     context = A valid parse context that was returned from pango_markup_parser_new()
-	 *     attrList = address of return location for a #PangoAttrList, or %NULL
+	 *     context = A valid parse context that was returned from [func@markup_parser_new]
+	 *     attrList = address of return location for a `PangoAttrList`, or %NULL
 	 *     text = address of return location for text with tags stripped, or %NULL
 	 *     accelChar = address of return location for accelerator char, or %NULL
 	 *
@@ -644,31 +655,33 @@ public class PgAttribute
 	}
 
 	/**
-	 * Parses marked-up text (see
-	 * <link linkend="PangoMarkupFormat">markup format</link>) to create
-	 * a plain-text string and an attribute list.
+	 * Incrementally parses marked-up text to create a plain-text string
+	 * and an attribute list.
+	 *
+	 * See the [Pango Markup](pango_markup.html) docs for details about the
+	 * supported markup.
 	 *
 	 * If @accel_marker is nonzero, the given character will mark the
 	 * character following it as an accelerator. For example, @accel_marker
 	 * might be an ampersand or underscore. All characters marked
 	 * as an accelerator will receive a %PANGO_UNDERLINE_LOW attribute,
 	 * and the first character so marked will be returned in @accel_char,
-	 * when calling finish(). Two @accel_marker characters following each
-	 * other produce a single literal @accel_marker character.
+	 * when calling [func@markup_parser_finish]. Two @accel_marker characters
+	 * following each other produce a single literal @accel_marker character.
 	 *
 	 * To feed markup to the parser, use g_markup_parse_context_parse()
-	 * on the returned #GMarkupParseContext. When done with feeding markup
-	 * to the parser, use pango_markup_parser_finish() to get the data out
+	 * on the returned `GMarkupParseContext`. When done with feeding markup
+	 * to the parser, use [func@markup_parser_finish] to get the data out
 	 * of it, and then use g_markup_parse_context_free() to free it.
 	 *
-	 * This function is designed for applications that read pango markup
-	 * from streams. To simply parse a string containing pango markup,
-	 * the simpler pango_parse_markup() API is recommended instead.
+	 * This function is designed for applications that read Pango markup
+	 * from streams. To simply parse a string containing Pango markup,
+	 * the [func@parse_markup] API is recommended instead.
 	 *
 	 * Params:
 	 *     accelMarker = character that precedes an accelerator, or 0 for none
 	 *
-	 * Returns: a #GMarkupParseContext that should be
+	 * Returns: a `GMarkupParseContext` that should be
 	 *     destroyed with g_markup_parse_context_free().
 	 *
 	 * Since: 1.31.0
@@ -686,9 +699,10 @@ public class PgAttribute
 	}
 
 	/**
-	 * Parses marked-up text (see
-	 * <link linkend="PangoMarkupFormat">markup format</link>) to create
-	 * a plain-text string and an attribute list.
+	 * Parses marked-up text to create a plain-text string and an attribute list.
+	 *
+	 * See the [Pango Markup](pango_markup.html) docs for details about the
+	 * supported markup.
 	 *
 	 * If @accel_marker is nonzero, the given character will mark the
 	 * character following it as an accelerator. For example, @accel_marker
@@ -698,16 +712,16 @@ public class PgAttribute
 	 * Two @accel_marker characters following each other produce a single
 	 * literal @accel_marker character.
 	 *
-	 * To parse a stream of pango markup incrementally, use pango_markup_parser_new().
+	 * To parse a stream of pango markup incrementally, use [func@markup_parser_new].
 	 *
 	 * If any error happens, none of the output arguments are touched except
 	 * for @error.
 	 *
 	 * Params:
-	 *     markupText = markup to parse (see <link linkend="PangoMarkupFormat">markup format</link>)
+	 *     markupText = markup to parse (see the Pango Markup docs)
 	 *     length = length of @markup_text, or -1 if nul-terminated
 	 *     accelMarker = character that precedes an accelerator, or 0 for none
-	 *     attrList = address of return location for a #PangoAttrList, or %NULL
+	 *     attrList = address of return location for a `PangoAttrList`, or %NULL
 	 *     text = address of return location for text with tags stripped, or %NULL
 	 *     accelChar = address of return location for accelerator char, or %NULL
 	 *

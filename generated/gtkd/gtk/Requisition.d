@@ -108,10 +108,13 @@ public final class Requisition
 	}
 
 	/**
-	 * Allocates a new #GtkRequisition-struct and initializes its elements to zero.
+	 * Allocates a new `GtkRequisition`.
 	 *
-	 * Returns: a new empty #GtkRequisition. The newly allocated #GtkRequisition should
-	 *     be freed with gtk_requisition_free().
+	 * The struct is initialized to zero.
+	 *
+	 * Returns: a new empty `GtkRequisition`. The newly
+	 *     allocated `GtkRequisition` should be freed with
+	 *     [method@Gtk.Requisition.free]
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -128,7 +131,7 @@ public final class Requisition
 	}
 
 	/**
-	 * Copies a #GtkRequisition.
+	 * Copies a `GtkRequisition`.
 	 *
 	 * Returns: a copy of @requisition
 	 */
@@ -145,7 +148,7 @@ public final class Requisition
 	}
 
 	/**
-	 * Frees a #GtkRequisition.
+	 * Frees a `GtkRequisition`.
 	 */
 	public void free()
 	{

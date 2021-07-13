@@ -32,8 +32,10 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoTabArray struct contains an array
- * of tab stops. Each tab stop has an alignment and a position.
+ * A `PangoTabArray` contains an array of tab stops.
+ * 
+ * `PangoTabArray` can be used to set tab stops in a `PangoLayout`.
+ * Each tab stop has an alignment and a position.
  */
 public class PgTabArray
 {
@@ -78,16 +80,17 @@ public class PgTabArray
 	}
 
 	/**
-	 * Creates an array of @initial_size tab stops. Tab stops are specified in
-	 * pixel units if @positions_in_pixels is %TRUE, otherwise in Pango
-	 * units. All stops are initially at position 0.
+	 * Creates an array of @initial_size tab stops.
+	 *
+	 * Tab stops are specified in pixel units if @positions_in_pixels is %TRUE,
+	 * otherwise in Pango units. All stops are initially at position 0.
 	 *
 	 * Params:
 	 *     initialSize = Initial number of tab stops to allocate, can be 0
 	 *     positionsInPixels = whether positions are in pixel units
 	 *
-	 * Returns: the newly allocated #PangoTabArray, which should
-	 *     be freed with pango_tab_array_free().
+	 * Returns: the newly allocated `PangoTabArray`, which should
+	 *     be freed with [method@Pango.TabArray.free].
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -104,10 +107,10 @@ public class PgTabArray
 	}
 
 	/**
-	 * Copies a #PangoTabArray
+	 * Copies a `PangoTabArray`.
 	 *
-	 * Returns: the newly allocated #PangoTabArray, which should
-	 *     be freed with pango_tab_array_free().
+	 * Returns: the newly allocated `PangoTabArray`, which should
+	 *     be freed with [method@Pango.TabArray.free].
 	 */
 	public PgTabArray copy()
 	{
@@ -131,8 +134,8 @@ public class PgTabArray
 	}
 
 	/**
-	 * Returns %TRUE if the tab positions are in pixels, %FALSE if they are
-	 * in Pango units.
+	 * Returns %TRUE if the tab positions are in pixels,
+	 * %FALSE if they are in Pango units.
 	 *
 	 * Returns: whether positions are in pixels.
 	 */
@@ -166,8 +169,10 @@ public class PgTabArray
 
 	/**
 	 * If non-%NULL, @alignments and @locations are filled with allocated
-	 * arrays of length pango_tab_array_get_size(). You must free the
-	 * returned array.
+	 * arrays.
+	 *
+	 * The arrays are of length [method@Pango.TabArray.get_size].
+	 * You must free the returned array.
 	 *
 	 * Params:
 	 *     alignments = location to store an array of tab
@@ -185,8 +190,10 @@ public class PgTabArray
 	}
 
 	/**
-	 * Resizes a tab array. You must subsequently initialize any tabs that
-	 * were added as a result of growing the array.
+	 * Resizes a tab array.
+	 *
+	 * You must subsequently initialize any tabs
+	 * that were added as a result of growing the array.
 	 *
 	 * Params:
 	 *     newSize = new size of the array
@@ -198,7 +205,8 @@ public class PgTabArray
 
 	/**
 	 * Sets the alignment and location of a tab stop.
-	 * @alignment must always be #PANGO_TAB_LEFT in the current
+	 *
+	 * @alignment must always be %PANGO_TAB_LEFT in the current
 	 * implementation.
 	 *
 	 * Params:

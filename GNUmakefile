@@ -121,16 +121,16 @@ generate: generate-runtime
 
 generate-runtime: $(GIRTOD)
 ifndef girdir
-	$(GIRTOD) -i src --use-runtime-linker
+	$(GIRTOD) --use-runtime-linker -i src/ -o generated/
 else
-	$(GIRTOD) -i src --use-runtime-linker -g $(girdir)
+	$(GIRTOD) --use-runtime-linker -i src/ -o generated/ -g $(girdir)
 endif
 
 generate-compiletime: $(GIRTOD)
 ifndef girdir
-	$(GIRTOD) -i src
+	$(GIRTOD) -i src -o generated/
 else
-	$(GIRTOD) -i src -g $(girdir)
+	$(GIRTOD) -i src -o generated/ -g $(girdir)
 endif
 
 $(GIRTOD):

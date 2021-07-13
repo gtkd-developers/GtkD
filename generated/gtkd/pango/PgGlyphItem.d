@@ -37,11 +37,12 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoGlyphItem is a pair of a #PangoItem and the glyphs
- * resulting from shaping the text corresponding to an item.
- * As an example of the usage of #PangoGlyphItem, the results
- * of shaping text with #PangoLayout is a list of #PangoLayoutLine,
- * each of which contains a list of #PangoGlyphItem.
+ * A `PangoGlyphItem` is a pair of a `PangoItem` and the glyphs
+ * resulting from shaping the items text.
+ * 
+ * As an example of the usage of `PangoGlyphItem`, the results
+ * of shaping text with `PangoLayout` is a list of `PangoLayoutLine`,
+ * each of which contains a list of `PangoGlyphItem`.
  */
 public final class PgGlyphItem
 {
@@ -80,7 +81,7 @@ public final class PgGlyphItem
 
 
 	/**
-	 * corresponding #PangoItem.
+	 * corresponding `PangoItem`
 	 */
 	public @property PgItem item()
 	{
@@ -94,7 +95,7 @@ public final class PgGlyphItem
 	}
 
 	/**
-	 * corresponding #PangoGlyphString.
+	 * corresponding `PangoGlyphString`
 	 */
 	public @property PgGlyphString glyphs()
 	{
@@ -114,10 +115,12 @@ public final class PgGlyphItem
 	}
 
 	/**
-	 * Splits a shaped item (PangoGlyphItem) into multiple items based
-	 * on an attribute list. The idea is that if you have attributes
+	 * Splits a shaped item (`PangoGlyphItem`) into multiple items based
+	 * on an attribute list.
+	 *
+	 * The idea is that if you have attributes
 	 * that don't affect shaping, such as color or underline, to avoid
-	 * affecting shaping, you filter them out (pango_attr_list_filter()),
+	 * affecting shaping, you filter them out ([method@Pango.AttrList.filter]),
 	 * apply the shaping process and then reapply them to the result using
 	 * this function.
 	 *
@@ -125,7 +128,7 @@ public final class PgGlyphItem
 	 * to that cluster; for instance, if half of a cluster is underlined
 	 * and the other-half strikethrough, then the cluster will end
 	 * up with both underline and strikethrough attributes. In these
-	 * cases, it may happen that item->extra_attrs for some of the
+	 * cases, it may happen that @item->extra_attrs for some of the
 	 * result items can have multiple attributes of the same type.
 	 *
 	 * This function takes ownership of @glyph_item; it will be reused
@@ -133,11 +136,11 @@ public final class PgGlyphItem
 	 *
 	 * Params:
 	 *     text = text that @list applies to
-	 *     list = a #PangoAttrList
+	 *     list = a `PangoAttrList`
 	 *
 	 * Returns: a
 	 *     list of glyph items resulting from splitting @glyph_item. Free
-	 *     the elements using pango_glyph_item_free(), the list using
+	 *     the elements using [method@Pango.GlyphItem.free], the list using
 	 *     g_slist_free().
 	 *
 	 * Since: 1.2
@@ -155,9 +158,9 @@ public final class PgGlyphItem
 	}
 
 	/**
-	 * Make a deep copy of an existing #PangoGlyphItem structure.
+	 * Make a deep copy of an existing `PangoGlyphItem` structure.
 	 *
-	 * Returns: the newly allocated #PangoGlyphItem, which should
+	 * Returns: the newly allocated `PangoGlyphItem`, which should
 	 *     be freed with pango_glyph_item_free(), or %NULL
 	 *     if @orig was %NULL.
 	 *
@@ -176,7 +179,7 @@ public final class PgGlyphItem
 	}
 
 	/**
-	 * Frees a #PangoGlyphItem and resources to which it points.
+	 * Frees a `PangoGlyphItem` and resources to which it points.
 	 *
 	 * Since: 1.6
 	 */
@@ -187,12 +190,13 @@ public final class PgGlyphItem
 	}
 
 	/**
-	 * Given a #PangoGlyphItem and the corresponding
-	 * text, determine the screen width corresponding to each character. When
-	 * multiple characters compose a single cluster, the width of the entire
+	 * Given a `PangoGlyphItem` and the corresponding text, determine the width
+	 * corresponding to each character.
+	 *
+	 * When multiple characters compose a single cluster, the width of the entire
 	 * cluster is divided equally among the characters.
 	 *
-	 * See also pango_glyph_string_get_logical_widths().
+	 * See also [method@Pango.GlyphString.get_logical_widths].
 	 *
 	 * Params:
 	 *     text = text that @glyph_item corresponds to
@@ -235,7 +239,9 @@ public final class PgGlyphItem
 	/**
 	 * Modifies @orig to cover only the text after @split_index, and
 	 * returns a new item that covers the text before @split_index that
-	 * used to be in @orig. You can think of @split_index as the length of
+	 * used to be in @orig.
+	 *
+	 * You can think of @split_index as the length of
 	 * the returned item. @split_index may not be 0, and it may not be
 	 * greater than or equal to the length of @orig (that is, there must
 	 * be at least one byte assigned to each item, you can't create a

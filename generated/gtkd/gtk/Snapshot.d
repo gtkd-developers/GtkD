@@ -51,18 +51,18 @@ private import pango.PgLayout;
 
 
 /**
- * GtkSnapshot is an auxiliary object that assists in creating #GskRenderNodes
- * in the #GdkPaintableInterface.snapshot() vfunc. It functions in a similar way to
- * a cairo context, and maintains a stack of render nodes and their associated
- * transformations.
+ * `GtkSnapshot` assists in creating `GskRenderNodes` for widgets.
+ * 
+ * It functions in a similar way to a cairo context, and maintains a stack
+ * of render nodes and their associated transformations.
  * 
  * The node at the top of the stack is the the one that gtk_snapshot_append_…
- * functions operate on. Use the gtk_snapshot_push_… functions and gtk_snapshot_pop()
- * to change the current node.
+ * functions operate on. Use the gtk_snapshot_push_… functions and
+ * gtk_snapshot_pop() to change the current node.
  * 
- * The typical way to obtain a GtkSnapshot object is as an argument to
- * the #GtkWidgetClass.snapshot() vfunc. If you need to create your own GtkSnapshot,
- * use gtk_snapshot_new().
+ * The typical way to obtain a `GtkSnapshot` object is as an argument to
+ * the GtkWidgetClass.snapshot() vfunc. If you need to create your own
+ * `GtkSnapshot`, use [ctor@Gtk.Snapshot.new].
  */
 public class Snapshot : DGdkSnapshot
 {
@@ -100,9 +100,9 @@ public class Snapshot : DGdkSnapshot
 	}
 
 	/**
-	 * Creates a new #GtkSnapshot.
+	 * Creates a new `GtkSnapshot`.
 	 *
-	 * Returns: a newly-allocated #GtkSnapshot
+	 * Returns: a newly-allocated `GtkSnapshot`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -119,11 +119,12 @@ public class Snapshot : DGdkSnapshot
 	}
 
 	/**
-	 * Appends a stroked border rectangle inside the given @outline. The
-	 * 4 sides of the border can have different widths and colors.
+	 * Appends a stroked border rectangle inside the given @outline.
+	 *
+	 * The four sides of the border can have different widths and colors.
 	 *
 	 * Params:
-	 *     outline = a #GskRoundedRect describing the outline of the border
+	 *     outline = a `GskRoundedRect` describing the outline of the border
 	 *     borderWidth = the stroke width of the border on
 	 *         the top, right, bottom and left side respectively.
 	 *     borderColor = the color used on the top, right,
@@ -141,14 +142,14 @@ public class Snapshot : DGdkSnapshot
 	}
 
 	/**
-	 * Creates a new render node and appends it to the current render
-	 * node of @snapshot, without changing the current node.
+	 * Creates a new `GskCairoNode` and appends it to the current
+	 * render node of @snapshot, without changing the current node.
 	 *
 	 * Params:
 	 *     bounds = the bounds for the new node
 	 *
-	 * Returns: a cairo_t suitable for drawing the contents of the newly
-	 *     created render node
+	 * Returns: a `cairo_t` suitable for drawing the contents of
+	 *     the newly created render node
 	 */
 	public Context appendCairo(Rect bounds)
 	{
@@ -163,13 +164,15 @@ public class Snapshot : DGdkSnapshot
 	}
 
 	/**
-	 * Creates a new render node drawing the @color into the given @bounds and appends it
-	 * to the current render node of @snapshot.
+	 * Creates a new render node drawing the @color into the
+	 * given @bounds and appends it to the current render node
+	 * of @snapshot.
 	 *
-	 * You should try to avoid calling this function if @color is transparent.
+	 * You should try to avoid calling this function if
+	 * @color is transparent.
 	 *
 	 * Params:
-	 *     color = the #GdkRGBA to draw
+	 *     color = the `GdkRGBA` to draw
 	 *     bounds = the bounds for the new node
 	 */
 	public void appendColor(RGBA color, Rect bounds)
@@ -183,9 +186,10 @@ public class Snapshot : DGdkSnapshot
 	 * Params:
 	 *     bounds = the rectangle to render the gradient into
 	 *     center = the center point of the conic gradient
-	 *     rotation = the clockwise rotation in degrees of the starting angle. 0 means the
-	 *         starting angle is the top.
-	 *     stops = a pointer to an array of #GskColorStop defining the gradient
+	 *     rotation = the clockwise rotation in degrees of the starting angle.
+	 *         0 means the starting angle is the top.
+	 *     stops = a pointer to an array of `GskColorStop`
+	 *         defining the gradient
 	 */
 	public void appendConicGradient(Rect bounds, Point center, float rotation, GskColorStop[] stops)
 	{
@@ -221,7 +225,8 @@ public class Snapshot : DGdkSnapshot
 	 *     bounds = the rectangle to render the linear gradient into
 	 *     startPoint = the point at which the linear gradient will begin
 	 *     endPoint = the point at which the linear gradient will finish
-	 *     stops = a pointer to an array of #GskColorStop defining the gradient
+	 *     stops = a pointer to an array of `GskColorStop`
+	 *         defining the gradient
 	 */
 	public void appendLinearGradient(Rect bounds, Point startPoint, Point endPoint, GskColorStop[] stops)
 	{
@@ -230,9 +235,10 @@ public class Snapshot : DGdkSnapshot
 
 	/**
 	 * Appends @node to the current render node of @snapshot,
-	 * without changing the current node. If @snapshot does
-	 * not have a current node yet, @node will become the
-	 * initial node.
+	 * without changing the current node.
+	 *
+	 * If @snapshot does not have a current node yet, @node
+	 * will become the initial node.
 	 *
 	 * Params:
 	 *     node = a #GskRenderNode
@@ -268,7 +274,8 @@ public class Snapshot : DGdkSnapshot
 	 *     vradius = the vertical radius
 	 *     start = the start position (on the horizontal axis)
 	 *     end = the end position (on the horizontal axis)
-	 *     stops = a pointer to an array of #GskColorStop defining the gradient
+	 *     stops = a pointer to an array of `GskColorStop`
+	 *         defining the gradient
 	 */
 	public void appendRadialGradient(Rect bounds, Point center, float hradius, float vradius, float start, float end, GskColorStop[] stops)
 	{
@@ -282,7 +289,8 @@ public class Snapshot : DGdkSnapshot
 	 *     bounds = the rectangle to render the linear gradient into
 	 *     startPoint = the point at which the linear gradient will begin
 	 *     endPoint = the point at which the linear gradient will finish
-	 *     stops = a pointer to an array of #GskColorStop defining the gradient
+	 *     stops = a pointer to an array of `GskColorStop`
+	 *         defining the gradient
 	 */
 	public void appendRepeatingLinearGradient(Rect bounds, Point startPoint, Point endPoint, GskColorStop[] stops)
 	{
@@ -299,7 +307,8 @@ public class Snapshot : DGdkSnapshot
 	 *     vradius = the vertical radius
 	 *     start = the start position (on the horizontal axis)
 	 *     end = the end position (on the horizontal axis)
-	 *     stops = a pointer to an array of #GskColorStop defining the gradient
+	 *     stops = a pointer to an array of `GskColorStop`
+	 *         defining the gradient
 	 */
 	public void appendRepeatingRadialGradient(Rect bounds, Point center, float hradius, float vradius, float start, float end, GskColorStop[] stops)
 	{
@@ -307,11 +316,12 @@ public class Snapshot : DGdkSnapshot
 	}
 
 	/**
-	 * Creates a new render node drawing the @texture into the given @bounds and appends it
-	 * to the current render node of @snapshot.
+	 * Creates a new render node drawing the @texture
+	 * into the given @bounds and appends it to the
+	 * current render node of @snapshot.
 	 *
 	 * Params:
-	 *     texture = the #GdkTexture to render
+	 *     texture = the `GdkTexture` to render
 	 *     bounds = the bounds for the new node
 	 */
 	public void appendTexture(Texture texture, Rect bounds)
@@ -323,7 +333,7 @@ public class Snapshot : DGdkSnapshot
 	 * Returns the node that was constructed by @snapshot
 	 * and frees @snapshot.
 	 *
-	 * Returns: a newly-created #GskRenderNode
+	 * Returns: a newly-created `GskRenderNode`
 	 */
 	public RenderNode freeToNode()
 	{
@@ -345,7 +355,7 @@ public class Snapshot : DGdkSnapshot
 	 *     size = The size of the resulting paintable
 	 *         or %NULL to use the bounds of the snapshot
 	 *
-	 * Returns: a newly-created #GdkPaintable
+	 * Returns: a newly-created `GdkPaintable`
 	 */
 	public PaintableIF freeToPaintable(Size size)
 	{
@@ -361,9 +371,11 @@ public class Snapshot : DGdkSnapshot
 
 	/**
 	 * Removes the top element from the stack of render nodes and
-	 * adds it to the nearest GskGLShaderNode below it. This must be called the
-	 * same number of times as the number of textures is needed for the
-	 * shader in gtk_snapshot_push_gl_shader().
+	 * adds it to the nearest `GskGLShaderNode` below it.
+	 *
+	 * This must be called the same number of times as the number
+	 * of textures is needed for the shader in
+	 * [method@Gtk.Snapshot.push_gl_shader].
 	 */
 	public void glShaderPopTexture()
 	{
@@ -373,7 +385,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Applies a perspective projection transform.
 	 *
-	 * See gsk_transform_perspective() for a discussion on the details.
+	 * See [method@Gsk.Transform.perspective] for a discussion on the details.
 	 *
 	 * Params:
 	 *     depth = distance of the z=0 plane
@@ -393,13 +405,15 @@ public class Snapshot : DGdkSnapshot
 	}
 
 	/**
-	 * Blends together 2 images with the given blend mode.
+	 * Blends together two images with the given blend mode.
 	 *
-	 * Until the first call to gtk_snapshot_pop(), the bottom image for the
-	 * blend operation will be recorded. After that call, the top image to
-	 * be blended will be recorded until the second call to gtk_snapshot_pop().
+	 * Until the first call to [method@Gtk.Snapshot.pop], the
+	 * bottom image for the blend operation will be recorded.
+	 * After that call, the top image to be blended will be
+	 * recorded until the second call to [method@Gtk.Snapshot.pop].
 	 *
-	 * Calling this function requires 2 subsequent calls to gtk_snapshot_pop().
+	 * Calling this function requires two subsequent calls
+	 * to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     blendMode = blend mode to use
@@ -412,7 +426,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Blurs an image.
 	 *
-	 * The image is recorded until the next call to gtk_snapshot_pop().
+	 * The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     radius = the blur radius to use
@@ -425,7 +439,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Clips an image to a rectangle.
 	 *
-	 * The image is recorded until the next call to gtk_snapshot_pop().
+	 * The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     bounds = the rectangle to clip to
@@ -439,7 +453,7 @@ public class Snapshot : DGdkSnapshot
 	 * Modifies the colors of an image by applying an affine transformation
 	 * in RGB space.
 	 *
-	 * The image is recorded until the next call to gtk_snapshot_pop().
+	 * The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     colorMatrix = the color matrix to use
@@ -454,11 +468,12 @@ public class Snapshot : DGdkSnapshot
 	 * Snapshots a cross-fade operation between two images with the
 	 * given @progress.
 	 *
-	 * Until the first call to gtk_snapshot_pop(), the start image
+	 * Until the first call to [method@Gtk.Snapshot.pop], the start image
 	 * will be snapshot. After that call, the end image will be recorded
-	 * until the second call to gtk_snapshot_pop().
+	 * until the second call to [method@Gtk.Snapshot.pop].
 	 *
-	 * Calling this function requires 2 calls to gtk_snapshot_pop().
+	 * Calling this function requires two subsequent calls
+	 * to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     progress = progress between 0.0 and 1.0
@@ -469,33 +484,40 @@ public class Snapshot : DGdkSnapshot
 	}
 
 	/**
-	 * Push a #GskGLShaderNode with a specific #GskGLShader and a set of uniform values
-	 * to use while rendering. Additionally this takes a list of @n_children other nodes
-	 * which will be passed to the #GskGLShaderNode.
+	 * Push a `GskGLShaderNode`.
+	 *
+	 * The node uses the given [class@Gsk.GLShader] and uniform values
+	 * Additionally this takes a list of @n_children other nodes
+	 * which will be passed to the `GskGLShaderNode`.
 	 *
 	 * The @take_args argument is a block of data to use for uniform
-	 * arguments, as per types and offsets defined by the @shader. Normally this is
-	 * generated by gsk_gl_shader_format_args() or #GskGLShaderArgBuilder.
-	 * The snapshotter takes ownership of @take_args, so the caller should not free it
-	 * after this.
+	 * arguments, as per types and offsets defined by the @shader.
+	 * Normally this is generated by [method@Gsk.GLShader.format_args]
+	 * or [struct@Gsk.ShaderArgsBuilder].
 	 *
-	 * If the renderer doesn't support GL shaders, or if there is any problem when
-	 * compiling the shader, then the node will draw pink. You should use
-	 * gsk_gl_shader_compile() to ensure the @shader will work for the renderer
-	 * before using it.
+	 * The snapshotter takes ownership of @take_args, so the caller should
+	 * not free it after this.
 	 *
-	 * If the shader requires textures (see gsk_gl_shader_get_n_textures()), then it is
-	 * expected that you call gtk_snapshot_gl_shader_pop_texture() the number of times that are
-	 * required. Each of these calls will generate a node that is added as a child to the gl shader
-	 * node, which in turn will render these offscreen and pass as a texture to the shader.
+	 * If the renderer doesn't support GL shaders, or if there is any
+	 * problem when compiling the shader, then the node will draw pink.
+	 * You should use [method@Gsk.GLShader.compile] to ensure the @shader
+	 * will work for the renderer before using it.
 	 *
-	 * Once all textures (if any) are pop:ed, you must call the regular gtk_snapshot_pop().
+	 * If the shader requires textures (see [method@Gsk.GLShader.get_n_textures]),
+	 * then it is expected that you call [method@Gtk.Snapshot.gl_shader_pop_texture]
+	 * the number of times that are required. Each of these calls will generate
+	 * a node that is added as a child to the `GskGLShaderNode`, which in turn
+	 * will render these offscreen and pass as a texture to the shader.
 	 *
-	 * If you want to use pre-existing textures as input to the shader rather than
-	 * rendering new ones, use gtk_snapshot_append_texture() to push a texture node. These
-	 * will be used directly rather than being re-rendered.
+	 * Once all textures (if any) are pop:ed, you must call the regular
+	 * [method@Gtk.Snapshot.pop].
 	 *
-	 * For details on how to write shaders, see #GskGLShader.
+	 * If you want to use pre-existing textures as input to the shader rather
+	 * than rendering new ones, use [method@Gtk.Snapshot.append_texture] to
+	 * push a texture node. These will be used directly rather than being
+	 * re-rendered.
+	 *
+	 * For details on how to write shaders, see [class@Gsk.GLShader].
 	 *
 	 * Params:
 	 *     shader = The code to run
@@ -510,7 +532,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Modifies the opacity of an image.
 	 *
-	 * The image is recorded until the next call to gtk_snapshot_pop().
+	 * The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     opacity = the opacity to use
@@ -523,7 +545,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Creates a node that repeats the child node.
 	 *
-	 * The child is recorded until the next call to gtk_snapshot_pop().
+	 * The child is recorded until the next call to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     bounds = the bounds within which to repeat
@@ -538,7 +560,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Clips an image to a rounded rectangle.
 	 *
-	 * The image is recorded until the next call to gtk_snapshot_pop().
+	 * The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     bounds = the rounded rectangle to clip to
@@ -551,7 +573,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Applies a shadow to an image.
 	 *
-	 * The image is recorded until the next call to gtk_snapshot_pop().
+	 * The image is recorded until the next call to [method@Gtk.Snapshot.pop].
 	 *
 	 * Params:
 	 *     shadow = the first shadow specification
@@ -568,7 +590,7 @@ public class Snapshot : DGdkSnapshot
 	 * the current node.
 	 *
 	 * Params:
-	 *     context = the #GtkStyleContext to use
+	 *     context = the `GtkStyleContext` to use
 	 *     x = X origin of the rectangle
 	 *     y = Y origin of the rectangle
 	 *     width = rectangle width
@@ -585,7 +607,7 @@ public class Snapshot : DGdkSnapshot
 	 * the current node.
 	 *
 	 * Params:
-	 *     context = the #GtkStyleContext to use
+	 *     context = the `GtkStyleContext` to use
 	 *     x = X origin of the rectangle
 	 *     y = Y origin of the rectangle
 	 *     width = rectangle width
@@ -602,7 +624,7 @@ public class Snapshot : DGdkSnapshot
 	 * the current node.
 	 *
 	 * Params:
-	 *     context = the #GtkStyleContext to use
+	 *     context = the `GtkStyleContext` to use
 	 *     x = X origin of the rectangle
 	 *     y = Y origin of the rectangle
 	 *     width = rectangle width
@@ -617,10 +639,10 @@ public class Snapshot : DGdkSnapshot
 	 * Draws a text caret using @snapshot at the specified index of @layout.
 	 *
 	 * Params:
-	 *     context = a #GtkStyleContext
+	 *     context = a `GtkStyleContext`
 	 *     x = X origin
 	 *     y = Y origin
-	 *     layout = the #PangoLayout of the text
+	 *     layout = the `PangoLayout` of the text
 	 *     index = the index in the #PangoLayout
 	 *     direction = the #PangoDirection of the text
 	 */
@@ -635,7 +657,7 @@ public class Snapshot : DGdkSnapshot
 	 * without changing the current node.
 	 *
 	 * Params:
-	 *     context = the #GtkStyleContext to use
+	 *     context = the `GtkStyleContext` to use
 	 *     x = X origin of the rectangle
 	 *     y = Y origin of the rectangle
 	 *     layout = the #PangoLayout to render
@@ -657,7 +679,9 @@ public class Snapshot : DGdkSnapshot
 
 	/**
 	 * Rotates @@snapshot's coordinate system by @angle degrees in 2D space -
-	 * or in 3D speak, rotates around the z axis.
+	 * or in 3D speak, rotates around the Z axis.
+	 *
+	 * To rotate around other axes, use [method@Gsk.Transform.rotate_3d].
 	 *
 	 * Params:
 	 *     angle = the rotation angle, in degrees (clockwise)
@@ -670,7 +694,7 @@ public class Snapshot : DGdkSnapshot
 	/**
 	 * Rotates @snapshot's coordinate system by @angle degrees around @axis.
 	 *
-	 * For a rotation in 2D space, use gsk_transform_rotate().
+	 * For a rotation in 2D space, use [method@Gsk.Transform.rotate].
 	 *
 	 * Params:
 	 *     angle = the rotation angle, in degrees (clockwise)
@@ -683,15 +707,16 @@ public class Snapshot : DGdkSnapshot
 
 	/**
 	 * Makes a copy of the current state of @snapshot and saves it
-	 * on an internal stack of saved states for @snapshot. When
-	 * gtk_snapshot_restore() is called, @snapshot will be restored to
-	 * the saved state. Multiple calls to gtk_snapshot_save() and
-	 * gtk_snapshot_restore() can be nested; each call to
-	 * gtk_snapshot_restore() restores the state from the matching paired
-	 * gtk_snapshot_save().
+	 * on an internal stack.
 	 *
-	 * It is necessary to clear all saved states with corresponding calls
-	 * to gtk_snapshot_restore().
+	 * When [method@Gtk.Snapshot.restore] is called, @snapshot will
+	 * be restored to the saved state. Multiple calls to
+	 * gtk_snapshot_save() and gtk_snapshot_restore() can be nested;
+	 * each call to gtk_snapshot_restore() restores the state from
+	 * the matching paired gtk_snapshot_save().
+	 *
+	 * It is necessary to clear all saved states with corresponding
+	 * calls to gtk_snapshot_restore().
 	 */
 	public void save()
 	{
@@ -702,7 +727,7 @@ public class Snapshot : DGdkSnapshot
 	 * Scales @snapshot's coordinate system in 2-dimensional space by
 	 * the given factors.
 	 *
-	 * Use gtk_snapshot_scale_3d() to scale in all 3 dimensions.
+	 * Use [method@Gtk.Snapshot.scale_3d] to scale in all 3 dimensions.
 	 *
 	 * Params:
 	 *     factorX = scaling factor on the X axis
@@ -728,12 +753,13 @@ public class Snapshot : DGdkSnapshot
 
 	/**
 	 * Returns the render node that was constructed
-	 * by @snapshot. After calling this function, it
-	 * is no longer possible to add more nodes to
-	 * @snapshot. The only function that should be
-	 * called after this is g_object_unref().
+	 * by @snapshot.
 	 *
-	 * Returns: the constructed #GskRenderNode
+	 * After calling this function, it is no longer possible to
+	 * add more nodes to @snapshot. The only function that should
+	 * be called after this is g_object_unref().
+	 *
+	 * Returns: the constructed `GskRenderNode`
 	 */
 	public RenderNode toNode()
 	{
@@ -749,10 +775,11 @@ public class Snapshot : DGdkSnapshot
 
 	/**
 	 * Returns a paintable encapsulating the render node
-	 * that was constructed by @snapshot. After calling
-	 * this function, it is no longer possible to add more
-	 * nodes to @snapshot. The only function that should be
-	 * called after this is g_object_unref().
+	 * that was constructed by @snapshot.
+	 *
+	 * After calling this function, it is no longer possible to
+	 * add more nodes to @snapshot. The only function that should
+	 * be called after this is g_object_unref().
 	 *
 	 * Params:
 	 *     size = The size of the resulting paintable

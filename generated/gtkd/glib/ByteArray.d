@@ -152,6 +152,10 @@ public class ByteArray
 	 * Create byte array containing the data. The data will be owned by the array
 	 * and will be freed with g_free(), i.e. it could be allocated using g_strdup().
 	 *
+	 * Do not use it if @len is greater than %G_MAXUINT. #GByteArray
+	 * stores the length of its data in #guint, which may be shorter than
+	 * #gsize.
+	 *
 	 * Params:
 	 *     data = byte data for the array
 	 *

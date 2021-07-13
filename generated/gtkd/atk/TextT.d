@@ -28,6 +28,7 @@ public  import atk.TextRange;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import std.algorithm;

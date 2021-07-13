@@ -36,11 +36,7 @@ public import pango.c.types;
 
 
 /**
- * A #GtkAllocation-struct of a widget represents region
- * which has been allocated to the widget by its parent. It is a subregion
- * of its parents allocation. See
- * [GtkWidget’s geometry management section][geometry-management] for
- * more information.
+ * The rectangle representing the area allocated for a widget by its parent.
  */
 public alias GdkRectangle GtkAllocation;
 
@@ -107,7 +103,7 @@ public enum GtkAccessibleInvalidState
 alias GtkAccessibleInvalidState AccessibleInvalidState;
 
 /**
- * The possible accessible properties of a #GtkAccessible.
+ * The possible accessible properties of a `GtkAccessible`.
  */
 public enum GtkAccessibleProperty
 {
@@ -219,7 +215,8 @@ public enum GtkAccessibleProperty
 alias GtkAccessibleProperty AccessibleProperty;
 
 /**
- * The possible accessible relations of a #GtkAccessible.
+ * The possible accessible relations of a `GtkAccessible`.
+ *
  * Accessible relations can be references to other widgets,
  * integers or strings.
  */
@@ -326,7 +323,7 @@ public enum GtkAccessibleRelation
 alias GtkAccessibleRelation AccessibleRelation;
 
 /**
- * The accessible role for a #GtkAccessible implementation.
+ * The accessible role for a `GtkAccessible` implementation.
  *
  * Abstract roles are only used as part of the ontology; application
  * developers must not use abstract roles in their code.
@@ -695,7 +692,7 @@ public enum GtkAccessibleSort
 alias GtkAccessibleSort AccessibleSort;
 
 /**
- * The possible accessible states of a #GtkAccessible.
+ * The possible accessible states of a `GtkAccessible`.
  */
 public enum GtkAccessibleState
 {
@@ -773,12 +770,11 @@ public enum GtkAccessibleTristate
 alias GtkAccessibleTristate AccessibleTristate;
 
 /**
- * Controls how a widget deals with extra space in a single (x or y)
- * dimension.
+ * Controls how a widget deals with extra space in a single dimension.
  *
  * Alignment only matters if the widget receives a “too large” allocation,
- * for example if you packed the widget with the #GtkWidget:hexpand
- * property inside a #GtkBox, then the widget might get extra space.
+ * for example if you packed the widget with the [property@Gtk.Widget:hexpand]
+ * property inside a `GtkBox`, then the widget might get extra space.
  * If you have for example a 16x16 icon inside a 32x32 space, the icon
  * could be scaled and stretched, it could be centered, or it could be
  * positioned to one side of the space.
@@ -821,7 +817,9 @@ public enum GtkAlign
 alias GtkAlign Align;
 
 /**
- * Types of user actions that may be blocked by gtk_application_inhibit().
+ * Types of user actions that may be blocked by `GtkApplication`.
+ *
+ * See [method@Gtk.Application.inhibit].
  */
 public enum GtkApplicationInhibitFlags
 {
@@ -876,8 +874,9 @@ public enum GtkArrowType
 alias GtkArrowType ArrowType;
 
 /**
- * An enum for determining the page role inside the #GtkAssistant. It's
- * used to handle buttons sensitivity and visibility.
+ * Determines the page role inside a `GtkAssistant`.
+ *
+ * The role is used to handle buttons sensitivity and visibility.
  *
  * Note that an assistant needs to end its page flow with a page of type
  * %GTK_ASSISTANT_PAGE_CONFIRM, %GTK_ASSISTANT_PAGE_SUMMARY or
@@ -925,11 +924,13 @@ public enum GtkAssistantPageType
 alias GtkAssistantPageType AssistantPageType;
 
 /**
+ * Baseline position in a row of widgets.
+ *
  * Whenever a container has some form of natural row it may align
  * children in that row along a common typographical baseline. If
  * the amount of vertical space in the row is taller than the total
  * requested height of the baseline-aligned children then it can use a
- * #GtkBaselinePosition to select where to put the baseline inside the
+ * `GtkBaselinePosition` to select where to put the baseline inside the
  * extra available space.
  */
 public enum GtkBaselinePosition
@@ -999,10 +1000,11 @@ alias GtkBorderStyle BorderStyle;
 
 /**
  * The list of flags that can be passed to gtk_builder_create_closure().
+ *
  * New values may be added in the future for new features, so external
- * implementations of GtkBuilderScopeInterface should test the flags for unknown
- * values and raise a %GTK_BUILDER_ERROR_INVALID_ATTRIBUTE error when they
- * encounter one.
+ * implementations of [interface@Gtk.BuilderScope] should test the flags
+ * for unknown values and raise a %GTK_BUILDER_ERROR_INVALID_ATTRIBUTE error
+ * when they encounter one.
  */
 public enum GtkBuilderClosureFlags
 {
@@ -1095,9 +1097,10 @@ public enum GtkBuilderError
 alias GtkBuilderError BuilderError;
 
 /**
- * Prebuilt sets of buttons for the dialog. If
- * none of these choices are appropriate, simply use %GTK_BUTTONS_NONE
- * then call gtk_dialog_add_buttons().
+ * Prebuilt sets of buttons for `GtkDialog`.
+ *
+ * If none of these choices are appropriate, simply use
+ * %GTK_BUTTONS_NONE and call [method@Gtk.Dialog.add_buttons].
  *
  * > Please note that %GTK_BUTTONS_OK, %GTK_BUTTONS_YES_NO
  * > and %GTK_BUTTONS_OK_CANCEL are discouraged by the
@@ -1212,7 +1215,7 @@ public enum GtkCellRendererState
 alias GtkCellRendererState CellRendererState;
 
 /**
- * The widget attributes that can be used when creating a #GtkConstraint.
+ * The widget attributes that can be used when creating a `GtkConstraint`.
  */
 public enum GtkConstraintAttribute
 {
@@ -1357,8 +1360,9 @@ alias GtkConstraintVflParserError ConstraintVflParserError;
 
 /**
  * Specifies which corner a child widget should be placed in when packed into
- * a #GtkScrolledWindow. This is effectively the opposite of where the scroll
- * bars are placed.
+ * a `GtkScrolledWindow.`
+ *
+ * This is effectively the opposite of where the scroll bars are placed.
  */
 public enum GtkCornerType
 {
@@ -1464,11 +1468,12 @@ public enum GtkDebugFlags
 	CONSTRAINTS = 32768,
 	BUILDER_OBJECTS = 65536,
 	A11Y = 131072,
+	ICONFALLBACK = 262144,
 }
 alias GtkDebugFlags DebugFlags;
 
 /**
- * See also: #GtkEntry::delete-from-cursor.
+ * Passed to various keybinding signals for deleting text.
  */
 public enum GtkDeleteType
 {
@@ -1519,13 +1524,11 @@ alias GtkDeleteType DeleteType;
 public enum GtkDialogFlags
 {
 	/**
-	 * Make the constructed dialog modal,
-	 * see gtk_window_set_modal()
+	 * Make the constructed dialog modal
 	 */
 	MODAL = 1,
 	/**
-	 * Destroy the dialog when its
-	 * parent is destroyed, see gtk_window_set_destroy_with_parent()
+	 * Destroy the dialog when its parent is destroyed
 	 */
 	DESTROY_WITH_PARENT = 2,
 	/**
@@ -1599,7 +1602,7 @@ public enum GtkEntryIconPosition
 alias GtkEntryIconPosition EntryIconPosition;
 
 /**
- * Describes the behavior of a #GtkEventControllerScroll.
+ * Describes the behavior of a `GtkEventControllerScroll`.
  */
 public enum GtkEventControllerScrollFlags
 {
@@ -1620,8 +1623,7 @@ public enum GtkEventControllerScrollFlags
 	 */
 	DISCRETE = 4,
 	/**
-	 * Emit #GtkEventControllerScroll::decelerate
-	 * after continuous scroll finishes.
+	 * Emit ::decelerate after continuous scroll finishes.
 	 */
 	KINETIC = 8,
 	/**
@@ -1632,7 +1634,7 @@ public enum GtkEventControllerScrollFlags
 alias GtkEventControllerScrollFlags EventControllerScrollFlags;
 
 /**
- * Describes the state of a #GdkEventSequence in a #GtkGesture.
+ * Describes the state of a `GdkEventSequence` in a `GtkGesture`.
  */
 public enum GtkEventSequenceState
 {
@@ -1652,7 +1654,7 @@ public enum GtkEventSequenceState
 alias GtkEventSequenceState EventSequenceState;
 
 /**
- * Describes whether a #GtkFileChooser is being used to open existing files
+ * Describes whether a `GtkFileChooser` is being used to open existing files
  * or to save to a possibly new file.
  */
 public enum GtkFileChooserAction
@@ -1679,7 +1681,7 @@ alias GtkFileChooserAction FileChooserAction;
 
 /**
  * These identify the various errors that can occur while calling
- * #GtkFileChooser functions.
+ * `GtkFileChooser` functions.
  */
 public enum GtkFileChooserError
 {
@@ -1762,8 +1764,8 @@ public enum GtkFilterMatch
 alias GtkFilterMatch FilterMatch;
 
 /**
- * This enumeration specifies the granularity of font selection
- * that is desired in a font chooser.
+ * Specifies the granularity of font selection
+ * that is desired in a `GtkFontChooser`.
  *
  * This enumeration may be extended in the future; applications should
  * ignore unknown values.
@@ -1794,7 +1796,7 @@ public enum GtkFontChooserLevel
 alias GtkFontChooserLevel FontChooserLevel;
 
 /**
- * Used to specify options for gtk_icon_theme_lookup_icon()
+ * Used to specify options for gtk_icon_theme_lookup_icon().
  */
 public enum GtkIconLookupFlags
 {
@@ -1822,9 +1824,10 @@ alias GtkIconLookupFlags IconLookupFlags;
  * Icon sizes default to being inherited. Where they cannot be
  * inherited, text size is the default.
  *
- * All widgets which use GtkIconSize set the normal-icons or large-icons
- * style classes correspondingly, and let themes determine the actual size
- * to be used with the -gtk-icon-size CSS property.
+ * All widgets which use `GtkIconSize` set the normal-icons or
+ * large-icons style classes correspondingly, and let themes
+ * determine the actual size to be used with the
+ * `-gtk-icon-size` CSS property.
  */
 public enum GtkIconSize
 {
@@ -1844,7 +1847,7 @@ public enum GtkIconSize
 alias GtkIconSize IconSize;
 
 /**
- * Error codes for GtkIconTheme operations.
+ * Error codes for `GtkIconTheme` operations.
  */
 public enum GtkIconThemeError
 {
@@ -1892,13 +1895,14 @@ public enum GtkIconViewDropPosition
 alias GtkIconViewDropPosition IconViewDropPosition;
 
 /**
- * Describes the image data representation used by a #GtkImage. If you
- * want to get the image from the widget, you can only get the
- * currently-stored representation. e.g.  if the
- * gtk_image_get_storage_type() returns #GTK_IMAGE_PAINTABLE, then you can
- * call gtk_image_get_paintable().  For empty images, you can request any
- * storage type (call any of the "get" functions), but they will all
- * return %NULL values.
+ * Describes the image data representation used by a [class@Gtk.Image].
+ *
+ * If you want to get the image from the widget, you can only get the
+ * currently-stored representation; for instance, if the gtk_image_get_storage_type()
+ * returns %GTK_IMAGE_PAINTABLE, then you can call gtk_image_get_paintable().
+ *
+ * For empty images, you can request any storage type (call any of the "get"
+ * functions), but they will all return %NULL values.
  */
 public enum GtkImageType
 {
@@ -1923,8 +1927,10 @@ alias GtkImageType ImageType;
 
 /**
  * Describes hints that might be taken into account by input methods
- * or applications. Note that input methods may already tailor their
- * behaviour according to the #GtkInputPurpose of the entry.
+ * or applications.
+ *
+ * Note that input methods may already tailor their behaviour according
+ * to the `GtkInputPurpose` of the entry.
  *
  * Some common sense is expected when using these flags - mixing
  * %GTK_INPUT_HINT_LOWERCASE with any of the uppercase hints makes no sense.
@@ -1994,9 +2000,10 @@ public enum GtkInputHints
 alias GtkInputHints InputHints;
 
 /**
- * Describes primary purpose of the input widget. This information is
- * useful for on-screen keyboards and similar input methods to decide
- * which keys should be presented to the user.
+ * Describes primary purpose of the input widget.
+ *
+ * This information is useful for on-screen keyboards and similar input
+ * methods to decide which keys should be presented to the user.
  *
  * Note that the purpose is not meant to impose a totally strict rule
  * about allowed characters, and does not replace input validation.
@@ -2063,7 +2070,7 @@ public enum GtkInputPurpose
 alias GtkInputPurpose InputPurpose;
 
 /**
- * Used for justifying the text inside a #GtkLabel widget.
+ * Used for justifying the text inside a `GtkLabel` widget.
  */
 public enum GtkJustification
 {
@@ -2087,7 +2094,8 @@ public enum GtkJustification
 alias GtkJustification Justification;
 
 /**
- * Describes how #GtkLevelBar contents should be rendered.
+ * Describes how `GtkLevelBar` contents should be rendered.
+ *
  * Note that this enumeration could be extended with additional modes
  * in the future.
  */
@@ -2188,7 +2196,7 @@ public enum GtkLicense
 alias GtkLicense License;
 
 /**
- * The type of message being displayed in the dialog.
+ * The type of message being displayed in a `GtkMessageDialog`.
  */
 public enum GtkMessageType : uint
 {
@@ -2215,6 +2223,10 @@ public enum GtkMessageType : uint
 }
 alias GtkMessageType MessageType;
 
+/**
+ * Passed as argument to various keybinding signals for moving the
+ * cursor position.
+ */
 public enum GtkMovementStep
 {
 	/**
@@ -2261,7 +2273,7 @@ public enum GtkMovementStep
 alias GtkMovementStep MovementStep;
 
 /**
- * The parameter used in the action signals of #GtkNotebook.
+ * The parameter used in the action signals of `GtkNotebook`.
  */
 public enum GtkNotebookTab
 {
@@ -2320,10 +2332,10 @@ alias GtkNumberUpLayout NumberUpLayout;
 /**
  * Describes the way two values can be compared.
  *
- * These values can be used with a #GCompareFunc. However, a
- * #GCompareFunc is allowed to return any integer values.
- * For converting such a value to a #GtkOrdering, use
- * gtk_ordering_from_cmpfunc().
+ * These values can be used with a `GCompareFunc`. However,
+ * a `GCompareFunc` is allowed to return any integer values.
+ * For converting such a value to a `GtkOrdering` value, use
+ * [func@Gtk.Ordering.from_cmpfunc].
  */
 public enum GtkOrdering
 {
@@ -2343,9 +2355,9 @@ public enum GtkOrdering
 alias GtkOrdering Ordering;
 
 /**
- * Represents the orientation of widgets and other objects which can be switched
- * between horizontal and vertical orientation on the fly, like #GtkBox or
- * #GtkGesturePan.
+ * Represents the orientation of widgets and other objects.
+ *
+ * Typical examples are `GtkBox or `GtkGesturePan`.
  */
 public enum GtkOrientation
 {
@@ -2361,9 +2373,11 @@ public enum GtkOrientation
 alias GtkOrientation Orientation;
 
 /**
- * Defines how content overflowing a given area should be handled, such as
- * with gtk_widget_set_overflow(). This property is modeled after the CSS overflow
- * property, but implements it only partially.
+ * Defines how content overflowing a given area should be handled.
+ *
+ * This is used in [method@Gtk.Widget.set_overflow]. The
+ * [property@Gtk.Widget:overflow] property is modeled after the
+ * CSS overflow property, but implements it only partially.
  */
 public enum GtkOverflow
 {
@@ -2382,7 +2396,8 @@ alias GtkOverflow Overflow;
 
 /**
  * Represents the packing location of a children in its parent.
- * See #GtkWindowControls for example.
+ *
+ * See `GtkWindowControls` for example.
  */
 public enum GtkPackType
 {
@@ -2462,7 +2477,7 @@ public enum GtkPageSet
 alias GtkPageSet PageSet;
 
 /**
- * Describes the panning direction of a #GtkGesturePan
+ * Describes the panning direction of a `GtkGesturePan`
  */
 public enum GtkPanDirection
 {
@@ -2486,7 +2501,7 @@ public enum GtkPanDirection
 alias GtkPanDirection PanDirection;
 
 /**
- * Flags that influence the behavior of gtk_widget_pick()
+ * Flags that influence the behavior of gtk_widget_pick().
  */
 public enum GtkPickFlags
 {
@@ -2518,7 +2533,7 @@ public enum GtkPolicyType
 	ALWAYS = 0,
 	/**
 	 * The scrollbar will appear and disappear as necessary.
-	 * For example, when all of a #GtkTreeView can not be seen.
+	 * For example, when all of a `GtkTreeView` can not be seen.
 	 */
 	AUTOMATIC = 1,
 	/**
@@ -2551,8 +2566,10 @@ public enum GtkPopoverMenuFlags
 alias GtkPopoverMenuFlags PopoverMenuFlags;
 
 /**
- * Describes which edge of a widget a certain feature is positioned at, e.g.
- * the tabs of a #GtkNotebook, or the label of a #GtkScale.
+ * Describes which edge of a widget a certain feature is positioned at.
+ *
+ * For examples, see the tabs of a `GtkNotebook`, or the label
+ * of a `GtkScale`.
  */
 public enum GtkPositionType
 {
@@ -2574,6 +2591,62 @@ public enum GtkPositionType
 	BOTTOM = 3,
 }
 alias GtkPositionType PositionType;
+
+/**
+ * Specifies which features the print dialog should offer.
+ *
+ * If neither %GTK_PRINT_CAPABILITY_GENERATE_PDF nor
+ * %GTK_PRINT_CAPABILITY_GENERATE_PS is specified, GTK assumes that all
+ * formats are supported.
+ */
+public enum GtkPrintCapabilities
+{
+	/**
+	 * Print dialog will offer printing even/odd pages.
+	 */
+	PAGE_SET = 1,
+	/**
+	 * Print dialog will allow to print multiple copies.
+	 */
+	COPIES = 2,
+	/**
+	 * Print dialog will allow to collate multiple copies.
+	 */
+	COLLATE = 4,
+	/**
+	 * Print dialog will allow to print pages in reverse order.
+	 */
+	REVERSE = 8,
+	/**
+	 * Print dialog will allow to scale the output.
+	 */
+	SCALE = 16,
+	/**
+	 * The program will send the document to
+	 * the printer in PDF format
+	 */
+	GENERATE_PDF = 32,
+	/**
+	 * The program will send the document to
+	 * the printer in Postscript format
+	 */
+	GENERATE_PS = 64,
+	/**
+	 * Print dialog will offer a preview
+	 */
+	PREVIEW = 128,
+	/**
+	 * Print dialog will offer printing multiple
+	 * pages per sheet
+	 */
+	NUMBER_UP = 256,
+	/**
+	 * Print dialog will allow to rearrange
+	 * pages when printing multiple pages per sheet
+	 */
+	NUMBER_UP_LAYOUT = 512,
+}
+alias GtkPrintCapabilities PrintCapabilities;
 
 /**
  * See also gtk_print_settings_set_duplex().
@@ -2622,8 +2695,9 @@ public enum GtkPrintError
 alias GtkPrintError PrintError;
 
 /**
- * The @action parameter to gtk_print_operation_run()
- * determines what action the print operation should perform.
+ * Determines what action the print operation should perform.
+ *
+ * A parameter of this typs is passed to [method@Gtk.PrintOperation.run].
  */
 public enum GtkPrintOperationAction
 {
@@ -2649,7 +2723,9 @@ public enum GtkPrintOperationAction
 alias GtkPrintOperationAction PrintOperationAction;
 
 /**
- * A value of this type is returned by gtk_print_operation_run().
+ * The result of a print operation.
+ *
+ * A value of this type is returned by [method@Gtk.PrintOperation.run].
  */
 public enum GtkPrintOperationResult
 {
@@ -2774,7 +2850,7 @@ public enum GtkPrintStatus
 alias GtkPrintStatus PrintStatus;
 
 /**
- * Describes limits of a #GtkEventController for handling events
+ * Describes limits of a `GtkEventController` for handling events
  * targeting other widgets.
  */
 public enum GtkPropagationLimit
@@ -2794,7 +2870,7 @@ public enum GtkPropagationLimit
 alias GtkPropagationLimit PropagationLimit;
 
 /**
- * Describes the stage at which events are fed into a #GtkEventController.
+ * Describes the stage at which events are fed into a `GtkEventController`.
  */
 public enum GtkPropagationPhase
 {
@@ -2867,6 +2943,7 @@ alias GtkRecentManagerError RecentManagerError;
 
 /**
  * Predefined values for use as response ids in gtk_dialog_add_button().
+ *
  * All predefined values are negative; GTK leaves values of 0 or greater for
  * application-defined response ids.
  */
@@ -2922,7 +2999,7 @@ alias GtkResponseType ResponseType;
 
 /**
  * These enumeration values describe the possible transitions
- * when the child of a #GtkRevealer widget is shown or hidden.
+ * when the child of a `GtkRevealer` widget is shown or hidden.
  */
 public enum GtkRevealerTransitionType
 {
@@ -2969,6 +3046,9 @@ public enum GtkRevealerTransitionType
 }
 alias GtkRevealerTransitionType RevealerTransitionType;
 
+/**
+ * Passed as argument to various keybinding signals.
+ */
 public enum GtkScrollStep
 {
 	/**
@@ -3143,6 +3223,7 @@ alias GtkSensitivityType SensitivityType;
 
 /**
  * List of flags that can be passed to action activation.
+ *
  * More flags may be added in the future.
  */
 public enum GtkShortcutActionFlags
@@ -3157,8 +3238,8 @@ public enum GtkShortcutActionFlags
 alias GtkShortcutActionFlags ShortcutActionFlags;
 
 /**
- * Describes where #GtkShortcuts added to a
- * #GtkShortcutController get handled.
+ * Describes where `GtkShortcut`s added to a
+ * `GtkShortcutController` get handled.
  */
 public enum GtkShortcutScope
 {
@@ -3182,50 +3263,51 @@ alias GtkShortcutScope ShortcutScope;
 
 /**
  * GtkShortcutType specifies the kind of shortcut that is being described.
+ *
  * More values may be added to this enumeration over time.
  */
 public enum GtkShortcutType
 {
 	/**
-	 * The shortcut is a keyboard accelerator. The #GtkShortcutsShortcut:accelerator
+	 * The shortcut is a keyboard accelerator. The GtkShortcutsShortcut:accelerator
 	 * property will be used.
 	 */
 	ACCELERATOR = 0,
 	/**
-	 * The shortcut is a pinch gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a pinch gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_PINCH = 1,
 	/**
-	 * The shortcut is a stretch gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a stretch gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_STRETCH = 2,
 	/**
-	 * The shortcut is a clockwise rotation gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a clockwise rotation gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_ROTATE_CLOCKWISE = 3,
 	/**
-	 * The shortcut is a counterclockwise rotation gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a counterclockwise rotation gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_ROTATE_COUNTERCLOCKWISE = 4,
 	/**
-	 * The shortcut is a two-finger swipe gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a two-finger swipe gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_TWO_FINGER_SWIPE_LEFT = 5,
 	/**
-	 * The shortcut is a two-finger swipe gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a two-finger swipe gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_TWO_FINGER_SWIPE_RIGHT = 6,
 	/**
-	 * The shortcut is a gesture. The #GtkShortcutsShortcut:icon property will be
+	 * The shortcut is a gesture. The GtkShortcutsShortcut:icon property will be
 	 * used.
 	 */
 	GESTURE = 7,
 	/**
-	 * The shortcut is a swipe gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a swipe gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_SWIPE_LEFT = 8,
 	/**
-	 * The shortcut is a swipe gesture. GTK+ provides an icon and subtitle.
+	 * The shortcut is a swipe gesture. GTK provides an icon and subtitle.
 	 */
 	GESTURE_SWIPE_RIGHT = 9,
 }
@@ -3324,7 +3406,7 @@ public enum GtkSorterChange
 alias GtkSorterChange SorterChange;
 
 /**
- * Describes the type of order that a #GtkSorter may describe.
+ * Describes the type of order that a `GtkSorter` may produce.
  */
 public enum GtkSorterOrder
 {
@@ -3347,9 +3429,10 @@ public enum GtkSorterOrder
 alias GtkSorterOrder SorterOrder;
 
 /**
- * The spin button update policy determines whether the spin button displays
- * values even if they are outside the bounds of its adjustment.
- * See gtk_spin_button_set_update_policy().
+ * Determines whether the spin button displays values outside the adjustment
+ * bounds.
+ *
+ * See [method@Gtk.SpinButton.set_update_policy].
  */
 public enum GtkSpinButtonUpdatePolicy
 {
@@ -3405,8 +3488,7 @@ public enum GtkSpinType
 alias GtkSpinType SpinType;
 
 /**
- * These enumeration values describe the possible transitions
- * between pages in a #GtkStack widget.
+ * Possible transitions between pages in a `GtkStack` widget.
  *
  * New values may be added to this enumeration over time.
  */
@@ -3508,9 +3590,11 @@ public enum GtkStackTransitionType
 alias GtkStackTransitionType StackTransitionType;
 
 /**
- * Describes a widget state. Widget states are used to match the widget
- * against CSS pseudo-classes. Note that GTK extends the regular CSS
- * classes and sometimes uses different names.
+ * Describes a widget state.
+ *
+ * Widget states are used to match the widget against CSS pseudo-classes.
+ * Note that GTK extends the regular CSS classes and sometimes uses
+ * different names.
  */
 public enum GtkStateFlags
 {
@@ -3606,6 +3690,7 @@ alias GtkStringFilterMatchMode StringFilterMatchMode;
 
 /**
  * Flags that modify the behavior of gtk_style_context_to_string().
+ *
  * New values may be added to this enumeration.
  */
 public enum GtkStyleContextPrintFlags
@@ -3634,10 +3719,12 @@ alias GtkStyleContextPrintFlags StyleContextPrintFlags;
 
 /**
  * Values that can be passed to the GtkWidgetClass.system_setting_changed
- * vfunc to indicate that a system setting has changed and widgets may
- * need to drop caches, or react otherwise.
+ * vfunc.
  *
- * Most of the values correspond to #GtkSettings properties.
+ * The values indicate which system setting has changed.
+ * Widgets may need to drop caches, or react otherwise.
+ *
+ * Most of the values correspond to `GtkSettings` properties.
  *
  * More values may be added over time.
  */
@@ -3713,7 +3800,7 @@ alias GtkTextExtendSelection TextExtendSelection;
 /**
  * Flags affecting how a search is done.
  *
- * If neither #GTK_TEXT_SEARCH_VISIBLE_ONLY nor #GTK_TEXT_SEARCH_TEXT_ONLY are
+ * If neither %GTK_TEXT_SEARCH_VISIBLE_ONLY nor %GTK_TEXT_SEARCH_TEXT_ONLY are
  * enabled, the match must be exact; the special 0xFFFC character will match
  * embedded paintables or child widgets.
  */
@@ -3945,7 +4032,7 @@ struct GtkActionBar;
 struct GtkActionable;
 
 /**
- * The interface vtable for #GtkActionable.
+ * The interface vtable for `GtkActionable`.
  */
 struct GtkActionableInterface
 {
@@ -3953,7 +4040,7 @@ struct GtkActionableInterface
 	/**
 	 *
 	 * Params:
-	 *     actionable = a #GtkActionable widget
+	 *     actionable = a `GtkActionable` widget
 	 * Returns: the action name, or %NULL if none is set
 	 */
 	extern(C) const(char)* function(GtkActionable* actionable) getActionName;
@@ -3962,7 +4049,7 @@ struct GtkActionableInterface
 	/**
 	 *
 	 * Params:
-	 *     actionable = a #GtkActionable widget
+	 *     actionable = a `GtkActionable` widget
 	 * Returns: the current target value
 	 */
 	extern(C) GVariant* function(GtkActionable* actionable) getActionTargetValue;
@@ -4122,9 +4209,9 @@ struct GtkBoxLayoutClass
 struct GtkBuildable;
 
 /**
- * The #GtkBuildableIface interface contains method that are
- * necessary to allow #GtkBuilder to construct an object from
- * a #GtkBuilder UI definition.
+ * The `GtkBuildableIface` interface contains methods that are
+ * necessary to allow `GtkBuilder` to construct an object from
+ * a `GtkBuilder` UI definition.
  */
 struct GtkBuildableIface
 {
@@ -4176,7 +4263,7 @@ struct GtkBuildableIface
 struct GtkBuildableParseContext;
 
 /**
- * A sub-parser for #GtkBuildable implementations.
+ * A sub-parser for `GtkBuildable` implementations.
  */
 struct GtkBuildableParser
 {
@@ -4544,7 +4631,9 @@ struct GtkCheckButtonClass
 	GtkWidgetClass parentClass;
 	/** */
 	extern(C) void function(GtkCheckButton* checkButton) toggled;
-	void*[8] padding;
+	/** */
+	extern(C) void function(GtkCheckButton* checkButton) activate;
+	void*[7] padding;
 }
 
 struct GtkClosureExpression;
@@ -4634,8 +4723,8 @@ struct GtkConstraintTarget;
 struct GtkConstraintTargetInterface;
 
 /**
- * #GtkCssLocation is used to present a location in a file - or other
- * source of data parsed by the CSS engine.
+ * Represents a location in a file or other source of data parsed
+ * by the CSS engine.
  *
  * The @bytes and @line_bytes offsets are meant to be used to
  * programmatically match data. The @lines and @line_chars offsets
@@ -4790,8 +4879,8 @@ struct GtkEditableInterface
 	/**
 	 *
 	 * Params:
-	 *     editable = a #GtkEditable
-	 * Returns: a pointer to the contents of the editable.
+	 *     editable = a `GtkEditable`
+	 * Returns: a pointer to the contents of the editable
 	 */
 	extern(C) const(char)* function(GtkEditable* editable) getText;
 	/** */
@@ -4801,7 +4890,7 @@ struct GtkEditableInterface
 	/**
 	 *
 	 * Params:
-	 *     editable = a #GtkEditable
+	 *     editable = a `GtkEditable`
 	 *     startPos = location to store the starting position, or %NULL
 	 *     endPos = location to store the end position, or %NULL
 	 * Returns: %TRUE if there is a non-empty selection, %FALSE otherwise
@@ -4812,8 +4901,8 @@ struct GtkEditableInterface
 	/**
 	 *
 	 * Params:
-	 *     editable = a #GtkEditable
-	 * Returns: the delegate #GtkEditable
+	 *     editable = a `GtkEditable`
+	 * Returns: the delegate `GtkEditable`
 	 */
 	extern(C) GtkEditable* function(GtkEditable* editable) getDelegate;
 }
@@ -4851,14 +4940,14 @@ struct GtkEntryBufferClass
 	/**
 	 *
 	 * Params:
-	 *     buffer = a #GtkEntryBuffer
+	 *     buffer = a `GtkEntryBuffer`
 	 * Returns: The number of characters in the buffer.
 	 */
 	extern(C) uint function(GtkEntryBuffer* buffer) getLength;
 	/**
 	 *
 	 * Params:
-	 *     buffer = a #GtkEntryBuffer
+	 *     buffer = a `GtkEntryBuffer`
 	 *     position = the position at which to insert text.
 	 *     chars = the text to insert into the buffer.
 	 *     nChars = the length of the text in characters, or -1
@@ -4868,7 +4957,7 @@ struct GtkEntryBufferClass
 	/**
 	 *
 	 * Params:
-	 *     buffer = a #GtkEntryBuffer
+	 *     buffer = a `GtkEntryBuffer`
 	 *     position = position at which to delete text
 	 *     nChars = number of characters to delete
 	 * Returns: The number of characters deleted.
@@ -4972,7 +5061,7 @@ struct GtkFilterClass
 	/**
 	 *
 	 * Params:
-	 *     self = a #GtkFilter
+	 *     self = a `GtkFilter`
 	 *     item = The item to check
 	 * Returns: %TRUE if the filter matches the item and a filter model should
 	 *     keep it, %FALSE if not.
@@ -5069,8 +5158,8 @@ struct GtkFontChooserIface
 	/**
 	 *
 	 * Params:
-	 *     fontchooser = a #GtkFontChooser
-	 * Returns: A #PangoFontFamily representing the
+	 *     fontchooser = a `GtkFontChooser`
+	 * Returns: A `PangoFontFamily` representing the
 	 *     selected font family, or %NULL. The returned object is owned by @fontchooser
 	 *     and must not be modified or freed.
 	 */
@@ -5078,8 +5167,8 @@ struct GtkFontChooserIface
 	/**
 	 *
 	 * Params:
-	 *     fontchooser = a #GtkFontChooser
-	 * Returns: A #PangoFontFace representing the
+	 *     fontchooser = a `GtkFontChooser`
+	 * Returns: A `PangoFontFace` representing the
 	 *     selected font group details, or %NULL. The returned object is owned by
 	 *     @fontchooser and must not be modified or freed.
 	 */
@@ -5087,7 +5176,7 @@ struct GtkFontChooserIface
 	/**
 	 *
 	 * Params:
-	 *     fontchooser = a #GtkFontChooser
+	 *     fontchooser = a `GtkFontChooser`
 	 * Returns: A n integer representing the selected font size,
 	 *     or -1 if no font size is selected.
 	 */
@@ -5101,8 +5190,8 @@ struct GtkFontChooserIface
 	/**
 	 *
 	 * Params:
-	 *     fontchooser = a #GtkFontChooser
-	 * Returns: a #PangoFontMap, or %NULL
+	 *     fontchooser = a `GtkFontChooser`
+	 * Returns: a `PangoFontMap`, or %NULL
 	 */
 	extern(C) PangoFontMap* function(GtkFontChooser* fontchooser) getFontMap;
 	void*[10] padding;
@@ -5241,7 +5330,7 @@ struct GtkIMContextClass
 	/**
 	 *
 	 * Params:
-	 *     context = a #GtkIMContext
+	 *     context = a `GtkIMContext`
 	 *     offset = offset from cursor position in chars;
 	 *         a negative value means start before the cursor.
 	 *     nChars = number of characters to delete.
@@ -5255,7 +5344,7 @@ struct GtkIMContextClass
 	/**
 	 *
 	 * Params:
-	 *     context = a #GtkIMContext
+	 *     context = a `GtkIMContext`
 	 *     event = the key event
 	 * Returns: %TRUE if the input method handled the key event.
 	 */
@@ -5275,6 +5364,22 @@ struct GtkIMContextClass
 	/**
 	 *
 	 * Params:
+	 *     context = a `GtkIMContext`
+	 *     text = location to store a UTF-8 encoded
+	 *         string of text holding context around the insertion point.
+	 *         If the function returns %TRUE, then you must free the result
+	 *         stored in this location with g_free().
+	 *     cursorIndex = location to store byte index of the insertion
+	 *         cursor within @text.
+	 * Returns: `TRUE` if surrounding text was provided; in this case
+	 *     you must free the result stored in `text`.
+	 */
+	extern(C) int function(GtkIMContext* context, char** text, int* cursorIndex) getSurrounding;
+	/** */
+	extern(C) void function(GtkIMContext* context, const(char)* text, int len, int cursorIndex, int anchorIndex) setSurroundingWithSelection;
+	/**
+	 *
+	 * Params:
 	 *     context = a #GtkIMContext
 	 *     text = location to store a UTF-8 encoded
 	 *         string of text holding context around the insertion point.
@@ -5282,10 +5387,12 @@ struct GtkIMContextClass
 	 *         stored in this location with g_free().
 	 *     cursorIndex = location to store byte index of the insertion
 	 *         cursor within @text.
-	 * Returns: %TRUE if surrounding text was provided; in this case
-	 *     you must free the result stored in *text.
+	 *     anchorIndex = location to store byte index of the selection
+	 *         bound within @text
+	 * Returns: `TRUE` if surrounding text was provided; in this case
+	 *     you must free the result stored in `text`.
 	 */
-	extern(C) int function(GtkIMContext* context, char** text, int* cursorIndex) getSurrounding;
+	extern(C) int function(GtkIMContext* context, char** text, int* cursorIndex, int* anchorIndex) getSurroundingWithSelection;
 	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
@@ -5296,8 +5403,6 @@ struct GtkIMContextClass
 	extern(C) void function() GtkReserved4;
 	/** */
 	extern(C) void function() GtkReserved5;
-	/** */
-	extern(C) void function() GtkReserved6;
 }
 
 struct GtkIMContextSimple
@@ -5706,7 +5811,9 @@ struct GtkPadController;
 struct GtkPadControllerClass;
 
 /**
- * See also gtk_print_settings_set_page_ranges().
+ * A range of pages to print.
+ *
+ * See also [method@Gtk.PrintSettings.set_page_ranges].
  */
 struct GtkPageRange
 {
@@ -5721,6 +5828,8 @@ struct GtkPageRange
 }
 
 struct GtkPageSetup;
+
+struct GtkPageSetupUnixDialog;
 
 struct GtkPaned;
 
@@ -5761,7 +5870,11 @@ struct GtkPopoverMenu;
 
 struct GtkPopoverMenuBar;
 
+struct GtkPrintBackend;
+
 struct GtkPrintContext;
+
+struct GtkPrintJob;
 
 struct GtkPrintOperation
 {
@@ -5814,7 +5927,7 @@ struct GtkPrintOperationPreviewIface
 	/**
 	 *
 	 * Params:
-	 *     preview = a #GtkPrintOperationPreview
+	 *     preview = a `GtkPrintOperationPreview`
 	 *     pageNr = a page number
 	 * Returns: %TRUE if the page has been selected for printing
 	 */
@@ -5842,6 +5955,10 @@ struct GtkPrintOperationPreviewIface
 struct GtkPrintOperationPrivate;
 
 struct GtkPrintSettings;
+
+struct GtkPrintUnixDialog;
+
+struct GtkPrinter;
 
 struct GtkProgressBar;
 
@@ -6013,7 +6130,7 @@ struct GtkScrollableInterface
 	/**
 	 *
 	 * Params:
-	 *     scrollable = a #GtkScrollable
+	 *     scrollable = a `GtkScrollable`
 	 *     border = return location for the results
 	 * Returns: %TRUE if @border has been set
 	 */
@@ -6057,7 +6174,7 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 *     position = the position of the item to query
 	 * Returns: %TRUE if the item is selected
 	 */
@@ -6065,18 +6182,18 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 *     position = start of the queired range
 	 *     nItems = number of items in the queried range
-	 * Returns: A #GtkBitset that matches the selection state for the given state
-	 *     with all other values being undefined.
+	 * Returns: A `GtkBitset` that matches the selection state
+	 *     for the given range with all other values being undefined.
 	 *     The bitset must not be modified.
 	 */
 	extern(C) GtkBitset* function(GtkSelectionModel* model, uint position, uint nItems) getSelectionInRange;
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 *     position = the position of the item to select
 	 *     unselectRest = whether previously selected items should be unselected
 	 * Returns: %TRUE if this action was supported and no fallback should be
@@ -6086,7 +6203,7 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 *     position = the position of the item to unselect
 	 * Returns: %TRUE if this action was supported and no fallback should be
 	 *     tried. This does not mean the item was unselected.
@@ -6095,7 +6212,7 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 *     position = the first item to select
 	 *     nItems = the number of items to select
 	 *     unselectRest = whether previously selected items should be unselected
@@ -6106,7 +6223,7 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 *     position = the first item to unselect
 	 *     nItems = the number of items to unselect
 	 * Returns: %TRUE if this action was supported and no fallback should be
@@ -6116,7 +6233,7 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 * Returns: %TRUE if this action was supported and no fallback should be
 	 *     tried. This does not mean that all items are now selected.
 	 */
@@ -6124,7 +6241,7 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 * Returns: %TRUE if this action was supported and no fallback should be
 	 *     tried. This does not mean that all items are now unselected.
 	 */
@@ -6132,7 +6249,7 @@ struct GtkSelectionModelInterface
 	/**
 	 *
 	 * Params:
-	 *     model = a #GtkSelectionModel
+	 *     model = a `GtkSelectionModel`
 	 *     selected = bitmask specifying if items should be selected or
 	 *         unselected
 	 *     mask = bitmask specifying which items should be updated
@@ -6146,20 +6263,6 @@ struct GtkSelectionModelInterface
 struct GtkSeparator;
 
 struct GtkSettings;
-
-struct GtkSettingsValue
-{
-	/**
-	 * Origin should be something like “filename:linenumber” for
-	 * rc files, or e.g. “XProperty” for other sources.
-	 */
-	char* origin;
-	/**
-	 * Valid types are LONG, DOUBLE and STRING corresponding to
-	 * the token parsed, or a GSTRING holding an unparsed statement
-	 */
-	GValue value;
-}
 
 struct GtkShortcut;
 
@@ -6259,7 +6362,7 @@ struct GtkSorter
 }
 
 /**
- * The virtual table for #GtkSorter.
+ * The virtual table for `GtkSorter`.
  */
 struct GtkSorterClass
 {
@@ -6267,7 +6370,7 @@ struct GtkSorterClass
 	/**
 	 *
 	 * Params:
-	 *     self = a #GtkSorter
+	 *     self = a `GtkSorter`
 	 *     item1 = first item to compare
 	 *     item2 = second item to compare
 	 * Returns: %GTK_ORDERING_EQUAL if @item1 == @item2,
@@ -6278,7 +6381,7 @@ struct GtkSorterClass
 	/**
 	 *
 	 * Params:
-	 *     self = a #GtkSorter
+	 *     self = a `GtkSorter`
 	 * Returns: The order
 	 */
 	extern(C) GtkSorterOrder function(GtkSorter* self) getOrder;
@@ -6370,8 +6473,6 @@ struct GtkText
 {
 	GtkWidget parentInstance;
 }
-
-struct GtkTextBTree;
 
 struct GtkTextBuffer
 {
@@ -6961,8 +7062,8 @@ struct GtkWidgetClass
 	/**
 	 *
 	 * Params:
-	 *     widget = a #GtkWidget instance
-	 * Returns: The #GtkSizeRequestMode preferred by @widget.
+	 *     widget = a `GtkWidget` instance
+	 * Returns: The `GtkSizeRequestMode` preferred by @widget.
 	 */
 	extern(C) GtkSizeRequestMode function(GtkWidget* widget) getRequestMode;
 	/** */
@@ -6970,7 +7071,7 @@ struct GtkWidgetClass
 	/**
 	 *
 	 * Params:
-	 *     widget = a #GtkWidget
+	 *     widget = a `GtkWidget`
 	 *     groupCycling = %TRUE if there are other widgets with the same mnemonic
 	 * Returns: %TRUE if the signal has been handled
 	 */
@@ -6978,7 +7079,7 @@ struct GtkWidgetClass
 	/**
 	 *
 	 * Params:
-	 *     widget = a #GtkWidget
+	 *     widget = a `GtkWidget`
 	 * Returns: %TRUE if focus is now inside @widget.
 	 */
 	extern(C) int function(GtkWidget* widget) grabFocus;
@@ -6991,7 +7092,7 @@ struct GtkWidgetClass
 	/**
 	 *
 	 * Params:
-	 *     widget = a #GtkWidget
+	 *     widget = a `GtkWidget`
 	 *     direction = direction of focus movement
 	 * Returns: %TRUE if stopping keyboard navigation is fine, %FALSE
 	 *     if the emitting widget should try to handle the keyboard
@@ -7092,16 +7193,18 @@ struct GtkWindowHandleClass
 }
 
 /**
- * A function used by gtk_assistant_set_forward_page_func() to know which
- * is the next page given a current one. It’s called both for computing the
- * next page when the user presses the “forward” button and for handling
- * the behavior of the “last” button.
+ * Type of callback used to calculate the next page in a `GtkAssistant`.
+ *
+ * It’s called both for computing the next page when the user presses the
+ * “forward” button and for handling the behavior of the “last” button.
+ *
+ * See [method@Gtk.Assistant.set_forward_page_func].
  *
  * Params:
  *     currentPage = The page number used to calculate the next page.
  *     data = user data.
  *
- * Returns: The next page number.
+ * Returns: The next page number
  */
 public alias extern(C) int function(int currentPage, void* data) GtkAssistantPageFunc;
 
@@ -7148,7 +7251,7 @@ public alias extern(C) int function(GtkCellRenderer* renderer, void* data) GtkCe
 public alias extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkTreeModel* treeModel, GtkTreeIter* iter, void* data) GtkCellLayoutDataFunc;
 
 /**
- * A function to be used by #GtkCustomLayout to allocate a widget.
+ * A function to be used by `GtkCustomLayout` to allocate a widget.
  *
  * Params:
  *     widget = the widget to allocate
@@ -7160,6 +7263,7 @@ public alias extern(C) void function(GtkWidget* widget, int width, int height, i
 
 /**
  * User function that is called to determine if the @item should be matched.
+ *
  * If the filter matches the item, this function must return %TRUE. If the
  * item should be filtered out, %FALSE must be returned.
  *
@@ -7215,6 +7319,7 @@ public alias extern(C) void function(GtkDrawingArea* drawingArea, cairo_t* cr, i
 /**
  * A function which decides whether the row indicated by @iter matches
  * a given @key, and should be displayed as a possible completion for @key.
+ *
  * Note that @key is normalized and case-folded (see g_utf8_normalize()
  * and g_utf8_casefold()). If this is not appropriate, match functions
  * have access to the unmodified key via
@@ -7241,24 +7346,26 @@ public alias extern(C) int function(GtkEntryCompletion* completion, const(char)*
 public alias extern(C) void function(void* userData) GtkExpressionNotify;
 
 /**
- * Called for flow boxes that are bound to a #GListModel with
- * gtk_flow_box_bind_model() for each item that gets added to the model.
+ * Called for flow boxes that are bound to a `GListModel`.
+ *
+ * This function is called for each item that gets added to the model.
  *
  * Params:
  *     item = the item from the model for which to create a widget for
  *     userData = user data from gtk_flow_box_bind_model()
  *
- * Returns: a #GtkWidget that represents @item
+ * Returns: a `GtkWidget` that represents @item
  */
 public alias extern(C) GtkWidget* function(void* item, void* userData) GtkFlowBoxCreateWidgetFunc;
 
 /**
  * A function that will be called whenever a child changes
- * or is added. It lets you control if the child should be
- * visible or not.
+ * or is added.
+ *
+ * It lets you control if the child should be visible or not.
  *
  * Params:
- *     child = a #GtkFlowBoxChild that may be filtered
+ *     child = a `GtkFlowBoxChild` that may be filtered
  *     userData = user data
  *
  * Returns: %TRUE if the row should be visible, %FALSE otherwise
@@ -7267,11 +7374,12 @@ public alias extern(C) int function(GtkFlowBoxChild* child, void* userData) GtkF
 
 /**
  * A function used by gtk_flow_box_selected_foreach().
+ *
  * It will be called on every selected child of the @box.
  *
  * Params:
- *     box = a #GtkFlowBox
- *     child = a #GtkFlowBoxChild
+ *     box = a `GtkFlowBox`
+ *     child = a `GtkFlowBoxChild`
  *     userData = user data
  */
 public alias extern(C) void function(GtkFlowBox* box, GtkFlowBoxChild* child, void* userData) GtkFlowBoxForeachFunc;
@@ -7292,7 +7400,9 @@ public alias extern(C) int function(GtkFlowBoxChild* child1, GtkFlowBoxChild* ch
 
 /**
  * The type of function that is used for deciding what fonts get
- * shown in a #GtkFontChooser. See gtk_font_chooser_set_filter_func().
+ * shown in a `GtkFontChooser`.
+ *
+ * See [method@Gtk.FontChooser.set_filter_func].
  *
  * Params:
  *     family = a #PangoFontFamily
@@ -7305,7 +7415,9 @@ public alias extern(C) int function(PangoFontFamily* family, PangoFontFace* face
 
 /**
  * A function used by gtk_icon_view_selected_foreach() to map all
- * selected rows.  It will be called on every selected row in the view.
+ * selected rows.
+ *
+ * It will be called on every selected row in the view.
  *
  * Params:
  *     iconView = a #GtkIconView
@@ -7315,14 +7427,14 @@ public alias extern(C) int function(PangoFontFamily* family, PangoFontFace* face
 public alias extern(C) void function(GtkIconView* iconView, GtkTreePath* path, void* data) GtkIconViewForeachFunc;
 
 /**
- * Called for list boxes that are bound to a #GListModel with
+ * Called for list boxes that are bound to a `GListModel` with
  * gtk_list_box_bind_model() for each item that gets added to the model.
  *
  * Params:
  *     item = the item from the model for which to create a widget for
  *     userData = user data
  *
- * Returns: a #GtkWidget that represents @item
+ * Returns: a `GtkWidget` that represents @item
  */
 public alias extern(C) GtkWidget* function(void* item, void* userData) GtkListBoxCreateWidgetFunc;
 
@@ -7340,11 +7452,12 @@ public alias extern(C) int function(GtkListBoxRow* row, void* userData) GtkListB
 
 /**
  * A function used by gtk_list_box_selected_foreach().
+ *
  * It will be called on every selected child of the @box.
  *
  * Params:
- *     box = a #GtkListBox
- *     row = a #GtkListBoxRow
+ *     box = a `GtkListBox`
+ *     row = a `GtkListBoxRow`
  *     userData = user data
  */
 public alias extern(C) void function(GtkListBox* box, GtkListBoxRow* row, void* userData) GtkListBoxForeachFunc;
@@ -7364,9 +7477,10 @@ public alias extern(C) int function(GtkListBoxRow* row1, GtkListBoxRow* row2, vo
 
 /**
  * Whenever @row changes or which row is before @row changes this
- * is called, which lets you update the header on @row. You may
- * remove or set a new one via gtk_list_box_row_set_header() or
- * just change the state of the current header widget.
+ * is called, which lets you update the header on @row.
+ *
+ * You may remove or set a new one via [method@Gtk.ListBoxRow.set_header]
+ * or just change the state of the current header widget.
  *
  * Params:
  *     row = the row to update
@@ -7392,9 +7506,12 @@ public alias extern(C) void function(GtkListBoxRow* row, GtkListBoxRow* before, 
 public alias extern(C) void* function(void* item, void* userData) GtkMapListModelMapFunc;
 
 /**
- * User-provided callback function to create a popup for @menu_button on demand.
- * This function is called when the popup of @menu_button is shown, but none has
- * been provided via gtk_menu_button_set_popover() or gtk_menu_button_set_menu_model().
+ * User-provided callback function to create a popup for a
+ * `GtkMenuButton` on demand.
+ *
+ * This function is called when the popup of @menu_button is shown,
+ * but none has been provided via [method@Gtk.MenuButton.set_popover]
+ * or [method@Gtk.MenuButton.set_menu_model].
  *
  * Params:
  *     menuButton = the #GtkMenuButton
@@ -7417,8 +7534,35 @@ public alias extern(C) void function(GtkMenuButton* menuButton, void* userData) 
  */
 public alias extern(C) void function(GtkPageSetup* pageSetup, void* data) GtkPageSetupDoneFunc;
 
+/**
+ * The type of callback that is passed to gtk_print_job_send().
+ *
+ * It is called when the print job has been completely sent.
+ *
+ * Params:
+ *     printJob = the #GtkPrintJob
+ *     userData = user data that has been passed to gtk_print_job_send()
+ *     error = a #GError that contains error information if the sending
+ *         of the print job failed, otherwise %NULL
+ */
+public alias extern(C) void function(GtkPrintJob* printJob, void* userData, GError* error) GtkPrintJobCompleteFunc;
+
 /** */
 public alias extern(C) void function(const(char)* key, const(char)* value, void* userData) GtkPrintSettingsFunc;
+
+/**
+ * The type of function passed to gtk_enumerate_printers().
+ *
+ * Note that you need to ref @printer, if you want to keep
+ * a reference to it after the function has returned.
+ *
+ * Params:
+ *     printer = a #GtkPrinter
+ *     data = user data passed to gtk_enumerate_printers()
+ *
+ * Returns: %TRUE to stop the enumeration, %FALSE to continue
+ */
+public alias extern(C) int function(GtkPrinter* printer, void* data) GtkPrinterFunc;
 
 /**
  *
@@ -7455,11 +7599,11 @@ public alias extern(C) int function(GtkWidget* widget, GVariant* args, void* use
 public alias extern(C) int function(dchar ch, void* userData) GtkTextCharPredicate;
 
 /**
- * A function used with gtk_text_tag_table_foreach(), to iterate over every
- * #GtkTextTag inside a #GtkTextTagTable.
+ * A function used with gtk_text_tag_table_foreach(),
+ * to iterate over every `GtkTextTag` inside a `GtkTextTagTable`.
  *
  * Params:
- *     tag = the #GtkTextTag
+ *     tag = the `GtkTextTag`
  *     data = data passed to gtk_text_tag_table_foreach()
  */
 public alias extern(C) void function(GtkTextTag* tag, void* data) GtkTextTagTableForeach;
@@ -7479,11 +7623,13 @@ public alias extern(C) int function(GtkWidget* widget, GdkFrameClock* frameClock
 
 /**
  * A function to set the properties of a cell instead of just using the
- * straight mapping between the cell and the model.  This is useful for
- * customizing the cell renderer.  For example, a function might get an
- * integer from the @tree_model, and render it to the “text” attribute of
- * “cell” by converting it to its written equivalent.  This is set by
- * calling gtk_tree_view_column_set_cell_data_func()
+ * straight mapping between the cell and the model.
+ *
+ * This function is useful for customizing the cell renderer. For example,
+ * a function might get an* integer from the @tree_model, and render it to
+ * the “text” attribute of “cell” by converting it to its written equivalent.
+ *
+ * See also: gtk_tree_view_column_set_cell_data_func()
  *
  * Params:
  *     treeColumn = A #GtkTreeViewColumn
@@ -7497,7 +7643,9 @@ public alias extern(C) void function(GtkTreeViewColumn* treeColumn, GtkCellRende
 /**
  * A GtkTreeIterCompareFunc should return a negative integer, zero, or a positive
  * integer if @a sorts before @b, @a sorts with @b, or @a sorts after @b
- * respectively. If two iters compare as equal, their order in the sorted model
+ * respectively.
+ *
+ * If two iters compare as equal, their order in the sorted model
  * is undefined. In order to ensure that the #GtkTreeSortable behaves as
  * expected, the GtkTreeIterCompareFunc must define a partial order on
  * the model, i.e. it must be reflexive, antisymmetric and transitive.
@@ -7595,9 +7743,11 @@ public alias extern(C) void function(GtkTreeModel* model, GtkTreePath* path, Gtk
 
 /**
  * A function used by gtk_tree_selection_set_select_function() to filter
- * whether or not a row may be selected.  It is called whenever a row's
- * state might change.  A return value of %TRUE indicates to @selection
- * that it is okay to change the selection.
+ * whether or not a row may be selected. It is called whenever a row's
+ * state might change.
+ *
+ * A return value of %TRUE indicates to @selection that it is okay to
+ * change the selection.
  *
  * Params:
  *     selection = A #GtkTreeSelection
@@ -7699,15 +7849,17 @@ alias GTK_ACCESSIBLE_VALUE_UNDEFINED = ACCESSIBLE_VALUE_UNDEFINED;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 3;
+enum BINARY_AGE = 201;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 enum IM_MODULE_EXTENSION_POINT_NAME = "gtk-im-module";
 alias GTK_IM_MODULE_EXTENSION_POINT_NAME = IM_MODULE_EXTENSION_POINT_NAME;
 
 /**
- * Constant to return from a signal handler for the #GtkSpinButton::input
+ * Constant to return from a signal handler for the ::input
  * signal in case of conversion failure.
+ *
+ * See [signal@Gtk.SpinButton::input].
  */
 enum INPUT_ERROR = -1;
 alias GTK_INPUT_ERROR = INPUT_ERROR;
@@ -7717,7 +7869,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 3;
+enum INTERFACE_AGE = 1;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -7746,9 +7898,6 @@ alias GTK_LEVEL_BAR_OFFSET_LOW = LEVEL_BAR_OFFSET_LOW;
 enum MAJOR_VERSION = 4;
 alias GTK_MAJOR_VERSION = MAJOR_VERSION;
 
-/**
- * The maximum length of sequences in compose tables.
- */
 enum MAX_COMPOSE_LEN = 7;
 alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
 
@@ -7760,7 +7909,7 @@ alias GTK_MEDIA_FILE_EXTENSION_POINT_NAME = MEDIA_FILE_EXTENSION_POINT_NAME;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 3;
+enum MICRO_VERSION = 1;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -7768,7 +7917,7 @@ alias GTK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 0;
+enum MINOR_VERSION = 2;
 alias GTK_MINOR_VERSION = MINOR_VERSION;
 
 /**
@@ -7938,7 +8087,7 @@ enum PRIORITY_RESIZE = 110;
 alias GTK_PRIORITY_RESIZE = PRIORITY_RESIZE;
 
 /**
- * A priority that can be used when adding a #GtkStyleProvider
+ * A priority that can be used when adding a `GtkStyleProvider`
  * for application-specific style information.
  */
 enum STYLE_PROVIDER_PRIORITY_APPLICATION = 600;
@@ -7958,7 +8107,7 @@ alias GTK_STYLE_PROVIDER_PRIORITY_FALLBACK = STYLE_PROVIDER_PRIORITY_FALLBACK;
 
 /**
  * The priority used for style information provided
- * via #GtkSettings.
+ * via `GtkSettings`.
  *
  * This priority is higher than #GTK_STYLE_PROVIDER_PRIORITY_THEME
  * to let settings override themes.
@@ -7991,19 +8140,17 @@ enum TEXT_VIEW_PRIORITY_VALIDATE = 125;
 alias GTK_TEXT_VIEW_PRIORITY_VALIDATE = TEXT_VIEW_PRIORITY_VALIDATE;
 
 /**
- * The GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID can be used to make a
- * #GtkTreeSortable use the default sort function.
+ * Uses the default sort function in a [interface@Gtk.TreeSortable].
  *
- * See also gtk_tree_sortable_set_sort_column_id()
+ * See also: [method@Gtk.TreeSortable.set_sort_column_id]
  */
 enum TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID = -1;
 alias GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID = TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID;
 
 /**
- * The GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID can be used to make a
- * #GtkTreeSortable use no sorting.
+ * Disables sorting in a [interface@Gtk.TreeSortable].
  *
- * See also gtk_tree_sortable_set_sort_column_id()
+ * See also: [method@Gtk.TreeSortable.set_sort_column_id]
  */
 enum TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID = -2;
 alias GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID = TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID;

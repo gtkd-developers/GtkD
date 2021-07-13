@@ -35,26 +35,24 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkSizeGroup provides a mechanism for grouping a number of widgets
- * together so they all request the same amount of space.  This is
- * typically useful when you want a column of widgets to have the same
- * size, but you can’t use a #GtkGrid widget.
+ * `GtkSizeGroup` groups widgets together so they all request the same size.
  * 
- * In detail, the size requested for each widget in a #GtkSizeGroup is
+ * This is typically useful when you want a column of widgets to have the
+ * same size, but you can’t use a `GtkGrid`.
+ * 
+ * In detail, the size requested for each widget in a `GtkSizeGroup` is
  * the maximum of the sizes that would have been requested for each
  * widget in the size group if they were not in the size group. The mode
- * of the size group (see gtk_size_group_set_mode()) determines whether
+ * of the size group (see [method@Gtk.SizeGroup.set_mode]) determines whether
  * this applies to the horizontal size, the vertical size, or both sizes.
  * 
  * Note that size groups only affect the amount of space requested, not
  * the size that the widgets finally receive. If you want the widgets in
- * a #GtkSizeGroup to actually be the same size, you need to pack them in
- * such a way that they get the size they request and not more. For
- * example, if you are packing your widgets into a table, you would not
- * include the %GTK_FILL flag.
+ * a `GtkSizeGroup` to actually be the same size, you need to pack them in
+ * such a way that they get the size they request and not more.
  * 
- * #GtkSizeGroup objects are referenced by each widget in the size group,
- * so once you have added all widgets to a #GtkSizeGroup, you can drop
+ * `GtkSizeGroup` objects are referenced by each widget in the size group,
+ * so once you have added all widgets to a `GtkSizeGroup`, you can drop
  * the initial reference to the size group with g_object_unref(). If the
  * widgets in the size group are subsequently destroyed, then they will
  * be removed from the size group and drop their references on the size
@@ -78,9 +76,10 @@ public  import gtk.c.types;
  * widgets in the group. The same is of course true when horizontally grouping
  * width for height widgets.
  * 
- * Widgets that trade height-for-width should set a reasonably large minimum width
- * by way of #GtkLabel:width-chars for instance. Widgets with static sizes as well
- * as widgets that grow (such as ellipsizing text) need no such considerations.
+ * Widgets that trade height-for-width should set a reasonably large minimum
+ * width by way of [property@Gtk.Label:width-chars] for instance. Widgets with
+ * static sizes as well as widgets that grow (such as ellipsizing text) need no
+ * such considerations.
  * 
  * # GtkSizeGroup as GtkBuildable
  * 
@@ -90,8 +89,8 @@ public  import gtk.c.types;
  * that may contain multiple <widget> elements, one for each member of the
  * size group. The ”name” attribute gives the id of the widget.
  * 
- * An example of a UI definition fragment with GtkSizeGroup:
- * |[
+ * An example of a UI definition fragment with `GtkSizeGroup`:
+ * ```xml
  * <object class="GtkSizeGroup">
  * <property name="mode">horizontal</property>
  * <widgets>
@@ -99,7 +98,7 @@ public  import gtk.c.types;
  * <widget name="radio2"/>
  * </widgets>
  * </object>
- * ]|
+ * ```
  */
 public class SizeGroup : ObjectG, BuildableIF
 {
@@ -140,12 +139,12 @@ public class SizeGroup : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Create a new #GtkSizeGroup.
+	 * Create a new `GtkSizeGroup`.
 	 *
 	 * Params:
 	 *     mode = the mode for the new size group.
 	 *
-	 * Returns: a newly created #GtkSizeGroup
+	 * Returns: a newly created `GtkSizeGroup`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -162,17 +161,20 @@ public class SizeGroup : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Adds a widget to a #GtkSizeGroup. In the future, the requisition
+	 * Adds a widget to a `GtkSizeGroup`.
+	 *
+	 * In the future, the requisition
 	 * of the widget will be determined as the maximum of its requisition
 	 * and the requisition of the other widgets in the size group.
 	 * Whether this applies horizontally, vertically, or in both directions
-	 * depends on the mode of the size group. See gtk_size_group_set_mode().
+	 * depends on the mode of the size group.
+	 * See [method@Gtk.SizeGroup.set_mode].
 	 *
-	 * When the widget is destroyed or no longer referenced elsewhere, it will
-	 * be removed from the size group.
+	 * When the widget is destroyed or no longer referenced elsewhere, it
+	 * will be removed from the size group.
 	 *
 	 * Params:
-	 *     widget = the #GtkWidget to add
+	 *     widget = the `GtkWidget` to add
 	 */
 	public void addWidget(Widget widget)
 	{
@@ -180,7 +182,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Gets the current mode of the size group. See gtk_size_group_set_mode().
+	 * Gets the current mode of the size group.
 	 *
 	 * Returns: the current mode of the size group.
 	 */
@@ -192,7 +194,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Returns the list of widgets associated with @size_group.
 	 *
-	 * Returns: a #GSList of
+	 * Returns: a `GSList` of
 	 *     widgets. The list is owned by GTK and should not be modified.
 	 */
 	public ListSG getWidgets()
@@ -208,10 +210,10 @@ public class SizeGroup : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Removes a widget from a #GtkSizeGroup.
+	 * Removes a widget from a `GtkSizeGroup`.
 	 *
 	 * Params:
-	 *     widget = the #GtkWidget to remove
+	 *     widget = the `GtkWidget` to remove
 	 */
 	public void removeWidget(Widget widget)
 	{
@@ -219,12 +221,13 @@ public class SizeGroup : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Sets the #GtkSizeGroupMode of the size group. The mode of the size
-	 * group determines whether the widgets in the size group should
-	 * all have the same horizontal requisition (%GTK_SIZE_GROUP_HORIZONTAL)
-	 * all have the same vertical requisition (%GTK_SIZE_GROUP_VERTICAL),
-	 * or should all have the same requisition in both directions
-	 * (%GTK_SIZE_GROUP_BOTH).
+	 * Sets the `GtkSizeGroupMode` of the size group.
+	 *
+	 * The mode of the size group determines whether the widgets in the
+	 * size group should all have the same horizontal requisition
+	 * (%GTK_SIZE_GROUP_HORIZONTAL) all have the same vertical requisition
+	 * (%GTK_SIZE_GROUP_VERTICAL), or should all have the same requisition
+	 * in both directions (%GTK_SIZE_GROUP_BOTH).
 	 *
 	 * Params:
 	 *     mode = the mode to set for the size group.

@@ -32,9 +32,10 @@ public  import gtk.c.types;
 
 
 /**
- * A #GtkTextChildAnchor is a spot in the buffer where child widgets can
- * be “anchored” (inserted inline, as if they were characters). The anchor
- * can have multiple widgets anchored, to allow for multiple views.
+ * A `GtkTextChildAnchor` is a spot in a `GtkTextBuffer` where child widgets can
+ * be “anchored”.
+ * 
+ * The anchor can have multiple widgets anchored, to allow for multiple views.
  */
 public class TextChildAnchor : ObjectG
 {
@@ -72,12 +73,14 @@ public class TextChildAnchor : ObjectG
 	}
 
 	/**
-	 * Creates a new #GtkTextChildAnchor. Usually you would then insert
-	 * it into a #GtkTextBuffer with gtk_text_buffer_insert_child_anchor().
-	 * To perform the creation and insertion in one step, use the
-	 * convenience function gtk_text_buffer_create_child_anchor().
+	 * Creates a new `GtkTextChildAnchor`.
 	 *
-	 * Returns: a new #GtkTextChildAnchor
+	 * Usually you would then insert it into a `GtkTextBuffer` with
+	 * [method@Gtk.TextBuffer.insert_child_anchor]. To perform the
+	 * creation and insertion in one step, use the convenience
+	 * function [method@Gtk.TextBuffer.create_child_anchor].
+	 *
+	 * Returns: a new `GtkTextChildAnchor`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -95,11 +98,13 @@ public class TextChildAnchor : ObjectG
 
 	/**
 	 * Determines whether a child anchor has been deleted from
-	 * the buffer. Keep in mind that the child anchor will be
-	 * unreferenced when removed from the buffer, so you need to
-	 * hold your own reference (with g_object_ref()) if you plan
-	 * to use this function — otherwise all deleted child anchors
-	 * will also be finalized.
+	 * the buffer.
+	 *
+	 * Keep in mind that the child anchor will be unreferenced
+	 * when removed from the buffer, so you need to hold your own
+	 * reference (with g_object_ref()) if you plan to use this
+	 * function — otherwise all deleted child anchors will also
+	 * be finalized.
 	 *
 	 * Returns: %TRUE if the child anchor has been deleted from its buffer
 	 */

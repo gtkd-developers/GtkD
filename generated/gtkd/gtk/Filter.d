@@ -32,17 +32,17 @@ private import std.algorithm;
 
 
 /**
- * A #GtkFilter object describes the filtering to be performed by a
- * #GtkFilterListModel.
+ * A `GtkFilter` object describes the filtering to be performed by a
+ * `GtkFilterListModel`.
  * 
  * The model will use the filter to determine if it should include items
- * or not by calling gtk_filter_match() for each item and only keeping the
- * ones that the function returns %TRUE for.
+ * or not by calling [method@Gtk.Filter.match] for each item and only
+ * keeping the ones that the function returns %TRUE for.
  * 
  * Filters may change what items they match through their lifetime. In that
- * case, they will emit the #GtkFilter::changed signal to notify that previous
- * filter results are no longer valid and that items should be checked again
- * via gtk_filter_match().
+ * case, they will emit the [signal@Gtk.Filter::changed] signal to notify
+ * that previous filter results are no longer valid and that items should
+ * be checked again via [method@Gtk.Filter.match].
  * 
  * GTK provides various pre-made filter implementations for common filtering
  * operations. These filters often include properties that can be linked to
@@ -136,13 +136,16 @@ public class Filter : ObjectG
 	}
 
 	/**
-	 * This signal is emitted whenever the filter changed. Users of the filter
-	 * should then check items again via gtk_filter_match().
+	 * Emitted whenever the filter changed.
 	 *
-	 * #GtkFilterListModel handles this signal automatically.
+	 * Users of the filter should then check items again via
+	 * [method@Gtk.Filter.match].
 	 *
-	 * Depending on the @change parameter, not all items need to be changed, but
-	 * only some. Refer to the #GtkFilterChange documentation for details.
+	 * `GtkFilterListModel` handles this signal automatically.
+	 *
+	 * Depending on the @change parameter, not all items need
+	 * to be checked, but only some. Refer to the [enum@Gtk.FilterChange]
+	 * documentation for details.
 	 *
 	 * Params:
 	 *     change = how the filter changed

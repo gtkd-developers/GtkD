@@ -32,6 +32,8 @@ public  import gtk.c.types;
 
 
 /**
+ * Renders a spinning animation in a cell
+ * 
  * GtkCellRendererSpinner renders a spinning animation in a cell, very
  * similar to #GtkSpinner. It can often be used as an alternative
  * to a #GtkCellRendererProgress for displaying indefinite activity,

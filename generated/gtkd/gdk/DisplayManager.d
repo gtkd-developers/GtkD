@@ -35,18 +35,23 @@ private import std.algorithm;
 
 
 /**
- * The purpose of the #GdkDisplayManager singleton object is to offer
- * notification when displays appear or disappear or the default display
- * changes.
+ * A singleton object that offers notification when displays appear or
+ * disappear.
  * 
- * You can use gdk_display_manager_get() to obtain the #GdkDisplayManager
+ * You can use [func@Gdk.DisplayManager.get] to obtain the `GdkDisplayManager`
  * singleton, but that should be rarely necessary. Typically, initializing
  * GTK opens a display that you can work with without ever accessing the
- * #GdkDisplayManager.
+ * `GdkDisplayManager`.
  * 
  * The GDK library can be built with support for multiple backends.
- * The #GdkDisplayManager object determines which backend is used
+ * The `GdkDisplayManager` object determines which backend is used
  * at runtime.
+ * 
+ * In the rare case that you need to influence which of the backends
+ * is being used, you can use [func@Gdk.set_allowed_backends]. Note
+ * that you need to call this function before initializing GTK.
+ * 
+ * ## Backend-specific code
  * 
  * When writing backend-specific code that is supposed to work with
  * multiple GDK backends, you have to consider both compile time and
@@ -55,9 +60,7 @@ private import std.algorithm;
  * you are building your application against. At runtime, use type-check
  * macros like GDK_IS_X11_DISPLAY() to find out which backend is in use:
  * 
- * ## Backend-specific code ## {#backend-specific}
- * 
- * |[<!-- language="C" -->
+ * ```c
  * #ifdef GDK_WINDOWING_X11
  * if (GDK_IS_X11_DISPLAY (display))
  * {
@@ -73,7 +76,7 @@ private import std.algorithm;
  * else
  * #endif
  * g_error ("Unsupported GDK backend");
- * ]|
+ * ```
  */
 public class DisplayManager : ObjectG
 {
@@ -111,15 +114,17 @@ public class DisplayManager : ObjectG
 	}
 
 	/**
-	 * Gets the singleton #GdkDisplayManager object.
+	 * Gets the singleton `GdkDisplayManager` object.
 	 *
 	 * When called for the first time, this function consults the
-	 * `GDK_BACKEND` environment variable to find out which
-	 * of the supported GDK backends to use (in case GDK has been compiled
-	 * with multiple backends). Applications can use gdk_set_allowed_backends()
-	 * to limit what backends can be used.
+	 * `GDK_BACKEND` environment variable to find out which of the
+	 * supported GDK backends to use (in case GDK has been compiled
+	 * with multiple backends).
 	 *
-	 * Returns: The global #GdkDisplayManager singleton
+	 * Applications can use [func@set_allowed_backends] to limit what
+	 * backends wil be used.
+	 *
+	 * Returns: The global `GdkDisplayManager` singleton
 	 */
 	public static DisplayManager get()
 	{
@@ -134,9 +139,9 @@ public class DisplayManager : ObjectG
 	}
 
 	/**
-	 * Gets the default #GdkDisplay.
+	 * Gets the default `GdkDisplay`.
 	 *
-	 * Returns: a #GdkDisplay, or %NULL if
+	 * Returns: a `GdkDisplay`, or %NULL if
 	 *     there is no default display.
 	 */
 	public Display getDefaultDisplay()
@@ -155,7 +160,7 @@ public class DisplayManager : ObjectG
 	 * List all currently open displays.
 	 *
 	 * Returns: a newly
-	 *     allocated #GSList of #GdkDisplay objects. Free with g_slist_free()
+	 *     allocated `GSList` of `GdkDisplay` objects. Free with g_slist_free()
 	 *     when you are done with it.
 	 */
 	public ListSG listDisplays()
@@ -176,8 +181,8 @@ public class DisplayManager : ObjectG
 	 * Params:
 	 *     name = the name of the display to open
 	 *
-	 * Returns: a #GdkDisplay, or %NULL if the
-	 *     display could not be opened
+	 * Returns: a `GdkDisplay`, or %NULL
+	 *     if the display could not be opened
 	 */
 	public Display openDisplay(string name)
 	{
@@ -195,7 +200,7 @@ public class DisplayManager : ObjectG
 	 * Sets @display as the default display.
 	 *
 	 * Params:
-	 *     display = a #GdkDisplay
+	 *     display = a `GdkDisplay`
 	 */
 	public void setDefaultDisplay(Display display)
 	{
@@ -203,7 +208,7 @@ public class DisplayManager : ObjectG
 	}
 
 	/**
-	 * The ::display-opened signal is emitted when a display is opened.
+	 * Emitted when a display is opened.
 	 *
 	 * Params:
 	 *     display = the opened display

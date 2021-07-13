@@ -26,6 +26,7 @@ module gtk.FontButton;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.FontChooserIF;
@@ -37,19 +38,22 @@ private import std.algorithm;
 
 
 /**
- * The #GtkFontButton is a button which displays the currently selected
- * font an allows to open a font chooser dialog to change the font.
+ * The `GtkFontButton` allows to open a font chooser dialog to change
+ * the font.
+ * 
+ * ![An example GtkFontButton](font-button.png)
+ * 
  * It is suitable widget for selecting a font in a preference dialog.
  * 
  * # CSS nodes
  * 
- * |[<!-- language="plain" -->
+ * ```
  * fontbutton
  * ╰── button.font
  * ╰── [content]
- * ]|
+ * ```
  * 
- * GtkFontButton has a single CSS node with name fontbutton which
+ * `GtkFontButton` has a single CSS node with name fontbutton which
  * contains a button node with the .font style class.
  */
 public class FontButton : Widget, FontChooserIF
@@ -110,7 +114,7 @@ public class FontButton : Widget, FontChooserIF
 	}
 
 	/**
-	 * Creates a new font picker widget.
+	 * Creates a new font picker widget showing the given font.
 	 *
 	 * Params:
 	 *     fontname = Name of font to display in font chooser dialog
@@ -144,7 +148,8 @@ public class FontButton : Widget, FontChooserIF
 	/**
 	 * Retrieves the title of the font chooser dialog.
 	 *
-	 * Returns: an internal copy of the title string which must not be freed.
+	 * Returns: an internal copy of the title string
+	 *     which must not be freed.
 	 */
 	public string getTitle()
 	{
@@ -194,7 +199,8 @@ public class FontButton : Widget, FontChooserIF
 	}
 
 	/**
-	 * If @use_font is %TRUE, the font name will be written using the selected font.
+	 * If @use_font is %TRUE, the font name will be written
+	 * using the selected font.
 	 *
 	 * Params:
 	 *     useFont = If %TRUE, font name will be written using font chosen.
@@ -205,10 +211,12 @@ public class FontButton : Widget, FontChooserIF
 	}
 
 	/**
-	 * If @use_size is %TRUE, the font name will be written using the selected size.
+	 * If @use_size is %TRUE, the font name will be written using
+	 * the selected size.
 	 *
 	 * Params:
-	 *     useSize = If %TRUE, font name will be written using the selected size.
+	 *     useSize = If %TRUE, font name will be written using the
+	 *         selected size.
 	 */
 	public void setUseSize(bool useSize)
 	{
@@ -216,13 +224,14 @@ public class FontButton : Widget, FontChooserIF
 	}
 
 	/**
-	 * The ::font-set signal is emitted when the user selects a font.
-	 * When handling this signal, use gtk_font_chooser_get_font()
+	 * Emitted when the user selects a font.
+	 *
+	 * When handling this signal, use [method@Gtk.FontChooser.get_font]
 	 * to find out which font was just selected.
 	 *
-	 * Note that this signal is only emitted when the user
-	 * changes the font. If you need to react to programmatic font changes
-	 * as well, use the notify::font signal.
+	 * Note that this signal is only emitted when the user changes the font.
+	 * If you need to react to programmatic font changes as well, use
+	 * the notify::font signal.
 	 */
 	gulong addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

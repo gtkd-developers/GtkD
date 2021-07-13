@@ -71,14 +71,14 @@ public class ClipNode : RenderNode
 	}
 
 	/**
-	 * Creates a #GskRenderNode that will clip the @child to the area
+	 * Creates a `GskRenderNode` that will clip the @child to the area
 	 * given by @clip.
 	 *
 	 * Params:
 	 *     child = The node to draw
 	 *     clip = The clip to apply
 	 *
-	 * Returns: A new #GskRenderNode
+	 * Returns: A new `GskRenderNode`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

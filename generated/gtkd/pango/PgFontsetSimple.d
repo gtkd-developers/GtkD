@@ -34,10 +34,11 @@ public  import pango.c.types;
 
 
 /**
- * #PangoFontsetSimple is a implementation of the abstract
- * #PangoFontset base class in terms of an array of fonts,
- * which the creator provides when constructing the
- * #PangoFontsetSimple.
+ * `PangoFontsetSimple` is a implementation of the abstract
+ * `PangoFontset` base class as an array of fonts.
+ * 
+ * When creating a `PangoFontsetSimple`, you have to provide
+ * the array of fonts that make up the fontset.
  */
 public class PgFontsetSimple : PgFontset
 {
@@ -75,12 +76,12 @@ public class PgFontsetSimple : PgFontset
 	}
 
 	/**
-	 * Creates a new #PangoFontsetSimple for the given language.
+	 * Creates a new `PangoFontsetSimple` for the given language.
 	 *
 	 * Params:
-	 *     language = a #PangoLanguage tag
+	 *     language = a `PangoLanguage` tag
 	 *
-	 * Returns: the newly allocated #PangoFontsetSimple, which should
+	 * Returns: the newly allocated `PangoFontsetSimple`, which should
 	 *     be freed with g_object_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -101,7 +102,7 @@ public class PgFontsetSimple : PgFontset
 	 * Adds a font to the fontset.
 	 *
 	 * Params:
-	 *     font = a #PangoFont.
+	 *     font = a `PangoFont`.
 	 */
 	public void append(PgFont font)
 	{

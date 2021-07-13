@@ -26,12 +26,18 @@ module gtk.StringObject;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
-/** */
+/**
+ * `GtkStringObject` is the type of items in a `GtkStringList`.
+ * 
+ * A `GtkStringObject` is a wrapper around a `const char*`; it has
+ * a [property@Gtk.StringObject:string] property.
+ */
 public class StringObject : ObjectG
 {
 	/** the main Gtk struct */
@@ -68,12 +74,12 @@ public class StringObject : ObjectG
 	}
 
 	/**
-	 * Wraps a string in an object for use with #GListModel
+	 * Wraps a string in an object for use with `GListModel`.
 	 *
 	 * Params:
 	 *     string_ = The string to wrap
 	 *
-	 * Returns: a new #GtkStringObject
+	 * Returns: a new `GtkStringObject`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -90,7 +96,7 @@ public class StringObject : ObjectG
 	}
 
 	/**
-	 * Returns the string contained in a #GtkStringObject.
+	 * Returns the string contained in a `GtkStringObject`.
 	 *
 	 * Returns: the string of @self
 	 */

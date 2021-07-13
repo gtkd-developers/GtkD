@@ -35,8 +35,8 @@ public  import gtk.c.types;
 
 
 /**
- * GtkMultiSelection is an implementation of the #GtkSelectionModel interface
- * that allows selecting multiple elements.
+ * `GtkMultiSelection` is a `GtkSelectionModel` that allows selecting multiple
+ * elements.
  */
 public class MultiSelection : ObjectG, ListModelIF, SelectionModelIF
 {
@@ -83,9 +83,9 @@ public class MultiSelection : ObjectG, ListModelIF, SelectionModelIF
 	 * Creates a new selection to handle @model.
 	 *
 	 * Params:
-	 *     model = the #GListModel to manage, or %NULL
+	 *     model = the `GListModel` to manage, or %NULL
 	 *
-	 * Returns: a new #GtkMultiSelection
+	 * Returns: a new `GtkMultiSelection`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -119,11 +119,12 @@ public class MultiSelection : ObjectG, ListModelIF, SelectionModelIF
 	}
 
 	/**
-	 * Sets the model that @self should wrap. If @model is %NULL, @self
-	 * will be empty.
+	 * Sets the model that @self should wrap.
+	 *
+	 * If @model is %NULL, @self will be empty.
 	 *
 	 * Params:
-	 *     model = A #GListModel to wrap
+	 *     model = A `GListModel` to wrap
 	 */
 	public void setModel(ListModelIF model)
 	{

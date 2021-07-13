@@ -203,6 +203,7 @@ shared static this()
 	Linker.link(gdk_device_get_seat, "gdk_device_get_seat", LIBRARY_GDK);
 	Linker.link(gdk_device_get_source, "gdk_device_get_source", LIBRARY_GDK);
 	Linker.link(gdk_device_get_surface_at_position, "gdk_device_get_surface_at_position", LIBRARY_GDK);
+	Linker.link(gdk_device_get_timestamp, "gdk_device_get_timestamp", LIBRARY_GDK);
 	Linker.link(gdk_device_get_vendor_id, "gdk_device_get_vendor_id", LIBRARY_GDK);
 	Linker.link(gdk_device_has_bidi_layouts, "gdk_device_has_bidi_layouts", LIBRARY_GDK);
 
@@ -477,12 +478,14 @@ shared static this()
 	Linker.link(gdk_popup_layout_get_anchor_rect, "gdk_popup_layout_get_anchor_rect", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_get_offset, "gdk_popup_layout_get_offset", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_get_rect_anchor, "gdk_popup_layout_get_rect_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_get_shadow_width, "gdk_popup_layout_get_shadow_width", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_get_surface_anchor, "gdk_popup_layout_get_surface_anchor", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_ref, "gdk_popup_layout_ref", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_set_anchor_hints, "gdk_popup_layout_set_anchor_hints", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_set_anchor_rect, "gdk_popup_layout_set_anchor_rect", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_set_offset, "gdk_popup_layout_set_offset", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_set_rect_anchor, "gdk_popup_layout_set_rect_anchor", LIBRARY_GDK);
+	Linker.link(gdk_popup_layout_set_shadow_width, "gdk_popup_layout_set_shadow_width", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_set_surface_anchor, "gdk_popup_layout_set_surface_anchor", LIBRARY_GDK);
 	Linker.link(gdk_popup_layout_unref, "gdk_popup_layout_unref", LIBRARY_GDK);
 
@@ -804,6 +807,7 @@ __gshared extern(C)
 	GdkSeat* function(GdkDevice* device) c_gdk_device_get_seat;
 	GdkInputSource function(GdkDevice* device) c_gdk_device_get_source;
 	GdkSurface* function(GdkDevice* device, double* winX, double* winY) c_gdk_device_get_surface_at_position;
+	uint function(GdkDevice* device) c_gdk_device_get_timestamp;
 	const(char)* function(GdkDevice* device) c_gdk_device_get_vendor_id;
 	int function(GdkDevice* device) c_gdk_device_has_bidi_layouts;
 
@@ -1078,12 +1082,14 @@ __gshared extern(C)
 	GdkRectangle* function(GdkPopupLayout* layout) c_gdk_popup_layout_get_anchor_rect;
 	void function(GdkPopupLayout* layout, int* dx, int* dy) c_gdk_popup_layout_get_offset;
 	GdkGravity function(GdkPopupLayout* layout) c_gdk_popup_layout_get_rect_anchor;
+	void function(GdkPopupLayout* layout, int* left, int* right, int* top, int* bottom) c_gdk_popup_layout_get_shadow_width;
 	GdkGravity function(GdkPopupLayout* layout) c_gdk_popup_layout_get_surface_anchor;
 	GdkPopupLayout* function(GdkPopupLayout* layout) c_gdk_popup_layout_ref;
 	void function(GdkPopupLayout* layout, GdkAnchorHints anchorHints) c_gdk_popup_layout_set_anchor_hints;
 	void function(GdkPopupLayout* layout, GdkRectangle* anchorRect) c_gdk_popup_layout_set_anchor_rect;
 	void function(GdkPopupLayout* layout, int dx, int dy) c_gdk_popup_layout_set_offset;
 	void function(GdkPopupLayout* layout, GdkGravity anchor) c_gdk_popup_layout_set_rect_anchor;
+	void function(GdkPopupLayout* layout, int left, int right, int top, int bottom) c_gdk_popup_layout_set_shadow_width;
 	void function(GdkPopupLayout* layout, GdkGravity anchor) c_gdk_popup_layout_set_surface_anchor;
 	void function(GdkPopupLayout* layout) c_gdk_popup_layout_unref;
 
@@ -1403,6 +1409,7 @@ alias c_gdk_device_get_scroll_lock_state gdk_device_get_scroll_lock_state;
 alias c_gdk_device_get_seat gdk_device_get_seat;
 alias c_gdk_device_get_source gdk_device_get_source;
 alias c_gdk_device_get_surface_at_position gdk_device_get_surface_at_position;
+alias c_gdk_device_get_timestamp gdk_device_get_timestamp;
 alias c_gdk_device_get_vendor_id gdk_device_get_vendor_id;
 alias c_gdk_device_has_bidi_layouts gdk_device_has_bidi_layouts;
 
@@ -1677,12 +1684,14 @@ alias c_gdk_popup_layout_get_anchor_hints gdk_popup_layout_get_anchor_hints;
 alias c_gdk_popup_layout_get_anchor_rect gdk_popup_layout_get_anchor_rect;
 alias c_gdk_popup_layout_get_offset gdk_popup_layout_get_offset;
 alias c_gdk_popup_layout_get_rect_anchor gdk_popup_layout_get_rect_anchor;
+alias c_gdk_popup_layout_get_shadow_width gdk_popup_layout_get_shadow_width;
 alias c_gdk_popup_layout_get_surface_anchor gdk_popup_layout_get_surface_anchor;
 alias c_gdk_popup_layout_ref gdk_popup_layout_ref;
 alias c_gdk_popup_layout_set_anchor_hints gdk_popup_layout_set_anchor_hints;
 alias c_gdk_popup_layout_set_anchor_rect gdk_popup_layout_set_anchor_rect;
 alias c_gdk_popup_layout_set_offset gdk_popup_layout_set_offset;
 alias c_gdk_popup_layout_set_rect_anchor gdk_popup_layout_set_rect_anchor;
+alias c_gdk_popup_layout_set_shadow_width gdk_popup_layout_set_shadow_width;
 alias c_gdk_popup_layout_set_surface_anchor gdk_popup_layout_set_surface_anchor;
 alias c_gdk_popup_layout_unref gdk_popup_layout_unref;
 

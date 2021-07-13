@@ -37,26 +37,26 @@ public  import gtk.c.types;
 
 
 /**
- * #GtkShortcutController is an event controller that manages shortcuts.
+ * `GtkShortcutController` is an event controller that manages shortcuts.
  * 
  * Most common shortcuts are using this controller implicitly, e.g. by
- * adding a mnemonic underline to a #GtkLabel, or by installing a key
+ * adding a mnemonic underline to a `GtkLabel`, or by installing a key
  * binding using gtk_widget_class_add_binding(), or by adding accelerators
  * to global actions using gtk_application_set_accels_for_action().
  * 
  * But it is possible to create your own shortcut controller, and add
  * shortcuts to it.
  * 
- * #GtkShortcutController implements #GListModel for querying the shortcuts that
- * have been added to it.
+ * `GtkShortcutController` implements `GListModel` for querying the
+ * shortcuts that have been added to it.
  * 
  * # GtkShortcutController as a GtkBuildable
  * 
- * GtkShortcutControllers can be creates in ui files to set up shortcuts
- * in the same place as the widgets.
+ * `GtkShortcutControllers` can be creates in ui files to set up
+ * shortcuts in the same place as the widgets.
  * 
- * An example of a UI definition fragment with GtkShortcutController:
- * |[
+ * An example of a UI definition fragment with `GtkShortcutController`:
+ * ```xml
  * <object class='GtkButton'>
  * <child>
  * <object class='GtkShortcutController'>
@@ -70,12 +70,13 @@ public  import gtk.c.types;
  * </object>
  * </child>
  * </object>
- * ]|
+ * ```
  * 
- * This example creates a #GtkActivateAction for triggering the `activate`
- * signal of the GtkButton. See gtk_shortcut_action_parse_string() for the syntax
- * for other kinds of #GtkShortcutAction. See gtk_shortcut_trigger_parse_string()
- * to learn more about the syntax for triggers.
+ * This example creates a [class@Gtk.ActivateAction] for triggering the
+ * `activate` signal of the `GtkButton`. See [ctor@Gtk.ShortcutAction.parse_string]
+ * for the syntax for other kinds of `GtkShortcutAction`. See
+ * [ctor@Gtk.ShortcutTrigger.parse_string] to learn more about the syntax
+ * for triggers.
  */
 public class ShortcutController : EventController, ListModelIF, BuildableIF
 {
@@ -146,7 +147,7 @@ public class ShortcutController : EventController, ListModelIF, BuildableIF
 	 * but you can change the contents of the model.
 	 *
 	 * Params:
-	 *     model = a #GListModel containing shortcuts
+	 *     model = a `GListModel` containing shortcuts
 	 *
 	 * Returns: a newly created shortcut controller
 	 *
@@ -171,7 +172,7 @@ public class ShortcutController : EventController, ListModelIF, BuildableIF
 	 * function does nothing.
 	 *
 	 * Params:
-	 *     shortcut = a #GtkShortcut
+	 *     shortcut = a `GtkShortcut`
 	 */
 	public void addShortcut(Shortcut shortcut)
 	{
@@ -179,8 +180,7 @@ public class ShortcutController : EventController, ListModelIF, BuildableIF
 	}
 
 	/**
-	 * Gets the mnemonics modifiers for when this controller activates its shortcuts. See
-	 * gtk_shortcut_controller_set_mnemonics_modifiers() for details.
+	 * Gets the mnemonics modifiers for when this controller activates its shortcuts.
 	 *
 	 * Returns: the controller's mnemonics modifiers
 	 */
@@ -207,7 +207,7 @@ public class ShortcutController : EventController, ListModelIF, BuildableIF
 	 * uses an external shortcut list, this function does nothing.
 	 *
 	 * Params:
-	 *     shortcut = a #GtkShortcut
+	 *     shortcut = a `GtkShortcut`
 	 */
 	public void removeShortcut(Shortcut shortcut)
 	{

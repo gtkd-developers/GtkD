@@ -26,6 +26,7 @@ module gstreamer.PluginFeature;
 
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.ObjectGst;
 private import gstreamer.Plugin;

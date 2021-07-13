@@ -613,6 +613,27 @@ public class StringG
 	}
 
 	/**
+	 * Replaces the string @find with the string @replace in a #GString up to
+	 * @limit times. If the number of instances of @find in the #GString is
+	 * less than @limit, all instances are replaced. If the number of
+	 * instances is `0`, all instances of @find are replaced.
+	 *
+	 * Params:
+	 *     find = the string to find in @string
+	 *     replace = the string to insert in place of @find
+	 *     limit = the maximum instances of @find to replace with @replace, or `0` for
+	 *         no limit
+	 *
+	 * Returns: the number of find and replace operations performed.
+	 *
+	 * Since: 2.68
+	 */
+	public uint replace(string find, string replace, uint limit)
+	{
+		return g_string_replace(gString, Str.toStringz(find), Str.toStringz(replace), limit);
+	}
+
+	/**
 	 * Sets the length of a #GString. If the length is less than
 	 * the current length, the string will be truncated. If the
 	 * length is greater than the current length, the contents

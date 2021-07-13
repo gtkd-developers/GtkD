@@ -37,25 +37,27 @@ private import std.algorithm;
 
 
 /**
+ * The collection of tags in a `GtkTextBuffer`
+ * 
  * You may wish to begin by reading the
- * [text widget conceptual overview][TextWidget]
- * which gives an overview of all the objects and
- * data types related to the text widget and how they work together.
+ * [text widget conceptual overview](section-text-widget.html),
+ * which gives an overview of all the objects and data types
+ * related to the text widget and how they work together.
  * 
  * # GtkTextTagTables as GtkBuildable
  * 
- * The GtkTextTagTable implementation of the GtkBuildable interface
+ * The `GtkTextTagTable` implementation of the `GtkBuildable` interface
  * supports adding tags by specifying “tag” as the “type” attribute
  * of a <child> element.
  * 
  * An example of a UI definition fragment specifying tags:
- * |[
+ * ```xml
  * <object class="GtkTextTagTable">
  * <child type="tag">
  * <object class="GtkTextTag"/>
  * </child>
  * </object>
- * ]|
+ * ```
  */
 public class TextTagTable : ObjectG, BuildableIF
 {
@@ -96,10 +98,11 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Creates a new #GtkTextTagTable. The table contains no tags by
-	 * default.
+	 * Creates a new `GtkTextTagTable`.
 	 *
-	 * Returns: a new #GtkTextTagTable
+	 * The table contains no tags by default.
+	 *
+	 * Returns: a new `GtkTextTagTable`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -116,14 +119,15 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Add a tag to the table. The tag is assigned the highest priority
-	 * in the table.
+	 * Add a tag to the table.
+	 *
+	 * The tag is assigned the highest priority in the table.
 	 *
 	 * @tag must not be in a tag table already, and may not have
 	 * the same name as an already-added tag.
 	 *
 	 * Params:
-	 *     tag = a #GtkTextTag
+	 *     tag = a `GtkTextTag`
 	 *
 	 * Returns: %TRUE on success.
 	 */
@@ -135,6 +139,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	alias foreac = foreach_;
 	/**
 	 * Calls @func on each tag in @table, with user data @data.
+	 *
 	 * Note that the table may not be modified while iterating
 	 * over it (you can’t add/remove tags).
 	 *
@@ -163,8 +168,8 @@ public class TextTagTable : ObjectG, BuildableIF
 	 * Params:
 	 *     name = name of a tag
 	 *
-	 * Returns: The tag, or %NULL if none by that
-	 *     name is in the table.
+	 * Returns: The tag,
+	 *     or %NULL if none by that name is in the table.
 	 */
 	public TextTag lookup(string name)
 	{
@@ -179,13 +184,15 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Remove a tag from the table. If a #GtkTextBuffer has @table as its tag table,
-	 * the tag is removed from the buffer. The table’s reference to the tag is
-	 * removed, so the tag will end up destroyed if you don’t have a reference to
-	 * it.
+	 * Remove a tag from the table.
+	 *
+	 * If a `GtkTextBuffer` has @table as its tag table, the tag is
+	 * removed from the buffer. The table’s reference to the tag is
+	 * removed, so the tag will end up destroyed if you don’t have
+	 * a reference to it.
 	 *
 	 * Params:
-	 *     tag = a #GtkTextTag
+	 *     tag = a `GtkTextTag`
 	 */
 	public void remove(TextTag tag)
 	{
@@ -193,7 +200,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Emitted every time a new tag is added in the #GtkTextTagTable.
+	 * Emitted every time a new tag is added in the `GtkTextTagTable`.
 	 *
 	 * Params:
 	 *     tag = the added tag.
@@ -204,11 +211,11 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Emitted every time a tag in the #GtkTextTagTable changes.
+	 * Emitted every time a tag in the `GtkTextTagTable` changes.
 	 *
 	 * Params:
 	 *     tag = the changed tag.
-	 *     sizeChanged = whether the change affects the #GtkTextView layout.
+	 *     sizeChanged = whether the change affects the `GtkTextView` layout.
 	 */
 	gulong addOnTagChanged(void delegate(TextTag, bool, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -216,7 +223,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Emitted every time a tag is removed from the #GtkTextTagTable.
+	 * Emitted every time a tag is removed from the `GtkTextTagTable`.
 	 *
 	 * The @tag is still valid by the time the signal is emitted, but
 	 * it is not associated with a tag table any more.
