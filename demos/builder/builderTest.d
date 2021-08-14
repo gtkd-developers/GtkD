@@ -34,8 +34,8 @@ int main(string[] args) {
 			exit(1);
 		}
 		auto window = cast(ApplicationWindow)builder.getObject("window");
-		window.setApplication(application);
 		if (window !is null) {
+			window.setApplication(application);
 			window.setTitle("This is a glade application window");
 			auto button = cast(Button)builder.getObject("button");
 			if(button !is null) {
