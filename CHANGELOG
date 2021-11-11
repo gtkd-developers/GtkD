@@ -1,6 +1,13 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.10.0
+---------------
+-Support wingtk and vcpkg
+-Update GtkSourceview
+-Update GLib an Atk
+-Bug fixes
+
 Release: 3.9.0
 --------------
 -Update the libraries to the latest versions.
