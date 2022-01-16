@@ -13,30 +13,229 @@
         "Sebastián E. Peyrott",
         "John Reimer",
         "Mike Wey",
-        "hauptmech"
+        "hauptmech",
+        "KonstantIMP"
     ],
-    "dependencies": {
-        "gtk-d:gtkd": "*",
-        "gtk-d:gstreamer": "*"
-    },
-
-    "subPackages" : [
-        {
-            "name": "gtkd",
-            "targetType": "library",
-            "targetName": "gtkd-3",
-            "sourcePaths": ["generated/gtkd"],
-            "libs-posix": ["dl"],
-            "importPaths": ["generated/gtkd"]
-        },
-        {
-            "name": "gstreamer",
-            "targetType": "library",
-            "targetName": "gstreamerd-3",
-            "sourcePaths": ["generated/gstreamer"],
-            "libs-posix": ["dl"],
-            "importPaths": ["generated/gstreamer"],
-            "dependencies": {"gtk-d:gtkd":"*"}
-        }
-    ]
+    "subPackages": [
+		{
+			"name": "linker",
+			"targetType": "library",
+			"targetName": "linker",
+			"importPaths": ["source/linker"],
+			"sourcePaths": ["source/linker"]
+		},
+		{
+			"name": "glib",
+			"targetType": "library",
+			"targetName": "glib",
+			"importPaths": ["source/generated/glib"],
+			"sourcePaths": ["source/generated/glib"],
+			"dependencies": {
+				"gtk_d:linker" : "*"
+			}
+		},
+		{
+			"name": "graphene",
+			"targetType": "library",
+			"targetName": "graphene",
+			"importPaths": ["source/generated/graphene"],
+			"sourcePaths": ["source/generated/graphene"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*"
+			}
+		},
+		{
+			"name": "cairo",
+			"targetType": "library",
+			"targetName": "cairo",
+			"importPaths": ["source/generated/cairo"],
+			"sourcePaths": ["source/generated/cairo"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*"
+			}
+		},
+		{
+			"name": "harfbuzz",
+			"targetType": "library",
+			"targetName": "harfbuzz",
+			"importPaths": ["source/generated/harfbuzz"],
+			"sourcePaths": ["source/generated/harfbuzz"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*"
+			}
+		},
+		{
+			"name": "pango",
+			"targetType": "library",
+			"targetName": "pango",
+			"importPaths": ["source/generated/pango"],
+			"sourcePaths": ["source/generated/pango"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:cairo" : "*",
+				"gtk_d:harfbuzz" : "*"
+			}
+		},
+		{
+			"name": "gio",
+			"targetType": "library",
+			"targetName": "gio",
+			"importPaths": ["source/generated/gio"],
+			"sourcePaths": ["source/generated/gio"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*"
+			}
+		},
+		{
+			"name": "gdkpixbuf",
+			"targetType": "library",
+			"targetName": "gdkpixbuf",
+			"importPaths": ["source/generated/gdkpixbuf"],
+			"sourcePaths": ["source/generated/gdkpixbuf"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:gio" : "*"
+			}
+		},
+		{
+			"name": "atk",
+			"targetType": "library",
+			"targetName": "atk",
+			"importPaths": ["source/generated/atk"],
+			"sourcePaths": ["source/generated/atk"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*"
+			}
+		},
+		{
+			"name": "gdk",
+			"targetType": "library",
+			"targetName": "gdk",
+			"importPaths": ["source/generated/gdk"],
+			"sourcePaths": ["source/generated/gdk"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:cairo" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:gio" : "*",
+				"gtk_d:gdkpixbuf" : "*",
+				"gtk_d:pango" : "*"
+			}
+		},
+		{
+			"name": "rsvg",
+			"targetType": "library",
+			"targetName": "rsvg",
+			"importPaths": ["source/generated/rsvg"],
+			"sourcePaths": ["source/generated/rsvg"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:cairo" : "*",
+				"gtk_d:gdkpixbuf" : "*"
+			}
+		},
+		{
+			"name": "gsk",
+			"targetType": "library",
+			"targetName": "gsk",
+			"importPaths": ["source/generated/gsk"],
+			"sourcePaths": ["source/generated/gsk"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:cairo" : "*",
+				"gtk_d:graphene" : "*",
+				"gtk_d:gdk" : "*"
+			}
+		},
+		{
+			"name": "gtk",
+			"targetType": "library",
+			"targetName": "gtk",
+			"importPaths": ["source/generated/gtk"],
+			"sourcePaths": ["source/generated/gtk"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:gdk" : "*",
+				"gtk_d:graphene" : "*",
+				"gtk_d:gsk" : "*"
+			}
+		},
+		{
+			"name": "adw",
+			"targetType": "library",
+			"targetName": "adw",
+			"importPaths": ["source/generated/adw"],
+			"sourcePaths": ["source/generated/adw"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:gtk" : "*"
+			}
+		},
+		{
+			"name": "sourceview",
+			"targetType": "library",
+			"targetName": "sourceview",
+			"importPaths": ["source/generated/sourceview"],
+			"sourcePaths": ["source/generated/sourceview"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:gtk" : "*"
+			}
+		},
+		{
+			"name": "soup",
+			"targetType": "library",
+			"targetName": "soup",
+			"importPaths": ["source/generated/soup"],
+			"sourcePaths": ["source/generated/soup"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:gio" : "*"
+			}
+		},
+		{
+			"name": "shumate",
+			"targetType": "library",
+			"targetName": "shumate",
+			"importPaths": ["source/generated/shumate"],
+			"sourcePaths": ["source/generated/shumate"],
+			"dependencies": {
+				"gtk_d:linker" : "*",
+				"gtk_d:glib" : "*",
+				"gtk_d:gtk" : "*",
+				"gtk_d:soup" : "*"
+			}
+		}
+	],
+	"dependencies": {
+		"gtk_d:linker" : "*",
+		"gtk_d:glib" : "*",
+		"gtk_d:graphene" : "*",
+		"gtk_d:cairo" : "*",
+		"gtk_d:harfbuzz" : "*",
+		"gtk_d:pango" : "*",
+		"gtk_d:gio" : "*",
+		"gtk_d:gdkpixbuf" : "*",
+		"gtk_d:atk" : "*",
+		"gtk_d:gdk" : "*",
+		"gtk_d:rsvg" : "*",
+		"gtk_d:gsk" : "*",
+		"gtk_d:gtk" : "*",
+		"gtk_d:adw" : "*",
+		"gtk_d:sourceview" : "*",
+		"gtk_d:soup" : "*",
+		"gtk_d:shumate" : "*"
+	}
 }
