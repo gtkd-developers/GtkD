@@ -66,7 +66,7 @@ public class ValueArray
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GOBJECT)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GOBJECT[0]) && ownedRef )
 			g_value_array_free(gValueArray);
 	}
 

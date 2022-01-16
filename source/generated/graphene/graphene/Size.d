@@ -68,7 +68,7 @@ public final class Size
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_size_free(graphene_size);
 	}
 

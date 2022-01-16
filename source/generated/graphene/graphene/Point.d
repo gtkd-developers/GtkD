@@ -69,7 +69,7 @@ public final class Point
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_point_free(graphene_point);
 	}
 

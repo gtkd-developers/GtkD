@@ -73,7 +73,7 @@ public class Triangle
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_triangle_free(graphene_triangle);
 	}
 

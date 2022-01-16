@@ -68,7 +68,7 @@ public class MessageHeaders
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_SOUP)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_SOUP[0]) && ownedRef )
 			soup_message_headers_free(soupMessageHeaders);
 	}
 

@@ -26,7 +26,7 @@ module sourceview.c.functions;
 
 import std.stdio;
 import sourceview.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_SOURCEVIEW = ["libgtksourceview-5-0.dll;gtksourceview-5-5.0.dll;gtksourceview-5.dll"];

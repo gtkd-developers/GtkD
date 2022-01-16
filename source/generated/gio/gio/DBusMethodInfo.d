@@ -71,7 +71,7 @@ public final class DBusMethodInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO[0]) && ownedRef )
 			g_dbus_method_info_unref(gDBusMethodInfo);
 	}
 

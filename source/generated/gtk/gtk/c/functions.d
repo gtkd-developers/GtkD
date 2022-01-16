@@ -26,7 +26,7 @@ module gtk.c.functions;
 
 import std.stdio;
 import gtk.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GTK = ["libgtk-4-1.dll;gtk-4-4.1.dll;gtk-4.dll"];

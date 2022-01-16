@@ -68,7 +68,7 @@ public class ContentFormatsBuilder
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK[0]) && ownedRef )
 			gdk_content_formats_builder_unref(gdkContentFormatsBuilder);
 	}
 

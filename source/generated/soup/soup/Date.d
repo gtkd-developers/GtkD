@@ -75,7 +75,7 @@ public final class Date
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_SOUP)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_SOUP[0]) && ownedRef )
 			soup_date_free(soupDate);
 	}
 

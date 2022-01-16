@@ -71,7 +71,7 @@ public class PgGlyphString
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO[0]) && ownedRef )
 			pango_glyph_string_free(pangoGlyphString);
 	}
 

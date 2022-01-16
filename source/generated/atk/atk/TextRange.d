@@ -66,7 +66,7 @@ public final class TextRange
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_ATK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_ATK[0]) && ownedRef )
 			sliceFree(atkTextRange);
 	}
 

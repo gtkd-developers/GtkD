@@ -81,7 +81,7 @@ public final class MessageBody
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_SOUP)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_SOUP[0]) && ownedRef )
 			soup_message_body_free(soupMessageBody);
 	}
 

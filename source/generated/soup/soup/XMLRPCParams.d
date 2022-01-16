@@ -71,7 +71,7 @@ public class XMLRPCParams
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_SOUP)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_SOUP[0]) && ownedRef )
 			soup_xmlrpc_params_free(soupXMLRPCParams);
 	}
 

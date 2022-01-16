@@ -81,7 +81,7 @@ public final class Pixdata
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF[0]) && ownedRef )
 			sliceFree(gdkPixdata);
 	}
 

@@ -19,6 +19,9 @@
 wrap: shumate
 file: Shumate-1.0.gir
 
+struct: License
+class: LicenseSh
+
 struct: MapSourceRegistry
 import: glib.ConstructionException
 noCode: new

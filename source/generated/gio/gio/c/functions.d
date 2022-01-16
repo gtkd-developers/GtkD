@@ -26,7 +26,7 @@ module gio.c.functions;
 
 import std.stdio;
 import gio.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GIO = ["libgio-2.0-0.dll;gio-2.0-0.dll;gio-2.dll"];

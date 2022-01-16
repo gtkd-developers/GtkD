@@ -80,7 +80,7 @@ public class Matrix
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_matrix_free(graphene_matrix);
 	}
 

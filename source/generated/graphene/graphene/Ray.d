@@ -77,7 +77,7 @@ public class Ray
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_ray_free(graphene_ray);
 	}
 

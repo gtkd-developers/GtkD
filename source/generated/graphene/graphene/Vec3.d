@@ -71,7 +71,7 @@ public class Vec3
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_vec3_free(graphene_vec3);
 	}
 

@@ -26,7 +26,7 @@ module soup.c.functions;
 
 import std.stdio;
 import soup.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_SOUP = ["libsoup-2.4-1.dll;soup-2.4-1.dll;soup-2.dll"];

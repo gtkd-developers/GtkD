@@ -26,7 +26,7 @@ module graphene.c.functions;
 
 import std.stdio;
 import graphene.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GRAPHENE = ["libgraphene-1.0-0.dll;graphene-1.0-0.dll;graphene-1.dll"];

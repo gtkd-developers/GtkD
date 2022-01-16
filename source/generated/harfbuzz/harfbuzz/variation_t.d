@@ -69,7 +69,7 @@ public final class variation_t
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_HARFBUZZ)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_HARFBUZZ[0]) && ownedRef )
 			sliceFree(hb_variation);
 	}
 

@@ -70,7 +70,7 @@ public class ShaderArgsBuilder
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSK[0]) && ownedRef )
 			gsk_shader_args_builder_unref(gskShaderArgsBuilder);
 	}
 

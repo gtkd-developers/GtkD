@@ -70,7 +70,7 @@ public final class Point3D
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_point3d_free(graphene_point3d);
 	}
 

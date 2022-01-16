@@ -70,7 +70,7 @@ public class MappedFile
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB[0]) && ownedRef )
 			g_mapped_file_unref(gMappedFile);
 	}
 

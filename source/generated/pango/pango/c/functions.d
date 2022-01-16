@@ -27,7 +27,7 @@ module pango.c.functions;
 import std.stdio;
 import pango.c.types;
 import cairo.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_PANGO = ["libpango-1.0-0.dll;pango-1.0-0.dll;pango-1.dll", "libpangocairo-1.0-0.dll;pangocairo-1.0-0.dll;pangocairo-1.dll"];

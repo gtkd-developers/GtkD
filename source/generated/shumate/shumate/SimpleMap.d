@@ -35,7 +35,7 @@ private import gtk.ConstraintTargetT;
 private import gtk.Widget;
 private import shumate.Compass;
 private import shumate.Layer;
-private import shumate.License;
+private import shumate.LicenseSh;
 private import shumate.MapSource;
 private import shumate.Scale;
 private import shumate.Viewport;
@@ -125,7 +125,7 @@ public class SimpleMap : Widget
 	 *
 	 * Returns: a [class@License]
 	 */
-	public License getLicense()
+	public LicenseSh getLicense()
 	{
 		auto __p = shumate_simple_map_get_license(shumateSimpleMap);
 
@@ -134,7 +134,7 @@ public class SimpleMap : Widget
 			return null;
 		}
 
-		return ObjectG.getDObject!(License)(cast(ShumateLicense*) __p);
+		return ObjectG.getDObject!(LicenseSh)(cast(ShumateLicense*) __p);
 	}
 
 	/**

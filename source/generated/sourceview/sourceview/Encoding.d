@@ -71,7 +71,7 @@ public class Encoding
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_SOURCEVIEW)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_SOURCEVIEW[0]) && ownedRef )
 			gtk_source_encoding_free(gtkSourceEncoding);
 	}
 

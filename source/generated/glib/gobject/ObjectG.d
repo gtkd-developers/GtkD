@@ -138,7 +138,7 @@ public class ObjectG
 	~this()
 	{
 		static if ( isPointer!(typeof(g_object_steal_data)) )
-			bool libLoaded = Linker.isLoaded(LIBRARY_GOBJECT);
+			bool libLoaded = Linker.isLoaded(LIBRARY_GOBJECT[0]);
 		else
 			enum libLoaded = true;
 

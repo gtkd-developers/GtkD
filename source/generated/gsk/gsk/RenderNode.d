@@ -83,7 +83,7 @@ public class RenderNode
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSK[0]) && ownedRef )
 			gsk_render_node_unref(gskRenderNode);
 	}
 

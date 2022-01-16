@@ -26,7 +26,7 @@ module atk.c.functions;
 
 import std.stdio;
 import atk.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_ATK = ["libatk-1.0-0.dll;atk-1.0-0.dll;atk-1.dll"];

@@ -27,7 +27,7 @@ module glib.c.functions;
 import std.stdio;
 import glib.c.types;
 import gobject.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GLIB = ["libglib-2.0-0.dll;g-2.0-0.dll;g-2.dll", "libgmodule-2.0-0.dll;gmodule-2.0-0.dll;gmodule-2.dll", "libgobject-2.0-0.dll;gobject-2.0-0.dll;gobject-2.dll"];

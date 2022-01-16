@@ -26,7 +26,7 @@ module shumate.c.functions;
 
 import std.stdio;
 import shumate.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_SHUMATE = ["libshumate-1.0-1.dll;shumate-1.0-1.dll;shumate-1.dll"];
@@ -77,7 +77,7 @@ shared static this()
 	Linker.link(shumate_layer_get_type, "shumate_layer_get_type", LIBRARY_SHUMATE);
 	Linker.link(shumate_layer_get_viewport, "shumate_layer_get_viewport", LIBRARY_SHUMATE);
 
-	// shumate.License
+	// shumate.LicenseSh
 
 	Linker.link(shumate_license_get_type, "shumate_license_get_type", LIBRARY_SHUMATE);
 	Linker.link(shumate_license_new, "shumate_license_new", LIBRARY_SHUMATE);
@@ -381,7 +381,7 @@ __gshared extern(C)
 	GType function() c_shumate_layer_get_type;
 	ShumateViewport* function(ShumateLayer* self) c_shumate_layer_get_viewport;
 
-	// shumate.License
+	// shumate.LicenseSh
 
 	GType function() c_shumate_license_get_type;
 	ShumateLicense* function() c_shumate_license_new;
@@ -683,7 +683,7 @@ alias c_shumate_file_cache_store_tile_finish shumate_file_cache_store_tile_finis
 alias c_shumate_layer_get_type shumate_layer_get_type;
 alias c_shumate_layer_get_viewport shumate_layer_get_viewport;
 
-// shumate.License
+// shumate.LicenseSh
 
 alias c_shumate_license_get_type shumate_license_get_type;
 alias c_shumate_license_new shumate_license_new;

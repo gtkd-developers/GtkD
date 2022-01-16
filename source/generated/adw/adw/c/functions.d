@@ -26,7 +26,7 @@ module adw.c.functions;
 
 import std.stdio;
 import adw.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_ADW = ["libadwaita-1-0.dll;adwaita-1-1.0.dll;adwaita-1.dll"];

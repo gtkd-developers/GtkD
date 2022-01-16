@@ -26,7 +26,7 @@ module gsk.c.functions;
 
 import std.stdio;
 import gsk.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GSK = ["libgtk-4-1.dll;gtk-4-4.1.dll;gtk-4.dll"];

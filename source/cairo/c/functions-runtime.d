@@ -26,7 +26,7 @@ module cairo.c.functions;
 
 private import std.stdio;
 private import cairo.c.types;
-private import gtkd.Loader;
+private import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_CAIRO = ["libcairo-2.dll;cairo.dll"];

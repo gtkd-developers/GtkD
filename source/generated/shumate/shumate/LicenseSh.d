@@ -22,7 +22,7 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module shumate.License;
+module shumate.LicenseSh;
 
 private import glib.ConstructionException;
 private import glib.Str;
@@ -43,13 +43,13 @@ public  import shumate.c.types;
 /**
  * A widget that displays license text.
  */
-public class License : Widget
+public class LicenseSh : Widget
 {
 	/** the main Gtk struct */
 	protected ShumateLicense* shumateLicense;
 
 	/** Get the main Gtk struct */
-	public ShumateLicense* getLicenseStruct(bool transferOwnership = false)
+	public ShumateLicense* getLicenseShStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;

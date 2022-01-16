@@ -96,7 +96,7 @@ public class SpringParams
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_ADW)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_ADW[0]) && ownedRef )
 			adw_spring_params_unref(adwSpringParams);
 	}
 

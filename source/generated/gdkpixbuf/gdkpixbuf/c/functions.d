@@ -26,7 +26,7 @@ module gdkpixbuf.c.functions;
 
 import std.stdio;
 import gdkpixbuf.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GDKPIXBUF = ["libgdk_pixbuf-2.0-0.dll;gdk_pixbuf-2.0-0.dll;gdk_pixbuf-2.dll"];

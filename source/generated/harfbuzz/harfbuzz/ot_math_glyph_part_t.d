@@ -68,7 +68,7 @@ public final class ot_math_glyph_part_t
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_HARFBUZZ)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_HARFBUZZ[0]) && ownedRef )
 			sliceFree(hb_ot_math_glyph_part);
 	}
 

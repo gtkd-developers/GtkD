@@ -26,7 +26,7 @@ module rsvg.c.functions;
 
 import std.stdio;
 import rsvg.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_RSVG = ["librsvg-2-2.dll;rsvg-2-2.2.dll;rsvg-2.dll"];

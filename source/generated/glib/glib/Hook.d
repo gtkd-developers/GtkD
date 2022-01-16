@@ -65,7 +65,7 @@ public final class Hook
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB[0]) && ownedRef )
 			sliceFree(gHook);
 	}
 

@@ -79,7 +79,7 @@ public class ParamSpec
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GOBJECT)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GOBJECT[0]) && ownedRef )
 			g_param_spec_unref(gParamSpec);
 	}
 

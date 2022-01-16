@@ -72,7 +72,7 @@ public final class PgLayoutLine
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO[0]) && ownedRef )
 			pango_layout_line_unref(pangoLayoutLine);
 	}
 
@@ -134,19 +134,6 @@ public final class PgLayoutLine
 		pangoLayoutLine.runs = value.getListSGStruct();
 	}
 
-	/**
-	 * #TRUE if this is the first line of the paragraph
-	 */
-	public @property uint isParagraphStart()
-	{
-		return pangoLayoutLine.isParagraphStart;
-	}
-
-	/** Ditto */
-	public @property void isParagraphStart(uint value)
-	{
-		pangoLayoutLine.isParagraphStart = value;
-	}
 
 	/**
 	 * #Resolved PangoDirection of line

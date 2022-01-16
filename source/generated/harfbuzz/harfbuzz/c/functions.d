@@ -26,7 +26,7 @@ module harfbuzz.c.functions;
 
 import std.stdio;
 import harfbuzz.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_HARFBUZZ = ["gobject-0.dll;gobject.dll;gobject.dll"];

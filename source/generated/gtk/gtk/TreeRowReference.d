@@ -70,7 +70,7 @@ public class TreeRowReference
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK[0]) && ownedRef )
 			gtk_tree_row_reference_free(gtkTreeRowReference);
 	}
 

@@ -70,7 +70,7 @@ public final class DBusArgInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO[0]) && ownedRef )
 			g_dbus_arg_info_unref(gDBusArgInfo);
 	}
 

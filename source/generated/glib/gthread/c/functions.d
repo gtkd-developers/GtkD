@@ -26,7 +26,7 @@ module gthread.c.functions;
 
 import std.stdio;
 import gthread.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GTHREAD = [];

@@ -64,7 +64,7 @@ public class TestSuite
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB[0]) && ownedRef )
 			g_test_suite_free(gTestSuite);
 	}
 

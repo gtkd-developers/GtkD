@@ -97,7 +97,7 @@ public class PopupLayout
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK[0]) && ownedRef )
 			gdk_popup_layout_unref(gdkPopupLayout);
 	}
 

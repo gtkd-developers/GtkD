@@ -74,7 +74,7 @@ public class ToplevelLayout
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK[0]) && ownedRef )
 			gdk_toplevel_layout_unref(gdkToplevelLayout);
 	}
 

@@ -27,7 +27,7 @@ module gdk.c.functions;
 import std.stdio;
 import gdk.c.types;
 import cairo.c.types;
-import gtkd.Loader;
+import linker.Loader;
 
 version (Windows)
 	static immutable LIBRARY_GDK = ["libgtk-4-1.dll;gtk-4-4.1.dll;gtk-4.dll"];

@@ -95,6 +95,51 @@ public class Texture : ObjectG, PaintableIF, IconIF, LoadableIconIF
 	// add the LoadableIcon capabilities
 	mixin LoadableIconT!(GdkTexture);
 
+	/**
+	 * Creates a new texture by loading an image from a file or a resource.
+	 *
+	 * The file format is detected automatically. The supported formats
+	 * are PNG and JPEG, though more formats might be available.
+	 *
+	 * If %NULL is returned, then @error will be set.
+	 *
+	 * This function is threadsafe, so that you can e.g. use GTask
+	 * and g_task_run_in_thread() to avoid blocking the main thread
+	 * while loading a big image.
+	 *
+	 * Params:
+	 *     path = the filename or resourcename to load
+	 *     resource = true if load from resource
+	 *
+	 * Returns: A newly-created `GdkTexture`
+	 *
+	 * Since: 4.6
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string path, bool resource = false)
+	{
+		GError* err = null; GdkTexture *__p;
+
+		if (resource) __p = gdk_texture_new_from_resource(Str.toStringz(path));
+		else __p = gdk_texture_new_from_filename(Str.toStringz(path), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_" ~ (resource ? "resource" : "filename"));
+		}
+
+		this(cast(GdkTexture*) __p, true);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
@@ -203,81 +248,6 @@ public class Texture : ObjectG, PaintableIF, IconIF, LoadableIconIF
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
-		}
-
-		this(cast(GdkTexture*) __p, true);
-	}
-
-	/**
-	 * Creates a new texture by loading an image from a file.
-	 *
-	 * The file format is detected automatically. The supported formats
-	 * are PNG and JPEG, though more formats might be available.
-	 *
-	 * If %NULL is returned, then @error will be set.
-	 *
-	 * This function is threadsafe, so that you can e.g. use GTask
-	 * and g_task_run_in_thread() to avoid blocking the main thread
-	 * while loading a big image.
-	 *
-	 * Params:
-	 *     path = the filename to load
-	 *
-	 * Returns: A newly-created `GdkTexture`
-	 *
-	 * Since: 4.6
-	 *
-	 * Throws: GException on failure.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string path)
-	{
-		GError* err = null;
-
-		auto __p = gdk_texture_new_from_filename(Str.toStringz(path), &err);
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_filename");
-		}
-
-		this(cast(GdkTexture*) __p, true);
-	}
-
-	/**
-	 * Creates a new texture by loading an image from a resource.
-	 *
-	 * The file format is detected automatically. The supported formats
-	 * are PNG and JPEG, though more formats might be available.
-	 *
-	 * It is a fatal error if @resource_path does not specify a valid
-	 * image resource and the program will abort if that happens.
-	 * If you are unsure about the validity of a resource, use
-	 * [ctor@Gdk.Texture.new_from_file] to load it.
-	 *
-	 * This function is threadsafe, so that you can e.g. use GTask
-	 * and g_task_run_in_thread() to avoid blocking the main thread
-	 * while loading a big image.
-	 *
-	 * Params:
-	 *     resourcePath = the path of the resource file
-	 *
-	 * Returns: A newly-created `GdkTexture`
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string resourcePath)
-	{
-		auto __p = gdk_texture_new_from_resource(Str.toStringz(resourcePath));
-
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new_from_resource");
 		}
 
 		this(cast(GdkTexture*) __p, true);

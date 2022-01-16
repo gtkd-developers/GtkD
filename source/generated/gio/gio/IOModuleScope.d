@@ -72,7 +72,7 @@ public class IOModuleScope
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO[0]) && ownedRef )
 			g_io_module_scope_free(gIOModuleScope);
 	}
 

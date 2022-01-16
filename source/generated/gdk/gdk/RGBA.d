@@ -75,7 +75,7 @@ public final class RGBA
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK[0]) && ownedRef )
 			gdk_rgba_free(gdkRGBA);
 	}
 

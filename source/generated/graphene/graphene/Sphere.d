@@ -71,7 +71,7 @@ public class Sphere
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GRAPHENE)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GRAPHENE[0]) && ownedRef )
 			graphene_sphere_free(graphene_sphere);
 	}
 

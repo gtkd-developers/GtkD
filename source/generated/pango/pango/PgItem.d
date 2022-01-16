@@ -70,7 +70,7 @@ public final class PgItem
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO[0]) && ownedRef )
 			pango_item_free(pangoItem);
 	}
 

@@ -72,7 +72,7 @@ public class CssSection
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK[0]) && ownedRef )
 			gtk_css_section_unref(gtkCssSection);
 	}
 

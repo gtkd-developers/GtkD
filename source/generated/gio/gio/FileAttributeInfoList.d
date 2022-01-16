@@ -68,7 +68,7 @@ public final class FileAttributeInfoList
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO[0]) && ownedRef )
 			g_file_attribute_info_list_unref(gFileAttributeInfoList);
 	}
 

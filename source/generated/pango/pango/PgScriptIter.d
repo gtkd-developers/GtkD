@@ -68,7 +68,7 @@ public class PgScriptIter
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO[0]) && ownedRef )
 			pango_script_iter_free(pangoScriptIter);
 	}
 

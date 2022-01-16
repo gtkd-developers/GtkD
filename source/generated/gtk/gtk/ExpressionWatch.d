@@ -68,7 +68,7 @@ public class ExpressionWatch
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK[0]) && ownedRef )
 			gtk_expression_watch_unref(gtkExpressionWatch);
 	}
 

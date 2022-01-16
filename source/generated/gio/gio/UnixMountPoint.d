@@ -68,7 +68,7 @@ public class UnixMountPoint
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO[0]) && ownedRef )
 			g_unix_mount_point_free(gUnixMountPoint);
 	}
 

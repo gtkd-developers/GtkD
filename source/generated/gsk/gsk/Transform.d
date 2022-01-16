@@ -82,7 +82,7 @@ public class Transform
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GSK)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSK[0]) && ownedRef )
 			gsk_transform_unref(gskTransform);
 	}
 

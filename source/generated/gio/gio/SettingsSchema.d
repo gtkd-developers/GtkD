@@ -158,7 +158,7 @@ public class SettingsSchema
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO[0]) && ownedRef )
 			g_settings_schema_unref(gSettingsSchema);
 	}
 

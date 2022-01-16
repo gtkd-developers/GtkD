@@ -87,7 +87,7 @@ public final class HSTSPolicy
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_SOUP)[0] && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_SOUP[0]) && ownedRef )
 			soup_hsts_policy_free(soupHSTSPolicy);
 	}
 
