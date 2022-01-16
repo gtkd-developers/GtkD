@@ -16,14 +16,13 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
-
-module gtkd.Loader;
+module linker.Loader;
 
 import std.algorithm : canFind;
 import std.stdio;
 import std.string;
 
-import gtkd.paths;
+import linker.Exception;
 
 public struct Linker
 {
@@ -32,7 +31,7 @@ public struct Linker
 
 	extern(C) static void unsupportedSymbol()
 	{
-		throw new Error("The function you are calling is not pressent in your version of GTK+.");
+		throw new Error("The function you are calling is not pressent in your version of one of loaded libraries");
 	}
 
 	/*
@@ -101,7 +100,7 @@ public struct Linker
 		}
 
 		if ( handle is null )
-			throw new Exception("Library load failed ("~ library ~"): "~ getErrorMessage());
+			throw new LinkException("Library load failed ("~ library ~"): "~ getErrorMessage());
 
 		loadedLibraries[library] = handle;
 	}
@@ -164,12 +163,6 @@ public struct Linker
 			return true;
 		else
 			return false;
-	}
-
-	///Ditto
-	public static bool isLoaded(const string[] libraries)
-	{
-		return isLoaded(libraries[0]);
 	}
 
 	/**
