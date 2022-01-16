@@ -1,0 +1,350 @@
+﻿#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+alias: 90R _90R
+alias: 180 _180
+alias: 90L _90L
+
+# must start with wrap
+wrap: gstinterfaces
+file: GstVideo-1.0.gir
+
+struct: ColorBalanceChannel
+noCode: true
+noExternal: true
+
+struct: ColorBalanceChannelClass
+noExternal: true
+
+struct: ColorBalance
+noCode: true
+noExternal: true
+
+struct: ColorBalanceInterface
+noExternal: true
+
+struct: Navigation
+noCode: true
+noExternal: true
+
+struct: NavigationInterface
+noExternal: true
+
+struct: VideoAFDMeta
+noCode: true
+noExternal: true
+
+struct: VideoAffineTransformationMeta
+noCode: true
+noExternal: true
+
+struct: VideoAggregator
+noCode: true
+noExternal: true
+
+struct: VideoAggregatorClass
+noExternal: true
+
+struct: VideoAggregatorPrivate
+noExternal: true
+
+struct: VideoAggregatorConvertPad
+noCode: true
+noExternal: true
+
+struct: VideoAggregatorConvertPadClass
+noExternal: true
+
+struct: VideoAggregatorConvertPadPrivate
+noExternal: true
+
+struct: VideoAggregatorPad
+noCode: true
+noExternal: true
+
+struct: VideoAggregatorPadClass
+noExternal: true
+
+struct: VideoAggregatorPadPrivate
+noExternal: true
+
+struct: VideoAlignment
+noCode: true
+noExternal: true
+
+struct: VideoAncillary
+noExternal: true
+
+struct: VideoBarMeta
+noCode: true
+noExternal: true
+
+struct: VideoBufferPool
+noCode: true
+noExternal: true
+
+struct: VideoBufferPoolClass
+noExternal: true
+
+struct: VideoBufferPoolPrivate
+noExternal: true
+
+struct: VideoCaptionMeta
+noCode: true
+noExternal: true
+
+struct: VideoChromaResample
+noCode: true
+noExternal: true
+
+struct: VideoCodecFrame
+noCode: true
+noExternal: true
+
+struct: VideoCodecState
+noCode: true
+noExternal: true
+
+struct: VideoColorimetry
+noCode: true
+noExternal: true
+
+struct: VideoContentLightLevel
+noCode: true
+noExternal: true
+
+struct: VideoConverter
+noCode: true
+noExternal: true
+
+struct: VideoCropMeta
+noCode: true
+noExternal: true
+
+struct: VideoDecoder
+noCode: true
+noExternal: true
+
+struct: VideoDecoderClass
+noExternal: true
+
+struct: VideoDecoderPrivate
+noExternal: true
+
+struct: VideoDirection
+noCode: true
+noExternal: true
+
+struct: VideoDither
+noCode: true
+noExternal: true
+
+struct: VideoEncoder
+noCode: true
+noExternal: true
+
+struct: VideoEncoderClass
+noExternal: true
+
+struct: VideoEncoderPrivate
+noExternal: true
+
+struct: VideoFilter
+noCode: true
+noExternal: true
+
+struct: VideoFilterClass
+noExternal: true
+
+struct: VideoFormatInfo
+noCode: true
+noExternal: true
+
+struct: VideoFrame
+noCode: true
+noExternal: true
+
+struct: VideoGLTextureUploadMeta
+noCode: true
+noExternal: true
+
+struct: VideoInfo
+noCode: true
+noExternal: true
+
+struct: VideoMasteringDisplayInfo
+noCode: true
+noExternal: true
+
+struct: VideoMeta
+noCode: true
+noExternal: true
+
+struct: VideoMetaTransform
+noCode: true
+noExternal: true
+
+struct: VideoMultiviewFlagsSet
+noCode: true
+noExternal: true
+
+struct: VideoOrientation
+noCode: true
+noExternal: true
+
+struct: VideoOrientationInterface
+noExternal: true
+
+struct: VideoOverlay
+class: VideoOverlay
+import: gstreamer.Element
+code: start
+	/**
+	* The Element parameter should usually be
+	* your videosink that you want to create your
+	* XOverlay with.
+	*/
+	public this(Element elem)
+	{
+		this( cast(GstVideoOverlay*)elem.getElementStruct() );
+	}
+code: end
+
+struct: VideoOverlayComposition
+noCode: true
+noExternal: true
+
+struct: VideoOverlayCompositionMeta
+noCode: true
+noExternal: true
+
+struct: VideoOverlayRectangle
+noCode: true
+noExternal: true
+
+struct: VideoColorPrimariesInfo
+noExternal: true
+
+struct: VideoRectangle
+noExternal: true
+
+struct: VideoRegionOfInterestMeta
+noCode: true
+noExternal: true
+
+struct: VideoResampler
+noCode: true
+noExternal: true
+
+struct: VideoSink
+noCode: true
+noExternal: true
+
+struct: VideoScaler
+noCode: true
+noExternal: true
+
+struct: VideoSinkClass
+noExternal: true
+
+struct: VideoSinkPrivate
+noExternal: true
+
+struct: VideoTimeCode
+noCode: true
+noExternal: true
+
+struct: VideoTimeCodeMeta
+noCode: true
+noExternal: true
+
+struct: VideoVBIEncoder
+noCode: true
+noExternal: true
+
+struct: VideoVBIParser
+noCode: true
+noExternal: true
+
+version 1.12: start
+	struct: VideoTimeCodeInterval
+	noCode: true
+	noExternal: true
+version 1.12: end
+
+noEnum: ColorBalanceType
+noEnum: NavigationCommand
+noEnum: NavigationEventType
+noEnum: NavigationMessageType
+noEnum: NavigationQueryType
+noEnum: VideoAlphaMode
+noEnum: VideoBufferFlags
+noEnum: VideoChromaFlags
+noEnum: VideoChromaMethod
+noEnum: VideoChromaMode
+noEnum: VideoChromaSite
+noEnum: VideoCodecFrameFlags
+noEnum: VideoColorMatrix
+noEnum: VideoColorPrimaries
+noEnum: VideoColorRange
+noEnum: VideoDitherFlags
+noEnum: VideoDitherMethod
+noEnum: VideoFlags
+noEnum: VideoFormat
+noEnum: VideoFormatFlags
+noEnum: VideoFrameFlags
+noEnum: VideoFrameMapFlags
+noEnum: VideoGammaMode
+noEnum: VideoGLTextureOrientation
+noEnum: VideoGLTextureType
+noEnum: VideoInterlaceMode
+noEnum: VideoMatrixMode
+noEnum: VideoMultiviewFlags
+noEnum: VideoMultiviewFramePacking
+noEnum: VideoMultiviewMode
+noEnum: VideoOverlayFormatFlags
+noEnum: VideoPackFlags
+noEnum: VideoPrimariesMode
+noEnum: VideoResamplerFlags
+noEnum: VideoResamplerMethod
+noEnum: VideoScalerFlags
+noEnum: VideoTileMode
+noEnum: VideoTileType
+noEnum: VideoTransferFunction
+
+version 1.12: start
+	noEnum: VideoFieldOrder
+	noEnum: VideoTimeCodeInterval
+version 1.12: end
+
+version 1.16: start
+	noEnum: VideoAncillaryDID
+	noEnum: VideoAncillaryDID16
+	noEnum: VideoCaptionType
+	noEnum: VideoVBIParserResult
+version 1.16: end
+
+noCallback: VideoAffineTransformationGetMatrix
+noCallback: VideoConvertSampleCallback
+noCallback: VideoFormatPack
+noCallback: VideoFormatUnpack
+noCallback: VideoGLTextureUpload

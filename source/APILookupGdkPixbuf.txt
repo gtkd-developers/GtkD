@@ -1,0 +1,255 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gdkpixbuf
+file: GdkPixbuf-2.0.gir
+file: GdkPixdata-2.0.gir
+
+addConstants: start
+
+	import core.stdc.stdio;
+addConstants: end
+
+struct: Pixbuf
+array: new_from_inline data data_length
+noCode: save_to_bufferv
+noCode: ref
+noCode: unref
+noCode: new_from_resource
+noCode: new_from_resource_at_scale
+noCode: get_pixels
+
+code: start
+	/**
+	 * Saves pixbuf to a new buffer in format @type, which is currently "jpeg",
+	 * "tiff", "png", "ico" or "bmp".  See gdk_pixbuf_save_to_buffer()
+	 * for more details.
+	 *
+	 * Params:
+	 *     buffer = location to receive a pointer to the new buffer.
+	 *     bufferSize = location to receive the size of the new buffer.
+	 *     type = name of file format.
+	 *     optionKeys = name of options to set, %NULL-terminated
+	 *     optionValues = values for named options
+	 *
+	 * Return: whether an error was set
+	 *
+	 * Since: 2.4
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool saveToBuffer(out ubyte[] buffer, string type, string[] optionKeys, string[] optionValues)
+	{
+		char* outbuffer = null;
+		size_t bufferSize;
+		GError* err = null;
+
+		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		buffer = (cast(ubyte*)outbuffer)[0 .. bufferSize];
+
+		return p;
+	}
+
+	/**
+	 * Creates a new pixbuf by loading an image from an resource.
+	 *
+	 * The file format is detected automatically.
+	 *
+	 * Params:
+	 *     resourcePath = the path of the resource file
+	 *
+	 * Return: A newly-created pixbuf, or null if any of several error
+	 *     conditions occurred: the file could not be opened, the image format is
+	 *     not supported, there was not enough memory to allocate the image buffer,
+	 *     the stream contained invalid data, or the operation was cancelled.
+	 *
+	 * Since: 2.26
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Pixbuf newFromResource(string resourcePath)
+	{
+		GError* err = null;
+
+		auto p = gdk_pixbuf_new_from_resource(Str.toStringz(resourcePath), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return new Pixbuf(cast(GdkPixbuf*) p, true);
+	}
+
+	/**
+	 * Creates a new pixbuf by loading an image from an resource.
+	 *
+	 * The file format is detected automatically.
+	 *
+	 * The image will be scaled to fit in the requested size, optionally
+	 * preserving the image's aspect ratio. When preserving the aspect ratio,
+	 * a width of -1 will cause the image to be scaled to the exact given
+	 * height, and a height of -1 will cause the image to be scaled to the
+	 * exact given width. When not preserving aspect ratio, a width or
+	 * height of -1 means to not scale the image at all in that dimension.
+	 *
+	 * The stream is not closed.
+	 *
+	 * Params:
+	 *     resourcePath = the path of the resource file
+	 *     width = The width the image should have or -1 to not constrain the width
+	 *     height = The height the image should have or -1 to not constrain the height
+	 *     preserveAspectRatio = true to preserve the image's aspect ratio
+	 *
+	 * Return: A newly-created pixbuf, or null if any of several error
+	 *     conditions occurred: the file could not be opened, the image format is
+	 *     not supported, there was not enough memory to allocate the image buffer,
+	 *     the stream contained invalid data, or the operation was cancelled.
+	 *
+	 * Since: 2.26
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Pixbuf newFromResource(string resourcePath, int width, int height, bool preserveAspectRatio)
+	{
+		GError* err = null;
+
+		auto p = gdk_pixbuf_new_from_resource_at_scale(Str.toStringz(resourcePath), width, height, preserveAspectRatio, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return new Pixbuf(cast(GdkPixbuf*) p, true);
+	}
+
+	/**
+	 * Queries a pointer to the pixel data of a pixbuf.
+	 *
+	 * Return: A pointer to the pixbuf's pixel data.
+	 *     Please see the section on [image data](image-data) for information
+	 *     about how the pixel data is stored in memory.
+	 *
+	 *     This function will cause an implicit copy of the pixbuf data if the
+	 *     pixbuf was created from read-only data.
+	 */
+	public char* getPixels()
+	{
+		return gdk_pixbuf_get_pixels(gdkPixbuf);
+	}
+code: end
+
+struct: PixbufAnimation
+noCode: new_from_resource
+
+struct: PixbufLoader
+import: glib.Str
+noCode: new_with_type
+noCode: new_with_mime_type
+code: start
+	/**
+	 * Creates a new pixbuf loader object that always attempts to parse
+	 * image data as if it were an image of type @image_type, instead of
+	 * identifying the type automatically. Useful if you want an error if
+	 * the image isn't the expected type, for loading image formats
+	 * that can't be reliably identified by looking at the data, or if
+	 * the user manually forces a specific type.
+	 *
+	 * The list of supported image formats depends on what image loaders
+	 * are installed, but typically "png", "jpeg", "gif", "tiff" and
+	 * "xpm" are among the supported formats. To obtain the full list of
+	 * supported image formats, call gdk_pixbuf_format_get_name() on each
+	 * of the #GdkPixbufFormat structs returned by gdk_pixbuf_get_formats().
+	 *
+	 * Params:
+	 *     imageType  = name of the image format to be loaded with the image
+	 *     isMimeType = Set to true if type is a mime type
+	 *
+	 * Return: A newly-created pixbuf loader.
+	 *
+	 * Throws: GException on failure.
+	 */
+	public this(string type, bool isMimeType=false)
+	{
+		GError* err = null;
+		GdkPixbufLoader* p;
+
+		if ( isMimeType )
+		{
+			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), &err);
+		}
+		else
+		{
+			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), &err);
+		}
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		this(cast(GdkPixbufLoader*) p, true);
+	}
+code: end
+
+struct: PixbufSimpleAnim
+class: PixbufSimpleAnimation
+
+struct: PixbufSimpleAnimIter
+class: PixbufSimpleAnimationIter
+noCode: true
+
+struct: Pixdata
+noProperty: pixel_data
+noCode: from_pixbuf
+import: gdkpixbuf.Pixbuf
+code: start
+	/**
+	 * Converts a `GdkPixbuf` to a `GdkPixdata`.
+	 *
+	 * If `use_rle` is `TRUE`, the pixel data is run-length encoded into
+	 * newly-allocated memory and a pointer to that memory is returned.
+	 *
+	 * Deprecated: Use #GResource instead.
+	 *
+	 * Params:
+	 *     pixbuf = the data to fill `pixdata` with.
+	 *     useRle = whether to use run-length encoding for the pixel data.
+	 *
+	 * Returns: If `use_rle` is
+	 *     `TRUE`, a pointer to the newly-allocated memory for the run-length
+	 *     encoded pixel data, otherwise `NULL`.
+	 */
+	public ubyte[] fromPixbuf(Pixbuf pixbuf, bool useRle)
+	{
+		auto __p = gdk_pixdata_from_pixbuf(gdkPixdata, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), useRle);
+
+		return cast(ubyte[])__p[0 .. getArrayLength(cast(ubyte *)__p)];
+	}
+code: end

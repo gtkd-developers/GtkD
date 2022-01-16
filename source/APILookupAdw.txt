@@ -1,0 +1,81 @@
+#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License
+# as published by the Free Software Foundation; either version 3
+# of the License, or (at your option) any later version, with
+# some exceptions, please read the COPYING file.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+#
+wrap: adw
+file: Adw-1.gir
+
+# Fix generation errors
+
+struct: ActionRow
+noCode: activate
+code: start
+	/**
+	 * Activates @self.
+	 *
+	 * Since: 1.0
+	 */
+	public override bool activate()
+	{
+		adw_action_row_activate(adwActionRow);
+		return true;
+	}
+code: end
+
+struct: ApplicationWindow
+code: start
+	/**
+	 * You should use `setContent(Widget)` instead
+	 */
+	override void setChild(Widget child)
+	{
+		setContent(child);
+	}
+code: end
+
+struct: Window
+code: start
+	/**
+	 * You should use `setContent(Widget)` instead
+	 */
+	override void setChild(Widget child)
+	{
+		setContent(child);
+	}
+code: end
+
+struct: SplitButton
+# workaround to getDirection being marked as override
+# see https://github.com/gtkd-developers/gir-to-d/issues/40
+noCode: get_direction
+code: start
+	/**
+	 * Gets the direction in which the popup will be popped up.
+	 *
+	 * Returns: the direction
+	 *
+	 * Since: 1.0
+	 */
+	public GtkArrowType getButtonDirection()
+	{
+		return adw_split_button_get_direction(adwSplitButton);
+	}
+code: end
+
+struct: SpringParams
+# conflicts with constructor
+noCode: new_full

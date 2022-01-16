@@ -1,0 +1,91 @@
+#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License
+# as published by the Free Software Foundation; either version 3
+# of the License, or (at your option) any later version, with
+# some exceptions, please read the COPYING file.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+#
+wrap: soup
+file: Soup-2.4.gir
+
+addConstants: start
+version ( Windows ) {
+    public import core.sys.windows.winsock2 : sockaddr;
+}
+else {
+    public import core.sys.posix.sys.socket : sockaddr;   
+}
+addConstants: end
+
+struct: Socket
+class: SSocket
+noCode: read_until
+code: start
+    /**
+    * Like soup_socket_read(), but reads no further than the first
+    * occurrence of @boundary. (If the boundary is found, it will be
+    * included in the returned data, and *@got_boundary will be set to
+    * %TRUE.) Any data after the boundary will returned in future reads.
+    *
+    * soup_socket_read_until() will almost always return fewer than @len
+    * bytes: if the boundary is found, then it will only return the bytes
+    * up until the end of the boundary, and if the boundary is not found,
+    * then it will leave the last <literal>(boundary_len - 1)</literal>
+    * bytes in its internal buffer, in case they form the start of the
+    * boundary string. Thus, @len normally needs to be at least 1 byte
+    * longer than @boundary_len if you want to make any progress at all.
+    *
+    * Params:
+    *     buffer = buffer to read
+    *         into
+    *     boundary = boundary to read until
+    *     boundaryLen = length of @boundary in bytes
+    *     nread = on return, the number of bytes read into @buffer
+    *     gotBoundary = on return, whether or not the data in @buffer
+    *         ends with the boundary string
+    *     cancellable = a #GCancellable, or %NULL
+    *
+    * Returns: as for soup_socket_read()
+    *
+    * Throws: GException on failure.
+    */
+    public SoupSocketIOStatus readUntil(ubyte[] buffer, void* boundary, size_t boundaryLen, out size_t nread, bool* gotBoundary, Cancellable cancellable) {
+        GError* err = null;
+
+        auto __p = soup_socket_read_until(soupSocket, buffer.ptr, cast(size_t)buffer.length, boundary, boundaryLen, &nread, cast(int *)gotBoundary, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+
+        if (err !is null) {
+            throw new GException( new ErrorG(err) );
+    }
+
+    return __p;
+    }
+code: end
+
+struct: Buffer
+noProperty: data
+import: glib.c.types
+code: start
+    /**
+    * the data
+    */
+    public @property ubyte [] data() {
+        return cast(ubyte [])soupBuffer.data[0..getArrayLength(cast(ubyte *)soupBuffer.data)];
+    }
+
+    /** Ditto */
+    public @property void data(ubyte [] value) {
+        soupBuffer.data = cast(void *)value.ptr;
+    }
+code: end

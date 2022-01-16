@@ -1,0 +1,87 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gst.base
+file: GstBase-1.0.gir
+
+struct: Base
+move: type_find_helper Base
+move: type_find_helper_for_buffer Base
+move: type_find_helper_for_data Base
+move: type_find_helper_for_extension Base
+move: type_find_helper_get_range Base
+array: type_find_helper_for_data data size
+version 1.16: start
+	move: type_find_helper_for_buffer_with_extension Base
+	move: type_find_helper_for_data_with_extension Base
+	move: type_find_helper_get_range_full Base
+version: end
+
+struct: BaseParse
+out: convert_default dest_value
+
+struct: ByteReader
+out: masked_scan_uint32_peek value
+
+struct: ByteWriter
+array: new_with_data data size
+noCode: free_and_get_data
+noCode: reset_and_get_data
+code: start
+	/**
+	 * Frees @writer and all memory allocated by it except
+	 * the current data, which is returned.
+	 *
+	 * Free-function: g_free
+	 *
+	 * Returns: the current data. g_free() after usage.
+	 */
+	public ubyte[] freeAndGetData()
+	{
+		ubyte* p = gst_byte_writer_free_and_get_data(gstByteWriter);
+		ownedRef = false;
+		return p[0 .. gstByteWriter.parent.size];
+	}
+
+	/**
+	 * Resets @writer and returns the current data.
+	 *
+	 * Free-function: g_free
+	 *
+	 * Returns: the current data. g_free() after
+	 *     usage.
+	 */
+	public ubyte[] resetAndGetData()
+	{
+		auto p = gst_byte_writer_reset_and_get_data(gstByteWriter);
+
+		return p[0 .. gstByteWriter.parent.size];
+	}
+code: end
+
+struct: CollectPads
+out: clip_running_time outbuf
+
+struct: DataQueue
+out: get_level level
+out: peek item
+out: pop item

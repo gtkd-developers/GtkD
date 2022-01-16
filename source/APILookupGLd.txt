@@ -1,0 +1,105 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: glgdk
+file: GdkGLExt-3.0.gir
+
+addAliases: start
+	public import glib.c.types;
+	public import gdk.c.types;
+addAliases: end
+
+addStructs: start
+	struct GdkGLConfigImpl;
+	struct GdkGLContextImpl;
+	struct GdkGLWindowImpl;
+addStructs: end
+
+struct: Config
+class: GLConfig
+out: get_attrib value
+code: start
+	/**
+	 * Creates a mew OpenGL frame buffer configuration that match the specified display mode,
+	 * or the fallback mode.
+	 * Params:
+	 *  mode = display mode bit mask.
+	 *  fallback = Try this mode if first fails.
+	 * Throws: ConstructionException if configuring GL fails
+	 */
+	this(GdkGLConfigMode mode, GdkGLConfigMode fallback)
+	{
+		gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(mode);
+
+		if ( gdkGLConfig is null )
+		{
+			gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(fallback);
+		}
+		if ( gdkGLConfig is null )
+		{
+			throw new ConstructionException("GL configure failed");
+		}
+
+		this(gdkGLConfig);
+	}
+code: end
+
+struct: Context
+class: GLContext
+noStruct: true
+
+struct: Drawable
+interface: GLDrawable
+
+struct: GLdInit
+move: init GLdInit
+move: init_check GLdInit
+inout: init argv
+inout: init argc
+array: init argv argc
+inout: init_check argv
+inout: init_check argc
+array: init_check argv argc
+
+struct: GLQuery
+move: query_version GLQuery version
+move: query_version_for_display GLQuery version_for_display
+out: version major
+out: version minor
+out: version_for_display major
+out: version_for_display minor
+
+struct: Window
+class: GLWindow
+
+struct:
+
+move: get_proc_address GLQuery
+move: query_extension GLQuery extension
+move: query_extension_for_display GLQuery extension_for_display
+move: query_gl_extension GLQuery gl_extension
+
+move: get_binary_age GLVersion
+move: get_interface_age GLVersion
+move: get_major_version GLVersion
+move: get_micro_version GLVersion
+move: get_minor_version GLVersion

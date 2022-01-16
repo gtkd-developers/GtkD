@@ -1,0 +1,1494 @@
+﻿#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gstreamer
+file: Gst-1.0.gir
+
+noEnum: DebugGraphDetails
+addEnums: start
+	/**
+	* Available details for pipeline graphs produced by GST_DEBUG_BIN_TO_DOT_FILE()
+	* and GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS().
+	*/
+	public enum GstDebugGraphDetails : long
+	{
+		/**
+		* show caps-name on edges
+		*/
+		MEDIA_TYPE = 1,
+		/**
+		* show caps-details on edges
+		*/
+		CAPS_DETAILS = 2,
+		/**
+		* show modified parameters on
+		* elements
+		*/
+		NON_DEFAULT_PARAMS = 4,
+		/**
+		* show element states
+		*/
+		STATES = 8,
+		/**
+		* show full element parameter values even
+		* if they are very long
+		*/
+		FULL_PARAMS = 16,
+		/**
+		* show all the typical details that one might want
+		*/
+		ALL = 15,
+		/**
+		* show all details regardless of how large or
+		* verbose they make the resulting output
+		*/
+		VERBOSE = 4294967295,
+	}
+	alias GstDebugGraphDetails DebugGraphDetails;
+addEnums: stop
+
+struct: Bin
+code: start
+	/** */
+	public this(Element elem)
+	{
+		super( elem.getElementStruct(), true );
+		this.gstBin = cast(GstBin*)elem.getElementStruct();
+	}
+
+	/**
+	 * Adds a list of elements to a bin.
+	 * This function is equivalent to calling add() for each member of the list.
+	 * The return value of each add() is ignored.
+	 */
+	public void addMany( Element[] elems... )
+	{
+		foreach( e; elems ) add( e );
+	}
+
+	/**
+	 * Remove a list of elements from a bin.
+	 * This function is equivalent to calling remove() with each member of the list.
+	 */
+	public void removeMany( Element[] elems... )
+	{
+		foreach( e; elems ) remove( e );
+	}
+code: end
+
+struct: BufferPool
+inout: config_get_allocator allocator
+
+struct: Bus
+noCode: add_watch
+noCode: set_sync_handler
+code: start
+	/**
+	 * Adds a bus watch to the default main context with the default priority.
+	 * This function is used to receive asynchronous messages in the main loop.
+	 * The watch can be removed using g_source_remove() or by returning FALSE
+	 * from func.
+	 * MT safe.
+	 * Params:
+	 *  dlg = A function to call when a message is received.
+	 * Returns:
+	 *  The event source id.
+	 */
+	public uint addWatch( bool delegate(Message) dlg )
+	{
+		onWatchListener = dlg;
+		return gst_bus_add_watch(gstBus, cast(GstBusFunc)&watchCallBack, cast(void*)this);
+	}
+
+	bool delegate(Message) onWatchListener;
+
+	extern(C) static int watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
+	{
+		Message msg_d = new Message( msg );
+
+		return bus_d.onWatchListener( msg_d );
+	}
+	
+	 /**
+	  * Use this for making an XOverlay.
+	  * Sets the synchronous handler on the bus. The function will be called
+	  * every time a new message is posted on the bus. Note that the function
+	  * will be called in the same thread context as the posting object. This
+	  * function is usually only called by the creator of the bus. Applications
+	  * should handle messages asynchronously using the gst_bus watch and poll
+	  * functions.
+	  * You cannot replace an existing sync_handler. You can pass NULL to this
+	  * function, which will clear the existing handler.
+	  * Params:
+	  *  dlg = The handler function to install
+	  */
+	public void setSyncHandler( GstBusSyncReply delegate(Message) dlg )
+	{
+		onSyncHandlerListener = dlg;
+		gst_bus_set_sync_handler(gstBus, cast(GstBusSyncHandler)&syncHandlerCallBack, cast(void*)this, null);
+	}
+	
+	GstBusSyncReply delegate(Message) onSyncHandlerListener;
+	
+	extern(C) static GstBusSyncReply syncHandlerCallBack(GstBus* bus, GstMessage* msg, Bus bus_d)
+	{
+		Message msg_d = new Message( msg );
+		
+		return bus_d.onSyncHandlerListener( msg_d );
+	}
+code: end
+
+struct: Caps
+noCode: new_any
+code: start
+	/**
+	 * Creates a new GstCaps that indicates that it is compatible with
+	 * any media format.
+	 * Returns:
+	 *  the new GstCaps
+	 */
+	public static Caps newAny()
+	{
+		// GstCaps* gst_caps_new_any (void);
+		auto p = cast(GstCaps*)gst_caps_new_any();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_caps_new_any");
+		}
+
+		return new Caps(cast(GstCaps*)p); //, true);
+	}
+code: end
+
+struct: CapsFeatures
+noCode: new_any
+code: start
+	/**
+	 * Creates a new, ANY #GstCapsFeatures. This will be equal
+	 * to any other #GstCapsFeatures but caps with these are
+	 * unfixed.
+	 *
+	 * Free-function: gst_caps_features_free
+	 *
+	 * Return: a new, ANY #GstCapsFeatures
+	 *
+	 * Since: 1.2
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static newAny()
+	{
+		auto p = gst_caps_features_new_any();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_any");
+		}
+		
+		return new CapsFeatures(cast(GstCapsFeatures*)p);
+	}
+code: end
+
+struct: ChildProxy
+alias: get_property childGetProperty
+alias: get_valist childGetValist
+alias: set_property childSetProperty
+alias: set_valist childSetValist
+
+struct: ControlSource
+alias: control_source_get_value getValue
+alias: control_source_get_value_array getValueArray
+
+struct: DateTime
+import: glib.DateTime : GLibDateTime = DateTime
+structWrap: GLib.DateTime GLibDateTime
+noCode: new_now_utc
+noCode: new_from_unix_epoch_local_time_usecs
+noCode: new_now_local_time
+noCode: new_from_unix_epoch_utc
+noCode: new_from_unix_epoch_local_time
+
+code: start
+	/**
+	 * Creates a new GstDateTime representing the current date and time.
+	 * 
+	 * Params:
+	 *     utc  = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool utc)
+	{
+		GstDateTime* p;
+
+		if ( utc )
+		{
+			p = gst_date_time_new_now_utc();
+		}
+		else
+		{
+			p = gst_date_time_new_now_local_time();
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_date_time_new_now_local_time()");
+		}
+		this(p); //, true);
+	}
+code: end
+
+struct: DebugMessage
+namespace: DebugMessage
+
+struct: Element
+import: gobject.Type
+import: gobject.c.functions
+in: query_convert src_format
+code: start
+	/**
+	 * Queries an element for the stream position.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The current position in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryPosition()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_pos;
+		queryPosition( form, cur_pos );
+		return cur_pos;
+	}
+
+	/**
+	 * Queries an element for the stream duration.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The duration in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryDuration()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_dur;
+		queryDuration( form, cur_dur );
+		return cur_dur;
+	}
+
+	/**
+	 *	This set's the filename for a filesrc element.
+	 */
+	public void location( string set )
+	{
+		//g_object_set( G_OBJECT(getElementStruct()), "location", set, NULL);
+		setProperty("location", set);
+	}
+
+	/**
+	 * Set the caps property of an Element.
+	 */
+	void caps( Caps cp )
+	{
+		g_object_set( getElementStruct(), Str.toStringz("caps"), cp.getCapsStruct(), null );
+	}
+
+	/**
+	* For your convenience in gstreamerD: you can seek to the
+	* position of the pipeline measured in time_nanoseconds.
+	*/
+	public int seek( long time_nanoseconds ) //gint64
+	{
+		return seek( 1.0, GstFormat.TIME, GstSeekFlags.FLUSH,
+								GstSeekType.SET, time_nanoseconds,
+								GstSeekType.NONE, GST_CLOCK_TIME_NONE);
+	}
+
+	/**
+	* Get's all the pads from an element in a Pad[].
+	*/
+	public Pad[] pads()
+	{
+		Pad[] result;
+		GValue* pad = g_value_init(new GValue(), Pad.getType());
+		GstIterator* iter = gst_element_iterate_pads(gstElement);
+
+		while ( gst_iterator_next(iter, pad) == GstIteratorResult.OK )
+		{
+			result ~= ObjectG.getDObject!(Pad)(cast(GstPad*)g_value_get_object(pad));
+			g_value_reset(pad);
+		}
+
+		g_value_unset(pad);
+
+		return result;
+	}
+code: end
+
+struct: ElementFactory
+code: start
+	/**
+	 * Create a new element of the type defined by the given element factory.
+	 * The element will receive a guaranteed unique name,
+	 * consisting of the element factory name and a number.
+	 * Params:
+	 *  factoryname = a named factory to instantiate
+	 * Returns:
+	 *  new GstElement or NULL if unable to create element
+	 */
+	public static Element make( string factoryname )
+	{
+		// GstElement* gst_element_factory_make (const gchar *factoryname,  const gchar *name);
+		auto p = gst_element_factory_make(Str.toStringz(factoryname), null );
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+	}
+code: end
+
+struct: Event
+noCode: new_eos
+noCode: new_flush_start
+noCode: new_toc_select
+code: start
+	/**
+	 * Create a new EOS event. The eos event can only travel downstream
+	 * synchronized with the buffer flow. Elements that receive the EOS
+	 * event on a pad can return UNEXPECTED as a GstFlowReturn when data
+	 * after the EOS event arrives.
+	 * The EOS event will travel down to the sink elements in the pipeline
+	 * which will then post the GST_MESSAGE_EOS on the bus after they have
+	 * finished playing any buffered data.
+	 * When all sinks have posted an EOS message, the EOS message is
+	 * forwarded to the application.
+	 * Returns:
+	 *  The new EOS event.
+	 */
+	public static Event newEOS()
+	{
+		// GstEvent* gst_event_new_eos (void);
+		auto p = gst_event_new_eos();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_eos");
+		}
+
+		return new Event(cast(GstEvent*)p );
+	}
+
+	/**
+	 * Allocate a new flush start event. The flush start event can be send
+	 * upstream and downstream and travels out-of-bounds with the dataflow.
+	 * It marks pads as being in a WRONG_STATE to process more data.
+	 * Elements unlock and blocking functions and exit their streaming functions
+	 * as fast as possible.
+	 * This event is typically generated after a seek to minimize the latency
+	 * after the seek.
+	 * Returns:
+	 *  A new flush start event.
+	 */
+	public static Event newFlushStart()
+	{
+		// GstEvent* gst_event_new_flush_start (void);
+		auto p = gst_event_new_flush_start();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_flush_start");
+		}
+
+		return new Event(cast(GstEvent*)p );
+	}
+
+	/**
+	 * Generate a TOC select event with the given uid. The purpose of the
+	 * TOC select event is to start playback based on the TOC's entry with
+	 * the given uid.
+	 */
+	public static Event newTocSelect(string uid)
+	{
+		// GstEvent* gst_event_new_toc_select (const gchar *uid);
+		auto p = gst_event_new_toc_select(cast(char*)uid.ptr);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_toc_select");
+		}
+
+		return new Event(cast(GstEvent*)p );
+	}
+code: end
+
+struct: Iterator
+inout: new_list list
+
+struct: Message
+#TODO: use the messagetype enum to consolidate the constructors.
+noCode: new_element
+noCode: new_new_clock
+noCode: new_segment_done
+noCode: new_segment_start
+noCode: new_warning
+noCode: new_state_dirty
+noCode: new_eos
+noCode: new_error
+noCode: new_info
+noCode: new_latency
+noCode: new_duration_changed
+noCode: new_async_start
+noCode: new_reset_time
+noCode: new_device_added
+noCode: new_device_removed
+noCode: new_error_with_details
+noCode: new_info_with_details
+noCode: new_warning_with_details
+noCode: new_stream_collection
+noCode: new_streams_selected
+
+
+code: start
+	/**
+	* Get the type of the message.
+	*/
+	public GstMessageType type()
+	{
+		return cast(GstMessageType)getMessageStruct().type;
+	}
+	
+	/**
+	 * Get the src (the element that originated the message) of the message.
+	 */
+	public ObjectGst src()
+	{
+		return new ObjectGst( cast(GstObject*)getMessageStruct().src );
+	}
+
+	/**
+	 * Create a new element-specific message. This is meant as a generic way of
+	 * allowing one-way communication from an element to an application, for example
+	 * "the firewire cable was unplugged". The format of the message should be
+	 * documented in the element's documentation. The structure field can be NULL.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  structure = The structure for the message. The message will take ownership of
+	 *  the structure.
+	 * Returns:
+	 *  The new element message.
+	 */
+	public static Message newElement(ObjectGst src, Structure structure)
+	{
+		// GstMessage* gst_message_new_element (GstObject *src,  GstStructure *structure);
+		auto p = gst_message_new_element((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_element");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new clock message. This message is posted whenever the
+	 * pipeline selectes a new clock for the pipeline.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  clock = the new selected clock
+	 * Returns:
+	 *  The new new clock message.
+	 */
+	public static Message newNewClock(ObjectGst src, Clock clock)
+	{
+		// GstMessage* gst_message_new_new_clock (GstObject *src,  GstClock *clock);
+		auto p = gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_new_clock");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new segment done message. This message is posted by elements that
+	 * finish playback of a segment as a result of a segment seek. This message
+	 * is received by the application after all elements that posted a segment_start
+	 * have posted the segment_done.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  format = The format of the position being done
+	 *  position = The position of the segment being done
+	 * Returns:
+	 *  The new segment done message.
+	 */
+	public static Message newSegmentDone(ObjectGst src, GstFormat format, long position)
+	{
+		// GstMessage* gst_message_new_segment_done (GstObject *src,  GstFormat format,  gint64 position);
+		auto p = gst_message_new_segment_done((src is null) ? null : src.getObjectGstStruct(), format, position);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_segment_done");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new segment message. This message is posted by elements that
+	 * start playback of a segment as a result of a segment seek. This message
+	 * is not received by the application but is used for maintenance reasons in
+	 * container elements.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  format = The format of the position being played
+	 *  position = The position of the segment being played
+	 * Returns:
+	 *  The new segment start message.
+	 */
+	public static Message newSegmentStart(ObjectGst src, GstFormat format, long position)
+	{
+		// GstMessage* gst_message_new_segment_start (GstObject *src,  GstFormat format,  gint64 position);
+		auto p = gst_message_new_segment_start((src is null) ? null : src.getObjectGstStruct(), format, position);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_segment_start");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new warning message. The message will make copies of error and
+	 * debug.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
+	 * Returns:
+	 *  The new warning message.
+	 */
+	public static Message newWarning(ObjectGst src, ErrorG error, string dbug)
+	{
+		// GstMessage* gst_message_new_warning (GstObject *src,  GError *error,  gchar *debug);
+		auto p = gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_warning");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a state dirty message. This message is posted whenever an element
+	 * changed its state asynchronously and is used internally to update the
+	 * states of container objects.
+	 * MT safe.
+	 * Params:
+	 *  src = the object originating the message
+	 * Returns:
+	 *  The new state dirty message.
+	 */
+	public static Message newStateDirty(ObjectGst src)
+	{
+		// GstMessage* gst_message_new_state_dirty (GstObject *src);
+		auto p = gst_message_new_state_dirty((src is null) ? null : src.getObjectGstStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_state_dirty");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new eos message. This message is generated and posted in
+	 * the sink elements of a GstBin. The bin will only forward the EOS
+	 * message to the application if all sinks have posted an EOS message.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 * Returns:
+	 *  The new eos message.
+	 */
+	public static Message newEOS(ObjectGst src)
+	{
+		// GstMessage* gst_message_new_eos (GstObject *src);
+		auto p = gst_message_new_eos((src is null) ? null : src.getObjectGstStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_eos");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new error message. The message will copy error and
+	 * debug. This message is posted by element when a fatal event
+	 * occured. The pipeline will probably (partially) stop. The application
+	 * receiving this message should stop the pipeline.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
+	 * Returns:
+	 *  The new error message.
+	 */
+	public static Message newError(ObjectGst src, ErrorG error, string dbug)
+	{
+		// GstMessage* gst_message_new_error (GstObject *src,  GError *error,  gchar *debug);
+		auto p = gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_error");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new info message. The message will make copies of error and
+	 * debug.
+	 * MT safe.
+	 * Since 0.10.12
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
+	 * Returns:
+	 *  The new info message.
+	 */
+	public static Message newInfo(ObjectGst src, ErrorG error, string dbug)
+	{
+		// GstMessage* gst_message_new_info (GstObject *src,  GError *error,  gchar *debug);
+		auto p = gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_info");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * This message can be posted by elements when their latency requirements
+	 * have changed.
+	 * Params:
+	 *     src = The object originating the message.
+	 * Returns:
+	 * The new latency message. MT safe.
+	 */
+	public static Message newLatency(ObjectGst src)
+	{
+		// GstMessage* gst_message_new_latency (GstObject *src);
+		auto p = gst_message_new_latency((src is null) ? null : src.getObjectGstStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_latency");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new duration changed message. This message is posted by elements
+	 * that know the duration of a stream when the duration changes. This message
+	 * is received by bins and is used to calculate the total duration of a
+	 * pipeline. Elements may post a duration message with a duration of
+	 * GST_CLOCK_TIME_NONE to indicate that the duration has changed and the
+	 * cached duration should be discarded. The new duration can then be
+	 * retrieved via a query.
+	 * Params:
+	 *    src = The object originating the message. [transfer none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newDurationChanged(ObjectGst src)
+	{
+		// GstMessage * gst_message_new_duration_changed (GstObject *src);
+		auto p = gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct())");
+		}
+
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * This message is posted by elements when they start an ASYNC state change.
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncStart(ObjectGst src)
+	{
+		// GstMessage * gst_message_new_async_start (GstObject *src);
+		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct())");
+		}
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * The message is posted when elements completed an ASYNC state change.
+	 * running_time contains the time of the desired running_time when this
+	 * elements goes to PLAYING. A value of GST_CLOCK_TIME_NONE for running_time
+	 * means that the element has no clock interaction and thus doesn't care about
+	 * the running_time of the pipeline.
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * runningTime = the desired running_time
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncDone(ObjectGst src, GstClockTime runningTime)
+	{
+		// GstMessage * gst_message_new_async_done (GstObject *src,  GstClockTime running_time);
+		auto p = gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime)");
+		}
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Creates a new device-added message. The device-added message is produced by
+	 * #GstDeviceProvider or a #GstDeviceMonitor. They announce the appearance
+	 * of monitored devices.
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     device = The new #GstDevice
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newDeviceAdded(ObjectGst src, Device device)
+	{
+		auto p = gst_message_new_device_added((src is null) ? null : src.getObjectGstStruct(), (device is null) ? null : device.getDeviceStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_device_added");
+		}
+		
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Creates a new device-removed message. The device-removed message is produced
+	 * by #GstDeviceProvider or a #GstDeviceMonitor. They announce the
+	 * disappearance of monitored devices.
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     device = The removed #GstDevice
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public  static Message newDeviceRemoved(ObjectGst src, Device device)
+	{
+		auto p = gst_message_new_device_removed((src is null) ? null : src.getObjectGstStruct(), (device is null) ? null : device.getDeviceStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_device_removed");
+		}
+		
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new error message. The message will copy @error and
+	 * @debug. This message is posted by element when a fatal event
+	 * occurred. The pipeline will probably (partially) stop. The application
+	 * receiving this message should stop the pipeline.
+	 *
+	 * Params:
+	 *     src = The object originating the message.
+	 *     error = The GError for this message.
+	 *     dbg = A debugging string.
+	 *     details = (allow-none): A GstStructure with details
+	 *
+	 * Return: the new error message.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newErrorWithDetails(ObjectGst src, ErrorG error, string dbg, Structure details)
+	{
+		auto p = gst_message_new_error_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_error_with_details");
+		}
+		
+		return new Message(cast(GstMessage*)p, true);
+	}
+
+	/**
+	 * Create a new info message. The message will make copies of @error and
+	 * @debug.
+	 *
+	 * Params:
+	 *     src = The object originating the message.
+	 *     error = The GError for this message.
+	 *     dbg = A debugging string.
+	 *     details = (allow-none): A GstStructure with details
+	 *
+	 * Return: the new warning message.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newInfoWithDetails(ObjectGst src, ErrorG error, string dbg, Structure details)
+	{
+		auto p = gst_message_new_info_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_info_with_details");
+		}
+		
+		return new Message(cast(GstMessage*)p, true);
+	}
+
+	/**
+	 * Create a new warning message. The message will make copies of @error and
+	 * @debug.
+	 *
+	 * Params:
+	 *     src = The object originating the message.
+	 *     error = The GError for this message.
+	 *     dbg = A debugging string.
+	 *     details = (allow-none): A GstStructure with details
+	 *
+	 * Return: the new warning message.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newWarningWithDetails(ObjectGst src, ErrorG error, string dbg, Structure details)
+	{
+		auto p = gst_message_new_warning_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_warning_with_details");
+		}
+		
+		return new Message(cast(GstMessage*)p, true);
+	}
+
+	/**
+	 * Creates a new stream-collection message. The message is used to announce new
+	 * #GstStreamCollection
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     collection = The #GstStreamCollection
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newStreamCollection(ObjectGst src, StreamCollection collection)
+	{
+		auto p = gst_message_new_stream_collection((src is null) ? null : src.getObjectGstStruct(), (collection is null) ? null : collection.getStreamCollectionStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_stream_collection");
+		}
+		
+		return new Message(cast(GstMessage*)p, true);
+	}
+
+	/**
+	 * Creates a new steams-selected message. The message is used to announce
+	 * that an array of streams has been selected. This is generally in response
+	 * to a #GST_EVENT_SELECT_STREAMS event, or when an element (such as decodebin3)
+	 * makes an initial selection of streams.
+	 *
+	 * The message also contains the #GstStreamCollection to which the various streams
+	 * belong to.
+	 *
+	 * Users of gst_message_new_streams_selected() can add the selected streams with
+	 * gst_message_streams_selected_add().
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     collection = The #GstStreamCollection
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newStreamsSelected(ObjectGst src, StreamCollection collection)
+	{
+		auto p = gst_message_new_streams_selected((src is null) ? null : src.getObjectGstStruct(), (collection is null) ? null : collection.getStreamCollectionStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_streams_selected");
+		}
+		
+		return new Message(cast(GstMessage*)p, true);
+	}
+code: end
+
+struct: Pad
+code: start
+	/**
+	 * Queries a pad for the stream position.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The current position in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryPosition()
+	{
+		long cur_pos;
+		queryPosition( GstFormat.TIME, cur_pos );
+		return cur_pos;
+	}
+
+	/**
+	 * Queries a pad for the stream duration.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The duration in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryDuration()
+	{
+		long cur_dur;
+		queryDuration( GstFormat.TIME, cur_dur );
+		return cur_dur;
+	}
+code: end
+
+version 1.12: start
+	struct: ParamArray
+	noCode: true
+version 1.12: end
+
+struct: ParamFraction
+noCode: true
+
+struct: ParamSpecFraction
+class: ParamSpecFraction
+import: glib.ConstructionException
+import: glib.Str
+move: param_spec_fraction ParamSpecFraction
+noCode: param_spec_fraction
+code: start
+	/**
+	 * This function creates a fraction GParamSpec for use by objects/elements
+	 * that want to expose properties of fraction type. This function is typically
+	 * used in connection with g_object_class_install_property() in a GObjects's
+	 * instance_init function.
+	 * Params:
+	 * name = canonical name of the property specified
+	 * nick = nick name for the property specified
+	 * blurb = description of the property specified
+	 * minNum = minimum value (fraction numerator)
+	 * minDenom = minimum value (fraction denominator)
+	 * maxNum = maximum value (fraction numerator)
+	 * maxDenom = maximum value (fraction denominator)
+	 * defaultNum = default value (fraction numerator)
+	 * defaultDenom = default value (fraction denominator)
+	 * flags = flags for the property specified
+	 * Returns: a newly created parameter specification. [transfer full]
+	 */
+	public this(string name, string nick, string blurb, int minNum, int minDenom, int maxNum, int maxDenom, int defaultNum, int defaultDenom, GParamFlags flags)
+	{
+		auto p = gst_param_spec_fraction(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minNum, minDenom, maxNum, maxDenom, defaultNum, defaultDenom, flags);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_param_spec_fraction");
+		}
+		this(cast(GstParamSpecFraction*) p);
+	}
+code: end
+
+struct: ProtectionMeta
+class: ProtectionMeta
+
+struct: Query
+inout: parse_accept_caps_result result
+in: parse_nth_format nth
+noCode: new_position
+noCode: new_duration
+noCode: new_seeking
+noCode: new_formats
+noCode: new_segment
+noCode: new_latency
+noCode: new_uri
+noCode: new_scheduling
+noCode: new_drain
+noCode: new_accept_caps
+code: start
+	/**
+	 * Constructs a new query stream position query object. Use gst_query_unref()
+	 * when done with it. A position query is used to query the current position
+	 * of playback in the streams, in some format.
+	 * Params:
+	 *  format = the default GstFormat for the new query
+	 * Returns:
+	 *  A GstQuery
+	 */
+	public static Query newPosition(GstFormat format)
+	{
+		auto p = gst_query_new_position(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_position");
+		}
+
+		return new Query( cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new stream duration query object to query in the given format.
+	 * Use gst_query_unref() when done with it. A duration query will give the
+	 * total length of the stream.
+	 * Params:
+	 *  format = the GstFormat for this duration query
+	 * Returns:
+	 *  A GstQuery
+	 */
+	public static Query newDuration(GstFormat format)
+	{
+		auto p = gst_query_new_duration(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_duration");
+		}
+
+		return new Query( cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new query object for querying seeking properties of
+	 * the stream.
+	 * Params:
+	 *  format = the default GstFormat for the new query
+	 * Returns:
+	 *  A GstQuery
+	 */
+	public static Query newSeeking(GstFormat format)
+	{
+		auto p = gst_query_new_seeking(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_seeking");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new query object for querying formats of
+	 * the stream.
+	 * Returns:
+	 *  A GstQuery
+	 */
+	public static Query newFormats()
+	{
+		auto p = gst_query_new_formats();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_formats");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new segment query object. Use gst_query_unref()
+	 * when done with it. A segment query is used to discover information about the
+	 * currently configured segment for playback.
+	 * Params:
+	 *  format = the GstFormat for the new query
+	 * Returns:
+	 *  a GstQuery
+	 */
+	public static Query newSegment(GstFormat format)
+	{
+		auto p = gst_query_new_segment(format);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_segment");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new latency query object.
+	 * Use gst_query_unref() when done with it. A latency query is usually performed
+	 * by sinks to compensate for additional latency introduced by elements in the
+	 * pipeline.
+	 * Free-function: gst_query_unref
+	 */
+	public static Query newLatency()
+	{
+		auto p = gst_query_new_latency();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_latency()");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new query URI query object. Use gst_query_unref()
+	 * when done with it. An URI query is used to query the current URI
+	 * that is used by the source or sink.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newUri()
+	{
+		auto p = gst_query_new_uri();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_uri()");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new query object for querying the scheduling properties.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newScheduling()
+	{
+		auto p = gst_query_new_scheduling();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_scheduling()");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new query object for querying the drain state.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newDrain()
+	{
+		auto p = gst_query_new_drain();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_drain()");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+
+	/**
+	 * Constructs a new query object for querying if caps are accepted.
+	 * Free-function: gst_query_unref
+	 * Params:
+	 * caps = a fixed GstCaps
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newAcceptCaps(Caps caps)
+	{
+		auto p = gst_query_new_accept_caps((caps is null) ? null : caps.getCapsStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_accept_caps((caps is null) ? null : caps.getCapsStruct())");
+		}
+
+		return new Query(cast(GstQuery*)p); //, true);
+	}
+code: end
+
+struct: Segment
+inout: do_seek update
+
+struct: Structure
+noCode: new_from_string
+code: start
+	public static Structure fromString(string name)
+	{
+		auto p = gst_structure_new_from_string(Str.toStringz(name));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_structure_new_from_string(Str.toStringz(name))");
+		}
+
+		return new Structure(cast(GstStructure*)p); //, true);
+	}
+code: end
+
+struct: TypeFind
+noCode: peek
+code: start
+	/**
+	 * Returns the size bytes of the stream to identify beginning at offset. If
+	 * offset is a positive number, the offset is relative to the beginning of the
+	 * stream, if offset is a negative number the offset is relative to the end of
+	 * the stream. The returned memory is valid until the typefinding function
+	 * returns and must not be freed.
+	 * Params:
+	 *     offset = The offset
+	 *     size = The number of bytes to return
+	 * Returns: the requested data, or NULL if that data is not available.
+	 */
+	public ubyte[] peek(long offset, uint size)
+	{
+		ubyte* buff = gst_type_find_peek(gstTypeFind, offset, size);
+
+		return buff[0 .. size];
+	}
+code: end
+
+struct:
+
+move: debug_add_log_function Debug add_log_function
+move: debug_bin_to_dot_data Debug bin_to_dot_data
+move: debug_bin_to_dot_file Debug bin_to_dot_file
+move: debug_bin_to_dot_file_with_ts Debug bin_to_dot_file_with_ts
+move: debug_construct_term_color Debug construct_term_color
+move: debug_construct_win_color Debug construct_win_color
+move: debug_get_all_categories Debug get_all_categories
+move: debug_get_color_mode Debug get_color_mode
+move: debug_get_default_threshold Debug get_default_threshold
+move: debug_is_active Debug is_active
+move: debug_is_colored Debug is_colored
+move: debug_level_get_name Debug level_get_name
+move: debug_log Debug log
+move: debug_log_default Debug log_default
+move: debug_log_valist Debug log_valist
+move: debug_print_stack_trace Debug print_stack_trace
+move: debug_remove_log_function Debug remove_log_function
+move: debug_remove_log_function_by_data Debug remove_log_function_by_data
+move: debug_set_active Debug set_active
+move: debug_set_color_mode Debug set_color_mode
+move: debug_set_color_mode_from_string Debug set_color_mode_from_string
+move: debug_set_colored Debug set_colored
+move: debug_set_default_threshold Debug set_default_threshold
+move: debug_set_threshold_for_name Debug set_threshold_for_name
+move: debug_set_threshold_from_string Debug set_threshold_from_string
+move: debug_unset_threshold_for_name Debug unset_threshold_for_name
+
+move: error_get_message GError
+
+move: event_type_get_flags Event type_get_flags
+move: event_type_get_name Event type_get_name
+move: event_type_to_quark Event type_to_quark
+
+move: filename_to_uri Uri
+move: uri_error_quark Uri
+
+move: flow_get_name Pad
+move: flow_to_quark Pad
+move: pad_mode_get_name Pad mode_get_name
+
+move: format_get_by_nick Format get_by_nick
+move: format_get_details Format get_details
+move: format_get_name Format get_name
+move: format_iterate_definitions Format iterate_definitions
+move: format_register Format register
+move: format_to_quark Format to_quark
+move: formats_contains Format contains
+
+move: deinit GStreamer
+move: init GStreamer
+move: init_check GStreamer
+move: init_get_option_group GStreamer
+move: is_initialized GStreamer
+move: segtrap_is_enabled GStreamer
+move: segtrap_set_enabled GStreamer
+move: update_registry GStreamer
+move: version GStreamer
+move: version_string GStreamer
+
+move: message_type_get_name Message type_get_name
+move: message_type_to_quark Message type_to_quark
+
+move: parent_buffer_meta_api_get_type ParentBufferMeta get_type
+
+move: parse_bin_from_description Parse bin_from_description
+move: parse_bin_from_description_full Parse bin_from_description_full
+move: parse_error_quark Parse error_quark
+move: parse_launch Parse launch
+move: parse_launch_full Parse launch_full
+move: parse_launchv Parse launchv
+move: parse_launchv_full Parse launchv_full
+
+move: plugin_error_quark Plugin
+
+move: protection_meta_api_get_type ProtectionMeta get_type
+move: protection_select_system ProtectionMeta
+
+move: query_type_get_flags Query type_get_flags
+move: query_type_get_name Query type_get_name
+move: query_type_to_quark Query type_to_quark
+
+move: tag_exists TagList exists
+move: tag_get_description TagList get_description
+move: tag_get_flag TagList get_flag
+move: tag_get_nick TagList get_nick
+move: tag_get_type TagList get_type
+move: tag_is_fixed TagList is_fixed
+move: tag_merge_strings_with_comma TagList merge_strings_with_comma
+move: tag_merge_use_first TagList merge_use_first
+move: tag_register TagList register
+move: tag_register_static TagList register_static
+
+move: type_find_get_type TypeFind
+
+move: util_array_binary_search Utils array_binary_search
+move: util_double_to_fraction Utils double_to_fraction
+move: util_dump_mem Utils dump_mem
+move: util_fraction_add Utils fraction_add
+move: util_fraction_compare Utils fraction_compare
+move: util_fraction_multiply Utils fraction_multiply
+move: util_fraction_to_double Utils fraction_to_double
+move: util_gdouble_to_guint64 Utils gdouble_to_guint64
+move: util_get_timestamp Utils get_timestamp
+move: util_greatest_common_divisor Utils greatest_common_divisor
+move: util_greatest_common_divisor_int64 Utils greatest_common_divisor_int64
+move: util_group_id_next Utils group_id_next
+move: util_guint64_to_gdouble Utils guint64_to_gdouble
+move: util_seqnum_compare Utils seqnum_compare
+move: util_seqnum_next Utils seqnum_next
+move: util_set_object_arg Utils set_object_arg
+move: util_set_value_from_string Utils set_value_from_string
+move: util_uint64_scale Utils uint64_scale
+move: util_uint64_scale_ceil Utils uint64_scale_ceil
+move: util_uint64_scale_int Utils uint64_scale_int
+move: util_uint64_scale_int_ceil Utils uint64_scale_int_ceil
+move: util_uint64_scale_int_round Utils uint64_scale_int_round
+move: util_uint64_scale_round Utils uint64_scale_round
+version 1.12: start
+	move: calculate_linear_regression Utils
+	move: dynamic_type_register Utils
+	move: util_get_object_array Utils get_object_array
+	move: util_set_object_array Utils set_object_array
+version 1.12: end
+
+move: value_can_compare ValueGst can_compare
+move: value_can_intersect ValueGst can_intersect
+move: value_can_subtract ValueGst can_subtract
+move: value_can_union ValueGst can_union
+move: value_compare ValueGst compare
+move: value_deserialize ValueGst deserialize
+move: value_fixate ValueGst fixate
+move: value_fraction_multiply ValueGst fraction_multiply
+move: value_fraction_subtract ValueGst fraction_subtract
+move: value_get_bitmask ValueGst get_bitmask
+move: value_get_caps ValueGst get_caps
+move: value_get_caps_features ValueGst get_caps_features
+move: value_get_double_range_max ValueGst get_double_range_max
+move: value_get_double_range_min ValueGst get_double_range_min
+move: value_get_flagset_flags ValueGst get_flagset_flags
+move: value_get_flagset_mask ValueGst get_flagset_mask
+move: value_set_flagset ValueGst set_flagset
+move: value_get_fraction_denominator ValueGst get_fraction_denominator
+move: value_get_fraction_numerator ValueGst get_fraction_numerator
+move: value_get_fraction_range_max ValueGst get_fraction_range_max
+move: value_get_fraction_range_min ValueGst get_fraction_range_min
+move: value_get_int64_range_max ValueGst get_int64_range_max
+move: value_get_int64_range_min ValueGst get_int64_range_min
+move: value_get_int64_range_step ValueGst get_int64_range_step
+move: value_get_int_range_max ValueGst get_int_range_max
+move: value_get_int_range_min ValueGst get_int_range_min
+move: value_get_int_range_step ValueGst get_int_range_step
+move: value_get_structure ValueGst get_structure
+move: value_init_and_copy ValueGst init_and_copy
+move: value_intersect ValueGst intersect
+move: value_is_fixed ValueGst is_fixed
+move: value_is_subset ValueGst is_subset
+move: value_register ValueGst register
+move: value_serialize ValueGst serialize
+move: value_set_bitmask ValueGst set_bitmask
+move: value_set_caps ValueGst set_caps
+move: value_set_caps_features ValueGst set_caps_features
+move: value_set_double_range ValueGst set_double_range
+move: value_set_fraction ValueGst set_fraction
+move: value_set_fraction_range ValueGst set_fraction_range
+move: value_set_fraction_range_full ValueGst set_fraction_range_full
+move: value_set_int64_range ValueGst set_int64_range
+move: value_set_int64_range_step ValueGst set_int64_range_step
+move: value_set_int_range ValueGst set_int_range
+move: value_set_int_range_step ValueGst set_int_range_step
+move: value_set_structure ValueGst set_structure
+move: value_subtract ValueGst subtract
+move: value_union ValueGst union

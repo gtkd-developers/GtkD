@@ -1,0 +1,109 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: atk
+file: Atk-1.0.gir
+
+struct: Attribute
+noCode: true
+noExternal: true
+
+struct: Component
+override: get_layer
+override: get_mdi_zorder
+
+struct: Document
+override: get_attributes
+
+struct: Implementor
+interface: Implementor
+merge: ImplementorIface
+
+struct: NoOpObject
+code: start
+	/**
+	 * Removes the specified child of the object from the object's selection.
+	 *
+	 * Params:
+	 *     i = a #gint specifying the index in the selection set.  (e.g. the
+	 *         ith selection as opposed to the ith child).
+	 *
+	 * Return: TRUE if success, FALSE otherwise.
+	 */
+	public bool removeSelection(int i)
+	{
+		return atk_selection_remove_selection(getSelectionStruct(), i) != 0;
+	}
+code: end
+
+struct: Util
+namespace: Util
+
+#
+# Move functions defined as global into there respective classes
+#
+
+struct:
+
+move: add_focus_tracker Util
+move: add_global_event_listener Util
+move: add_key_event_listener Util
+move: focus_tracker_init Util
+move: focus_tracker_notify Util
+move: get_focus_object Util
+move: get_root Util
+move: get_toolkit_name Util
+move: remove_focus_tracker Util
+move: remove_global_event_listener Util
+move: remove_key_event_listener Util
+
+move: attribute_set_free Text
+move: text_attribute_for_name Text attribute_for_name
+move: text_attribute_get_name Text attribute_get_name
+move: text_attribute_get_value Text attribute_get_value
+move: text_attribute_register Text attribute_register
+
+#TODO: Why are these functions not available on Windows?
+version !Windows: start
+	move: get_binary_age Version
+	move: get_interface_age Version
+	move: get_major_version Version
+	move: get_micro_version Version
+	move: get_minor_version Version
+version: end
+move: get_toolkit_version Version
+move: get_version Version
+
+move: get_default_registry Registry
+
+move: relation_type_for_name Relation type_for_name
+move: relation_type_get_name Relation type_get_name
+move: relation_type_register Relation type_register
+
+move: role_for_name Object
+move: role_get_localized_name Object
+move: role_get_name Object
+move: role_register Object
+
+move: state_type_for_name State type_for_name
+move: state_type_get_name State type_get_name
+move: state_type_register State type_register

@@ -1,0 +1,333 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: glgtk
+file: GtkGLExt-3.0.gir
+
+addAliases: start
+	public import glib.c.types;
+	public import glgdk.c.types;
+	public import gtk.c.types;
+addAliases: end
+
+struct: GLCapability
+namespace:
+code: start
+	public import cairo.Context;
+	public import gdk.Event;
+	public import glgdk.GLWindow;
+	public import glgtk.GLWidget;
+	public import glgtk.GLWidget : widgetSetGlCapability = setGlCapability;
+
+	template GLCapability()
+	{
+		GLfloat width = 0;
+		GLfloat height = 0;
+		
+		GLfloat getGlWidth()
+		{
+			return width;
+		}
+		GLfloat getGlHeight()
+		{
+			return height;
+		}	
+		
+		/**
+		 * Sets the GL capabilities for the widget
+		 */
+		bool setGlCapability(GLConfig glConfig = null, int renderType = GdkGLRenderType.RGBA_TYPE)
+		{
+			if ( glConfig is null )
+			{
+				glConfig = new GLConfig(
+				GdkGLConfigMode.RGB
+				| GdkGLConfigMode.DEPTH
+				| GdkGLConfigMode.DOUBLE,
+				GdkGLConfigMode.RGB
+				| GdkGLConfigMode.DEPTH
+				);
+			}
+			return setGlCapability(this, glConfig, null, true, renderType);
+		}
+		
+		/**
+		 * Set the GL capabilities for the widget
+		 */
+		bool setGlCapability(Widget widget, GLConfig glConfig, GLContext shareList, bool direct, int renderType)
+		{
+			if(!widgetSetGlCapability(widget, glConfig, shareList, direct, renderType))
+				return false;
+			
+			addOnRealize(&realizeFrame);
+			addOnUnrealize(&realizeFrame);
+			addOnDraw(&drawFrame);
+			addOnConfigure(&configureFrame);
+			addOnMap(&mapFrame);
+			addOnUnmap(&unmapFrame);
+			addOnVisibilityNotify(&visibilityFrame);
+			return true;
+		}
+		
+		/**
+		 * The widget should use this method to redraw it self at any time
+		 */
+		bool drawFrame()
+		{
+			return drawFrame(getScopedGobject!Context(null, true), this);
+		}
+		
+		bool alreadyRealized;
+		
+		bool getAlreadyRealized()
+		{
+			return alreadyRealized;
+		}
+		
+		void realizeFrame(Widget widget)
+		{
+			alreadyRealized = true;
+			
+			GLContext context = getGlContext(widget);
+			GLWindow drawable = getGlWindow(widget);
+			
+			/*** OpenGL BEGIN ***/
+			if ( !context.makeCurrent(drawable, drawable) )
+			{
+				return;
+			}
+			
+			/*** do user actions ***/
+			typeof(this).initGL();
+			
+			/*** flush ***/
+			if ( drawable.isDoubleBuffered() )
+			{
+				drawable.swapBuffers();
+			}
+			else
+			{
+				glFlush ();
+			}
+			
+			context.releaseCurrent();
+			/*** OpenGL END ***/
+		}
+		
+		bool drawFrame(Scoped!Context cr, Widget widget)
+		{
+			GLContext context = getGlContext(widget);
+			GLWindow drawable = getGlWindow(widget);
+			
+			/*** OpenGL BEGIN ***/
+			if ( !context.makeCurrent(drawable, drawable) )
+			{
+				return false;
+			}
+			
+			/*** do user actions ***/
+			bool consumeEvent = typeof(this).drawGL();
+			
+			/*** flush ***/
+			if ( drawable.isDoubleBuffered() )
+			{
+				drawable.swapBuffers();
+			}
+			else
+			{
+				glFlush ();
+			}
+			
+			context.releaseCurrent();
+			/*** OpenGL END ***/
+			
+			return consumeEvent;
+		}
+		
+		bool configureFrame(Event event, Widget widget)
+		{
+			if ( event.type == GdkEventType.CONFIGURE )
+			{
+				width = event.configure.width;
+				height = event.configure.height;
+			}
+
+			GLContext context = getGlContext(widget);
+			GLWindow drawable = getGlWindow(widget);
+			
+			/*** OpenGL BEGIN ***/
+			if ( !context.makeCurrent(drawable, drawable) )
+			{
+				return false;
+			}
+			
+			/*** do user actions ***/
+			bool consumeEvent = typeof(this).resizeGL(event);
+
+			/*** Seems to be the default on Linux, but not on Windows ***/
+			version(Windows)
+			{
+				typeof(this).drawGL();
+			}
+			
+			/*** flush ***/
+			if ( drawable.isDoubleBuffered() )
+			{
+				drawable.swapBuffers();
+			}
+			else
+			{
+				glFlush ();
+			}
+			
+			context.releaseCurrent();
+			/*** OpenGL END ***/
+			
+			return consumeEvent;
+		}
+		
+		void mapFrame(Widget widget)
+		{
+			GLContext context = getGlContext(widget);
+			GLWindow drawable = getGlWindow(widget);
+			
+			/*** OpenGL BEGIN ***/
+			if ( !context.makeCurrent(drawable, drawable) )
+			{
+				return;
+			}
+			
+			/*** do user actions ***/
+			typeof(this).onMap();
+			
+			/*** flush ***/
+			if ( drawable.isDoubleBuffered() )
+			{
+				drawable.swapBuffers();
+			}
+			else
+			{
+				glFlush ();
+			}
+			
+			context.releaseCurrent();
+			/*** OpenGL END ***/
+		}
+		
+		void unmapFrame(Widget widget)
+		{
+			GLContext context = getGlContext(widget);
+			GLWindow drawable = getGlWindow(widget);
+			
+			/*** OpenGL BEGIN ***/
+			if ( !context.makeCurrent(drawable, drawable) )
+			{
+				return;
+			}
+			
+			/*** do user actions ***/
+			typeof(this).onUnmap();
+			
+			/*** flush ***/
+			if ( drawable.isDoubleBuffered() )
+			{
+				drawable.swapBuffers();
+			}
+			else
+			{
+				glFlush ();
+			}
+			
+			context.releaseCurrent();
+			/*** OpenGL END ***/
+		}
+		
+		bool visibilityFrame(Event event, Widget widget)
+		{
+			GLContext context = getGlContext(widget);
+			GLWindow drawable = getGlWindow(widget);
+			
+			/*** OpenGL BEGIN ***/
+			if ( !context.makeCurrent(drawable, drawable) )
+			{
+				return false;
+			}
+			
+			/*** do user actions ***/
+			bool consumeEvent = typeof(this).onVisibility(event);
+			
+			/*** flush ***/
+			if ( drawable.isDoubleBuffered() )
+			{
+				drawable.swapBuffers();
+			}
+			else
+			{
+				glFlush ();
+			}
+			
+			context.releaseCurrent();
+			/*** OpenGL END ***/
+			
+			return consumeEvent;
+		}
+
+		void onMap()
+		{
+			return;
+		}
+		
+		void onUnmap()
+		{
+			return;
+		}
+		
+		bool onVisibility(Event event)
+		{
+			return true;
+		}
+	}
+code: end
+
+struct: GLtInit
+move: init GLtInit
+move: init_check GLtInit
+inout: init argv
+inout: init argc
+array: init argv argc
+inout: init_check argv
+inout: init_check argc
+array: init_check argv argc
+
+struct: GLWidget
+namespace:
+
+struct:
+
+move: widget_begin_gl GLWidget begin_gl
+move: widget_create_gl_context GLWidget create_gl_context
+move: widget_end_gl GLWidget widget_end_gl
+move: widget_get_gl_config GLWidget get_gl_config
+move: widget_get_gl_context GLWidget get_gl_context
+move: widget_get_gl_window GLWidget get_gl_window
+move: widget_is_gl_capable GLWidget is_gl_capable
+move: widget_set_gl_capability GLWidget set_gl_capability
