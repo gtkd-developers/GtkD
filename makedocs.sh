@@ -1,24 +1,36 @@
 #!/bin/sh
-echo "MODULES =" > modules.ddoc ;grep -h -e "^module" generated/gtkd/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/sourceview/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/gstreamer/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/vte/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/peas/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+echo "MODULES =" > modules.ddoc
+grep -h -e "^module" source/linker/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/adw/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/atk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/cairo/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gdk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gdkpixbuf/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gio/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/glib/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/graphene/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gsk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+#grep -h -e "^module" source/generated/gstreamer/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gtk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/harfbuzz/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/pango/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/rsvg/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/shumate/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/soup/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/sourceview/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 
-cd generated
+cd source/generated
 
-dmd -o- -D -Dd../docs  ../modules.ddoc ../docs/candydoc/candy.ddoc \
-	gtkd/gtk/*.d gtkd/gtk/c/*.d  gtkd/gtkc/*.d gtkd/gtkd/*.d gtkd/glib/*.d gtkd/glib/c/*.d gtkd/gio/*.d \
-	gtkd/gio/c/*.d gtkd/gdk/*.d gtkd/gdk/c/*.d gtkd/gobject/*.d gtkd/gobject/c/*.d \
-	gtkd/gthread/*.d gtkd/gthread/c/*.d gtkd/atk/*.d gtkd/atk/c/*.d gtkd/pango/*.d gtkd/pango/c/*.d \
-	gtkd/cairo/*.d gtkd/cairo/c/*.d gtkd/gdkpixbuf/*.d gtkd/gdkpixbuf/c/*.d gtkd/rsvg/*.d gtkd/rsvg/c/*.d \
-	sourceview/gsv/*.d sourceview/gsv/c/*.d sourceview/gsvc/*.d \
-	vte/vtec/*.d  vte/vte/*.d vte/vte/c/*.d \
-	gstreamer/gstreamer/*.d gstreamer/gstreamer/c/*.d gstreamer/gstinterfaces/*.d gstreamer/gstinterfaces/c/*.d gstreamer/gstreamerc/*.d \
-  gstreamer/gst/mpegts/*.d gstreamer/gst/mpegts/c/*.d gstreamer/gst/base/*.d gstreamer/gst/base/c/*.d gstreamer/gst/app/*.d gstreamer/gst/app/c/*.d \
-	peas/peas/*.d peas/peas/c/*.d peas/peasc/*.d -op
+dmd -o- -D -Dd../../docs  ../../modules.ddoc ../../docs/candydoc/candy.ddoc \
+	gtk/gtk/*.d gtk/gtk/c/*.d glib/glib/*.d glib/glib/c/*.d gio/gio/*.d \
+	gio/gio/c/*.d gdk/gdk/*.d gdk/gdk/c/*.d glib/gobject/*.d glib/gobject/c/*.d \
+	glib/gthread/*.d glib/gthread/c/*.d atk/atk/*.d atk/atk/c/*.d pango/pango/*.d pango/pango/c/*.d \
+	cairo/cairo/*.d cairo/cairo/c/*.d gdkpixbuf/gdkpixbuf/*.d gdkpixbuf/gdkpixbuf/c/*.d rsvg/rsvg/*.d rsvg/rsvg/c/*.d \
+	sourceview/sourceview/*.d sourceview/sourceview/c/*.d harfbuzz/harfbuzz/*.d harfbuzz/harfbuzz/c/*.d \
+	adw/adw/*.d adw/adw/c/*.d soup/soup/*.d soup/soup/c/*.d graphene/graphene/*.d graphene/graphene/c/*.d \
+  shumate/shumate/*.d shumate/shumate/c/*.d gsk/gsk/*.d gsk/gsk/c/*.d ../linker/*.d -op
 
-cd ../docs
+cd ../../docs
 
 echo Escaping gtk.Builder tags.
 for file in */*/*.html;

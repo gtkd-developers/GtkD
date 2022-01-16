@@ -4,22 +4,34 @@ mkdir -p ddox/temp
 
 echo "Generating JSON file for modules"
 
-echo "MODULES =" > modules.ddoc ;grep -h -e "^module" generated/gtkd/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/sourceview/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/vte/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/gstreamer/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" generated/peas/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+echo "MODULES =" > modules.ddoc
+grep -h -e "^module" source/linker/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/adw/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/atk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/cairo/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gdk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gdkpixbuf/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gio/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/glib/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/graphene/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gsk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+#grep -h -e "^module" source/generated/gstreamer/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/gtk/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/harfbuzz/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/pango/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/rsvg/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/shumate/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/soup/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" source/generated/sourceview/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 
 dmd -o- -D -X -Xfddox/docs.json -Ddddox/temp \
-	generated/gtkd/gtk/*.d generated/gtkd/gtk/c/*.d  generated/gtkd/gtkc/*.d generated/gtkd/gtkd/*.d generated/gtkd/glib/*.d generated/gtkd/glib/c/*.d generated/gtkd/gio/*.d \
-	generated/gtkd/gio/c/*.d generated/gtkd/gdk/*.d generated/gtkd/gdk/c/*.d generated/gtkd/gobject/*.d generated/gtkd/gobject/c/*.d \
-	generated/gtkd/gthread/*.d generated/gtkd/gthread/c/*.d generated/gtkd/atk/*.d generated/gtkd/atk/c/*.d generated/gtkd/pango/*.d generated/gtkd/pango/c/*.d \
-	generated/gtkd/cairo/*.d generated/gtkd/cairo/c/*.d generated/gtkd/gdkpixbuf/*.d generated/gtkd/gdkpixbuf/c/*.d generated/gtkd/rsvg/*.d generated/gtkd/rsvg/c/*.d \
-	generated/sourceview/gsv/*.d generated/sourceview/gsv/c/*.d generated/sourceview/gsvc/*.d \
-	generated/vte/vtec/*.d  generated/vte/vte/*.d generated/vte/vte/c/*.d \
-	generated/gstreamer/gstreamer/*.d generated/gstreamer/gstreamer/c/*.d generated/gstreamer/gstinterfaces/*.d generated/gstreamer/gstinterfaces/c/*.d generated/gstreamer/gstreamerc/*.d \
-	generated/gstreamer/gst/mpegts/*.d generated/gstreamer/gst/mpegts/c/*.d generated/gstreamer/gst/base/*.d generated/gstreamer/gst/base/c/*.d generated/gstreamer/gst/app/*.d generated/gstreamer/gst/app/c/*.d \
-	generated/peas/peas/*.d generated/peas/peas/c/*.d generated/peas/peasc/*.d -op
+	source/generated/gtk/gtk/*.d source/generated/gtk/gtk/c/*.d source/generated/glib/glib/*.d source/generated/glib/glib/c/*.d source/generated/gio/gio/*.d \
+	source/generated/gio/gio/c/*.d source/generated/gdk/gdk/*.d source/generated/gdk/gdk/c/*.d source/generated/glib/gobject/*.d source/generated/glib/gobject/c/*.d \
+	source/generated/glib/gthread/*.d source/generated/glib/gthread/c/*.d source/generated/atk/atk/*.d source/generated/atk/atk/c/*.d source/generated/pango/pango/*.d source/generated/pango/pango/c/*.d \
+	source/generated/cairo/cairo/*.d source/generated/cairo/cairo/c/*.d source/generated/gdkpixbuf/gdkpixbuf/*.d source/generated/gdkpixbuf/gdkpixbuf/c/*.d source/generated/rsvg/rsvg/*.d source/generated/rsvg/rsvg/c/*.d \
+	source/generated/sourceview/sourceview/*.d source/generated/sourceview/sourceview/c/*.d source/generated/harfbuzz/harfbuzz/*.d source/generated/harfbuzz/harfbuzz/c/*.d \
+	source/generated/adw/adw/*.d source/generated/adw/adw/c/*.d source/generated/soup/soup/*.d source/generated/soup/soup/c/*.d source/generated/graphene/graphene/*.d source/generated/graphene/graphene/c/*.d \
+    source/generated/shumate/shumate/*.d source/generated/shumate/shumate/c/*.d source/generated/gsk/gsk/*.d source/generated/gsk/gsk/c/*.d source/linker/*.d -op
 
 # Delete all html files generated by D ddocs
 rm -rf ddox/temp/*
