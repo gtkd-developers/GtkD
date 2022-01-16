@@ -53,27 +53,61 @@ outputRoot: generated
 ### predifined: lib
 ###########################################################
 
-srcDir: gtkd
-copy: cairo
-copy: gtkd
+srcDir: glib
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
-lookup: APILookupGio.txt
-lookup: APILookupCairo.txt
-lookup: APILookupRsvg.txt
-lookup: APILookupHarfBuzz.txt
-lookup: APILookupPango.txt
-lookup: APILookupAtk.txt
-lookup: APILookupGdkPixbuf.txt
-lookup: APILookupGdk.txt
-lookup: APILookupGsk.txt
-lookup: APILookupGtk.txt
+
+srcDir: graphene
 lookup: APILookupGraphene.txt
 
-srcDir: gstreamer
-lookup: APILookupGStreamer.txt
-lookup: APILookupGstInterfaces.txt
-lookup: APILookupGstApp.txt
-lookup: APILookupGstBase.txt
-lookup: APILookupGstMpegts.txt
+srcDir: cairo
+copy: cairo
+lookup: APILookupCairo.txt
+
+srcDir: harfbuzz
+lookup: APILookupHarfBuzz.txt
+
+srcDir: pango
+lookup: APILookupPango.txt
+
+srcDir: gio
+lookup: APILookupGio.txt
+
+srcDir: gdkpixbuf
+lookup: APILookupGdkPixbuf.txt
+
+srcDir: gdk
+lookup: APILookupGdk.txt
+
+srcDir: atk
+lookup: APILookupAtk.txt
+
+srcDir: rsvg
+lookup: APILookupRsvg.txt
+
+srcDir: gsk
+lookup: APILookupGsk.txt
+
+srcDir: gtk
+#copy: Implement.d
+lookup: APILookupGtk.txt
+
+srcDir: adw
+lookup: APILookupAdw.txt
+
+srcDir: sourceview
+lookup: APILookupSourceView.txt
+
+srcDir: soup
+lookup: APILookupSoup.txt
+
+srcDir: shumate
+lookup: APILookupShumate.txt
+
+#srcDir: gstreamer
+#lookup: APILookupGStreamer.txt
+#lookup: APILookupGstInterfaces.txt
+#lookup: APILookupGstApp.txt
+#lookup: APILookupGstBase.txt
+#lookup: APILookupGstMpegts.txt
