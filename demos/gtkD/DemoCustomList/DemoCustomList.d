@@ -1,6 +1,6 @@
 module DemoCustomList;
 
-import CustomList;
+import CustomList : CustomList, CustomListColumn;
 
 import gio.Application : GioApplication = Application;
 import glib.RandG;
@@ -23,10 +23,10 @@ class CustomListWindow : ApplicationWindow
 		ScrolledWindow scrollwin = new ScrolledWindow();
 		TreeView view = createViewAndModel();
 
-		scrollwin.add(view);
-		add(scrollwin);
+		scrollwin.setChild(view);
+		setChild(scrollwin);
 
-		showAll();
+		show();
 	}
 
 	TreeView createViewAndModel()
@@ -44,14 +44,14 @@ class CustomListWindow : ApplicationWindow
 		col = new TreeViewColumn();
 		renderer  = new CellRendererText();
 		col.packStart(renderer, true);
-		col.addAttribute(renderer, "text", CustomListColumn.Name);
+		col.addAttribute(renderer, "text", 0);
 		col.setTitle("Name");
 		view.appendColumn(col);
 
 		col = new TreeViewColumn();
 		renderer  = new CellRendererText();
 		col.packStart(renderer, true);
-		col.addAttribute(renderer, "text", CustomListColumn.YearBorn);
+		col.addAttribute(renderer, "text", 1);
 		col.setTitle("Year Born");
 		view.appendColumn(col);
 

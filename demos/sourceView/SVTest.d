@@ -27,11 +27,10 @@ private import gtk.Widget;
 
 private import glib.Str;
 
-private import gsv.SourceView;
-private import gsv.SourceBuffer;
-private import gsv.SourceLanguage;
-private import gsv.SourceLanguageManager;
-private import gsv.SourceBuffer;
+private import sourceview.View;
+private import sourceview.Buffer;
+private import sourceview.Language;
+private import sourceview.LanguageManager;
 
 private import std.stdio;
 private import std.file;
@@ -44,16 +43,16 @@ private import std.file;
 class HelloWorld : ApplicationWindow
 {
 
-	SourceView sourceView;
+	View sourceView;
 
 	this(Application application)
 	{
 		super(application);
 		setTitle("GtkD SourceView");
-		setBorderWidth(10);
-		add(getSourceView());
+		//setBorderWidth(10);
+		setChild(getSourceView());
 		setDefaultSize(640,400);
-		showAll();
+		show();
 	}
 
 	private string getDemoText()
@@ -71,28 +70,27 @@ class HelloWorld : ApplicationWindow
 
 	private Widget getSourceView()
 	{
-		sourceView = new SourceView();
+		sourceView = new View();
 		sourceView.setShowLineNumbers(true);
 
 		sourceView.setInsertSpacesInsteadOfTabs(false);
 		sourceView.setTabWidth(4);
 		sourceView.setHighlightCurrentLine(true);
 
-		SourceBuffer sb = sourceView.getBuffer();
-		sb.setText(getDemoText());
+		//sourceView.getBuffer().setText(getDemoText());
 
 		ScrolledWindow scWindow = new ScrolledWindow();
-		scWindow.add(sourceView);
+		scWindow.setChild(sourceView);
 
 
-		SourceLanguageManager slm = new SourceLanguageManager();
-		SourceLanguage dLang = slm.getLanguage("d");
+		LanguageManager slm = new LanguageManager();
+		Language dLang = slm.getLanguage("d");
 
 		if ( dLang !is null )
 		{
 			writefln("Setting language to D");
-			sb.setLanguage(dLang);
-			sb.setHighlightSyntax(true);
+			//sb.setLanguage(dLang);
+			//sb.setHighlightSyntax(true);
 		}
 
 		//sourceView.modifyFont("Courier", 9);

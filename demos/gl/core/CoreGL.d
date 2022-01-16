@@ -44,8 +44,8 @@ int main(string[] args)
     mainWnd.setTitle("Simplest GLArea + CoreGL Example");
 
     auto wnd = new CoreGL;
-    mainWnd.add(wnd);
-    mainWnd.showAll();
+    mainWnd.setChild(wnd);
+    mainWnd.show();
 	}
 
 	application = new Application("org.gtkd.demo.gl.core", GApplicationFlags.FLAGS_NONE);
@@ -66,14 +66,11 @@ public:
   {
     setAutoRender(true);
 
-    addEvents(GdkEventMask.BUTTON_PRESS_MASK);
-    addEvents(GdkEventMask.SCROLL_MASK);
-
     addOnRender(&render);
     addOnRealize(&realize);
     addOnUnrealize(&unrealize);
 
-    showAll();
+    show();
   }
 
   GLuint m_Vao;

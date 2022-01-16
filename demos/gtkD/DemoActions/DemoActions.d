@@ -33,7 +33,6 @@ import std.stdio;
 import gtk.Application : Application;
 import gio.Application : GioApplication = Application;
 import gtk.ApplicationWindow : ApplicationWindow;
-import gtkc.giotypes : GApplicationFlags;
 
 import gdk.Event;
 
@@ -48,15 +47,16 @@ import gtk.HeaderBar;
 import gtk.Image;
 import gtk.MenuButton;
 import gtk.MessageDialog;
-import gtk.Popover;
+import gtk.PopoverMenu;
 import gtk.Widget;
+import gtk.Label;
 
 class MainWindow : ApplicationWindow {
 
     this(Application application) {
         super(application);
         initUI();
-        showAll();
+        show();
     }
 
     /**
@@ -67,18 +67,18 @@ class MainWindow : ApplicationWindow {
 
         //HeaderBar
         HeaderBar hb = new HeaderBar();
-        hb.setShowCloseButton(true);
-        hb.setTitle("Actions Demo, Click the menu button >>>");
+        //hb.setShowCloseButton(true);
+        hb.setTitleWidget(new Label("Actions Demo, Click the menu button >>>"));
         this.setTitlebar(hb);
 
         //Normal stateless action
         SimpleAction saNormal = new SimpleAction("normal", null);
         saNormal.addOnActivate(delegate(Variant, SimpleAction) {
-            MessageDialog dialog = new MessageDialog(this, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, "Normal action clicked!", null);
+            MessageDialog dialog = new MessageDialog(this, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, "Normal action clicked!");
             scope (exit) {
                 dialog.destroy();
             }
-            dialog.run();
+            dialog.show();
         });
         addAction(saNormal);
 
@@ -124,12 +124,12 @@ class MainWindow : ApplicationWindow {
         //MenuButton
         MenuButton mb = new MenuButton();
         mb.setFocusOnClick(false);
-        Image imgHamburger = new Image("open-menu-symbolic", IconSize.MENU);
-        mb.add(imgHamburger);
+        //Image imgHamburger = new Image(new StatusIcon("open-menu-symbolic"));
+        //mb.add(imgHamburger);
         hb.packEnd(mb);
 
         //Popover
-        Popover po = new Popover(mb, model);
+        PopoverMenu po = new PopoverMenu(model);
         mb.setPopover(po);
     }
 }

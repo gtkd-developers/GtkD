@@ -4,6 +4,6 @@
 	"targetType": "executable",
 	"sourceFiles": ["main.d", "clock.d"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../../" }
+		"gtk-d:gtk": {"path": "../../../" }
 	}
 }

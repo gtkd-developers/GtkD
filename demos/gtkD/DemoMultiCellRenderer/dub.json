@@ -5,6 +5,6 @@
 	"targetName": "DemoMultiCellRenderer",
 	"sourceFiles": ["DemoMultiCellRenderer.d"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../../" },
+		"gtk-d:gtk": {"path": "../../../" }
 	}
 }

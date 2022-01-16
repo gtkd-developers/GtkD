@@ -5,6 +5,6 @@
 	"targetName": "DemoCustomList",
 	"sourceFiles": ["DemoCustomList.d", "CustomList.d"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../../" },
+		"gtk-d:gtk": {"path": "../../../" }
 	}
 }

@@ -18,7 +18,8 @@
 module clock;
 
 import std.stdio;
-import std.math;
+import graphene.c.types : PI;
+import std.math : cos, sin;
 import std.datetime;
 
 import glib.Timeout;
@@ -35,12 +36,14 @@ public:
 	this()
 	{
 		//Attach our expose callback, which will draw the window.
-		addOnDraw(&drawCallback);
+		setDrawFunc ((area, cairo, w, h, data) {
+            (cast(Clock)data).drawCallback (new Context (cairo));
+        }, cast(void *)this, null);
 	}
 
 protected:
 	//Override default signal handler:
-	bool drawCallback(Scoped!Context cr, Widget widget)
+	bool drawCallback(Context cr)
 	{
 		if ( m_timeout is null )
 		{
@@ -156,7 +159,8 @@ protected:
 		GtkAllocation area;
 		getAllocation(area);
 
-		queueDrawArea(area.x, area.y, area.width, area.height);
+		queueDraw();
+		//queueDrawArea(area.x, area.y, area.width, area.height);
 		
 		return true;
 	}

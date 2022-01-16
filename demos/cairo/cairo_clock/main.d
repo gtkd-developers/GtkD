@@ -35,9 +35,9 @@ int main(string[] args)
 		win.setDefaultSize( 250, 250 );
 
 		Clock c = new Clock();
-		win.add(c);
+		win.setChild(c);
 		c.show();
-		win.showAll();
+		win.show();
 	}
 
 	application = new Application("org.gtkd.demo.cairo.clock", GApplicationFlags.FLAGS_NONE);
