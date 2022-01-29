@@ -67,7 +67,6 @@ class MainWindow : ApplicationWindow {
 
         //HeaderBar
         HeaderBar hb = new HeaderBar();
-        //hb.setShowCloseButton(true);
         hb.setTitleWidget(new Label("Actions Demo, Click the menu button >>>"));
         this.setTitlebar(hb);
 
@@ -124,8 +123,6 @@ class MainWindow : ApplicationWindow {
         //MenuButton
         MenuButton mb = new MenuButton();
         mb.setFocusOnClick(false);
-        //Image imgHamburger = new Image(new StatusIcon("open-menu-symbolic"));
-        //mb.add(imgHamburger);
         hb.packEnd(mb);
 
         //Popover
