@@ -320,7 +320,7 @@ code: start
 		if ( date is null )
 			return false;
 
-		return equal(this, date) != 0;
+		return g_date_time_compare(gDateTime, date.getDateTimeStruct()) != 0;
 	}
 
 	/** */
@@ -331,7 +331,7 @@ code: start
 		if ( date is null )
 			return int.min;
 
-		return compare(this, date);
+		return g_date_time_compare(gDateTime, date.getDateTimeStruct());
 	}
 
 	/** */
@@ -1489,9 +1489,16 @@ code: end
 struct: TimeZone
 noCode: new_local
 noCode: new_utc
+#TODO: Proper solution
+version 2.68: noCode: new_identifier
 
 struct: Tree
 class: BBTree
+
+version 2.66: start
+	struct: Uri
+	class: URI
+version: end
 
 struct: Util
 move: build_filenamev Util
@@ -1978,9 +1985,11 @@ version: end
 
 version 2.60: move: strv_equal Str
 
-move: string_new String
-move: string_new_len String
-move: string_sized_new String
+version <2.70: start
+	move: string_new String
+	move: string_new_len String
+	move: string_sized_new String
+version: end
 
 move: bit_lock Thread
 move: bit_trylock Thread
@@ -2083,11 +2092,13 @@ version: end
 
 move: filename_from_uri URI
 move: filename_to_uri URI
-move: uri_escape_string URI
-move: uri_list_extract_uris URI
-move: uri_parse_scheme URI
-move: uri_unescape_segment URI
-move: uri_unescape_string URI
+version <2.66: start
+	move: uri_escape_string URI
+	move: uri_list_extract_uris URI
+	move: uri_parse_scheme URI
+	move: uri_unescape_segment URI
+	move: uri_unescape_string URI
+version: end
 
 version 2.52: start
 	move: uuid_string_is_valid Uuid string_is_valid

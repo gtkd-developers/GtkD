@@ -401,6 +401,12 @@ array: set_environ env
 struct: ThemedIcon
 noCode: new
 
+version 2.68: start
+	struct: TlsCertificate
+	#TODO: Proper solution
+	noCode: new_from_pkcs11_uris
+version: end
+
 struct: TlsPassword
 out: get_value length
 array: get_value Return length
