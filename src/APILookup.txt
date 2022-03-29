@@ -64,6 +64,7 @@ lookup: APILookupGio.txt
 lookup: APILookupCairo.txt
 lookup: APILookupRsvg.txt
 lookup: APILookupPango.txt
+lookup: APILookupHarfBuzz.txt
 lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
