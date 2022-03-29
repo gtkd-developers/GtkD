@@ -34,7 +34,7 @@ private import gtkd.Loader;
 
 
 /**
- * An individual stream definition.
+ * An individual stream definition of a #GstMpegtsPMT.
  */
 public final class PMTStream
 {
@@ -130,13 +130,13 @@ public final class PMTStream
 	 */
 	public this()
 	{
-		auto p = gst_mpegts_pmt_stream_new();
+		auto __p = gst_mpegts_pmt_stream_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsPMTStream*) p);
+		this(cast(GstMpegtsPMTStream*) __p);
 	}
 }

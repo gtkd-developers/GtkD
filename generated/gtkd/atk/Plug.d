@@ -31,6 +31,7 @@ private import atk.c.functions;
 public  import atk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.atktypes;
 
@@ -117,5 +118,26 @@ public class Plug : ObjectAtk, ComponentIF
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
+	}
+
+	/**
+	 * Sets @child as accessible child of @plug and @plug as accessible parent of
+	 * @child. @child can be NULL.
+	 *
+	 * In some cases, one can not use the AtkPlug type directly as accessible
+	 * object for the toplevel widget of the application. For instance in the gtk
+	 * case, GtkPlugAccessible can not inherit both from GtkWindowAccessible and
+	 * from AtkPlug. In such a case, one can create, in addition to the standard
+	 * accessible object for the toplevel widget, an AtkPlug object, and make the
+	 * former the child of the latter by calling atk_plug_set_child().
+	 *
+	 * Params:
+	 *     child = an #AtkObject to be set as accessible child of @plug.
+	 *
+	 * Since: 2.35.0
+	 */
+	public void setChild(ObjectAtk child)
+	{
+		atk_plug_set_child(atkPlug, (child is null) ? null : child.getObjectAtkStruct());
 	}
 }

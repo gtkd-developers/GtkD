@@ -28,6 +28,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -77,7 +78,7 @@ public  import gtkc.giotypes;
  * 
  * An example of a test fixture for D-Bus services can be found
  * here:
- * [gdbus-test-fixture.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-test-fixture.c)
+ * [gdbus-test-fixture.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-test-fixture.c)
  * 
  * Note that these examples only deal with isolating the D-Bus aspect of your
  * service. To successfully run isolated unit tests on your service you may need

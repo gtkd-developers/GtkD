@@ -26,6 +26,9 @@ module gstreamer.Meta;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
+private import gobject.ObjectG;
+private import gstreamer.MetaInfo;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
@@ -106,15 +109,15 @@ public final class Meta
 	/**
 	 * pointer to the #GstMetaInfo
 	 */
-	public @property GstMetaInfo* info()
+	public @property MetaInfo info()
 	{
-		return gstMeta.info;
+		return ObjectG.getDObject!(MetaInfo)(gstMeta.info, false);
 	}
 
 	/** Ditto */
-	public @property void info(GstMetaInfo* value)
+	public @property void info(MetaInfo value)
 	{
-		gstMeta.info = value;
+		gstMeta.info = value.getMetaInfoStruct();
 	}
 
 	/**
@@ -197,9 +200,16 @@ public final class Meta
 	 * Returns: a #GstMetaInfo with @impl, or
 	 *     %NULL when no such metainfo exists.
 	 */
-	public static GstMetaInfo* getInfo(string impl)
+	public static MetaInfo getInfo(string impl)
 	{
-		return gst_meta_get_info(Str.toStringz(impl));
+		auto __p = gst_meta_get_info(Str.toStringz(impl));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(MetaInfo)(cast(GstMetaInfo*) __p);
 	}
 
 	/**
@@ -219,8 +229,54 @@ public final class Meta
 	 * Returns: a #GstMetaInfo that can be used to
 	 *     access metadata.
 	 */
-	public static GstMetaInfo* register(GType api, string impl, size_t size, GstMetaInitFunction initFunc, GstMetaFreeFunction freeFunc, GstMetaTransformFunction transformFunc)
+	public static MetaInfo register(GType api, string impl, size_t size, GstMetaInitFunction initFunc, GstMetaFreeFunction freeFunc, GstMetaTransformFunction transformFunc)
 	{
-		return gst_meta_register(api, Str.toStringz(impl), size, initFunc, freeFunc, transformFunc);
+		auto __p = gst_meta_register(api, Str.toStringz(impl), size, initFunc, freeFunc, transformFunc);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(MetaInfo)(cast(GstMetaInfo*) __p);
+	}
+
+	/**
+	 * Register a new custom #GstMeta implementation, backed by an opaque
+	 * structure holding a #GstStructure.
+	 *
+	 * The registered info can be retrieved later with gst_meta_get_info() by using
+	 * @name as the key.
+	 *
+	 * The backing #GstStructure can be retrieved with
+	 * gst_custom_meta_get_structure(), its mutability is conditioned by the
+	 * writability of the buffer the meta is attached to.
+	 *
+	 * When @transform_func is %NULL, the meta and its backing #GstStructure
+	 * will always be copied when the transform operation is copy, other operations
+	 * are discarded, copy regions are ignored.
+	 *
+	 * Params:
+	 *     name = the name of the #GstMeta implementation
+	 *     tags = tags for @api
+	 *     transformFunc = a #GstMetaTransformFunction
+	 *     userData = user data passed to @transform_func
+	 *     destroyData = #GDestroyNotify for user_data
+	 *
+	 * Returns: a #GstMetaInfo that can be used to
+	 *     access metadata.
+	 *
+	 * Since: 1.20
+	 */
+	public static MetaInfo registerCustom(string name, string[] tags, GstCustomMetaTransformFunction transformFunc, void* userData, GDestroyNotify destroyData)
+	{
+		auto __p = gst_meta_register_custom(Str.toStringz(name), Str.toStringzArray(tags), transformFunc, userData, destroyData);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(MetaInfo)(cast(GstMetaInfo*) __p);
 	}
 }

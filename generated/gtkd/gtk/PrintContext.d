@@ -149,14 +149,14 @@ public class PrintContext : ObjectG
 	 */
 	public PgContext createPangoContext()
 	{
-		auto p = gtk_print_context_create_pango_context(gtkPrintContext);
+		auto __p = gtk_print_context_create_pango_context(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) __p, true);
 	}
 
 	/**
@@ -169,14 +169,14 @@ public class PrintContext : ObjectG
 	 */
 	public PgLayout createPangoLayout()
 	{
-		auto p = gtk_print_context_create_pango_layout(gtkPrintContext);
+		auto __p = gtk_print_context_create_pango_layout(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p, true);
 	}
 
 	/**
@@ -189,14 +189,14 @@ public class PrintContext : ObjectG
 	 */
 	public Context getCairoContext()
 	{
-		auto p = gtk_print_context_get_cairo_context(gtkPrintContext);
+		auto __p = gtk_print_context_get_cairo_context(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Context(cast(cairo_t*) p);
+		return new Context(cast(cairo_t*) __p);
 	}
 
 	/**
@@ -265,14 +265,14 @@ public class PrintContext : ObjectG
 	 */
 	public PageSetup getPageSetup()
 	{
-		auto p = gtk_print_context_get_page_setup(gtkPrintContext);
+		auto __p = gtk_print_context_get_page_setup(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) __p);
 	}
 
 	/**
@@ -285,14 +285,14 @@ public class PrintContext : ObjectG
 	 */
 	public PgFontMap getPangoFontmap()
 	{
-		auto p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
+		auto __p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) __p);
 	}
 
 	/**

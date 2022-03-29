@@ -175,13 +175,13 @@ public class DrawingArea : Widget
 	 */
 	public this()
 	{
-		auto p = gtk_drawing_area_new();
+		auto __p = gtk_drawing_area_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkDrawingArea*) p);
+		this(cast(GtkDrawingArea*) __p);
 	}
 }

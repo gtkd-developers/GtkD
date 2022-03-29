@@ -25,6 +25,7 @@
 module gtk.BuildableIF;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gtk.Builder;
@@ -119,7 +120,7 @@ public interface BuildableIF{
 	public void customTagEnd(Builder builder, ObjectG child, string tagname, void** data);
 
 	/**
-	 * This is called for each unknown element under <child>.
+	 * This is called for each unknown element under `<child>`.
 	 *
 	 * Params:
 	 *     builder = a #GtkBuilder used to construct this object

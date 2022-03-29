@@ -112,7 +112,7 @@ public class IOExtensionPoint
 	 * Gets the required type for @extension_point.
 	 *
 	 * Returns: the #GType that all implementations must have,
-	 *     or #G_TYPE_INVALID if the extension point has no required type
+	 *     or %G_TYPE_INVALID if the extension point has no required type
 	 */
 	public GType getRequiredType()
 	{

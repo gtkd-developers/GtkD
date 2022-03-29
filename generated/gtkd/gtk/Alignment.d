@@ -185,14 +185,14 @@ public class Alignment : Bin
 	 */
 	public this(float xalign, float yalign, float xscale, float yscale)
 	{
-		auto p = gtk_alignment_new(xalign, yalign, xscale, yscale);
+		auto __p = gtk_alignment_new(xalign, yalign, xscale, yscale);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAlignment*) p);
+		this(cast(GtkAlignment*) __p);
 	}
 
 	/**

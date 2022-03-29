@@ -26,6 +26,7 @@ module gtk.IMContext;
 
 private import gdk.Window;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
@@ -260,11 +261,11 @@ public class IMContext : ObjectG
 	{
 		char* outtext = null;
 
-		auto p = gtk_im_context_get_surrounding(gtkIMContext, &outtext, &cursorIndex) != 0;
+		auto __p = gtk_im_context_get_surrounding(gtkIMContext, &outtext, &cursorIndex) != 0;
 
 		text = Str.toString(outtext);
 
-		return p;
+		return __p;
 	}
 
 	/**

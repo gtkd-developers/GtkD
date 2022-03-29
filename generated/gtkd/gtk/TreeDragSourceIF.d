@@ -113,12 +113,12 @@ public interface TreeDragSourceIF{
 		GtkTreeModel* outtreeModel = null;
 		GtkTreePath* outpath = null;
 
-		auto p = gtk_tree_get_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), &outtreeModel, &outpath) != 0;
+		auto __p = gtk_tree_get_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), &outtreeModel, &outpath) != 0;
 
 		treeModel = ObjectG.getDObject!(TreeModelIF)(outtreeModel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -26,6 +26,7 @@ module gstreamer.CapsFeatures;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
@@ -50,8 +51,8 @@ private import gtkd.Loader;
  * 
  * Examples for caps features would be the requirement of a specific #GstMemory
  * types or the requirement of having a specific #GstMeta on the buffer. Features
- * are given as a string of the format "memory:GstMemoryTypeName" or
- * "meta:GstMetaAPIName".
+ * are given as a string of the format `memory:GstMemoryTypeName` or
+ * `meta:GstMetaAPIName`.
  *
  * Since: 1.2
  */
@@ -127,8 +128,6 @@ public class CapsFeatures
 	/**
 	 * Creates a new, empty #GstCapsFeatures.
 	 *
-	 * Free-function: gst_caps_features_free
-	 *
 	 * Returns: a new, empty #GstCapsFeatures
 	 *
 	 * Since: 1.2
@@ -137,20 +136,18 @@ public class CapsFeatures
 	 */
 	public this()
 	{
-		auto p = gst_caps_features_new_empty();
+		auto __p = gst_caps_features_new_empty();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
 
-		this(cast(GstCapsFeatures*) p);
+		this(cast(GstCapsFeatures*) __p);
 	}
 
 	/**
 	 * Creates a new #GstCapsFeatures with the given features.
-	 *
-	 * Free-function: gst_caps_features_free
 	 *
 	 * Params:
 	 *     feature1 = name of first feature to set
@@ -164,20 +161,42 @@ public class CapsFeatures
 	 */
 	public this(GQuark feature1, void* varargs)
 	{
-		auto p = gst_caps_features_new_id_valist(feature1, varargs);
+		auto __p = gst_caps_features_new_id_valist(feature1, varargs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_id_valist");
 		}
 
-		this(cast(GstCapsFeatures*) p);
+		this(cast(GstCapsFeatures*) __p);
+	}
+
+	/**
+	 * Creates a new #GstCapsFeatures with a single feature.
+	 *
+	 * Params:
+	 *     feature = The feature
+	 *
+	 * Returns: a new #GstCapsFeatures
+	 *
+	 * Since: 1.20
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string feature)
+	{
+		auto __p = gst_caps_features_new_single(Str.toStringz(feature));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_single");
+		}
+
+		this(cast(GstCapsFeatures*) __p);
 	}
 
 	/**
 	 * Creates a new #GstCapsFeatures with the given features.
-	 *
-	 * Free-function: gst_caps_features_free
 	 *
 	 * Params:
 	 *     feature1 = name of first feature to set
@@ -191,14 +210,14 @@ public class CapsFeatures
 	 */
 	public this(string feature1, void* varargs)
 	{
-		auto p = gst_caps_features_new_valist(Str.toStringz(feature1), varargs);
+		auto __p = gst_caps_features_new_valist(Str.toStringz(feature1), varargs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(GstCapsFeatures*) p);
+		this(cast(GstCapsFeatures*) __p);
 	}
 
 	/**
@@ -228,7 +247,7 @@ public class CapsFeatures
 	}
 
 	/**
-	 * Check if @features contains @feature.
+	 * Checks if @features contains @feature.
 	 *
 	 * Params:
 	 *     feature = a feature
@@ -243,7 +262,7 @@ public class CapsFeatures
 	}
 
 	/**
-	 * Check if @features contains @feature.
+	 * Checks if @features contains @feature.
 	 *
 	 * Params:
 	 *     feature = a feature
@@ -260,22 +279,20 @@ public class CapsFeatures
 	/**
 	 * Duplicates a #GstCapsFeatures and all its values.
 	 *
-	 * Free-function: gst_caps_features_free
-	 *
 	 * Returns: a new #GstCapsFeatures.
 	 *
 	 * Since: 1.2
 	 */
 	public CapsFeatures copy()
 	{
-		auto p = gst_caps_features_copy(gstCapsFeatures);
+		auto __p = gst_caps_features_copy(gstCapsFeatures);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p, true);
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) __p, true);
 	}
 
 	/**
@@ -333,7 +350,7 @@ public class CapsFeatures
 	}
 
 	/**
-	 * Check if @features is %GST_CAPS_FEATURES_ANY.
+	 * Checks if @features is %GST_CAPS_FEATURES_ANY.
 	 *
 	 * Returns: %TRUE if @features is %GST_CAPS_FEATURES_ANY.
 	 *
@@ -345,7 +362,7 @@ public class CapsFeatures
 	}
 
 	/**
-	 * Check if @features1 and @features2 are equal.
+	 * Checks if @features1 and @features2 are equal.
 	 *
 	 * Params:
 	 *     features2 = a #GstCapsFeatures.
@@ -389,7 +406,7 @@ public class CapsFeatures
 	 * Sets the parent_refcount field of #GstCapsFeatures. This field is used to
 	 * determine whether a caps features is mutable or not. This function should only be
 	 * called by code implementing parent objects of #GstCapsFeatures, as described in
-	 * the MT Refcounting section of the design documents.
+	 * [the MT refcounting design document](additional/design/MT-refcounting.md).
 	 *
 	 * Params:
 	 *     refcount = a pointer to the parent's refcount
@@ -407,15 +424,14 @@ public class CapsFeatures
 	 * Converts @features to a human-readable string representation.
 	 *
 	 * For debugging purposes its easier to do something like this:
-	 * |[<!-- language="C" -->
+	 *
+	 * ``` C
 	 * GST_LOG ("features is %" GST_PTR_FORMAT, features);
-	 * ]|
+	 * ```
+	 *
 	 * This prints the features in human readable form.
 	 *
-	 * Free-function: g_free
-	 *
 	 * Returns: a pointer to string allocated by g_malloc().
-	 *     g_free() after usage.
 	 *
 	 * Since: 1.2
 	 */
@@ -430,26 +446,23 @@ public class CapsFeatures
 	/**
 	 * Creates a #GstCapsFeatures from a string representation.
 	 *
-	 * Free-function: gst_caps_features_free
-	 *
 	 * Params:
 	 *     features = a string representation of a #GstCapsFeatures.
 	 *
 	 * Returns: a new #GstCapsFeatures or
-	 *     %NULL when the string could not be parsed. Free with
-	 *     gst_caps_features_free() after use.
+	 *     %NULL when the string could not be parsed.
 	 *
 	 * Since: 1.2
 	 */
 	public static CapsFeatures fromString(string features)
 	{
-		auto p = gst_caps_features_from_string(Str.toStringz(features));
+		auto __p = gst_caps_features_from_string(Str.toStringz(features));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p, true);
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) __p, true);
 	}
 }

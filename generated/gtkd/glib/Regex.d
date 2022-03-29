@@ -41,7 +41,7 @@ private import gtkd.Loader;
  * Perl regular expression.
  * 
  * Some functions accept a @start_position argument, setting it differs
- * from just passing over a shortened string and setting #G_REGEX_MATCH_NOTBOL
+ * from just passing over a shortened string and setting %G_REGEX_MATCH_NOTBOL
  * in the case of a pattern that begins with any kind of lookbehind assertion.
  * For example, consider the pattern "\Biss\B" which finds occurrences of "iss"
  * in the middle of words. ("\B" matches only if the current position in the
@@ -53,11 +53,11 @@ private import gtkd.Loader;
  * it is able to look behind the starting point to discover that it is
  * preceded by a letter.
  * 
- * Note that, unless you set the #G_REGEX_RAW flag, all the strings passed
+ * Note that, unless you set the %G_REGEX_RAW flag, all the strings passed
  * to these functions must be encoded in UTF-8. The lengths and the positions
  * inside the strings are in bytes and not in characters, so, for instance,
  * "\xc3\xa0" (i.e. "à") is two bytes long but it is treated as a
- * single character. If you set #G_REGEX_RAW the strings can be non-valid
+ * single character. If you set %G_REGEX_RAW the strings can be non-valid
  * UTF-8 strings and a byte is treated as a character, so "\xc3\xa0" is two
  * bytes and two characters long.
  * 
@@ -72,11 +72,11 @@ private import gtkd.Loader;
  * The behaviour of the dot, circumflex, and dollar metacharacters are
  * affected by newline characters, the default is to recognize any newline
  * character (the same characters recognized by "\R"). This can be changed
- * with #G_REGEX_NEWLINE_CR, #G_REGEX_NEWLINE_LF and #G_REGEX_NEWLINE_CRLF
- * compile options, and with #G_REGEX_MATCH_NEWLINE_ANY,
- * #G_REGEX_MATCH_NEWLINE_CR, #G_REGEX_MATCH_NEWLINE_LF and
- * #G_REGEX_MATCH_NEWLINE_CRLF match options. These settings are also
- * relevant when compiling a pattern if #G_REGEX_EXTENDED is set, and an
+ * with %G_REGEX_NEWLINE_CR, %G_REGEX_NEWLINE_LF and %G_REGEX_NEWLINE_CRLF
+ * compile options, and with %G_REGEX_MATCH_NEWLINE_ANY,
+ * %G_REGEX_MATCH_NEWLINE_CR, %G_REGEX_MATCH_NEWLINE_LF and
+ * %G_REGEX_MATCH_NEWLINE_CRLF match options. These settings are also
+ * relevant when compiling a pattern if %G_REGEX_EXTENDED is set, and an
  * unescaped "#" outside a character class is encountered. This indicates
  * a comment that lasts until after the next newline.
  * 
@@ -149,7 +149,7 @@ public class Regex
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options for the regular expression, or 0
 	 *
-	 * Returns: a #GRegex structure or %NULL if an error occured. Call
+	 * Returns: a #GRegex structure or %NULL if an error occurred. Call
 	 *     g_regex_unref() when you are done with it
 	 *
 	 * Since: 2.14
@@ -410,7 +410,7 @@ public class Regex
 	 * is not able to capture substrings, so backreferences do not work.
 	 *
 	 * Setting @start_position differs from just passing over a shortened
-	 * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
+	 * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 *
 	 * Unless %G_REGEX_RAW is specified in the options, @string must be valid UTF-8.
@@ -462,7 +462,7 @@ public class Regex
 	 * flexibility in reusing #GRegex structures.
 	 *
 	 * Setting @start_position differs from just passing over a shortened
-	 * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
+	 * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 *
 	 * Unless %G_REGEX_RAW is specified in the options, @string must be valid UTF-8.
@@ -578,12 +578,12 @@ public class Regex
 	 *
 	 * If you do not need to use backreferences use g_regex_replace_literal().
 	 *
-	 * The @replacement string must be UTF-8 encoded even if #G_REGEX_RAW was
-	 * passed to g_regex_new(). If you want to use not UTF-8 encoded stings
+	 * The @replacement string must be UTF-8 encoded even if %G_REGEX_RAW was
+	 * passed to g_regex_new(). If you want to use not UTF-8 encoded strings
 	 * you can use g_regex_replace_literal().
 	 *
 	 * Setting @start_position differs from just passing over a shortened
-	 * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern that
+	 * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern that
 	 * begins with any kind of lookbehind assertion, such as "\b".
 	 *
 	 * Params:
@@ -618,7 +618,7 @@ public class Regex
 	 * @eval for that occurrence.
 	 *
 	 * Setting @start_position differs from just passing over a shortened
-	 * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
+	 * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 *
 	 * The following example uses g_regex_replace_eval() to replace multiple
@@ -694,7 +694,7 @@ public class Regex
 	 * include backreferences use g_regex_replace().
 	 *
 	 * Setting @start_position differs from just passing over a
-	 * shortened string and setting #G_REGEX_MATCH_NOTBOL in the
+	 * shortened string and setting %G_REGEX_MATCH_NOTBOL in the
 	 * case of a pattern that begins with any kind of lookbehind
 	 * assertion, such as "\b".
 	 *
@@ -781,7 +781,7 @@ public class Regex
 	 * "a", "b" and "c".
 	 *
 	 * Setting @start_position differs from just passing over a shortened
-	 * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
+	 * string and setting %G_REGEX_MATCH_NOTBOL in the case of a pattern
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 *
 	 * Params:

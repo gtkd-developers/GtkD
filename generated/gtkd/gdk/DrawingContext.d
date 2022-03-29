@@ -96,14 +96,14 @@ public class DrawingContext : ObjectG
 	 */
 	public Context getCairoContext()
 	{
-		auto p = gdk_drawing_context_get_cairo_context(gdkDrawingContext);
+		auto __p = gdk_drawing_context_get_cairo_context(gdkDrawingContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Context(cast(cairo_t*) p);
+		return new Context(cast(cairo_t*) __p);
 	}
 
 	/**
@@ -115,14 +115,14 @@ public class DrawingContext : ObjectG
 	 */
 	public Region getClip()
 	{
-		auto p = gdk_drawing_context_get_clip(gdkDrawingContext);
+		auto __p = gdk_drawing_context_get_clip(gdkDrawingContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Region(cast(cairo_region_t*) p);
+		return new Region(cast(cairo_region_t*) __p);
 	}
 
 	/**
@@ -134,14 +134,14 @@ public class DrawingContext : ObjectG
 	 */
 	public Window getWindow()
 	{
-		auto p = gdk_drawing_context_get_window(gdkDrawingContext);
+		auto __p = gdk_drawing_context_get_window(gdkDrawingContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**

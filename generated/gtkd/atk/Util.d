@@ -28,6 +28,7 @@ private import atk.ObjectAtk;
 private import atk.c.functions;
 public  import atk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.atktypes;
 

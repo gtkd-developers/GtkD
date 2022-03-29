@@ -108,6 +108,9 @@ public interface ComponentIF{
 	/**
 	 * Gets the rectangle which gives the extent of the @component.
 	 *
+	 * If the extent can not be obtained (e.g. a non-embedded plug or missing
+	 * support), all of x, y, width, height are set to -1.
+	 *
 	 * Params:
 	 *     x = address of #gint to put x coordinate
 	 *     y = address of #gint to put y coordinate
@@ -139,6 +142,9 @@ public interface ComponentIF{
 	 * Gets the position of @component in the form of
 	 * a point specifying @component's top-left corner.
 	 *
+	 * If the position can not be obtained (e.g. a non-embedded plug or missing
+	 * support), x and y are set to -1.
+	 *
 	 * Deprecated: Since 2.12. Use atk_component_get_extents() instead.
 	 *
 	 * Params:
@@ -151,6 +157,9 @@ public interface ComponentIF{
 
 	/**
 	 * Gets the size of the @component in terms of width and height.
+	 *
+	 * If the size can not be obtained (e.g. a non-embedded plug or missing
+	 * support), width and height are set to -1.
 	 *
 	 * Deprecated: Since 2.12. Use atk_component_get_extents() instead.
 	 *
@@ -213,8 +222,8 @@ public interface ComponentIF{
 	public bool scrollTo(AtkScrollType type);
 
 	/**
-	 * Makes an object visible on the screen at a given position by scrolling all
-	 * necessary parents.
+	 * Move the top-left of @component to a given position of the screen by
+	 * scrolling all necessary parents.
 	 *
 	 * Params:
 	 *     coords = specify whether coordinates are relative to the screen or to the

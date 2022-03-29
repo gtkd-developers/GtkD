@@ -85,13 +85,13 @@ public class Bin : Container
 	 */
 	public Widget getChild()
 	{
-		auto p = gtk_bin_get_child(gtkBin);
+		auto __p = gtk_bin_get_child(gtkBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 }

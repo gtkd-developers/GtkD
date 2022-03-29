@@ -122,8 +122,8 @@ public interface PollableInputStreamIF{
 	 * to having been cancelled.
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least @count bytes long).
+	 *     buffer = a
+	 *         buffer to read data into (which should be at least @count bytes long).
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
 	 * Returns: the number of bytes read, or -1 on error (including
@@ -131,5 +131,5 @@ public interface PollableInputStreamIF{
 	 *
 	 * Throws: GException on failure.
 	 */
-	public ptrdiff_t readNonblocking(ubyte[] buffer, Cancellable cancellable);
+	public ptrdiff_t readNonblocking(out ubyte[] buffer, Cancellable cancellable);
 }

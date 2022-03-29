@@ -50,6 +50,7 @@ shared static this()
 	Linker.link(vte_pty_set_utf8, "vte_pty_set_utf8", LIBRARY_VTE);
 	Linker.link(vte_pty_spawn_async, "vte_pty_spawn_async", LIBRARY_VTE);
 	Linker.link(vte_pty_spawn_finish, "vte_pty_spawn_finish", LIBRARY_VTE);
+	Linker.link(vte_pty_spawn_with_fds_async, "vte_pty_spawn_with_fds_async", LIBRARY_VTE);
 
 	// vte.Regex
 
@@ -69,6 +70,7 @@ shared static this()
 	Linker.link(vte_terminal_copy_clipboard_format, "vte_terminal_copy_clipboard_format", LIBRARY_VTE);
 	Linker.link(vte_terminal_copy_primary, "vte_terminal_copy_primary", LIBRARY_VTE);
 	Linker.link(vte_terminal_event_check_gregex_simple, "vte_terminal_event_check_gregex_simple", LIBRARY_VTE);
+	Linker.link(vte_terminal_event_check_regex_array, "vte_terminal_event_check_regex_array", LIBRARY_VTE);
 	Linker.link(vte_terminal_event_check_regex_simple, "vte_terminal_event_check_regex_simple", LIBRARY_VTE);
 	Linker.link(vte_terminal_feed, "vte_terminal_feed", LIBRARY_VTE);
 	Linker.link(vte_terminal_feed_child, "vte_terminal_feed_child", LIBRARY_VTE);
@@ -89,6 +91,10 @@ shared static this()
 	Linker.link(vte_terminal_get_cursor_blink_mode, "vte_terminal_get_cursor_blink_mode", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_cursor_position, "vte_terminal_get_cursor_position", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_cursor_shape, "vte_terminal_get_cursor_shape", LIBRARY_VTE);
+	Linker.link(vte_terminal_get_enable_bidi, "vte_terminal_get_enable_bidi", LIBRARY_VTE);
+	Linker.link(vte_terminal_get_enable_fallback_scrolling, "vte_terminal_get_enable_fallback_scrolling", LIBRARY_VTE);
+	Linker.link(vte_terminal_get_enable_shaping, "vte_terminal_get_enable_shaping", LIBRARY_VTE);
+	Linker.link(vte_terminal_get_enable_sixel, "vte_terminal_get_enable_sixel", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_encoding, "vte_terminal_get_encoding", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_font, "vte_terminal_get_font", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_font_scale, "vte_terminal_get_font_scale", LIBRARY_VTE);
@@ -102,6 +108,7 @@ shared static this()
 	Linker.link(vte_terminal_get_row_count, "vte_terminal_get_row_count", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_scroll_on_keystroke, "vte_terminal_get_scroll_on_keystroke", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_scroll_on_output, "vte_terminal_get_scroll_on_output", LIBRARY_VTE);
+	Linker.link(vte_terminal_get_scroll_unit_is_pixels, "vte_terminal_get_scroll_unit_is_pixels", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_scrollback_lines, "vte_terminal_get_scrollback_lines", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_text, "vte_terminal_get_text", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_text_blink_mode, "vte_terminal_get_text_blink_mode", LIBRARY_VTE);
@@ -121,6 +128,7 @@ shared static this()
 	Linker.link(vte_terminal_match_set_cursor_type, "vte_terminal_match_set_cursor_type", LIBRARY_VTE);
 	Linker.link(vte_terminal_paste_clipboard, "vte_terminal_paste_clipboard", LIBRARY_VTE);
 	Linker.link(vte_terminal_paste_primary, "vte_terminal_paste_primary", LIBRARY_VTE);
+	Linker.link(vte_terminal_paste_text, "vte_terminal_paste_text", LIBRARY_VTE);
 	Linker.link(vte_terminal_pty_new_sync, "vte_terminal_pty_new_sync", LIBRARY_VTE);
 	Linker.link(vte_terminal_reset, "vte_terminal_reset", LIBRARY_VTE);
 	Linker.link(vte_terminal_search_find_next, "vte_terminal_search_find_next", LIBRARY_VTE);
@@ -153,6 +161,10 @@ shared static this()
 	Linker.link(vte_terminal_set_cursor_shape, "vte_terminal_set_cursor_shape", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_default_colors, "vte_terminal_set_default_colors", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_delete_binding, "vte_terminal_set_delete_binding", LIBRARY_VTE);
+	Linker.link(vte_terminal_set_enable_bidi, "vte_terminal_set_enable_bidi", LIBRARY_VTE);
+	Linker.link(vte_terminal_set_enable_fallback_scrolling, "vte_terminal_set_enable_fallback_scrolling", LIBRARY_VTE);
+	Linker.link(vte_terminal_set_enable_shaping, "vte_terminal_set_enable_shaping", LIBRARY_VTE);
+	Linker.link(vte_terminal_set_enable_sixel, "vte_terminal_set_enable_sixel", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_encoding, "vte_terminal_set_encoding", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_font, "vte_terminal_set_font", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_font_scale, "vte_terminal_set_font_scale", LIBRARY_VTE);
@@ -163,12 +175,14 @@ shared static this()
 	Linker.link(vte_terminal_set_rewrap_on_resize, "vte_terminal_set_rewrap_on_resize", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_scroll_on_keystroke, "vte_terminal_set_scroll_on_keystroke", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_scroll_on_output, "vte_terminal_set_scroll_on_output", LIBRARY_VTE);
+	Linker.link(vte_terminal_set_scroll_unit_is_pixels, "vte_terminal_set_scroll_unit_is_pixels", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_scrollback_lines, "vte_terminal_set_scrollback_lines", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_size, "vte_terminal_set_size", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_text_blink_mode, "vte_terminal_set_text_blink_mode", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_word_char_exceptions, "vte_terminal_set_word_char_exceptions", LIBRARY_VTE);
 	Linker.link(vte_terminal_spawn_async, "vte_terminal_spawn_async", LIBRARY_VTE);
 	Linker.link(vte_terminal_spawn_sync, "vte_terminal_spawn_sync", LIBRARY_VTE);
+	Linker.link(vte_terminal_spawn_with_fds_async, "vte_terminal_spawn_with_fds_async", LIBRARY_VTE);
 	Linker.link(vte_terminal_unselect_all, "vte_terminal_unselect_all", LIBRARY_VTE);
 	Linker.link(vte_terminal_watch_child, "vte_terminal_watch_child", LIBRARY_VTE);
 	Linker.link(vte_terminal_write_contents_sync, "vte_terminal_write_contents_sync", LIBRARY_VTE);
@@ -198,6 +212,7 @@ __gshared extern(C)
 	int function(VtePty* pty, int utf8, GError** err) c_vte_pty_set_utf8;
 	void function(VtePty* pty, const(char)* workingDirectory, char** argv, char** envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_vte_pty_spawn_async;
 	int function(VtePty* pty, GAsyncResult* result, GPid* childPid, GError** err) c_vte_pty_spawn_finish;
+	void function(VtePty* pty, const(char)* workingDirectory, char** argv, char** envv, int* fds, int nFds, int* mapFds, int nMapFds, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_vte_pty_spawn_with_fds_async;
 
 	// vte.Regex
 
@@ -217,6 +232,7 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, VteFormat format) c_vte_terminal_copy_clipboard_format;
 	void function(VteTerminal* terminal) c_vte_terminal_copy_primary;
 	int function(VteTerminal* terminal, GdkEvent* event, GRegex** regexes, size_t nRegexes, GRegexMatchFlags matchFlags, char** matches) c_vte_terminal_event_check_gregex_simple;
+	char** function(VteTerminal* terminal, GdkEvent* event, VteRegex** regexes, size_t nRegexes, uint matchFlags, size_t* nMatches) c_vte_terminal_event_check_regex_array;
 	int function(VteTerminal* terminal, GdkEvent* event, VteRegex** regexes, size_t nRegexes, uint matchFlags, char** matches) c_vte_terminal_event_check_regex_simple;
 	void function(VteTerminal* terminal, char* data, ptrdiff_t length) c_vte_terminal_feed;
 	void function(VteTerminal* terminal, char* text, ptrdiff_t length) c_vte_terminal_feed_child;
@@ -237,6 +253,10 @@ __gshared extern(C)
 	VteCursorBlinkMode function(VteTerminal* terminal) c_vte_terminal_get_cursor_blink_mode;
 	void function(VteTerminal* terminal, glong* column, glong* row) c_vte_terminal_get_cursor_position;
 	VteCursorShape function(VteTerminal* terminal) c_vte_terminal_get_cursor_shape;
+	int function(VteTerminal* terminal) c_vte_terminal_get_enable_bidi;
+	int function(VteTerminal* terminal) c_vte_terminal_get_enable_fallback_scrolling;
+	int function(VteTerminal* terminal) c_vte_terminal_get_enable_shaping;
+	int function(VteTerminal* terminal) c_vte_terminal_get_enable_sixel;
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_encoding;
 	PangoFontDescription* function(VteTerminal* terminal) c_vte_terminal_get_font;
 	double function(VteTerminal* terminal) c_vte_terminal_get_font_scale;
@@ -250,6 +270,7 @@ __gshared extern(C)
 	glong function(VteTerminal* terminal) c_vte_terminal_get_row_count;
 	int function(VteTerminal* terminal) c_vte_terminal_get_scroll_on_keystroke;
 	int function(VteTerminal* terminal) c_vte_terminal_get_scroll_on_output;
+	int function(VteTerminal* terminal) c_vte_terminal_get_scroll_unit_is_pixels;
 	glong function(VteTerminal* terminal) c_vte_terminal_get_scrollback_lines;
 	char* function(VteTerminal* terminal, VteSelectionFunc isSelected, void* userData, GArray* attributes) c_vte_terminal_get_text;
 	VteTextBlinkMode function(VteTerminal* terminal) c_vte_terminal_get_text_blink_mode;
@@ -269,6 +290,7 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, int tag, GdkCursorType cursorType) c_vte_terminal_match_set_cursor_type;
 	void function(VteTerminal* terminal) c_vte_terminal_paste_clipboard;
 	void function(VteTerminal* terminal) c_vte_terminal_paste_primary;
+	void function(VteTerminal* terminal, const(char)* text) c_vte_terminal_paste_text;
 	VtePty* function(VteTerminal* terminal, VtePtyFlags flags, GCancellable* cancellable, GError** err) c_vte_terminal_pty_new_sync;
 	void function(VteTerminal* terminal, int clearTabstops, int clearHistory) c_vte_terminal_reset;
 	int function(VteTerminal* terminal) c_vte_terminal_search_find_next;
@@ -301,6 +323,10 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, VteCursorShape shape) c_vte_terminal_set_cursor_shape;
 	void function(VteTerminal* terminal) c_vte_terminal_set_default_colors;
 	void function(VteTerminal* terminal, VteEraseBinding binding) c_vte_terminal_set_delete_binding;
+	void function(VteTerminal* terminal, int enableBidi) c_vte_terminal_set_enable_bidi;
+	void function(VteTerminal* terminal, int enable) c_vte_terminal_set_enable_fallback_scrolling;
+	void function(VteTerminal* terminal, int enableShaping) c_vte_terminal_set_enable_shaping;
+	void function(VteTerminal* terminal, int enabled) c_vte_terminal_set_enable_sixel;
 	int function(VteTerminal* terminal, const(char)* codeset, GError** err) c_vte_terminal_set_encoding;
 	void function(VteTerminal* terminal, PangoFontDescription* fontDesc) c_vte_terminal_set_font;
 	void function(VteTerminal* terminal, double scale) c_vte_terminal_set_font_scale;
@@ -311,12 +337,14 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, int rewrap) c_vte_terminal_set_rewrap_on_resize;
 	void function(VteTerminal* terminal, int scroll) c_vte_terminal_set_scroll_on_keystroke;
 	void function(VteTerminal* terminal, int scroll) c_vte_terminal_set_scroll_on_output;
+	void function(VteTerminal* terminal, int enable) c_vte_terminal_set_scroll_unit_is_pixels;
 	void function(VteTerminal* terminal, glong lines) c_vte_terminal_set_scrollback_lines;
 	void function(VteTerminal* terminal, glong columns, glong rows) c_vte_terminal_set_size;
 	void function(VteTerminal* terminal, VteTextBlinkMode textBlinkMode) c_vte_terminal_set_text_blink_mode;
 	void function(VteTerminal* terminal, const(char)* exceptions) c_vte_terminal_set_word_char_exceptions;
 	void function(VteTerminal* terminal, VtePtyFlags ptyFlags, const(char)* workingDirectory, char** argv, char** envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, GCancellable* cancellable, VteTerminalSpawnAsyncCallback callback, void* userData) c_vte_terminal_spawn_async;
 	int function(VteTerminal* terminal, VtePtyFlags ptyFlags, const(char)* workingDirectory, char** argv, char** envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GPid* childPid, GCancellable* cancellable, GError** err) c_vte_terminal_spawn_sync;
+	void function(VteTerminal* terminal, VtePtyFlags ptyFlags, const(char)* workingDirectory, char** argv, char** envv, int* fds, int nFds, int* mapFds, int nMapFds, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, GCancellable* cancellable, VteTerminalSpawnAsyncCallback callback, void* userData) c_vte_terminal_spawn_with_fds_async;
 	void function(VteTerminal* terminal) c_vte_terminal_unselect_all;
 	void function(VteTerminal* terminal, GPid childPid) c_vte_terminal_watch_child;
 	int function(VteTerminal* terminal, GOutputStream* stream, VteWriteFlags flags, GCancellable* cancellable, GError** err) c_vte_terminal_write_contents_sync;
@@ -344,6 +372,7 @@ alias c_vte_pty_set_size vte_pty_set_size;
 alias c_vte_pty_set_utf8 vte_pty_set_utf8;
 alias c_vte_pty_spawn_async vte_pty_spawn_async;
 alias c_vte_pty_spawn_finish vte_pty_spawn_finish;
+alias c_vte_pty_spawn_with_fds_async vte_pty_spawn_with_fds_async;
 
 // vte.Regex
 
@@ -363,6 +392,7 @@ alias c_vte_terminal_copy_clipboard vte_terminal_copy_clipboard;
 alias c_vte_terminal_copy_clipboard_format vte_terminal_copy_clipboard_format;
 alias c_vte_terminal_copy_primary vte_terminal_copy_primary;
 alias c_vte_terminal_event_check_gregex_simple vte_terminal_event_check_gregex_simple;
+alias c_vte_terminal_event_check_regex_array vte_terminal_event_check_regex_array;
 alias c_vte_terminal_event_check_regex_simple vte_terminal_event_check_regex_simple;
 alias c_vte_terminal_feed vte_terminal_feed;
 alias c_vte_terminal_feed_child vte_terminal_feed_child;
@@ -383,6 +413,10 @@ alias c_vte_terminal_get_current_file_uri vte_terminal_get_current_file_uri;
 alias c_vte_terminal_get_cursor_blink_mode vte_terminal_get_cursor_blink_mode;
 alias c_vte_terminal_get_cursor_position vte_terminal_get_cursor_position;
 alias c_vte_terminal_get_cursor_shape vte_terminal_get_cursor_shape;
+alias c_vte_terminal_get_enable_bidi vte_terminal_get_enable_bidi;
+alias c_vte_terminal_get_enable_fallback_scrolling vte_terminal_get_enable_fallback_scrolling;
+alias c_vte_terminal_get_enable_shaping vte_terminal_get_enable_shaping;
+alias c_vte_terminal_get_enable_sixel vte_terminal_get_enable_sixel;
 alias c_vte_terminal_get_encoding vte_terminal_get_encoding;
 alias c_vte_terminal_get_font vte_terminal_get_font;
 alias c_vte_terminal_get_font_scale vte_terminal_get_font_scale;
@@ -396,6 +430,7 @@ alias c_vte_terminal_get_rewrap_on_resize vte_terminal_get_rewrap_on_resize;
 alias c_vte_terminal_get_row_count vte_terminal_get_row_count;
 alias c_vte_terminal_get_scroll_on_keystroke vte_terminal_get_scroll_on_keystroke;
 alias c_vte_terminal_get_scroll_on_output vte_terminal_get_scroll_on_output;
+alias c_vte_terminal_get_scroll_unit_is_pixels vte_terminal_get_scroll_unit_is_pixels;
 alias c_vte_terminal_get_scrollback_lines vte_terminal_get_scrollback_lines;
 alias c_vte_terminal_get_text vte_terminal_get_text;
 alias c_vte_terminal_get_text_blink_mode vte_terminal_get_text_blink_mode;
@@ -415,6 +450,7 @@ alias c_vte_terminal_match_set_cursor_name vte_terminal_match_set_cursor_name;
 alias c_vte_terminal_match_set_cursor_type vte_terminal_match_set_cursor_type;
 alias c_vte_terminal_paste_clipboard vte_terminal_paste_clipboard;
 alias c_vte_terminal_paste_primary vte_terminal_paste_primary;
+alias c_vte_terminal_paste_text vte_terminal_paste_text;
 alias c_vte_terminal_pty_new_sync vte_terminal_pty_new_sync;
 alias c_vte_terminal_reset vte_terminal_reset;
 alias c_vte_terminal_search_find_next vte_terminal_search_find_next;
@@ -447,6 +483,10 @@ alias c_vte_terminal_set_cursor_blink_mode vte_terminal_set_cursor_blink_mode;
 alias c_vte_terminal_set_cursor_shape vte_terminal_set_cursor_shape;
 alias c_vte_terminal_set_default_colors vte_terminal_set_default_colors;
 alias c_vte_terminal_set_delete_binding vte_terminal_set_delete_binding;
+alias c_vte_terminal_set_enable_bidi vte_terminal_set_enable_bidi;
+alias c_vte_terminal_set_enable_fallback_scrolling vte_terminal_set_enable_fallback_scrolling;
+alias c_vte_terminal_set_enable_shaping vte_terminal_set_enable_shaping;
+alias c_vte_terminal_set_enable_sixel vte_terminal_set_enable_sixel;
 alias c_vte_terminal_set_encoding vte_terminal_set_encoding;
 alias c_vte_terminal_set_font vte_terminal_set_font;
 alias c_vte_terminal_set_font_scale vte_terminal_set_font_scale;
@@ -457,12 +497,14 @@ alias c_vte_terminal_set_pty vte_terminal_set_pty;
 alias c_vte_terminal_set_rewrap_on_resize vte_terminal_set_rewrap_on_resize;
 alias c_vte_terminal_set_scroll_on_keystroke vte_terminal_set_scroll_on_keystroke;
 alias c_vte_terminal_set_scroll_on_output vte_terminal_set_scroll_on_output;
+alias c_vte_terminal_set_scroll_unit_is_pixels vte_terminal_set_scroll_unit_is_pixels;
 alias c_vte_terminal_set_scrollback_lines vte_terminal_set_scrollback_lines;
 alias c_vte_terminal_set_size vte_terminal_set_size;
 alias c_vte_terminal_set_text_blink_mode vte_terminal_set_text_blink_mode;
 alias c_vte_terminal_set_word_char_exceptions vte_terminal_set_word_char_exceptions;
 alias c_vte_terminal_spawn_async vte_terminal_spawn_async;
 alias c_vte_terminal_spawn_sync vte_terminal_spawn_sync;
+alias c_vte_terminal_spawn_with_fds_async vte_terminal_spawn_with_fds_async;
 alias c_vte_terminal_unselect_all vte_terminal_unselect_all;
 alias c_vte_terminal_watch_child vte_terminal_watch_child;
 alias c_vte_terminal_write_contents_sync vte_terminal_write_contents_sync;

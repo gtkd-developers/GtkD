@@ -181,6 +181,28 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	}
 
 	/**
+	 * Creates a new #GtkTreeModelSort, with @child_model as the child model.
+	 *
+	 * Params:
+	 *     childModel = A #GtkTreeModel
+	 *
+	 * Returns: A new #GtkTreeModelSort.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(TreeModelIF childModel)
+	{
+		auto __p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct());
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_with_model");
+		}
+
+		this(cast(GtkTreeModelSort*) __p, true);
+	}
+
+	/**
 	 * This function should almost never be called.  It clears the @tree_model_sort
 	 * of any cached iterators that haven’t been reffed with
 	 * gtk_tree_model_ref_node().  This might be useful if the child model being
@@ -209,11 +231,11 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	{
 		GtkTreeIter* outsortIter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, outsortIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
+		auto __p = gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, outsortIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
 
 		sortIter = ObjectG.getDObject!(TreeIter)(outsortIter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -229,14 +251,14 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
-		auto p = gtk_tree_model_sort_convert_child_path_to_path(gtkTreeModelSort, (childPath is null) ? null : childPath.getTreePathStruct());
+		auto __p = gtk_tree_model_sort_convert_child_path_to_path(gtkTreeModelSort, (childPath is null) ? null : childPath.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -269,14 +291,14 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 */
 	public TreePath convertPathToChildPath(TreePath sortedPath)
 	{
-		auto p = gtk_tree_model_sort_convert_path_to_child_path(gtkTreeModelSort, (sortedPath is null) ? null : sortedPath.getTreePathStruct());
+		auto __p = gtk_tree_model_sort_convert_path_to_child_path(gtkTreeModelSort, (sortedPath is null) ? null : sortedPath.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -286,14 +308,14 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_tree_model_sort_get_model(gtkTreeModelSort);
+		auto __p = gtk_tree_model_sort_get_model(gtkTreeModelSort);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
@@ -323,27 +345,5 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	public void resetDefaultSortFunc()
 	{
 		gtk_tree_model_sort_reset_default_sort_func(gtkTreeModelSort);
-	}
-
-	/**
-	 * Creates a new #GtkTreeModel, with @child_model as the child model.
-	 *
-	 * Params:
-	 *     childModel = A #GtkTreeModel
-	 *
-	 * Returns: A new #GtkTreeModel.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(TreeModelIF childModel)
-	{
-		auto p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct());
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_with_model");
-		}
-
-		this(cast(GtkTreeModelSort*) p, true);
 	}
 }

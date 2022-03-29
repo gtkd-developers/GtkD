@@ -26,6 +26,7 @@ module gtk.Frame;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Bin;
 private import gtk.Widget;
@@ -42,13 +43,14 @@ public  import gtkc.gtktypes;
  * 
  * # GtkFrame as GtkBuildable
  * 
- * The GtkFrame implementation of the GtkBuildable interface supports
+ * The GtkFrame implementation of the #GtkBuildable interface supports
  * placing a child in the label position by specifying “label” as the
- * “type” attribute of a <child> element. A normal content child can
- * be specified without specifying a <child> type attribute.
+ * “type” attribute of a `<child>` element. A normal content child can
+ * be specified without specifying a `<child>` type attribute.
  * 
- * An example of a UI definition fragment with GtkFrame:
- * |[
+ * An example of a UI definition fragment with `GtkFrame`:
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkFrame">
  * <child type="label">
  * <object class="GtkLabel" id="frame-label"/>
@@ -136,14 +138,14 @@ public class Frame : Bin
 	 */
 	public this(string label)
 	{
-		auto p = gtk_frame_new(Str.toStringz(label));
+		auto __p = gtk_frame_new(Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFrame*) p);
+		this(cast(GtkFrame*) __p);
 	}
 
 	/**
@@ -186,14 +188,14 @@ public class Frame : Bin
 	 */
 	public Widget getLabelWidget()
 	{
-		auto p = gtk_frame_get_label_widget(gtkFrame);
+		auto __p = gtk_frame_get_label_widget(gtkFrame);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

@@ -29,12 +29,16 @@ private import glib.MemorySlice;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.PgAttributeIterator;
 private import pango.c.functions;
 public  import pango.c.types;
 
 
 /**
- * The #PangoItem structure stores information about a segment of text.
+ * The `PangoItem` structure stores information about a segment of text.
+ * 
+ * You typically obtain `PangoItems` by itemizing a piece of text
+ * with [func@itemize].
  */
 public final class PgItem
 {
@@ -135,46 +139,67 @@ public final class PgItem
 	}
 
 	/**
-	 * Creates a new #PangoItem structure initialized to default values.
+	 * Creates a new `PangoItem` structure initialized to default values.
 	 *
-	 * Returns: the newly allocated #PangoItem, which should
-	 *     be freed with pango_item_free().
+	 * Returns: the newly allocated `PangoItem`, which should
+	 *     be freed with [method@Pango.Item.free].
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = pango_item_new();
+		auto __p = pango_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoItem*) p);
+		this(cast(PangoItem*) __p);
 	}
 
 	/**
-	 * Copy an existing #PangoItem structure.
+	 * Add attributes to a `PangoItem`.
 	 *
-	 * Returns: the newly allocated #PangoItem, which
-	 *     should be freed with pango_item_free(), or %NULL if
-	 *     @item was %NULL.
+	 * The idea is that you have attributes that don't affect itemization,
+	 * such as font features, so you filter them out using
+	 * [method@Pango.AttrList.filter], itemize your text, then reapply the
+	 * attributes to the resulting items using this function.
+	 *
+	 * The @iter should be positioned before the range of the item,
+	 * and will be advanced past it. This function is meant to be called
+	 * in a loop over the items resulting from itemization, while passing
+	 * the iter to each call.
+	 *
+	 * Params:
+	 *     iter = a `PangoAttrIterator`
+	 *
+	 * Since: 1.44
+	 */
+	public void applyAttrs(PgAttributeIterator iter)
+	{
+		pango_item_apply_attrs(pangoItem, (iter is null) ? null : iter.getPgAttributeIteratorStruct());
+	}
+
+	/**
+	 * Copy an existing `PangoItem` structure.
+	 *
+	 * Returns: the newly allocated `PangoItem`
 	 */
 	public PgItem copy()
 	{
-		auto p = pango_item_copy(pangoItem);
+		auto __p = pango_item_copy(pangoItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
+		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) __p, true);
 	}
 
 	/**
-	 * Free a #PangoItem and all associated memory.
+	 * Free a `PangoItem` and all associated memory.
 	 */
 	public void free()
 	{
@@ -185,31 +210,34 @@ public final class PgItem
 	/**
 	 * Modifies @orig to cover only the text after @split_index, and
 	 * returns a new item that covers the text before @split_index that
-	 * used to be in @orig. You can think of @split_index as the length of
-	 * the returned item. @split_index may not be 0, and it may not be
-	 * greater than or equal to the length of @orig (that is, there must
-	 * be at least one byte assigned to each item, you can't create a
-	 * zero-length item). @split_offset is the length of the first item in
-	 * chars, and must be provided because the text used to generate the
-	 * item isn't available, so pango_item_split() can't count the char
-	 * length of the split items itself.
+	 * used to be in @orig.
+	 *
+	 * You can think of @split_index as the length of the returned item.
+	 * @split_index may not be 0, and it may not be greater than or equal
+	 * to the length of @orig (that is, there must be at least one byte
+	 * assigned to each item, you can't create a zero-length item).
+	 * @split_offset is the length of the first item in chars, and must be
+	 * provided because the text used to generate the item isn't available,
+	 * so `pango_item_split()` can't count the char length of the split items
+	 * itself.
 	 *
 	 * Params:
-	 *     splitIndex = byte index of position to split item, relative to the start of the item
+	 *     splitIndex = byte index of position to split item, relative to the
+	 *         start of the item
 	 *     splitOffset = number of chars between start of @orig and @split_index
 	 *
 	 * Returns: new item representing text before @split_index, which
-	 *     should be freed with pango_item_free().
+	 *     should be freed with [method@Pango.Item.free].
 	 */
 	public PgItem split(int splitIndex, int splitOffset)
 	{
-		auto p = pango_item_split(pangoItem, splitIndex, splitOffset);
+		auto __p = pango_item_split(pangoItem, splitIndex, splitOffset);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
+		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) __p, true);
 	}
 }

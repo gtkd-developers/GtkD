@@ -27,6 +27,7 @@ module gtk.AboutDialog;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Dialog;
@@ -123,14 +124,14 @@ public class AboutDialog : Dialog
 	 */
 	public this()
 	{
-		auto p = gtk_about_dialog_new();
+		auto __p = gtk_about_dialog_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAboutDialog*) p);
+		this(cast(GtkAboutDialog*) __p);
 	}
 
 	/**
@@ -254,14 +255,14 @@ public class AboutDialog : Dialog
 	 */
 	public Pixbuf getLogo()
 	{
-		auto p = gtk_about_dialog_get_logo(gtkAboutDialog);
+		auto __p = gtk_about_dialog_get_logo(gtkAboutDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**

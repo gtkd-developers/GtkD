@@ -64,11 +64,13 @@ public void sliceFree(T)(T* memBlock)
 
 /**
  * Allocates a block of memory from the slice allocator.
+ *
  * The block address handed out can be expected to be aligned
- * to at least 1 * sizeof (void*),
- * though in general slices are 2 * sizeof (void*) bytes aligned,
- * if a malloc() fallback implementation is used instead,
- * the alignment may be reduced in a libc dependent fashion.
+ * to at least `1 * sizeof (void*)`, though in general slices
+ * are `2 * sizeof (void*)` bytes aligned; if a `malloc()`
+ * fallback implementation is used instead, the alignment may
+ * be reduced in a libc dependent fashion.
+ *
  * Note that the underlying slice allocation mechanism can
  * be changed with the [`G_SLICE=always-malloc`][G_SLICE]
  * environment variable.
@@ -76,8 +78,8 @@ public void sliceFree(T)(T* memBlock)
  * Params:
  *     blockSize = the number of bytes to allocate
  *
- * Returns: a pointer to the allocated memory block, which will be %NULL if and
- *     only if @mem_size is 0
+ * Returns: a pointer to the allocated memory block, which will
+ *     be %NULL if and only if @mem_size is 0
  *
  * Since: 2.10
  */

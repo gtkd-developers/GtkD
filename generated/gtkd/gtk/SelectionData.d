@@ -27,6 +27,7 @@ module gtk.SelectionData;
 private import gdk.Display;
 private import gdkpixbuf.Pixbuf;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.TargetEntry;
 private import gtk.TextBuffer;
@@ -101,14 +102,14 @@ public class SelectionData
 	 */
 	public SelectionData copy()
 	{
-		auto p = gtk_selection_data_copy(gtkSelectionData);
+		auto __p = gtk_selection_data_copy(gtkSelectionData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) p, true);
+		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) __p, true);
 	}
 
 	/**
@@ -144,9 +145,9 @@ public class SelectionData
 	{
 		int length;
 
-		auto p = gtk_selection_data_get_data_with_length(gtkSelectionData, &length);
+		auto __p = gtk_selection_data_get_data_with_length(gtkSelectionData, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -158,14 +159,14 @@ public class SelectionData
 	 */
 	public Display getDisplay()
 	{
-		auto p = gtk_selection_data_get_display(gtkSelectionData);
+		auto __p = gtk_selection_data_get_display(gtkSelectionData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -205,14 +206,14 @@ public class SelectionData
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = gtk_selection_data_get_pixbuf(gtkSelectionData);
+		auto __p = gtk_selection_data_get_pixbuf(gtkSelectionData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -254,14 +255,14 @@ public class SelectionData
 	 */
 	public bool getTargets(out GdkAtom[] targets)
 	{
-		GdkAtom* outtargets = null;
+		GdkAtom* outtargets;
 		int nAtoms;
 
-		auto p = gtk_selection_data_get_targets(gtkSelectionData, &outtargets, &nAtoms) != 0;
+		auto __p = gtk_selection_data_get_targets(gtkSelectionData, &outtargets, &nAtoms) != 0;
 
 		targets = outtargets[0 .. nAtoms];
 
-		return p;
+		return __p;
 	}
 
 	/**

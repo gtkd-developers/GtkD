@@ -50,10 +50,11 @@ private import std.algorithm;
  * 
  * The GtkMenuToolButton implementation of the GtkBuildable interface
  * supports adding a menu by specifying “menu” as the “type” attribute
- * of a <child> element.
+ * of a `<child>` element.
  * 
  * An example for a UI definition fragment with menus:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkMenuToolButton">
  * <child type="menu">
  * <object class="GtkMenu"/>
@@ -146,14 +147,14 @@ public class MenuToolButton : ToolButton
 	 */
 	public this(Widget iconWidget, string label)
 	{
-		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
+		auto __p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenuToolButton*) p);
+		this(cast(GtkMenuToolButton*) __p);
 	}
 
 	/**
@@ -174,14 +175,14 @@ public class MenuToolButton : ToolButton
 	 */
 	public this(string stockId)
 	{
-		auto p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
+		auto __p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
 
-		this(cast(GtkMenuToolButton*) p);
+		this(cast(GtkMenuToolButton*) __p);
 	}
 
 	/**

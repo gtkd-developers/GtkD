@@ -28,6 +28,7 @@ private import cairo.Context;
 private import gdk.Event;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
@@ -631,14 +632,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public CellAreaContext copyContext(CellAreaContext context)
 	{
-		auto p = gtk_cell_area_copy_context(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct());
+		auto __p = gtk_cell_area_copy_context(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p, true);
+		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) __p, true);
 	}
 
 	/**
@@ -655,14 +656,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public CellAreaContext createContext()
 	{
-		auto p = gtk_cell_area_create_context(gtkCellArea);
+		auto __p = gtk_cell_area_create_context(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p, true);
+		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) __p, true);
 	}
 
 	/**
@@ -778,14 +779,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public CellRenderer getCellAtPosition(CellAreaContext context, Widget widget, GdkRectangle* cellArea, int x, int y, out GdkRectangle allocArea)
 	{
-		auto p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, x, y, &allocArea);
+		auto __p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, x, y, &allocArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
@@ -816,14 +817,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public CellEditableIF getEditWidget()
 	{
-		auto p = gtk_cell_area_get_edit_widget(gtkCellArea);
+		auto __p = gtk_cell_area_get_edit_widget(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) __p);
 	}
 
 	/**
@@ -836,14 +837,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public CellRenderer getEditedCell()
 	{
-		auto p = gtk_cell_area_get_edited_cell(gtkCellArea);
+		auto __p = gtk_cell_area_get_edited_cell(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
@@ -855,14 +856,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public CellRenderer getFocusCell()
 	{
-		auto p = gtk_cell_area_get_focus_cell(gtkCellArea);
+		auto __p = gtk_cell_area_get_focus_cell(gtkCellArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
@@ -884,14 +885,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public CellRenderer getFocusFromSibling(CellRenderer renderer)
 	{
-		auto p = gtk_cell_area_get_focus_from_sibling(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
+		auto __p = gtk_cell_area_get_focus_from_sibling(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
+		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) __p);
 	}
 
 	/**
@@ -907,14 +908,14 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public ListG getFocusSiblings(CellRenderer renderer)
 	{
-		auto p = gtk_cell_area_get_focus_siblings(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
+		auto __p = gtk_cell_area_get_focus_siblings(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

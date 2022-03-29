@@ -100,14 +100,14 @@ public class StackSidebar : Bin
 	 */
 	public this()
 	{
-		auto p = gtk_stack_sidebar_new();
+		auto __p = gtk_stack_sidebar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStackSidebar*) p);
+		this(cast(GtkStackSidebar*) __p);
 	}
 
 	/**
@@ -121,14 +121,14 @@ public class StackSidebar : Bin
 	 */
 	public Stack getStack()
 	{
-		auto p = gtk_stack_sidebar_get_stack(gtkStackSidebar);
+		auto __p = gtk_stack_sidebar_get_stack(gtkStackSidebar);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Stack)(cast(GtkStack*) p);
+		return ObjectG.getDObject!(Stack)(cast(GtkStack*) __p);
 	}
 
 	/**

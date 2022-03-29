@@ -61,6 +61,8 @@ public struct Hostname
 	 * Tests if @hostname is the string form of an IPv4 or IPv6 address.
 	 * (Eg, "192.168.0.1".)
 	 *
+	 * Since 2.66, IPv6 addresses with a zone-id are accepted (RFC6874).
+	 *
 	 * Params:
 	 *     hostname = a hostname (or IP address in string form)
 	 *
@@ -102,8 +104,8 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a valid UTF-8 or ASCII hostname
 	 *
-	 * Returns: an ASCII hostname, which must be freed, or %NULL if
-	 *     @hostname is in some way invalid.
+	 * Returns: an ASCII hostname, which must be freed,
+	 *     or %NULL if @hostname is in some way invalid.
 	 *
 	 * Since: 2.22
 	 */
@@ -127,8 +129,8 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a valid UTF-8 or ASCII hostname
 	 *
-	 * Returns: a UTF-8 hostname, which must be freed, or %NULL if
-	 *     @hostname is in some way invalid.
+	 * Returns: a UTF-8 hostname, which must be freed,
+	 *     or %NULL if @hostname is in some way invalid.
 	 *
 	 * Since: 2.22
 	 */

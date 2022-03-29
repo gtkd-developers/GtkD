@@ -151,13 +151,13 @@ public class CheckButton : ToggleButton
 	 */
 	public this()
 	{
-		auto p = gtk_check_button_new();
+		auto __p = gtk_check_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCheckButton*) p);
+		this(cast(GtkCheckButton*) __p);
 	}
 }

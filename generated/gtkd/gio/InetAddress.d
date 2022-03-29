@@ -28,6 +28,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -147,8 +148,8 @@ public class InetAddress : ObjectG
 	 * Params:
 	 *     string_ = a string representation of an IP address
 	 *
-	 * Returns: a new #GInetAddress corresponding to @string, or %NULL if
-	 *     @string could not be parsed.
+	 * Returns: a new #GInetAddress corresponding
+	 *     to @string, or %NULL if @string could not be parsed.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22

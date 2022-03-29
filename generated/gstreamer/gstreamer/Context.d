@@ -26,11 +26,13 @@ module gstreamer.Context;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -40,24 +42,25 @@ public  import gstreamerc.gstreamertypes;
  * 
  * Applications can set a context on a complete pipeline by using
  * gst_element_set_context(), which will then be propagated to all
- * child elements. Elements can handle these in #GstElementClass.set_context()
+ * child elements. Elements can handle these in #GstElementClass::set_context
  * and merge them with the context information they already have.
  * 
  * When an element needs a context it will do the following actions in this
  * order until one step succeeds:
+ * 
  * 1. Check if the element already has a context
- * 2. Query downstream with GST_QUERY_CONTEXT for the context
- * 3. Query upstream with GST_QUERY_CONTEXT for the context
- * 4. Post a GST_MESSAGE_NEED_CONTEXT message on the bus with the required
+ * 2. Query downstream with %GST_QUERY_CONTEXT for the context
+ * 3. Query upstream with %GST_QUERY_CONTEXT for the context
+ * 4. Post a %GST_MESSAGE_NEED_CONTEXT message on the bus with the required
  * context types and afterwards check if a usable context was set now
- * 5. Create a context by itself and post a GST_MESSAGE_HAVE_CONTEXT message
+ * 5. Create a context by itself and post a %GST_MESSAGE_HAVE_CONTEXT message
  * on the bus.
  * 
- * Bins will catch GST_MESSAGE_NEED_CONTEXT messages and will set any previously
+ * Bins will catch %GST_MESSAGE_NEED_CONTEXT messages and will set any previously
  * known context on the element that asks for it if possible. Otherwise the
  * application should provide one if it can.
  * 
- * #GstContext<!-- -->s can be persistent.
+ * #GstContext can be persistent.
  * A persistent #GstContext is kept in elements when they reach
  * %GST_STATE_NULL, non-persistent ones will be removed.
  * Also, a non-persistent context won't override a previous persistent
@@ -94,6 +97,12 @@ public class Context
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_context_unref(gstContext);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -102,7 +111,7 @@ public class Context
 	}
 
 	/**
-	 * Create a new context.
+	 * Creates a new context.
 	 *
 	 * Params:
 	 *     contextType = Context type
@@ -116,18 +125,39 @@ public class Context
 	 */
 	public this(string contextType, bool persistent)
 	{
-		auto p = gst_context_new(Str.toStringz(contextType), persistent);
+		auto __p = gst_context_new(Str.toStringz(contextType), persistent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstContext*) p);
+		this(cast(GstContext*) __p);
 	}
 
 	/**
-	 * Get the type of @context.
+	 * Creates a copy of the context. Returns a copy of the context.
+	 *
+	 * Returns: a new copy of @context.
+	 *
+	 *     MT safe
+	 *
+	 * Since: 1.2
+	 */
+	public Context copy()
+	{
+		auto __p = gst_context_copy(gstContext);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Context)(cast(GstContext*) __p, true);
+	}
+
+	/**
+	 * Gets the type of @context.
 	 *
 	 * Returns: The type of the context.
 	 *
@@ -139,7 +169,7 @@ public class Context
 	}
 
 	/**
-	 * Access the structure of the context.
+	 * Accesses the structure of the context.
 	 *
 	 * Returns: The structure of the context. The structure is
 	 *     still owned by the context, which means that you should not modify it,
@@ -149,14 +179,14 @@ public class Context
 	 */
 	public Structure getStructure()
 	{
-		auto p = gst_context_get_structure(gstContext);
+		auto __p = gst_context_get_structure(gstContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -175,7 +205,7 @@ public class Context
 	}
 
 	/**
-	 * Check if @context is persistent.
+	 * Checks if @context is persistent.
 	 *
 	 * Returns: %TRUE if the context is persistent.
 	 *
@@ -186,8 +216,39 @@ public class Context
 		return gst_context_is_persistent(gstContext) != 0;
 	}
 
+	alias doref = ref_;
 	/**
-	 * Get a writable version of the structure.
+	 * Convenience macro to increase the reference count of the context.
+	 *
+	 * Returns: @context (for convenience when doing assignments)
+	 *
+	 * Since: 1.2
+	 */
+	public Context ref_()
+	{
+		auto __p = gst_context_ref(gstContext);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Context)(cast(GstContext*) __p, true);
+	}
+
+	/**
+	 * Convenience macro to decrease the reference count of the context, possibly
+	 * freeing it.
+	 *
+	 * Since: 1.2
+	 */
+	public void unref()
+	{
+		gst_context_unref(gstContext);
+	}
+
+	/**
+	 * Gets a writable version of the structure.
 	 *
 	 * Returns: The structure of the context. The structure is still
 	 *     owned by the context, which means that you should not free it and
@@ -198,13 +259,42 @@ public class Context
 	 */
 	public Structure writableStructure()
 	{
-		auto p = gst_context_writable_structure(gstContext);
+		auto __p = gst_context_writable_structure(gstContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstContext to point to a different #GstContext. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * context is unreffed, the new one is reffed).
+	 *
+	 * Either @new_context or the #GstContext pointed to by @old_context may be %NULL.
+	 *
+	 * Params:
+	 *     oldContext = pointer to a pointer to a #GstContext
+	 *         to be replaced.
+	 *     newContext = pointer to a #GstContext that will
+	 *         replace the context pointed to by @old_context.
+	 *
+	 * Returns: %TRUE if @new_context was different from @old_context
+	 *
+	 * Since: 1.2
+	 */
+	public static bool replace(ref Context oldContext, Context newContext)
+	{
+		GstContext* outoldContext = oldContext.getContextStruct();
+
+		auto __p = gst_context_replace(&outoldContext, (newContext is null) ? null : newContext.getContextStruct()) != 0;
+
+		oldContext = ObjectG.getDObject!(Context)(outoldContext);
+
+		return __p;
 	}
 }

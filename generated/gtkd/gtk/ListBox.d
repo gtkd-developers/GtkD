@@ -41,7 +41,7 @@ private import std.algorithm;
 
 /**
  * A GtkListBox is a vertical container that contains GtkListBoxRow
- * children. These rows can by dynamically sorted and filtered, and
+ * children. These rows can be dynamically sorted and filtered, and
  * headers can be added dynamically depending on the row content.
  * It also allows keyboard and mouse navigation and selection like
  * a typical list.
@@ -61,6 +61,12 @@ private import std.algorithm;
  * as selected when the user tries to select it.
  * 
  * The GtkListBox widget was added in GTK+ 3.10.
+ * 
+ * # GtkListBox as GtkBuildable
+ * 
+ * The GtkListBox implementation of the #GtkBuildable interface supports
+ * setting a child as the placeholder by specifying “placeholder” as the “type”
+ * attribute of a `<child>` element. See gtk_list_box_set_placeholder() for info.
  * 
  * # CSS nodes
  * 
@@ -119,14 +125,14 @@ public class ListBox : Container
 	 */
 	public this()
 	{
-		auto p = gtk_list_box_new();
+		auto __p = gtk_list_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkListBox*) p);
+		this(cast(GtkListBox*) __p);
 	}
 
 	/**
@@ -212,14 +218,14 @@ public class ListBox : Container
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_list_box_get_adjustment(gtkListBox);
+		auto __p = gtk_list_box_get_adjustment(gtkListBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -236,14 +242,14 @@ public class ListBox : Container
 	 */
 	public ListBoxRow getRowAtIndex(int index)
 	{
-		auto p = gtk_list_box_get_row_at_index(gtkListBox, index);
+		auto __p = gtk_list_box_get_row_at_index(gtkListBox, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
+		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -259,14 +265,14 @@ public class ListBox : Container
 	 */
 	public ListBoxRow getRowAtY(int y)
 	{
-		auto p = gtk_list_box_get_row_at_y(gtkListBox, y);
+		auto __p = gtk_list_box_get_row_at_y(gtkListBox, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
+		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -282,14 +288,14 @@ public class ListBox : Container
 	 */
 	public ListBoxRow getSelectedRow()
 	{
-		auto p = gtk_list_box_get_selected_row(gtkListBox);
+		auto __p = gtk_list_box_get_selected_row(gtkListBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
+		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -302,14 +308,14 @@ public class ListBox : Container
 	 */
 	public ListG getSelectedRows()
 	{
-		auto p = gtk_list_box_get_selected_rows(gtkListBox);
+		auto __p = gtk_list_box_get_selected_rows(gtkListBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

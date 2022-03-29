@@ -28,6 +28,7 @@ private import gio.Settings;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import peas.c.functions;
 public  import peas.c.types;
@@ -101,9 +102,9 @@ public class PluginInfo
 	 * Gets the data dir of the plugin.
 	 *
 	 * The module data directory is the directory where a plugin should find its
-	 * runtime data. This is not a value read from the #GKeyFile, but rather a
-	 * value provided by the #PeasEngine, depending on where the plugin file was
-	 * found.
+	 * runtime data. This is not a value read from the [struct@GLib.KeyFile], but
+	 * rather a value provided by the [class@Engine], depending on where the plugin
+	 * file was found.
 	 *
 	 * Returns: the plugin's data dir.
 	 */
@@ -115,7 +116,7 @@ public class PluginInfo
 	/**
 	 * Gets the dependencies of the plugin.
 	 *
-	 * The #PeasEngine will always ensure that the dependencies of a plugin are
+	 * The [class@Engine] will always ensure that the dependencies of a plugin are
 	 * loaded when the said plugin is loaded. It means that dependencies are
 	 * loaded before the plugin, and unloaded after it. Circular dependencies of
 	 * plugins lead to undefined loading order.
@@ -148,7 +149,7 @@ public class PluginInfo
 	 * Gets external data specified for the plugin.
 	 *
 	 * External data is specified in the plugin info file prefixed with X-. For
-	 * example, if a key/value pair X-Peas=1 is specified in the key file, you
+	 * example, if a key/value pair `X-Peas=1` is specified in the key file, you
 	 * can use "Peas" for @key to retrieve the value "1".
 	 *
 	 * Note: that you can omit the X- prefix when retrieving the value,
@@ -203,8 +204,8 @@ public class PluginInfo
 	 * Gets the module directory.
 	 *
 	 * The module directory is the directory where the plugin file was found. This
-	 * is not a value from the #GKeyFile, but rather a value provided by the
-	 * #PeasEngine.
+	 * is not a value from the [struct@GLib.KeyFile], but rather a value provided by the
+	 * [class@Engine].
 	 *
 	 * Returns: the module directory.
 	 */
@@ -244,27 +245,27 @@ public class PluginInfo
 	}
 
 	/**
-	 * Creates a new #GSettings for the given @schema_id and if
+	 * Creates a new [class@Gio.Settings] for the given @schema_id and if
 	 * gschemas.compiled is not in the module directory an attempt
 	 * will be made to create it.
 	 *
 	 * Params:
 	 *     schemaId = The schema id.
 	 *
-	 * Returns: a new #GSettings, or %NULL.
+	 * Returns: a new #GSettings.
 	 *
 	 * Since: 1.4
 	 */
 	public Settings getSettings(string schemaId)
 	{
-		auto p = peas_plugin_info_get_settings(peasPluginInfo, Str.toStringz(schemaId));
+		auto __p = peas_plugin_info_get_settings(peasPluginInfo, Str.toStringz(schemaId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Settings)(cast(GSettings*) p, true);
+		return ObjectG.getDObject!(Settings)(cast(GSettings*) __p, true);
 	}
 
 	/**
@@ -319,23 +320,24 @@ public class PluginInfo
 	{
 		GError* err = null;
 
-		auto p = peas_plugin_info_is_available(peasPluginInfo, &err) != 0;
+		auto __p = peas_plugin_info_is_available(peasPluginInfo, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Check if the plugin is a builtin plugin.
 	 *
-	 * A builtin plugin is a plugin which cannot be enabled or disabled by the
-	 * user through a plugin manager (like #PeasGtkPluginManager). Loading or
-	 * unloading such plugins is the responsibility of the application alone.
-	 * Most applications will usually load those plugins immediately after
+	 * A builtin plugin is a plugin which cannot be enabled or disabled by the user
+	 * through a plugin manager (like
+	 * [PeasGtkPluginManager](https://gnome.pages.gitlab.gnome.org/libpeas/libpeas-gtk-1.0/class.PluginManager.html)).
+	 * Loading or unloading such plugins is the responsibility of the application
+	 * alone. Most applications will usually load those plugins immediately after
 	 * the initialization of the #PeasEngine.
 	 *
 	 * The relevant key in the plugin info file is "Builtin".
@@ -352,7 +354,9 @@ public class PluginInfo
 	 * Check if the plugin is a hidden plugin.
 	 *
 	 * A hidden plugin is a plugin which cannot be seen by a
-	 * user through a plugin manager (like #PeasGtkPluginManager). Loading and
+	 * user through a plugin manager (like
+	 * [PeasGtkPluginManager](https://gnome.pages.gitlab.gnome.org/libpeas/libpeas-gtk-1.0/class.PluginManager.html)).
+	 * Loading and
 	 * unloading such plugins is the responsibility of the application alone or
 	 * through plugins that depend on them.
 	 *

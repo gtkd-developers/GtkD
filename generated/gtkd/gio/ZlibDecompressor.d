@@ -35,7 +35,8 @@ public  import gtkc.giotypes;
 
 
 /**
- * Zlib decompression
+ * #GZlibDecompressor is an implementation of #GConverter that
+ * decompresses data compressed with zlib.
  */
 public class ZlibDecompressor : ObjectG, ConverterIF
 {

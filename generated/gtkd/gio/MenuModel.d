@@ -359,7 +359,7 @@ public class MenuModel : ObjectG
 	}
 
 	/**
-	 * Emitted when a change has occured to the menu.
+	 * Emitted when a change has occurred to the menu.
 	 *
 	 * The only changes that can occur to a menu is that items are removed
 	 * or added.  Items may not change (except by being removed and added

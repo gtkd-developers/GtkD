@@ -124,14 +124,14 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 */
 	public this()
 	{
-		auto p = gtk_icon_view_new();
+		auto __p = gtk_icon_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIconView*) p);
+		this(cast(GtkIconView*) __p);
 	}
 
 	/**
@@ -149,14 +149,14 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 */
 	public this(CellArea area)
 	{
-		auto p = gtk_icon_view_new_with_area((area is null) ? null : area.getCellAreaStruct());
+		auto __p = gtk_icon_view_new_with_area((area is null) ? null : area.getCellAreaStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
 
-		this(cast(GtkIconView*) p);
+		this(cast(GtkIconView*) __p);
 	}
 
 	/**
@@ -173,14 +173,14 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 */
 	public this(TreeModelIF model)
 	{
-		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		auto __p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_model");
 		}
 
-		this(cast(GtkIconView*) p);
+		this(cast(GtkIconView*) __p);
 	}
 
 	/**
@@ -213,14 +213,14 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 */
 	public Surface createDragIcon(TreePath path)
 	{
-		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
+		auto __p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 
 	/**
@@ -348,12 +348,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		GtkTreePath* outpath = null;
 		GtkCellRenderer* outcell = null;
 
-		auto p = gtk_icon_view_get_cursor(gtkIconView, &outpath, &outcell) != 0;
+		auto __p = gtk_icon_view_get_cursor(gtkIconView, &outpath, &outcell) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		cell = ObjectG.getDObject!(CellRenderer)(outcell);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -374,11 +374,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 
-		auto p = gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, &outpath, &pos) != 0;
+		auto __p = gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, &outpath, &pos) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -424,12 +424,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		GtkTreePath* outpath = null;
 		GtkCellRenderer* outcell = null;
 
-		auto p = gtk_icon_view_get_item_at_pos(gtkIconView, x, y, &outpath, &outcell) != 0;
+		auto __p = gtk_icon_view_get_item_at_pos(gtkIconView, x, y, &outpath, &outcell) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		cell = ObjectG.getDObject!(CellRenderer)(outcell);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -536,14 +536,14 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_icon_view_get_model(gtkIconView);
+		auto __p = gtk_icon_view_get_model(gtkIconView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
@@ -564,14 +564,14 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 */
 	public TreePath getPathAtPos(int x, int y)
 	{
-		auto p = gtk_icon_view_get_path_at_pos(gtkIconView, x, y);
+		auto __p = gtk_icon_view_get_path_at_pos(gtkIconView, x, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -628,14 +628,14 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 */
 	public ListG getSelectedItems()
 	{
-		auto p = gtk_icon_view_get_selected_items(gtkIconView);
+		auto __p = gtk_icon_view_get_selected_items(gtkIconView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -720,13 +720,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		GtkTreePath* outpath = null;
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
+		auto __p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 
 		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -749,12 +749,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		GtkTreePath* outstartPath = null;
 		GtkTreePath* outendPath = null;
 
-		auto p = gtk_icon_view_get_visible_range(gtkIconView, &outstartPath, &outendPath) != 0;
+		auto __p = gtk_icon_view_get_visible_range(gtkIconView, &outstartPath, &outendPath) != 0;
 
 		startPath = ObjectG.getDObject!(TreePath)(outstartPath);
 		endPath = ObjectG.getDObject!(TreePath)(outendPath);
 
-		return p;
+		return __p;
 	}
 
 	/**

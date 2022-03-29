@@ -28,6 +28,7 @@ private import gdk.Display;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -86,14 +87,14 @@ public class Keymap : ObjectG
 	 */
 	public static Keymap getDefault()
 	{
-		auto p = gdk_keymap_get_default();
+		auto __p = gdk_keymap_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) p);
+		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) __p);
 	}
 
 	/**
@@ -108,14 +109,14 @@ public class Keymap : ObjectG
 	 */
 	public static Keymap getForDisplay(Display display)
 	{
-		auto p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
+		auto __p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) p);
+		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) __p);
 	}
 
 	/**
@@ -183,16 +184,16 @@ public class Keymap : ObjectG
 	 */
 	public bool getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, out uint[] keyvals)
 	{
-		GdkKeymapKey* outkeys = null;
-		uint* outkeyvals = null;
+		GdkKeymapKey* outkeys;
+		uint* outkeyvals;
 		int nEntries;
 
-		auto p = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &outkeys, &outkeyvals, &nEntries) != 0;
+		auto __p = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &outkeys, &outkeyvals, &nEntries) != 0;
 
 		keys = outkeys[0 .. nEntries];
 		keyvals = outkeyvals[0 .. nEntries];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -217,14 +218,14 @@ public class Keymap : ObjectG
 	 */
 	public bool getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
 	{
-		GdkKeymapKey* outkeys = null;
+		GdkKeymapKey* outkeys;
 		int nKeys;
 
-		auto p = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &outkeys, &nKeys) != 0;
+		auto __p = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &outkeys, &nKeys) != 0;
 
 		keys = outkeys[0 .. nKeys];
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -274,6 +274,39 @@ version 1.12: start
 	noExternal: true
 version 1.12: end
 
+version 1.16: start
+	struct: VideoAFDMeta
+	noCode: true
+	noExternal: true
+
+	struct: VideoAggregatorParallelConvertPad
+	noCode: true
+	noExternal: true
+
+	struct: VideoAggregatorParallelConvertPadClass
+	noExternal: true
+	
+	struct: VideoBarMeta
+	noCode: true
+	noExternal: true
+
+	struct: VideoCodecAlphaMeta
+	noCode: true
+	noExternal: true
+
+	struct: VideoContentLightLevel
+	noCode: true
+	noExternal: true
+
+	struct: VideoFormatInfo
+	noCode: true
+	noExternal: true
+
+	struct: VideoMasteringDisplayInfo
+	noCode: true
+	noExternal: true
+version: end
+
 noEnum: ColorBalanceType
 noEnum: NavigationCommand
 noEnum: NavigationEventType

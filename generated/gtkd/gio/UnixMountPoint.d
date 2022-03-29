@@ -28,6 +28,7 @@ private import gio.IconIF;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -252,5 +253,34 @@ public class UnixMountPoint
 	public bool isUserMountable()
 	{
 		return g_unix_mount_point_is_user_mountable(gUnixMountPoint) != 0;
+	}
+
+	/**
+	 * Gets a #GUnixMountPoint for a given mount path. If @time_read is set, it
+	 * will be filled with a unix timestamp for checking if the mount points have
+	 * changed since with g_unix_mount_points_changed_since().
+	 *
+	 * If more mount points have the same mount path, the last matching mount point
+	 * is returned.
+	 *
+	 * Params:
+	 *     mountPath = path for a possible unix mount point.
+	 *     timeRead = guint64 to contain a timestamp.
+	 *
+	 * Returns: a #GUnixMountPoint, or %NULL if no match
+	 *     is found.
+	 *
+	 * Since: 2.66
+	 */
+	public static UnixMountPoint at(string mountPath, out ulong timeRead)
+	{
+		auto __p = g_unix_mount_point_at(Str.toStringz(mountPath), &timeRead);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(UnixMountPoint)(cast(GUnixMountPoint*) __p, true);
 	}
 }

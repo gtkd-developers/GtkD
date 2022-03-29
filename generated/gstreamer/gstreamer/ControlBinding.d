@@ -33,7 +33,7 @@ public  import gstreamerc.gstreamertypes;
 
 
 /**
- * A base class for value mapping objects that attaches control sources to gobject
+ * A base class for value mapping objects that attaches control sources to #GObject
  * properties. Such an object is taking one or more #GstControlSource instances,
  * combines them and maps the resulting value to the type and value range of the
  * bound property.
@@ -110,19 +110,19 @@ public class ControlBinding : ObjectGst
 	 */
 	public Value getValue(GstClockTime timestamp)
 	{
-		auto p = gst_control_binding_get_value(gstControlBinding, timestamp);
+		auto __p = gst_control_binding_get_value(gstControlBinding, timestamp);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p, true);
 	}
 
 	/**
 	 * Gets a number of values for the given controlled property starting at the
-	 * requested time. The array @values need to hold enough space for @n_values of
+	 * requested time. The array @values needs to hold enough space for @n_values of
 	 * the same type as the objects property's type.
 	 *
 	 * This function is useful if one wants to e.g. draw a graph of the control
@@ -145,7 +145,7 @@ public class ControlBinding : ObjectGst
 	}
 
 	/**
-	 * Check if the control binding is disabled.
+	 * Checks if the control binding is disabled.
 	 *
 	 * Returns: %TRUE if the binding is inactive
 	 */
@@ -169,7 +169,7 @@ public class ControlBinding : ObjectGst
 
 	/**
 	 * Sets the property of the @object, according to the #GstControlSources that
-	 * handle them and for the given timestamp.
+	 * handles it and for the given timestamp.
 	 *
 	 * If this function fails, it is most likely the application developers fault.
 	 * Most probably the control sources are not setup correctly.

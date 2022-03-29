@@ -30,6 +30,7 @@ public  import atk.c.types;
 private import glib.ConstructionException;
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.atktypes;
 

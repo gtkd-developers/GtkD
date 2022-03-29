@@ -28,13 +28,14 @@ private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
 private import gio.ActionMapIF;
 private import gio.ActionMapT;
-private import gio.Application : GioApplication = Application;
+private import gio.Application : DGioApplication = Application;
 private import gio.Menu;
 private import gio.MenuModel;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Window;
@@ -122,7 +123,7 @@ private import std.algorithm;
  * [HowDoI: Using GtkApplication](https://wiki.gnome.org/HowDoI/GtkApplication),
  * [Getting Started with GTK+: Basics](https://developer.gnome.org/gtk3/stable/gtk-getting-started.html#id-1.2.3.3)
  */
-public class Application : GioApplication
+public class Application : DGioApplication
 {
 	/** the main Gtk struct */
 	protected GtkApplication* gtkApplication;
@@ -225,14 +226,14 @@ public class Application : GioApplication
 	 */
 	public this(string applicationId, GApplicationFlags flags)
 	{
-		auto p = gtk_application_new(Str.toStringz(applicationId), flags);
+		auto __p = gtk_application_new(Str.toStringz(applicationId), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkApplication*) p, true);
+		this(cast(GtkApplication*) __p, true);
 	}
 
 	/**
@@ -363,14 +364,14 @@ public class Application : GioApplication
 	 */
 	public Window getActiveWindow()
 	{
-		auto p = gtk_application_get_active_window(gtkApplication);
+		auto __p = gtk_application_get_active_window(gtkApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -384,14 +385,14 @@ public class Application : GioApplication
 	 */
 	public MenuModel getAppMenu()
 	{
-		auto p = gtk_application_get_app_menu(gtkApplication);
+		auto __p = gtk_application_get_app_menu(gtkApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
 	}
 
 	/**
@@ -409,14 +410,14 @@ public class Application : GioApplication
 	 */
 	public Menu getMenuById(string id)
 	{
-		auto p = gtk_application_get_menu_by_id(gtkApplication, Str.toStringz(id));
+		auto __p = gtk_application_get_menu_by_id(gtkApplication, Str.toStringz(id));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Menu)(cast(GMenu*) p);
+		return ObjectG.getDObject!(Menu)(cast(GMenu*) __p);
 	}
 
 	/**
@@ -429,14 +430,14 @@ public class Application : GioApplication
 	 */
 	public MenuModel getMenubar()
 	{
-		auto p = gtk_application_get_menubar(gtkApplication);
+		auto __p = gtk_application_get_menubar(gtkApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
 	}
 
 	/**
@@ -455,14 +456,14 @@ public class Application : GioApplication
 	 */
 	public Window getWindowById(uint id)
 	{
-		auto p = gtk_application_get_window_by_id(gtkApplication, id);
+		auto __p = gtk_application_get_window_by_id(gtkApplication, id);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -482,14 +483,14 @@ public class Application : GioApplication
 	 */
 	public ListG getWindows()
 	{
-		auto p = gtk_application_get_windows(gtkApplication);
+		auto __p = gtk_application_get_windows(gtkApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

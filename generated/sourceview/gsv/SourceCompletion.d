@@ -98,14 +98,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_source_completion_add_provider(gtkSourceCompletion, (provider is null) ? null : provider.getSourceCompletionProviderStruct(), &err) != 0;
+		auto __p = gtk_source_completion_add_provider(gtkSourceCompletion, (provider is null) ? null : provider.getSourceCompletionProviderStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -138,14 +138,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 */
 	public SourceCompletionContext createContext(TextIter position)
 	{
-		auto p = gtk_source_completion_create_context(gtkSourceCompletion, (position is null) ? null : position.getTextIterStruct());
+		auto __p = gtk_source_completion_create_context(gtkSourceCompletion, (position is null) ? null : position.getTextIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceCompletionContext)(cast(GtkSourceCompletionContext*) p);
+		return ObjectG.getDObject!(SourceCompletionContext)(cast(GtkSourceCompletionContext*) __p);
 	}
 
 	/**
@@ -157,14 +157,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 */
 	public SourceCompletionInfo getInfoWindow()
 	{
-		auto p = gtk_source_completion_get_info_window(gtkSourceCompletion);
+		auto __p = gtk_source_completion_get_info_window(gtkSourceCompletion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceCompletionInfo)(cast(GtkSourceCompletionInfo*) p);
+		return ObjectG.getDObject!(SourceCompletionInfo)(cast(GtkSourceCompletionInfo*) __p);
 	}
 
 	/**
@@ -175,14 +175,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 */
 	public ListG getProviders()
 	{
-		auto p = gtk_source_completion_get_providers(gtkSourceCompletion);
+		auto __p = gtk_source_completion_get_providers(gtkSourceCompletion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -194,14 +194,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 */
 	public SourceView getView()
 	{
-		auto p = gtk_source_completion_get_view(gtkSourceCompletion);
+		auto __p = gtk_source_completion_get_view(gtkSourceCompletion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
+		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) __p);
 	}
 
 	/**
@@ -227,14 +227,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_source_completion_remove_provider(gtkSourceCompletion, (provider is null) ? null : provider.getSourceCompletionProviderStruct(), &err) != 0;
+		auto __p = gtk_source_completion_remove_provider(gtkSourceCompletion, (provider is null) ? null : provider.getSourceCompletionProviderStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

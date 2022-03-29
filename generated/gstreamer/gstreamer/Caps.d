@@ -26,6 +26,7 @@ module gstreamer.Caps;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.CapsFeatures;
@@ -33,6 +34,7 @@ private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -48,7 +50,8 @@ public  import gstreamerc.gstreamertypes;
  * handle or produce at runtime.
  * 
  * A #GstCaps can be constructed with the following code fragment:
- * |[<!-- language="C" -->
+ * 
+ * ``` C
  * GstCaps *caps = gst_caps_new_simple ("video/x-raw",
  * "format", G_TYPE_STRING, "I420",
  * "framerate", GST_TYPE_FRACTION, 25, 1,
@@ -56,18 +59,18 @@ public  import gstreamerc.gstreamertypes;
  * "width", G_TYPE_INT, 320,
  * "height", G_TYPE_INT, 240,
  * NULL);
- * ]|
+ * ```
  * 
- * A #GstCaps is fixed when it has no properties with ranges or lists. Use
+ * A #GstCaps is fixed when it has no fields with ranges or lists. Use
  * gst_caps_is_fixed() to test for fixed caps. Fixed caps can be used in a
  * caps event to notify downstream elements of the current media type.
  * 
  * Various methods exist to work with the media types such as subtracting
  * or intersecting.
  * 
- * Be aware that the current #GstCaps / #GstStructure serialization into string
- * has limited support for nested #GstCaps / #GstStructure fields. It can only
- * support one level of nesting. Using more levels will lead to unexpected
+ * Be aware that until 1.20 the #GstCaps / #GstStructure serialization into string
+ * had limited support for nested #GstCaps / #GstStructure fields. It could only
+ * support one level of nesting. Using more levels would lead to unexpected
  * behavior when using serialization features, such as gst_caps_to_string() or
  * gst_value_serialize() and their counterparts.
  */
@@ -98,6 +101,12 @@ public class Caps
 	{
 		this.gstCaps = gstCaps;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_caps_unref(gstCaps);
 	}
 
 	/**
@@ -132,7 +141,6 @@ public class Caps
 	 * Creates a new #GstCaps that is empty.  That is, the returned
 	 * #GstCaps contains no media formats.
 	 * The #GstCaps is guaranteed to be writable.
-	 * Caller is responsible for unreffing the returned caps.
 	 *
 	 * Returns: the new #GstCaps
 	 *
@@ -140,20 +148,19 @@ public class Caps
 	 */
 	public this()
 	{
-		auto p = gst_caps_new_empty();
+		auto __p = gst_caps_new_empty();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
 
-		this(cast(GstCaps*) p);
+		this(cast(GstCaps*) __p);
 	}
 
 	/**
 	 * Creates a new #GstCaps that contains one #GstStructure with name
 	 * @media_type.
-	 * Caller is responsible for unreffing the returned caps.
 	 *
 	 * Params:
 	 *     mediaType = the media type of the structure
@@ -164,14 +171,14 @@ public class Caps
 	 */
 	public this(string mediaType)
 	{
-		auto p = gst_caps_new_empty_simple(Str.toStringz(mediaType));
+		auto __p = gst_caps_new_empty_simple(Str.toStringz(mediaType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_empty_simple");
 		}
 
-		this(cast(GstCaps*) p);
+		this(cast(GstCaps*) __p);
 	}
 
 	/**
@@ -189,14 +196,14 @@ public class Caps
 	 */
 	public this(Structure structure, void* varArgs)
 	{
-		auto p = gst_caps_new_full_valist((structure is null) ? null : structure.getStructureStruct(), varArgs);
+		auto __p = gst_caps_new_full_valist((structure is null) ? null : structure.getStructureStruct(), varArgs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full_valist");
 		}
 
-		this(cast(GstCaps*) p);
+		this(cast(GstCaps*) __p);
 	}
 
 	/**
@@ -209,7 +216,7 @@ public class Caps
 	 */
 	public void append(Caps caps2)
 	{
-		gst_caps_append(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		gst_caps_append(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(true));
 	}
 
 	/**
@@ -261,20 +268,18 @@ public class Caps
 	 * followed by a gst_caps_make_writable(). If you only want to hold on to a
 	 * reference to the data, you should use gst_caps_ref().
 	 *
-	 * When you are finished with the caps, call gst_caps_unref() on it.
-	 *
 	 * Returns: the new #GstCaps
 	 */
 	public Caps copy()
 	{
-		auto p = gst_caps_copy(gstCaps);
+		auto __p = gst_caps_copy(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -285,17 +290,19 @@ public class Caps
 	 *     nth = the nth structure to copy
 	 *
 	 * Returns: the new #GstCaps
+	 *
+	 * Since: 1.16
 	 */
 	public Caps copyNth(uint nth)
 	{
-		auto p = gst_caps_copy_nth(gstCaps, nth);
+		auto __p = gst_caps_copy_nth(gstCaps, nth);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -326,18 +333,24 @@ public class Caps
 	 * on it so you must not use @caps afterwards unless you keep an additional
 	 * reference to it with gst_caps_ref().
 	 *
+	 * Note that it is not guaranteed that the returned caps have exactly one
+	 * structure. If @caps are empty caps then the returned caps will be
+	 * the empty too and contain no structure at all.
+	 *
+	 * Calling this function with ANY caps is not allowed.
+	 *
 	 * Returns: the fixated caps
 	 */
 	public Caps fixate()
 	{
-		auto p = gst_caps_fixate(gstCaps);
+		auto __p = gst_caps_fixate(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	alias foreac = foreach_;
@@ -361,20 +374,16 @@ public class Caps
 	}
 
 	/**
-	 * Finds the features in @caps that has the index @index, and
-	 * returns it.
+	 * Finds the features in @caps at @index, and returns it.
 	 *
-	 * WARNING: This function takes a const GstCaps *, but returns a
-	 * non-const GstCapsFeatures *.  This is for programming convenience --
-	 * the caller should be aware that structures inside a constant
+	 * WARNING: This function takes a `const GstCaps *`, but returns a
+	 * non-const `GstCapsFeatures *`.  This is for programming convenience --
+	 * the caller should be aware that features inside a constant
 	 * #GstCaps should not be modified. However, if you know the caps
 	 * are writable, either because you have just copied them or made
 	 * them writable with gst_caps_make_writable(), you may modify the
 	 * features returned in the usual way, e.g. with functions like
 	 * gst_caps_features_add().
-	 *
-	 * You do not need to free or unref the structure returned, it
-	 * belongs to the #GstCaps.
 	 *
 	 * Params:
 	 *     index = the index of the structure
@@ -386,14 +395,14 @@ public class Caps
 	 */
 	public CapsFeatures getFeatures(uint index)
 	{
-		auto p = gst_caps_get_features(gstCaps, index);
+		auto __p = gst_caps_get_features(gstCaps, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) __p);
 	}
 
 	/**
@@ -407,20 +416,16 @@ public class Caps
 	}
 
 	/**
-	 * Finds the structure in @caps that has the index @index, and
-	 * returns it.
+	 * Finds the structure in @caps at @index, and returns it.
 	 *
-	 * WARNING: This function takes a const GstCaps *, but returns a
-	 * non-const GstStructure *.  This is for programming convenience --
+	 * WARNING: This function takes a `const GstCaps *`, but returns a
+	 * non-const `GstStructure *`.  This is for programming convenience --
 	 * the caller should be aware that structures inside a constant
 	 * #GstCaps should not be modified. However, if you know the caps
 	 * are writable, either because you have just copied them or made
 	 * them writable with gst_caps_make_writable(), you may modify the
 	 * structure returned in the usual way, e.g. with functions like
 	 * gst_structure_set().
-	 *
-	 * You do not need to free or unref the structure returned, it
-	 * belongs to the #GstCaps.
 	 *
 	 * Params:
 	 *     index = the index of the structure
@@ -430,14 +435,14 @@ public class Caps
 	 */
 	public Structure getStructure(uint index)
 	{
-		auto p = gst_caps_get_structure(gstCaps, index);
+		auto __p = gst_caps_get_structure(gstCaps, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -451,14 +456,14 @@ public class Caps
 	 */
 	public Caps intersect(Caps caps2)
 	{
-		auto p = gst_caps_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		auto __p = gst_caps_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -474,14 +479,14 @@ public class Caps
 	 */
 	public Caps intersectFull(Caps caps2, GstCapsIntersectMode mode)
 	{
-		auto p = gst_caps_intersect_full(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(), mode);
+		auto __p = gst_caps_intersect_full(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(), mode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -647,18 +652,18 @@ public class Caps
 	 */
 	public Caps merge(Caps caps2)
 	{
-		auto p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
+		auto __p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
-	 * Appends @structure to @caps if its not already expressed by @caps.
+	 * Appends @structure to @caps if it is not already expressed by @caps.
 	 *
 	 * Params:
 	 *     structure = the #GstStructure to merge
@@ -667,14 +672,14 @@ public class Caps
 	 */
 	public Caps mergeStructure(Structure structure)
 	{
-		auto p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct(true));
+		auto __p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -690,20 +695,20 @@ public class Caps
 	 */
 	public Caps mergeStructureFull(Structure structure, CapsFeatures features)
 	{
-		auto p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(true), (features is null) ? null : features.getCapsFeaturesStruct(true));
+		auto __p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(true), (features is null) ? null : features.getCapsFeaturesStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
 	 * Returns a #GstCaps that represents the same set of formats as
 	 * @caps, but contains no lists.  Each list is expanded into separate
-	 * @GstStructures.
+	 * #GstStructure.
 	 *
 	 * This function takes ownership of @caps and will call gst_caps_make_writable()
 	 * on it so you must not use @caps afterwards unless you keep an additional
@@ -713,18 +718,43 @@ public class Caps
 	 */
 	public Caps normalize()
 	{
-		auto p = gst_caps_normalize(gstCaps);
+		auto __p = gst_caps_normalize(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	alias doref = ref_;
+	/**
+	 * Adds a reference to a #GstCaps object.
+	 *
+	 * From this point on, until the caller calls gst_caps_unref() or
+	 * gst_caps_make_writable(), it is guaranteed that the caps object will not
+	 * change. This means its structures won't change, etc. To use a #GstCaps
+	 * object, you must always have a refcount on it -- either the one made
+	 * implicitly by e.g. gst_caps_new_simple(), or via taking one explicitly with
+	 * this function.
+	 *
+	 * Returns: the same #GstCaps object.
+	 */
+	public Caps ref_()
+	{
+		auto __p = gst_caps_ref(gstCaps);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
-	 * removes the structure with the given index from the list of structures
+	 * Removes the structure with the given index from the list of structures
 	 * contained in @caps.
 	 *
 	 * Params:
@@ -736,7 +766,33 @@ public class Caps
 	}
 
 	/**
-	 * Sets the #GstCapsFeatures @features for the structure at @index.
+	 * Converts @caps to a string representation.  This string representation can be
+	 * converted back to a #GstCaps by gst_caps_from_string().
+	 *
+	 * This prints the caps in human readable form.
+	 *
+	 * This version of the caps serialization function introduces support for nested
+	 * structures and caps but the resulting strings won't be parsable with
+	 * GStreamer prior to 1.20 unless #GST_SERIALIZE_FLAG_BACKWARD_COMPAT is passed
+	 * as @flag.
+	 *
+	 * Params:
+	 *     flags = a #GstSerializeFlags
+	 *
+	 * Returns: a newly allocated string representing @caps.
+	 *
+	 * Since: 1.20
+	 */
+	public string serialize(GstSerializeFlags flags)
+	{
+		auto retStr = gst_caps_serialize(gstCaps, flags);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
+	 * Sets the @features for the structure at @index.
 	 *
 	 * Params:
 	 *     index = the index of the structure
@@ -750,7 +806,7 @@ public class Caps
 	}
 
 	/**
-	 * Sets the #GstCapsFeatures @features for all the structures of @caps.
+	 * Sets the @features for all the structures of @caps.
 	 *
 	 * Params:
 	 *     features = the #GstCapsFeatures to set
@@ -805,14 +861,14 @@ public class Caps
 	 */
 	public Caps simplify()
 	{
-		auto p = gst_caps_simplify(gstCaps);
+		auto __p = gst_caps_simplify(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -827,14 +883,14 @@ public class Caps
 	 */
 	public Structure stealStructure(uint index)
 	{
-		auto p = gst_caps_steal_structure(gstCaps, index);
+		auto __p = gst_caps_steal_structure(gstCaps, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
@@ -849,14 +905,14 @@ public class Caps
 	 */
 	public Caps subtract(Caps subtrahend)
 	{
-		auto p = gst_caps_subtract(gstCaps, (subtrahend is null) ? null : subtrahend.getCapsStruct());
+		auto __p = gst_caps_subtract(gstCaps, (subtrahend is null) ? null : subtrahend.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -864,13 +920,15 @@ public class Caps
 	 * can be converted back to a #GstCaps by gst_caps_from_string().
 	 *
 	 * For debugging purposes its easier to do something like this:
-	 * |[<!-- language="C" -->
+	 *
+	 * ``` C
 	 * GST_LOG ("caps are %" GST_PTR_FORMAT, caps);
-	 * ]|
+	 * ```
+	 *
 	 * This prints the caps in human readable form.
 	 *
-	 * The current implementation of serialization will lead to unexpected results
-	 * when there are nested #GstCaps / #GstStructure deeper than one level.
+	 * The implementation of serialization up to 1.20 would lead to unexpected results
+	 * when there were nested #GstCaps / #GstStructure deeper than one level.
 	 *
 	 * Returns: a newly allocated string representing @caps.
 	 */
@@ -883,32 +941,45 @@ public class Caps
 	}
 
 	/**
-	 * Discard all but the first structure from @caps. Useful when
+	 * Discards all but the first structure from @caps. Useful when
 	 * fixating.
 	 *
 	 * This function takes ownership of @caps and will call gst_caps_make_writable()
 	 * on it if necessary, so you must not use @caps afterwards unless you keep an
 	 * additional reference to it with gst_caps_ref().
 	 *
+	 * Note that it is not guaranteed that the returned caps have exactly one
+	 * structure. If @caps is any or empty caps then the returned caps will be
+	 * the same and contain no structure at all.
+	 *
 	 * Returns: truncated caps
 	 */
 	public Caps truncate()
 	{
-		auto p = gst_caps_truncate(gstCaps);
+		auto __p = gst_caps_truncate(gstCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	/**
+	 * Unrefs a #GstCaps and frees all its structures and the
+	 * structures' values when the refcount reaches 0.
+	 */
+	public void unref()
+	{
+		gst_caps_unref(gstCaps);
 	}
 
 	/**
 	 * Converts @caps from a string representation.
 	 *
-	 * The current implementation of serialization will lead to unexpected results
-	 * when there are nested #GstCaps / #GstStructure deeper than one level.
+	 * The implementation of serialization up to 1.20 would lead to unexpected results
+	 * when there were nested #GstCaps / #GstStructure deeper than one level.
 	 *
 	 * Params:
 	 *     string_ = a string to convert to #GstCaps
@@ -917,13 +988,64 @@ public class Caps
 	 */
 	public static Caps fromString(string string_)
 	{
-		auto p = gst_caps_from_string(Str.toStringz(string_));
+		auto __p = gst_caps_from_string(Str.toStringz(string_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstCaps to point to a different #GstCaps. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * caps is unreffed, the new is reffed).
+	 *
+	 * Either @new_caps or the #GstCaps pointed to by @old_caps may be %NULL.
+	 *
+	 * Params:
+	 *     oldCaps = pointer to a pointer
+	 *         to a #GstCaps to be replaced.
+	 *     newCaps = pointer to a #GstCaps that will
+	 *         replace the caps pointed to by @old_caps.
+	 *
+	 * Returns: %TRUE if @new_caps was different from @old_caps
+	 */
+	public static bool replace(ref Caps oldCaps, Caps newCaps)
+	{
+		GstCaps* outoldCaps = oldCaps.getCapsStruct();
+
+		auto __p = gst_caps_replace(&outoldCaps, (newCaps is null) ? null : newCaps.getCapsStruct()) != 0;
+
+		oldCaps = ObjectG.getDObject!(Caps)(outoldCaps);
+
+		return __p;
+	}
+
+	/**
+	 * Modifies a pointer to a #GstCaps to point to a different #GstCaps. This
+	 * function is similar to gst_caps_replace() except that it takes ownership
+	 * of @new_caps.
+	 *
+	 * Params:
+	 *     oldCaps = pointer to a pointer to a #GstCaps to be
+	 *         replaced.
+	 *     newCaps = pointer to a #GstCaps that will
+	 *         replace the caps pointed to by @old_caps.
+	 *
+	 * Returns: %TRUE if @new_caps was different from @old_caps
+	 */
+	public static bool take(ref Caps oldCaps, Caps newCaps)
+	{
+		GstCaps* outoldCaps = oldCaps.getCapsStruct();
+
+		auto __p = gst_caps_take(&outoldCaps, (newCaps is null) ? null : newCaps.getCapsStruct(true)) != 0;
+
+		oldCaps = ObjectG.getDObject!(Caps)(outoldCaps);
+
+		return __p;
 	}
 }

@@ -26,6 +26,7 @@ module gtk.AppChooserT;
 
 public  import gio.AppInfoIF;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gtk.c.functions;
 public  import gtk.c.types;
@@ -72,14 +73,14 @@ public template AppChooserT(TStruct)
 	 */
 	public AppInfoIF getAppInfo()
 	{
-		auto p = gtk_app_chooser_get_app_info(getAppChooserStruct());
+		auto __p = gtk_app_chooser_get_app_info(getAppChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**

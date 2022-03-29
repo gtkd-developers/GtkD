@@ -31,6 +31,7 @@ public  import gio.c.types;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantDict;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -96,9 +97,9 @@ public  import gtkc.giotypes;
  * }
  * ]|
  * The complete example can be found here:
- * [gapplication-example-cmdline.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-cmdline.c)
+ * [gapplication-example-cmdline.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-cmdline.c)
  * 
- * In more complicated cases, the handling of the comandline can be
+ * In more complicated cases, the handling of the commandline can be
  * split between the launcher and the primary instance.
  * |[<!-- language="C" -->
  * static gboolean
@@ -110,6 +111,12 @@ public  import gtkc.giotypes;
  * gchar **argv;
  * 
  * argv = *arguments;
+ * 
+ * if (argv[0] == NULL)
+ * {
+ * *exit_status = 0;
+ * return FALSE;
+ * }
  * 
  * i = 1;
  * while (argv[i])
@@ -147,7 +154,7 @@ public  import gtkc.giotypes;
  * instance.
  * 
  * The complete example can be found here:
- * [gapplication-example-cmdline2.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-cmdline2.c)
+ * [gapplication-example-cmdline2.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-cmdline2.c)
  * 
  * If handling the commandline requires a lot of work, it may
  * be better to defer it.
@@ -189,7 +196,7 @@ public  import gtkc.giotypes;
  * hold the application until you are done with the commandline.
  * 
  * The complete example can be found here:
- * [gapplication-example-cmdline3.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-cmdline3.c)
+ * [gapplication-example-cmdline3.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-cmdline3.c)
  */
 public class ApplicationCommandLine : ObjectG
 {
@@ -409,7 +416,7 @@ public class ApplicationCommandLine : ObjectG
 	 * The #GInputStream can be used to read data passed to the standard
 	 * input of the invoking process.
 	 * This doesn't work on all platforms.  Presently, it is only available
-	 * on UNIX when using a DBus daemon capable of passing file descriptors.
+	 * on UNIX when using a D-Bus daemon capable of passing file descriptors.
 	 * If stdin is not available then %NULL will be returned.  In the
 	 * future, support may be expanded to other platforms.
 	 *

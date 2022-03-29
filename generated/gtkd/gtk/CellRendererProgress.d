@@ -89,13 +89,13 @@ public class CellRendererProgress : CellRenderer, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_progress_new();
+		auto __p = gtk_cell_renderer_progress_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererProgress*) p);
+		this(cast(GtkCellRendererProgress*) __p);
 	}
 }

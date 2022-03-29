@@ -26,6 +26,7 @@ module pango.PgColor;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -34,7 +35,7 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoColor structure is used to
+ * The `PangoColor` structure is used to
  * represent a color in an uncalibrated RGB color-space.
  */
 public final class PgColor
@@ -122,29 +123,30 @@ public final class PgColor
 	}
 
 	/**
-	 * Creates a copy of @src, which should be freed with
-	 * pango_color_free(). Primarily used by language bindings,
-	 * not that useful otherwise (since colors can just be copied
-	 * by assignment in C).
+	 * Creates a copy of @src.
 	 *
-	 * Returns: the newly allocated #PangoColor, which
-	 *     should be freed with pango_color_free(), or %NULL if
-	 *     @src was %NULL.
+	 * The copy should be freed with [method@Pango.Color.free].
+	 * Primarily used by language bindings, not that useful
+	 * otherwise (since colors can just be copied by assignment
+	 * in C).
+	 *
+	 * Returns: the newly allocated `PangoColor`,
+	 *     which should be freed with [method@Pango.Color.free]
 	 */
 	public PgColor copy()
 	{
-		auto p = pango_color_copy(pangoColor);
+		auto __p = pango_color_copy(pangoColor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p, true);
+		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) __p, true);
 	}
 
 	/**
-	 * Frees a color allocated by pango_color_copy().
+	 * Frees a color allocated by [method@Pango.Color.copy].
 	 */
 	public void free()
 	{
@@ -153,20 +155,21 @@ public final class PgColor
 	}
 
 	/**
-	 * Fill in the fields of a color from a string specification. The
-	 * string can either one of a large set of standard names. (Taken
-	 * from the CSS <ulink url="http://dev.w3.org/csswg/css-color/#named-colors">specification</ulink>), or it can be a hexadecimal
-	 * value in the
-	 * form '&num;rgb' '&num;rrggbb' '&num;rrrgggbbb' or '&num;rrrrggggbbbb' where
-	 * 'r', 'g' and 'b' are hex digits of the red, green, and blue
-	 * components of the color, respectively. (White in the four
-	 * forms is '&num;fff' '&num;ffffff' '&num;fffffffff' and '&num;ffffffffffff')
+	 * Fill in the fields of a color from a string specification.
+	 *
+	 * The string can either one of a large set of standard names.
+	 * (Taken from the CSS Color [specification](https://www.w3.org/TR/css-color-4/#named-colors),
+	 * or it can be a value in the form `#rgb`, `#rrggbb`,
+	 * `#rrrgggbbb` or `#rrrrggggbbbb`, where `r`, `g` and `b`
+	 * are hex digits of the red, green, and blue components
+	 * of the color, respectively. (White in the four forms is
+	 * `#fff`, `#ffffff`, `#fffffffff` and `#ffffffffffff`.)
 	 *
 	 * Params:
 	 *     spec = a string specifying the new color
 	 *
 	 * Returns: %TRUE if parsing of the specifier succeeded,
-	 *     otherwise false.
+	 *     otherwise %FALSE
 	 */
 	public bool parse(string spec)
 	{
@@ -174,12 +177,45 @@ public final class PgColor
 	}
 
 	/**
-	 * Returns a textual specification of @color in the hexadecimal form
-	 * <literal>&num;rrrrggggbbbb</literal>, where <literal>r</literal>,
-	 * <literal>g</literal> and <literal>b</literal> are hex digits representing
-	 * the red, green, and blue components respectively.
+	 * Fill in the fields of a color from a string specification.
 	 *
-	 * Returns: a newly-allocated text string that must be freed with g_free().
+	 * The string can either one of a large set of standard names.
+	 * (Taken from the CSS Color [specification](https://www.w3.org/TR/css-color-4/#named-colors),
+	 * or it can be a hexadecimal value in the form `#rgb`,
+	 * `#rrggbb`, `#rrrgggbbb` or `#rrrrggggbbbb` where `r`, `g`
+	 * and `b` are hex digits of the red, green, and blue components
+	 * of the color, respectively. (White in the four forms is
+	 * `#fff`, `#ffffff`, `#fffffffff` and `#ffffffffffff`.)
+	 *
+	 * Additionally, parse strings of the form `#rgba`, `#rrggbbaa`,
+	 * `#rrrrggggbbbbaaaa`, if @alpha is not %NULL, and set @alpha
+	 * to the value specified by the hex digits for `a`. If no alpha
+	 * component is found in @spec, @alpha is set to 0xffff (for a
+	 * solid color).
+	 *
+	 * Params:
+	 *     alpha = return location for alpha
+	 *     spec = a string specifying the new color
+	 *
+	 * Returns: %TRUE if parsing of the specifier succeeded,
+	 *     otherwise %FALSE
+	 *
+	 * Since: 1.46
+	 */
+	public bool parseWithAlpha(out ushort alpha, string spec)
+	{
+		return pango_color_parse_with_alpha(pangoColor, &alpha, Str.toStringz(spec)) != 0;
+	}
+
+	/**
+	 * Returns a textual specification of @color.
+	 *
+	 * The string is in the hexadecimal form `#rrrrggggbbbb`,
+	 * where `r`, `g` and `b` are hex digits representing the
+	 * red, green, and blue components respectively.
+	 *
+	 * Returns: a newly-allocated text string that must
+	 *     be freed with g_free().
 	 *
 	 * Since: 1.16
 	 */

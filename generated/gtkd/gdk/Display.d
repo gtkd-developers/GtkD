@@ -36,6 +36,7 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -109,14 +110,14 @@ public class Display : ObjectG
 	 */
 	public static Display getDefault()
 	{
-		auto p = gdk_display_get_default();
+		auto __p = gdk_display_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -132,14 +133,14 @@ public class Display : ObjectG
 	 */
 	public static Display open(string displayName)
 	{
-		auto p = gdk_display_open(Str.toStringz(displayName));
+		auto __p = gdk_display_open(Str.toStringz(displayName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -157,14 +158,14 @@ public class Display : ObjectG
 	 */
 	public static Display openDefaultLibgtkOnly()
 	{
-		auto p = gdk_display_open_default_libgtk_only();
+		auto __p = gdk_display_open_default_libgtk_only();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -230,14 +231,14 @@ public class Display : ObjectG
 	 */
 	public AppLaunchContext getAppLaunchContext()
 	{
-		auto p = gdk_display_get_app_launch_context(gdkDisplay);
+		auto __p = gdk_display_get_app_launch_context(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppLaunchContext)(cast(GdkAppLaunchContext*) p, true);
+		return ObjectG.getDObject!(AppLaunchContext)(cast(GdkAppLaunchContext*) __p, true);
 	}
 
 	/**
@@ -264,14 +265,14 @@ public class Display : ObjectG
 	 */
 	public Window getDefaultGroup()
 	{
-		auto p = gdk_display_get_default_group(gdkDisplay);
+		auto __p = gdk_display_get_default_group(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -283,14 +284,14 @@ public class Display : ObjectG
 	 */
 	public Screen getDefaultScreen()
 	{
-		auto p = gdk_display_get_default_screen(gdkDisplay);
+		auto __p = gdk_display_get_default_screen(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -302,14 +303,14 @@ public class Display : ObjectG
 	 */
 	public Seat getDefaultSeat()
 	{
-		auto p = gdk_display_get_default_seat(gdkDisplay);
+		auto __p = gdk_display_get_default_seat(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) __p);
 	}
 
 	/**
@@ -325,14 +326,14 @@ public class Display : ObjectG
 	 */
 	public DeviceManager getDeviceManager()
 	{
-		auto p = gdk_display_get_device_manager(gdkDisplay);
+		auto __p = gdk_display_get_device_manager(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceManager)(cast(GdkDeviceManager*) p);
+		return ObjectG.getDObject!(DeviceManager)(cast(GdkDeviceManager*) __p);
 	}
 
 	/**
@@ -347,14 +348,14 @@ public class Display : ObjectG
 	 */
 	public Event getEvent()
 	{
-		auto p = gdk_display_get_event(gdkDisplay);
+		auto __p = gdk_display_get_event(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**
@@ -384,14 +385,14 @@ public class Display : ObjectG
 	 */
 	public MonitorG getMonitor(int monitorNum)
 	{
-		auto p = gdk_display_get_monitor(gdkDisplay, monitorNum);
+		auto __p = gdk_display_get_monitor(gdkDisplay, monitorNum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
+		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) __p);
 	}
 
 	/**
@@ -408,14 +409,14 @@ public class Display : ObjectG
 	 */
 	public MonitorG getMonitorAtPoint(int x, int y)
 	{
-		auto p = gdk_display_get_monitor_at_point(gdkDisplay, x, y);
+		auto __p = gdk_display_get_monitor_at_point(gdkDisplay, x, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
+		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) __p);
 	}
 
 	/**
@@ -432,14 +433,14 @@ public class Display : ObjectG
 	 */
 	public MonitorG getMonitorAtWindow(Window window)
 	{
-		auto p = gdk_display_get_monitor_at_window(gdkDisplay, (window is null) ? null : window.getWindowStruct());
+		auto __p = gdk_display_get_monitor_at_window(gdkDisplay, (window is null) ? null : window.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
+		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) __p);
 	}
 
 	/**
@@ -523,14 +524,14 @@ public class Display : ObjectG
 	 */
 	public MonitorG getPrimaryMonitor()
 	{
-		auto p = gdk_display_get_primary_monitor(gdkDisplay);
+		auto __p = gdk_display_get_primary_monitor(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
+		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) __p);
 	}
 
 	/**
@@ -547,14 +548,14 @@ public class Display : ObjectG
 	 */
 	public Screen getScreen(int screenNum)
 	{
-		auto p = gdk_display_get_screen(gdkDisplay, screenNum);
+		auto __p = gdk_display_get_screen(gdkDisplay, screenNum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -578,14 +579,14 @@ public class Display : ObjectG
 	 */
 	public Window getWindowAtPointer(out int winX, out int winY)
 	{
-		auto p = gdk_display_get_window_at_pointer(gdkDisplay, &winX, &winY);
+		auto __p = gdk_display_get_window_at_pointer(gdkDisplay, &winX, &winY);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -641,14 +642,14 @@ public class Display : ObjectG
 	 */
 	public ListG listDevices()
 	{
-		auto p = gdk_display_list_devices(gdkDisplay);
+		auto __p = gdk_display_list_devices(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -661,14 +662,14 @@ public class Display : ObjectG
 	 */
 	public ListG listSeats()
 	{
-		auto p = gdk_display_list_seats(gdkDisplay);
+		auto __p = gdk_display_list_seats(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -705,14 +706,14 @@ public class Display : ObjectG
 	 */
 	public Event peekEvent()
 	{
-		auto p = gdk_display_peek_event(gdkDisplay);
+		auto __p = gdk_display_peek_event(gdkDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**

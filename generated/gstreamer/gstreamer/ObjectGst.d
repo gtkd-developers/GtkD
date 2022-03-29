@@ -27,6 +27,7 @@ module gstreamer.ObjectGst;
 private import glib.ErrorG;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Signals;
@@ -206,11 +207,11 @@ public class ObjectGst : ObjectG
 	{
 		GstObject* outoldobj = oldobj.getObjectGstStruct();
 
-		auto p = gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct()) != 0;
+		auto __p = gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct()) != 0;
 
 		oldobj = ObjectG.getDObject!(ObjectGst)(outoldobj);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -258,14 +259,14 @@ public class ObjectGst : ObjectG
 	 */
 	public ControlBinding getControlBinding(string propertyName)
 	{
-		auto p = gst_object_get_control_binding(gstObject, Str.toStringz(propertyName));
+		auto __p = gst_object_get_control_binding(gstObject, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ControlBinding)(cast(GstControlBinding*) p, true);
+		return ObjectG.getDObject!(ControlBinding)(cast(GstControlBinding*) __p, true);
 	}
 
 	/**
@@ -346,14 +347,14 @@ public class ObjectGst : ObjectG
 	 */
 	public ObjectGst getParent()
 	{
-		auto p = gst_object_get_parent(gstObject);
+		auto __p = gst_object_get_parent(gstObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectGst)(cast(GstObject*) p, true);
+		return ObjectG.getDObject!(ObjectGst)(cast(GstObject*) __p, true);
 	}
 
 	/**
@@ -388,14 +389,14 @@ public class ObjectGst : ObjectG
 	 */
 	public Value getValue(string propertyName, GstClockTime timestamp)
 	{
-		auto p = gst_object_get_value(gstObject, Str.toStringz(propertyName), timestamp);
+		auto __p = gst_object_get_value(gstObject, Str.toStringz(propertyName), timestamp);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p, true);
 	}
 
 	/**
@@ -501,14 +502,14 @@ public class ObjectGst : ObjectG
 	 */
 	public override ObjectGst ref_()
 	{
-		auto p = gst_object_ref(gstObject);
+		auto __p = gst_object_ref(gstObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectGst)(cast(GstObject*) p, true);
+		return ObjectG.getDObject!(ObjectGst)(cast(GstObject*) __p, true);
 	}
 
 	/**

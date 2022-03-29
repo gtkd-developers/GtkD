@@ -38,7 +38,7 @@ public import gstreamer.c.types;
 public enum GstMpegtsATSCDescriptorType
 {
 	STUFFING = 128,
-	AC3 = 131,
+	AC3 = 129,
 	CAPTION_SERVICE = 134,
 	CONTENT_ADVISORY = 135,
 	EXTENDED_CHANNEL_NAME = 160,
@@ -61,6 +61,46 @@ public enum GstMpegtsATSCDescriptorType
 	GROUP_LINK = 184,
 }
 alias GstMpegtsATSCDescriptorType ATSCDescriptorType;
+
+/**
+ * Type of mpeg-ts streams for ATSC, as defined by the ATSC Code Points
+ * Registry. For convenience, some stream types from %GstMpegtsScteStreamType
+ * are also included.
+ *
+ * Since: 1.20
+ */
+public enum GstMpegtsATSCStreamType
+{
+	/**
+	 * DigiCipher II video | Identical to ITU-T Rec. H.262 | ISO/IEC 13818-2 Video
+	 */
+	DCII_VIDEO = 128,
+	/**
+	 * ATSC A/53 Audio | AC-3
+	 */
+	AUDIO_AC3 = 129,
+	/**
+	 * SCTE-27 Subtitling
+	 */
+	SUBTITLING = 130,
+	/**
+	 * SCTE-19 Isochronous data | Reserved
+	 */
+	ISOCH_DATA = 131,
+	/**
+	 * SCTE-35 Splice Information Table
+	 */
+	SIT = 134,
+	/**
+	 * E-AC-3 A/52:2018
+	 */
+	AUDIO_EAC3 = 135,
+	/**
+	 * E-AC-3 A/107 (ATSC 2.0)
+	 */
+	AUDIO_DTS_HD = 136,
+}
+alias GstMpegtsATSCStreamType ATSCStreamType;
 
 public enum GstMpegtsAtscMGTTableType
 {
@@ -171,6 +211,11 @@ public enum GstMpegtsDVBDescriptorType
 	SERVICE_MOVE = 96,
 	SHORT_SMOOTHING_BUFFER = 97,
 	FREQUENCY_LIST = 98,
+	/**
+	 * Partial Transport Stream descriptor. Only present in SIT Sections.
+	 *
+	 * See also: %GST_MPEGTS_SECTION_SIT, %GstMpegtsSIT
+	 */
 	PARTIAL_TRANSPORT_STREAM = 99,
 	DATA_BROADCAST = 100,
 	SCRAMBLING = 101,
@@ -232,6 +277,11 @@ public enum GstMpegtsDVBExtendedDescriptorType
 	VIDEO_DEPTH_RANGE = 16,
 	T2MI = 17,
 	URI_LINKAGE = 19,
+	AC4 = 21,
+	/**
+	 * Provide all avaliable audio programme for user selection
+	 */
+	AUDIO_PRESELECTION = 25,
 }
 alias GstMpegtsDVBExtendedDescriptorType DVBExtendedDescriptorType;
 
@@ -402,6 +452,30 @@ public enum GstMpegtsDescriptorType
 alias GstMpegtsDescriptorType DescriptorType;
 
 /**
+ * Type of mpeg-ts streams for Blu-ray formats. To be matched with the
+ * stream-type of a #GstMpegtsSection.
+ *
+ * Since: 1.20
+ */
+public enum GstMpegtsHdmvStreamType
+{
+	AUDIO_LPCM = 128,
+	AUDIO_AC3 = 129,
+	AUDIO_DTS = 130,
+	AUDIO_AC3_TRUE_HD = 131,
+	AUDIO_AC3_PLUS = 132,
+	AUDIO_DTS_HD = 133,
+	AUDIO_DTS_HD_MASTER_AUDIO = 134,
+	AUDIO_EAC3 = 135,
+	SUBPICTURE_PGS = 144,
+	IGS = 145,
+	SUBTITLE = 146,
+	AUDIO_AC3_PLUS_SECONDARY = 161,
+	AUDIO_DTS_HD_SECONDARY = 162,
+}
+alias GstMpegtsHdmvStreamType HdmvStreamType;
+
+/**
  * These values correspond to the registered descriptor type from
  * the various ISDB specifications.
  *
@@ -461,8 +535,7 @@ alias GstMpegtsIso639AudioType Iso639AudioType;
  */
 public enum GstMpegtsMiscDescriptorType
 {
-	AC3_AUDIO_STREAM = 129,
-	DTG_LOGICAL_CHANNEL = 131,
+	MTS_DESC_DTG_LOGICAL_CHANNEL = 131,
 }
 alias GstMpegtsMiscDescriptorType MiscDescriptorType;
 
@@ -487,6 +560,94 @@ public enum GstMpegtsModulationType
 alias GstMpegtsModulationType ModulationType;
 
 /**
+ * Well-known registration ids, expressed as native-endian 32bit integers. These
+ * are used in descriptors of type %GST_MTS_DESC_REGISTRATION. Unless specified
+ * otherwise (by use of the "OTHER" prefix), they are all registered by the
+ * [SMPTE Registration Authority](https://smpte-ra.org/) or specified in
+ * "official" documentation for the given format.
+ *
+ * Since: 1.20
+ */
+public enum GstMpegtsRegistrationId
+{
+	/**
+	 * Undefined registration id
+	 */
+	_0 = 0,
+	/**
+	 * Audio AC-3, ATSC A/52
+	 */
+	AC_3 = 1094921523,
+	/**
+	 * SCTE 35, "Digital Program Insertion Cueing Message"
+	 */
+	CUEI = 1129661769,
+	/**
+	 * Dirac Video codec
+	 */
+	DRAC = 1685217635,
+	/**
+	 * DTS Audio
+	 */
+	DTS1 = 1146377009,
+	/**
+	 * DTS Audio
+	 */
+	DTS2 = 1146377010,
+	/**
+	 * DTS Audio
+	 */
+	DTS3 = 1146377011,
+	/**
+	 * SMPTE 302M, Mapping of AES3 Data in mpeg-ts
+	 */
+	BSSD = 1112757060,
+	/**
+	 * Enhanced AC-3 (i.e. EAC3)
+	 */
+	EAC3 = 1161904947,
+	/**
+	 * Cablelabs ETV
+	 */
+	ETV1 = 1163154993,
+	/**
+	 * ATSC A/53 compliant stream (i.e. ATSC)
+	 */
+	GA94 = 1195456820,
+	/**
+	 * Blu-ray, "System Description Blu-ray Disc
+	 * Read-Only Format part 3 Audio Visual Basic Specifications"
+	 */
+	HDMV = 1212435798,
+	/**
+	 * SMPTE RP217 : Non-synchronized Mapping of KLV
+	 * Packets in mpeg-ts
+	 */
+	KLVA = 1263294017,
+	/**
+	 * Opus Audio
+	 */
+	OPUS = 1330664787,
+	/**
+	 * HDV (Sony)
+	 */
+	TSHV = 1414744150,
+	/**
+	 * Video VC-1, SMPTE RP227 "VC-1 Bitstream Transport Encodings"
+	 */
+	VC_1 = 1447243057,
+	/**
+	 * Audio AC-4, ETSI 103 190-2
+	 */
+	AC_4 = 1094921524,
+	/**
+	 * HEVC / h265
+	 */
+	OTHER_HEVC = 1212503619,
+}
+alias GstMpegtsRegistrationId RegistrationId;
+
+/**
  * Running status of a service.
  *
  * Corresponds to table 6 of ETSI EN 300 468 (v1.13.0)
@@ -501,6 +662,45 @@ public enum GstMpegtsRunningStatus
 	OFF_AIR = 5,
 }
 alias GstMpegtsRunningStatus RunningStatus;
+
+/**
+ * These values correspond to the ones defined by SCTE (amongst other in ANSI/SCTE 57)
+ *
+ * Since: 1.20
+ */
+public enum GstMpegtsSCTEDescriptorType
+{
+	STUFFING = 128,
+	AC3 = 129,
+	FRAME_RATE = 130,
+	EXTENDED_VIDEO = 131,
+	COMPONENT_NAME = 132,
+	FREQUENCY_SPEC = 144,
+	MODULATION_PARAMS = 145,
+	TRANSPORT_STREAM_ID = 146,
+}
+alias GstMpegtsSCTEDescriptorType SCTEDescriptorType;
+
+public enum GstMpegtsSCTESpliceCommandType
+{
+	NULL = 0,
+	SCHEDULE = 4,
+	INSERT = 5,
+	TIME = 6,
+	BANDWIDTH = 7,
+	PRIVATE = 255,
+}
+alias GstMpegtsSCTESpliceCommandType SCTESpliceCommandType;
+
+public enum GstMpegtsSCTESpliceDescriptor
+{
+	AVAIL = 0,
+	DTMF = 1,
+	SEGMENTATION = 2,
+	TIME = 3,
+	AUDIO = 4,
+}
+alias GstMpegtsSCTESpliceDescriptor SCTESpliceDescriptor;
 
 public enum GstMpegtsSatellitePolarizationType
 {
@@ -522,7 +722,8 @@ public enum GstMpegtsSatelliteRolloff
 alias GstMpegtsSatelliteRolloff SatelliteRolloff;
 
 /**
- * Type of mpeg-ts streams for SCTE
+ * Type of mpeg-ts streams for SCTE. Most users would want to use the
+ * #GstMpegtsATSCStreamType instead since it also covers these stream types
  */
 public enum GstMpegtsScteStreamType
 {
@@ -534,6 +735,10 @@ public enum GstMpegtsScteStreamType
 	 * SCTE-19 Isochronous data
 	 */
 	ISOCH_DATA = 131,
+	/**
+	 * SCTE-35 Splice Information Table
+	 */
+	SIT = 134,
 	/**
 	 * SCTE-07 Data Service or
 	 * Network Resource Table
@@ -563,28 +768,75 @@ alias GstMpegtsScteStreamType ScteStreamType;
 /**
  * Values for a #GstMpegtsSection table_id.
  *
- * These are the registered ATSC table_id variants.
+ * These are the registered ATSC section `table_id` variants. Unless specified
+ * otherwise, they are defined in the "ATSC A/65" specification.
  *
- * see also: #GstMpegtsSectionTableID
+ * see also: #GstMpegtsSectionTableID and other variants.
  */
 public enum GstMpegtsSectionATSCTableID
 {
+	/**
+	 * Master Guide Table (MGT)
+	 */
 	MASTER_GUIDE = 199,
+	/**
+	 * Terrestrial Virtual Channel Table (TVCT)
+	 */
 	TERRESTRIAL_VIRTUAL_CHANNEL = 200,
+	/**
+	 * Cable Virtual Channel Table (CVCT)
+	 */
 	CABLE_VIRTUAL_CHANNEL = 201,
+	/**
+	 * Rating Region Table (RRT)
+	 */
 	RATING_REGION = 202,
+	/**
+	 * Event Information Table (EIT)
+	 */
 	EVENT_INFORMATION = 203,
+	/**
+	 * Extended Text Table (ETT)
+	 */
 	CHANNEL_OR_EVENT_EXTENDED_TEXT = 204,
+	/**
+	 * System Time Table (STT)
+	 */
 	SYSTEM_TIME = 205,
+	/**
+	 * A/90: Data Event Table (DET)
+	 */
 	DATA_EVENT = 206,
+	/**
+	 * A/90: Data Service Table (DST)
+	 */
 	DATA_SERVICE = 207,
+	/**
+	 * A/57B: Program Identifier Table.
+	 */
+	PROGRAM_IDENTIFIER = 208,
+	/**
+	 * A/90: Network Resources Table (NRT)
+	 */
 	NETWORK_RESOURCE = 209,
+	/**
+	 * A/90: Long Term Service Table (LTST)
+	 */
 	LONG_TERM_SERVICE = 210,
+	/**
+	 * Directed Channel Change Table (DCCT)
+	 */
 	DIRECTED_CHANNEL_CHANGE = 211,
+	/**
+	 * Directed Channel Change Selection Code Table (DCCSCT)
+	 */
 	DIRECTED_CHANNEL_CHANGE_SECTION_CODE = 212,
 	AGGREGATE_EVENT_INFORMATION = 214,
 	AGGREGATE_EXTENDED_TEXT = 215,
 	AGGREGATE_DATA_EVENT = 217,
+	/**
+	 * A/81: Satellite Virtual Channel Table
+	 */
 	SATELLITE_VIRTUAL_CHANNEL = 218,
 }
 alias GstMpegtsSectionATSCTableID SectionATSCTableID;
@@ -592,39 +844,136 @@ alias GstMpegtsSectionATSCTableID SectionATSCTableID;
 /**
  * Values for a #GstMpegtsSection table_id.
  *
- * These are the registered DVB table_id variants.
+ * These are the registered DVB table_id variants. Unless specified otherwise,
+ * they come from the DVB Specification for SI (ETSI EN 300 468).
  *
  * see also: #GstMpegtsSectionTableID
  */
 public enum GstMpegtsSectionDVBTableID
 {
+	/**
+	 * Network Information Table (NIT), Actual Network
+	 */
 	NETWORK_INFORMATION_ACTUAL_NETWORK = 64,
+	/**
+	 * Network Information Table (NIT), Other Network
+	 */
 	NETWORK_INFORMATION_OTHER_NETWORK = 65,
+	/**
+	 * Service Description Table (SDT), Actual Transport Stream
+	 */
 	SERVICE_DESCRIPTION_ACTUAL_TS = 66,
+	/**
+	 * Service Description Table (SDT), Other Transport Stream
+	 */
 	SERVICE_DESCRIPTION_OTHER_TS = 70,
+	/**
+	 * Bouquet Association Table (BAT)
+	 */
 	BOUQUET_ASSOCIATION = 74,
+	/**
+	 * ETSI TS 102 006: Update Notification Table (UNT)
+	 */
+	UPDATE_NOTIFICATION = 75,
+	/**
+	 * ETSI EN 303 560: Downloadable Font Info
+	 */
+	DOWNLOADABLE_FONT_INFO = 76,
+	/**
+	 * Event Information Table (EIT), Actual Transport Stream, present/following
+	 */
 	EVENT_INFORMATION_ACTUAL_TS_PRESENT = 78,
+	/**
+	 * Event Information Table (EIT), Other Transport Stream, present/following
+	 */
 	EVENT_INFORMATION_OTHER_TS_PRESENT = 79,
+	/**
+	 * Event Information Table (EIT), Actual Transport Stream, Schedule (first)
+	 */
 	EVENT_INFORMATION_ACTUAL_TS_SCHEDULE_1 = 80,
+	/**
+	 * Event Information Table (EIT), Actual Transport Stream, Schedule (last)
+	 */
 	EVENT_INFORMATION_ACTUAL_TS_SCHEDULE_N = 95,
+	/**
+	 * Event Information Table (EIT), Other Transport Stream, Schedule (first)
+	 */
 	EVENT_INFORMATION_OTHER_TS_SCHEDULE_1 = 96,
+	/**
+	 * Event Information Table (EIT), Other Transport Stream, Schedule (last)
+	 */
 	EVENT_INFORMATION_OTHER_TS_SCHEDULE_N = 111,
+	/**
+	 * Time Date Table (TDT)
+	 */
 	TIME_DATE = 112,
+	/**
+	 * Running Status Table (RST)
+	 */
 	RUNNING_STATUS = 113,
+	/**
+	 * Stuffing Table (ST)
+	 */
 	STUFFING = 114,
+	/**
+	 * Time Offset Table (TOT)
+	 */
 	TIME_OFFSET = 115,
+	/**
+	 * ETSI TS 102 323: Application Information Table (AIT)
+	 */
 	APPLICATION_INFORMATION_TABLE = 116,
+	/**
+	 * ETSI TS 102 323: Container Section
+	 */
 	CONTAINER = 117,
+	/**
+	 * ETSI TS 102 323: Related Content Table (RCT)
+	 */
 	RELATED_CONTENT = 118,
+	/**
+	 * ETSI TS 102 323: Content Identifier Table (CIT)
+	 */
 	CONTENT_IDENTIFIER = 119,
+	/**
+	 * ETSI TS 301 192: MPE-FEC Section
+	 */
 	MPE_FEC = 120,
+	/**
+	 * ETSI 103 323: Resolution Provider Notification Table (RNT)
+	 */
 	RESOLUTION_NOTIFICATION = 121,
+	/**
+	 * ETSI TS 102 772: MPE-IFEC Section
+	 */
 	MPE_IFEC = 122,
+	/**
+	 * ETSI TS 102 809: Protection Message Section
+	 */
+	PROTECTION_MESSAGE = 123,
+	/**
+	 * Discontinuity Information Table (DIT)
+	 */
 	DISCONTINUITY_INFORMATION = 126,
+	/**
+	 * Selection Information Table (SIT)
+	 */
 	SELECTION_INFORMATION = 127,
+	/**
+	 * ETSI TR 289: CA Message Table (CMT): ECM 0
+	 */
 	CA_MESSAGE_ECM_0 = 128,
+	/**
+	 * ETSI TR 289: CA Message Table (CMT): ECM 1
+	 */
 	CA_MESSAGE_ECM_1 = 129,
+	/**
+	 * ETSI TR 289: CA Message Table (CMT): CA System Private (First)
+	 */
 	CA_MESSAGE_SYSTEM_PRIVATE_1 = 130,
+	/**
+	 * ETSI TR 289: CA Message Table (CMT): CA System Private (Last)
+	 */
 	CA_MESSAGE_SYSTEM_PRIVATE_N = 143,
 	SCT = 160,
 	FCT = 161,
@@ -689,26 +1038,85 @@ alias GstMpegtsSectionSCTETableID SectionSCTETableID;
  */
 public enum GstMpegtsSectionTableID
 {
+	/**
+	 * Program Association Table (PAT)
+	 */
 	PROGRAM_ASSOCIATION = 0,
+	/**
+	 * Conditional Access Table (CAT)
+	 */
 	CONDITIONAL_ACCESS = 1,
+	/**
+	 * Program Map Table (PMT)
+	 */
 	TS_PROGRAM_MAP = 2,
+	/**
+	 * Transport Stream Description Table
+	 */
 	TS_DESCRIPTION = 3,
+	/**
+	 * ISO/IEC 14496 Scene Description Table
+	 */
 	_14496_SCENE_DESCRIPTION = 4,
+	/**
+	 * ISO/IEC 14496 Object Descriptor Table
+	 */
 	_14496_OBJET_DESCRIPTOR = 5,
+	/**
+	 * Metadata Section
+	 */
 	METADATA = 6,
+	/**
+	 * IPMP Control Information
+	 */
 	IPMP_CONTROL_INFORMATION = 7,
+	/**
+	 * ISO/IEC 14496 Section.
+	 */
+	_14496_SECTION = 8,
+	/**
+	 * ISO/IEC 23001-11 (Green Access Unit) Section.
+	 */
+	_23001_11_SECTION = 9,
+	/**
+	 * ISO/ISO 23001-10 (Quality Access Unit) Section.
+	 */
+	_23001_10_SECTION = 10,
+	/**
+	 * DSM-CC Multi-Protocol Encapsulated (MPE) Data
+	 */
 	DSM_CC_MULTIPROTO_ENCAPSULATED_DATA = 58,
+	/**
+	 * DSM-CC U-N Messages
+	 */
 	DSM_CC_U_N_MESSAGES = 59,
+	/**
+	 * DSM-CC Download Data Messages
+	 */
 	DSM_CC_DOWNLOAD_DATA_MESSAGES = 60,
+	/**
+	 * DSM-CC Stream Descriptors
+	 */
 	DSM_CC_STREAM_DESCRIPTORS = 61,
+	/**
+	 * DSM-CC Private Data
+	 */
 	DSM_CC_PRIVATE_DATA = 62,
+	/**
+	 * DSM-CC Addressable Section
+	 */
 	DSM_CC_ADDRESSABLE_SECTIONS = 63,
+	/**
+	 * Unset section table_id (value is forbidden to use in actual sections)
+	 */
 	UNSET = 255,
 }
 alias GstMpegtsSectionTableID SectionTableID;
 
 /**
- * Types of #GstMpegtsSection that the library handles.
+ * Types of #GstMpegtsSection that the library handles. This covers all the
+ * MPEG-TS and derivate specification that the library can properly identify and
+ * use.
  */
 public enum GstMpegtsSectionType
 {
@@ -757,34 +1165,46 @@ public enum GstMpegtsSectionType
 	 */
 	TOT = 10,
 	/**
+	 * Selection Information Table (EN 300 468)
+	 */
+	SIT = 11,
+	/**
 	 * ATSC Terrestrial Virtual Channel Table (A65)
 	 */
-	ATSC_TVCT = 11,
+	ATSC_TVCT = 12,
 	/**
 	 * ATSC Cable Virtual Channel Table (A65)
 	 */
-	ATSC_CVCT = 12,
+	ATSC_CVCT = 13,
 	/**
 	 * ATSC Master Guide Table (A65)
 	 */
-	ATSC_MGT = 13,
+	ATSC_MGT = 14,
 	/**
 	 * ATSC Extended Text Table (A65)
 	 */
-	ATSC_ETT = 14,
+	ATSC_ETT = 15,
 	/**
 	 * ATSC Event Information Table (A65)
 	 */
-	ATSC_EIT = 15,
+	ATSC_EIT = 16,
 	/**
 	 * ATSC System Time Table (A65)
 	 */
-	ATSC_STT = 16,
+	ATSC_STT = 17,
+	/**
+	 * ATSC Rating Region Table (A65)
+	 */
+	ATSC_RRT = 18,
+	/**
+	 * SCTE Splice Information Table (SCTE-35)
+	 */
+	SCTE_SIT = 19,
 }
 alias GstMpegtsSectionType SectionType;
 
 /**
- * Type of mpeg-ts stream type.
+ * Type of MPEG-TS stream type.
  *
  * These values correspond to the base standard registered types. Depending
  * on the variant of mpeg-ts being used (Bluray, ATSC, DVB, ...), other
@@ -799,12 +1219,13 @@ public enum GstMpegtsStreamType
 	 */
 	RESERVED_00 = 0,
 	/**
-	 * ISO/IEC 11172-2 Video
+	 * ISO/IEC 11172-2 Video (i.e. MPEG-1 Video)
 	 */
 	VIDEO_MPEG1 = 1,
 	/**
 	 * Rec. ITU-T H.262 | ISO/IEC 13818-2
-	 * Video or ISO/IEC 11172-2 constrained parameter video stream
+	 * Video or ISO/IEC 11172-2 constrained parameter video stream (i.e.
+	 * MPEG-2 Video)
 	 */
 	VIDEO_MPEG2 = 2,
 	/**
@@ -856,16 +1277,16 @@ public enum GstMpegtsStreamType
 	 */
 	AUXILIARY = 14,
 	/**
-	 * ISO/IEC 13818-7 Audio with ADTS
+	 * ISO/IEC 13818-7 Audio (AAC) with ADTS
 	 * transport syntax
 	 */
 	AUDIO_AAC_ADTS = 15,
 	/**
-	 * ISO/IEC 14496-2 Visual
+	 * ISO/IEC 14496-2 Visual (MPEG-4 Video)
 	 */
 	VIDEO_MPEG4 = 16,
 	/**
-	 * ISO/IEC 14496-3 Audio with the LATM
+	 * ISO/IEC 14496-3 Audio (AAC) with the LATM
 	 * transport syntax as defined in ISO/IEC 14496-3
 	 */
 	AUDIO_AAC_LATM = 17,
@@ -921,7 +1342,7 @@ public enum GstMpegtsStreamType
 	 */
 	VIDEO_H264 = 27,
 	/**
-	 * ISO/IEC 14496-3 Audio, without
+	 * ISO/IEC 14496-3 (AAC) Audio, without
 	 * using any additional transport syntax, such as DST, ALS and SLS
 	 */
 	AUDIO_AAC_CLEAN = 28,
@@ -948,7 +1369,7 @@ public enum GstMpegtsStreamType
 	VIDEO_H264_MVC_SUB_BITSTREAM = 32,
 	/**
 	 * Video stream conforming to one or more
-	 * profiles as defined in Rec. ITU-T T.800 | ISO/IEC 15444-1
+	 * profiles as defined in Rec. ITU-T T.800 | ISO/IEC 15444-1 (i.e. JPEG 2000)
 	 */
 	VIDEO_JP2K = 33,
 	/**
@@ -963,11 +1384,19 @@ public enum GstMpegtsStreamType
 	 * profiles defined in Annex A for service-compatible stereoscopic 3D services
 	 */
 	VIDEO_H264_STEREO_ADDITIONAL_VIEW = 35,
+	/**
+	 * Rec. ITU-T H.265 | ISO/IEC 23008-2 video
+	 * stream or an HEVC temporal video sub-bitstream
+	 */
 	VIDEO_HEVC = 36,
 	/**
 	 * IPMP stream
 	 */
 	IPMP_STREAM = 127,
+	/**
+	 * User Private stream id (used for VC-1) as defined by SMPTE RP227.
+	 */
+	USER_PRIVATE_EA = 234,
 }
 alias GstMpegtsStreamType StreamType;
 
@@ -1081,9 +1510,6 @@ struct GstMpegtsAtscETT
 	GPtrArray* messages;
 }
 
-/**
- * Master Guide Table (A65)
- */
 struct GstMpegtsAtscMGT
 {
 	/**
@@ -1135,6 +1561,62 @@ struct GstMpegtsAtscMultString
 	 */
 	char[4] iso639Langcode;
 	GPtrArray* segments;
+}
+
+struct GstMpegtsAtscRRT
+{
+	/**
+	 * The protocol version
+	 */
+	ubyte protocolVersion;
+	/**
+	 * the names
+	 */
+	GPtrArray* names;
+	/**
+	 * the number of dimensions defined for this rating table
+	 */
+	ubyte dimensionsDefined;
+	/**
+	 * A set of dimensions
+	 */
+	GPtrArray* dimensions;
+	/**
+	 * descriptors
+	 */
+	GPtrArray* descriptors;
+}
+
+struct GstMpegtsAtscRRTDimension
+{
+	/**
+	 * the names
+	 */
+	GPtrArray* names;
+	/**
+	 * whether the ratings represent a graduated scale
+	 */
+	bool graduatedScale;
+	/**
+	 * the number of values defined for this dimension
+	 */
+	ubyte valuesDefined;
+	/**
+	 * set of values
+	 */
+	GPtrArray* values;
+}
+
+struct GstMpegtsAtscRRTDimensionValue
+{
+	/**
+	 * the abbreviated ratings
+	 */
+	GPtrArray* abbrevRatings;
+	/**
+	 * the ratings
+	 */
+	GPtrArray* ratings;
 }
 
 struct GstMpegtsAtscSTT
@@ -1217,7 +1699,7 @@ struct GstMpegtsAtscVCT
 }
 
 /**
- * Source from a @GstMpegtsAtscVCT, can be used both for TVCT and CVCT tables
+ * Source from a %GstMpegtsAtscVCT, can be used both for TVCT and CVCT tables
  */
 struct GstMpegtsAtscVCTSource
 {
@@ -1285,6 +1767,42 @@ struct GstMpegtsAtscVCTSource
 	 * an array of #GstMpegtsDescriptor
 	 */
 	GPtrArray* descriptors;
+}
+
+/**
+ * Table 110: Audio Preselection Descriptor (ETSI EN 300 468 v1.16.1)
+ *
+ * Since: 1.20
+ */
+struct GstMpegtsAudioPreselectionDescriptor
+{
+	/**
+	 * 5-bit
+	 */
+	ubyte preselectionId;
+	/**
+	 * 3-bit field
+	 */
+	ubyte audioRenderingIndication;
+	/**
+	 * visually impaired
+	 */
+	bool audioDescription;
+	bool spokenSubtitles;
+	bool dialogueEnhancement;
+	bool interactivityEnabled;
+	bool languageCodePresent;
+	bool textLabelPresent;
+	/**
+	 * indicates if this PID conveys a complete audio programme
+	 */
+	bool multiStreamInfoPresent;
+	bool futureExtension;
+	/**
+	 * NULL terminated ISO 639 language code.
+	 */
+	char* languageCode;
+	ubyte messageId;
 }
 
 /**
@@ -1358,12 +1876,12 @@ struct GstMpegtsDVBLinkageDescriptor
 	 */
 	ushort serviceId;
 	/**
-	 * the type which %linkage_data has
+	 * the type which @linkage_data has
 	 */
 	GstMpegtsDVBLinkageType linkageType;
 	void* linkageData;
 	/**
-	 * the length for %private_data_bytes
+	 * the length for @private_data_bytes
 	 */
 	ubyte privateDataLength;
 	/**
@@ -1632,12 +2150,15 @@ struct GstMpegtsNITStream
 struct GstMpegtsPMT
 {
 	/**
-	 * PID of the stream containing PCR
+	 * PID of the stream containing the PCR for this program.
 	 */
 	ushort pcrPid;
+	/**
+	 * The program to which this PMT is applicable.
+	 */
 	ushort programNumber;
 	/**
-	 * array of #GstMpegtsDescriptor
+	 * Array of #GstMpegtsDescriptor
 	 */
 	GPtrArray* descriptors;
 	/**
@@ -1673,6 +2194,77 @@ struct GstMpegtsPatProgram
 	 * the network of program map PID
 	 */
 	ushort networkOrProgramMapPID;
+}
+
+struct GstMpegtsSCTESIT
+{
+	bool encryptedPacket;
+	ubyte encryptionAlgorithm;
+	ulong ptsAdjustment;
+	ubyte cwIndex;
+	ushort tier;
+	ushort spliceCommandLength;
+	GstMpegtsSCTESpliceCommandType spliceCommandType;
+	bool spliceTimeSpecified;
+	ulong spliceTime;
+	GPtrArray* splices;
+	GPtrArray* descriptors;
+	/**
+	 * When encrypted, or when encountering an unknown command type,
+	 * we may still want to pass the sit through.
+	 */
+	bool fullyParsed;
+	/**
+	 * When the SIT was constructed by the application, splice times
+	 * are in running_time and must be translated before packetizing.
+	 */
+	bool isRunningTime;
+}
+
+struct GstMpegtsSCTESpliceComponent
+{
+	/**
+	 * the elementary PID stream containing the Splice Point
+	 */
+	ubyte tag;
+	/**
+	 * Whether @splice_time was specified
+	 */
+	bool spliceTimeSpecified;
+	/**
+	 * the presentation time of the signaled splice event
+	 */
+	ulong spliceTime;
+	/**
+	 * The UTC time of the signaled splice event
+	 */
+	uint utcSpliceTime;
+}
+
+struct GstMpegtsSCTESpliceEvent
+{
+	bool insertEvent;
+	uint spliceEventId;
+	bool spliceEventCancelIndicator;
+	bool outOfNetworkIndicator;
+	bool programSpliceFlag;
+	bool durationFlag;
+	bool spliceImmediateFlag;
+	bool programSpliceTimeSpecified;
+	ulong programSpliceTime;
+	/**
+	 * The UTC time of the signaled splice event
+	 */
+	uint utcSpliceTime;
+	/**
+	 * Per-PID splice time information
+	 */
+	GPtrArray* components;
+	bool breakDurationAutoReturn;
+	ulong breakDuration;
+	ushort uniqueProgramId;
+	ubyte availNum;
+	ubyte availsExpected;
 }
 
 struct GstMpegtsSDT
@@ -1717,6 +2309,44 @@ struct GstMpegtsSDTService
 	 * True if one or more streams is controlled by a CA system
 	 */
 	bool freeCAMode;
+	/**
+	 * List of descriptors
+	 */
+	GPtrArray* descriptors;
+}
+
+/**
+ * Selection Information Table (EN 300 468)
+ *
+ * Since: 1.20
+ */
+struct GstMpegtsSIT
+{
+	/**
+	 * List of descriptors
+	 */
+	GPtrArray* descriptors;
+	/**
+	 * List of services
+	 */
+	GPtrArray* services;
+}
+
+/**
+ * SIT Service entry
+ *
+ * Since: 1.20
+ */
+struct GstMpegtsSITService
+{
+	/**
+	 * The Program number this table belongs to
+	 */
+	ushort serviceId;
+	/**
+	 * Status of this service
+	 */
+	GstMpegtsRunningStatus runningStatus;
 	/**
 	 * List of descriptors
 	 */
@@ -1771,15 +2401,16 @@ struct GstMpegtsSection
 {
 	GstMiniObject parent;
 	/**
-	 * The type of section
+	 * The type of section.
 	 */
 	GstMpegtsSectionType sectionType;
 	/**
-	 * The pid on which this section was found
+	 * The PID on which this section was found or belongs to.
 	 */
 	ushort pid;
 	/**
-	 * The table id of this section
+	 * The table id of this section. See %GstMpegtsSectionTableID and
+	 * derivates for more information.
 	 */
 	ubyte tableId;
 	/**
@@ -1804,7 +2435,7 @@ struct GstMpegtsSection
 	 */
 	ubyte lastSectionNumber;
 	/**
-	 * CRC
+	 * Checksum (if applicable)
 	 */
 	uint crc;
 	ubyte* data;
@@ -1893,7 +2524,7 @@ struct GstMpegtsTerrestrialDeliverySystemDescriptor
 	 */
 	bool mpeFec;
 	/**
-	 * the constallation
+	 * the constellation
 	 */
 	GstMpegtsModulationType constellation;
 	/**

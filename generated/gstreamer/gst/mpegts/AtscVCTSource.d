@@ -27,13 +27,14 @@ module gst.mpegts.AtscVCTSource;
 private import glib.MemorySlice;
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
 
 
 /**
- * Source from a @GstMpegtsAtscVCT, can be used both for TVCT and CVCT tables
+ * Source from a %GstMpegtsAtscVCT, can be used both for TVCT and CVCT tables
  */
 public final class AtscVCTSource
 {

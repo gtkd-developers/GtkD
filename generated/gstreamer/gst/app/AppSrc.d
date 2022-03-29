@@ -61,11 +61,12 @@ private import std.algorithm;
  * streaming thread. It is important to note that data transport will not happen
  * from the thread that performed the push-buffer call.
  * 
- * The "max-bytes" property controls how much data can be queued in appsrc
- * before appsrc considers the queue full. A filled internal queue will always
- * signal the "enough-data" signal, which signals the application that it should
- * stop pushing data into appsrc. The "block" property will cause appsrc to
- * block the push-buffer method until free data becomes available again.
+ * The "max-bytes", "max-buffers" and "max-time" properties control how much
+ * data can be queued in appsrc before appsrc considers the queue full. A
+ * filled internal queue will always signal the "enough-data" signal, which
+ * signals the application that it should stop pushing data into appsrc. The
+ * "block" property will cause appsrc to block the push-buffer method until
+ * free data becomes available again.
  * 
  * When the internal queue is running out of data, the "need-data" signal is
  * emitted, which signals the application that it should start pushing more data
@@ -90,7 +91,7 @@ private import std.algorithm;
  * 
  * The pull mode, in which the need-data signal triggers the next push-buffer call.
  * This mode is typically used in the "random-access" stream-type. Use this
- * mode for file access or other randomly accessable sources. In this mode, a
+ * mode for file access or other randomly accessible sources. In this mode, a
  * buffer of exactly the amount of bytes given by the need-data signal should be
  * pushed into appsrc.
  * 
@@ -146,7 +147,7 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 * Indicates to the appsrc element that the last buffer queued in the
 	 * element is the last buffer of the stream.
 	 *
-	 * Returns: #GST_FLOW_OK when the EOS was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the EOS was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
 	 */
 	public GstFlowReturn endOfStream()
@@ -161,14 +162,26 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_app_src_get_caps(gstAppSrc);
+		auto __p = gst_app_src_get_caps(gstAppSrc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
+	}
+
+	/**
+	 * Get the number of currently queued buffers inside @appsrc.
+	 *
+	 * Returns: The number of currently queued buffers.
+	 *
+	 * Since: 1.20
+	 */
+	public ulong getCurrentLevelBuffers()
+	{
+		return gst_app_src_get_current_level_buffers(gstAppSrc);
 	}
 
 	/**
@@ -181,6 +194,18 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	public ulong getCurrentLevelBytes()
 	{
 		return gst_app_src_get_current_level_bytes(gstAppSrc);
+	}
+
+	/**
+	 * Get the amount of currently queued time inside @appsrc.
+	 *
+	 * Returns: The amount of currently queued time.
+	 *
+	 * Since: 1.20
+	 */
+	public GstClockTime getCurrentLevelTime()
+	{
+		return gst_app_src_get_current_level_time(gstAppSrc);
 	}
 
 	/**
@@ -220,6 +245,31 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	}
 
 	/**
+	 * Returns the currently set #GstAppLeakyType. See gst_app_src_set_leaky_type()
+	 * for more details.
+	 *
+	 * Returns: The currently set #GstAppLeakyType.
+	 *
+	 * Since: 1.20
+	 */
+	public GstAppLeakyType getLeakyType()
+	{
+		return gst_app_src_get_leaky_type(gstAppSrc);
+	}
+
+	/**
+	 * Get the maximum amount of buffers that can be queued in @appsrc.
+	 *
+	 * Returns: The maximum amount of buffers that can be queued.
+	 *
+	 * Since: 1.20
+	 */
+	public ulong getMaxBuffers()
+	{
+		return gst_app_src_get_max_buffers(gstAppSrc);
+	}
+
+	/**
 	 * Get the maximum amount of bytes that can be queued in @appsrc.
 	 *
 	 * Returns: The maximum amount of bytes that can be queued.
@@ -227,6 +277,18 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	public ulong getMaxBytes()
 	{
 		return gst_app_src_get_max_bytes(gstAppSrc);
+	}
+
+	/**
+	 * Get the maximum amount of time that can be queued in @appsrc.
+	 *
+	 * Returns: The maximum amount of time that can be queued.
+	 *
+	 * Since: 1.20
+	 */
+	public GstClockTime getMaxTime()
+	{
+		return gst_app_src_get_max_time(gstAppSrc);
 	}
 
 	/**
@@ -261,13 +323,13 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 * Params:
 	 *     buffer = a #GstBuffer to push
 	 *
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	public GstFlowReturn pushBuffer(Buffer buffer)
 	{
-		return gst_app_src_push_buffer(gstAppSrc, (buffer is null) ? null : buffer.getBufferStruct());
+		return gst_app_src_push_buffer(gstAppSrc, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
@@ -281,15 +343,15 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 * Params:
 	 *     bufferList = a #GstBufferList to push
 	 *
-	 * Returns: #GST_FLOW_OK when the buffer list was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer list was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 *
 	 * Since: 1.14
 	 */
 	public GstFlowReturn pushBufferList(BufferList bufferList)
 	{
-		return gst_app_src_push_buffer_list(gstAppSrc, (bufferList is null) ? null : bufferList.getBufferListStruct());
+		return gst_app_src_push_buffer_list(gstAppSrc, (bufferList is null) ? null : bufferList.getBufferListStruct(true));
 	}
 
 	/**
@@ -308,9 +370,9 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 *     sample = a #GstSample from which buffer and caps may be
 	 *         extracted
 	 *
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 *
 	 * Since: 1.6
 	 */
@@ -327,6 +389,9 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 *
 	 * If callbacks are installed, no signals will be emitted for performance
 	 * reasons.
+	 *
+	 * Before 1.16.3 it was not possible to change the callbacks in a thread-safe
+	 * way.
 	 *
 	 * Params:
 	 *     callbacks = the callbacks
@@ -379,6 +444,37 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	}
 
 	/**
+	 * When set to any other value than GST_APP_LEAKY_TYPE_NONE then the appsrc
+	 * will drop any buffers that are pushed into it once its internal queue is
+	 * full. The selected type defines whether to drop the oldest or new
+	 * buffers.
+	 *
+	 * Params:
+	 *     leaky = the #GstAppLeakyType
+	 *
+	 * Since: 1.20
+	 */
+	public void setLeakyType(GstAppLeakyType leaky)
+	{
+		gst_app_src_set_leaky_type(gstAppSrc, leaky);
+	}
+
+	/**
+	 * Set the maximum amount of buffers that can be queued in @appsrc.
+	 * After the maximum amount of buffers are queued, @appsrc will emit the
+	 * "enough-data" signal.
+	 *
+	 * Params:
+	 *     max = the maximum number of buffers to queue
+	 *
+	 * Since: 1.20
+	 */
+	public void setMaxBuffers(ulong max)
+	{
+		gst_app_src_set_max_buffers(gstAppSrc, max);
+	}
+
+	/**
 	 * Set the maximum amount of bytes that can be queued in @appsrc.
 	 * After the maximum amount of bytes are queued, @appsrc will emit the
 	 * "enough-data" signal.
@@ -389,6 +485,21 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	public void setMaxBytes(ulong max)
 	{
 		gst_app_src_set_max_bytes(gstAppSrc, max);
+	}
+
+	/**
+	 * Set the maximum amount of time that can be queued in @appsrc.
+	 * After the maximum amount of time are queued, @appsrc will emit the
+	 * "enough-data" signal.
+	 *
+	 * Params:
+	 *     max = the maximum amonut of time to queue
+	 *
+	 * Since: 1.20
+	 */
+	public void setMaxTime(GstClockTime max)
+	{
+		gst_app_src_set_max_time(gstAppSrc, max);
 	}
 
 	/**

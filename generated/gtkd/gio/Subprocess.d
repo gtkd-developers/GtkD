@@ -37,6 +37,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -82,7 +83,10 @@ public  import gtkc.giotypes;
  * As a matter of principle, #GSubprocess has no API that accepts
  * shell-style space-separated strings.  It will, however, match the
  * typical shell behaviour of searching the PATH for executables that do
- * not contain a directory separator in their name.
+ * not contain a directory separator in their name. By default, the `PATH`
+ * of the current process is used.  You can specify
+ * %G_SUBPROCESS_FLAGS_SEARCH_PATH_FROM_ENVP to use the `PATH` of the
+ * launcher environment instead.
  * 
  * #GSubprocess attempts to have a very simple API for most uses (ie:
  * spawning a subprocess with arguments and support for most typical
@@ -459,7 +463,7 @@ public class Subprocess : ObjectG, InitableIF
 	 *
 	 * This value has no particular meaning, but it can be used with the
 	 * macros defined by the system headers such as WIFEXITED.  It can also
-	 * be used with g_spawn_check_exit_status().
+	 * be used with g_spawn_check_wait_status().
 	 *
 	 * It is more likely that you want to use g_subprocess_get_if_exited()
 	 * followed by g_subprocess_get_exit_status().
@@ -480,8 +484,8 @@ public class Subprocess : ObjectG, InitableIF
 	 * Gets the #GInputStream from which to read the stderr output of
 	 * @subprocess.
 	 *
-	 * The process must have been created with
-	 * %G_SUBPROCESS_FLAGS_STDERR_PIPE.
+	 * The process must have been created with %G_SUBPROCESS_FLAGS_STDERR_PIPE,
+	 * otherwise %NULL will be returned.
 	 *
 	 * Returns: the stderr pipe
 	 *
@@ -503,8 +507,8 @@ public class Subprocess : ObjectG, InitableIF
 	 * Gets the #GOutputStream that you can write to in order to give data
 	 * to the stdin of @subprocess.
 	 *
-	 * The process must have been created with
-	 * %G_SUBPROCESS_FLAGS_STDIN_PIPE.
+	 * The process must have been created with %G_SUBPROCESS_FLAGS_STDIN_PIPE and
+	 * not %G_SUBPROCESS_FLAGS_STDIN_INHERIT, otherwise %NULL will be returned.
 	 *
 	 * Returns: the stdout pipe
 	 *
@@ -526,8 +530,8 @@ public class Subprocess : ObjectG, InitableIF
 	 * Gets the #GInputStream from which to read the stdout output of
 	 * @subprocess.
 	 *
-	 * The process must have been created with
-	 * %G_SUBPROCESS_FLAGS_STDOUT_PIPE.
+	 * The process must have been created with %G_SUBPROCESS_FLAGS_STDOUT_PIPE,
+	 * otherwise %NULL will be returned.
 	 *
 	 * Returns: the stdout pipe
 	 *
@@ -653,7 +657,7 @@ public class Subprocess : ObjectG, InitableIF
 	}
 
 	/**
-	 * Combines g_subprocess_wait() with g_spawn_check_exit_status().
+	 * Combines g_subprocess_wait() with g_spawn_check_wait_status().
 	 *
 	 * Params:
 	 *     cancellable = a #GCancellable
@@ -680,7 +684,7 @@ public class Subprocess : ObjectG, InitableIF
 	}
 
 	/**
-	 * Combines g_subprocess_wait_async() with g_spawn_check_exit_status().
+	 * Combines g_subprocess_wait_async() with g_spawn_check_wait_status().
 	 *
 	 * This is the asynchronous version of g_subprocess_wait_check().
 	 *

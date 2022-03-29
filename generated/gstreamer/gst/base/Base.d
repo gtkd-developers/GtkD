@@ -52,14 +52,14 @@ public struct Base
 	 */
 	public static Caps typeFindHelper(Pad src, ulong size)
 	{
-		auto p = gst_type_find_helper((src is null) ? null : src.getPadStruct(), size);
+		auto __p = gst_type_find_helper((src is null) ? null : src.getPadStruct(), size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -88,14 +88,14 @@ public struct Base
 	 */
 	public static Caps typeFindHelperForBuffer(ObjectGst obj, Buffer buf, out GstTypeFindProbability prob)
 	{
-		auto p = gst_type_find_helper_for_buffer((obj is null) ? null : obj.getObjectGstStruct(), (buf is null) ? null : buf.getBufferStruct(), &prob);
+		auto __p = gst_type_find_helper_for_buffer((obj is null) ? null : obj.getObjectGstStruct(), (buf is null) ? null : buf.getBufferStruct(), &prob);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -124,14 +124,14 @@ public struct Base
 	 */
 	public static Caps typeFindHelperForData(ObjectGst obj, ubyte[] data, out GstTypeFindProbability prob)
 	{
-		auto p = gst_type_find_helper_for_data((obj is null) ? null : obj.getObjectGstStruct(), data.ptr, cast(size_t)data.length, &prob);
+		auto __p = gst_type_find_helper_for_data((obj is null) ? null : obj.getObjectGstStruct(), data.ptr, cast(size_t)data.length, &prob);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -153,14 +153,14 @@ public struct Base
 	 */
 	public static Caps typeFindHelperForExtension(ObjectGst obj, string extension)
 	{
-		auto p = gst_type_find_helper_for_extension((obj is null) ? null : obj.getObjectGstStruct(), Str.toStringz(extension));
+		auto __p = gst_type_find_helper_for_extension((obj is null) ? null : obj.getObjectGstStruct(), Str.toStringz(extension));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -194,14 +194,14 @@ public struct Base
 	 */
 	public static Caps typeFindHelperGetRange(ObjectGst obj, ObjectGst parent, GstTypeFindHelperGetRangeFunction func, ulong size, string extension, out GstTypeFindProbability prob)
 	{
-		auto p = gst_type_find_helper_get_range((obj is null) ? null : obj.getObjectGstStruct(), (parent is null) ? null : parent.getObjectGstStruct(), func, size, Str.toStringz(extension), &prob);
+		auto __p = gst_type_find_helper_get_range((obj is null) ? null : obj.getObjectGstStruct(), (parent is null) ? null : parent.getObjectGstStruct(), func, size, Str.toStringz(extension), &prob);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -237,14 +237,14 @@ public struct Base
 	 */
 	public static Caps typeFindHelperForBufferWithExtension(ObjectGst obj, Buffer buf, string extension, out GstTypeFindProbability prob)
 	{
-		auto p = gst_type_find_helper_for_buffer_with_extension((obj is null) ? null : obj.getObjectGstStruct(), (buf is null) ? null : buf.getBufferStruct(), Str.toStringz(extension), &prob);
+		auto __p = gst_type_find_helper_for_buffer_with_extension((obj is null) ? null : obj.getObjectGstStruct(), (buf is null) ? null : buf.getBufferStruct(), Str.toStringz(extension), &prob);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -280,14 +280,14 @@ public struct Base
 	 */
 	public static Caps typeFindHelperForDataWithExtension(ObjectGst obj, ubyte[] data, string extension, out GstTypeFindProbability prob)
 	{
-		auto p = gst_type_find_helper_for_data_with_extension((obj is null) ? null : obj.getObjectGstStruct(), data.ptr, cast(size_t)data.length, Str.toStringz(extension), &prob);
+		auto __p = gst_type_find_helper_for_data_with_extension((obj is null) ? null : obj.getObjectGstStruct(), data.ptr, cast(size_t)data.length, Str.toStringz(extension), &prob);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -324,10 +324,10 @@ public struct Base
 	{
 		GstCaps* outcaps = null;
 
-		auto p = gst_type_find_helper_get_range_full((obj is null) ? null : obj.getObjectGstStruct(), (parent is null) ? null : parent.getObjectGstStruct(), func, size, Str.toStringz(extension), &outcaps, &prob);
+		auto __p = gst_type_find_helper_get_range_full((obj is null) ? null : obj.getObjectGstStruct(), (parent is null) ? null : parent.getObjectGstStruct(), func, size, Str.toStringz(extension), &outcaps, &prob);
 
 		caps = ObjectG.getDObject!(Caps)(outcaps);
 
-		return p;
+		return __p;
 	}
 }

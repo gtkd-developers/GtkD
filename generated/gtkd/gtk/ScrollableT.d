@@ -91,11 +91,11 @@ public template ScrollableT(TStruct)
 	{
 		GtkBorder* outborder = sliceNew!GtkBorder();
 
-		auto p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
+		auto __p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
 
 		border = ObjectG.getDObject!(Border)(outborder, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -107,14 +107,14 @@ public template ScrollableT(TStruct)
 	 */
 	public Adjustment getHadjustment()
 	{
-		auto p = gtk_scrollable_get_hadjustment(getScrollableStruct());
+		auto __p = gtk_scrollable_get_hadjustment(getScrollableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -138,14 +138,14 @@ public template ScrollableT(TStruct)
 	 */
 	public Adjustment getVadjustment()
 	{
-		auto p = gtk_scrollable_get_vadjustment(getScrollableStruct());
+		auto __p = gtk_scrollable_get_vadjustment(getScrollableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**

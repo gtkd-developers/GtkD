@@ -102,13 +102,13 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	 */
 	public this(string title, Window parent)
 	{
-		auto p = gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
+		auto __p = gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFontChooserDialog*) p);
+		this(cast(GtkFontChooserDialog*) __p);
 	}
 }

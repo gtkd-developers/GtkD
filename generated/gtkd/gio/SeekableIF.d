@@ -109,14 +109,15 @@ public interface SeekableIF{
 	/**
 	 * Tells the current position within the stream.
 	 *
-	 * Returns: the offset from the beginning of the buffer.
+	 * Returns: the (positive or zero) offset from the beginning of the
+	 *     buffer, zero if the target is not seekable.
 	 */
 	public long tell();
 
 	/**
 	 * Sets the length of the stream to @offset. If the stream was previously
 	 * larger than @offset, the extra data is discarded. If the stream was
-	 * previouly shorter than @offset, it is extended with NUL ('\0') bytes.
+	 * previously shorter than @offset, it is extended with NUL ('\0') bytes.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation

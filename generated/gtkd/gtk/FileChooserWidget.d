@@ -102,14 +102,14 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	public this(GtkFileChooserAction action)
 	{
-		auto p = gtk_file_chooser_widget_new(action);
+		auto __p = gtk_file_chooser_widget_new(action);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFileChooserWidget*) p);
+		this(cast(GtkFileChooserWidget*) __p);
 	}
 
 	/**

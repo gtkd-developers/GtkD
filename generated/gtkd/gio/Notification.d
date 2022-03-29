@@ -48,6 +48,29 @@ public  import gtkc.giotypes;
  * not running, applications using #GNotification should be able to be
  * started as a D-Bus service, using #GApplication.
  * 
+ * In order for #GNotification to work, the application must have installed
+ * a `.desktop` file. For example:
+ * |[
+ * [Desktop Entry]
+ * Name=Test Application
+ * Comment=Description of what Test Application does
+ * Exec=gnome-test-application
+ * Icon=org.gnome.TestApplication
+ * Terminal=false
+ * Type=Application
+ * Categories=GNOME;GTK;TestApplication Category;
+ * StartupNotify=true
+ * DBusActivatable=true
+ * X-GNOME-UsesNotifications=true
+ * ]|
+ * 
+ * The `X-GNOME-UsesNotifications` key indicates to GNOME Control Center
+ * that this application uses notifications, so it can be listed in the
+ * Control Center’s ‘Notifications’ panel.
+ * 
+ * The `.desktop` file must be named as `org.gnome.TestApplication.desktop`,
+ * where `org.gnome.TestApplication` is the ID passed to g_application_new().
+ * 
  * User interaction with a notification (either the default action, or
  * buttons) must be associated with actions on the application (ie:
  * "app." actions).  It is not possible to route user interaction
@@ -174,6 +197,24 @@ public class Notification : ObjectG
 	public void setBody(string body_)
 	{
 		g_notification_set_body(gNotification, Str.toStringz(body_));
+	}
+
+	/**
+	 * Sets the type of @notification to @category. Categories have a main
+	 * type like `email`, `im` or `device` and can have a detail separated
+	 * by a `.`, e.g. `im.received` or `email.arrived`. Setting the category
+	 * helps the notification server to select proper feedback to the user.
+	 *
+	 * Standard categories are [listed in the specification](https://specifications.freedesktop.org/notification-spec/latest/ar01s06.html).
+	 *
+	 * Params:
+	 *     category = the category for @notification, or %NULL for no category
+	 *
+	 * Since: 2.70
+	 */
+	public void setCategory(string category)
+	{
+		g_notification_set_category(gNotification, Str.toStringz(category));
 	}
 
 	/**

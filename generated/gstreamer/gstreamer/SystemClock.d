@@ -88,14 +88,14 @@ public class SystemClock : Clock
 	 */
 	public static Clock obtain()
 	{
-		auto p = gst_system_clock_obtain();
+		auto __p = gst_system_clock_obtain();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**

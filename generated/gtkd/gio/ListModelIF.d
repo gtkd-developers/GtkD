@@ -71,7 +71,7 @@ private import std.algorithm;
  * it are gone.
  * 
  * On the other side, a consumer is expected only to hold references on
- * objects that are currently "user visible", in order to faciliate the
+ * objects that are currently "user visible", in order to facilitate the
  * maximum level of laziness in the implementation of the list and to
  * reduce the required number of signal connections at a given time.
  * 
@@ -96,11 +96,15 @@ public interface ListModelIF{
 	}
 
 	/**
-	 * Get the item at @position. If @position is greater than the number of
-	 * items in @list, %NULL is returned.
+	 * Get the item at @position.
+	 *
+	 * If @position is greater than the number of items in @list, %NULL is
+	 * returned.
 	 *
 	 * %NULL is never returned for an index that is smaller than the length
-	 * of the list.  See g_list_model_get_n_items().
+	 * of the list.
+	 *
+	 * See also: g_list_model_get_n_items()
 	 *
 	 * Params:
 	 *     position = the position of the item to fetch
@@ -112,9 +116,11 @@ public interface ListModelIF{
 	public void* getItem(uint position);
 
 	/**
-	 * Gets the type of the items in @list. All items returned from
-	 * g_list_model_get_type() are of that type or a subtype, or are an
-	 * implementation of that interface.
+	 * Gets the type of the items in @list.
+	 *
+	 * All items returned from g_list_model_get_item() are of the type
+	 * returned by this function, or a subtype, or if the type is an
+	 * interface, they are an implementation of that interface.
 	 *
 	 * The item type of a #GListModel can not change during the life of the
 	 * model.
@@ -139,11 +145,18 @@ public interface ListModelIF{
 	public uint getNItems();
 
 	/**
-	 * Get the item at @position. If @position is greater than the number of
-	 * items in @list, %NULL is returned.
+	 * Get the item at @position.
+	 *
+	 * If @position is greater than the number of items in @list, %NULL is
+	 * returned.
 	 *
 	 * %NULL is never returned for an index that is smaller than the length
-	 * of the list.  See g_list_model_get_n_items().
+	 * of the list.
+	 *
+	 * This function is meant to be used by language bindings in place
+	 * of g_list_model_get_item().
+	 *
+	 * See also: g_list_model_get_n_items()
 	 *
 	 * Params:
 	 *     position = the position of the item to fetch
@@ -190,7 +203,7 @@ public interface ListModelIF{
 	 * from @list. At @position, @removed items were removed and @added
 	 * items were added in their place.
 	 *
-	 * Note: If @removed != @added, the positions of all later items
+	 * Note: If `removed != added`, the positions of all later items
 	 * in the model change.
 	 *
 	 * Params:

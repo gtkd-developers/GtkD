@@ -217,14 +217,14 @@ public class MenuShell : Container
 	 */
 	public Widget getParentShell()
 	{
-		auto p = gtk_menu_shell_get_parent_shell(gtkMenuShell);
+		auto __p = gtk_menu_shell_get_parent_shell(gtkMenuShell);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -236,14 +236,14 @@ public class MenuShell : Container
 	 */
 	public Widget getSelectedItem()
 	{
-		auto p = gtk_menu_shell_get_selected_item(gtkMenuShell);
+		auto __p = gtk_menu_shell_get_selected_item(gtkMenuShell);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

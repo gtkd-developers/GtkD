@@ -31,6 +31,7 @@ private import gobject.ObjectG;
 private import gst.mpegts.AtscEIT;
 private import gst.mpegts.AtscETT;
 private import gst.mpegts.AtscMGT;
+private import gst.mpegts.AtscRRT;
 private import gst.mpegts.AtscSTT;
 private import gst.mpegts.AtscVCT;
 private import gst.mpegts.BAT;
@@ -38,7 +39,9 @@ private import gst.mpegts.EIT;
 private import gst.mpegts.NIT;
 private import gst.mpegts.PMT;
 private import gst.mpegts.PatProgram;
+private import gst.mpegts.SCTESIT;
 private import gst.mpegts.SDT;
+private import gst.mpegts.SIT;
 private import gst.mpegts.TOT;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
@@ -50,8 +53,50 @@ private import gstreamer.ObjectGst;
 
 
 /**
+ * ## Generic usage of sections with %GstMpegtsSection
+ * 
+ * The %GstMpegtsSection object is the representation of MPEG-TS Section (SI or
+ * PSI).
+ * 
+ * Various elements can post those on the bus via %GstMessage of type
+ * %GST_MESSAGE_ELEMENT. The gst_message_parse_mpegts_section() function
+ * provides access to the section.
+ * 
+ * Applications (or other elements) can create them either by using one of the
+ * `gst_mpegts_section_from_*` functions, or by providing the raw SI data via
+ * gst_mpegts_section_new().
+ * 
+ * Elements outputting MPEG-TS streams can also create sections using the
+ * various convenience functions and then get the packetized data (to be
+ * inserted in MPEG-TS packets) using gst_mpegts_section_packetize().
+ * 
  * For more details, refer to the ITU H.222.0 or ISO/IEC 13818-1 specifications
  * and other specifications mentioned in the documentation.
+ * 
+ * # Supported base MPEG-TS sections
+ * These are the sections for which parsing and packetizing code exists.
+ * 
+ * ## Program Association Table (PAT)
+ * See:
+ * * gst_mpegts_section_get_pat()
+ * * gst_mpegts_pat_program_new()
+ * * %GstMpegtsPatProgram
+ * 
+ * ## Conditional Access Table (CAT)
+ * See:
+ * * gst_mpegts_section_get_cat()
+ * 
+ * ## Program Map Table (PMT)
+ * See:
+ * * %GstMpegtsPMT
+ * * gst_mpegts_section_get_pmt()
+ * * gst_mpegts_pmt_new()
+ * * %GstMpegtsPMTStream
+ * 
+ * ## Transport Stream Description Table (TSDT)
+ * See:
+ * * gst_mpegts_section_get_tsdt()
+ * # API
  */
 public class Section
 {
@@ -101,8 +146,8 @@ public class Section
 	 *
 	 * Params:
 	 *     pid = the PID to which this section belongs
-	 *     data = a pointer to the beginning of the section (i.e. the first byte
-	 *         should contain the table_id field).
+	 *     data = a pointer to the beginning of
+	 *         the section (i.e. the first byte should contain the `table_id` field).
 	 *
 	 * Returns: A new #GstMpegtsSection if the data was valid,
 	 *     else %NULL
@@ -111,14 +156,14 @@ public class Section
 	 */
 	public this(ushort pid, ubyte[] data)
 	{
-		auto p = gst_mpegts_section_new(pid, data.ptr, cast(size_t)data.length);
+		auto __p = gst_mpegts_section_new(pid, data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsSection*) p);
+		this(cast(GstMpegtsSection*) __p);
 	}
 
 	/**
@@ -129,14 +174,14 @@ public class Section
 	 */
 	public AtscVCT getAtscCvct()
 	{
-		auto p = gst_mpegts_section_get_atsc_cvct(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_atsc_cvct(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AtscVCT)(cast(GstMpegtsAtscVCT*) p);
+		return ObjectG.getDObject!(AtscVCT)(cast(GstMpegtsAtscVCT*) __p);
 	}
 
 	/**
@@ -147,14 +192,14 @@ public class Section
 	 */
 	public AtscEIT getAtscEit()
 	{
-		auto p = gst_mpegts_section_get_atsc_eit(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_atsc_eit(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AtscEIT)(cast(GstMpegtsAtscEIT*) p);
+		return ObjectG.getDObject!(AtscEIT)(cast(GstMpegtsAtscEIT*) __p);
 	}
 
 	/**
@@ -165,14 +210,14 @@ public class Section
 	 */
 	public AtscETT getAtscEtt()
 	{
-		auto p = gst_mpegts_section_get_atsc_ett(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_atsc_ett(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AtscETT)(cast(GstMpegtsAtscETT*) p);
+		return ObjectG.getDObject!(AtscETT)(cast(GstMpegtsAtscETT*) __p);
 	}
 
 	/**
@@ -183,14 +228,34 @@ public class Section
 	 */
 	public AtscMGT getAtscMgt()
 	{
-		auto p = gst_mpegts_section_get_atsc_mgt(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_atsc_mgt(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AtscMGT)(cast(GstMpegtsAtscMGT*) p);
+		return ObjectG.getDObject!(AtscMGT)(cast(GstMpegtsAtscMGT*) __p);
+	}
+
+	/**
+	 * Returns the #GstMpegtsAtscRRT contained in the @section.
+	 *
+	 * Returns: The #GstMpegtsAtscRRT contained in the section, or %NULL if an error
+	 *     happened.
+	 *
+	 * Since: 1.18
+	 */
+	public AtscRRT getAtscRrt()
+	{
+		auto __p = gst_mpegts_section_get_atsc_rrt(gstMpegtsSection);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(AtscRRT)(cast(GstMpegtsAtscRRT*) __p);
 	}
 
 	/**
@@ -201,14 +266,14 @@ public class Section
 	 */
 	public AtscSTT getAtscStt()
 	{
-		auto p = gst_mpegts_section_get_atsc_stt(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_atsc_stt(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AtscSTT)(cast(GstMpegtsAtscSTT*) p);
+		return ObjectG.getDObject!(AtscSTT)(cast(GstMpegtsAtscSTT*) __p);
 	}
 
 	/**
@@ -219,14 +284,14 @@ public class Section
 	 */
 	public AtscVCT getAtscTvct()
 	{
-		auto p = gst_mpegts_section_get_atsc_tvct(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_atsc_tvct(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AtscVCT)(cast(GstMpegtsAtscVCT*) p);
+		return ObjectG.getDObject!(AtscVCT)(cast(GstMpegtsAtscVCT*) __p);
 	}
 
 	/**
@@ -237,34 +302,36 @@ public class Section
 	 */
 	public BAT getBat()
 	{
-		auto p = gst_mpegts_section_get_bat(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_bat(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BAT)(cast(GstMpegtsBAT*) p);
+		return ObjectG.getDObject!(BAT)(cast(GstMpegtsBAT*) __p);
 	}
 
 	/**
+	 * Parses a Conditional Access Table.
+	 *
 	 * Returns the array of #GstMpegtsDescriptor contained in the Conditional
 	 * Access Table.
 	 *
-	 * Returns: The
-	 *     #GstMpegtsDescriptor contained in the section, or %NULL if an error
+	 * Returns: The array
+	 *     of #GstMpegtsDescriptor contained in the section, or %NULL if an error
 	 *     happened. Release with #g_array_unref when done.
 	 */
 	public PtrArray getCat()
 	{
-		auto p = gst_mpegts_section_get_cat(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_cat(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -274,14 +341,14 @@ public class Section
 	 */
 	public Bytes getData()
 	{
-		auto p = gst_mpegts_section_get_data(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_data(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -292,14 +359,14 @@ public class Section
 	 */
 	public EIT getEit()
 	{
-		auto p = gst_mpegts_section_get_eit(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_eit(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(EIT)(cast(GstMpegtsEIT*) p);
+		return ObjectG.getDObject!(EIT)(cast(GstMpegtsEIT*) __p);
 	}
 
 	/**
@@ -310,14 +377,14 @@ public class Section
 	 */
 	public NIT getNit()
 	{
-		auto p = gst_mpegts_section_get_nit(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_nit(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(NIT)(cast(GstMpegtsNIT*) p);
+		return ObjectG.getDObject!(NIT)(cast(GstMpegtsNIT*) __p);
 	}
 
 	/**
@@ -325,41 +392,60 @@ public class Section
 	 *
 	 * Returns the array of #GstMpegtsPatProgram contained in the section.
 	 *
-	 * Note: The PAT "transport_id" field corresponds to the "subtable_extension"
-	 * field of the provided @section.
+	 * Note: The PAT `transport_stream_id` field corresponds to the
+	 * "subtable_extension" field of the provided @section.
 	 *
 	 * Returns: The
-	 *     #GstMpegtsPatProgram contained in the section, or %NULL if an error
-	 *     happened. Release with #g_ptr_array_unref when done.
+	 *     #GstMpegtsPatProgram contained in the section, or %NULL if an error happened
+	 *     or the @section did not contain a valid PAT. Release with #g_ptr_array_unref
+	 *     when done.
 	 */
 	public PtrArray getPat()
 	{
-		auto p = gst_mpegts_section_get_pat(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_pat(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
-	 * Returns the #GstMpegtsPMT contained in the @section.
+	 * Parses the Program Map Table contained in the @section.
 	 *
 	 * Returns: The #GstMpegtsPMT contained in the section, or %NULL if an error
 	 *     happened.
 	 */
 	public PMT getPmt()
 	{
-		auto p = gst_mpegts_section_get_pmt(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_pmt(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PMT)(cast(GstMpegtsPMT*) p);
+		return ObjectG.getDObject!(PMT)(cast(GstMpegtsPMT*) __p);
+	}
+
+	/**
+	 * Returns the #GstMpegtsSCTESIT contained in the @section.
+	 *
+	 * Returns: The #GstMpegtsSCTESIT contained in the section, or %NULL if an error
+	 *     happened.
+	 */
+	public SCTESIT getScteSit()
+	{
+		auto __p = gst_mpegts_section_get_scte_sit(gstMpegtsSection);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(SCTESIT)(cast(GstMpegtsSCTESIT*) __p);
 	}
 
 	/**
@@ -370,14 +456,34 @@ public class Section
 	 */
 	public SDT getSdt()
 	{
-		auto p = gst_mpegts_section_get_sdt(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_sdt(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SDT)(cast(GstMpegtsSDT*) p);
+		return ObjectG.getDObject!(SDT)(cast(GstMpegtsSDT*) __p);
+	}
+
+	/**
+	 * Returns the #GstMpegtsSIT contained in the @section.
+	 *
+	 * Returns: The #GstMpegtsSIT contained in the section, or %NULL if an error
+	 *     happened.
+	 *
+	 * Since: 1.20
+	 */
+	public SIT getSit()
+	{
+		auto __p = gst_mpegts_section_get_sit(gstMpegtsSection);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(SIT)(cast(GstMpegtsSIT*) __p);
 	}
 
 	/**
@@ -388,14 +494,14 @@ public class Section
 	 */
 	public DateTime getTdt()
 	{
-		auto p = gst_mpegts_section_get_tdt(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_tdt(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) p, true);
+		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) __p, true);
 	}
 
 	/**
@@ -406,62 +512,111 @@ public class Section
 	 */
 	public TOT getTot()
 	{
-		auto p = gst_mpegts_section_get_tot(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_tot(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TOT)(cast(GstMpegtsTOT*) p);
+		return ObjectG.getDObject!(TOT)(cast(GstMpegtsTOT*) __p);
 	}
 
 	/**
+	 * Parses a Transport Stream Description Table.
+	 *
 	 * Returns the array of #GstMpegtsDescriptor contained in the section
 	 *
-	 * Returns: The
-	 *     #GstMpegtsDescriptor contained in the section, or %NULL if an error
+	 * Returns: The array
+	 *     of #GstMpegtsDescriptor contained in the section, or %NULL if an error
 	 *     happened. Release with #g_array_unref when done.
 	 */
 	public PtrArray getTsdt()
 	{
-		auto p = gst_mpegts_section_get_tsdt(gstMpegtsSection);
+		auto __p = gst_mpegts_section_get_tsdt(gstMpegtsSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
-	 * If the data in @section has already been packetized, the data pointer is returned
-	 * immediately. Otherwise, the data field is allocated and populated.
+	 * Packetize (i.e. serialize) the @section. If the data in @section has already
+	 * been packetized, the data pointer is returned immediately. Otherwise, the
+	 * data field is allocated and populated.
 	 *
-	 * Returns: pointer to section data, or %NULL on fail
+	 * Returns: pointer to section data, or %NULL on failure.
 	 */
 	public ubyte[] packetize()
 	{
 		size_t outputSize;
 
-		auto p = gst_mpegts_section_packetize(gstMpegtsSection, &outputSize);
+		auto __p = gst_mpegts_section_packetize(gstMpegtsSection, &outputSize);
 
-		return p[0 .. outputSize];
+		return __p[0 .. outputSize];
 	}
 
 	/**
-	 * Creates a custom #GstEvent with a @GstMpegtsSection.
-	 * The #GstEvent is sent to the @element #GstElement.
+	 * Creates a custom #GstEvent with a @GstMpegtsSection and send it the @element
+	 * #GstElement.
 	 *
 	 * Params:
 	 *     element = The #GstElement to send to section event to
 	 *
-	 * Returns: %TRUE if the event is sent
+	 * Returns: %TRUE if the event was sent to the element.
 	 */
 	public bool sendEvent(Element element)
 	{
 		return gst_mpegts_section_send_event(gstMpegtsSection, (element is null) ? null : element.getElementStruct()) != 0;
+	}
+
+	/**
+	 *
+	 * Params:
+	 *     mgt = a #GstMpegtsAtscMGT to create the #GstMpegtsSection from
+	 * Returns: the #GstMpegtsSection
+	 *
+	 * Since: 1.18
+	 */
+	public static Section fromAtscMgt(AtscMGT mgt)
+	{
+		auto __p = gst_mpegts_section_from_atsc_mgt((mgt is null) ? null : mgt.getAtscMGTStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
+	}
+
+	/** */
+	public static Section fromAtscRrt(AtscRRT rrt)
+	{
+		auto __p = gst_mpegts_section_from_atsc_rrt((rrt is null) ? null : rrt.getAtscRRTStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
+	}
+
+	/** */
+	public static Section fromAtscStt(AtscSTT stt)
+	{
+		auto __p = gst_mpegts_section_from_atsc_stt((stt is null) ? null : stt.getAtscSTTStruct());
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
 	}
 
 	/**
@@ -474,14 +629,14 @@ public class Section
 	 */
 	public static Section fromNit(NIT nit)
 	{
-		auto p = gst_mpegts_section_from_nit((nit is null) ? null : nit.getNITStruct());
+		auto __p = gst_mpegts_section_from_nit((nit is null) ? null : nit.getNITStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) p, true);
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
 	}
 
 	/**
@@ -495,14 +650,14 @@ public class Section
 	 */
 	public static Section fromPat(PtrArray programs, ushort tsId)
 	{
-		auto p = gst_mpegts_section_from_pat((programs is null) ? null : programs.getPtrArrayStruct(), tsId);
+		auto __p = gst_mpegts_section_from_pat((programs is null) ? null : programs.getPtrArrayStruct(), tsId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) p, true);
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
 	}
 
 	/**
@@ -516,14 +671,34 @@ public class Section
 	 */
 	public static Section fromPmt(PMT pmt, ushort pid)
 	{
-		auto p = gst_mpegts_section_from_pmt((pmt is null) ? null : pmt.getPMTStruct(), pid);
+		auto __p = gst_mpegts_section_from_pmt((pmt is null) ? null : pmt.getPMTStruct(), pid);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) p, true);
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
+	}
+
+	/**
+	 * Ownership of @sit is taken. The data in @sit is managed by the #GstMpegtsSection
+	 *
+	 * Params:
+	 *     sit = a #GstMpegtsSCTESIT to create the #GstMpegtsSection from
+	 *
+	 * Returns: the #GstMpegtsSection
+	 */
+	public static Section fromScteSit(SCTESIT sit, ushort pid)
+	{
+		auto __p = gst_mpegts_section_from_scte_sit((sit is null) ? null : sit.getSCTESITStruct(), pid);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
 	}
 
 	/**
@@ -536,14 +711,14 @@ public class Section
 	 */
 	public static Section fromSdt(SDT sdt)
 	{
-		auto p = gst_mpegts_section_from_sdt((sdt is null) ? null : sdt.getSDTStruct());
+		auto __p = gst_mpegts_section_from_sdt((sdt is null) ? null : sdt.getSDTStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) p, true);
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
 	}
 
 	/**
@@ -552,18 +727,19 @@ public class Section
 	 * Params:
 	 *     event = #GstEvent containing a #GstMpegtsSection
 	 *
-	 * Returns: The extracted #GstMpegtsSection
+	 * Returns: The extracted #GstMpegtsSection , or %NULL if the
+	 *     event did not contain a valid #GstMpegtsSection.
 	 */
 	public static Section eventParseMpegtsSection(Event event)
 	{
-		auto p = gst_event_parse_mpegts_section((event is null) ? null : event.getEventStruct());
+		auto __p = gst_event_parse_mpegts_section((event is null) ? null : event.getEventStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) p, true);
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
 	}
 
 	/**
@@ -578,14 +754,14 @@ public class Section
 	 */
 	public static Message messageNewMpegtsSection(ObjectGst parent, Section section)
 	{
-		auto p = gst_message_new_mpegts_section((parent is null) ? null : parent.getObjectGstStruct(), (section is null) ? null : section.getSectionStruct());
+		auto __p = gst_message_new_mpegts_section((parent is null) ? null : parent.getObjectGstStruct(), (section is null) ? null : section.getSectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -598,13 +774,13 @@ public class Section
 	 */
 	public static Section messageParseMpegtsSection(Message message)
 	{
-		auto p = gst_message_parse_mpegts_section((message is null) ? null : message.getMessageStruct());
+		auto __p = gst_message_parse_mpegts_section((message is null) ? null : message.getMessageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) p, true);
+		return ObjectG.getDObject!(Section)(cast(GstMpegtsSection*) __p, true);
 	}
 }

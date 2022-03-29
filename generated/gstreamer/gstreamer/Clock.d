@@ -47,7 +47,7 @@ private import std.algorithm;
  * 
  * The pipeline uses the clock to calculate the running time. Usually all
  * renderers synchronize to the global clock using the buffer timestamps, the
- * newsegment events and the element's base time, see #GstPipeline.
+ * #GST_EVENT_SEGMENT events and the element's base time, see #GstPipeline.
  * 
  * A clock implementation can support periodic and single shot clock
  * notifications both synchronous and asynchronous.
@@ -56,14 +56,14 @@ private import std.algorithm;
  * notification using gst_clock_new_single_shot_id() or
  * gst_clock_new_periodic_id().
  * 
- * To perform a blocking wait for the specific time of the #GstClockID use the
+ * To perform a blocking wait for the specific time of the #GstClockID use
  * gst_clock_id_wait(). To receive a callback when the specific time is reached
  * in the clock use gst_clock_id_wait_async(). Both these calls can be
  * interrupted with the gst_clock_id_unschedule() call. If the blocking wait is
  * unscheduled a return value of #GST_CLOCK_UNSCHEDULED is returned.
  * 
  * Periodic callbacks scheduled async will be repeatedly called automatically
- * until it is unscheduled. To schedule a sync periodic callback,
+ * until they are unscheduled. To schedule a sync periodic callback,
  * gst_clock_id_wait() should be called repeatedly.
  * 
  * The async callbacks can happen from any thread, either provided by the core
@@ -91,7 +91,7 @@ private import std.algorithm;
  * the clock is not PLAYING.
  * 
  * When a clock has the #GST_CLOCK_FLAG_CAN_SET_MASTER flag set, it can be
- * slaved to another #GstClock with the gst_clock_set_master(). The clock will
+ * slaved to another #GstClock with gst_clock_set_master(). The clock will
  * then automatically be synchronized to this master clock by repeatedly
  * sampling the master clock and the slave clock and recalibrating the slave
  * clock with gst_clock_set_calibration(). This feature is mostly useful for
@@ -150,9 +150,7 @@ public class Clock : ObjectGst
 	 *     id1 = A #GstClockID
 	 *     id2 = A #GstClockID to compare with
 	 *
-	 * Returns: negative value if a < b; zero if a = b; positive value if a > b
-	 *
-	 *     MT safe.
+	 * Returns: negative value if `a < b`; zero if `a = b`; positive value if `a > b`
 	 */
 	public static int idCompareFunc(void* id1, void* id2)
 	{
@@ -166,33 +164,29 @@ public class Clock : ObjectGst
 	 *     id = a #GstClockID
 	 *
 	 * Returns: a #GstClock or %NULL when the
-	 *     underlying clock has been freed.  Unref after usage.
-	 *
-	 *     MT safe.
+	 *     underlying clock has been freed.
 	 *
 	 * Since: 1.16
 	 */
 	public static Clock idGetClock(GstClockID id)
 	{
-		auto p = gst_clock_id_get_clock(id);
+		auto __p = gst_clock_id_get_clock(id);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**
-	 * Get the time of the clock ID
+	 * Gets the time of the clock ID
 	 *
 	 * Params:
 	 *     id = The #GstClockID to query
 	 *
 	 * Returns: the time of the given clock id.
-	 *
-	 *     MT safe.
 	 */
 	public static GstClockTime idGetTime(GstClockID id)
 	{
@@ -200,14 +194,12 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Increase the refcount of given @id.
+	 * Increases the refcount of given @id.
 	 *
 	 * Params:
 	 *     id = The #GstClockID to ref
 	 *
 	 * Returns: The same #GstClockID with increased refcount.
-	 *
-	 *     MT safe.
 	 */
 	public static GstClockID idRef(GstClockID id)
 	{
@@ -215,10 +207,8 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Unref given @id. When the refcount reaches 0 the
+	 * Unrefs given @id. When the refcount reaches 0 the
 	 * #GstClockID will be freed.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     id = The #GstClockID to unref
@@ -229,12 +219,10 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Cancel an outstanding request with @id. This can either
+	 * Cancels an outstanding request with @id. This can either
 	 * be an outstanding async notification or a pending sync notification.
 	 * After this call, @id cannot be used anymore to receive sync or
 	 * async notifications, you need to create a new #GstClockID.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     id = The id to unschedule
@@ -256,8 +244,6 @@ public class Clock : ObjectGst
 	 *
 	 * Returns: whether the clock @id uses the same underlying #GstClock @clock.
 	 *
-	 *     MT safe.
-	 *
 	 * Since: 1.16
 	 */
 	public static bool idUsesClock(GstClockID id, Clock clock)
@@ -266,7 +252,7 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Perform a blocking wait on @id.
+	 * Performs a blocking wait on @id.
 	 * @id should have been created with gst_clock_new_single_shot_id()
 	 * or gst_clock_new_periodic_id() and should not have been unscheduled
 	 * with a call to gst_clock_id_unschedule().
@@ -289,8 +275,6 @@ public class Clock : ObjectGst
 	 *     if the current clock time is past the time of @id, #GST_CLOCK_OK if
 	 *     @id was scheduled in time. #GST_CLOCK_UNSCHEDULED if @id was
 	 *     unscheduled with gst_clock_id_unschedule().
-	 *
-	 *     MT safe.
 	 */
 	public static GstClockReturn idWait(GstClockID id, out GstClockTimeDiff jitter)
 	{
@@ -298,10 +282,10 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Register a callback on the given #GstClockID @id with the given
+	 * Registers a callback on the given #GstClockID @id with the given
 	 * function and user_data. When passing a #GstClockID with an invalid
 	 * time to this function, the callback will be called immediately
-	 * with  a time set to GST_CLOCK_TIME_NONE. The callback will
+	 * with  a time set to %GST_CLOCK_TIME_NONE. The callback will
 	 * be called when the time of @id has been reached.
 	 *
 	 * The callback @func can be invoked from any thread, either provided by the
@@ -314,8 +298,6 @@ public class Clock : ObjectGst
 	 *     destroyData = #GDestroyNotify for user_data
 	 *
 	 * Returns: the result of the non blocking wait.
-	 *
-	 *     MT safe.
 	 */
 	public static GstClockReturn idWaitAsync(GstClockID id, GstClockCallback func, void* userData, GDestroyNotify destroyData)
 	{
@@ -341,8 +323,6 @@ public class Clock : ObjectGst
 	 *
 	 * Returns: %TRUE if enough observations were added to run the
 	 *     regression algorithm.
-	 *
-	 *     MT safe.
 	 */
 	public bool addObservation(GstClockTime slave, GstClockTime master, out double rSquared)
 	{
@@ -365,6 +345,9 @@ public class Clock : ObjectGst
 	 *     external = a location to store the external time
 	 *     rateNum = a location to store the rate numerator
 	 *     rateDenom = a location to store the rate denominator
+	 *
+	 * Returns: %TRUE if enough observations were added to run the
+	 *     regression algorithm.
 	 *
 	 * Since: 1.6
 	 */
@@ -424,8 +407,6 @@ public class Clock : ObjectGst
 	 * @internal, @external, @rate_num, and @rate_denom can be left %NULL if the
 	 * caller is not interested in the values.
 	 *
-	 * MT safe.
-	 *
 	 * Params:
 	 *     internal = a location to store the internal time
 	 *     external = a location to store the external time
@@ -441,10 +422,8 @@ public class Clock : ObjectGst
 	 * Gets the current internal time of the given clock. The time is returned
 	 * unadjusted for the offset and the rate.
 	 *
-	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE when
+	 * Returns: the internal time of the clock. Or %GST_CLOCK_TIME_NONE when
 	 *     given invalid input.
-	 *
-	 *     MT safe.
 	 */
 	public GstClockTime getInternalTime()
 	{
@@ -452,34 +431,29 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Get the master clock that @clock is slaved to or %NULL when the clock is
+	 * Gets the master clock that @clock is slaved to or %NULL when the clock is
 	 * not slaved to any master clock.
 	 *
 	 * Returns: a master #GstClock or %NULL
-	 *     when this clock is not slaved to a master clock. Unref after
-	 *     usage.
-	 *
-	 *     MT safe.
+	 *     when this clock is not slaved to a master clock.
 	 */
 	public Clock getMaster()
 	{
-		auto p = gst_clock_get_master(gstClock);
+		auto __p = gst_clock_get_master(gstClock);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**
-	 * Get the accuracy of the clock. The accuracy of the clock is the granularity
+	 * Gets the accuracy of the clock. The accuracy of the clock is the granularity
 	 * of the values returned by gst_clock_get_time().
 	 *
 	 * Returns: the resolution of the clock in units of #GstClockTime.
-	 *
-	 *     MT safe.
 	 */
 	public GstClockTime getResolution()
 	{
@@ -491,10 +465,8 @@ public class Clock : ObjectGst
 	 * monotonically increasing and adjusted according to the current
 	 * offset and rate.
 	 *
-	 * Returns: the time of the clock. Or GST_CLOCK_TIME_NONE when
+	 * Returns: the time of the clock. Or %GST_CLOCK_TIME_NONE when
 	 *     given invalid input.
-	 *
-	 *     MT safe.
 	 */
 	public GstClockTime getTime()
 	{
@@ -502,7 +474,7 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Get the amount of time that master and slave clocks are sampled.
+	 * Gets the amount of time that master and slave clocks are sampled.
 	 *
 	 * Returns: the interval between samples.
 	 */
@@ -512,9 +484,8 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Checks if the clock is currently synced.
-	 *
-	 * This returns if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC is not set on the clock.
+	 * Checks if the clock is currently synced, by looking at whether
+	 * %GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC is set.
 	 *
 	 * Returns: %TRUE if the clock is currently synced
 	 *
@@ -526,12 +497,9 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Get an ID from @clock to trigger a periodic notification.
+	 * Gets an ID from @clock to trigger a periodic notification.
 	 * The periodic notifications will start at time @start_time and
-	 * will then be fired with the given @interval. @id should be unreffed
-	 * after usage.
-	 *
-	 * Free-function: gst_clock_id_unref
+	 * will then be fired with the given @interval.
 	 *
 	 * Params:
 	 *     startTime = the requested start time
@@ -539,8 +507,6 @@ public class Clock : ObjectGst
 	 *
 	 * Returns: a #GstClockID that can be used to request the
 	 *     time notification.
-	 *
-	 *     MT safe.
 	 */
 	public GstClockID newPeriodicId(GstClockTime startTime, GstClockTime interval)
 	{
@@ -548,19 +514,14 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Get a #GstClockID from @clock to trigger a single shot
-	 * notification at the requested time. The single shot id should be
-	 * unreffed after usage.
-	 *
-	 * Free-function: gst_clock_id_unref
+	 * Gets a #GstClockID from @clock to trigger a single shot
+	 * notification at the requested time.
 	 *
 	 * Params:
 	 *     time = the requested time
 	 *
 	 * Returns: a #GstClockID that can be used to request the
 	 *     time notification.
-	 *
-	 *     MT safe.
 	 */
 	public GstClockID newSingleShotId(GstClockTime time)
 	{
@@ -596,9 +557,9 @@ public class Clock : ObjectGst
 	 * Subsequent calls to gst_clock_get_time() will return clock times computed as
 	 * follows:
 	 *
-	 * |[
+	 * ``` C
 	 * time = (internal_time - internal) * rate_num / rate_denom + external
-	 * ]|
+	 * ```
 	 *
 	 * This formula is implemented in gst_clock_adjust_unlocked(). Of course, it
 	 * tries to do the integer arithmetic as precisely as possible.
@@ -606,8 +567,6 @@ public class Clock : ObjectGst
 	 * Note that gst_clock_get_time() always returns increasing values so when you
 	 * move the clock backwards, gst_clock_get_time() will report the previous value
 	 * until the clock catches up.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     internal = a reference internal time
@@ -622,7 +581,7 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Set @master as the master clock for @clock. @clock will be automatically
+	 * Sets @master as the master clock for @clock. @clock will be automatically
 	 * calibrated so that gst_clock_get_time() reports the same time as the
 	 * master clock.
 	 *
@@ -639,8 +598,6 @@ public class Clock : ObjectGst
 	 * Returns: %TRUE if the clock is capable of being slaved to a master clock.
 	 *     Trying to set a master on a clock without the
 	 *     #GST_CLOCK_FLAG_CAN_SET_MASTER flag will make this function return %FALSE.
-	 *
-	 *     MT safe.
 	 */
 	public bool setMaster(Clock master)
 	{
@@ -648,7 +605,7 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Set the accuracy of the clock. Some clocks have the possibility to operate
+	 * Sets the accuracy of the clock. Some clocks have the possibility to operate
 	 * with different accuracy at the expense of more resource usage. There is
 	 * normally no need to change the default resolution of a clock. The resolution
 	 * of a clock can only be changed if the clock has the
@@ -665,10 +622,10 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Sets @clock to synced and emits the GstClock::synced signal, and wakes up any
+	 * Sets @clock to synced and emits the #GstClock::synced signal, and wakes up any
 	 * thread waiting in gst_clock_wait_for_sync().
 	 *
-	 * This function must only be called if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC
+	 * This function must only be called if %GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC
 	 * is set on the clock, and is intended to be called by subclasses only.
 	 *
 	 * Params:
@@ -682,7 +639,7 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Set the amount of time, in nanoseconds, to sample master and slave
+	 * Sets the amount of time, in nanoseconds, to sample master and slave
 	 * clocks
 	 *
 	 * Params:
@@ -757,9 +714,9 @@ public class Clock : ObjectGst
 	 * is %GST_CLOCK_TIME_NONE it will wait forever, otherwise it will time out
 	 * after @timeout nanoseconds.
 	 *
-	 * For asynchronous waiting, the GstClock::synced signal can be used.
+	 * For asynchronous waiting, the #GstClock::synced signal can be used.
 	 *
-	 * This returns immediately with TRUE if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC
+	 * This returns immediately with %TRUE if %GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC
 	 * is not set on the clock, or if the clock is already synced.
 	 *
 	 * Params:
@@ -775,7 +732,7 @@ public class Clock : ObjectGst
 	}
 
 	/**
-	 * Signaled on clocks with GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC set once
+	 * Signaled on clocks with %GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC set once
 	 * the clock is synchronized, or when it completely lost synchronization.
 	 * This signal will not be emitted on clocks without the flag.
 	 *

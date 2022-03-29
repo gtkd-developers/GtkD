@@ -28,6 +28,7 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.gdktypes;
 private import gtkd.Loader;
@@ -172,14 +173,14 @@ public final class RGBA
 	 */
 	public RGBA copy()
 	{
-		auto p = gdk_rgba_copy(gdkRGBA);
+		auto __p = gdk_rgba_copy(gdkRGBA);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RGBA)(cast(GdkRGBA*) p, true);
+		return ObjectG.getDObject!(RGBA)(cast(GdkRGBA*) __p, true);
 	}
 
 	/**

@@ -31,6 +31,7 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Button;
 private import gtk.HButtonBox;
+private import gtk.HeaderBar;
 private import gtk.VBox;
 private import gtk.Widget;
 private import gtk.Window;
@@ -128,21 +129,22 @@ private import std.algorithm;
  * @vbox and @action_area as internal children with the names “vbox” and
  * “action_area”.
  * 
- * GtkDialog supports a custom <action-widgets> element, which can contain
- * multiple <action-widget> elements. The “response” attribute specifies a
+ * GtkDialog supports a custom `<action-widgets>` element, which can contain
+ * multiple `<action-widget>` elements. The “response” attribute specifies a
  * numeric response, and the content of the element is the id of widget
  * (which should be a child of the dialogs @action_area). To mark a response
- * as default, set the “default“ attribute of the <action-widget> element
+ * as default, set the “default“ attribute of the `<action-widget>` element
  * to true.
  * 
  * GtkDialog supports adding action widgets by specifying “action“ as
- * the “type“ attribute of a <child> element. The widget will be added
+ * the “type“ attribute of a `<child>` element. The widget will be added
  * either to the action area or the headerbar of the dialog, depending
  * on the “use-header-bar“ property. The response id has to be associated
- * with the action widget using the <action-widgets> element.
+ * with the action widget using the `<action-widgets>` element.
  * 
  * An example of a #GtkDialog UI definition fragment:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkDialog" id="dialog1">
  * <child type="action">
  * <object class="GtkButton" id="button_cancel"/>
@@ -301,14 +303,14 @@ public class Dialog : Window
 	 */
 	public this()
 	{
-		auto p = gtk_dialog_new();
+		auto __p = gtk_dialog_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkDialog*) p);
+		this(cast(GtkDialog*) __p);
 	}
 
 	/**
@@ -343,14 +345,14 @@ public class Dialog : Window
 	 */
 	public Widget addButton(string buttonText, int responseId)
 	{
-		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
+		auto __p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -362,16 +364,16 @@ public class Dialog : Window
 	 *
 	 * Since: 3.12
 	 */
-	public Widget getHeaderBar()
+	public HeaderBar getHeaderBar()
 	{
-		auto p = gtk_dialog_get_header_bar(gtkDialog);
+		auto __p = gtk_dialog_get_header_bar(gtkDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(HeaderBar)(cast(GtkHeaderBar*) __p);
 	}
 
 	/**
@@ -405,14 +407,14 @@ public class Dialog : Window
 	 */
 	public Widget getWidgetForResponse(int responseId)
 	{
-		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
+		auto __p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

@@ -30,6 +30,7 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.ListG;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtkc.giotypes;
@@ -82,7 +83,7 @@ public template DBusObjectManagerT(TStruct)
 	}
 
 	/**
-	 * Gets the #GDBusObjectProxy at @object_path, if any.
+	 * Gets the #GDBusObject at @object_path, if any.
 	 *
 	 * Params:
 	 *     objectPath = Object path to look up.

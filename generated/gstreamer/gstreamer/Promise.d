@@ -30,19 +30,22 @@ private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
  * The #GstPromise object implements the container for values that may
  * be available later. i.e. a Future or a Promise in
- * <ulink url="https://en.wikipedia.org/wiki/Futures_and_promises">https://en.wikipedia.org/wiki/Futures_and_promises</ulink>
+ * <https://en.wikipedia.org/wiki/Futures_and_promises>.
  * As with all Future/Promise-like functionality, there is the concept of the
  * producer of the value and the consumer of the value.
  * 
  * A #GstPromise is created with gst_promise_new() by the consumer and passed
  * to the producer to avoid thread safety issues with the change callback.
  * A #GstPromise can be replied to with a value (or an error) by the producer
- * with gst_promise_reply(). gst_promise_interrupt() is for the consumer to
+ * with gst_promise_reply(). The exact value returned is defined by the API
+ * contract of the producer and %NULL may be a valid reply.
+ * gst_promise_interrupt() is for the consumer to
  * indicate to the producer that the value is not needed anymore and producing
  * that value can stop.  The @GST_PROMISE_RESULT_EXPIRED state set by a call
  * to gst_promise_expire() indicates to the consumer that a value will never
@@ -116,6 +119,12 @@ public class Promise
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_promise_unref(gstPromise);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -132,14 +141,14 @@ public class Promise
 	 */
 	public this()
 	{
-		auto p = gst_promise_new();
+		auto __p = gst_promise_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstPromise*) p);
+		this(cast(GstPromise*) __p);
 	}
 
 	/**
@@ -160,14 +169,14 @@ public class Promise
 	 */
 	public this(GstPromiseChangeFunc func, void* userData, GDestroyNotify notify)
 	{
-		auto p = gst_promise_new_with_change_func(func, userData, notify);
+		auto __p = gst_promise_new_with_change_func(func, userData, notify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_change_func");
 		}
 
-		this(cast(GstPromise*) p);
+		this(cast(GstPromise*) __p);
 	}
 
 	/**
@@ -192,14 +201,14 @@ public class Promise
 	 */
 	public Structure getReply()
 	{
-		auto p = gst_promise_get_reply(gstPromise);
+		auto __p = gst_promise_get_reply(gstPromise);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -212,6 +221,26 @@ public class Promise
 	public void interrupt()
 	{
 		gst_promise_interrupt(gstPromise);
+	}
+
+	alias doref = ref_;
+	/**
+	 * Increases the refcount of the given @promise by one.
+	 *
+	 * Returns: @promise
+	 *
+	 * Since: 1.14
+	 */
+	public Promise ref_()
+	{
+		auto __p = gst_promise_ref(gstPromise);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Promise)(cast(GstPromise*) __p, true);
 	}
 
 	/**
@@ -230,6 +259,17 @@ public class Promise
 	public void reply(Structure s)
 	{
 		gst_promise_reply(gstPromise, (s is null) ? null : s.getStructureStruct(true));
+	}
+
+	/**
+	 * Decreases the refcount of the promise. If the refcount reaches 0, the
+	 * promise will be freed.
+	 *
+	 * Since: 1.14
+	 */
+	public void unref()
+	{
+		gst_promise_unref(gstPromise);
 	}
 
 	/**

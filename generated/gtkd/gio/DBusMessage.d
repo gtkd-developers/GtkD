@@ -32,6 +32,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -487,6 +488,8 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_SIGNATURE header field.
 	 *
+	 * This will always be non-%NULL, but may be an empty string.
+	 *
 	 * Returns: The value.
 	 *
 	 * Since: 2.26
@@ -500,6 +503,12 @@ public class DBusMessage : ObjectG
 	 * Gets the UNIX file descriptors associated with @message, if any.
 	 *
 	 * This method is only available on UNIX.
+	 *
+	 * The file descriptors normally correspond to %G_VARIANT_TYPE_HANDLE
+	 * values in the body of the message. For example,
+	 * if g_variant_get_handle() returns 5, that is intended to be a reference
+	 * to the file descriptor that can be accessed by
+	 * `g_unix_fd_list_get (list, 5, ...)`.
 	 *
 	 * Returns: A #GUnixFDList or %NULL if no file descriptors are
 	 *     associated. Do not free, this object is owned by @message.
@@ -851,6 +860,11 @@ public class DBusMessage : ObjectG
 	 * @fd_list is %NULL).
 	 *
 	 * This method is only available on UNIX.
+	 *
+	 * When designing D-Bus APIs that are intended to be interoperable,
+	 * please note that non-GDBus implementations of D-Bus can usually only
+	 * access file descriptors if they are referenced by a value of type
+	 * %G_VARIANT_TYPE_HANDLE in the body of the message.
 	 *
 	 * Params:
 	 *     fdList = A #GUnixFDList or %NULL.

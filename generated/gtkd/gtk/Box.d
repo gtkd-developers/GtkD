@@ -137,14 +137,14 @@ public class Box : Container, OrientableIF
 	 */
 	public this(GtkOrientation orientation, int spacing)
 	{
-		auto p = gtk_box_new(orientation, spacing);
+		auto __p = gtk_box_new(orientation, spacing);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkBox*) p);
+		this(cast(GtkBox*) __p);
 	}
 
 	/**
@@ -169,14 +169,14 @@ public class Box : Container, OrientableIF
 	 */
 	public Widget getCenterWidget()
 	{
-		auto p = gtk_box_get_center_widget(gtkBox);
+		auto __p = gtk_box_get_center_widget(gtkBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

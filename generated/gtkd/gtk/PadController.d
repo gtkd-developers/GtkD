@@ -139,14 +139,14 @@ public class PadController : EventController
 	 */
 	public this(Window window, ActionGroupIF group, Device pad)
 	{
-		auto p = gtk_pad_controller_new((window is null) ? null : window.getWindowStruct(), (group is null) ? null : group.getActionGroupStruct(), (pad is null) ? null : pad.getDeviceStruct());
+		auto __p = gtk_pad_controller_new((window is null) ? null : window.getWindowStruct(), (group is null) ? null : group.getActionGroupStruct(), (pad is null) ? null : pad.getDeviceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPadController*) p, true);
+		this(cast(GtkPadController*) __p, true);
 	}
 
 	/**

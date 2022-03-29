@@ -94,14 +94,14 @@ public class DataQueue : ObjectG
 	 */
 	public this(GstDataQueueCheckFullFunction checkfull, GstDataQueueFullCallback fullcallback, GstDataQueueEmptyCallback emptycallback, void* checkdata)
 	{
-		auto p = gst_data_queue_new(checkfull, fullcallback, emptycallback, checkdata);
+		auto __p = gst_data_queue_new(checkfull, fullcallback, emptycallback, checkdata);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstDataQueue*) p, true);
+		this(cast(GstDataQueue*) __p, true);
 	}
 
 	/**

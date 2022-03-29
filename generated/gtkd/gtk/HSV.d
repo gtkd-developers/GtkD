@@ -90,14 +90,14 @@ public class HSV : Widget
 	 */
 	public this()
 	{
-		auto p = gtk_hsv_new();
+		auto __p = gtk_hsv_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHSV*) p);
+		this(cast(GtkHSV*) __p);
 	}
 
 	/**

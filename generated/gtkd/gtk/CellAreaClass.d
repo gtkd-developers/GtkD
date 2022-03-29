@@ -76,14 +76,14 @@ public class CellAreaClass
 	 */
 	public ParamSpec findCellProperty(string propertyName)
 	{
-		auto p = gtk_cell_area_class_find_cell_property(gtkCellAreaClass, Str.toStringz(propertyName));
+		auto __p = gtk_cell_area_class_find_cell_property(gtkCellAreaClass, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -113,9 +113,9 @@ public class CellAreaClass
 	{
 		uint nProperties;
 
-		auto p = gtk_cell_area_class_list_cell_properties(gtkCellAreaClass, &nProperties);
+		auto __p = gtk_cell_area_class_list_cell_properties(gtkCellAreaClass, &nProperties);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -123,7 +123,7 @@ public class CellAreaClass
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;

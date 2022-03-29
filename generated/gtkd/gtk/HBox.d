@@ -47,10 +47,11 @@ public  import gtkc.gtktypes;
  * from #GtkBox. No further changes are needed, since the default
  * value of the #GtkOrientable:orientation property is
  * %GTK_ORIENTATION_HORIZONTAL.
- * If you don’t need first-child or last-child styling, and want your code
- * to be future-proof, the recommendation is to switch to #GtkGrid instead
- * of nested boxes. For more information about migrating to #GtkGrid,
- * see [Migrating from other containers to GtkGrid][gtk-migrating-GtkGrid].
+ * 
+ * If you have a grid-like layout composed of nested boxes, and you don’t
+ * need first-child or last-child styling, the recommendation is to switch
+ * to #GtkGrid. For more information about migrating to #GtkGrid, see
+ * [Migrating from other containers to GtkGrid][gtk-migrating-GtkGrid].
  */
 public class HBox : Box
 {
@@ -90,10 +91,8 @@ public class HBox : Box
 	/**
 	 * Creates a new #GtkHBox.
 	 *
-	 * Deprecated: You can use gtk_box_new() with %GTK_ORIENTATION_HORIZONTAL instead,
-	 * which is a quick and easy change. But the recommendation is to switch to
-	 * #GtkGrid, since #GtkBox is going to go away eventually.
-	 * See [Migrating from other containers to GtkGrid][gtk-migrating-GtkGrid].
+	 * Deprecated: You should use gtk_box_new() with a %GTK_ORIENTATION_HORIZONTAL
+	 * #GtkOrientable:orientation instead
 	 *
 	 * Params:
 	 *     homogeneous = %TRUE if all children are to be given equal space allotments.
@@ -105,13 +104,13 @@ public class HBox : Box
 	 */
 	public this(bool homogeneous, int spacing)
 	{
-		auto p = gtk_hbox_new(homogeneous, spacing);
+		auto __p = gtk_hbox_new(homogeneous, spacing);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHBox*) p);
+		this(cast(GtkHBox*) __p);
 	}
 }

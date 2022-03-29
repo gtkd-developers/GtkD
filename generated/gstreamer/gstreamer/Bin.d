@@ -68,46 +68,56 @@ private import std.algorithm;
  * the bin. Likewise the #GstBin::element-removed signal is fired whenever an
  * element is removed from the bin.
  * 
- * ## Notes
- * 
  * A #GstBin internally intercepts every #GstMessage posted by its children and
  * implements the following default behaviour for each of them:
  * 
- * * GST_MESSAGE_EOS: This message is only posted by sinks in the PLAYING
+ * * %GST_MESSAGE_EOS: This message is only posted by sinks in the PLAYING
  * state. If all sinks posted the EOS message, this bin will post and EOS
  * message upwards.
  * 
- * * GST_MESSAGE_SEGMENT_START: Just collected and never forwarded upwards.
+ * * %GST_MESSAGE_SEGMENT_START: Just collected and never forwarded upwards.
  * The messages are used to decide when all elements have completed playback
  * of their segment.
  * 
- * * GST_MESSAGE_SEGMENT_DONE: Is posted by #GstBin when all elements that posted
+ * * %GST_MESSAGE_SEGMENT_DONE: Is posted by #GstBin when all elements that posted
  * a SEGMENT_START have posted a SEGMENT_DONE.
  * 
- * * GST_MESSAGE_DURATION_CHANGED: Is posted by an element that detected a change
- * in the stream duration. The default bin behaviour is to clear any
- * cached duration values so that the next duration query will perform
- * a full duration recalculation. The duration change is posted to the
+ * * %GST_MESSAGE_DURATION_CHANGED: Is posted by an element that detected a change
+ * in the stream duration. The duration change is posted to the
  * application so that it can refetch the new duration with a duration
- * query. Note that these messages can be posted before the bin is
- * prerolled, in which case the duration query might fail.
+ * query.
  * 
- * * GST_MESSAGE_CLOCK_LOST: This message is posted by an element when it
- * can no longer provide a clock. The default bin behaviour is to
- * check if the lost clock was the one provided by the bin. If so and
- * the bin is currently in the PLAYING state, the message is forwarded to
- * the bin parent.
+ * Note that these messages can be posted before the bin is prerolled, in which
+ * case the duration query might fail.
+ * 
+ * Note also that there might be a discrepancy (due to internal buffering/queueing)
+ * between the stream being currently displayed and the returned duration query.
+ * 
+ * Applications might want to also query for duration (and changes) by
+ * listening to the %GST_MESSAGE_STREAM_START message, signaling the active start
+ * of a (new) stream.
+ * 
+ * * %GST_MESSAGE_CLOCK_LOST: This message is posted by an element when it
+ * can no longer provide a clock.
+ * 
+ * The default bin behaviour is to check if the lost clock was the one provided
+ * by the bin. If so and the bin is currently in the PLAYING state, the message
+ * is forwarded to the bin parent.
+ * 
  * This message is also generated when a clock provider is removed from
  * the bin. If this message is received by the application, it should
  * PAUSE the pipeline and set it back to PLAYING to force a new clock
  * distribution.
  * 
- * * GST_MESSAGE_CLOCK_PROVIDE: This message is generated when an element
+ * * %GST_MESSAGE_CLOCK_PROVIDE: This message is generated when an element
  * can provide a clock. This mostly happens when a new clock
- * provider is added to the bin. The default behaviour of the bin is to
- * mark the currently selected clock as dirty, which will perform a clock
- * recalculation the next time the bin is asked to provide a clock.
- * This message is never sent tot the application but is forwarded to
+ * provider is added to the bin.
+ * 
+ * The default behaviour of the bin is to mark the currently selected clock as
+ * dirty, which will perform a clock recalculation the next time the bin is
+ * asked to provide a clock.
+ * 
+ * This message is never sent to the application but is forwarded to
  * the parent of the bin.
  * 
  * * OTHERS: posted upwards.
@@ -115,24 +125,22 @@ private import std.algorithm;
  * A #GstBin implements the following default behaviour for answering to a
  * #GstQuery:
  * 
- * * GST_QUERY_DURATION:If the query has been asked before with the same format
- * and the bin is a toplevel bin (ie. has no parent),
- * use the cached previous value. If no previous value was cached, the
- * query is sent to all sink elements in the bin and the MAXIMUM of all
- * values is returned. If the bin is a toplevel bin the value is cached.
+ * * %GST_QUERY_DURATION: The bin will forward the query to all sink
+ * elements contained within and will return the maximum value.
  * If no sinks are available in the bin, the query fails.
  * 
- * * GST_QUERY_POSITION:The query is sent to all sink elements in the bin and the
+ * * %GST_QUERY_POSITION: The query is sent to all sink elements in the bin and the
  * MAXIMUM of all values is returned. If no sinks are available in the bin,
  * the query fails.
  * 
- * * OTHERS:the query is forwarded to all sink elements, the result
+ * * OTHERS: the query is forwarded to all sink elements, the result
  * of the first sink that answers the query successfully is returned. If no
  * sink is in the bin, the query fails.
  * 
  * A #GstBin will by default forward any event sent to it to all sink
- * (#GST_EVENT_TYPE_DOWNSTREAM) or source (#GST_EVENT_TYPE_UPSTREAM) elements
+ * ( %GST_EVENT_TYPE_DOWNSTREAM ) or source ( %GST_EVENT_TYPE_UPSTREAM ) elements
  * depending on the event type.
+ * 
  * If all the elements return %TRUE, the bin will also return %TRUE, else %FALSE
  * is returned. If no elements of the required type are in the bin, the event
  * handler will return %TRUE.
@@ -215,14 +223,14 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public this(string name)
 	{
-		auto p = gst_bin_new(Str.toStringz(name));
+		auto __p = gst_bin_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBin*) p);
+		this(cast(GstBin*) __p);
 	}
 
 	/**
@@ -237,8 +245,6 @@ public class Bin : Element, ChildProxyIF
 	 * > state (usually PLAYING or PAUSED, same you set the pipeline to originally)
 	 * > with gst_element_set_state(), or use gst_element_sync_state_with_parent().
 	 * > The bin or pipeline will not take care of this for you.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     element = the #GstElement to add
@@ -262,18 +268,18 @@ public class Bin : Element, ChildProxyIF
 	 *     direction = whether to look for an unlinked source or sink pad
 	 *
 	 * Returns: unlinked pad of the given
-	 *     direction, %NULL.
+	 *     direction.
 	 */
 	public Pad findUnlinkedPad(GstPadDirection direction)
 	{
-		auto p = gst_bin_find_unlinked_pad(gstBin, direction);
+		auto __p = gst_bin_find_unlinked_pad(gstBin, direction);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -283,8 +289,6 @@ public class Bin : Element, ChildProxyIF
 	 * all elements that implement the interface, use
 	 * gst_bin_iterate_all_by_interface(). This function recurses into child bins.
 	 *
-	 * MT safe.  Caller owns returned reference.
-	 *
 	 * Params:
 	 *     iface = the #GType of an interface
 	 *
@@ -293,74 +297,61 @@ public class Bin : Element, ChildProxyIF
 	 */
 	public Element getByInterface(GType iface)
 	{
-		auto p = gst_bin_get_by_interface(gstBin, iface);
+		auto __p = gst_bin_get_by_interface(gstBin, iface);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p, true);
 	}
 
 	/**
 	 * Gets the element with the given name from a bin. This
 	 * function recurses into child bins.
 	 *
-	 * Returns %NULL if no element with the given name is found in the bin.
-	 *
-	 * MT safe.  Caller owns returned reference.
-	 *
 	 * Params:
 	 *     name = the element name to search for
 	 *
 	 * Returns: the #GstElement with the given
-	 *     name, or %NULL
+	 *     name
 	 */
 	public Element getByName(string name)
 	{
-		auto p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
+		auto __p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p, true);
 	}
 
 	/**
 	 * Gets the element with the given name from this bin. If the
 	 * element is not found, a recursion is performed on the parent bin.
 	 *
-	 * Returns %NULL if:
-	 * - no element with the given name is found in the bin
-	 *
-	 * MT safe.  Caller owns returned reference.
-	 *
 	 * Params:
 	 *     name = the element name to search for
 	 *
 	 * Returns: the #GstElement with the given
-	 *     name, or %NULL
+	 *     name
 	 */
 	public Element getByNameRecurseUp(string name)
 	{
-		auto p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
+		auto __p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p, true);
 	}
 
 	/**
-	 * Return the suppressed flags of the bin.
-	 *
-	 * MT safe.
-	 *
 	 * Returns: the bin's suppressed #GstElementFlags.
 	 *
 	 * Since: 1.10
@@ -371,92 +362,105 @@ public class Bin : Element, ChildProxyIF
 	}
 
 	/**
+	 * Looks for all elements inside the bin with the given element factory name.
+	 * The function recurses inside child bins. The iterator will yield a series of
+	 * #GstElement.
+	 *
+	 * Params:
+	 *     factoryName = the name of the #GstElementFactory
+	 *
+	 * Returns: a #GstIterator of #GstElement
+	 *     for all elements in the bin with the given element factory name
+	 *
+	 * Since: 1.18
+	 */
+	public Iterator iterateAllByElementFactoryName(string factoryName)
+	{
+		auto __p = gst_bin_iterate_all_by_element_factory_name(gstBin, Str.toStringz(factoryName));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
+	}
+
+	/**
 	 * Looks for all elements inside the bin that implements the given
 	 * interface. You can safely cast all returned elements to the given interface.
 	 * The function recurses inside child bins. The iterator will yield a series
-	 * of #GstElement that should be unreffed after use.
-	 *
-	 * MT safe.  Caller owns returned value.
+	 * of #GstElement.
 	 *
 	 * Params:
 	 *     iface = the #GType of an interface
 	 *
 	 * Returns: a #GstIterator of #GstElement
-	 *     for all elements in the bin implementing the given interface,
-	 *     or %NULL
+	 *     for all elements in the bin implementing the given interface
 	 */
 	public Iterator iterateAllByInterface(GType iface)
 	{
-		auto p = gst_bin_iterate_all_by_interface(gstBin, iface);
+		auto __p = gst_bin_iterate_all_by_interface(gstBin, iface);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
 	 * Gets an iterator for the elements in this bin.
 	 *
-	 * MT safe.  Caller owns returned value.
-	 *
-	 * Returns: a #GstIterator of #GstElement,
-	 *     or %NULL
+	 * Returns: a #GstIterator of #GstElement
 	 */
 	public Iterator iterateElements()
 	{
-		auto p = gst_bin_iterate_elements(gstBin);
+		auto __p = gst_bin_iterate_elements(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
 	 * Gets an iterator for the elements in this bin.
 	 * This iterator recurses into GstBin children.
 	 *
-	 * MT safe.  Caller owns returned value.
-	 *
-	 * Returns: a #GstIterator of #GstElement,
-	 *     or %NULL
+	 * Returns: a #GstIterator of #GstElement
 	 */
 	public Iterator iterateRecurse()
 	{
-		auto p = gst_bin_iterate_recurse(gstBin);
+		auto __p = gst_bin_iterate_recurse(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
 	 * Gets an iterator for all elements in the bin that have the
 	 * #GST_ELEMENT_FLAG_SINK flag set.
 	 *
-	 * MT safe.  Caller owns returned value.
-	 *
-	 * Returns: a #GstIterator of #GstElement,
-	 *     or %NULL
+	 * Returns: a #GstIterator of #GstElement
 	 */
 	public Iterator iterateSinks()
 	{
-		auto p = gst_bin_iterate_sinks(gstBin);
+		auto __p = gst_bin_iterate_sinks(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -467,52 +471,46 @@ public class Bin : Element, ChildProxyIF
 	 * This function is used internally to perform the state changes
 	 * of the bin elements and for clock selection.
 	 *
-	 * MT safe.  Caller owns returned value.
-	 *
-	 * Returns: a #GstIterator of #GstElement,
-	 *     or %NULL
+	 * Returns: a #GstIterator of #GstElement
 	 */
 	public Iterator iterateSorted()
 	{
-		auto p = gst_bin_iterate_sorted(gstBin);
+		auto __p = gst_bin_iterate_sorted(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
 	 * Gets an iterator for all elements in the bin that have the
 	 * #GST_ELEMENT_FLAG_SOURCE flag set.
 	 *
-	 * MT safe.  Caller owns returned value.
-	 *
-	 * Returns: a #GstIterator of #GstElement,
-	 *     or %NULL
+	 * Returns: a #GstIterator of #GstElement
 	 */
 	public Iterator iterateSources()
 	{
-		auto p = gst_bin_iterate_sources(gstBin);
+		auto __p = gst_bin_iterate_sources(gstBin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
-	 * Query @bin for the current latency using and reconfigures this latency to all the
-	 * elements with a LATENCY event.
+	 * Queries @bin for the current latency and reconfigures this latency on all the
+	 * elements using a LATENCY event.
 	 *
 	 * This method is typically called on the pipeline when a #GST_MESSAGE_LATENCY
 	 * is posted on the bus.
 	 *
-	 * This function simply emits the 'do-latency' signal so any custom latency
+	 * This function simply emits the #GstBin::do-latency signal so any custom latency
 	 * calculations will be performed.
 	 *
 	 * Returns: %TRUE if the latency could be queried and reconfigured.
@@ -533,8 +531,6 @@ public class Bin : Element, ChildProxyIF
 	 * If the element's pads are linked to other pads, the pads will be unlinked
 	 * before the element is removed from the bin.
 	 *
-	 * MT safe.
-	 *
 	 * Params:
 	 *     element = the #GstElement to remove
 	 *
@@ -547,12 +543,10 @@ public class Bin : Element, ChildProxyIF
 	}
 
 	/**
-	 * Suppress the given flags on the bin. #GstElementFlags of a
+	 * Suppresses the given flags on the bin. #GstElementFlags of a
 	 * child element are propagated when it is added to the bin.
 	 * When suppressed flags are set, those specified flags will
 	 * not be propagated to the bin.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     flags = the #GstElementFlags to suppress
@@ -579,7 +573,7 @@ public class Bin : Element, ChildProxyIF
 	}
 
 	/**
-	 * Will be emitted after the element was added to sub_bin.
+	 * Will be emitted after the element was added to @sub_bin.
 	 *
 	 * Params:
 	 *     subBin = the #GstBin the element was added to
@@ -593,7 +587,7 @@ public class Bin : Element, ChildProxyIF
 	}
 
 	/**
-	 * Will be emitted after the element was removed from sub_bin.
+	 * Will be emitted after the element was removed from @sub_bin.
 	 *
 	 * Params:
 	 *     subBin = the #GstBin the element was removed from
@@ -608,7 +602,7 @@ public class Bin : Element, ChildProxyIF
 
 	/**
 	 * Will be emitted when the bin needs to perform latency calculations. This
-	 * signal is only emitted for toplevel bins or when async-handling is
+	 * signal is only emitted for toplevel bins or when #GstBin:async-handling is
 	 * enabled.
 	 *
 	 * Only one signal handler is invoked. If no signals are connected, the

@@ -42,9 +42,9 @@ public  import gtkc.gtktypes;
  * #GtkRecentChooserMenu.
  * 
  * To construct a submenu showing recently used files, use a #GtkRecentAction
- * as the action for a <menuitem>. To construct a menu toolbutton showing
+ * as the action for a `<menuitem>`. To construct a menu toolbutton showing
  * the recently used files in the popup menu, use a #GtkRecentAction as the
- * action for a <toolitem> element.
+ * action for a `<toolitem>` element.
  */
 public class RecentAction : Action, RecentChooserIF
 {
@@ -149,14 +149,14 @@ public class RecentAction : Action, RecentChooserIF
 	 */
 	public this(string name, string label, string tooltip, string stockId)
 	{
-		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		auto __p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRecentAction*) p, true);
+		this(cast(GtkRecentAction*) __p, true);
 	}
 
 	/**
@@ -182,14 +182,14 @@ public class RecentAction : Action, RecentChooserIF
 	 */
 	public this(string name, string label, string tooltip, string stockId, RecentManager manager)
 	{
-		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), (manager is null) ? null : manager.getRecentManagerStruct());
+		auto __p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), (manager is null) ? null : manager.getRecentManagerStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_manager");
 		}
 
-		this(cast(GtkRecentAction*) p, true);
+		this(cast(GtkRecentAction*) __p, true);
 	}
 
 	/**

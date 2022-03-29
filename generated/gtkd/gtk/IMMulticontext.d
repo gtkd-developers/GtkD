@@ -26,6 +26,7 @@ module gtk.IMMulticontext;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.IMContext;
 private import gtk.MenuShell;
@@ -79,14 +80,14 @@ public class IMMulticontext : IMContext
 	 */
 	public this()
 	{
-		auto p = gtk_im_multicontext_new();
+		auto __p = gtk_im_multicontext_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIMMulticontext*) p, true);
+		this(cast(GtkIMMulticontext*) __p, true);
 	}
 
 	/**

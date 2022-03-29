@@ -27,6 +27,7 @@ module gtk.IconSource;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -115,14 +116,14 @@ public class IconSource
 	 */
 	public this()
 	{
-		auto p = gtk_icon_source_new();
+		auto __p = gtk_icon_source_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIconSource*) p);
+		this(cast(GtkIconSource*) __p);
 	}
 
 	/**
@@ -134,14 +135,14 @@ public class IconSource
 	 */
 	public IconSource copy()
 	{
-		auto p = gtk_icon_source_copy(gtkIconSource);
+		auto __p = gtk_icon_source_copy(gtkIconSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconSource)(cast(GtkIconSource*) p, true);
+		return ObjectG.getDObject!(IconSource)(cast(GtkIconSource*) __p, true);
 	}
 
 	/**
@@ -226,14 +227,14 @@ public class IconSource
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = gtk_icon_source_get_pixbuf(gtkIconSource);
+		auto __p = gtk_icon_source_get_pixbuf(gtkIconSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**

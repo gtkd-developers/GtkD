@@ -26,6 +26,7 @@ module gstreamer.Stream;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.ObjectGst;
@@ -105,14 +106,14 @@ public class Stream : ObjectGst
 	 */
 	public this(string streamId, Caps caps, GstStreamType type, GstStreamFlags flags)
 	{
-		auto p = gst_stream_new(Str.toStringz(streamId), (caps is null) ? null : caps.getCapsStruct(), type, flags);
+		auto __p = gst_stream_new(Str.toStringz(streamId), (caps is null) ? null : caps.getCapsStruct(), type, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstStream*) p, true);
+		this(cast(GstStream*) __p, true);
 	}
 
 	/**
@@ -124,14 +125,14 @@ public class Stream : ObjectGst
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_stream_get_caps(gstStream);
+		auto __p = gst_stream_get_caps(gstStream);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -180,14 +181,14 @@ public class Stream : ObjectGst
 	 */
 	public TagList getTags()
 	{
-		auto p = gst_stream_get_tags(gstStream);
+		auto __p = gst_stream_get_tags(gstStream);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p, true);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p, true);
 	}
 
 	/**

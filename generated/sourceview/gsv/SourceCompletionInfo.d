@@ -79,14 +79,14 @@ public class SourceCompletionInfo : Window
 	 */
 	public this()
 	{
-		auto p = gtk_source_completion_info_new();
+		auto __p = gtk_source_completion_info_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceCompletionInfo*) p);
+		this(cast(GtkSourceCompletionInfo*) __p);
 	}
 
 	/**

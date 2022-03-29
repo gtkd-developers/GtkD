@@ -94,13 +94,13 @@ public class HButtonBox : ButtonBox
 	 */
 	public this()
 	{
-		auto p = gtk_hbutton_box_new();
+		auto __p = gtk_hbutton_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHButtonBox*) p);
+		this(cast(GtkHButtonBox*) __p);
 	}
 }

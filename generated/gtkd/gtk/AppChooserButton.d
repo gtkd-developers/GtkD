@@ -27,6 +27,7 @@ module gtk.AppChooserButton;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AppChooserIF;
@@ -116,14 +117,14 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 */
 	public this(string contentType)
 	{
-		auto p = gtk_app_chooser_button_new(Str.toStringz(contentType));
+		auto __p = gtk_app_chooser_button_new(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAppChooserButton*) p);
+		this(cast(GtkAppChooserButton*) __p);
 	}
 
 	/**

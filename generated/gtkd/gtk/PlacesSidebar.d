@@ -127,14 +127,14 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	public this()
 	{
-		auto p = gtk_places_sidebar_new();
+		auto __p = gtk_places_sidebar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPlacesSidebar*) p);
+		this(cast(GtkPlacesSidebar*) __p);
 	}
 
 	/**
@@ -189,14 +189,14 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	public FileIF getLocation()
 	{
-		auto p = gtk_places_sidebar_get_location(gtkPlacesSidebar);
+		auto __p = gtk_places_sidebar_get_location(gtkPlacesSidebar);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -215,14 +215,14 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	public FileIF getNthBookmark(int n)
 	{
-		auto p = gtk_places_sidebar_get_nth_bookmark(gtkPlacesSidebar, n);
+		auto __p = gtk_places_sidebar_get_nth_bookmark(gtkPlacesSidebar, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -336,14 +336,14 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	public ListSG listShortcuts()
 	{
-		auto p = gtk_places_sidebar_list_shortcuts(gtkPlacesSidebar);
+		auto __p = gtk_places_sidebar_list_shortcuts(gtkPlacesSidebar);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**

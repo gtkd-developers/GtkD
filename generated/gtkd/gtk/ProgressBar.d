@@ -26,6 +26,7 @@ module gtk.ProgressBar;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
@@ -123,14 +124,14 @@ public class ProgressBar : Widget, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_progress_bar_new();
+		auto __p = gtk_progress_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkProgressBar*) p);
+		this(cast(GtkProgressBar*) __p);
 	}
 
 	/**

@@ -28,6 +28,7 @@ private import gdk.Display;
 private import gdk.Event;
 private import gdkpixbuf.Pixbuf;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.SelectionData;
@@ -147,14 +148,14 @@ public class Clipboard : ObjectG
 	 */
 	public static Clipboard get(GdkAtom selection)
 	{
-		auto p = gtk_clipboard_get(selection);
+		auto __p = gtk_clipboard_get(selection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) __p);
 	}
 
 	/**
@@ -170,14 +171,14 @@ public class Clipboard : ObjectG
 	 */
 	public static Clipboard getDefault(Display display)
 	{
-		auto p = gtk_clipboard_get_default((display is null) ? null : display.getDisplayStruct());
+		auto __p = gtk_clipboard_get_default((display is null) ? null : display.getDisplayStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) __p);
 	}
 
 	/**
@@ -221,14 +222,14 @@ public class Clipboard : ObjectG
 	 */
 	public static Clipboard getForDisplay(Display display, GdkAtom selection)
 	{
-		auto p = gtk_clipboard_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
+		auto __p = gtk_clipboard_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
+		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) __p);
 	}
 
 	/**
@@ -252,14 +253,14 @@ public class Clipboard : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		auto p = gtk_clipboard_get_display(gtkClipboard);
+		auto __p = gtk_clipboard_get_display(gtkClipboard);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -273,14 +274,14 @@ public class Clipboard : ObjectG
 	 */
 	public ObjectG getOwner()
 	{
-		auto p = gtk_clipboard_get_owner(gtkClipboard);
+		auto __p = gtk_clipboard_get_owner(gtkClipboard);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -568,14 +569,14 @@ public class Clipboard : ObjectG
 	 */
 	public SelectionData waitForContents(GdkAtom target)
 	{
-		auto p = gtk_clipboard_wait_for_contents(gtkClipboard, target);
+		auto __p = gtk_clipboard_wait_for_contents(gtkClipboard, target);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) p, true);
+		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) __p, true);
 	}
 
 	/**
@@ -595,14 +596,14 @@ public class Clipboard : ObjectG
 	 */
 	public Pixbuf waitForImage()
 	{
-		auto p = gtk_clipboard_wait_for_image(gtkClipboard);
+		auto __p = gtk_clipboard_wait_for_image(gtkClipboard);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -628,9 +629,9 @@ public class Clipboard : ObjectG
 	{
 		size_t length;
 
-		auto p = gtk_clipboard_wait_for_rich_text(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct(), &format, &length);
+		auto __p = gtk_clipboard_wait_for_rich_text(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct(), &format, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -652,14 +653,14 @@ public class Clipboard : ObjectG
 	 */
 	public bool waitForTargets(out GdkAtom[] targets)
 	{
-		GdkAtom* outtargets = null;
+		GdkAtom* outtargets;
 		int nTargets;
 
-		auto p = gtk_clipboard_wait_for_targets(gtkClipboard, &outtargets, &nTargets) != 0;
+		auto __p = gtk_clipboard_wait_for_targets(gtkClipboard, &outtargets, &nTargets) != 0;
 
 		targets = outtargets[0 .. nTargets];
 
-		return p;
+		return __p;
 	}
 
 	/**

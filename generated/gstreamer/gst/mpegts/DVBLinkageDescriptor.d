@@ -88,14 +88,14 @@ public class DVBLinkageDescriptor
 	 */
 	public DVBLinkageEvent getEvent()
 	{
-		auto p = gst_mpegts_dvb_linkage_descriptor_get_event(gstMpegtsDVBLinkageDescriptor);
+		auto __p = gst_mpegts_dvb_linkage_descriptor_get_event(gstMpegtsDVBLinkageDescriptor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DVBLinkageEvent)(cast(GstMpegtsDVBLinkageEvent*) p);
+		return ObjectG.getDObject!(DVBLinkageEvent)(cast(GstMpegtsDVBLinkageEvent*) __p);
 	}
 
 	/**
@@ -103,14 +103,14 @@ public class DVBLinkageDescriptor
 	 */
 	public PtrArray getExtendedEvent()
 	{
-		auto p = gst_mpegts_dvb_linkage_descriptor_get_extended_event(gstMpegtsDVBLinkageDescriptor);
+		auto __p = gst_mpegts_dvb_linkage_descriptor_get_extended_event(gstMpegtsDVBLinkageDescriptor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -118,13 +118,13 @@ public class DVBLinkageDescriptor
 	 */
 	public DVBLinkageMobileHandOver getMobileHandOver()
 	{
-		auto p = gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over(gstMpegtsDVBLinkageDescriptor);
+		auto __p = gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over(gstMpegtsDVBLinkageDescriptor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DVBLinkageMobileHandOver)(cast(GstMpegtsDVBLinkageMobileHandOver*) p);
+		return ObjectG.getDObject!(DVBLinkageMobileHandOver)(cast(GstMpegtsDVBLinkageMobileHandOver*) __p);
 	}
 }

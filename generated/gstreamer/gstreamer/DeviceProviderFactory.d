@@ -26,6 +26,7 @@ module gstreamer.DeviceProviderFactory;
 
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.DeviceProvider;
 private import gstreamer.PluginFeature;
@@ -95,14 +96,14 @@ public class DeviceProviderFactory : PluginFeature
 	 */
 	public static DeviceProviderFactory find(string name)
 	{
-		auto p = gst_device_provider_factory_find(Str.toStringz(name));
+		auto __p = gst_device_provider_factory_find(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceProviderFactory)(cast(GstDeviceProviderFactory*) p, true);
+		return ObjectG.getDObject!(DeviceProviderFactory)(cast(GstDeviceProviderFactory*) __p, true);
 	}
 
 	/**
@@ -119,14 +120,14 @@ public class DeviceProviderFactory : PluginFeature
 	 */
 	public static DeviceProvider getByName(string factoryname)
 	{
-		auto p = gst_device_provider_factory_get_by_name(Str.toStringz(factoryname));
+		auto __p = gst_device_provider_factory_get_by_name(Str.toStringz(factoryname));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceProvider)(cast(GstDeviceProvider*) p, true);
+		return ObjectG.getDObject!(DeviceProvider)(cast(GstDeviceProvider*) __p, true);
 	}
 
 	/**
@@ -143,14 +144,14 @@ public class DeviceProviderFactory : PluginFeature
 	 */
 	public static ListG listGetDeviceProviders(GstRank minrank)
 	{
-		auto p = gst_device_provider_factory_list_get_device_providers(minrank);
+		auto __p = gst_device_provider_factory_list_get_device_providers(minrank);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -164,14 +165,14 @@ public class DeviceProviderFactory : PluginFeature
 	 */
 	public DeviceProvider get()
 	{
-		auto p = gst_device_provider_factory_get(gstDeviceProviderFactory);
+		auto __p = gst_device_provider_factory_get(gstDeviceProviderFactory);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceProvider)(cast(GstDeviceProvider*) p, true);
+		return ObjectG.getDObject!(DeviceProvider)(cast(GstDeviceProvider*) __p, true);
 	}
 
 	/**

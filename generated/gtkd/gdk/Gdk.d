@@ -29,6 +29,7 @@ private import gdk.Window;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 public  import gtkc.gdktypes;
 
 
@@ -211,11 +212,11 @@ public struct Gdk
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
 
-		auto p = gdk_init_check(&argc, &outargv) != 0;
+		auto __p = gdk_init_check(&argc, &outargv) != 0;
 
 		argv = Str.toStringArray(outargv, argc);
 
-		return p;
+		return __p;
 	}
 
 	/**

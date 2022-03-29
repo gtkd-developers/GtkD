@@ -30,9 +30,10 @@ public  import gtkc.gobjecttypes;
 
 
 /**
+ * An interface that handles the lifecycle of dynamically loaded types.
+ * 
  * The GObject type system supports dynamic loading of types.
- * The #GTypePlugin interface is used to handle the lifecycle
- * of dynamically loaded types. It goes as follows:
+ * It goes as follows:
  * 
  * 1. The type is initially introduced (usually upon loading the module
  * the first time, or by your main application that knows what modules
@@ -95,7 +96,7 @@ public template TypePluginT(TStruct)
 	 * function outside of the GObject type system itself.
 	 *
 	 * Params:
-	 *     instanceType = the #GType of an instantiable type to which the interface
+	 *     instanceType = the #GType of an instantiatable type to which the interface
 	 *         is added
 	 *     interfaceType = the #GType of the interface whose info is completed
 	 *     info = the #GInterfaceInfo to fill in

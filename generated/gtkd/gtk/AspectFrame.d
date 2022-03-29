@@ -103,14 +103,14 @@ public class AspectFrame : Frame
 	 */
 	public this(string label, float xalign, float yalign, float ratio, bool obeyChild)
 	{
-		auto p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);
+		auto __p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAspectFrame*) p);
+		this(cast(GtkAspectFrame*) __p);
 	}
 
 	/**

@@ -63,8 +63,14 @@ public struct Boxed
 
 	/**
 	 * This function creates a new %G_TYPE_BOXED derived type id for a new
-	 * boxed type with name @name. Boxed type handling functions have to be
-	 * provided to copy and free opaque boxed structures of this type.
+	 * boxed type with name @name.
+	 *
+	 * Boxed type handling functions have to be provided to copy and free
+	 * opaque boxed structures of this type.
+	 *
+	 * For the general case, it is recommended to use G_DEFINE_BOXED_TYPE()
+	 * instead of calling g_boxed_type_register_static() directly. The macro
+	 * will create the appropriate `*_get_type()` function for the boxed type.
 	 *
 	 * Params:
 	 *     name = Name of the new boxed type.

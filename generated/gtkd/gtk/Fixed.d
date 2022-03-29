@@ -119,14 +119,14 @@ public class Fixed : Container
 	 */
 	public this()
 	{
-		auto p = gtk_fixed_new();
+		auto __p = gtk_fixed_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFixed*) p);
+		this(cast(GtkFixed*) __p);
 	}
 
 	/**

@@ -78,14 +78,14 @@ public class SourceFile : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_source_file_new();
+		auto __p = gtk_source_file_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceFile*) p, true);
+		this(cast(GtkSourceFile*) __p, true);
 	}
 
 	/**
@@ -126,14 +126,14 @@ public class SourceFile : ObjectG
 	 */
 	public SourceEncoding getEncoding()
 	{
-		auto p = gtk_source_file_get_encoding(gtkSourceFile);
+		auto __p = gtk_source_file_get_encoding(gtkSourceFile);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
+		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) __p);
 	}
 
 	/**
@@ -143,14 +143,14 @@ public class SourceFile : ObjectG
 	 */
 	public FileIF getLocation()
 	{
-		auto p = gtk_source_file_get_location(gtkSourceFile);
+		auto __p = gtk_source_file_get_location(gtkSourceFile);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p);
 	}
 
 	/**

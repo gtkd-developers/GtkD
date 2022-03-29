@@ -214,6 +214,10 @@ public class Source
 	 *
 	 * This function is safe to call from any thread, regardless of which thread
 	 * the #GMainContext is running in.
+	 *
+	 * If the source is currently attached to a #GMainContext, destroying it
+	 * will effectively unset the callback similar to calling g_source_set_callback().
+	 * This can mean, that the data's #GDestroyNotify gets called right away.
 	 */
 	public void destroy()
 	{
@@ -357,10 +361,10 @@ public class Source
 	 * {
 	 * SomeWidget *self = data;
 	 *
-	 * GDK_THREADS_ENTER ();
+	 * g_mutex_lock (&self->idle_id_mutex);
 	 * // do stuff with self
 	 * self->idle_id = 0;
-	 * GDK_THREADS_LEAVE ();
+	 * g_mutex_unlock (&self->idle_id_mutex);
 	 *
 	 * return G_SOURCE_REMOVE;
 	 * }
@@ -368,7 +372,17 @@ public class Source
 	 * static void
 	 * some_widget_do_stuff_later (SomeWidget *self)
 	 * {
+	 * g_mutex_lock (&self->idle_id_mutex);
 	 * self->idle_id = g_idle_add (idle_callback, self);
+	 * g_mutex_unlock (&self->idle_id_mutex);
+	 * }
+	 *
+	 * static void
+	 * some_widget_init (SomeWidget *self)
+	 * {
+	 * g_mutex_init (&self->idle_id_mutex);
+	 *
+	 * // ...
 	 * }
 	 *
 	 * static void
@@ -378,6 +392,8 @@ public class Source
 	 *
 	 * if (self->idle_id)
 	 * g_source_remove (self->idle_id);
+	 *
+	 * g_mutex_clear (&self->idle_id_mutex);
 	 *
 	 * G_OBJECT_CLASS (parent_class)->finalize (object);
 	 * }
@@ -395,12 +411,12 @@ public class Source
 	 * {
 	 * SomeWidget *self = data;
 	 *
-	 * GDK_THREADS_ENTER ();
+	 * g_mutex_lock (&self->idle_id_mutex);
 	 * if (!g_source_is_destroyed (g_main_current_source ()))
 	 * {
 	 * // do stuff with self
 	 * }
-	 * GDK_THREADS_LEAVE ();
+	 * g_mutex_unlock (&self->idle_id_mutex);
 	 *
 	 * return FALSE;
 	 * }
@@ -560,6 +576,9 @@ public class Source
 	 * been attached to a context. The changes will take effect for the next time
 	 * the source is dispatched after this call returns.
 	 *
+	 * Note that g_source_destroy() for a currently attached source has the effect
+	 * of also unsetting the callback.
+	 *
 	 * Params:
 	 *     func = a callback function
 	 *     data = the data to pass to callback function
@@ -666,6 +685,8 @@ public class Source
 	 * the value, and changing the value will free it while the other thread
 	 * may be attempting to use it.
 	 *
+	 * Also see g_source_set_static_name().
+	 *
 	 * Params:
 	 *     name = debug name for the source
 	 *
@@ -730,6 +751,21 @@ public class Source
 	}
 
 	/**
+	 * A variant of g_source_set_name() that does not
+	 * duplicate the @name, and can only be used with
+	 * string literals.
+	 *
+	 * Params:
+	 *     name = debug name for the source
+	 *
+	 * Since: 2.70
+	 */
+	public void setStaticName(string name)
+	{
+		g_source_set_static_name(gSource, Str.toStringz(name));
+	}
+
+	/**
 	 * Decreases the reference count of a source by one. If the
 	 * resulting reference count is zero the source and associated
 	 * memory will be destroyed.
@@ -763,7 +799,7 @@ public class Source
 	 * Params:
 	 *     tag = the ID of the source to remove.
 	 *
-	 * Returns: For historical reasons, this function always returns %TRUE
+	 * Returns: %TRUE if the source was found and removed.
 	 */
 	public static bool remove(uint tag)
 	{

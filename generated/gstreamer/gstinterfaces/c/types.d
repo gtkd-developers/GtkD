@@ -28,6 +28,156 @@ public import gobject.c.types;
 
 
 /**
+ * Enumeration of the different standards that may apply to AFD data:
+ *
+ * 0) ETSI/DVB:
+ * https://www.etsi.org/deliver/etsi_ts/101100_101199/101154/02.01.01_60/ts_101154v020101p.pdf
+ *
+ * 1) ATSC A/53:
+ * https://www.atsc.org/wp-content/uploads/2015/03/a_53-Part-4-2009.pdf
+ *
+ * 2) SMPTE ST2016-1:
+ *
+ * Since: 1.18
+ */
+public enum GstVideoAFDSpec
+{
+	/**
+	 * AFD value is from DVB/ETSI standard
+	 */
+	DVB_ETSI = 0,
+	/**
+	 * AFD value is from ATSC A/53 standard
+	 */
+	ATSC_A53 = 1,
+	SMPTE_ST2016_1 = 2,
+}
+alias GstVideoAFDSpec VideoAFDSpec;
+
+/**
+ * Enumeration of the various values for Active Format Description (AFD)
+ *
+ * AFD should be included in video user data whenever the rectangular
+ * picture area containing useful information does not extend to the full height or width of the coded
+ * frame. AFD data may also be included in user data when the rectangular picture area containing
+ * useful information extends to the full height and width of the coded frame.
+ *
+ * For details, see Table 6.14 Active Format in:
+ *
+ * ATSC Digital Television Standard:
+ * Part 4 – MPEG-2 Video System Characteristics
+ *
+ * https://www.atsc.org/wp-content/uploads/2015/03/a_53-Part-4-2009.pdf
+ *
+ * and Active Format Description in Complete list of AFD codes
+ *
+ * https://en.wikipedia.org/wiki/Active_Format_Description#Complete_list_of_AFD_codes
+ *
+ * and SMPTE ST2016-1
+ *
+ * Notes:
+ *
+ * 1) AFD 0 is undefined for ATSC and SMPTE ST2016-1, indicating that AFD data is not available:
+ * If Bar Data is not present, AFD '0000' indicates that exact information
+ * is not available and the active image should be assumed to be the same as the coded frame. AFD '0000'.
+ * AFD '0000' accompanied by Bar Data signals that the active image’s aspect ratio is narrower than 16:9,
+ * but is not 4:3 or 14:9. As the exact aspect ratio cannot be conveyed by AFD alone, wherever possible,
+ * AFD ‘0000’ should be accompanied by Bar Data to define the exact vertical or horizontal extent
+ * of the active image.
+ * 2) AFD 0 is reserved for DVB/ETSI
+ * 3) values 1, 5, 6, 7, and 12 are reserved for both ATSC and DVB/ETSI
+ * 4) values 2 and 3 are not recommended for ATSC, but are valid for DVB/ETSI
+ *
+ * Since: 1.18
+ */
+public enum GstVideoAFDValue
+{
+	/**
+	 * Unavailable (see note 0 below).
+	 */
+	UNAVAILABLE = 0,
+	/**
+	 * For 4:3 coded frame, letterbox 16:9 image,
+	 * at top of the coded frame. For 16:9 coded frame, full frame 16:9 image,
+	 * the same as the coded frame.
+	 */
+	_16_9_TOP_ALIGNED = 2,
+	/**
+	 * For 4:3 coded frame, letterbox 14:9 image,
+	 * at top of the coded frame. For 16:9 coded frame, pillarbox 14:9 image,
+	 * horizontally centered in the coded frame.
+	 */
+	_14_9_TOP_ALIGNED = 3,
+	/**
+	 * For 4:3 coded frame, letterbox image with an aspect ratio
+	 * greater than 16:9, vertically centered in the coded frame. For 16:9 coded frame,
+	 * letterbox image with an aspect ratio greater than 16:9.
+	 */
+	GREATER_THAN_16_9 = 4,
+	/**
+	 * For 4:3 coded frame, full frame 4:3 image,
+	 * the same as the coded frame. For 16:9 coded frame, full frame 16:9 image, the same as
+	 * the coded frame.
+	 */
+	_4_3_FULL_16_9_FULL = 8,
+	/**
+	 * For 4:3 coded frame, full frame 4:3 image, the same as
+	 * the coded frame. For 16:9 coded frame, pillarbox 4:3 image, horizontally centered in the
+	 * coded frame.
+	 */
+	_4_3_FULL_4_3_PILLAR = 9,
+	/**
+	 * For 4:3 coded frame, letterbox 16:9 image, vertically centered in
+	 * the coded frame with all image areas protected. For 16:9 coded frame, full frame 16:9 image,
+	 * with all image areas protected.
+	 */
+	_16_9_LETTER_16_9_FULL = 10,
+	/**
+	 * For 4:3 coded frame, letterbox 14:9 image, vertically centered in
+	 * the coded frame. For 16:9 coded frame, pillarbox 14:9 image, horizontally centered in the
+	 * coded frame.
+	 */
+	_14_9_LETTER_14_9_PILLAR = 11,
+	/**
+	 * For 4:3 coded frame, full frame 4:3 image, with alternative 14:9
+	 * center. For 16:9 coded frame, pillarbox 4:3 image, with alternative 14:9 center.
+	 */
+	_4_3_FULL_14_9_CENTER = 13,
+	/**
+	 * For 4:3 coded frame, letterbox 16:9 image, with alternative 14:9
+	 * center. For 16:9 coded frame, full frame 16:9 image, with alternative 14:9 center.
+	 */
+	_16_9_LETTER_14_9_CENTER = 14,
+	/**
+	 * For 4:3 coded frame, letterbox 16:9 image, with alternative 4:3
+	 * center. For 16:9 coded frame, full frame 16:9 image, with alternative 4:3 center.
+	 */
+	_16_9_LETTER_4_3_CENTER = 15,
+}
+alias GstVideoAFDValue VideoAFDValue;
+
+/**
+ * Flags to be used in combination with gst_video_decoder_request_sync_point().
+ * See the function documentation for more details.
+ *
+ * Since: 1.20
+ */
+public enum GstVideoDecoderRequestSyncPointFlags
+{
+	/**
+	 * discard all following
+	 * input until the next sync point.
+	 */
+	DISCARD_INPUT = 1,
+	/**
+	 * discard all following
+	 * output until the next sync point.
+	 */
+	CORRUPT_OUTPUT = 2,
+}
+alias GstVideoDecoderRequestSyncPointFlags VideoDecoderRequestSyncPointFlags;
+
+/**
  * The different video orientation methods.
  *
  * Since: 1.10
@@ -113,6 +263,24 @@ struct GstVideoDirectionInterface
 	GTypeInterface iface;
 }
 
+/**
+ * Used to represent display_primaries and white_point of
+ * #GstVideoMasteringDisplayInfo struct. See #GstVideoMasteringDisplayInfo
+ *
+ * Since: 1.18
+ */
+struct GstVideoMasteringDisplayInfoCoordinates
+{
+	/**
+	 * the x coordinate of CIE 1931 color space in unit of 0.00002.
+	 */
+	ushort x;
+	/**
+	 * the y coordinate of CIE 1931 color space in unit of 0.00002.
+	 */
+	ushort y;
+}
+
 struct GstVideoOverlay;
 
 /**
@@ -193,8 +361,19 @@ enum BUFFER_POOL_OPTION_VIDEO_META = "GstBufferPoolOptionVideoMeta";
 alias GST_BUFFER_POOL_OPTION_VIDEO_META = BUFFER_POOL_OPTION_VIDEO_META;
 
 /**
- * Name of the caps feature indicating that the stream is interlaced. Currently
- * it is only used for video.
+ * Name of the caps feature indicating that the stream is interlaced.
+ *
+ * Currently it is only used for video with 'interlace-mode=alternate'
+ * to ensure backwards compatibility for this new mode.
+ * In this mode each buffer carries a single field of interlaced video.
+ * @GST_VIDEO_BUFFER_FLAG_TOP_FIELD and @GST_VIDEO_BUFFER_FLAG_BOTTOM_FIELD
+ * indicate whether the buffer carries a top or bottom field. The order of
+ * buffers/fields in the stream and the timestamps on the buffers indicate the
+ * temporal order of the fields.
+ * Top and bottom fields are expected to alternate in this mode.
+ * The frame rate in the caps still signals the frame rate, so the notional field
+ * rate will be twice the frame rate from the caps
+ * (see @GST_VIDEO_INFO_FIELD_RATE_N).
  */
 enum CAPS_FEATURE_FORMAT_INTERLACED = "format:Interlaced";
 alias GST_CAPS_FEATURE_FORMAT_INTERLACED = CAPS_FEATURE_FORMAT_INTERLACED;
@@ -238,6 +417,15 @@ alias GST_META_TAG_VIDEO_STR = META_TAG_VIDEO_STR;
 enum VIDEO_COLORIMETRY_BT2020 = "bt2020";
 alias GST_VIDEO_COLORIMETRY_BT2020 = VIDEO_COLORIMETRY_BT2020;
 
+enum VIDEO_COLORIMETRY_BT2020_10 = "bt2020-10";
+alias GST_VIDEO_COLORIMETRY_BT2020_10 = VIDEO_COLORIMETRY_BT2020_10;
+
+enum VIDEO_COLORIMETRY_BT2100_HLG = "bt2100-hlg";
+alias GST_VIDEO_COLORIMETRY_BT2100_HLG = VIDEO_COLORIMETRY_BT2100_HLG;
+
+enum VIDEO_COLORIMETRY_BT2100_PQ = "bt2100-pq";
+alias GST_VIDEO_COLORIMETRY_BT2100_PQ = VIDEO_COLORIMETRY_BT2100_PQ;
+
 enum VIDEO_COLORIMETRY_BT601 = "bt601";
 alias GST_VIDEO_COLORIMETRY_BT601 = VIDEO_COLORIMETRY_BT601;
 
@@ -278,7 +466,7 @@ enum VIDEO_COMP_Y = 0;
 alias GST_VIDEO_COMP_Y = VIDEO_COMP_Y;
 
 /**
- * #GST_TYPE_VIDEO_ALPHA_MODE, the alpha mode to use.
+ * #GstVideoAlphaMode, the alpha mode to use.
  * Default is #GST_VIDEO_ALPHA_MODE_COPY.
  */
 enum VIDEO_CONVERTER_OPT_ALPHA_MODE = "GstVideoConverter.alpha-mode";
@@ -292,6 +480,15 @@ enum VIDEO_CONVERTER_OPT_ALPHA_VALUE = "GstVideoConverter.alpha-value";
 alias GST_VIDEO_CONVERTER_OPT_ALPHA_VALUE = VIDEO_CONVERTER_OPT_ALPHA_VALUE;
 
 /**
+ * #G_TYPE_BOOLEAN, whether gst_video_converter_frame() will return immediately
+ * without waiting for the conversion to complete.  A subsequent
+ * gst_video_converter_frame_finish() must be performed to ensure completion of the
+ * conversion before subsequent use.  Default %FALSE
+ */
+enum VIDEO_CONVERTER_OPT_ASYNC_TASKS = "GstVideoConverter.async-tasks";
+alias GST_VIDEO_CONVERTER_OPT_ASYNC_TASKS = VIDEO_CONVERTER_OPT_ASYNC_TASKS;
+
+/**
  * #G_TYPE_UINT, the border color to use if #GST_VIDEO_CONVERTER_OPT_FILL_BORDER
  * is set to %TRUE. The color is in ARGB format.
  * Default 0xff000000
@@ -300,14 +497,14 @@ enum VIDEO_CONVERTER_OPT_BORDER_ARGB = "GstVideoConverter.border-argb";
 alias GST_VIDEO_CONVERTER_OPT_BORDER_ARGB = VIDEO_CONVERTER_OPT_BORDER_ARGB;
 
 /**
- * #GST_TYPE_VIDEO_CHROMA_MODE, set the chroma resample mode subsampled
+ * #GstVideoChromaMode, set the chroma resample mode subsampled
  * formats. Default is #GST_VIDEO_CHROMA_MODE_FULL.
  */
 enum VIDEO_CONVERTER_OPT_CHROMA_MODE = "GstVideoConverter.chroma-mode";
 alias GST_VIDEO_CONVERTER_OPT_CHROMA_MODE = VIDEO_CONVERTER_OPT_CHROMA_MODE;
 
 /**
- * #GST_TYPE_VIDEO_RESAMPLER_METHOD, The resampler method to use for
+ * #GstVideoChromaMethod, The resampler method to use for
  * chroma resampling. Other options for the resampler can be used, see
  * the #GstVideoResampler. Default is #GST_VIDEO_RESAMPLER_METHOD_LINEAR
  */
@@ -339,7 +536,7 @@ enum VIDEO_CONVERTER_OPT_DEST_Y = "GstVideoConverter.dest-y";
 alias GST_VIDEO_CONVERTER_OPT_DEST_Y = VIDEO_CONVERTER_OPT_DEST_Y;
 
 /**
- * #GST_TYPE_VIDEO_DITHER_METHOD, The dither method to use when
+ * #GstVideoDitherMethod, The dither method to use when
  * changing bit depth.
  * Default is #GST_VIDEO_DITHER_BAYER.
  */
@@ -364,14 +561,14 @@ enum VIDEO_CONVERTER_OPT_FILL_BORDER = "GstVideoConverter.fill-border";
 alias GST_VIDEO_CONVERTER_OPT_FILL_BORDER = VIDEO_CONVERTER_OPT_FILL_BORDER;
 
 /**
- * #GST_TYPE_VIDEO_GAMMA_MODE, set the gamma mode.
+ * #GstVideoGammaMode, set the gamma mode.
  * Default is #GST_VIDEO_GAMMA_MODE_NONE.
  */
 enum VIDEO_CONVERTER_OPT_GAMMA_MODE = "GstVideoConverter.gamma-mode";
 alias GST_VIDEO_CONVERTER_OPT_GAMMA_MODE = VIDEO_CONVERTER_OPT_GAMMA_MODE;
 
 /**
- * #GST_TYPE_VIDEO_MATRIX_MODE, set the color matrix conversion mode for
+ * #GstVideoMatrixMode, set the color matrix conversion mode for
  * converting between Y'PbPr and non-linear RGB (R'G'B').
  * Default is #GST_VIDEO_MATRIX_MODE_FULL.
  */
@@ -379,14 +576,14 @@ enum VIDEO_CONVERTER_OPT_MATRIX_MODE = "GstVideoConverter.matrix-mode";
 alias GST_VIDEO_CONVERTER_OPT_MATRIX_MODE = VIDEO_CONVERTER_OPT_MATRIX_MODE;
 
 /**
- * #GST_TYPE_VIDEO_PRIMARIES_MODE, set the primaries conversion mode.
+ * #GstVideoPrimariesMode, set the primaries conversion mode.
  * Default is #GST_VIDEO_PRIMARIES_MODE_NONE.
  */
 enum VIDEO_CONVERTER_OPT_PRIMARIES_MODE = "GstVideoConverter.primaries-mode";
 alias GST_VIDEO_CONVERTER_OPT_PRIMARIES_MODE = VIDEO_CONVERTER_OPT_PRIMARIES_MODE;
 
 /**
- * #GST_TYPE_VIDEO_RESAMPLER_METHOD, The resampler method to use for
+ * #GstVideoResamplerMethod, The resampler method to use for
  * resampling. Other options for the resampler can be used, see
  * the #GstVideoResampler. Default is #GST_VIDEO_RESAMPLER_METHOD_CUBIC
  */
@@ -461,7 +658,24 @@ alias GST_VIDEO_ENCODER_SINK_NAME = VIDEO_ENCODER_SINK_NAME;
 enum VIDEO_ENCODER_SRC_NAME = "src";
 alias GST_VIDEO_ENCODER_SRC_NAME = VIDEO_ENCODER_SRC_NAME;
 
-enum VIDEO_FORMATS_ALL = "{ I420, YV12, YUY2, UYVY, AYUV, VUYA, RGBx, BGRx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, Y41B, Y42B, YVYU, Y444, v210, v216, Y210, Y410, NV12, NV21, GRAY8, GRAY16_BE, GRAY16_LE, v308, RGB16, BGR16, RGB15, BGR15, UYVP, A420, RGB8P, YUV9, YVU9, IYU1, ARGB64, AYUV64, r210, I420_10BE, I420_10LE, I422_10BE, I422_10LE, Y444_10BE, Y444_10LE, GBR, GBR_10BE, GBR_10LE, NV16, NV24, NV12_64Z32, A420_10BE, A420_10LE, A422_10BE, A422_10LE, A444_10BE, A444_10LE, NV61, P010_10BE, P010_10LE, IYU2, VYUY, GBRA, GBRA_10BE, GBRA_10LE, BGR10A2_LE, GBR_12BE, GBR_12LE, GBRA_12BE, GBRA_12LE, I420_12BE, I420_12LE, I422_12BE, I422_12LE, Y444_12BE, Y444_12LE, GRAY10_LE32, NV12_10LE32, NV16_10LE32, NV12_10LE40 }";
+/**
+ * List of all video formats, for use in template caps strings.
+ *
+ * Formats are sorted by decreasing "quality", using these criteria by priority:
+ * - number of components
+ * - depth
+ * - subsampling factor of the width
+ * - subsampling factor of the height
+ * - number of planes
+ * - native endianness preferred
+ * - pixel stride
+ * - poffset
+ * - prefer non-complex formats
+ * - prefer YUV formats over RGB ones
+ * - prefer I420 over YV12
+ * - format name
+ */
+enum VIDEO_FORMATS_ALL = "{ ABGR64_BE, BGRA64_BE, AYUV64, ARGB64_BE, ARGB64, RGBA64_BE, ABGR64_LE, BGRA64_LE, ARGB64_LE, RGBA64_LE, GBRA_12BE, GBRA_12LE, Y412_BE, Y412_LE, A444_10BE, GBRA_10BE, A444_10LE, GBRA_10LE, A422_10BE, A422_10LE, A420_10BE, A420_10LE, Y410, RGB10A2_LE, BGR10A2_LE, GBRA, ABGR, VUYA, BGRA, AYUV, ARGB, RGBA, A420, AV12, Y444_16BE, Y444_16LE, v216, P016_BE, P016_LE, Y444_12BE, GBR_12BE, Y444_12LE, GBR_12LE, I422_12BE, I422_12LE, Y212_BE, Y212_LE, I420_12BE, I420_12LE, P012_BE, P012_LE, Y444_10BE, GBR_10BE, Y444_10LE, GBR_10LE, r210, I422_10BE, I422_10LE, NV16_10LE32, Y210, v210, UYVP, I420_10BE, I420_10LE, P010_10BE, P010_10LE, NV12_10LE32, NV12_10LE40, Y444, RGBP, GBR, BGRP, NV24, xBGR, BGRx, xRGB, RGBx, BGR, IYU2, v308, RGB, Y42B, NV61, NV16, VYUY, UYVY, YVYU, YUY2, I420, YV12, NV21, NV12, NV12_64Z32, NV12_4L4, NV12_32L32, Y41B, IYU1, YVU9, YUV9, RGB16, BGR16, RGB15, BGR15, RGB8P, GRAY16_BE, GRAY16_LE, GRAY10_LE32, GRAY8 }";
 alias GST_VIDEO_FORMATS_ALL = VIDEO_FORMATS_ALL;
 
 enum VIDEO_FPS_RANGE = "(fraction) [ 0, max ]";
@@ -472,13 +686,6 @@ alias GST_VIDEO_MAX_COMPONENTS = VIDEO_MAX_COMPONENTS;
 
 enum VIDEO_MAX_PLANES = 4;
 alias GST_VIDEO_MAX_PLANES = VIDEO_MAX_PLANES;
-
-/**
- * Video formats supported by gst_video_overlay_composition_blend(), for
- * use in overlay elements' pad template caps.
- */
-enum VIDEO_OVERLAY_COMPOSITION_BLEND_FORMATS = "{ BGRx, RGBx, xRGB, xBGR, RGBA, BGRA, ARGB, ABGR, RGB, BGR, I420, YV12, AYUV, YUY2, UYVY, v308, Y41B, Y42B, Y444, NV12, NV21, A420, YUV9, YVU9, IYU1, GRAY8 }";
-alias GST_VIDEO_OVERLAY_COMPOSITION_BLEND_FORMATS = VIDEO_OVERLAY_COMPOSITION_BLEND_FORMATS;
 
 /**
  * G_TYPE_DOUBLE, B parameter of the cubic filter. The B
@@ -542,7 +749,7 @@ enum VIDEO_RESAMPLER_OPT_SHARPNESS = "GstVideoResampler.sharpness";
 alias GST_VIDEO_RESAMPLER_OPT_SHARPNESS = VIDEO_RESAMPLER_OPT_SHARPNESS;
 
 /**
- * #GST_TYPE_VIDEO_DITHER_METHOD, The dither method to use for propagating
+ * #GstVideoDitherMethod, The dither method to use for propagating
  * quatization errors.
  */
 enum VIDEO_SCALER_OPT_DITHER_METHOD = "GstVideoScaler.dither-method";

@@ -41,6 +41,7 @@ private import glib.GException;
 private import glib.OptionGroup;
 private import glib.Str;
 private import glib.VariantDict;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.giotypes;
@@ -70,7 +71,7 @@ private import std.algorithm;
  * arguments are passed through platform communication to the already
  * running program. The already running instance of the program is
  * called the "primary instance"; for non-unique applications this is
- * the always the current instance. On Linux, the D-Bus session bus
+ * always the current instance. On Linux, the D-Bus session bus
  * is used for communication.
  * 
  * The use of #GApplication differs from some other commonly-used
@@ -155,13 +156,13 @@ private import std.algorithm;
  * respectively.
  * 
  * For an example of opening files with a GApplication, see
- * [gapplication-example-open.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-open.c).
+ * [gapplication-example-open.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-open.c).
  * 
  * For an example of using actions with GApplication, see
- * [gapplication-example-actions.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-actions.c).
+ * [gapplication-example-actions.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-actions.c).
  * 
  * For an example of using extra D-Bus hooks with GApplication, see
- * [gapplication-example-dbushooks.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-dbushooks.c).
+ * [gapplication-example-dbushooks.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-dbushooks.c).
  *
  * Since: 2.28
  */
@@ -627,7 +628,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Gets the application's current busy state, as set through
 	 * g_application_mark_busy() or g_application_bind_busy_property().
 	 *
-	 * Returns: %TRUE if @application is currenty marked as busy
+	 * Returns: %TRUE if @application is currently marked as busy
 	 *
 	 * Since: 2.44
 	 */
@@ -711,6 +712,8 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * spinner).
 	 *
 	 * To cancel the busy indication, use g_application_unmark_busy().
+	 *
+	 * The application must be registered before calling this function.
 	 *
 	 * Since: 2.38
 	 */
@@ -881,7 +884,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * and override local_command_line(). In this case, you most likely want
 	 * to return %TRUE from your local_command_line() implementation to
 	 * suppress the default handling. See
-	 * [gapplication-example-cmdline2.c][gapplication-example-cmdline2]
+	 * [gapplication-example-cmdline2.c][https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gapplication-example-cmdline2.c]
 	 * for an example.
 	 *
 	 * If, after the above is done, the use count of the application is zero

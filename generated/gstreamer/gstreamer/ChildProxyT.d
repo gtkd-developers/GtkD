@@ -47,9 +47,9 @@ public  import std.algorithm;
  * By implementing this interface the child properties can be accessed from the
  * parent element by using gst_child_proxy_get() and gst_child_proxy_set().
  * 
- * Property names are written as "child-name::property-name". The whole naming
- * scheme is recursive. Thus "child1::child2::property" is valid too, if
- * "child1" and "child2" implement the #GstChildProxy interface.
+ * Property names are written as `child-name::property-name`. The whole naming
+ * scheme is recursive. Thus `child1::child2::property` is valid too, if
+ * `child1` and `child2` implement the #GstChildProxy interface.
  */
 public template ChildProxyT(TStruct)
 {
@@ -63,7 +63,7 @@ public template ChildProxyT(TStruct)
 
 
 	/**
-	 * Emits the "child-added" signal.
+	 * Emits the #GstChildProxy::child-added signal.
 	 *
 	 * Params:
 	 *     child = the newly added child
@@ -75,7 +75,7 @@ public template ChildProxyT(TStruct)
 	}
 
 	/**
-	 * Emits the "child-removed" signal.
+	 * Emits the #GstChildProxy::child-removed signal.
 	 *
 	 * Params:
 	 *     child = the removed child
@@ -93,20 +93,18 @@ public template ChildProxyT(TStruct)
 	 *     index = the child's position in the child list
 	 *
 	 * Returns: the child object or %NULL if
-	 *     not found (index too high). Unref after usage.
-	 *
-	 *     MT safe.
+	 *     not found (index too high).
 	 */
 	public ObjectG getChildByIndex(uint index)
 	{
-		auto p = gst_child_proxy_get_child_by_index(getChildProxyStruct(), index);
+		auto __p = gst_child_proxy_get_child_by_index(getChildProxyStruct(), index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -120,28 +118,24 @@ public template ChildProxyT(TStruct)
 	 *     name = the child's name
 	 *
 	 * Returns: the child object or %NULL if
-	 *     not found. Unref after usage.
-	 *
-	 *     MT safe.
+	 *     not found.
 	 */
 	public ObjectG getChildByName(string name)
 	{
-		auto p = gst_child_proxy_get_child_by_name(getChildProxyStruct(), Str.toStringz(name));
+		auto __p = gst_child_proxy_get_child_by_name(getChildProxyStruct(), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
 	 * Gets the number of child objects this parent contains.
 	 *
 	 * Returns: the number of child objects
-	 *
-	 *     MT safe.
 	 */
 	public uint getChildrenCount()
 	{
@@ -180,8 +174,6 @@ public template ChildProxyT(TStruct)
 	/**
 	 * Looks up which object and #GParamSpec would be effected by the given @name.
 	 *
-	 * MT safe.
-	 *
 	 * Params:
 	 *     name = name of the property to look up
 	 *     target = pointer to a #GObject that
@@ -191,19 +183,19 @@ public template ChildProxyT(TStruct)
 	 *
 	 * Returns: %TRUE if @target and @pspec could be found. %FALSE otherwise. In that
 	 *     case the values for @pspec and @target are not modified. Unref @target after
-	 *     usage. For plain GObjects @target is the same as @object.
+	 *     usage. For plain #GObject @target is the same as @object.
 	 */
 	public bool lookup(string name, out ObjectG target, out ParamSpec pspec)
 	{
 		GObject* outtarget = null;
 		GParamSpec* outpspec = null;
 
-		auto p = gst_child_proxy_lookup(getChildProxyStruct(), Str.toStringz(name), &outtarget, &outpspec) != 0;
+		auto __p = gst_child_proxy_lookup(getChildProxyStruct(), Str.toStringz(name), &outtarget, &outpspec) != 0;
 
 		target = ObjectG.getDObject!(ObjectG)(outtarget);
 		pspec = ObjectG.getDObject!(ParamSpec)(outpspec);
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -26,6 +26,7 @@ module gtk.Stack;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Container;
 private import gtk.Widget;
@@ -98,14 +99,14 @@ public class Stack : Container
 	 */
 	public this()
 	{
-		auto p = gtk_stack_new();
+		auto __p = gtk_stack_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStack*) p);
+		this(cast(GtkStack*) __p);
 	}
 
 	/**
@@ -155,14 +156,14 @@ public class Stack : Container
 	 */
 	public Widget getChildByName(string name)
 	{
-		auto p = gtk_stack_get_child_by_name(gtkStack, Str.toStringz(name));
+		auto __p = gtk_stack_get_child_by_name(gtkStack, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -266,14 +267,14 @@ public class Stack : Container
 	 */
 	public Widget getVisibleChild()
 	{
-		auto p = gtk_stack_get_visible_child(gtkStack);
+		auto __p = gtk_stack_get_visible_child(gtkStack);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

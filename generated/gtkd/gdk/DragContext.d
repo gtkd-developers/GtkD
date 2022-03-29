@@ -94,14 +94,14 @@ public class DragContext : ObjectG
 	 */
 	public Window getDestWindow()
 	{
-		auto p = gdk_drag_context_get_dest_window(gdkDragContext);
+		auto __p = gdk_drag_context_get_dest_window(gdkDragContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -111,14 +111,14 @@ public class DragContext : ObjectG
 	 */
 	public Device getDevice()
 	{
-		auto p = gdk_drag_context_get_device(gdkDragContext);
+		auto __p = gdk_drag_context_get_device(gdkDragContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -135,14 +135,14 @@ public class DragContext : ObjectG
 	 */
 	public Window getDragWindow()
 	{
-		auto p = gdk_drag_context_get_drag_window(gdkDragContext);
+		auto __p = gdk_drag_context_get_drag_window(gdkDragContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -178,14 +178,14 @@ public class DragContext : ObjectG
 	 */
 	public Window getSourceWindow()
 	{
-		auto p = gdk_drag_context_get_source_window(gdkDragContext);
+		auto __p = gdk_drag_context_get_source_window(gdkDragContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -209,14 +209,14 @@ public class DragContext : ObjectG
 	 */
 	public ListG listTargets()
 	{
-		auto p = gdk_drag_context_list_targets(gdkDragContext);
+		auto __p = gdk_drag_context_list_targets(gdkDragContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -379,14 +379,14 @@ public class DragContext : ObjectG
 	 */
 	public static DragContext dragBegin(Window window, ListG targets)
 	{
-		auto p = gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct());
+		auto __p = gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p, true);
+		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) __p, true);
 	}
 
 	/**
@@ -404,14 +404,14 @@ public class DragContext : ObjectG
 	 */
 	public static DragContext dragBeginForDevice(Window window, Device device, ListG targets)
 	{
-		auto p = gdk_drag_begin_for_device((window is null) ? null : window.getWindowStruct(), (device is null) ? null : device.getDeviceStruct(), (targets is null) ? null : targets.getListGStruct());
+		auto __p = gdk_drag_begin_for_device((window is null) ? null : window.getWindowStruct(), (device is null) ? null : device.getDeviceStruct(), (targets is null) ? null : targets.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p, true);
+		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) __p, true);
 	}
 
 	/**
@@ -433,14 +433,14 @@ public class DragContext : ObjectG
 	 */
 	public static DragContext dragBeginFromPoint(Window window, Device device, ListG targets, int xRoot, int yRoot)
 	{
-		auto p = gdk_drag_begin_from_point((window is null) ? null : window.getWindowStruct(), (device is null) ? null : device.getDeviceStruct(), (targets is null) ? null : targets.getListGStruct(), xRoot, yRoot);
+		auto __p = gdk_drag_begin_from_point((window is null) ? null : window.getWindowStruct(), (device is null) ? null : device.getDeviceStruct(), (targets is null) ? null : targets.getListGStruct(), xRoot, yRoot);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p, true);
+		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) __p, true);
 	}
 
 	/**

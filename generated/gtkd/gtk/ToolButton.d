@@ -26,6 +26,7 @@ module gtk.ToolButton;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.ActionableIF;
@@ -124,14 +125,14 @@ public class ToolButton : ToolItem, ActionableIF
 	 */
 	public this(Widget iconWidget, string label)
 	{
-		auto p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
+		auto __p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkToolButton*) p);
+		this(cast(GtkToolButton*) __p);
 	}
 
 	/**
@@ -155,14 +156,14 @@ public class ToolButton : ToolItem, ActionableIF
 	 */
 	public this(string stockId)
 	{
-		auto p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
+		auto __p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
 
-		this(cast(GtkToolButton*) p);
+		this(cast(GtkToolButton*) __p);
 	}
 
 	/**
@@ -190,14 +191,14 @@ public class ToolButton : ToolItem, ActionableIF
 	 */
 	public Widget getIconWidget()
 	{
-		auto p = gtk_tool_button_get_icon_widget(gtkToolButton);
+		auto __p = gtk_tool_button_get_icon_widget(gtkToolButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -225,14 +226,14 @@ public class ToolButton : ToolItem, ActionableIF
 	 */
 	public Widget getLabelWidget()
 	{
-		auto p = gtk_tool_button_get_label_widget(gtkToolButton);
+		auto __p = gtk_tool_button_get_label_widget(gtkToolButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

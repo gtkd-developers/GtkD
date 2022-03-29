@@ -25,6 +25,7 @@
 module gobject.ParamSpec;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
@@ -39,8 +40,8 @@ private import gtkd.Loader;
  * 
  * ## Parameter names # {#canonical-parameter-names}
  * 
- * A property name consists of segments consisting of ASCII letters and
- * digits, separated by either the `-` or `_` character. The first
+ * A property name consists of one or more segments consisting of ASCII letters
+ * and digits, separated by either the `-` or `_` character. The first
  * character of a property name must be a letter. These are the same rules as
  * for signal naming (see g_signal_new()).
  * 
@@ -98,13 +99,14 @@ public class ParamSpec
 	 * e.g. a tooltip. The @nick and @blurb should ideally be localized.
 	 *
 	 * Params:
-	 *     paramType = the #GType for the property; must be derived from #G_TYPE_PARAM
+	 *     paramType = the #GType for the property; must be derived from %G_TYPE_PARAM
 	 *     name = the canonical name of the property
 	 *     nick = the nickname of the property
 	 *     blurb = a short description of the property
 	 *     flags = a combination of #GParamFlags
 	 *
-	 * Returns: a newly allocated #GParamSpec instance
+	 * Returns: (transfer floating): a newly allocated
+	 *     #GParamSpec instance, which is initially floating
 	 */
 	public static ParamSpec internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
@@ -116,6 +118,26 @@ public class ParamSpec
 		}
 
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+	}
+
+	/**
+	 * Validate a property name for a #GParamSpec. This can be useful for
+	 * dynamically-generated properties which need to be validated at run-time
+	 * before actually trying to create them.
+	 *
+	 * See [canonical parameter names][canonical-parameter-names] for details of
+	 * the rules for valid names.
+	 *
+	 * Params:
+	 *     name = the canonical name of the property
+	 *
+	 * Returns: %TRUE if @name is a valid property name, %FALSE otherwise.
+	 *
+	 * Since: 2.66
+	 */
+	public static bool isValidName(string name)
+	{
+		return g_param_spec_is_valid_name(Str.toStringz(name)) != 0;
 	}
 
 	/**
@@ -238,7 +260,7 @@ public class ParamSpec
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -257,7 +279,7 @@ public class ParamSpec
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -334,10 +356,12 @@ public class ParamSpec
 	}
 
 	/**
-	 * Registers @name as the name of a new static type derived from
-	 * #G_TYPE_PARAM. The type system uses the information contained in
-	 * the #GParamSpecTypeInfo structure pointed to by @info to manage the
-	 * #GParamSpec type and its instances.
+	 * Registers @name as the name of a new static type derived
+	 * from %G_TYPE_PARAM.
+	 *
+	 * The type system uses the information contained in the #GParamSpecTypeInfo
+	 * structure pointed to by @info to manage the #GParamSpec type and its
+	 * instances.
 	 *
 	 * Params:
 	 *     name = 0-terminated string used as the name of the new #GParamSpec type.
@@ -361,7 +385,7 @@ public class ParamSpec
 	 *
 	 * Params:
 	 *     pspec = a valid #GParamSpec
-	 *     srcValue = souce #GValue
+	 *     srcValue = source #GValue
 	 *     destValue = destination #GValue of correct type for @pspec
 	 *     strictValidation = %TRUE requires @dest_value to conform to @pspec
 	 *         without modifications

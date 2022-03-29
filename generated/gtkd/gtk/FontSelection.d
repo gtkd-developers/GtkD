@@ -26,6 +26,7 @@ module gtk.FontSelection;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Box;
 private import gtk.Widget;
@@ -83,14 +84,14 @@ public class FontSelection : Box
 	 */
 	public this()
 	{
-		auto p = gtk_font_selection_new();
+		auto __p = gtk_font_selection_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFontSelection*) p);
+		this(cast(GtkFontSelection*) __p);
 	}
 
 	/**
@@ -107,14 +108,14 @@ public class FontSelection : Box
 	 */
 	public PgFontFace getFace()
 	{
-		auto p = gtk_font_selection_get_face(gtkFontSelection);
+		auto __p = gtk_font_selection_get_face(gtkFontSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) p);
+		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) __p);
 	}
 
 	/**
@@ -129,14 +130,14 @@ public class FontSelection : Box
 	 */
 	public Widget getFaceList()
 	{
-		auto p = gtk_font_selection_get_face_list(gtkFontSelection);
+		auto __p = gtk_font_selection_get_face_list(gtkFontSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -153,14 +154,14 @@ public class FontSelection : Box
 	 */
 	public PgFontFamily getFamily()
 	{
-		auto p = gtk_font_selection_get_family(gtkFontSelection);
+		auto __p = gtk_font_selection_get_family(gtkFontSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) p);
+		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) __p);
 	}
 
 	/**
@@ -175,14 +176,14 @@ public class FontSelection : Box
 	 */
 	public Widget getFamilyList()
 	{
-		auto p = gtk_font_selection_get_family_list(gtkFontSelection);
+		auto __p = gtk_font_selection_get_family_list(gtkFontSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -219,14 +220,14 @@ public class FontSelection : Box
 	 */
 	public Widget getPreviewEntry()
 	{
-		auto p = gtk_font_selection_get_preview_entry(gtkFontSelection);
+		auto __p = gtk_font_selection_get_preview_entry(gtkFontSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -270,14 +271,14 @@ public class FontSelection : Box
 	 */
 	public Widget getSizeEntry()
 	{
-		auto p = gtk_font_selection_get_size_entry(gtkFontSelection);
+		auto __p = gtk_font_selection_get_size_entry(gtkFontSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -291,14 +292,14 @@ public class FontSelection : Box
 	 */
 	public Widget getSizeList()
 	{
-		auto p = gtk_font_selection_get_size_list(gtkFontSelection);
+		auto __p = gtk_font_selection_get_size_list(gtkFontSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

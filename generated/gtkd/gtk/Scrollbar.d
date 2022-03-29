@@ -125,13 +125,13 @@ public class Scrollbar : Range
 	 */
 	public this(GtkOrientation orientation, Adjustment adjustment)
 	{
-		auto p = gtk_scrollbar_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_scrollbar_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScrollbar*) p);
+		this(cast(GtkScrollbar*) __p);
 	}
 }

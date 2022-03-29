@@ -34,7 +34,8 @@ private import gtkd.Loader;
 
 
 /**
- * Program Map Table (ISO/IEC 13818-1).
+ * Program Map Table (ISO/IEC 13818-1). Provides the mappings between program
+ * numbers and the program elements that comprise them.
  * 
  * The program_number is contained in the subtable_extension field of the
  * container #GstMpegtsSection.
@@ -76,7 +77,7 @@ public final class PMT
 
 
 	/**
-	 * PID of the stream containing PCR
+	 * PID of the stream containing the PCR for this program.
 	 */
 	public @property ushort pcrPid()
 	{
@@ -89,7 +90,9 @@ public final class PMT
 		gstMpegtsPMT.pcrPid = value;
 	}
 
-	/** */
+	/**
+	 * The program to which this PMT is applicable.
+	 */
 	public @property ushort programNumber()
 	{
 		return gstMpegtsPMT.programNumber;
@@ -102,7 +105,7 @@ public final class PMT
 	}
 
 	/**
-	 * array of #GstMpegtsDescriptor
+	 * Array of #GstMpegtsDescriptor
 	 */
 	public @property PtrArray descriptors()
 	{
@@ -136,7 +139,9 @@ public final class PMT
 	}
 
 	/**
-	 * Allocates and initializes a new #GstMpegtsPMT.
+	 * Allocates and initializes a new #GstMpegtsPMT. #GstMpegtsPMTStream can be
+	 * added to the streams array, and global PMT #GstMpegtsDescriptor to the
+	 * descriptors array.
 	 *
 	 * Returns: #GstMpegtsPMT
 	 *
@@ -144,13 +149,13 @@ public final class PMT
 	 */
 	public this()
 	{
-		auto p = gst_mpegts_pmt_new();
+		auto __p = gst_mpegts_pmt_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsPMT*) p);
+		this(cast(GstMpegtsPMT*) __p);
 	}
 }

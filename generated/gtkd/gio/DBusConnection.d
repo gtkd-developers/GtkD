@@ -46,6 +46,7 @@ private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import glib.c.functions;
 private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -87,22 +88,22 @@ private import std.algorithm;
  * ## An example D-Bus server # {#gdbus-server}
  * 
  * Here is an example for a D-Bus server:
- * [gdbus-example-server.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-server.c)
+ * [gdbus-example-server.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-example-server.c)
  * 
  * ## An example for exporting a subtree # {#gdbus-subtree-server}
  * 
  * Here is an example for exporting a subtree:
- * [gdbus-example-subtree.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-subtree.c)
+ * [gdbus-example-subtree.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-example-subtree.c)
  * 
  * ## An example for file descriptor passing # {#gdbus-unix-fd-client}
  * 
  * Here is an example for passing UNIX file descriptors:
- * [gdbus-unix-fd-client.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-unix-fd-client.c)
+ * [gdbus-unix-fd-client.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-example-unix-fd-client.c)
  * 
  * ## An example for exporting a GObject # {#gdbus-export}
  * 
  * Here is an example for exporting a #GObject:
- * [gdbus-example-export.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-export.c)
+ * [gdbus-example-export.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-example-export.c)
  *
  * Since: 2.26
  */
@@ -197,8 +198,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * This constructor can only be used to initiate client-side
 	 * connections - use g_dbus_connection_new_sync() if you need to act
 	 * as the server. In particular, @flags cannot contain the
-	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER or
-	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS flags.
+	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER,
+	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS or
+	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER flags.
 	 *
 	 * This is a synchronous failable constructor. See
 	 * g_dbus_connection_new_for_address() for the asynchronous version.
@@ -212,8 +214,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     observer = a #GDBusAuthObserver or %NULL
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Returns: a #GDBusConnection or %NULL if @error is set. Free with
-	 *     g_object_unref().
+	 * Returns: a #GDBusConnection or %NULL if @error is set.
+	 *     Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -263,7 +265,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     observer = a #GDBusAuthObserver or %NULL
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Returns: a #GDBusConnection or %NULL if @error is set. Free with g_object_unref().
+	 * Returns: a #GDBusConnection or %NULL if @error is set.
+	 *     Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -336,8 +339,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * This constructor can only be used to initiate client-side
 	 * connections - use g_dbus_connection_new() if you need to act as the
 	 * server. In particular, @flags cannot contain the
-	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER or
-	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS flags.
+	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER,
+	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS or
+	 * %G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER flags.
 	 *
 	 * When the operation is finished, @callback will be invoked. You can
 	 * then call g_dbus_connection_new_for_address_finish() to get the result of
@@ -489,8 +493,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * Params:
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed to g_dbus_connection_call()
 	 *
-	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
-	 *     return values. Free with g_variant_unref().
+	 * Returns: %NULL if @error is set. Otherwise a non-floating
+	 *     #GVariant tuple with return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -567,8 +571,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *         timeout or %G_MAXINT for no timeout
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
-	 *     return values. Free with g_variant_unref().
+	 * Returns: %NULL if @error is set. Otherwise a non-floating
+	 *     #GVariant tuple with return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -595,6 +599,18 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 
 	/**
 	 * Like g_dbus_connection_call() but also takes a #GUnixFDList object.
+	 *
+	 * The file descriptors normally correspond to %G_VARIANT_TYPE_HANDLE
+	 * values in the body of the message. For example, if a message contains
+	 * two file descriptors, @fd_list would have length 2, and
+	 * `g_variant_new_handle (0)` and `g_variant_new_handle (1)` would appear
+	 * somewhere in the body of the message (not necessarily in that order!)
+	 * to represent the file descriptors at indexes 0 and 1 respectively.
+	 *
+	 * When designing D-Bus APIs that are intended to be interoperable,
+	 * please note that non-GDBus implementations of D-Bus can usually only
+	 * access file descriptors if they are referenced in this way by a
+	 * value of type %G_VARIANT_TYPE_HANDLE in the body of the message.
 	 *
 	 * This method is only available on UNIX.
 	 *
@@ -627,13 +643,24 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	/**
 	 * Finishes an operation started with g_dbus_connection_call_with_unix_fd_list().
 	 *
+	 * The file descriptors normally correspond to %G_VARIANT_TYPE_HANDLE
+	 * values in the body of the message. For example,
+	 * if g_variant_get_handle() returns 5, that is intended to be a reference
+	 * to the file descriptor that can be accessed by
+	 * `g_unix_fd_list_get (*out_fd_list, 5, ...)`.
+	 *
+	 * When designing D-Bus APIs that are intended to be interoperable,
+	 * please note that non-GDBus implementations of D-Bus can usually only
+	 * access file descriptors if they are referenced in this way by a
+	 * value of type %G_VARIANT_TYPE_HANDLE in the body of the message.
+	 *
 	 * Params:
 	 *     outFdList = return location for a #GUnixFDList or %NULL
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed to
 	 *         g_dbus_connection_call_with_unix_fd_list()
 	 *
-	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
-	 *     return values. Free with g_variant_unref().
+	 * Returns: %NULL if @error is set. Otherwise a non-floating
+	 *     #GVariant tuple with return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
 	 *
@@ -663,6 +690,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 
 	/**
 	 * Like g_dbus_connection_call_sync() but also takes and returns #GUnixFDList objects.
+	 * See g_dbus_connection_call_with_unix_fd_list() and
+	 * g_dbus_connection_call_with_unix_fd_list_finish() for more details.
 	 *
 	 * This method is only available on UNIX.
 	 *
@@ -682,8 +711,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     outFdList = return location for a #GUnixFDList or %NULL
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
-	 *     return values. Free with g_variant_unref().
+	 * Returns: %NULL if @error is set. Otherwise a non-floating
+	 *     #GVariant tuple with return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
 	 *
@@ -1188,7 +1217,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * #GVariant of incorrect type.
 	 *
 	 * If an existing callback is already registered at @object_path and
-	 * @interface_name, then @error is set to #G_IO_ERROR_EXISTS.
+	 * @interface_name, then @error is set to %G_IO_ERROR_EXISTS.
 	 *
 	 * GDBus automatically implements the standard D-Bus interfaces
 	 * org.freedesktop.DBus.Properties, org.freedesktop.DBus.Introspectable
@@ -1242,7 +1271,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     getPropertyClosure = #GClosure for getting a property.
 	 *     setPropertyClosure = #GClosure for setting a property.
 	 *
-	 * Returns: 0 if @error is set, otherwise a registration id (never 0)
+	 * Returns: 0 if @error is set, otherwise a registration ID (never 0)
 	 *     that can be used with g_dbus_connection_unregister_object() .
 	 *
 	 * Since: 2.46
@@ -1272,7 +1301,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *
 	 * When handling remote calls into any node in the subtree, first the
 	 * @enumerate function is used to check if the node exists. If the node exists
-	 * or the #G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES flag is set
+	 * or the %G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES flag is set
 	 * the @introspection function is used to check if the node supports the
 	 * requested method. If so, the @dispatch function is used to determine
 	 * where to dispatch the call. The collected #GDBusInterfaceVTable and
@@ -1284,7 +1313,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * of the thread you are calling this method from.
 	 *
 	 * If an existing subtree is already registered at @object_path or
-	 * then @error is set to #G_IO_ERROR_EXISTS.
+	 * then @error is set to %G_IO_ERROR_EXISTS.
 	 *
 	 * Note that it is valid to register regular objects (using
 	 * g_dbus_connection_register_object()) in a subtree registered with
@@ -1307,8 +1336,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     userData = data to pass to functions in @vtable
 	 *     userDataFreeFunc = function to call when the subtree is unregistered
 	 *
-	 * Returns: 0 if @error is set, otherwise a subtree registration id (never 0)
-	 *     that can be used with g_dbus_connection_unregister_subtree() .
+	 * Returns: 0 if @error is set, otherwise a subtree registration ID (never 0)
+	 *     that can be used with g_dbus_connection_unregister_subtree()
 	 *
 	 * Since: 2.26
 	 *
@@ -1356,7 +1385,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * will be assigned by @connection and set on @message via
 	 * g_dbus_message_set_serial(). If @out_serial is not %NULL, then the
 	 * serial number used will be written to this location prior to
-	 * submitting the message to the underlying transport.
+	 * submitting the message to the underlying transport. While it has a `volatile`
+	 * qualifier, this is a historical artifact and the argument passed to it should
+	 * not be `volatile`.
 	 *
 	 * If @connection is closed then the operation will fail with
 	 * %G_IO_ERROR_CLOSED. If @message is not well-formed,
@@ -1404,7 +1435,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * will be assigned by @connection and set on @message via
 	 * g_dbus_message_set_serial(). If @out_serial is not %NULL, then the
 	 * serial number used will be written to this location prior to
-	 * submitting the message to the underlying transport.
+	 * submitting the message to the underlying transport. While it has a `volatile`
+	 * qualifier, this is a historical artifact and the argument passed to it should
+	 * not be `volatile`.
 	 *
 	 * If @connection is closed then the operation will fail with
 	 * %G_IO_ERROR_CLOSED. If @cancellable is canceled, the operation will
@@ -1496,7 +1529,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * will be assigned by @connection and set on @message via
 	 * g_dbus_message_set_serial(). If @out_serial is not %NULL, then the
 	 * serial number used will be written to this location prior to
-	 * submitting the message to the underlying transport.
+	 * submitting the message to the underlying transport. While it has a `volatile`
+	 * qualifier, this is a historical artifact and the argument passed to it should
+	 * not be `volatile`.
 	 *
 	 * If @connection is closed then the operation will fail with
 	 * %G_IO_ERROR_CLOSED. If @cancellable is canceled, the operation will
@@ -1661,6 +1696,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * g_dbus_connection_signal_subscribe() is called, in order to avoid memory
 	 * leaks through callbacks queued on the #GMainContext after it’s stopped being
 	 * iterated.
+	 * Alternatively, any idle source with a priority lower than %G_PRIORITY_DEFAULT
+	 * that was scheduled after unsubscription, also indicates that all resources
+	 * of this subscription are released.
 	 *
 	 * Params:
 	 *     subscriptionId = a subscription id obtained from
@@ -1813,7 +1851,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * callers of g_bus_get() and g_bus_get_sync() for @bus_type. In the
 	 * event that you need a private message bus connection, use
 	 * g_dbus_address_get_for_bus_sync() and
-	 * g_dbus_connection_new_for_address().
+	 * g_dbus_connection_new_for_address() with
+	 * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT and
+	 * G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION flags.
 	 *
 	 * Note that the returned #GDBusConnection object will (usually) have
 	 * the #GDBusConnection:exit-on-close property set to %TRUE.
@@ -1861,7 +1901,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * callers of g_bus_get() and g_bus_get_sync() for @bus_type. In the
 	 * event that you need a private message bus connection, use
 	 * g_dbus_address_get_for_bus_sync() and
-	 * g_dbus_connection_new_for_address().
+	 * g_dbus_connection_new_for_address() with
+	 * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT and
+	 * G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION flags.
 	 *
 	 * Note that the returned #GDBusConnection object will (usually) have
 	 * the #GDBusConnection:exit-on-close property set to %TRUE.

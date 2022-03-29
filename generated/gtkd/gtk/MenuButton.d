@@ -169,14 +169,14 @@ public class MenuButton : ToggleButton
 	 */
 	public this()
 	{
-		auto p = gtk_menu_button_new();
+		auto __p = gtk_menu_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenuButton*) p);
+		this(cast(GtkMenuButton*) __p);
 	}
 
 	/**
@@ -188,14 +188,14 @@ public class MenuButton : ToggleButton
 	 */
 	public Widget getAlignWidget()
 	{
-		auto p = gtk_menu_button_get_align_widget(gtkMenuButton);
+		auto __p = gtk_menu_button_get_align_widget(gtkMenuButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -219,14 +219,14 @@ public class MenuButton : ToggleButton
 	 */
 	public MenuModel getMenuModel()
 	{
-		auto p = gtk_menu_button_get_menu_model(gtkMenuButton);
+		auto __p = gtk_menu_button_get_menu_model(gtkMenuButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p);
 	}
 
 	/**
@@ -240,14 +240,14 @@ public class MenuButton : ToggleButton
 	 */
 	public Popover getPopover()
 	{
-		auto p = gtk_menu_button_get_popover(gtkMenuButton);
+		auto __p = gtk_menu_button_get_popover(gtkMenuButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Popover)(cast(GtkPopover*) p);
+		return ObjectG.getDObject!(Popover)(cast(GtkPopover*) __p);
 	}
 
 	/**
@@ -261,14 +261,14 @@ public class MenuButton : ToggleButton
 	 */
 	public Menu getPopup()
 	{
-		auto p = gtk_menu_button_get_popup(gtkMenuButton);
+		auto __p = gtk_menu_button_get_popup(gtkMenuButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
+		return ObjectG.getDObject!(Menu)(cast(GtkMenu*) __p);
 	}
 
 	/**

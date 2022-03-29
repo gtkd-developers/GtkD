@@ -125,6 +125,10 @@ version OSX: start
 	noExternal: true
 version: end
 
+struct: Font
+class: PgFont
+noCode: get_features
+
 struct: FcFontMap
 noCode: true
 noExternal: true
@@ -148,9 +152,16 @@ code: end
 struct: Layout
 array: set_text text length
 
-struct: Map
-out: get_engines exact_engines
-out: get_engines fallback_engines
+version 1.50: start
+	struct: LayoutLine
+	noCode: is_paragraph_start
+version: end
+
+version <1.48: start
+	struct: Map
+	out: get_engines exact_engines
+	out: get_engines fallback_engines
+version: end
 
 struct: PangoCairoFontMap
 class: PgCairoFontMap
@@ -158,7 +169,7 @@ extend: FontMap
 merge: PangoCairoFont
 noCode: create_context
 
-struct: PgMiscellaneous
+struct: PgMiscellaneous	
 import: core.stdc.stdio
 
 version Windows: start
@@ -194,8 +205,8 @@ move: markup_parser_finish Attribute
 move: markup_parser_new Attribute
 move: parse_markup Attribute
 
-move: find_map Map
-move: module_register Map
+version <1.46: move: find_map Map
+version <1.46: move: module_register Map
 
 move: gravity_get_for_matrix PgVertical
 move: gravity_get_for_script PgVertical

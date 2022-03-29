@@ -85,14 +85,15 @@ public  import gtkc.gtktypes;
  * 
  * # GtkSizeGroup as GtkBuildable
  * 
- * Size groups can be specified in a UI definition by placing an <object>
+ * Size groups can be specified in a UI definition by placing an `<object>`
  * element with `class="GtkSizeGroup"` somewhere in the UI definition. The
- * widgets that belong to the size group are specified by a <widgets> element
- * that may contain multiple <widget> elements, one for each member of the
+ * widgets that belong to the size group are specified by a `<widgets>` element
+ * that may contain multiple `<widget>` elements, one for each member of the
  * size group. The ”name” attribute gives the id of the widget.
  * 
  * An example of a UI definition fragment with GtkSizeGroup:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkSizeGroup">
  * <property name="mode">GTK_SIZE_GROUP_HORIZONTAL</property>
  * <widgets>
@@ -152,14 +153,14 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public this(GtkSizeGroupMode mode)
 	{
-		auto p = gtk_size_group_new(mode);
+		auto __p = gtk_size_group_new(mode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSizeGroup*) p, true);
+		this(cast(GtkSizeGroup*) __p, true);
 	}
 
 	/**
@@ -219,14 +220,14 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public ListSG getWidgets()
 	{
-		auto p = gtk_size_group_get_widgets(gtkSizeGroup);
+		auto __p = gtk_size_group_get_widgets(gtkSizeGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

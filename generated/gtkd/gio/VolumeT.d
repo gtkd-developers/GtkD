@@ -36,6 +36,7 @@ public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtkc.giotypes;
@@ -75,13 +76,13 @@ public  import std.algorithm;
  * different kinds of identifiers, such as Hal UDIs, filesystem labels,
  * traditional Unix devices (e.g. `/dev/sda2`), UUIDs. GIO uses predefined
  * strings as names for the different kinds of identifiers:
- * #G_VOLUME_IDENTIFIER_KIND_UUID, #G_VOLUME_IDENTIFIER_KIND_LABEL, etc.
+ * %G_VOLUME_IDENTIFIER_KIND_UUID, %G_VOLUME_IDENTIFIER_KIND_LABEL, etc.
  * Use g_volume_get_identifier() to obtain an identifier for a volume.
  * 
  * 
- * Note that #G_VOLUME_IDENTIFIER_KIND_HAL_UDI will only be available
+ * Note that %G_VOLUME_IDENTIFIER_KIND_HAL_UDI will only be available
  * when the gvfs hal volume monitor is in use. Other volume monitors
- * will generally be able to provide the #G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE
+ * will generally be able to provide the %G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE
  * identifier, which can be used to obtain a hal device by means of
  * libhal_manager_find_device_string_match().
  */

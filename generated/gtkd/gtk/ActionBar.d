@@ -93,14 +93,14 @@ public class ActionBar : Bin
 	 */
 	public this()
 	{
-		auto p = gtk_action_bar_new();
+		auto __p = gtk_action_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkActionBar*) p);
+		this(cast(GtkActionBar*) __p);
 	}
 
 	/**
@@ -112,14 +112,14 @@ public class ActionBar : Bin
 	 */
 	public Widget getCenterWidget()
 	{
-		auto p = gtk_action_bar_get_center_widget(gtkActionBar);
+		auto __p = gtk_action_bar_get_center_widget(gtkActionBar);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

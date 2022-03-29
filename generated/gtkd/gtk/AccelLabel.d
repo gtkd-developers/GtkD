@@ -144,14 +144,14 @@ public class AccelLabel : Label
 	 */
 	public this(string string_)
 	{
-		auto p = gtk_accel_label_new(Str.toStringz(string_));
+		auto __p = gtk_accel_label_new(Str.toStringz(string_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAccelLabel*) p);
+		this(cast(GtkAccelLabel*) __p);
 	}
 
 	/**
@@ -177,14 +177,14 @@ public class AccelLabel : Label
 	 */
 	public Widget getAccelWidget()
 	{
-		auto p = gtk_accel_label_get_accel_widget(gtkAccelLabel);
+		auto __p = gtk_accel_label_get_accel_widget(gtkAccelLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

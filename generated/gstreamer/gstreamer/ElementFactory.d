@@ -26,7 +26,9 @@ module gstreamer.ElementFactory;
 
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
+private import gobject.Value;
 private import gstreamer.Caps;
 private import gstreamer.Element;
 private import gstreamer.PluginFeature;
@@ -48,12 +50,12 @@ public  import gstreamerc.gstreamertypes;
  * 
  * ## Using an element factory
  * |[<!-- language="C" -->
- * #include &lt;gst/gst.h&gt;
+ * #include <gst/gst.h>
  * 
  * GstElement *src;
  * GstElementFactory *srcfactory;
  * 
- * gst_init (&amp;argc, &amp;argv);
+ * gst_init (&argc, &argv);
  * 
  * srcfactory = gst_element_factory_find ("filesrc");
  * g_return_if_fail (srcfactory != NULL);
@@ -133,14 +135,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public static ElementFactory find(string name)
 	{
-		auto p = gst_element_factory_find(Str.toStringz(name));
+		auto __p = gst_element_factory_find(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) p, true);
+		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) __p, true);
 	}
 
 	/**
@@ -164,14 +166,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public static ListG listFilter(ListG list, Caps caps, GstPadDirection direction, bool subsetonly)
 	{
-		auto p = gst_element_factory_list_filter((list is null) ? null : list.getListGStruct(), (caps is null) ? null : caps.getCapsStruct(), direction, subsetonly);
+		auto __p = gst_element_factory_list_filter((list is null) ? null : list.getListGStruct(), (caps is null) ? null : caps.getCapsStruct(), direction, subsetonly);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -189,14 +191,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public static ListG listGetElements(GstElementFactoryListType type, GstRank minrank)
 	{
-		auto p = gst_element_factory_list_get_elements(type, minrank);
+		auto __p = gst_element_factory_list_get_elements(type, minrank);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -215,14 +217,72 @@ public class ElementFactory : PluginFeature
 	 */
 	public static Element make(string factoryname, string name)
 	{
-		auto p = gst_element_factory_make(Str.toStringz(factoryname), Str.toStringz(name));
+		auto __p = gst_element_factory_make(Str.toStringz(factoryname), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
+	}
+
+	/**
+	 * Create a new element of the type defined by the given element factory.
+	 * The supplied list of properties, will be passed at object construction.
+	 *
+	 * Params:
+	 *     factoryname = a named factory to instantiate
+	 *     first = name of first property
+	 *     properties = list of properties
+	 *
+	 * Returns: new #GstElement or %NULL
+	 *     if unable to create element
+	 *
+	 * Since: 1.20
+	 */
+	public static Element makeValist(string factoryname, string first, void* properties)
+	{
+		auto __p = gst_element_factory_make_valist(Str.toStringz(factoryname), Str.toStringz(first), properties);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
+	}
+
+	/**
+	 * Create a new element of the type defined by the given elementfactory.
+	 * The supplied list of properties, will be passed at object construction.
+	 *
+	 * Params:
+	 *     factoryname = a named factory to instantiate
+	 *     names = array of properties names
+	 *     values = array of associated properties values
+	 *
+	 * Returns: new #GstElement or %NULL
+	 *     if the element couldn't be created
+	 *
+	 * Since: 1.20
+	 */
+	public static Element makeWithProperties(string factoryname, string[] names, Value[] values)
+	{
+		GValue[] valuesArray = new GValue[values.length];
+		for ( int i = 0; i < values.length; i++ )
+		{
+			valuesArray[i] = *(values[i].getValueStruct());
+		}
+
+		auto __p = gst_element_factory_make_with_properties(Str.toStringz(factoryname), cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -291,14 +351,70 @@ public class ElementFactory : PluginFeature
 	 */
 	public Element create(string name)
 	{
-		auto p = gst_element_factory_create(gstElementFactory, Str.toStringz(name));
+		auto __p = gst_element_factory_create(gstElementFactory, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
+	}
+
+	/**
+	 * Create a new element of the type defined by the given elementfactory.
+	 * The supplied list of properties, will be passed at object construction.
+	 *
+	 * Params:
+	 *     first = name of the first property
+	 *     properties = list of properties
+	 *
+	 * Returns: new #GstElement or %NULL
+	 *     if the element couldn't be created
+	 *
+	 * Since: 1.20
+	 */
+	public Element createValist(string first, void* properties)
+	{
+		auto __p = gst_element_factory_create_valist(gstElementFactory, Str.toStringz(first), properties);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
+	}
+
+	/**
+	 * Create a new element of the type defined by the given elementfactory.
+	 * The supplied list of properties, will be passed at object construction.
+	 *
+	 * Params:
+	 *     names = array of properties names
+	 *     values = array of associated properties values
+	 *
+	 * Returns: new #GstElement or %NULL
+	 *     if the element couldn't be created
+	 *
+	 * Since: 1.20
+	 */
+	public Element createWithProperties(string[] names, Value[] values)
+	{
+		GValue[] valuesArray = new GValue[values.length];
+		for ( int i = 0; i < values.length; i++ )
+		{
+			valuesArray[i] = *(values[i].getValueStruct());
+		}
+
+		auto __p = gst_element_factory_create_with_properties(gstElementFactory, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -353,6 +469,19 @@ public class ElementFactory : PluginFeature
 	}
 
 	/**
+	 * Queries whether registered element managed by @factory needs to
+	 * be excluded from documentation system or not.
+	 *
+	 * Returns: %TRUE if documentation should be skipped
+	 *
+	 * Since: 1.20
+	 */
+	public bool getSkipDocumentation()
+	{
+		return gst_element_factory_get_skip_documentation(gstElementFactory) != 0;
+	}
+
+	/**
 	 * Gets the #GList of #GstStaticPadTemplate for this factory.
 	 *
 	 * Returns: the
@@ -360,14 +489,14 @@ public class ElementFactory : PluginFeature
 	 */
 	public ListG getStaticPadTemplates()
 	{
-		auto p = gst_element_factory_get_static_pad_templates(gstElementFactory);
+		auto __p = gst_element_factory_get_static_pad_templates(gstElementFactory);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

@@ -212,19 +212,20 @@ private import std.algorithm;
  * # GtkContainer as GtkBuildable
  * 
  * The GtkContainer implementation of the GtkBuildable interface supports
- * a <packing> element for children, which can contain multiple <property>
+ * a `<packing>` element for children, which can contain multiple `<property>`
  * elements that specify child properties for the child.
  * 
  * Since 2.16, child properties can also be marked as translatable using
  * the same “translatable”, “comments” and “context” attributes that are used
  * for regular properties.
  * 
- * Since 3.16, containers can have a <focus-chain> element containing multiple
- * <widget> elements, one for each child that should be added to the focus
+ * Since 3.16, containers can have a `<focus-chain>` element containing multiple
+ * `<widget>` elements, one for each child that should be added to the focus
  * chain. The ”name” attribute gives the id of the widget.
  * 
  * An example of these properties in UI definitions:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkBox">
  * <child>
  * <object class="GtkEntry" id="entry1"/>
@@ -538,14 +539,14 @@ public class Container : Widget
 	 */
 	public ListG getChildren()
 	{
-		auto p = gtk_container_get_children(gtkContainer);
+		auto __p = gtk_container_get_children(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -573,11 +574,11 @@ public class Container : Widget
 	{
 		GList* outfocusableWidgets = null;
 
-		auto p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets) != 0;
+		auto __p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets) != 0;
 
 		focusableWidgets = new ListG(outfocusableWidgets);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -593,14 +594,14 @@ public class Container : Widget
 	 */
 	public Widget getFocusChild()
 	{
-		auto p = gtk_container_get_focus_child(gtkContainer);
+		auto __p = gtk_container_get_focus_child(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -612,14 +613,14 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusHadjustment()
 	{
-		auto p = gtk_container_get_focus_hadjustment(gtkContainer);
+		auto __p = gtk_container_get_focus_hadjustment(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -631,14 +632,14 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusVadjustment()
 	{
-		auto p = gtk_container_get_focus_vadjustment(gtkContainer);
+		auto __p = gtk_container_get_focus_vadjustment(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -652,14 +653,14 @@ public class Container : Widget
 	 */
 	public WidgetPath getPathForChild(Widget child)
 	{
-		auto p = gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) __p, true);
 	}
 
 	/**

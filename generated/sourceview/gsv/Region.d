@@ -27,6 +27,7 @@ module gsv.Region;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gsv.RegionIter;
 private import gsv.c.functions;
@@ -84,14 +85,14 @@ public class Region : ObjectG
 	 */
 	public this(TextBuffer buffer)
 	{
-		auto p = gtk_source_region_new((buffer is null) ? null : buffer.getTextBufferStruct());
+		auto __p = gtk_source_region_new((buffer is null) ? null : buffer.getTextBufferStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceRegion*) p, true);
+		this(cast(GtkSourceRegion*) __p, true);
 	}
 
 	/**
@@ -140,12 +141,12 @@ public class Region : ObjectG
 		GtkTextIter* outstart = sliceNew!GtkTextIter();
 		GtkTextIter* outend = sliceNew!GtkTextIter();
 
-		auto p = gtk_source_region_get_bounds(gtkSourceRegion, outstart, outend) != 0;
+		auto __p = gtk_source_region_get_bounds(gtkSourceRegion, outstart, outend) != 0;
 
 		start = ObjectG.getDObject!(TextIter)(outstart, true);
 		end = ObjectG.getDObject!(TextIter)(outend, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -155,14 +156,14 @@ public class Region : ObjectG
 	 */
 	public TextBuffer getBuffer()
 	{
-		auto p = gtk_source_region_get_buffer(gtkSourceRegion);
+		auto __p = gtk_source_region_get_buffer(gtkSourceRegion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) __p);
 	}
 
 	/**
@@ -197,14 +198,14 @@ public class Region : ObjectG
 	 */
 	public Region intersectRegion(Region region2)
 	{
-		auto p = gtk_source_region_intersect_region(gtkSourceRegion, (region2 is null) ? null : region2.getRegionStruct());
+		auto __p = gtk_source_region_intersect_region(gtkSourceRegion, (region2 is null) ? null : region2.getRegionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Region)(cast(GtkSourceRegion*) p, true);
+		return ObjectG.getDObject!(Region)(cast(GtkSourceRegion*) __p, true);
 	}
 
 	/**
@@ -222,14 +223,14 @@ public class Region : ObjectG
 	 */
 	public Region intersectSubregion(TextIter Start, TextIter End)
 	{
-		auto p = gtk_source_region_intersect_subregion(gtkSourceRegion, (Start is null) ? null : Start.getTextIterStruct(), (End is null) ? null : End.getTextIterStruct());
+		auto __p = gtk_source_region_intersect_subregion(gtkSourceRegion, (Start is null) ? null : Start.getTextIterStruct(), (End is null) ? null : End.getTextIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Region)(cast(GtkSourceRegion*) p, true);
+		return ObjectG.getDObject!(Region)(cast(GtkSourceRegion*) __p, true);
 	}
 
 	/**

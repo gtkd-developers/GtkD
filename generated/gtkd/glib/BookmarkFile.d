@@ -25,6 +25,7 @@
 module glib.BookmarkFile;
 
 private import glib.ConstructionException;
+private import glib.DateTime;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
@@ -35,8 +36,7 @@ private import gtkd.Loader;
 
 
 /**
- * The `GBookmarkFile` structure contains only
- * private data and should not be directly accessed.
+ * An opaque data structure representing a set of bookmarks.
  */
 public class BookmarkFile
 {
@@ -143,7 +143,10 @@ public class BookmarkFile
 	 * Gets the time the bookmark for @uri was added to @bookmark
 	 *
 	 * In the event the URI cannot be found, -1 is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 *
+	 * Deprecated: Use g_bookmark_file_get_added_date_time() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -169,19 +172,56 @@ public class BookmarkFile
 	}
 
 	/**
+	 * Gets the time the bookmark for @uri was added to @bookmark
+	 *
+	 * In the event the URI cannot be found, %NULL is returned and
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *
+	 * Returns: a #GDateTime
+	 *
+	 * Since: 2.66
+	 *
+	 * Throws: GException on failure.
+	 */
+	public DateTime getAddedDateTime(string uri)
+	{
+		GError* err = null;
+
+		auto __p = g_bookmark_file_get_added_date_time(gBookmarkFile, Str.toStringz(uri), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p);
+	}
+
+	/**
 	 * Gets the registration information of @app_name for the bookmark for
-	 * @uri.  See g_bookmark_file_set_app_info() for more information about
+	 * @uri.  See g_bookmark_file_set_application_info() for more information about
 	 * the returned data.
 	 *
 	 * The string returned in @app_exec must be freed.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
 	 * event that no application with name @app_name has registered a bookmark
 	 * for @uri,  %FALSE is returned and error is set to
-	 * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
-	 * the command line fails, an error of the #G_SHELL_ERROR domain is
+	 * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
+	 * the command line fails, an error of the %G_SHELL_ERROR domain is
 	 * set and %FALSE is returned.
+	 *
+	 * Deprecated: Use g_bookmark_file_get_application_info() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -214,11 +254,58 @@ public class BookmarkFile
 	}
 
 	/**
+	 * Gets the registration information of @app_name for the bookmark for
+	 * @uri.  See g_bookmark_file_set_application_info() for more information about
+	 * the returned data.
+	 *
+	 * The string returned in @app_exec must be freed.
+	 *
+	 * In the event the URI cannot be found, %FALSE is returned and
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+	 * event that no application with name @app_name has registered a bookmark
+	 * for @uri,  %FALSE is returned and error is set to
+	 * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED. In the event that unquoting
+	 * the command line fails, an error of the %G_SHELL_ERROR domain is
+	 * set and %FALSE is returned.
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *     name = an application's name
+	 *     exec = return location for the command line of the application, or %NULL
+	 *     count = return location for the registration count, or %NULL
+	 *     stamp = return location for the last registration time, or %NULL
+	 *
+	 * Returns: %TRUE on success.
+	 *
+	 * Since: 2.66
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool getApplicationInfo(string uri, string name, out string exec, out uint count, out DateTime stamp)
+	{
+		char* outexec = null;
+		GDateTime* outstamp = null;
+		GError* err = null;
+
+		auto __p = g_bookmark_file_get_application_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), &outexec, &count, &outstamp, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		exec = Str.toString(outexec);
+		stamp = new DateTime(outstamp);
+
+		return __p;
+	}
+
+	/**
 	 * Retrieves the names of the applications that have registered the
 	 * bookmark for @uri.
 	 *
 	 * In the event the URI cannot be found, %NULL is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -250,7 +337,7 @@ public class BookmarkFile
 	 * Retrieves the description of the bookmark for @uri.
 	 *
 	 * In the event the URI cannot be found, %NULL is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -281,7 +368,7 @@ public class BookmarkFile
 	 * Retrieves the list of group names of the bookmark for @uri.
 	 *
 	 * In the event the URI cannot be found, %NULL is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * The returned array is %NULL terminated, so @length may optionally
 	 * be %NULL.
@@ -316,7 +403,7 @@ public class BookmarkFile
 	 * Gets the icon of the bookmark for @uri.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -353,9 +440,9 @@ public class BookmarkFile
 	 * Gets whether the private flag of the bookmark for @uri is set.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
 	 * event that the private flag cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -384,9 +471,9 @@ public class BookmarkFile
 	 * Retrieves the MIME type of the resource pointed by @uri.
 	 *
 	 * In the event the URI cannot be found, %NULL is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
 	 * event that the MIME type cannot be found, %NULL is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -417,7 +504,10 @@ public class BookmarkFile
 	 * Gets the time when the bookmark for @uri was last modified.
 	 *
 	 * In the event the URI cannot be found, -1 is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 *
+	 * Deprecated: Use g_bookmark_file_get_modified_date_time() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -443,6 +533,40 @@ public class BookmarkFile
 	}
 
 	/**
+	 * Gets the time when the bookmark for @uri was last modified.
+	 *
+	 * In the event the URI cannot be found, %NULL is returned and
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *
+	 * Returns: a #GDateTime
+	 *
+	 * Since: 2.66
+	 *
+	 * Throws: GException on failure.
+	 */
+	public DateTime getModifiedDateTime(string uri)
+	{
+		GError* err = null;
+
+		auto __p = g_bookmark_file_get_modified_date_time(gBookmarkFile, Str.toStringz(uri), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p);
+	}
+
+	/**
 	 * Gets the number of bookmarks inside @bookmark.
 	 *
 	 * Returns: the number of bookmarks
@@ -460,7 +584,7 @@ public class BookmarkFile
 	 * If @uri is %NULL, the title of @bookmark is returned.
 	 *
 	 * In the event the URI cannot be found, %NULL is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * Params:
 	 *     uri = a valid URI or %NULL
@@ -511,7 +635,10 @@ public class BookmarkFile
 	 * Gets the time the bookmark for @uri was last visited.
 	 *
 	 * In the event the URI cannot be found, -1 is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 *
+	 * Deprecated: Use g_bookmark_file_get_visited_date_time() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -537,11 +664,45 @@ public class BookmarkFile
 	}
 
 	/**
+	 * Gets the time the bookmark for @uri was last visited.
+	 *
+	 * In the event the URI cannot be found, %NULL is returned and
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *
+	 * Returns: a #GDateTime
+	 *
+	 * Since: 2.66
+	 *
+	 * Throws: GException on failure.
+	 */
+	public DateTime getVisitedDateTime(string uri)
+	{
+		GError* err = null;
+
+		auto __p = g_bookmark_file_get_visited_date_time(gBookmarkFile, Str.toStringz(uri), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p);
+	}
+
+	/**
 	 * Checks whether the bookmark for @uri inside @bookmark has been
 	 * registered by application @name.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -572,7 +733,7 @@ public class BookmarkFile
 	 * the bookmark for @uri belongs to.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -712,7 +873,7 @@ public class BookmarkFile
 	 * %NULL, then the bookmark is removed.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 *
 	 * Params:
 	 *     oldUri = a valid URI
@@ -743,10 +904,10 @@ public class BookmarkFile
 	 * that have registered a bookmark for @uri inside @bookmark.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * In the event that no application with name @app_name has registered
 	 * a bookmark for @uri,  %FALSE is returned and error is set to
-	 * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.
+	 * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -777,9 +938,9 @@ public class BookmarkFile
 	 * for @uri belongs to.
 	 *
 	 * In the event the URI cannot be found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.
 	 * In the event no group was defined, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_INVALID_VALUE.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -836,6 +997,9 @@ public class BookmarkFile
 	 *
 	 * If no bookmark for @uri is found then it is created.
 	 *
+	 * Deprecated: Use g_bookmark_file_set_added_date_time() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
+	 *
 	 * Params:
 	 *     uri = a valid URI
 	 *     added = a timestamp or -1 to use the current time
@@ -845,6 +1009,22 @@ public class BookmarkFile
 	public void setAdded(string uri, uint added)
 	{
 		g_bookmark_file_set_added(gBookmarkFile, Str.toStringz(uri), added);
+	}
+
+	/**
+	 * Sets the time the bookmark for @uri was added into @bookmark.
+	 *
+	 * If no bookmark for @uri is found then it is created.
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *     added = a #GDateTime
+	 *
+	 * Since: 2.66
+	 */
+	public void setAddedDateTime(string uri, DateTime added)
+	{
+		g_bookmark_file_set_added_date_time(gBookmarkFile, Str.toStringz(uri), (added is null) ? null : added.getDateTimeStruct());
 	}
 
 	/**
@@ -861,7 +1041,7 @@ public class BookmarkFile
 	 * be expanded as the local file name retrieved from the bookmark's
 	 * URI; "\%u", which will be expanded as the bookmark's URI.
 	 * The expansion is done automatically when retrieving the stored
-	 * command line using the g_bookmark_file_get_app_info() function.
+	 * command line using the g_bookmark_file_get_application_info() function.
 	 * @count is the number of times the application has registered the
 	 * bookmark; if is < 0, the current registration count will be increased
 	 * by one, if is 0, the application with @name will be removed from
@@ -871,11 +1051,14 @@ public class BookmarkFile
 	 *
 	 * If you try to remove an application by setting its registration count to
 	 * zero, and no bookmark for @uri is found, %FALSE is returned and
-	 * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND; similarly,
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND; similarly,
 	 * in the event that no application @name has registered a bookmark
 	 * for @uri,  %FALSE is returned and error is set to
-	 * #G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
+	 * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
 	 * for @uri is found, one is created.
+	 *
+	 * Deprecated: Use g_bookmark_file_set_application_info() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -896,6 +1079,64 @@ public class BookmarkFile
 		GError* err = null;
 
 		auto __p = g_bookmark_file_set_app_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), Str.toStringz(exec), count, stamp, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return __p;
+	}
+
+	/**
+	 * Sets the meta-data of application @name inside the list of
+	 * applications that have registered a bookmark for @uri inside
+	 * @bookmark.
+	 *
+	 * You should rarely use this function; use g_bookmark_file_add_application()
+	 * and g_bookmark_file_remove_application() instead.
+	 *
+	 * @name can be any UTF-8 encoded string used to identify an
+	 * application.
+	 * @exec can have one of these two modifiers: "\%f", which will
+	 * be expanded as the local file name retrieved from the bookmark's
+	 * URI; "\%u", which will be expanded as the bookmark's URI.
+	 * The expansion is done automatically when retrieving the stored
+	 * command line using the g_bookmark_file_get_application_info() function.
+	 * @count is the number of times the application has registered the
+	 * bookmark; if is < 0, the current registration count will be increased
+	 * by one, if is 0, the application with @name will be removed from
+	 * the list of registered applications.
+	 * @stamp is the Unix time of the last registration.
+	 *
+	 * If you try to remove an application by setting its registration count to
+	 * zero, and no bookmark for @uri is found, %FALSE is returned and
+	 * @error is set to %G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND; similarly,
+	 * in the event that no application @name has registered a bookmark
+	 * for @uri,  %FALSE is returned and error is set to
+	 * %G_BOOKMARK_FILE_ERROR_APP_NOT_REGISTERED.  Otherwise, if no bookmark
+	 * for @uri is found, one is created.
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *     name = an application's name
+	 *     exec = an application's command line
+	 *     count = the number of registrations done for this application
+	 *     stamp = the time of the last registration for this application,
+	 *         which may be %NULL if @count is 0
+	 *
+	 * Returns: %TRUE if the application's meta-data was successfully
+	 *     changed.
+	 *
+	 * Since: 2.66
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool setApplicationInfo(string uri, string name, string exec, int count, DateTime stamp)
+	{
+		GError* err = null;
+
+		auto __p = g_bookmark_file_set_application_info(gBookmarkFile, Str.toStringz(uri), Str.toStringz(name), Str.toStringz(exec), count, (stamp is null) ? null : stamp.getDateTimeStruct(), &err) != 0;
 
 		if (err !is null)
 		{
@@ -1000,7 +1241,10 @@ public class BookmarkFile
 	 * The "modified" time should only be set when the bookmark's meta-data
 	 * was actually changed.  Every function of #GBookmarkFile that
 	 * modifies a bookmark also changes the modification time, except for
-	 * g_bookmark_file_set_visited().
+	 * g_bookmark_file_set_visited_date_time().
+	 *
+	 * Deprecated: Use g_bookmark_file_set_modified_date_time() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -1011,6 +1255,27 @@ public class BookmarkFile
 	public void setModified(string uri, uint modified)
 	{
 		g_bookmark_file_set_modified(gBookmarkFile, Str.toStringz(uri), modified);
+	}
+
+	/**
+	 * Sets the last time the bookmark for @uri was last modified.
+	 *
+	 * If no bookmark for @uri is found then it is created.
+	 *
+	 * The "modified" time should only be set when the bookmark's meta-data
+	 * was actually changed.  Every function of #GBookmarkFile that
+	 * modifies a bookmark also changes the modification time, except for
+	 * g_bookmark_file_set_visited_date_time().
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *     modified = a #GDateTime
+	 *
+	 * Since: 2.66
+	 */
+	public void setModifiedDateTime(string uri, DateTime modified)
+	{
+		g_bookmark_file_set_modified_date_time(gBookmarkFile, Str.toStringz(uri), (modified is null) ? null : modified.getDateTimeStruct());
 	}
 
 	/**
@@ -1038,10 +1303,13 @@ public class BookmarkFile
 	 * If no bookmark for @uri is found then it is created.
 	 *
 	 * The "visited" time should only be set if the bookmark was launched,
-	 * either using the command line retrieved by g_bookmark_file_get_app_info()
+	 * either using the command line retrieved by g_bookmark_file_get_application_info()
 	 * or by the default application for the bookmark's MIME type, retrieved
 	 * using g_bookmark_file_get_mime_type().  Changing the "visited" time
 	 * does not affect the "modified" time.
+	 *
+	 * Deprecated: Use g_bookmark_file_set_visited_date_time() instead, as
+	 * `time_t` is deprecated due to the year 2038 problem.
 	 *
 	 * Params:
 	 *     uri = a valid URI
@@ -1052,6 +1320,28 @@ public class BookmarkFile
 	public void setVisited(string uri, uint visited)
 	{
 		g_bookmark_file_set_visited(gBookmarkFile, Str.toStringz(uri), visited);
+	}
+
+	/**
+	 * Sets the time the bookmark for @uri was last visited.
+	 *
+	 * If no bookmark for @uri is found then it is created.
+	 *
+	 * The "visited" time should only be set if the bookmark was launched,
+	 * either using the command line retrieved by g_bookmark_file_get_application_info()
+	 * or by the default application for the bookmark's MIME type, retrieved
+	 * using g_bookmark_file_get_mime_type().  Changing the "visited" time
+	 * does not affect the "modified" time.
+	 *
+	 * Params:
+	 *     uri = a valid URI
+	 *     visited = a #GDateTime
+	 *
+	 * Since: 2.66
+	 */
+	public void setVisitedDateTime(string uri, DateTime visited)
+	{
+		g_bookmark_file_set_visited_date_time(gBookmarkFile, Str.toStringz(uri), (visited is null) ? null : visited.getDateTimeStruct());
 	}
 
 	/**

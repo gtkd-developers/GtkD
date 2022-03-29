@@ -22,50 +22,28 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module pango.PgEngine;
+module harfbuzz.font_funcs_t;
 
-private import gobject.ObjectG;
-public  import gtkc.pangotypes;
-private import pango.c.functions;
-public  import pango.c.types;
+private import harfbuzz.c.functions;
+public  import harfbuzz.c.types;
 
 
 /**
- * #PangoEngine is the base class for all types of language and
- * script specific engines. It has no functionality by itself.
+ * Data type containing a set of virtual methods used for
+ * working on #hb_font_t font objects.
+ * 
+ * HarfBuzz provides a lightweight default function for each of
+ * the methods in #hb_font_funcs_t. Client programs can implement
+ * their own replacements for the individual font functions, as
+ * needed, and replace the default by calling the setter for a
+ * method.
  */
-public class PgEngine : ObjectG
+public struct font_funcs_t
 {
-	/** the main Gtk struct */
-	protected PangoEngine* pangoEngine;
-
-	/** Get the main Gtk struct */
-	public PangoEngine* getPgEngineStruct(bool transferOwnership = false)
-	{
-		if (transferOwnership)
-			ownedRef = false;
-		return pangoEngine;
-	}
-
-	/** the main Gtk struct as a void* */
-	protected override void* getStruct()
-	{
-		return cast(void*)pangoEngine;
-	}
-
-	/**
-	 * Sets our main struct and passes it to the parent class.
-	 */
-	public this (PangoEngine* pangoEngine, bool ownedRef = false)
-	{
-		this.pangoEngine = pangoEngine;
-		super(cast(GObject*)pangoEngine, ownedRef);
-	}
-
 
 	/** */
 	public static GType getType()
 	{
-		return pango_engine_get_type();
+		return hb_gobject_font_funcs_get_type();
 	}
 }

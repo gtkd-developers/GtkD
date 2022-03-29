@@ -110,14 +110,14 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	public this(Adjustment hadjustment, Adjustment vadjustment)
 	{
-		auto p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		auto __p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkViewport*) p);
+		this(cast(GtkViewport*) __p);
 	}
 
 	/**
@@ -129,14 +129,14 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	public Window getBinWindow()
 	{
-		auto p = gtk_viewport_get_bin_window(gtkViewport);
+		auto __p = gtk_viewport_get_bin_window(gtkViewport);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -148,14 +148,14 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	public Adjustment getHadjustment()
 	{
-		auto p = gtk_viewport_get_hadjustment(gtkViewport);
+		auto __p = gtk_viewport_get_hadjustment(gtkViewport);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -178,14 +178,14 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	public Adjustment getVadjustment()
 	{
-		auto p = gtk_viewport_get_vadjustment(gtkViewport);
+		auto __p = gtk_viewport_get_vadjustment(gtkViewport);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -197,14 +197,14 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	public Window getViewWindow()
 	{
-		auto p = gtk_viewport_get_view_window(gtkViewport);
+		auto __p = gtk_viewport_get_view_window(gtkViewport);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**

@@ -32,7 +32,7 @@ public  import gstreamerc.gstreamertypes;
 
 
 /**
- * Datastructure to initialize #GstCaps from a string description usually
+ * Data structure to initialize #GstCaps from a string description usually
  * used in conjunction with GST_STATIC_CAPS() and gst_static_caps_get() to
  * instantiate a #GstCaps.
  */
@@ -67,7 +67,7 @@ public class StaticCaps
 
 
 	/**
-	 * Clean up the cached caps contained in @static_caps.
+	 * Cleans up the cached caps contained in @static_caps.
 	 */
 	public void cleanup()
 	{
@@ -77,20 +77,19 @@ public class StaticCaps
 	/**
 	 * Converts a #GstStaticCaps to a #GstCaps.
 	 *
-	 * Returns: a pointer to the #GstCaps. Unref
-	 *     after usage. Since the core holds an additional ref to the
-	 *     returned caps, use gst_caps_make_writable() on the returned caps
-	 *     to modify it.
+	 * Returns: a pointer to the #GstCaps. Since the
+	 *     core holds an additional ref to the returned caps, use
+	 *     gst_caps_make_writable() on the returned caps to modify it.
 	 */
 	public Caps get()
 	{
-		auto p = gst_static_caps_get(gstStaticCaps);
+		auto __p = gst_static_caps_get(gstStaticCaps);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 }

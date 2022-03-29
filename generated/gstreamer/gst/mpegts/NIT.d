@@ -143,13 +143,13 @@ public final class NIT
 	 */
 	public this()
 	{
-		auto p = gst_mpegts_nit_new();
+		auto __p = gst_mpegts_nit_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsNIT*) p);
+		this(cast(GstMpegtsNIT*) __p);
 	}
 }

@@ -36,6 +36,8 @@ private import gtkd.Loader;
  * #GstBitWriter provides a bit writer that can write any number of
  * bits into a memory buffer. It provides functions for writing any
  * number of bits into 8, 16, 32 and 64 bit variables.
+ *
+ * Since: 1.16
  */
 public class BitWriter
 {
@@ -107,14 +109,14 @@ public class BitWriter
 	 */
 	public Buffer freeAndGetBuffer()
 	{
-		auto p = gst_bit_writer_free_and_get_buffer(gstBitWriter);
+		auto __p = gst_bit_writer_free_and_get_buffer(gstBitWriter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -128,9 +130,9 @@ public class BitWriter
 	 */
 	public ubyte[] freeAndGetData()
 	{
-		auto p = gst_bit_writer_free_and_get_data(gstBitWriter);
+		auto __p = gst_bit_writer_free_and_get_data(gstBitWriter);
 
-		return p[0 .. getArrayLength(p)];
+		return __p[0 .. getArrayLength(__p)];
 	}
 
 	/**
@@ -138,9 +140,11 @@ public class BitWriter
 	 *
 	 * Returns: data pointer
 	 */
-	public ubyte* getData()
+	public ubyte[] getData()
 	{
-		return gst_bit_writer_get_data(gstBitWriter);
+		auto __p = gst_bit_writer_get_data(gstBitWriter);
+
+		return __p[0 .. getArrayLength(__p)];
 	}
 
 	/** */
@@ -259,9 +263,9 @@ public class BitWriter
 	 *
 	 * Returns: %TRUE if successful, %FALSE otherwise.
 	 */
-	public bool putBytes(ubyte* data, uint nbytes)
+	public bool putBytes(ubyte[] data, uint nbytes)
 	{
-		return gst_bit_writer_put_bytes(gstBitWriter, data, nbytes) != 0;
+		return gst_bit_writer_put_bytes(gstBitWriter, data.ptr, nbytes) != 0;
 	}
 
 	/**
@@ -282,14 +286,14 @@ public class BitWriter
 	 */
 	public Buffer resetAndGetBuffer()
 	{
-		auto p = gst_bit_writer_reset_and_get_buffer(gstBitWriter);
+		auto __p = gst_bit_writer_reset_and_get_buffer(gstBitWriter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -302,9 +306,9 @@ public class BitWriter
 	 */
 	public ubyte[] resetAndGetData()
 	{
-		auto p = gst_bit_writer_reset_and_get_data(gstBitWriter);
+		auto __p = gst_bit_writer_reset_and_get_data(gstBitWriter);
 
-		return p[0 .. getArrayLength(p)];
+		return __p[0 .. getArrayLength(__p)];
 	}
 
 	/** */
@@ -324,42 +328,41 @@ public class BitWriter
 	 */
 	public this()
 	{
-		auto p = gst_bit_writer_new();
+		auto __p = gst_bit_writer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBitWriter*) p);
+		this(cast(GstBitWriter*) __p);
 	}
 
 	/**
 	 * Creates a new #GstBitWriter instance with the given memory area. If
 	 * @initialized is %TRUE it is possible to read @size bits from the
-	 * #GstBitWriter from the beginnig.
+	 * #GstBitWriter from the beginning.
 	 *
 	 * Free-function: gst_bit_writer_free
 	 *
 	 * Params:
 	 *     data = Memory area for writing
-	 *     size = Size of @data in bytes
 	 *     initialized = if %TRUE the complete data can be read from the beginning
 	 *
 	 * Returns: a new #GstBitWriter instance
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(ubyte* data, uint size, bool initialized)
+	public this(ubyte[] data, bool initialized)
 	{
-		auto p = gst_bit_writer_new_with_data(data, size, initialized);
+		auto __p = gst_bit_writer_new_with_data(data.ptr, cast(uint)data.length, initialized);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_data");
 		}
 
-		this(cast(GstBitWriter*) p);
+		this(cast(GstBitWriter*) __p);
 	}
 
 	/**
@@ -377,13 +380,13 @@ public class BitWriter
 	 */
 	public this(uint size, bool fixed)
 	{
-		auto p = gst_bit_writer_new_with_size(size, fixed);
+		auto __p = gst_bit_writer_new_with_size(size, fixed);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_size");
 		}
 
-		this(cast(GstBitWriter*) p);
+		this(cast(GstBitWriter*) __p);
 	}
 }

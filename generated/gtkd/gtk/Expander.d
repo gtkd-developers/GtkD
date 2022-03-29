@@ -26,6 +26,7 @@ module gtk.Expander;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
@@ -90,11 +91,12 @@ private import std.algorithm;
  * 
  * The GtkExpander implementation of the GtkBuildable interface supports
  * placing a child in the label position by specifying “label” as the
- * “type” attribute of a <child> element. A normal content child can be
- * specified without specifying a <child> type attribute.
+ * “type” attribute of a `<child>` element. A normal content child can be
+ * specified without specifying a `<child>` type attribute.
  * 
  * An example of a UI definition fragment with GtkExpander:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkExpander">
  * <child type="label">
  * <object class="GtkLabel" id="expander-label"/>
@@ -252,14 +254,14 @@ public class Expander : Bin
 	 */
 	public Widget getLabelWidget()
 	{
-		auto p = gtk_expander_get_label_widget(gtkExpander);
+		auto __p = gtk_expander_get_label_widget(gtkExpander);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -350,6 +352,8 @@ public class Expander : Bin
 	/**
 	 * Sets whether the label widget should fill all available
 	 * horizontal space allocated to @expander.
+	 *
+	 * Note that this function has no effect since 3.20.
 	 *
 	 * Params:
 	 *     labelFill = %TRUE if the label should should fill

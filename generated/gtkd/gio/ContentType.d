@@ -30,6 +30,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -195,7 +196,7 @@ public struct ContentType
 	 * on the other argument.
 	 *
 	 * Params:
-	 *     filename = a string, or %NULL
+	 *     filename = a path, or %NULL
 	 *     data = a stream of data, or %NULL
 	 *     resultUncertain = return location for the certainty
 	 *         of the result, or %NULL

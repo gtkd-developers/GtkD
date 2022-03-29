@@ -25,6 +25,7 @@
 module gtk.EditableIF;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;

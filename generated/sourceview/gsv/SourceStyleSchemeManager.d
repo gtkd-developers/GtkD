@@ -26,6 +26,7 @@ module gsv.SourceStyleSchemeManager;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gsv.SourceStyleScheme;
 private import gsv.c.functions;
@@ -79,14 +80,14 @@ public class SourceStyleSchemeManager : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_source_style_scheme_manager_new();
+		auto __p = gtk_source_style_scheme_manager_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceStyleSchemeManager*) p, true);
+		this(cast(GtkSourceStyleSchemeManager*) __p, true);
 	}
 
 	/**
@@ -97,14 +98,14 @@ public class SourceStyleSchemeManager : ObjectG
 	 */
 	public static SourceStyleSchemeManager getDefault()
 	{
-		auto p = gtk_source_style_scheme_manager_get_default();
+		auto __p = gtk_source_style_scheme_manager_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceStyleSchemeManager)(cast(GtkSourceStyleSchemeManager*) p);
+		return ObjectG.getDObject!(SourceStyleSchemeManager)(cast(GtkSourceStyleSchemeManager*) __p);
 	}
 
 	/**
@@ -136,19 +137,19 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Params:
 	 *     schemeId = style scheme id to find.
 	 *
-	 * Returns: a #GtkSourceStyleScheme object. Returned value is owned by
-	 *     @manager and must not be unref'ed.
+	 * Returns: a #GtkSourceStyleScheme object.
+	 *     The returned value is owned by @manager and must not be unref'ed.
 	 */
 	public SourceStyleScheme getScheme(string schemeId)
 	{
-		auto p = gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));
+		auto __p = gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) p);
+		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) __p);
 	}
 
 	/**

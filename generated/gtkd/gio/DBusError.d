@@ -28,6 +28,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.Str;
+private import glib.c.functions;
 public  import gtkc.giotypes;
 
 
@@ -51,7 +52,8 @@ public struct DBusError
 	 * Params:
 	 *     error = A #GError.
 	 *
-	 * Returns: A D-Bus error name (never %NULL). Free with g_free().
+	 * Returns: A D-Bus error name (never %NULL).
+	 *     Free with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -74,8 +76,8 @@ public struct DBusError
 	 * Params:
 	 *     error = a #GError
 	 *
-	 * Returns: an allocated string or %NULL if the D-Bus error name
-	 *     could not be found. Free with g_free().
+	 * Returns: an allocated string or %NULL if the
+	 *     D-Bus error name could not be found. Free with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -120,7 +122,7 @@ public struct DBusError
 	 * such that it can be recovered with g_dbus_error_get_remote_error().
 	 *
 	 * Otherwise, a #GError with the error code %G_IO_ERROR_DBUS_ERROR
-	 * in the #G_IO_ERROR error domain is returned. Also, @dbus_error_name is
+	 * in the %G_IO_ERROR error domain is returned. Also, @dbus_error_name is
 	 * added to the error message such that it can be recovered with
 	 * g_dbus_error_get_remote_error().
 	 *
@@ -182,6 +184,9 @@ public struct DBusError
 
 	/**
 	 * Helper function for associating a #GError error domain with D-Bus error names.
+	 *
+	 * While @quark_volatile has a `volatile` qualifier, this is a historical
+	 * artifact and the argument passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     errorDomainQuarkName = The error domain name.

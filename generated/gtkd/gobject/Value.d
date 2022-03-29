@@ -27,6 +27,7 @@ module gobject.Value;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Type;
@@ -39,10 +40,12 @@ private import std.traits;
 
 /**
  * An opaque structure used to hold different types of values.
+ * 
  * The data within the structure has protected scope: it is accessible only
  * to functions within a #GTypeValueTable structure, or implementations of
  * the g_value_*() API. That is, code portions which implement new fundamental
  * types.
+ * 
  * #GValue users cannot make any assumptions about how data is stored
  * within the 2 element @data union, and the @g_type member should
  * only be accessed through the G_VALUE_TYPE() macro.
@@ -291,8 +294,8 @@ public class Value
 	 * Get the contents of a %G_TYPE_PARAM #GValue, increasing its
 	 * reference count.
 	 *
-	 * Returns: #GParamSpec content of @value, should be unreferenced when
-	 *     no longer needed.
+	 * Returns: #GParamSpec content of @value, should be
+	 *     unreferenced when no longer needed.
 	 */
 	public ParamSpec dupParam()
 	{
@@ -303,7 +306,7 @@ public class Value
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -802,6 +805,21 @@ public class Value
 	}
 
 	/**
+	 * Set the contents of a %G_TYPE_STRING #GValue to @v_string.  The string is
+	 * assumed to be static and interned (canonical, for example from
+	 * g_intern_string()), and is thus not duplicated when setting the #GValue.
+	 *
+	 * Params:
+	 *     vString = static string to be set
+	 *
+	 * Since: 2.66
+	 */
+	public void setInternedString(string vString)
+	{
+		g_value_set_interned_string(gValue, Str.toStringz(vString));
+	}
+
+	/**
 	 * Set the contents of a %G_TYPE_LONG #GValue to @v_long.
 	 *
 	 * Params:
@@ -896,6 +914,7 @@ public class Value
 
 	/**
 	 * Set the contents of a %G_TYPE_BOXED derived #GValue to @v_boxed.
+	 *
 	 * The boxed value is assumed to be static, and is thus not duplicated
 	 * when setting the #GValue.
 	 *
@@ -912,6 +931,9 @@ public class Value
 	 * The string is assumed to be static, and is thus not duplicated
 	 * when setting the #GValue.
 	 *
+	 * If the the string is a canonical string, using g_value_set_interned_string()
+	 * is more appropriate.
+	 *
 	 * Params:
 	 *     vString = static string to be set
 	 */
@@ -921,7 +943,7 @@ public class Value
 	}
 
 	/**
-	 * Set the contents of a %G_TYPE_STRING #GValue to @v_string.
+	 * Set the contents of a %G_TYPE_STRING #GValue to a copy of @v_string.
 	 *
 	 * Params:
 	 *     vString = caller-owned string to be duplicated for the #GValue

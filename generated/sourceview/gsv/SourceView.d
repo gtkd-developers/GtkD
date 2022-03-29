@@ -116,14 +116,14 @@ public class SourceView : TextView
 	 */
 	public this()
 	{
-		auto p = gtk_source_view_new();
+		auto __p = gtk_source_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceView*) p);
+		this(cast(GtkSourceView*) __p);
 	}
 
 	/**
@@ -139,14 +139,14 @@ public class SourceView : TextView
 	 */
 	public this(SourceBuffer buffer)
 	{
-		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
+		auto __p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_buffer");
 		}
 
-		this(cast(GtkSourceView*) p);
+		this(cast(GtkSourceView*) __p);
 	}
 
 	/**
@@ -181,14 +181,14 @@ public class SourceView : TextView
 	 */
 	public SourceCompletion getCompletion()
 	{
-		auto p = gtk_source_view_get_completion(gtkSourceView);
+		auto __p = gtk_source_view_get_completion(gtkSourceView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceCompletion)(cast(GtkSourceCompletion*) p);
+		return ObjectG.getDObject!(SourceCompletion)(cast(GtkSourceCompletion*) __p);
 	}
 
 	/**
@@ -206,14 +206,14 @@ public class SourceView : TextView
 	 */
 	public SourceGutter getGutter(GtkTextWindowType windowType)
 	{
-		auto p = gtk_source_view_get_gutter(gtkSourceView, windowType);
+		auto __p = gtk_source_view_get_gutter(gtkSourceView, windowType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceGutter)(cast(GtkSourceGutter*) p);
+		return ObjectG.getDObject!(SourceGutter)(cast(GtkSourceGutter*) __p);
 	}
 
 	/**
@@ -271,14 +271,14 @@ public class SourceView : TextView
 	 */
 	public SourceMarkAttributes getMarkAttributes(string category, int* priority)
 	{
-		auto p = gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
+		auto __p = gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceMarkAttributes)(cast(GtkSourceMarkAttributes*) p);
+		return ObjectG.getDObject!(SourceMarkAttributes)(cast(GtkSourceMarkAttributes*) __p);
 	}
 
 	/**
@@ -358,14 +358,14 @@ public class SourceView : TextView
 	 */
 	public SpaceDrawer getSpaceDrawer()
 	{
-		auto p = gtk_source_view_get_space_drawer(gtkSourceView);
+		auto __p = gtk_source_view_get_space_drawer(gtkSourceView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SpaceDrawer)(cast(GtkSourceSpaceDrawer*) p);
+		return ObjectG.getDObject!(SpaceDrawer)(cast(GtkSourceSpaceDrawer*) __p);
 	}
 
 	/**

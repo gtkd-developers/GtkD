@@ -25,6 +25,7 @@
 module gsv.SourceStyleScheme;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gsv.SourceStyle;
 private import gsv.c.functions;
@@ -133,13 +134,13 @@ public class SourceStyleScheme : ObjectG
 	 */
 	public SourceStyle getStyle(string styleId)
 	{
-		auto p = gtk_source_style_scheme_get_style(gtkSourceStyleScheme, Str.toStringz(styleId));
+		auto __p = gtk_source_style_scheme_get_style(gtkSourceStyleScheme, Str.toStringz(styleId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) p);
+		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) __p);
 	}
 }

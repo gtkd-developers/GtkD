@@ -446,6 +446,34 @@ public class HashTable
 		this(cast(GHashTable*) __p);
 	}
 
+	/**
+	 * Creates a new #GHashTable like g_hash_table_new_full() with a reference
+	 * count of 1.
+	 *
+	 * It inherits the hash function, the key equal function, the key destroy function,
+	 * as well as the value destroy function, from @other_hash_table.
+	 *
+	 * The returned hash table will be empty; it will not contain the keys
+	 * or values from @other_hash_table.
+	 *
+	 * Returns: a new #GHashTable
+	 *
+	 * Since: 2.72
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(HashTable otherHashTable)
+	{
+		auto __p = g_hash_table_new_similar((otherHashTable is null) ? null : otherHashTable.getHashTableStruct());
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_similar");
+		}
+
+		this(cast(GHashTable*) __p);
+	}
+
 	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @hash_table by one.

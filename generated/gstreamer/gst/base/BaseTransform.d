@@ -177,16 +177,15 @@ public class BaseTransform : Element
 	}
 
 	/**
-	 * Lets #GstBaseTransform sub-classes to know the memory @allocator
+	 * Lets #GstBaseTransform sub-classes know the memory @allocator
 	 * used by the base class and its @params.
 	 *
-	 * Unref the @allocator after use it.
+	 * Unref the @allocator after use.
 	 *
 	 * Params:
 	 *     allocator = the #GstAllocator
 	 *         used
-	 *     params = the
-	 *         #GstAllocationParams of @allocator
+	 *     params = the #GstAllocationParams of @allocator
 	 */
 	public void getAllocator(out Allocator allocator, out AllocationParams params)
 	{
@@ -201,24 +200,24 @@ public class BaseTransform : Element
 
 	/**
 	 * Returns: the instance of the #GstBufferPool used
-	 *     by @trans; free it after use it
+	 *     by @trans; free it after use
 	 */
 	public BufferPool getBufferPool()
 	{
-		auto p = gst_base_transform_get_buffer_pool(gstBaseTransform);
+		auto __p = gst_base_transform_get_buffer_pool(gstBaseTransform);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) p, true);
+		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) __p, true);
 	}
 
 	/**
 	 * See if @trans is configured as a in_place transform.
 	 *
-	 * Returns: %TRUE is the transform is configured in in_place mode.
+	 * Returns: %TRUE if the transform is configured in in_place mode.
 	 *
 	 *     MT safe.
 	 */
@@ -230,7 +229,7 @@ public class BaseTransform : Element
 	/**
 	 * See if @trans is configured as a passthrough transform.
 	 *
-	 * Returns: %TRUE is the transform is configured in passthrough mode.
+	 * Returns: %TRUE if the transform is configured in passthrough mode.
 	 *
 	 *     MT safe.
 	 */
@@ -249,6 +248,31 @@ public class BaseTransform : Element
 	public bool isQosEnabled()
 	{
 		return gst_base_transform_is_qos_enabled(gstBaseTransform) != 0;
+	}
+
+	/**
+	 * Negotiates src pad caps with downstream elements if the source pad is
+	 * marked as needing reconfiguring. Unmarks GST_PAD_FLAG_NEED_RECONFIGURE in
+	 * any case. But marks it again if negotiation fails.
+	 *
+	 * Do not call this in the #GstBaseTransformClass::transform or
+	 * #GstBaseTransformClass::transform_ip vmethod. Call this in
+	 * #GstBaseTransformClass::submit_input_buffer,
+	 * #GstBaseTransformClass::prepare_output_buffer or in
+	 * #GstBaseTransformClass::generate_output _before_ any output buffer is
+	 * allocated.
+	 *
+	 * It will be default be called when handling an ALLOCATION query or at the
+	 * very beginning of the default #GstBaseTransformClass::submit_input_buffer
+	 * implementation.
+	 *
+	 * Returns: %TRUE if the negotiation succeeded, else %FALSE.
+	 *
+	 * Since: 1.18
+	 */
+	public bool reconfigure()
+	{
+		return gst_base_transform_reconfigure(gstBaseTransform) != 0;
 	}
 
 	/**
@@ -312,7 +336,7 @@ public class BaseTransform : Element
 	 * useful for filters that do not care about negotiation.
 	 *
 	 * Always %TRUE for filters which don't implement either a transform
-	 * or transform_ip method.
+	 * or transform_ip or generate_output method.
 	 *
 	 * MT safe.
 	 *
@@ -379,7 +403,7 @@ public class BaseTransform : Element
 	}
 
 	/**
-	 * Updates the srcpad caps and send the caps downstream. This function
+	 * Updates the srcpad caps and sends the caps downstream. This function
 	 * can be used by subclasses when they have already negotiated their caps
 	 * but found a change in them (or computed new information). This way,
 	 * they can notify downstream about that change without losing any
@@ -389,7 +413,7 @@ public class BaseTransform : Element
 	 *     updatedCaps = An updated version of the srcpad caps to be pushed
 	 *         downstream
 	 *
-	 * Returns: %TRUE if the caps could be send downstream %FALSE otherwise
+	 * Returns: %TRUE if the caps could be sent downstream %FALSE otherwise
 	 *
 	 * Since: 1.6
 	 */

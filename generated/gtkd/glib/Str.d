@@ -214,7 +214,7 @@ public struct Str
 	 * the string back using g_ascii_strtod() gives the same machine-number
 	 * (on machines with IEEE compatible 64bit doubles). It is
 	 * guaranteed that the size of the resulting string will never
-	 * be larger than @G_ASCII_DTOSTR_BUF_SIZE bytes, including the terminating
+	 * be larger than %G_ASCII_DTOSTR_BUF_SIZE bytes, including the terminating
 	 * nul character, which is always added.
 	 *
 	 * Params:
@@ -238,6 +238,9 @@ public struct Str
 	 * a printf()-style format string. Allowed conversion
 	 * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
 	 *
+	 * The @format must just be a single format specifier
+	 * starting with `%`, expecting a #gdouble argument.
+	 *
 	 * The returned buffer is guaranteed to be nul-terminated.
 	 *
 	 * If you just want to want to serialize the value into a
@@ -247,7 +250,7 @@ public struct Str
 	 *     buffer = A buffer to place the resulting string in
 	 *     bufLen = The length of the buffer.
 	 *     format = The printf()-style format to use for the
-	 *         code to use for converting.
+	 *         code to use for converting
 	 *     d = The #gdouble to convert
 	 *
 	 * Returns: The pointer to the buffer with the converted string.
@@ -311,7 +314,9 @@ public struct Str
 
 	/**
 	 * Compare @s1 and @s2, ignoring the case of ASCII characters and any
-	 * characters after the first @n in each string.
+	 * characters after the first @n in each string. If either string is
+	 * less than @n bytes long, comparison will stop at the first nul byte
+	 * encountered.
 	 *
 	 * Unlike the BSD strcasecmp() function, this only recognizes standard
 	 * ASCII letters and ignores the locale, treating all non-ASCII
@@ -527,7 +532,7 @@ public struct Str
 	}
 
 	/**
-	 * Determines the numeric value of a character as a hexidecimal
+	 * Determines the numeric value of a character as a hexadecimal
 	 * digit. Differs from g_unichar_xdigit_value() because it takes
 	 * a char, so there's no worry about sign extension if characters
 	 * are signed.
@@ -742,14 +747,17 @@ public struct Str
 
 	/**
 	 * For each character in @string, if the character is not in @valid_chars,
-	 * replaces the character with @substitutor. Modifies @string in place,
-	 * and return @string itself, not a copy. The return value is to allow
-	 * nesting such as
+	 * replaces the character with @substitutor.
+	 *
+	 * Modifies @string in place, and return @string itself, not a copy. The
+	 * return value is to allow nesting such as:
+	 *
 	 * |[<!-- language="C" -->
 	 * g_ascii_strup (g_strcanon (str, "abc", '?'))
 	 * ]|
 	 *
-	 * In order to modify a copy, you may use `g_strdup()`:
+	 * In order to modify a copy, you may use g_strdup():
+	 *
 	 * |[<!-- language="C" -->
 	 * reformatted = g_strcanon (g_strdup (const_str), "abc", '?');
 	 * ...
@@ -761,7 +769,7 @@ public struct Str
 	 *     validChars = bytes permitted in @string
 	 *     substitutor = replacement character for disallowed bytes
 	 *
-	 * Returns: @string
+	 * Returns: the modified @string
 	 */
 	public static string strcanon(string string_, string validChars, char substitutor)
 	{
@@ -878,15 +886,19 @@ public struct Str
 
 	/**
 	 * Converts any delimiter characters in @string to @new_delimiter.
+	 *
 	 * Any characters in @string which are found in @delimiters are
 	 * changed to the @new_delimiter character. Modifies @string in place,
-	 * and returns @string itself, not a copy. The return value is to
-	 * allow nesting such as
+	 * and returns @string itself, not a copy.
+	 *
+	 * The return value is to allow nesting such as:
+	 *
 	 * |[<!-- language="C" -->
 	 * g_ascii_strup (g_strdelimit (str, "abc", '?'))
 	 * ]|
 	 *
-	 * In order to modify a copy, you may use `g_strdup()`:
+	 * In order to modify a copy, you may use g_strdup():
+	 *
 	 * |[<!-- language="C" -->
 	 * reformatted = g_strdelimit (g_strdup (const_str), "abc", '?');
 	 * ...
@@ -896,10 +908,10 @@ public struct Str
 	 * Params:
 	 *     string_ = the string to convert
 	 *     delimiters = a string containing the current delimiters,
-	 *         or %NULL to use the standard delimiters defined in #G_STR_DELIMITERS
+	 *         or %NULL to use the standard delimiters defined in %G_STR_DELIMITERS
 	 *     newDelimiter = the new delimiter character
 	 *
-	 * Returns: @string
+	 * Returns: the modified @string
 	 */
 	public static string strdelimit(string string_, string delimiters, char newDelimiter)
 	{
@@ -1269,7 +1281,8 @@ public struct Str
 	 *
 	 * Params:
 	 *     haystack = a nul-terminated string
-	 *     haystackLen = the maximum length of @haystack
+	 *     haystackLen = the maximum length of @haystack in bytes. A length of -1
+	 *         can be used to mean "search the entire string", like g_strrstr().
 	 *     needle = the nul-terminated string to search for
 	 *
 	 * Returns: a pointer to the found occurrence, or
@@ -1358,7 +1371,8 @@ public struct Str
 	 * Params:
 	 *     string_ = The string to be tokenized
 	 *     delimiters = A nul-terminated string containing bytes that are used
-	 *         to split the string.
+	 *         to split the string (it can accept an empty string, which will result
+	 *         in no string splitting).
 	 *     maxTokens = The maximum number of tokens to split @string into.
 	 *         If this is less than 1, the string is split completely
 	 *
@@ -1378,10 +1392,9 @@ public struct Str
 	 * to @haystack_len.
 	 *
 	 * Params:
-	 *     haystack = a string
-	 *     haystackLen = the maximum length of @haystack. Note that -1 is
-	 *         a valid length, if @haystack is nul-terminated, meaning it will
-	 *         search through the whole string.
+	 *     haystack = a nul-terminated string
+	 *     haystackLen = the maximum length of @haystack in bytes. A length of -1
+	 *         can be used to mean "search the entire string", like `strstr()`.
 	 *     needle = the string to search for
 	 *
 	 * Returns: a pointer to the found occurrence, or
@@ -1498,12 +1511,13 @@ public struct Str
 	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
 	 * Params:
-	 *     string_ = the return location for the newly-allocated string.
+	 *     string_ = the return location for the newly-allocated string,
+	 *         which will be %NULL if (and only if) this function fails
 	 *     format = a standard printf() format string, but notice
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
-	 * Returns: the number of bytes printed.
+	 * Returns: the number of bytes printed, or `-1` on failure
 	 *
 	 * Since: 2.4
 	 */
@@ -1556,7 +1570,7 @@ public struct Str
 	 *     n = the maximum number of bytes to produce (including the
 	 *         terminating nul character).
 	 *     format = a standard printf() format string, but notice
-	 *         string precision pitfalls][string-precision]
+	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
 	 * Returns: the number of bytes which would be produced if the buffer

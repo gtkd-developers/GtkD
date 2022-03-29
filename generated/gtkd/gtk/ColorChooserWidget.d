@@ -108,13 +108,13 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_color_chooser_widget_new();
+		auto __p = gtk_color_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkColorChooserWidget*) p);
+		this(cast(GtkColorChooserWidget*) __p);
 	}
 }

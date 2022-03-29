@@ -26,6 +26,7 @@ module gtk.ActionableIF;
 
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gtk.c.functions;
 public  import gtk.c.types;
 public  import gtkc.gtktypes;

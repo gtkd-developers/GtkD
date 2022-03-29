@@ -28,6 +28,7 @@ private import gio.SettingsSchemaKey;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -245,8 +246,8 @@ public class SettingsSchema
 	 * You should free the return value with g_strfreev() when you are done
 	 * with it.
 	 *
-	 * Returns: a list of the children on
-	 *     @settings, in no defined order
+	 * Returns: a list of
+	 *     the children on @settings, in no defined order
 	 *
 	 * Since: 2.44
 	 */
@@ -265,8 +266,8 @@ public class SettingsSchema
 	 * (since you should already know what keys are in your schema).  This
 	 * function is intended for introspection reasons.
 	 *
-	 * Returns: a list of the keys on
-	 *     @schema, in no defined order
+	 * Returns: a list
+	 *     of the keys on @schema, in no defined order
 	 *
 	 * Since: 2.46
 	 */

@@ -837,9 +837,27 @@ public enum AtkRole
 	 */
 	CONTENT_INSERTION = 124,
 	/**
+	 * A run of content that is marked or highlighted, such as for
+	 * reference purposes, or to call it out as having a special purpose. If the
+	 * marked content has an associated section in the document elaborating on the
+	 * reason for the mark, then %ATK_RELATION_DETAILS should be used on the mark
+	 * to point to that associated section. In addition, the reciprocal relation
+	 * %ATK_RELATION_DETAILS_FOR should be used on the associated content section
+	 * to point back to the mark. (Since: 2.36)
+	 */
+	MARK = 125,
+	/**
+	 * A container for content that is called out as a proposed
+	 * change from the current version of the document, such as by a reviewer of the
+	 * content. This role should include either %ATK_ROLE_CONTENT_DELETION and/or
+	 * %ATK_ROLE_CONTENT_INSERTION children, in any order, to indicate what the
+	 * actual change is. (Since: 2.36)
+	 */
+	SUGGESTION = 126,
+	/**
 	 * not a valid role, used for finding end of the enumeration
 	 */
-	LAST_DEFINED = 125,
+	LAST_DEFINED = 127,
 }
 alias AtkRole Role;
 
@@ -851,33 +869,33 @@ alias AtkRole Role;
 public enum AtkScrollType
 {
 	/**
-	 * Scroll the object vertically and horizontally to the top
-	 * left corner of the window.
+	 * Scroll the object vertically and horizontally to bring
+	 * its top left corner to the top left corner of the window.
 	 */
 	TOP_LEFT = 0,
 	/**
-	 * Scroll the object vertically and horizontally to the
-	 * bottom right corner of the window.
+	 * Scroll the object vertically and horizontally to
+	 * bring its bottom right corner to the bottom right corner of the window.
 	 */
 	BOTTOM_RIGHT = 1,
 	/**
-	 * Scroll the object vertically to the top edge of the
-	 * window.
+	 * Scroll the object vertically to bring its top edge to
+	 * the top edge of the window.
 	 */
 	TOP_EDGE = 2,
 	/**
-	 * Scroll the object vertically to the bottom edge of
-	 * the window.
+	 * Scroll the object vertically to bring its bottom
+	 * edge to the bottom edge of the window.
 	 */
 	BOTTOM_EDGE = 3,
 	/**
-	 * Scroll the object vertically and horizontally to the
-	 * left edge of the window.
+	 * Scroll the object vertically and horizontally to bring
+	 * its left edge to the left edge of the window.
 	 */
 	LEFT_EDGE = 4,
 	/**
-	 * Scroll the object vertically and horizontally to the
-	 * right edge of the window.
+	 * Scroll the object vertically and horizontally to
+	 * bring its right edge to the right edge of the window.
 	 */
 	RIGHT_EDGE = 5,
 	/**
@@ -1134,9 +1152,13 @@ public enum AtkStateType
 	 */
 	READ_ONLY = 42,
 	/**
+	 * Indicates this object is collapsed. @Since: ATK-2.38
+	 */
+	COLLAPSED = 43,
+	/**
 	 * Not a valid state, used for finding end of enumeration
 	 */
-	LAST_DEFINED = 43,
+	LAST_DEFINED = 44,
 }
 alias AtkStateType StateType;
 
@@ -1186,7 +1208,7 @@ public enum AtkTextAttribute
 	 */
 	BG_FULL_HEIGHT = 9,
 	/**
-	 * Number of pixels that the characters are risen above the baseline
+	 * Number of pixels that the characters are risen above the baseline. See also ATK_TEXT_ATTR_TEXT_POSITION.
 	 */
 	RISE = 10,
 	/**
@@ -1258,9 +1280,13 @@ public enum AtkTextAttribute
 	 */
 	STYLE = 27,
 	/**
+	 * The vertical position with respect to the baseline. Values are "baseline", "super", or "sub". Note that a super or sub text attribute refers to position with respect to the baseline of the prior character.
+	 */
+	TEXT_POSITION = 28,
+	/**
 	 * not a valid text attribute, used for finding end of enumeration
 	 */
-	LAST_DEFINED = 28,
+	LAST_DEFINED = 29,
 }
 alias AtkTextAttribute TextAttribute;
 
@@ -2300,7 +2326,7 @@ struct AtkSocketClass
 {
 	AtkObjectClass parentClass;
 	/** */
-	extern(C) void function(AtkSocket* obj, char* plugId) embed;
+	extern(C) void function(AtkSocket* obj, const(char)* plugId) embed;
 }
 
 struct AtkStateSet
@@ -2900,8 +2926,8 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
+	 *     startOffset = start offset in the @text
+	 *     endOffset = end offset in the @text, or -1 for the end of the text.
 	 *     type = specify where the object should be made visible.
 	 * Returns: whether scrolling was successful.
 	 */
@@ -2910,8 +2936,8 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
+	 *     startOffset = start offset in the @text
+	 *     endOffset = end offset in the @text, or -1 for the end of the text.
 	 *     coords = specify whether coordinates are relative to the screen or to the
 	 *         parent object.
 	 *     x = x-position where to scroll to
@@ -3144,7 +3170,7 @@ public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) At
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 23411;
+enum BINARY_AGE = 23810;
 alias ATK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -3168,7 +3194,7 @@ alias ATK_MAJOR_VERSION = MAJOR_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 1;
+enum MICRO_VERSION = 0;
 alias ATK_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -3176,7 +3202,7 @@ alias ATK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 34;
+enum MINOR_VERSION = 38;
 alias ATK_MINOR_VERSION = MINOR_VERSION;
 
 /**

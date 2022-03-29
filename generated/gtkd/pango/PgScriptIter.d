@@ -26,6 +26,7 @@ module pango.PgScriptIter;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -34,7 +35,7 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoScriptIter is used to iterate through a string
+ * A `PangoScriptIter` is used to iterate through a string
  * and identify ranges in different scripts.
  */
 public class PgScriptIter
@@ -73,8 +74,47 @@ public class PgScriptIter
 	}
 
 
+	/** */
+	public static GType getType()
+	{
+		return pango_script_iter_get_type();
+	}
+
 	/**
-	 * Frees a #PangoScriptIter created with pango_script_iter_new().
+	 * Create a new `PangoScriptIter`, used to break a string of
+	 * Unicode text into runs by Unicode script.
+	 *
+	 * No copy is made of @text, so the caller needs to make
+	 * sure it remains valid until the iterator is freed with
+	 * [method@Pango.ScriptIter.free].
+	 *
+	 * Params:
+	 *     text = a UTF-8 string
+	 *     length = length of @text, or -1 if @text is nul-terminated
+	 *
+	 * Returns: the new script iterator, initialized
+	 *     to point at the first range in the text, which should be
+	 *     freed with [method@Pango.ScriptIter.free]. If the string is
+	 *     empty, it will point at an empty range.
+	 *
+	 * Since: 1.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string text, int length)
+	{
+		auto __p = pango_script_iter_new(Str.toStringz(text), length);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(PangoScriptIter*) __p);
+	}
+
+	/**
+	 * Frees a `PangoScriptIter`.
 	 *
 	 * Since: 1.4
 	 */
@@ -86,13 +126,19 @@ public class PgScriptIter
 
 	/**
 	 * Gets information about the range to which @iter currently points.
+	 *
 	 * The range is the set of locations p where *start <= p < *end.
 	 * (That is, it doesn't include the character stored at *end)
 	 *
+	 * Note that while the type of the @script argument is declared
+	 * as `PangoScript`, as of Pango 1.18, this function simply returns
+	 * `GUnicodeScript` values. Callers must be prepared to handle unknown
+	 * values.
+	 *
 	 * Params:
-	 *     start = location to store start position of the range, or %NULL
-	 *     end = location to store end position of the range, or %NULL
-	 *     script = location to store script for range, or %NULL
+	 *     start = location to store start position of the range
+	 *     end = location to store end position of the range
+	 *     script = location to store script for range
 	 *
 	 * Since: 1.4
 	 */
@@ -108,47 +154,17 @@ public class PgScriptIter
 	}
 
 	/**
-	 * Advances a #PangoScriptIter to the next range. If @iter
-	 * is already at the end, it is left unchanged and %FALSE
-	 * is returned.
+	 * Advances a `PangoScriptIter` to the next range.
 	 *
-	 * Returns: %TRUE if @iter was successfully advanced.
+	 * If @iter is already at the end, it is left unchanged
+	 * and %FALSE is returned.
+	 *
+	 * Returns: %TRUE if @iter was successfully advanced
 	 *
 	 * Since: 1.4
 	 */
 	public bool next()
 	{
 		return pango_script_iter_next(pangoScriptIter) != 0;
-	}
-
-	/**
-	 * Create a new #PangoScriptIter, used to break a string of
-	 * Unicode text into runs by Unicode script. No copy is made of
-	 * @text, so the caller needs to make sure it remains valid until
-	 * the iterator is freed with pango_script_iter_free().
-	 *
-	 * Params:
-	 *     text = a UTF-8 string
-	 *     length = length of @text, or -1 if @text is nul-terminated.
-	 *
-	 * Returns: the new script iterator, initialized
-	 *     to point at the first range in the text, which should be
-	 *     freed with pango_script_iter_free(). If the string is
-	 *     empty, it will point at an empty range.
-	 *
-	 * Since: 1.4
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string text, int length)
-	{
-		auto p = pango_script_iter_new(Str.toStringz(text), length);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(PangoScriptIter*) p);
 	}
 }

@@ -26,6 +26,7 @@ module gstreamer.StaticPadTemplate;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.PadTemplate;
@@ -138,14 +139,14 @@ public final class StaticPadTemplate
 	 */
 	public PadTemplate get()
 	{
-		auto p = gst_static_pad_template_get(gstStaticPadTemplate);
+		auto __p = gst_static_pad_template_get(gstStaticPadTemplate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) __p);
 	}
 
 	/**
@@ -158,13 +159,13 @@ public final class StaticPadTemplate
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_static_pad_template_get_caps(gstStaticPadTemplate);
+		auto __p = gst_static_pad_template_get_caps(gstStaticPadTemplate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 }

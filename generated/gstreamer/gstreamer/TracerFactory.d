@@ -87,14 +87,14 @@ public class TracerFactory : PluginFeature
 	 */
 	public static ListG getList()
 	{
-		auto p = gst_tracer_factory_get_list();
+		auto __p = gst_tracer_factory_get_list();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -104,6 +104,8 @@ public class TracerFactory : PluginFeature
 	 *
 	 * Returns: the #GType for tracers managed by this factory or 0 if
 	 *     the factory is not loaded.
+	 *
+	 * Since: 1.14
 	 */
 	public GType getTracerType()
 	{

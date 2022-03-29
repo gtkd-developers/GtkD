@@ -27,6 +27,7 @@ module gstreamer.BufferPool;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
@@ -61,7 +62,7 @@ public  import gstreamerc.gstreamertypes;
  * gst_buffer_pool_set_config() updates the configuration in the pool. This can
  * fail when the configuration structure is not accepted.
  * 
- * After the a pool has been configured, it can be activated with
+ * After the pool has been configured, it can be activated with
  * gst_buffer_pool_set_active(). This will preallocate the configured resources
  * in the pool.
  * 
@@ -74,9 +75,6 @@ public  import gstreamerc.gstreamertypes;
  * The bufferpool can be deactivated again with gst_buffer_pool_set_active().
  * All further gst_buffer_pool_acquire_buffer() calls will return an error. When
  * all buffers are returned to the pool they will be freed.
- * 
- * Use gst_object_unref() to release the reference to a bufferpool. If the
- * refcount of the pool reaches 0, the pool will be freed.
  */
 public class BufferPool : ObjectGst
 {
@@ -122,21 +120,21 @@ public class BufferPool : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_buffer_pool_new();
+		auto __p = gst_buffer_pool_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBufferPool*) p, true);
+		this(cast(GstBufferPool*) __p, true);
 	}
 
 	/**
-	 * Enabled the option in @config. This will instruct the @bufferpool to enable
+	 * Enables the option in @config. This will instruct the @bufferpool to enable
 	 * the specified option on the buffers that it allocates.
 	 *
-	 * The supported options by @pool can be retrieved with gst_buffer_pool_get_options().
+	 * The options supported by @pool can be retrieved with gst_buffer_pool_get_options().
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
@@ -148,7 +146,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Get the @allocator and @params from @config.
+	 * Gets the @allocator and @params from @config.
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
@@ -162,23 +160,23 @@ public class BufferPool : ObjectGst
 		GstAllocator* outallocator = allocator.getAllocatorStruct();
 		GstAllocationParams* outparams = sliceNew!GstAllocationParams();
 
-		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
+		auto __p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
 
 		allocator = ObjectG.getDObject!(Allocator)(outallocator);
 		params = ObjectG.getDObject!(AllocationParams)(outparams, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Parse an available @config and get the option at @index of the options API
+	 * Parses an available @config and gets the option at @index of the options API
 	 * array.
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
 	 *     index = position in the option array to read
 	 *
-	 * Returns: a #gchar of the option at @index.
+	 * Returns: the option at @index.
 	 */
 	public static string configGetOption(Structure config, uint index)
 	{
@@ -186,7 +184,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Get the configuration values from @config.
+	 * Gets the configuration values from @config.
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
@@ -201,15 +199,15 @@ public class BufferPool : ObjectGst
 	{
 		GstCaps* outcaps = null;
 
-		auto p = gst_buffer_pool_config_get_params((config is null) ? null : config.getStructureStruct(), &outcaps, &size, &minBuffers, &maxBuffers) != 0;
+		auto __p = gst_buffer_pool_config_get_params((config is null) ? null : config.getStructureStruct(), &outcaps, &size, &minBuffers, &maxBuffers) != 0;
 
 		caps = ObjectG.getDObject!(Caps)(outcaps);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Check if @config contains @option.
+	 * Checks if @config contains @option.
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
@@ -223,7 +221,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Retrieve the number of values currently stored in the options array of the
+	 * Retrieves the number of values currently stored in the options array of the
 	 * @config structure.
 	 *
 	 * Params:
@@ -237,7 +235,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Set the @allocator and @params on @config.
+	 * Sets the @allocator and @params on @config.
 	 *
 	 * One of @allocator and @params can be %NULL, but not both. When @allocator
 	 * is %NULL, the default allocator of the pool will use the values in @param
@@ -261,7 +259,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Configure @config with the given parameters.
+	 * Configures @config with the given parameters.
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
@@ -276,7 +274,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Validate that changes made to @config are still valid in the context of the
+	 * Validates that changes made to @config are still valid in the context of the
 	 * expected parameters. This function is a helper that can be used to validate
 	 * changes made by a pool to a config when gst_buffer_pool_set_config()
 	 * returns %FALSE. This expects that @caps haven't changed and that
@@ -302,11 +300,10 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Acquire a buffer from @pool. @buffer should point to a memory location that
+	 * Acquires a buffer from @pool. @buffer should point to a memory location that
 	 * can hold a pointer to the new buffer.
 	 *
-	 * @params can be %NULL or contain optional parameters to influence the
-	 * allocation.
+	 * @params can contain optional parameters to influence the allocation.
 	 *
 	 * Params:
 	 *     buffer = a location for a #GstBuffer
@@ -319,35 +316,33 @@ public class BufferPool : ObjectGst
 	{
 		GstBuffer* outbuffer = null;
 
-		auto p = gst_buffer_pool_acquire_buffer(gstBufferPool, &outbuffer, params);
+		auto __p = gst_buffer_pool_acquire_buffer(gstBufferPool, &outbuffer, params);
 
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Get a copy of the current configuration of the pool. This configuration
-	 * can either be modified and used for the gst_buffer_pool_set_config() call
-	 * or it must be freed after usage.
+	 * Gets a copy of the current configuration of the pool. This configuration
+	 * can be modified and used for the gst_buffer_pool_set_config() call.
 	 *
-	 * Returns: a copy of the current configuration of @pool. use
-	 *     gst_structure_free() after usage or gst_buffer_pool_set_config().
+	 * Returns: a copy of the current configuration of @pool.
 	 */
 	public Structure getConfig()
 	{
-		auto p = gst_buffer_pool_get_config(gstBufferPool);
+		auto __p = gst_buffer_pool_get_config(gstBufferPool);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
-	 * Get a %NULL terminated array of string with supported bufferpool options for
+	 * Gets a %NULL terminated array of string with supported bufferpool options for
 	 * @pool. An option would typically be enabled with
 	 * gst_buffer_pool_config_add_option().
 	 *
@@ -360,7 +355,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Check if the bufferpool supports @option.
+	 * Checks if the bufferpool supports @option.
 	 *
 	 * Params:
 	 *     option = an option
@@ -373,7 +368,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Check if @pool is active. A pool can be activated with the
+	 * Checks if @pool is active. A pool can be activated with the
 	 * gst_buffer_pool_set_active() call.
 	 *
 	 * Returns: %TRUE when the pool is active.
@@ -384,7 +379,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Release @buffer to @pool. @buffer should have previously been allocated from
+	 * Releases @buffer to @pool. @buffer should have previously been allocated from
 	 * @pool with gst_buffer_pool_acquire_buffer().
 	 *
 	 * This function is usually called automatically when the last ref on @buffer
@@ -395,11 +390,11 @@ public class BufferPool : ObjectGst
 	 */
 	public void releaseBuffer(Buffer buffer)
 	{
-		gst_buffer_pool_release_buffer(gstBufferPool, (buffer is null) ? null : buffer.getBufferStruct());
+		gst_buffer_pool_release_buffer(gstBufferPool, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
-	 * Control the active state of @pool. When the pool is inactive, new calls to
+	 * Controls the active state of @pool. When the pool is inactive, new calls to
 	 * gst_buffer_pool_acquire_buffer() will return with %GST_FLOW_FLUSHING.
 	 *
 	 * Activating the bufferpool will preallocate all resources in the pool based on
@@ -421,10 +416,10 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Set the configuration of the pool. If the pool is already configured, and
-	 * the configuration haven't change, this function will return %TRUE. If the
+	 * Sets the configuration of the pool. If the pool is already configured, and
+	 * the configuration hasn't changed, this function will return %TRUE. If the
 	 * pool is active, this method will return %FALSE and active configuration
-	 * will remain. Buffers allocated form this pool must be returned or else this
+	 * will remain. Buffers allocated from this pool must be returned or else this
 	 * function will do nothing and return %FALSE.
 	 *
 	 * @config is a #GstStructure that contains the configuration parameters for
@@ -449,7 +444,7 @@ public class BufferPool : ObjectGst
 	}
 
 	/**
-	 * Enable or disable the flushing state of a @pool without freeing or
+	 * Enables or disables the flushing state of a @pool without freeing or
 	 * allocating buffers.
 	 *
 	 * Params:

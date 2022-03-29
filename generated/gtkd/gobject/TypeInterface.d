@@ -130,6 +130,26 @@ public class TypeInterface
 	}
 
 	/**
+	 * Returns the most specific instantiatable prerequisite of an
+	 * interface type. If the interface type has no instantiatable
+	 * prerequisite, %G_TYPE_INVALID is returned.
+	 *
+	 * See g_type_interface_add_prerequisite() for more information
+	 * about prerequisites.
+	 *
+	 * Params:
+	 *     interfaceType = an interface type
+	 *
+	 * Returns: the instantiatable prerequisite type or %G_TYPE_INVALID if none
+	 *
+	 * Since: 2.68
+	 */
+	public static GType instantiatablePrerequisite(GType interfaceType)
+	{
+		return g_type_interface_instantiatable_prerequisite(interfaceType);
+	}
+
+	/**
 	 * Returns the #GTypeInterface structure of an interface to which the
 	 * passed in class conforms.
 	 *

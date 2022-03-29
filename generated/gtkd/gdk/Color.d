@@ -28,6 +28,7 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.gdktypes;
 private import gtkd.Loader;
@@ -192,14 +193,14 @@ public final class Color
 	 */
 	public Color copy()
 	{
-		auto p = gdk_color_copy(gdkColor);
+		auto __p = gdk_color_copy(gdkColor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Color)(cast(GdkColor*) p, true);
+		return ObjectG.getDObject!(Color)(cast(GdkColor*) __p, true);
 	}
 
 	/**
@@ -286,10 +287,10 @@ public final class Color
 	{
 		GdkColor* outcolor = sliceNew!GdkColor();
 
-		auto p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
+		auto __p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
 
 		color = ObjectG.getDObject!(Color)(outcolor, true);
 
-		return p;
+		return __p;
 	}
 }

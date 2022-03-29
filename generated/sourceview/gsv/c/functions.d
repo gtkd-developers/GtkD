@@ -820,7 +820,7 @@ __gshared extern(C)
 	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, const(char)* id) c_gtk_source_language_manager_get_language;
 	char** function(GtkSourceLanguageManager* lm) c_gtk_source_language_manager_get_language_ids;
 	char** function(GtkSourceLanguageManager* lm) c_gtk_source_language_manager_get_search_path;
-	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, const(char)* filename, const(char)* contentType) c_gtk_source_language_manager_guess_language;
+	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, char* filename, const(char)* contentType) c_gtk_source_language_manager_guess_language;
 	void function(GtkSourceLanguageManager* lm, char** dirs) c_gtk_source_language_manager_set_search_path;
 
 	// gsv.SourceMap

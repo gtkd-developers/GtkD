@@ -120,14 +120,14 @@ public class FlowCombiner
 	 */
 	public this()
 	{
-		auto p = gst_flow_combiner_new();
+		auto __p = gst_flow_combiner_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstFlowCombiner*) p);
+		this(cast(GstFlowCombiner*) __p);
 	}
 
 	/**
@@ -174,14 +174,14 @@ public class FlowCombiner
 	 */
 	public FlowCombiner ref_()
 	{
-		auto p = gst_flow_combiner_ref(gstFlowCombiner);
+		auto __p = gst_flow_combiner_ref(gstFlowCombiner);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FlowCombiner)(cast(GstFlowCombiner*) p, true);
+		return ObjectG.getDObject!(FlowCombiner)(cast(GstFlowCombiner*) __p, true);
 	}
 
 	/**

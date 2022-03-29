@@ -122,14 +122,14 @@ public class EventControllerScroll : EventController
 	 */
 	public this(Widget widget, GtkEventControllerScrollFlags flags)
 	{
-		auto p = gtk_event_controller_scroll_new((widget is null) ? null : widget.getWidgetStruct(), flags);
+		auto __p = gtk_event_controller_scroll_new((widget is null) ? null : widget.getWidgetStruct(), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEventControllerScroll*) p, true);
+		this(cast(GtkEventControllerScroll*) __p, true);
 	}
 
 	/**

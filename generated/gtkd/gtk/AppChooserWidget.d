@@ -27,6 +27,7 @@ module gtk.AppChooserWidget;
 private import gio.AppInfoIF;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AppChooserIF;
@@ -116,14 +117,14 @@ public class AppChooserWidget : Box, AppChooserIF
 	 */
 	public this(string contentType)
 	{
-		auto p = gtk_app_chooser_widget_new(Str.toStringz(contentType));
+		auto __p = gtk_app_chooser_widget_new(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAppChooserWidget*) p);
+		this(cast(GtkAppChooserWidget*) __p);
 	}
 
 	/**

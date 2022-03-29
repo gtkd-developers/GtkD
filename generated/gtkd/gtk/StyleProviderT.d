@@ -66,14 +66,14 @@ public template StyleProviderT(TStruct)
 	 */
 	public IconFactory getIconFactory(WidgetPath path)
 	{
-		auto p = gtk_style_provider_get_icon_factory(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct());
+		auto __p = gtk_style_provider_get_icon_factory(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconFactory)(cast(GtkIconFactory*) p);
+		return ObjectG.getDObject!(IconFactory)(cast(GtkIconFactory*) __p);
 	}
 
 	/**
@@ -93,14 +93,14 @@ public template StyleProviderT(TStruct)
 	 */
 	public StyleProperties getStyle(WidgetPath path)
 	{
-		auto p = gtk_style_provider_get_style(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct());
+		auto __p = gtk_style_provider_get_style(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StyleProperties)(cast(GtkStyleProperties*) p, true);
+		return ObjectG.getDObject!(StyleProperties)(cast(GtkStyleProperties*) __p, true);
 	}
 
 	/**
@@ -121,10 +121,10 @@ public template StyleProviderT(TStruct)
 	{
 		GValue* outvalue = sliceNew!GValue();
 
-		auto p = gtk_style_provider_get_style_property(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct(), state, (pspec is null) ? null : pspec.getParamSpecStruct(), outvalue) != 0;
+		auto __p = gtk_style_provider_get_style_property(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct(), state, (pspec is null) ? null : pspec.getParamSpecStruct(), outvalue) != 0;
 
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 
-		return p;
+		return __p;
 	}
 }

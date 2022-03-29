@@ -239,14 +239,14 @@ public class AccelMap : ObjectG
 	 */
 	public static AccelMap get()
 	{
-		auto p = gtk_accel_map_get();
+		auto __p = gtk_accel_map_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AccelMap)(cast(GtkAccelMap*) p);
+		return ObjectG.getDObject!(AccelMap)(cast(GtkAccelMap*) __p);
 	}
 
 	/**

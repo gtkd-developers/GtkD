@@ -26,6 +26,7 @@ module gtk.Scale;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Adjustment;
@@ -53,8 +54,8 @@ private import std.algorithm;
  * 
  * # GtkScale as GtkBuildable
  * 
- * GtkScale supports a custom <marks> element, which can contain multiple
- * <mark> elements. The “value” and “position” attributes have the same
+ * GtkScale supports a custom `<marks>` element, which can contain multiple
+ * `<mark>` elements. The “value” and “position” attributes have the same
  * meaning as gtk_scale_add_mark() parameters of the same name. If the
  * element is not empty, its content is taken as the markup to show at
  * the mark. It can be translated with the usual ”translatable” and
@@ -163,14 +164,14 @@ public class Scale : Range
 	 */
 	public this(GtkOrientation orientation, Adjustment adjustment)
 	{
-		auto p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScale*) p);
+		this(cast(GtkScale*) __p);
 	}
 
 	/**
@@ -198,14 +199,14 @@ public class Scale : Range
 	 */
 	public this(GtkOrientation orientation, double min, double max, double step)
 	{
-		auto p = gtk_scale_new_with_range(orientation, min, max, step);
+		auto __p = gtk_scale_new_with_range(orientation, min, max, step);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
 
-		this(cast(GtkScale*) p);
+		this(cast(GtkScale*) __p);
 	}
 
 	/**
@@ -290,14 +291,14 @@ public class Scale : Range
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = gtk_scale_get_layout(gtkScale);
+		auto __p = gtk_scale_get_layout(gtkScale);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**

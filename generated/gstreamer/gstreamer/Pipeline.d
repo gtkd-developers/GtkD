@@ -50,8 +50,12 @@ public  import gstreamerc.gstreamertypes;
  * methods like gst_bin_add() and gst_bin_remove() (see #GstBin).
  * 
  * Before changing the state of the #GstPipeline (see #GstElement) a #GstBus
- * can be retrieved with gst_pipeline_get_bus(). This bus can then be
- * used to receive #GstMessage from the elements in the pipeline.
+ * should be retrieved with gst_pipeline_get_bus(). This #GstBus should then
+ * be used to receive #GstMessage from the elements in the pipeline. Listening
+ * to the #GstBus is necessary for retrieving error messages from the
+ * #GstPipeline and otherwise the #GstPipeline might stop without any
+ * indication, why. Furthermore, the #GstPipeline posts messages even if
+ * nobody listens on the #GstBus, which will pile up and use up memory.
  * 
  * By default, a #GstPipeline will automatically flush the pending #GstBus
  * messages when going to the NULL state to ensure that no circular
@@ -132,14 +136,14 @@ public class Pipeline : Bin
 	 */
 	public this(string name)
 	{
-		auto p = gst_pipeline_new(Str.toStringz(name));
+		auto __p = gst_pipeline_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstPipeline*) p);
+		this(cast(GstPipeline*) __p);
 	}
 
 	/**
@@ -181,14 +185,14 @@ public class Pipeline : Bin
 	 */
 	public override Bus getBus()
 	{
-		auto p = gst_pipeline_get_bus(gstPipeline);
+		auto __p = gst_pipeline_get_bus(gstPipeline);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
+		return ObjectG.getDObject!(Bus)(cast(GstBus*) __p, true);
 	}
 
 	/**
@@ -203,14 +207,14 @@ public class Pipeline : Bin
 	 */
 	public override Clock getClock()
 	{
-		auto p = gst_pipeline_get_clock(gstPipeline);
+		auto __p = gst_pipeline_get_clock(gstPipeline);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**
@@ -250,14 +254,14 @@ public class Pipeline : Bin
 	 */
 	public Clock getPipelineClock()
 	{
-		auto p = gst_pipeline_get_pipeline_clock(gstPipeline);
+		auto __p = gst_pipeline_get_pipeline_clock(gstPipeline);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**

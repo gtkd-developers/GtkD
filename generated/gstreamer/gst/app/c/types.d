@@ -31,6 +31,29 @@ public import gstreamer.c.types;
 
 
 /**
+ * Buffer dropping scheme to avoid the element's internal queue to block when
+ * full.
+ *
+ * Since: 1.20
+ */
+public enum GstAppLeakyType
+{
+	/**
+	 * Not Leaky
+	 */
+	NONE = 0,
+	/**
+	 * Leaky on upstream (new buffers)
+	 */
+	UPSTREAM = 1,
+	/**
+	 * Leaky on downstream (old buffers)
+	 */
+	DOWNSTREAM = 2,
+}
+alias GstAppLeakyType AppLeakyType;
+
+/**
  * The stream type.
  */
 public enum GstAppStreamType
@@ -72,7 +95,9 @@ struct GstAppSinkCallbacks
 	extern(C) GstFlowReturn function(GstAppSink* appsink, void* userData) newPreroll;
 	/** */
 	extern(C) GstFlowReturn function(GstAppSink* appsink, void* userData) newSample;
-	void*[4] GstReserved;
+	/** */
+	extern(C) int function(GstAppSink* appsink, void* userData) newEvent;
+	void*[3] GstReserved;
 }
 
 struct GstAppSinkClass
@@ -118,7 +143,16 @@ struct GstAppSinkClass
 	 *     Call gst_sample_unref() after usage.
 	 */
 	extern(C) GstSample* function(GstAppSink* appsink, GstClockTime timeout) tryPullSample;
-	void*[2] GstReserved;
+	/**
+	 *
+	 * Params:
+	 *     appsink = a #GstAppSink
+	 *     timeout = the maximum amount of time to wait for a sample
+	 * Returns: a #GstSample, or #GstEvent or NULL when the appsink is stopped or EOS or the timeout expires.
+	 *     Call gst_mini_object_unref() after usage.
+	 */
+	extern(C) GstMiniObject* function(GstAppSink* appsink, GstClockTime timeout) tryPullObject;
+	void*[1] GstReserved;
 }
 
 struct GstAppSinkPrivate;
@@ -159,16 +193,16 @@ struct GstAppSrcClass
 	 * Params:
 	 *     appsrc = a #GstAppSrc
 	 *     buffer = a #GstBuffer to push
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstBuffer* buffer) pushBuffer;
 	/**
 	 *
 	 * Params:
 	 *     appsrc = a #GstAppSrc
-	 * Returns: #GST_FLOW_OK when the EOS was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the EOS was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc) endOfStream;
@@ -178,9 +212,9 @@ struct GstAppSrcClass
 	 *     appsrc = a #GstAppSrc
 	 *     sample = a #GstSample from which buffer and caps may be
 	 *         extracted
-	 * Returns: #GST_FLOW_OK when the buffer was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstSample* sample) pushSample;
 	/**
@@ -188,9 +222,9 @@ struct GstAppSrcClass
 	 * Params:
 	 *     appsrc = a #GstAppSrc
 	 *     bufferList = a #GstBufferList to push
-	 * Returns: #GST_FLOW_OK when the buffer list was successfuly queued.
+	 * Returns: #GST_FLOW_OK when the buffer list was successfully queued.
 	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
-	 *     #GST_FLOW_EOS when EOS occured.
+	 *     #GST_FLOW_EOS when EOS occurred.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstBufferList* bufferList) pushBufferList;
 	void*[2] GstReserved;

@@ -35,6 +35,7 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 public  import gtkc.giotypes;
@@ -133,6 +134,9 @@ public struct DBusUtilities
 	/**
 	 * Finishes an operation started with g_dbus_address_get_stream().
 	 *
+	 * A server is not required to set a GUID, so @out_guid may be set to %NULL
+	 * even on success.
+	 *
 	 * Params:
 	 *     res = A #GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_address_get_stream().
 	 *     outGuid = %NULL or return location to store the GUID extracted from @address, if any.
@@ -170,6 +174,9 @@ public struct DBusUtilities
 	 * sets up the connection so it is in a state to run the client-side
 	 * of the D-Bus authentication conversation. @address must be in the
 	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
+	 *
+	 * A server is not required to set a GUID, so @out_guid may be set to %NULL
+	 * even on success.
 	 *
 	 * This is a synchronous failable function. See
 	 * g_dbus_address_get_stream() for the asynchronous version.
@@ -211,8 +218,14 @@ public struct DBusUtilities
 	 * Generate a D-Bus GUID that can be used with
 	 * e.g. g_dbus_connection_new().
 	 *
-	 * See the D-Bus specification regarding what strings are valid D-Bus
-	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
+	 * See the
+	 * [D-Bus specification](https://dbus.freedesktop.org/doc/dbus-specification.html#uuids)
+	 * regarding what strings are valid D-Bus GUIDs. The specification refers to
+	 * these as ‘UUIDs’ whereas GLib (for historical reasons) refers to them as
+	 * ‘GUIDs’. The terms are interchangeable.
+	 *
+	 * Note that D-Bus GUIDs do not follow
+	 * [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122).
 	 *
 	 * Returns: A valid D-Bus GUID. Free with g_free().
 	 *
@@ -232,23 +245,23 @@ public struct DBusUtilities
 	 *
 	 * The conversion is using the following rules:
 	 *
-	 * - #G_TYPE_STRING: 's', 'o', 'g' or 'ay'
-	 * - #G_TYPE_STRV: 'as', 'ao' or 'aay'
-	 * - #G_TYPE_BOOLEAN: 'b'
-	 * - #G_TYPE_UCHAR: 'y'
-	 * - #G_TYPE_INT: 'i', 'n'
-	 * - #G_TYPE_UINT: 'u', 'q'
-	 * - #G_TYPE_INT64 'x'
-	 * - #G_TYPE_UINT64: 't'
-	 * - #G_TYPE_DOUBLE: 'd'
-	 * - #G_TYPE_VARIANT: Any #GVariantType
+	 * - `G_TYPE_STRING`: 's', 'o', 'g' or 'ay'
+	 * - `G_TYPE_STRV`: 'as', 'ao' or 'aay'
+	 * - `G_TYPE_BOOLEAN`: 'b'
+	 * - `G_TYPE_UCHAR`: 'y'
+	 * - `G_TYPE_INT`: 'i', 'n'
+	 * - `G_TYPE_UINT`: 'u', 'q'
+	 * - `G_TYPE_INT64`: 'x'
+	 * - `G_TYPE_UINT64`: 't'
+	 * - `G_TYPE_DOUBLE`: 'd'
+	 * - `G_TYPE_VARIANT`: Any #GVariantType
 	 *
-	 * This can fail if e.g. @gvalue is of type #G_TYPE_STRING and @type
-	 * is ['i'][G-VARIANT-TYPE-INT32:CAPS]. It will also fail for any #GType
-	 * (including e.g. #G_TYPE_OBJECT and #G_TYPE_BOXED derived-types) not
+	 * This can fail if e.g. @gvalue is of type %G_TYPE_STRING and @type
+	 * is 'i', i.e. %G_VARIANT_TYPE_INT32. It will also fail for any #GType
+	 * (including e.g. %G_TYPE_OBJECT and %G_TYPE_BOXED derived-types) not
 	 * in the table above.
 	 *
-	 * Note that if @gvalue is of type #G_TYPE_VARIANT and its value is
+	 * Note that if @gvalue is of type %G_TYPE_VARIANT and its value is
 	 * %NULL, the empty #GVariant instance (never %NULL) for @type is
 	 * returned (e.g. 0 for scalar types, the empty string for string types,
 	 * '/' for object path types, the empty array for any array type and so on).
@@ -260,9 +273,9 @@ public struct DBusUtilities
 	 *     gvalue = A #GValue to convert to a #GVariant
 	 *     type = A #GVariantType
 	 *
-	 * Returns: A #GVariant (never floating) of #GVariantType @type holding
-	 *     the data from @gvalue or %NULL in case of failure. Free with
-	 *     g_variant_unref().
+	 * Returns: A #GVariant (never floating) of
+	 *     #GVariantType @type holding the data from @gvalue or an empty #GVariant
+	 *     in case of failure. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
 	 */
@@ -329,13 +342,13 @@ public struct DBusUtilities
 	/**
 	 * Checks if @string is a D-Bus GUID.
 	 *
-	 * See the D-Bus specification regarding what strings are valid D-Bus
-	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
+	 * See the documentation for g_dbus_generate_guid() for more information about
+	 * the format of a GUID.
 	 *
 	 * Params:
 	 *     string_ = The string to check.
 	 *
-	 * Returns: %TRUE if @string is a guid, %FALSE otherwise.
+	 * Returns: %TRUE if @string is a GUID, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */

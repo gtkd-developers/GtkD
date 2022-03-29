@@ -86,13 +86,13 @@ public class VSeparator : Separator
 	 */
 	public this()
 	{
-		auto p = gtk_vseparator_new();
+		auto __p = gtk_vseparator_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkVSeparator*) p);
+		this(cast(GtkVSeparator*) __p);
 	}
 }

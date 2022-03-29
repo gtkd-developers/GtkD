@@ -90,24 +90,22 @@ public class Allocator : ObjectGst
 	 *     name = the name of the allocator
 	 *
 	 * Returns: a #GstAllocator or %NULL when
-	 *     the allocator with @name was not registered. Use gst_object_unref()
-	 *     to release the allocator after usage.
+	 *     the allocator with @name was not registered.
 	 */
 	public static Allocator find(string name)
 	{
-		auto p = gst_allocator_find(Str.toStringz(name));
+		auto __p = gst_allocator_find(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Allocator)(cast(GstAllocator*) p, true);
+		return ObjectG.getDObject!(Allocator)(cast(GstAllocator*) __p, true);
 	}
 
 	/**
-	 * Registers the memory @allocator with @name. This function takes ownership of
-	 * @allocator.
+	 * Registers the memory @allocator with @name.
 	 *
 	 * Params:
 	 *     name = the name of the allocator
@@ -143,14 +141,14 @@ public class Allocator : ObjectGst
 	 */
 	public Memory alloc(size_t size, AllocationParams params)
 	{
-		auto p = gst_allocator_alloc(gstAllocator, size, (params is null) ? null : params.getAllocationParamsStruct());
+		auto __p = gst_allocator_alloc(gstAllocator, size, (params is null) ? null : params.getAllocationParamsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -161,11 +159,11 @@ public class Allocator : ObjectGst
 	 */
 	public void free(Memory memory)
 	{
-		gst_allocator_free(gstAllocator, (memory is null) ? null : memory.getMemoryStruct());
+		gst_allocator_free(gstAllocator, (memory is null) ? null : memory.getMemoryStruct(true));
 	}
 
 	/**
-	 * Set the default allocator. This function takes ownership of @allocator.
+	 * Set the default allocator.
 	 */
 	public void setDefault()
 	{

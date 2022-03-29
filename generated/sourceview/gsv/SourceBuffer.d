@@ -27,6 +27,7 @@ module gsv.SourceBuffer;
 private import glib.ConstructionException;
 private import glib.ListSG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gsv.SourceLanguage;
@@ -92,14 +93,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this(TextTagTable table)
 	{
-		auto p = gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct());
+		auto __p = gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceBuffer*) p, true);
+		this(cast(GtkSourceBuffer*) __p, true);
 	}
 
 	/**
@@ -117,14 +118,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this(SourceLanguage language)
 	{
-		auto p = gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct());
+		auto __p = gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_language");
 		}
 
-		this(cast(GtkSourceBuffer*) p, true);
+		this(cast(GtkSourceBuffer*) __p, true);
 	}
 
 	/**
@@ -140,9 +141,9 @@ public class SourceBuffer : TextBuffer
 	 *
 	 * Since: 2.2
 	 */
-	public bool backwardIterToSourceMark(TextIter iter, string category)
+	public bool backwardIterToSourceMark(ref TextIter iter, string category)
 	{
-		return gtk_source_buffer_backward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category)) != 0;
+		return gtk_source_buffer_backward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(true), Str.toStringz(category)) != 0;
 	}
 
 	/**
@@ -221,14 +222,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public SourceMark createSourceMark(string name, string category, TextIter where)
 	{
-		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
+		auto __p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
+		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) __p);
 	}
 
 	/**
@@ -275,9 +276,9 @@ public class SourceBuffer : TextBuffer
 	 *
 	 * Since: 2.2
 	 */
-	public bool forwardIterToSourceMark(TextIter iter, string category)
+	public bool forwardIterToSourceMark(ref TextIter iter, string category)
 	{
-		return gtk_source_buffer_forward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category)) != 0;
+		return gtk_source_buffer_forward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(true), Str.toStringz(category)) != 0;
 	}
 
 	/**
@@ -345,14 +346,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public SourceLanguage getLanguage()
 	{
-		auto p = gtk_source_buffer_get_language(gtkSourceBuffer);
+		auto __p = gtk_source_buffer_get_language(gtkSourceBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) p);
+		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) __p);
 	}
 
 	/**
@@ -379,14 +380,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public ListSG getSourceMarksAtIter(TextIter iter, string category)
 	{
-		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+		auto __p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -403,14 +404,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public ListSG getSourceMarksAtLine(int line, string category)
 	{
-		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
+		auto __p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -423,14 +424,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public SourceStyleScheme getStyleScheme()
 	{
-		auto p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
+		auto __p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) p);
+		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) __p);
 	}
 
 	/**
@@ -443,14 +444,14 @@ public class SourceBuffer : TextBuffer
 	 */
 	public SourceUndoManagerIF getUndoManager()
 	{
-		auto p = gtk_source_buffer_get_undo_manager(gtkSourceBuffer);
+		auto __p = gtk_source_buffer_get_undo_manager(gtkSourceBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceUndoManagerIF)(cast(GtkSourceUndoManager*) p);
+		return ObjectG.getDObject!(SourceUndoManagerIF)(cast(GtkSourceUndoManager*) __p);
 	}
 
 	/**
@@ -470,9 +471,9 @@ public class SourceBuffer : TextBuffer
 	 *
 	 * Since: 2.10
 	 */
-	public bool iterBackwardToContextClassToggle(TextIter iter, string contextClass)
+	public bool iterBackwardToContextClassToggle(ref TextIter iter, string contextClass)
 	{
-		return gtk_source_buffer_iter_backward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass)) != 0;
+		return gtk_source_buffer_iter_backward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(true), Str.toStringz(contextClass)) != 0;
 	}
 
 	/**
@@ -492,9 +493,9 @@ public class SourceBuffer : TextBuffer
 	 *
 	 * Since: 2.10
 	 */
-	public bool iterForwardToContextClassToggle(TextIter iter, string contextClass)
+	public bool iterForwardToContextClassToggle(ref TextIter iter, string contextClass)
 	{
-		return gtk_source_buffer_iter_forward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass)) != 0;
+		return gtk_source_buffer_iter_forward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(true), Str.toStringz(contextClass)) != 0;
 	}
 
 	/**

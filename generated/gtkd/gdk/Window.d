@@ -108,14 +108,14 @@ public class Window : ObjectG
 	 */
 	public this(Window parent, GdkWindowAttr* attributes, int attributesMask)
 	{
-		auto p = gdk_window_new((parent is null) ? null : parent.getWindowStruct(), attributes, attributesMask);
+		auto __p = gdk_window_new((parent is null) ? null : parent.getWindowStruct(), attributes, attributesMask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GdkWindow*) p, true);
+		this(cast(GdkWindow*) __p, true);
 	}
 
 	/**
@@ -138,14 +138,14 @@ public class Window : ObjectG
 	 */
 	public static Window atPointer(out int winX, out int winY)
 	{
-		auto p = gdk_window_at_pointer(&winX, &winY);
+		auto __p = gdk_window_at_pointer(&winX, &winY);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -275,14 +275,14 @@ public class Window : ObjectG
 	 */
 	public DrawingContext beginDrawFrame(Region region)
 	{
-		auto p = gdk_window_begin_draw_frame(gdkWindow, (region is null) ? null : region.getRegionStruct());
+		auto __p = gdk_window_begin_draw_frame(gdkWindow, (region is null) ? null : region.getRegionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) p);
+		return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) __p);
 	}
 
 	/**
@@ -528,19 +528,19 @@ public class Window : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gdk_window_create_gl_context(gdkWindow, &err);
+		auto __p = gdk_window_create_gl_context(gdkWindow, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p, true);
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) __p, true);
 	}
 
 	/**
@@ -591,14 +591,14 @@ public class Window : ObjectG
 	 */
 	public Surface createSimilarImageSurface(cairo_format_t format, int width, int height, int scale)
 	{
-		auto p = gdk_window_create_similar_image_surface(gdkWindow, format, width, height, scale);
+		auto __p = gdk_window_create_similar_image_surface(gdkWindow, format, width, height, scale);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 
 	/**
@@ -629,14 +629,14 @@ public class Window : ObjectG
 	 */
 	public Surface createSimilarSurface(cairo_content_t content, int width, int height)
 	{
-		auto p = gdk_window_create_similar_surface(gdkWindow, content, width, height);
+		auto __p = gdk_window_create_similar_surface(gdkWindow, content, width, height);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 
 	/**
@@ -859,14 +859,14 @@ public class Window : ObjectG
 	 */
 	public Pattern getBackgroundPattern()
 	{
-		auto p = gdk_window_get_background_pattern(gdkWindow);
+		auto __p = gdk_window_get_background_pattern(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Pattern(cast(cairo_pattern_t*) p);
+		return new Pattern(cast(cairo_pattern_t*) __p);
 	}
 
 	/**
@@ -882,14 +882,14 @@ public class Window : ObjectG
 	 */
 	public ListG getChildren()
 	{
-		auto p = gdk_window_get_children(gdkWindow);
+		auto __p = gdk_window_get_children(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -911,14 +911,14 @@ public class Window : ObjectG
 	 */
 	public ListG getChildrenWithUserData(void* userData)
 	{
-		auto p = gdk_window_get_children_with_user_data(gdkWindow, userData);
+		auto __p = gdk_window_get_children_with_user_data(gdkWindow, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -933,14 +933,14 @@ public class Window : ObjectG
 	 */
 	public Region getClipRegion()
 	{
-		auto p = gdk_window_get_clip_region(gdkWindow);
+		auto __p = gdk_window_get_clip_region(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Region(cast(cairo_region_t*) p);
+		return new Region(cast(cairo_region_t*) __p);
 	}
 
 	/**
@@ -975,14 +975,14 @@ public class Window : ObjectG
 	 */
 	public Cursor getCursor()
 	{
-		auto p = gdk_window_get_cursor(gdkWindow);
+		auto __p = gdk_window_get_cursor(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p);
+		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) __p);
 	}
 
 	/**
@@ -1017,14 +1017,14 @@ public class Window : ObjectG
 	 */
 	public Cursor getDeviceCursor(Device device)
 	{
-		auto p = gdk_window_get_device_cursor(gdkWindow, (device is null) ? null : device.getDeviceStruct());
+		auto __p = gdk_window_get_device_cursor(gdkWindow, (device is null) ? null : device.getDeviceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p);
+		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) __p);
 	}
 
 	/**
@@ -1063,14 +1063,14 @@ public class Window : ObjectG
 	 */
 	public Window getDevicePosition(Device device, out int x, out int y, out GdkModifierType mask)
 	{
-		auto p = gdk_window_get_device_position(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
+		auto __p = gdk_window_get_device_position(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1092,14 +1092,14 @@ public class Window : ObjectG
 	 */
 	public Window getDevicePositionDouble(Device device, out double x, out double y, out GdkModifierType mask)
 	{
-		auto p = gdk_window_get_device_position_double(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
+		auto __p = gdk_window_get_device_position_double(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1111,14 +1111,14 @@ public class Window : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		auto p = gdk_window_get_display(gdkWindow);
+		auto __p = gdk_window_get_display(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -1137,11 +1137,11 @@ public class Window : ObjectG
 	{
 		GdkWindow* outtarget = null;
 
-		auto p = gdk_window_get_drag_protocol(gdkWindow, &outtarget);
+		auto __p = gdk_window_get_drag_protocol(gdkWindow, &outtarget);
 
 		target = ObjectG.getDObject!(Window)(outtarget);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1157,14 +1157,14 @@ public class Window : ObjectG
 	 */
 	public Window getEffectiveParent()
 	{
-		auto p = gdk_window_get_effective_parent(gdkWindow);
+		auto __p = gdk_window_get_effective_parent(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1181,14 +1181,14 @@ public class Window : ObjectG
 	 */
 	public Window getEffectiveToplevel()
 	{
-		auto p = gdk_window_get_effective_toplevel(gdkWindow);
+		auto __p = gdk_window_get_effective_toplevel(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1239,14 +1239,14 @@ public class Window : ObjectG
 	 */
 	public FrameClock getFrameClock()
 	{
-		auto p = gdk_window_get_frame_clock(gdkWindow);
+		auto __p = gdk_window_get_frame_clock(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) p);
+		return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) __p);
 	}
 
 	/**
@@ -1317,14 +1317,14 @@ public class Window : ObjectG
 	 */
 	public Window getGroup()
 	{
-		auto p = gdk_window_get_group(gdkWindow);
+		auto __p = gdk_window_get_group(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1390,14 +1390,14 @@ public class Window : ObjectG
 	 */
 	public Window getParent()
 	{
-		auto p = gdk_window_get_parent(gdkWindow);
+		auto __p = gdk_window_get_parent(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1434,14 +1434,14 @@ public class Window : ObjectG
 	 */
 	public Window getPointer(out int x, out int y, out GdkModifierType mask)
 	{
-		auto p = gdk_window_get_pointer(gdkWindow, &x, &y, &mask);
+		auto __p = gdk_window_get_pointer(gdkWindow, &x, &y, &mask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1526,14 +1526,14 @@ public class Window : ObjectG
 	 */
 	public Screen getScreen()
 	{
-		auto p = gdk_window_get_screen(gdkWindow);
+		auto __p = gdk_window_get_screen(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -1590,14 +1590,14 @@ public class Window : ObjectG
 	 */
 	public Window getToplevel()
 	{
-		auto p = gdk_window_get_toplevel(gdkWindow);
+		auto __p = gdk_window_get_toplevel(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -1624,14 +1624,14 @@ public class Window : ObjectG
 	 */
 	public Region getUpdateArea()
 	{
-		auto p = gdk_window_get_update_area(gdkWindow);
+		auto __p = gdk_window_get_update_area(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Region(cast(cairo_region_t*) p);
+		return new Region(cast(cairo_region_t*) __p);
 	}
 
 	/**
@@ -1657,14 +1657,14 @@ public class Window : ObjectG
 	 */
 	public Region getVisibleRegion()
 	{
-		auto p = gdk_window_get_visible_region(gdkWindow);
+		auto __p = gdk_window_get_visible_region(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Region(cast(cairo_region_t*) p);
+		return new Region(cast(cairo_region_t*) __p);
 	}
 
 	/**
@@ -1676,14 +1676,14 @@ public class Window : ObjectG
 	 */
 	public Visual getVisual()
 	{
-		auto p = gdk_window_get_visual(gdkWindow);
+		auto __p = gdk_window_get_visual(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -2093,14 +2093,14 @@ public class Window : ObjectG
 	 */
 	public ListG peekChildren()
 	{
-		auto p = gdk_window_peek_children(gdkWindow);
+		auto __p = gdk_window_peek_children(gdkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -3351,14 +3351,14 @@ public class Window : ObjectG
 	 */
 	public static Window getDefaultRootWindow()
 	{
-		auto p = gdk_get_default_root_window();
+		auto __p = gdk_get_default_root_window();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -3374,14 +3374,14 @@ public class Window : ObjectG
 	 */
 	public static Window offscreenWindowGetEmbedder(Window window)
 	{
-		auto p = gdk_offscreen_window_get_embedder((window is null) ? null : window.getWindowStruct());
+		auto __p = gdk_offscreen_window_get_embedder((window is null) ? null : window.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -3397,14 +3397,14 @@ public class Window : ObjectG
 	 */
 	public static Surface offscreenWindowGetSurface(Window window)
 	{
-		auto p = gdk_offscreen_window_get_surface((window is null) ? null : window.getWindowStruct());
+		auto __p = gdk_offscreen_window_get_surface((window is null) ? null : window.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 
 	/**

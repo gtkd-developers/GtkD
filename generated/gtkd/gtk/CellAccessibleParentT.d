@@ -89,14 +89,14 @@ public template CellAccessibleParentT(TStruct)
 	/** */
 	public PtrArray getColumnHeaderCells(CellAccessible cell)
 	{
-		auto p = gtk_cell_accessible_parent_get_column_header_cells(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
+		auto __p = gtk_cell_accessible_parent_get_column_header_cells(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p, true);
+		return new PtrArray(cast(GPtrArray*) __p, true);
 	}
 
 	/** */
@@ -108,14 +108,14 @@ public template CellAccessibleParentT(TStruct)
 	/** */
 	public PtrArray getRowHeaderCells(CellAccessible cell)
 	{
-		auto p = gtk_cell_accessible_parent_get_row_header_cells(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
+		auto __p = gtk_cell_accessible_parent_get_row_header_cells(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p, true);
+		return new PtrArray(cast(GPtrArray*) __p, true);
 	}
 
 	/** */

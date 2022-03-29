@@ -26,6 +26,7 @@ module gtk.Notebook;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Container;
@@ -53,17 +54,18 @@ private import std.algorithm;
  * 
  * The GtkNotebook implementation of the #GtkBuildable interface
  * supports placing children into tabs by specifying “tab” as the
- * “type” attribute of a <child> element. Note that the content
+ * “type” attribute of a `<child>` element. Note that the content
  * of the tab must be created before the tab can be filled.
- * A tab child can be specified without specifying a <child>
+ * A tab child can be specified without specifying a `<child>`
  * type attribute.
  * 
  * To add a child widget in the notebooks action area, specify
  * "action-start" or “action-end” as the “type” attribute of the
- * <child> element.
+ * `<child>` element.
  * 
  * An example of a UI definition fragment with GtkNotebook:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkNotebook">
  * <child>
  * <object class="GtkLabel" id="notebook-content">
@@ -179,14 +181,14 @@ public class Notebook : Container
 	 */
 	public this()
 	{
-		auto p = gtk_notebook_new();
+		auto __p = gtk_notebook_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkNotebook*) p);
+		this(cast(GtkNotebook*) __p);
 	}
 
 	/**
@@ -259,14 +261,14 @@ public class Notebook : Container
 	 */
 	public Widget getActionWidget(GtkPackType packType)
 	{
-		auto p = gtk_notebook_get_action_widget(gtkNotebook, packType);
+		auto __p = gtk_notebook_get_action_widget(gtkNotebook, packType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -305,14 +307,14 @@ public class Notebook : Container
 	 */
 	public Widget getMenuLabel(Widget child)
 	{
-		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -356,14 +358,14 @@ public class Notebook : Container
 	 */
 	public Widget getNthPage(int pageNum)
 	{
-		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
+		auto __p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -440,14 +442,14 @@ public class Notebook : Container
 	 */
 	public Widget getTabLabel(Widget child)
 	{
-		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

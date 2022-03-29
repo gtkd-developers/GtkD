@@ -154,14 +154,14 @@ public class RecentManager : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_recent_manager_new();
+		auto __p = gtk_recent_manager_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRecentManager*) p, true);
+		this(cast(GtkRecentManager*) __p, true);
 	}
 
 	/**
@@ -175,14 +175,14 @@ public class RecentManager : ObjectG
 	 */
 	public static RecentManager getDefault()
 	{
-		auto p = gtk_recent_manager_get_default();
+		auto __p = gtk_recent_manager_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentManager)(cast(GtkRecentManager*) p);
+		return ObjectG.getDObject!(RecentManager)(cast(GtkRecentManager*) __p);
 	}
 
 	/**
@@ -256,14 +256,14 @@ public class RecentManager : ObjectG
 	 */
 	public ListG getItems()
 	{
-		auto p = gtk_recent_manager_get_items(gtkRecentManager);
+		auto __p = gtk_recent_manager_get_items(gtkRecentManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -303,19 +303,19 @@ public class RecentManager : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), &err);
+		auto __p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) __p, true);
 	}
 
 	/**
@@ -339,14 +339,14 @@ public class RecentManager : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), &err) != 0;
+		auto __p = gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -363,14 +363,14 @@ public class RecentManager : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_purge_items(gtkRecentManager, &err);
+		auto __p = gtk_recent_manager_purge_items(gtkRecentManager, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -391,14 +391,14 @@ public class RecentManager : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), &err) != 0;
+		auto __p = gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

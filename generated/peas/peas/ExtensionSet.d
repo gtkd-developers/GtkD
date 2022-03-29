@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gobject.Value;
 private import peas.Engine;
 private import peas.PluginInfo;
 private import peas.c.functions;
@@ -79,10 +80,10 @@ public class ExtensionSet : ObjectG
 	 *
 	 * If @engine is %NULL, then the default engine will be used.
 	 *
-	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @exten_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
-	 * See peas_extension_set_new() for more information.
+	 * See [ctor@ExtensionSet.new] for more information.
 	 *
 	 * Params:
 	 *     engine = A #PeasEngine, or %NULL.
@@ -97,14 +98,14 @@ public class ExtensionSet : ObjectG
 	 */
 	public this(Engine engine, GType extenType, string firstProperty, void* varArgs)
 	{
-		auto p = peas_extension_set_new_valist((engine is null) ? null : engine.getEngineStruct(), extenType, Str.toStringz(firstProperty), varArgs);
+		auto __p = peas_extension_set_new_valist((engine is null) ? null : engine.getEngineStruct(), extenType, Str.toStringz(firstProperty), varArgs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(PeasExtensionSet*) p, true);
+		this(cast(PeasExtensionSet*) __p, true);
 	}
 
 	/**
@@ -112,10 +113,50 @@ public class ExtensionSet : ObjectG
 	 *
 	 * If @engine is %NULL, then the default engine will be used.
 	 *
-	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @exten_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
-	 * See peas_extension_set_new() for more information.
+	 * See [ctor@ExtensionSet.new] for more information.
+	 *
+	 * Params:
+	 *     engine = A #PeasEngine, or %NULL.
+	 *     extenType = the extension #GType.
+	 *     propNames = an array of property names.
+	 *     propValues = an array of property values.
+	 *
+	 * Returns: a new instance of #PeasExtensionSet.
+	 *
+	 *     Since 1.24.0
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Engine engine, GType extenType, string[] propNames, Value[] propValues)
+	{
+		GValue[] propValuesArray = new GValue[propValues.length];
+		for ( int i = 0; i < propValues.length; i++ )
+		{
+			propValuesArray[i] = *(propValues[i].getValueStruct());
+		}
+
+		auto __p = peas_extension_set_new_with_properties((engine is null) ? null : engine.getEngineStruct(), extenType, cast(uint)propValues.length, Str.toStringzArray(propNames), propValuesArray.ptr);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_with_properties");
+		}
+
+		this(cast(PeasExtensionSet*) __p, true);
+	}
+
+	/**
+	 * Create a new #PeasExtensionSet for the @exten_type extension type.
+	 *
+	 * If @engine is %NULL, then the default engine will be used.
+	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
+	 *
+	 * See [ctor@ExtensionSet.new] for more information.
 	 *
 	 * Params:
 	 *     engine = A #PeasEngine, or %NULL.
@@ -128,19 +169,19 @@ public class ExtensionSet : ObjectG
 	 */
 	public this(Engine engine, GType extenType, GParameter[] parameters)
 	{
-		auto p = peas_extension_set_newv((engine is null) ? null : engine.getEngineStruct(), extenType, cast(uint)parameters.length, parameters.ptr);
+		auto __p = peas_extension_set_newv((engine is null) ? null : engine.getEngineStruct(), extenType, cast(uint)parameters.length, parameters.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
 
-		this(cast(PeasExtensionSet*) p, true);
+		this(cast(PeasExtensionSet*) __p, true);
 	}
 
 	alias foreac = foreach_;
 	/**
-	 * Calls @func for each #PeasExtension.
+	 * Calls @func for each [alias@Extension].
 	 *
 	 * Params:
 	 *     func = A function call for each extension.
@@ -154,13 +195,14 @@ public class ExtensionSet : ObjectG
 	}
 
 	/**
-	 * Returns the #PeasExtension object corresponding to @info, or %NULL
-	 * if the plugin doesn't provide such an extension.
+	 * Returns the [alias@Extension] object corresponding to @info.
+	 *
+	 * If the plugin doesn't provide such an extension, it returns %NULL.
 	 *
 	 * Params:
 	 *     info = a #PeasPluginInfo
 	 *
-	 * Returns: a reference to a #PeasExtension or %NULL
+	 * Returns: a reference to a #PeasExtension
 	 */
 	public PeasExtension* getExtension(PluginInfo info)
 	{
@@ -168,9 +210,10 @@ public class ExtensionSet : ObjectG
 	}
 
 	/**
-	 * The extension-added signal is emitted when a new extension has been
-	 * added to the #PeasExtensionSet. It happens when a new plugin implementing
-	 * the extension set's extension type is loaded.
+	 * Emitted when a new extension has been added to the #PeasExtensionSet.
+	 *
+	 * It happens when a new plugin implementing the extension set's extension
+	 * type is loaded.
 	 *
 	 * You should connect to this signal in order to set up the extensions when
 	 * they are loaded. Note that this signal is not fired for extensions coming
@@ -187,14 +230,15 @@ public class ExtensionSet : ObjectG
 	}
 
 	/**
-	 * The extension-removed signal is emitted when a new extension is about to be
-	 * removed from the #PeasExtensionSet. It happens when a plugin implementing
-	 * the extension set's extension type is unloaded, or when the
-	 * #PeasExtensionSet itself is destroyed.
+	 * Emitted when a new extension is about to be removed from the
+	 * #PeasExtensionSet.
+	 *
+	 * It happens when a plugin implementing the extension set's extension type is
+	 * unloaded, or when the #PeasExtensionSet itself is destroyed.
 	 *
 	 * You should connect to this signal in order to clean up the extensions
 	 * when their plugin is unload. Note that this signal is not fired for the
-	 * #PeasExtension instances still available when the #PeasExtensionSet
+	 * [alias@Extension] instances still available when the #PeasExtensionSet
 	 * instance is destroyed. You should clean those up by yourself.
 	 *
 	 * Params:

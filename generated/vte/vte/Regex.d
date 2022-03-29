@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtkd.Loader;
 private import vte.c.functions;
@@ -120,36 +121,64 @@ public class Regex
 		return vte_regex_get_type();
 	}
 
-	/** */
+	/**
+	 * If the platform supports JITing, JIT compiles @regex.
+	 *
+	 * Params:
+	 *     flags = PCRE2 JIT flags, or 0
+	 *
+	 * Returns: %TRUE if JITing succeeded (or PCRE2 was built without
+	 *     JIT support), or %FALSE with @error filled in
+	 *
+	 * Throws: GException on failure.
+	 */
 	public bool jit(uint flags)
 	{
 		GError* err = null;
 
-		auto p = vte_regex_jit(vteRegex, flags, &err) != 0;
+		auto __p = vte_regex_jit(vteRegex, flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	alias doref = ref_;
-	/** */
+	/**
+	 * Increases the reference count of @regex by one.
+	 *
+	 * Returns: @regex
+	 */
 	public Regex ref_()
 	{
-		auto p = vte_regex_ref(vteRegex);
+		auto __p = vte_regex_ref(vteRegex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Regex)(cast(VteRegex*) p, true);
+		return ObjectG.getDObject!(Regex)(cast(VteRegex*) __p, true);
 	}
 
-	/** */
+	/**
+	 * See man:pcre2api(3) and man:pcre2_substitute(3) for more information.
+	 *
+	 * Params:
+	 *     subject = the subject string
+	 *     replacement = the replacement string
+	 *     flags = PCRE2 match flags
+	 *
+	 * Returns: the substituted string, or %NULL
+	 *     if an error occurred
+	 *
+	 * Since: 0.56
+	 *
+	 * Throws: GException on failure.
+	 */
 	public string substitute(string subject, string replacement, uint flags)
 	{
 		GError* err = null;
@@ -165,16 +194,21 @@ public class Regex
 		return Str.toString(retStr);
 	}
 
-	/** */
+	/**
+	 * Decreases the reference count of @regex by one, and frees @regex
+	 * if the refcount reaches zero.
+	 *
+	 * Returns: %NULL
+	 */
 	public Regex unref()
 	{
-		auto p = vte_regex_unref(vteRegex);
+		auto __p = vte_regex_unref(vteRegex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Regex)(cast(VteRegex*) p, true);
+		return ObjectG.getDObject!(Regex)(cast(VteRegex*) __p, true);
 	}
 }

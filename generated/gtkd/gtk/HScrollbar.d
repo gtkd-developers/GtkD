@@ -93,13 +93,13 @@ public class HScrollbar : Scrollbar
 	 */
 	public this(Adjustment adjustment)
 	{
-		auto p = gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHScrollbar*) p);
+		this(cast(GtkHScrollbar*) __p);
 	}
 }

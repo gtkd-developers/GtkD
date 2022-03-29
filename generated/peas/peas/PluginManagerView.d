@@ -81,7 +81,7 @@ public class PluginManagerView : TreeView
 	}
 
 	/**
-	 * Creates a new plugin manager view for the given #PeasEngine.
+	 * Creates a new plugin manager view for the given [class@Peas.Engine].
 	 *
 	 * If @engine is %NULL, then the default engine will be used.
 	 *
@@ -94,14 +94,14 @@ public class PluginManagerView : TreeView
 	 */
 	public this(Engine engine)
 	{
-		auto p = peas_gtk_plugin_manager_view_new((engine is null) ? null : engine.getEngineStruct());
+		auto __p = peas_gtk_plugin_manager_view_new((engine is null) ? null : engine.getEngineStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PeasGtkPluginManagerView*) p);
+		this(cast(PeasGtkPluginManagerView*) __p);
 	}
 
 	/**
@@ -111,14 +111,14 @@ public class PluginManagerView : TreeView
 	 */
 	public PluginInfo getSelectedPlugin()
 	{
-		auto p = peas_gtk_plugin_manager_view_get_selected_plugin(peasGtkPluginManagerView);
+		auto __p = peas_gtk_plugin_manager_view_get_selected_plugin(peasGtkPluginManagerView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
+		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) __p);
 	}
 
 	/**
@@ -158,8 +158,9 @@ public class PluginManagerView : TreeView
 	}
 
 	/**
-	 * The ::populate-popup signal is emitted before showing the context
-	 * menu of the view. If you need to add items to the context menu,
+	 * Emitted before showing the context menu of the view.
+	 *
+	 * If you need to add items to the context menu,
 	 * connect to this signal and add your menuitems to the @menu.
 	 *
 	 * Params:

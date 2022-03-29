@@ -82,7 +82,7 @@ public class VariantIter
 	 * need it.
 	 *
 	 * A reference is taken to the container that @iter is iterating over
-	 * and will be releated only when g_variant_iter_free() is called.
+	 * and will be related only when g_variant_iter_free() is called.
 	 *
 	 * Returns: a new heap-allocated #GVariantIter
 	 *

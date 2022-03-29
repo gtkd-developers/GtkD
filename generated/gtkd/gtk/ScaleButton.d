@@ -49,6 +49,8 @@ private import std.algorithm;
  * 
  * GtkScaleButton has a single CSS node with name button. To differentiate
  * it from a plain #GtkButton, it gets the .scale style class.
+ * 
+ * The popup widget that contains the scale has a .scale-popup style class.
  */
 public class ScaleButton : Button, OrientableIF
 {
@@ -110,14 +112,14 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	public this(GtkIconSize size, double min, double max, double step, string[] icons)
 	{
-		auto p = gtk_scale_button_new(size, min, max, step, Str.toStringzArray(icons));
+		auto __p = gtk_scale_button_new(size, min, max, step, Str.toStringzArray(icons));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScaleButton*) p);
+		this(cast(GtkScaleButton*) __p);
 	}
 
 	/**
@@ -130,14 +132,14 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_scale_button_get_adjustment(gtkScaleButton);
+		auto __p = gtk_scale_button_get_adjustment(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -149,14 +151,14 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	public Button getMinusButton()
 	{
-		auto p = gtk_scale_button_get_minus_button(gtkScaleButton);
+		auto __p = gtk_scale_button_get_minus_button(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) __p);
 	}
 
 	/**
@@ -168,14 +170,14 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	public Button getPlusButton()
 	{
-		auto p = gtk_scale_button_get_plus_button(gtkScaleButton);
+		auto __p = gtk_scale_button_get_plus_button(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) __p);
 	}
 
 	/**
@@ -187,14 +189,14 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	public Widget getPopup()
 	{
-		auto p = gtk_scale_button_get_popup(gtkScaleButton);
+		auto __p = gtk_scale_button_get_popup(gtkScaleButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

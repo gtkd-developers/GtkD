@@ -27,6 +27,7 @@ module gtk.FileFilter;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
@@ -55,14 +56,15 @@ public  import gtkc.gtktypes;
  * # GtkFileFilter as GtkBuildable
  * 
  * The GtkFileFilter implementation of the GtkBuildable interface
- * supports adding rules using the <mime-types>, <patterns> and
- * <applications> elements and listing the rules within. Specifying
- * a <mime-type> or <pattern> has the same effect as as calling
+ * supports adding rules using the `<mime-types>`, `<patterns>` and
+ * `<applications>` elements and listing the rules within. Specifying
+ * a `<mime-type>` or `<pattern>` has the same effect as as calling
  * gtk_file_filter_add_mime_type() or gtk_file_filter_add_pattern().
  * 
  * An example of a UI definition fragment specifying GtkFileFilter
  * rules:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkFileFilter">
  * <mime-types>
  * <mime-type>text/plain</mime-type>
@@ -133,14 +135,14 @@ public class FileFilter : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_file_filter_new();
+		auto __p = gtk_file_filter_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFileFilter*) p);
+		this(cast(GtkFileFilter*) __p);
 	}
 
 	/**
@@ -158,14 +160,14 @@ public class FileFilter : ObjectG, BuildableIF
 	 */
 	public this(Variant variant)
 	{
-		auto p = gtk_file_filter_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		auto __p = gtk_file_filter_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 
-		this(cast(GtkFileFilter*) p, true);
+		this(cast(GtkFileFilter*) __p, true);
 	}
 
 	/**
@@ -306,13 +308,13 @@ public class FileFilter : ObjectG, BuildableIF
 	 */
 	public Variant toGvariant()
 	{
-		auto p = gtk_file_filter_to_gvariant(gtkFileFilter);
+		auto __p = gtk_file_filter_to_gvariant(gtkFileFilter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 }

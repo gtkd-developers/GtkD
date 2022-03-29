@@ -73,6 +73,47 @@ public class Pattern
 
 
 	/**
+	 * Compiles a pattern to a #GPatternSpec.
+	 *
+	 * Params:
+	 *     pattern = a zero-terminated UTF-8 encoded string
+	 *
+	 * Returns: a newly-allocated #GPatternSpec
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string pattern)
+	{
+		auto __p = g_pattern_spec_new(Str.toStringz(pattern));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GPatternSpec*) __p);
+	}
+
+	/**
+	 * Copies @pspec in a new #GPatternSpec.
+	 *
+	 * Returns: a copy of @pspec.
+	 *
+	 * Since: 2.70
+	 */
+	public Pattern copy()
+	{
+		auto __p = g_pattern_spec_copy(gPatternSpec);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new Pattern(cast(GPatternSpec*) __p, true);
+	}
+
+	/**
 	 * Compares two compiled pattern specs and returns whether they will
 	 * match the same set of strings.
 	 *
@@ -96,25 +137,54 @@ public class Pattern
 	}
 
 	/**
-	 * Compiles a pattern to a #GPatternSpec.
+	 * Matches a string against a compiled pattern. Passing the correct
+	 * length of the string given is mandatory. The reversed string can be
+	 * omitted by passing %NULL, this is more efficient if the reversed
+	 * version of the string to be matched is not at hand, as
+	 * g_pattern_match() will only construct it if the compiled pattern
+	 * requires reverse matches.
+	 *
+	 * Note that, if the user code will (possibly) match a string against a
+	 * multitude of patterns containing wildcards, chances are high that
+	 * some patterns will require a reversed string. In this case, it's
+	 * more efficient to provide the reversed string to avoid multiple
+	 * constructions thereof in the various calls to g_pattern_match().
+	 *
+	 * Note also that the reverse of a UTF-8 encoded string can in general
+	 * not be obtained by g_strreverse(). This works only if the string
+	 * does not contain any multibyte characters. GLib offers the
+	 * g_utf8_strreverse() function to reverse UTF-8 encoded strings.
 	 *
 	 * Params:
-	 *     pattern = a zero-terminated UTF-8 encoded string
+	 *     stringLength = the length of @string (in bytes, i.e. strlen(),
+	 *         not g_utf8_strlen())
+	 *     string_ = the UTF-8 encoded string to match
+	 *     stringReversed = the reverse of @string or %NULL
 	 *
-	 * Returns: a newly-allocated #GPatternSpec
+	 * Returns: %TRUE if @string matches @pspec
 	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * Since: 2.70
 	 */
-	public this(string pattern)
+	public bool match(size_t stringLength, string string_, string stringReversed)
 	{
-		auto __p = g_pattern_spec_new(Str.toStringz(pattern));
+		return g_pattern_spec_match(gPatternSpec, stringLength, Str.toStringz(string_), Str.toStringz(stringReversed)) != 0;
+	}
 
-		if(__p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-
-		this(cast(GPatternSpec*) __p);
+	/**
+	 * Matches a string against a compiled pattern. If the string is to be
+	 * matched against more than one pattern, consider using
+	 * g_pattern_match() instead while supplying the reversed string.
+	 *
+	 * Params:
+	 *     string_ = the UTF-8 encoded string to match
+	 *
+	 * Returns: %TRUE if @string matches @pspec
+	 *
+	 * Since: 2.70
+	 */
+	public bool matchString(string string_)
+	{
+		return g_pattern_spec_match_string(gPatternSpec, Str.toStringz(string_)) != 0;
 	}
 
 	/**
@@ -135,6 +205,8 @@ public class Pattern
 	 * not be obtained by g_strreverse(). This works only if the string
 	 * does not contain any multibyte characters. GLib offers the
 	 * g_utf8_strreverse() function to reverse UTF-8 encoded strings.
+	 *
+	 * Deprecated: Use g_pattern_spec_match() instead
 	 *
 	 * Params:
 	 *     pspec = a #GPatternSpec
@@ -171,6 +243,8 @@ public class Pattern
 	 * Matches a string against a compiled pattern. If the string is to be
 	 * matched against more than one pattern, consider using
 	 * g_pattern_match() instead while supplying the reversed string.
+	 *
+	 * Deprecated: Use g_pattern_spec_match_string() instead
 	 *
 	 * Params:
 	 *     pspec = a #GPatternSpec

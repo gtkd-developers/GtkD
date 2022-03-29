@@ -30,6 +30,7 @@ private import glib.GException;
 private import glib.ListG;
 private import glib.ListSG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AccelGroup;
@@ -45,15 +46,15 @@ private import std.algorithm;
 
 
 /**
+ * A #GtkUIManager constructs a user interface (menus and toolbars) from
+ * one or more UI definitions, which reference actions from one or more
+ * action groups.
+ * 
  * > GtkUIManager is deprecated since GTK+ 3.10. To construct user interfaces
  * > from XML definitions, you should use #GtkBuilder, #GMenuModel, et al. To
  * > work with actions, use #GAction, #GtkActionable et al. These newer classes
  * > support richer functionality and integration with various desktop shells.
  * > It should be possible to migrate most/all functionality from GtkUIManager.
- * 
- * A #GtkUIManager constructs a user interface (menus and toolbars) from
- * one or more UI definitions, which reference actions from one or more
- * action groups.
  * 
  * # UI Definitions # {#XML-UI}
  * 
@@ -115,7 +116,7 @@ private import std.algorithm;
  * 
  * # A UI definition #
  * 
- * |[
+ * |[<!-- language="xml" -->
  * <ui>
  * <menubar>
  * <menu name="FileMenu" action="FileMenuAction">
@@ -202,7 +203,7 @@ private import std.algorithm;
  * 
  * Every action has an accelerator path. Accelerators are installed together
  * with menuitem proxies, but they can also be explicitly added with
- * <accelerator> elements in the UI definition. This makes it possible to
+ * `<accelerator>` elements in the UI definition. This makes it possible to
  * have accelerators for actions even if they have no visible proxies.
  * 
  * # Smart Separators # {#Smart-Separators}
@@ -235,10 +236,10 @@ private import std.algorithm;
  * # GtkUIManager as GtkBuildable # {#GtkUIManager-BUILDER-UI}
  * 
  * The GtkUIManager implementation of the GtkBuildable interface accepts
- * GtkActionGroup objects as <child> elements in UI definitions.
+ * GtkActionGroup objects as `<child>` elements in UI definitions.
  * 
  * A GtkUIManager UI definition as described above can be embedded in
- * an GtkUIManager <object> element in a GtkBuilder UI definition.
+ * an GtkUIManager `<object>` element in a GtkBuilder UI definition.
  * 
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
@@ -246,7 +247,7 @@ private import std.algorithm;
  * 
  * ## An embedded GtkUIManager UI definition
  * 
- * |[
+ * |[<!-- language="xml" -->
  * <object class="GtkUIManager" id="uiman">
  * <child>
  * <object class="GtkActionGroup" id="actiongroup">
@@ -320,14 +321,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_ui_manager_new();
+		auto __p = gtk_ui_manager_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkUIManager*) p, true);
+		this(cast(GtkUIManager*) __p, true);
 	}
 
 	/**
@@ -376,14 +377,14 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), &err);
+		auto __p = gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -405,19 +406,19 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
+		auto __p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Parses a string containing a [UI definition][XML-UI] and merges it with
-	 * the current contents of @manager. An enclosing <ui> element is added if
+	 * the current contents of @manager. An enclosing `<ui>` element is added if
 	 * it is missing.
 	 *
 	 * Params:
@@ -436,14 +437,14 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
+		auto __p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -479,14 +480,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
+		auto __p = gtk_ui_manager_get_accel_group(gtkUIManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) __p);
 	}
 
 	/**
@@ -503,14 +504,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public Action getAction(string path)
 	{
-		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
+		auto __p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) __p);
 	}
 
 	/**
@@ -524,14 +525,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public ListG getActionGroups()
 	{
-		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
+		auto __p = gtk_ui_manager_get_action_groups(gtkUIManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -565,14 +566,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
-		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
+		auto __p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -595,10 +596,10 @@ public class UIManager : ObjectG, BuildableIF
 	 * Looks up a widget by following a path.
 	 * The path consists of the names specified in the XML description of the UI.
 	 * separated by “/”. Elements which don’t have a name or action attribute in
-	 * the XML (e.g. <popup>) can be addressed by their XML element name
+	 * the XML (e.g. `<popup>`) can be addressed by their XML element name
 	 * (e.g. "popup"). The root element ("/ui") can be omitted in the path.
 	 *
-	 * Note that the widget found by following a path that ends in a <menu>;
+	 * Note that the widget found by following a path that ends in a `<menu>`;
 	 * element is the menuitem to which the menu is attached, not the menu it
 	 * manages.
 	 *
@@ -617,14 +618,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public Widget getWidget(string path)
 	{
-		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+		auto __p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

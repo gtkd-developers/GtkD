@@ -100,14 +100,14 @@ public class Grid : Container, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_grid_new();
+		auto __p = gtk_grid_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGrid*) p);
+		this(cast(GtkGrid*) __p);
 	}
 
 	/**
@@ -179,14 +179,14 @@ public class Grid : Container, OrientableIF
 	 */
 	public Widget getChildAt(int left, int top)
 	{
-		auto p = gtk_grid_get_child_at(gtkGrid, left, top);
+		auto __p = gtk_grid_get_child_at(gtkGrid, left, top);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

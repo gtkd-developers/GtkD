@@ -101,14 +101,14 @@ public class TextTag : ObjectG
 	 */
 	public this(string name)
 	{
-		auto p = gtk_text_tag_new(Str.toStringz(name));
+		auto __p = gtk_text_tag_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextTag*) p, true);
+		this(cast(GtkTextTag*) __p, true);
 	}
 
 	/**

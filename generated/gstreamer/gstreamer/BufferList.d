@@ -30,13 +30,14 @@ private import gstreamer.Buffer;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
  * Buffer lists are an object containing a list of buffers.
  * 
  * Buffer lists are created with gst_buffer_list_new() and filled with data
- * using a gst_buffer_list_insert().
+ * using gst_buffer_list_insert().
  * 
  * Buffer lists can be pushed on a srcpad with gst_pad_push_list(). This is
  * interesting when multiple buffers need to be pushed in one go because it
@@ -71,6 +72,12 @@ public class BufferList
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_buffer_list_unref(gstBufferList);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -79,60 +86,52 @@ public class BufferList
 	}
 
 	/**
-	 * Creates a new, empty #GstBufferList. The caller is responsible for unreffing
-	 * the returned #GstBufferList.
+	 * Creates a new, empty #GstBufferList.
 	 *
-	 * Free-function: gst_buffer_list_unref
-	 *
-	 * Returns: the new #GstBufferList. gst_buffer_list_unref()
-	 *     after usage.
+	 * Returns: the new #GstBufferList.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gst_buffer_list_new();
+		auto __p = gst_buffer_list_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBufferList*) p);
+		this(cast(GstBufferList*) __p);
 	}
 
 	/**
-	 * Creates a new, empty #GstBufferList. The caller is responsible for unreffing
-	 * the returned #GstBufferList. The list will have @size space preallocated so
-	 * that memory reallocations can be avoided.
-	 *
-	 * Free-function: gst_buffer_list_unref
+	 * Creates a new, empty #GstBufferList. The list will have @size space
+	 * preallocated so that memory reallocations can be avoided.
 	 *
 	 * Params:
 	 *     size = an initial reserved size
 	 *
-	 * Returns: the new #GstBufferList. gst_buffer_list_unref()
-	 *     after usage.
+	 * Returns: the new #GstBufferList.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(uint size)
 	{
-		auto p = gst_buffer_list_new_sized(size);
+		auto __p = gst_buffer_list_new_sized(size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sized");
 		}
 
-		this(cast(GstBufferList*) p);
+		this(cast(GstBufferList*) __p);
 	}
 
 	/**
-	 * Calculates the size of the data contained in buffer list by adding the
+	 * Calculates the size of the data contained in @list by adding the
 	 * size of all buffers.
 	 *
-	 * Returns: the size of the data contained in buffer list in bytes.
+	 * Returns: the size of the data contained in @list in bytes.
 	 *
 	 * Since: 1.14
 	 */
@@ -142,8 +141,27 @@ public class BufferList
 	}
 
 	/**
-	 * Create a copy of the given buffer list. This will make a newly allocated
-	 * copy of the buffer that the source buffer list contains.
+	 * Creates a shallow copy of the given buffer list. This will make a newly
+	 * allocated copy of the source list with copies of buffer pointers. The
+	 * refcount of buffers pointed to will be increased by one.
+	 *
+	 * Returns: a new copy of @list.
+	 */
+	public BufferList copy()
+	{
+		auto __p = gst_buffer_list_copy(gstBufferList);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
+	}
+
+	/**
+	 * Creates a copy of the given buffer list. This will make a newly allocated
+	 * copy of the buffers that the source buffer list contains.
 	 *
 	 * Returns: a new copy of @list.
 	 *
@@ -151,22 +169,22 @@ public class BufferList
 	 */
 	public BufferList copyDeep()
 	{
-		auto p = gst_buffer_list_copy_deep(gstBufferList);
+		auto __p = gst_buffer_list_copy_deep(gstBufferList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p, true);
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
 	}
 
 	alias foreac = foreach_;
 	/**
-	 * Call @func with @data for each buffer in @list.
+	 * Calls @func with @data for each buffer in @list.
 	 *
 	 * @func can modify the passed buffer pointer or its contents. The return value
-	 * of @func define if this function returns or if the remaining buffers in
+	 * of @func defines if this function returns or if the remaining buffers in
 	 * the list should be skipped.
 	 *
 	 * Params:
@@ -182,7 +200,7 @@ public class BufferList
 	}
 
 	/**
-	 * Get the buffer at @idx.
+	 * Gets the buffer at @idx.
 	 *
 	 * You must make sure that @idx does not exceed the number of
 	 * buffers available.
@@ -196,14 +214,14 @@ public class BufferList
 	 */
 	public Buffer get(uint idx)
 	{
-		auto p = gst_buffer_list_get(gstBufferList, idx);
+		auto __p = gst_buffer_list_get(gstBufferList, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -223,18 +241,18 @@ public class BufferList
 	 */
 	public Buffer getWritable(uint idx)
 	{
-		auto p = gst_buffer_list_get_writable(gstBufferList, idx);
+		auto __p = gst_buffer_list_get_writable(gstBufferList, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p);
 	}
 
 	/**
-	 * Insert @buffer at @idx in @list. Other buffers are moved to make room for
+	 * Inserts @buffer at @idx in @list. Other buffers are moved to make room for
 	 * this new buffer.
 	 *
 	 * A -1 value for @idx will append the buffer at the end.
@@ -245,7 +263,7 @@ public class BufferList
 	 */
 	public void insert(int idx, Buffer buffer)
 	{
-		gst_buffer_list_insert(gstBufferList, idx, (buffer is null) ? null : buffer.getBufferStruct());
+		gst_buffer_list_insert(gstBufferList, idx, (buffer is null) ? null : buffer.getBufferStruct(true));
 	}
 
 	/**
@@ -258,8 +276,31 @@ public class BufferList
 		return gst_buffer_list_length(gstBufferList);
 	}
 
+	alias doref = ref_;
 	/**
-	 * Remove @length buffers starting from @idx in @list. The following buffers
+	 * Increases the refcount of the given buffer list by one.
+	 *
+	 * Note that the refcount affects the writability of @list and its data, see
+	 * gst_buffer_list_make_writable(). It is important to note that keeping
+	 * additional references to GstBufferList instances can potentially increase
+	 * the number of memcpy operations in a pipeline.
+	 *
+	 * Returns: @list
+	 */
+	public BufferList ref_()
+	{
+		auto __p = gst_buffer_list_ref(gstBufferList);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p, true);
+	}
+
+	/**
+	 * Removes @length buffers starting from @idx in @list. The following buffers
 	 * are moved to close the gap.
 	 *
 	 * Params:
@@ -269,5 +310,69 @@ public class BufferList
 	public void remove(uint idx, uint length)
 	{
 		gst_buffer_list_remove(gstBufferList, idx, length);
+	}
+
+	/**
+	 * Decreases the refcount of the buffer list. If the refcount reaches 0, the
+	 * buffer list will be freed.
+	 */
+	public void unref()
+	{
+		gst_buffer_list_unref(gstBufferList);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstBufferList to point to a different
+	 * #GstBufferList. The modification is done atomically (so this is useful for
+	 * ensuring thread safety in some cases), and the reference counts are updated
+	 * appropriately (the old buffer list is unreffed, the new is reffed).
+	 *
+	 * Either @new_list or the #GstBufferList pointed to by @old_list may be %NULL.
+	 *
+	 * Params:
+	 *     oldList = pointer to a pointer to a
+	 *         #GstBufferList to be replaced.
+	 *     newList = pointer to a #GstBufferList that
+	 *         will replace the buffer list pointed to by @old_list.
+	 *
+	 * Returns: %TRUE if @new_list was different from @old_list
+	 *
+	 * Since: 1.16
+	 */
+	public static bool replace(ref BufferList oldList, BufferList newList)
+	{
+		GstBufferList* outoldList = oldList.getBufferListStruct();
+
+		auto __p = gst_buffer_list_replace(&outoldList, (newList is null) ? null : newList.getBufferListStruct()) != 0;
+
+		oldList = ObjectG.getDObject!(BufferList)(outoldList);
+
+		return __p;
+	}
+
+	/**
+	 * Modifies a pointer to a #GstBufferList to point to a different
+	 * #GstBufferList. This function is similar to gst_buffer_list_replace() except
+	 * that it takes ownership of @new_list.
+	 *
+	 * Params:
+	 *     oldList = pointer to a pointer to a #GstBufferList
+	 *         to be replaced.
+	 *     newList = pointer to a #GstBufferList
+	 *         that will replace the bufferlist pointed to by @old_list.
+	 *
+	 * Returns: %TRUE if @new_list was different from @old_list
+	 *
+	 * Since: 1.16
+	 */
+	public static bool take(ref BufferList oldList, BufferList newList)
+	{
+		GstBufferList* outoldList = oldList.getBufferListStruct();
+
+		auto __p = gst_buffer_list_take(&outoldList, (newList is null) ? null : newList.getBufferListStruct(true)) != 0;
+
+		oldList = ObjectG.getDObject!(BufferList)(outoldList);
+
+		return __p;
 	}
 }

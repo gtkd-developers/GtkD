@@ -26,6 +26,7 @@ module gtk.MenuItem;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AccelGroup;
@@ -55,6 +56,7 @@ private import std.algorithm;
  * For more advanced label settings, you can fetch the child widget from the GtkBin.
  * 
  * An example for setting markup and accelerator on a MenuItem:
+ * 
  * |[<!-- language="C" -->
  * GtkWidget *menu_item = gtk_menu_item_new_with_label ("Example Menu Item");
  * 
@@ -67,10 +69,11 @@ private import std.algorithm;
  * 
  * The GtkMenuItem implementation of the #GtkBuildable interface supports
  * adding a submenu by specifying “submenu” as the “type” attribute of
- * a <child> element.
+ * a `<child>` element.
  * 
  * An example of UI definition fragment with submenus:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkMenuItem">
  * <child type="submenu">
  * <object class="GtkMenu"/>
@@ -230,14 +233,14 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 */
 	public this()
 	{
-		auto p = gtk_menu_item_new();
+		auto __p = gtk_menu_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenuItem*) p);
+		this(cast(GtkMenuItem*) __p);
 	}
 
 	/**
@@ -321,14 +324,14 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 */
 	public Widget getSubmenu()
 	{
-		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
+		auto __p = gtk_menu_item_get_submenu(gtkMenuItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

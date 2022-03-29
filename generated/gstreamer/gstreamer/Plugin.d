@@ -28,6 +28,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.ObjectGst;
 private import gstreamer.Structure;
@@ -38,15 +39,15 @@ public  import gstreamerc.gstreamertypes;
 
 /**
  * GStreamer is extensible, so #GstElement instances can be loaded at runtime.
- * A plugin system can provide one or more of the basic
- * <application>GStreamer</application> #GstPluginFeature subclasses.
+ * A plugin system can provide one or more of the basic GStreamer
+ * #GstPluginFeature subclasses.
  * 
- * A plugin should export a symbol <symbol>gst_plugin_desc</symbol> that is a
+ * A plugin should export a symbol `gst_plugin_desc` that is a
  * struct of type #GstPluginDesc.
  * the plugin loader will check the version of the core library the plugin was
  * linked against and will create a new #GstPlugin. It will then call the
  * #GstPluginInitFunc function that was provided in the
- * <symbol>gst_plugin_desc</symbol>.
+ * `gst_plugin_desc`.
  * 
  * Once you have a handle to a #GstPlugin (e.g. from the #GstRegistry), you
  * can add any object that subclasses #GstPluginFeature.
@@ -114,14 +115,14 @@ public class Plugin : ObjectGst
 	 */
 	public static Plugin loadByName(string name)
 	{
-		auto p = gst_plugin_load_by_name(Str.toStringz(name));
+		auto __p = gst_plugin_load_by_name(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) __p, true);
 	}
 
 	/**
@@ -139,19 +140,19 @@ public class Plugin : ObjectGst
 	{
 		GError* err = null;
 
-		auto p = gst_plugin_load_file(Str.toStringz(filename), &err);
+		auto __p = gst_plugin_load_file(Str.toStringz(filename), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) __p, true);
 	}
 
 	/**
@@ -293,14 +294,14 @@ public class Plugin : ObjectGst
 	 */
 	public Structure getCacheData()
 	{
-		auto p = gst_plugin_get_cache_data(gstPlugin);
+		auto __p = gst_plugin_get_cache_data(gstPlugin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -428,14 +429,14 @@ public class Plugin : ObjectGst
 	 */
 	public Plugin load()
 	{
-		auto p = gst_plugin_load(gstPlugin);
+		auto __p = gst_plugin_load(gstPlugin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) __p, true);
 	}
 
 	/**

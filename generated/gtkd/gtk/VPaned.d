@@ -102,13 +102,13 @@ public class VPaned : Paned
 	 */
 	public this()
 	{
-		auto p = gtk_vpaned_new();
+		auto __p = gtk_vpaned_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkVPaned*) p);
+		this(cast(GtkVPaned*) __p);
 	}
 }

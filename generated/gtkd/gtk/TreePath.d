@@ -26,6 +26,7 @@ module gtk.TreePath;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -136,14 +137,14 @@ public class TreePath
 	 */
 	public this(string path)
 	{
-		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
+		auto __p = gtk_tree_path_new_from_string(Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
 
-		this(cast(GtkTreePath*) p);
+		this(cast(GtkTreePath*) __p);
 	}
 
 	/**
@@ -183,14 +184,14 @@ public class TreePath
 	 */
 	public TreePath copy()
 	{
-		auto p = gtk_tree_path_copy(gtkTreePath);
+		auto __p = gtk_tree_path_copy(gtkTreePath);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -236,9 +237,9 @@ public class TreePath
 	{
 		int depth;
 
-		auto p = gtk_tree_path_get_indices_with_depth(gtkTreePath, &depth);
+		auto __p = gtk_tree_path_get_indices_with_depth(gtkTreePath, &depth);
 
-		return p[0 .. depth];
+		return __p[0 .. depth];
 	}
 
 	/**

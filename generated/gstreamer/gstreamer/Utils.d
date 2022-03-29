@@ -158,7 +158,12 @@ public struct Utils
 		gst_util_fraction_to_double(srcN, srcD, &dest);
 	}
 
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     value = The #gdouble value to convert guint64 double
+	 * Returns: @value casted to #guint64
+	 */
 	public static ulong gdoubleToGuint64(double value)
 	{
 		return gst_util_gdouble_to_guint64(value);
@@ -221,7 +226,12 @@ public struct Utils
 		return gst_util_group_id_next();
 	}
 
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     value = The #guint64 value to convert to double
+	 * Returns: @value casted to #gdouble
+	 */
 	public static double guint64ToGdouble(ulong value)
 	{
 		return gst_util_guint64_to_gdouble(value);
@@ -475,7 +485,15 @@ public struct Utils
 		return gst_calculate_linear_regression(xy, temp, n, &mNum, &mDenom, &b, &xbase, &rSquared) != 0;
 	}
 
-	/** */
+	/**
+	 * Registers a new #GstDynamicTypeFactory in the registry
+	 *
+	 * Params:
+	 *     plugin = The #GstPlugin to register @dyn_type for
+	 *     type = The #GType to register dynamically
+	 *
+	 * Since: 1.12
+	 */
 	public static bool dynamicTypeRegister(Plugin plugin, GType type)
 	{
 		return gst_dynamic_type_register((plugin is null) ? null : plugin.getPluginStruct(), type) != 0;
@@ -497,11 +515,11 @@ public struct Utils
 	{
 		GValueArray* outarray = null;
 
-		auto p = gst_util_get_object_array((object is null) ? null : object.getObjectGStruct(), Str.toStringz(name), &outarray) != 0;
+		auto __p = gst_util_get_object_array((object is null) ? null : object.getObjectGStruct(), Str.toStringz(name), &outarray) != 0;
 
 		array = ObjectG.getDObject!(ValueArray)(outarray);
 
-		return p;
+		return __p;
 	}
 
 	/**

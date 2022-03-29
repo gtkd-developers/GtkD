@@ -25,7 +25,7 @@
 module gtk.MountOperation;
 
 private import gdk.Screen;
-private import gio.MountOperation : GioMountOperation = MountOperation;
+private import gio.MountOperation : DGioMountOperation = MountOperation;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
@@ -40,7 +40,7 @@ public  import gtkc.gtktypes;
 /**
  * This should not be accessed directly. Use the accessor functions below.
  */
-public class MountOperation : GioMountOperation
+public class MountOperation : DGioMountOperation
 {
 	/** the main Gtk struct */
 	protected GtkMountOperation* gtkMountOperation;
@@ -89,14 +89,14 @@ public class MountOperation : GioMountOperation
 	 */
 	public this(Window parent)
 	{
-		auto p = gtk_mount_operation_new((parent is null) ? null : parent.getWindowStruct());
+		auto __p = gtk_mount_operation_new((parent is null) ? null : parent.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMountOperation*) p, true);
+		this(cast(GtkMountOperation*) __p, true);
 	}
 
 	/**
@@ -108,14 +108,14 @@ public class MountOperation : GioMountOperation
 	 */
 	public Window getParent()
 	{
-		auto p = gtk_mount_operation_get_parent(gtkMountOperation);
+		auto __p = gtk_mount_operation_get_parent(gtkMountOperation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -128,14 +128,14 @@ public class MountOperation : GioMountOperation
 	 */
 	public Screen getScreen()
 	{
-		auto p = gtk_mount_operation_get_screen(gtkMountOperation);
+		auto __p = gtk_mount_operation_get_screen(gtkMountOperation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -187,6 +187,8 @@ public class MountOperation : GioMountOperation
 	 * information for helpers to parent their dialog properly, when run from
 	 * sandboxed applications for example.
 	 *
+	 * Deprecated: Use gtk_show_uri_on_window() instead.
+	 *
 	 * Params:
 	 *     screen = screen to show the uri on
 	 *         or %NULL for the default screen
@@ -203,13 +205,13 @@ public class MountOperation : GioMountOperation
 	{
 		GError* err = null;
 
-		auto p = gtk_show_uri((screen is null) ? null : screen.getScreenStruct(), Str.toStringz(uri), timestamp, &err) != 0;
+		auto __p = gtk_show_uri((screen is null) ? null : screen.getScreenStruct(), Str.toStringz(uri), timestamp, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

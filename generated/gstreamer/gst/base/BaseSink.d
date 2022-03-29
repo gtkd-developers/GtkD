@@ -30,6 +30,7 @@ public  import gst.base.c.types;
 private import gstreamer.Element;
 private import gstreamer.MiniObject;
 private import gstreamer.Sample;
+private import gstreamer.Structure;
 
 
 /**
@@ -54,7 +55,7 @@ private import gstreamer.Sample;
  * 
  * // sinktemplate should be a #GstStaticPadTemplate with direction
  * // %GST_PAD_SINK and name "sink"
- * gst_element_class_add_static_pad_template (gstelement_class, &amp;sinktemplate);
+ * gst_element_class_add_static_pad_template (gstelement_class, &sinktemplate);
  * 
  * gst_element_class_set_static_metadata (gstelement_class,
  * "Sink name",
@@ -67,19 +68,19 @@ private import gstreamer.Sample;
  * #GstBaseSink will handle the prerolling correctly. This means that it will
  * return %GST_STATE_CHANGE_ASYNC from a state change to PAUSED until the first
  * buffer arrives in this element. The base class will call the
- * #GstBaseSinkClass.preroll() vmethod with this preroll buffer and will then
+ * #GstBaseSinkClass::preroll vmethod with this preroll buffer and will then
  * commit the state change to the next asynchronously pending state.
  * 
  * When the element is set to PLAYING, #GstBaseSink will synchronise on the
- * clock using the times returned from #GstBaseSinkClass.get_times(). If this
+ * clock using the times returned from #GstBaseSinkClass::get_times. If this
  * function returns %GST_CLOCK_TIME_NONE for the start time, no synchronisation
  * will be done. Synchronisation can be disabled entirely by setting the object
  * #GstBaseSink:sync property to %FALSE.
  * 
- * After synchronisation the virtual method #GstBaseSinkClass.render() will be
+ * After synchronisation the virtual method #GstBaseSinkClass::render will be
  * called. Subclasses should minimally implement this method.
  * 
- * Subclasses that synchronise on the clock in the #GstBaseSinkClass.render()
+ * Subclasses that synchronise on the clock in the #GstBaseSinkClass::render
  * method are supported as well. These classes typically receive a buffer in
  * the render method and can then potentially block on the clock while
  * rendering. A typical example is an audiosink.
@@ -88,7 +89,7 @@ private import gstreamer.Sample;
  * 
  * Upon receiving the EOS event in the PLAYING state, #GstBaseSink will wait
  * for the clock to reach the time indicated by the stop time of the last
- * #GstBaseSinkClass.get_times() call before posting an EOS message. When the
+ * #GstBaseSinkClass::get_times call before posting an EOS message. When the
  * element receives EOS in PAUSED, preroll completes, the event is queued and an
  * EOS message is posted when going to PLAYING.
  * 
@@ -103,24 +104,24 @@ private import gstreamer.Sample;
  * If no clock has been set on the element, the query will be forwarded
  * upstream.
  * 
- * The #GstBaseSinkClass.set_caps() function will be called when the subclass
+ * The #GstBaseSinkClass::set_caps function will be called when the subclass
  * should configure itself to process a specific media type.
  * 
- * The #GstBaseSinkClass.start() and #GstBaseSinkClass.stop() virtual methods
+ * The #GstBaseSinkClass::start and #GstBaseSinkClass::stop virtual methods
  * will be called when resources should be allocated. Any
- * #GstBaseSinkClass.preroll(), #GstBaseSinkClass.render() and
- * #GstBaseSinkClass.set_caps() function will be called between the
- * #GstBaseSinkClass.start() and #GstBaseSinkClass.stop() calls.
+ * #GstBaseSinkClass::preroll, #GstBaseSinkClass::render and
+ * #GstBaseSinkClass::set_caps function will be called between the
+ * #GstBaseSinkClass::start and #GstBaseSinkClass::stop calls.
  * 
- * The #GstBaseSinkClass.event() virtual method will be called when an event is
+ * The #GstBaseSinkClass::event virtual method will be called when an event is
  * received by #GstBaseSink. Normally this method should only be overridden by
  * very specific elements (such as file sinks) which need to handle the
  * newsegment event specially.
  * 
- * The #GstBaseSinkClass.unlock() method is called when the elements should
+ * The #GstBaseSinkClass::unlock method is called when the elements should
  * unblock any blocking operations they perform in the
- * #GstBaseSinkClass.render() method. This is mostly useful when the
- * #GstBaseSinkClass.render() method performs a blocking write on a file
+ * #GstBaseSinkClass::render method. This is mostly useful when the
+ * #GstBaseSinkClass::render method performs a blocking write on a file
  * descriptor, for example.
  * 
  * The #GstBaseSink:max-lateness property affects how the sink deals with
@@ -131,7 +132,7 @@ private import gstreamer.Sample;
  * If the frame is later than max-lateness, the sink will drop the buffer
  * without calling the render method.
  * This feature is disabled if sync is disabled, the
- * #GstBaseSinkClass.get_times() method does not return a valid start time or
+ * #GstBaseSinkClass::get_times method does not return a valid start time or
  * max-lateness is set to -1 (the default).
  * Subclasses can use gst_base_sink_set_max_lateness() to configure the
  * max-lateness value.
@@ -240,14 +241,14 @@ public class BaseSink : Element
 	 */
 	public Sample getLastSample()
 	{
-		auto p = gst_base_sink_get_last_sample(gstBaseSink);
+		auto __p = gst_base_sink_get_last_sample(gstBaseSink);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) p, true);
+		return ObjectG.getDObject!(Sample)(cast(GstSample*) __p, true);
 	}
 
 	/**
@@ -308,6 +309,30 @@ public class BaseSink : Element
 	public GstClockTime getRenderDelay()
 	{
 		return gst_base_sink_get_render_delay(gstBaseSink);
+	}
+
+	/**
+	 * Return various #GstBaseSink statistics. This function returns a #GstStructure
+	 * with name `application/x-gst-base-sink-stats` with the following fields:
+	 *
+	 * - "average-rate" G_TYPE_DOUBLE   average frame rate
+	 * - "dropped" G_TYPE_UINT64   Number of dropped frames
+	 * - "rendered" G_TYPE_UINT64   Number of rendered frames
+	 *
+	 * Returns: pointer to #GstStructure
+	 *
+	 * Since: 1.18
+	 */
+	public Structure getStats()
+	{
+		auto __p = gst_base_sink_get_stats(gstBaseSink);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
@@ -401,12 +426,12 @@ public class BaseSink : Element
 		int outlive;
 		int outupstreamLive;
 
-		auto p = gst_base_sink_query_latency(gstBaseSink, &outlive, &outupstreamLive, &minLatency, &maxLatency) != 0;
+		auto __p = gst_base_sink_query_latency(gstBaseSink, &outlive, &outupstreamLive, &minLatency, &maxLatency) != 0;
 
 		live = (outlive == 1);
 		upstreamLive = (outupstreamLive == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -609,9 +634,9 @@ public class BaseSink : Element
 	 * is no clock, no synchronisation is done and %GST_CLOCK_BADTIME is returned.
 	 *
 	 * This function should only be called with the PREROLL_LOCK held, like when
-	 * receiving an EOS event in the #GstBaseSinkClass.event() vmethod or when
+	 * receiving an EOS event in the #GstBaseSinkClass::event vmethod or when
 	 * receiving a buffer in
-	 * the #GstBaseSinkClass.render() vmethod.
+	 * the #GstBaseSinkClass::render vmethod.
 	 *
 	 * The @time argument should be the running_time of when this method should
 	 * return and is not adjusted with any latency or offset configured in the
@@ -629,14 +654,14 @@ public class BaseSink : Element
 	}
 
 	/**
-	 * If the #GstBaseSinkClass.render() method performs its own synchronisation
+	 * If the #GstBaseSinkClass::render method performs its own synchronisation
 	 * against the clock it must unblock when going from PLAYING to the PAUSED state
 	 * and call this method before continuing to render the remaining data.
 	 *
-	 * If the #GstBaseSinkClass.render() method can block on something else than
+	 * If the #GstBaseSinkClass::render method can block on something else than
 	 * the clock, it must also be ready to unblock immediately on
-	 * the #GstBaseSinkClass.unlock() method and cause the
-	 * #GstBaseSinkClass.render() method to immediately call this function.
+	 * the #GstBaseSinkClass::unlock method and cause the
+	 * #GstBaseSinkClass::render method to immediately call this function.
 	 * In this case, the subclass must be prepared to continue rendering where it
 	 * left off if this function returns %GST_FLOW_OK.
 	 *

@@ -32,6 +32,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.c.functions;
@@ -248,14 +249,14 @@ public class TextBuffer : ObjectG
 	 */
 	public this(TextTagTable table)
 	{
-		auto p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
+		auto __p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextBuffer*) p, true);
+		this(cast(GtkTextBuffer*) __p, true);
 	}
 
 	/**
@@ -394,14 +395,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
-		auto p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
+		auto __p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) p);
+		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) __p);
 	}
 
 	/**
@@ -432,14 +433,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark createMark(string markName, TextIter where, bool leftGravity)
 	{
-		auto p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
+		auto __p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
 	}
 
 	/**
@@ -565,14 +566,14 @@ public class TextBuffer : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data.ptr, cast(size_t)data.length, &err) != 0;
+		auto __p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data.ptr, cast(size_t)data.length, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -675,14 +676,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TargetList getCopyTargetList()
 	{
-		auto p = gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) __p);
 	}
 
 	/**
@@ -699,9 +700,9 @@ public class TextBuffer : ObjectG
 	{
 		int nFormats;
 
-		auto p = gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, &nFormats);
+		auto __p = gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, &nFormats);
 
-		return p[0 .. nFormats];
+		return __p[0 .. nFormats];
 	}
 
 	/**
@@ -746,14 +747,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getInsert()
 	{
-		auto p = gtk_text_buffer_get_insert(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_insert(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
 	}
 
 	/**
@@ -895,14 +896,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getMark(string name)
 	{
-		auto p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
+		auto __p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
 	}
 
 	/**
@@ -931,14 +932,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TargetList getPasteTargetList()
 	{
-		auto p = gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) __p);
 	}
 
 	/**
@@ -958,14 +959,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getSelectionBound()
 	{
-		auto p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
+		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) __p);
 	}
 
 	/**
@@ -987,12 +988,12 @@ public class TextBuffer : ObjectG
 		GtkTextIter* outstart = sliceNew!GtkTextIter();
 		GtkTextIter* outend = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_buffer_get_selection_bounds(gtkTextBuffer, outstart, outend) != 0;
+		auto __p = gtk_text_buffer_get_selection_bounds(gtkTextBuffer, outstart, outend) != 0;
 
 		start = ObjectG.getDObject!(TextIter)(outstart, true);
 		end = ObjectG.getDObject!(TextIter)(outend, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1009,9 +1010,9 @@ public class TextBuffer : ObjectG
 	{
 		int nFormats;
 
-		auto p = gtk_text_buffer_get_serialize_formats(gtkTextBuffer, &nFormats);
+		auto __p = gtk_text_buffer_get_serialize_formats(gtkTextBuffer, &nFormats);
 
-		return p[0 .. nFormats];
+		return __p[0 .. nFormats];
 	}
 
 	/**
@@ -1065,14 +1066,14 @@ public class TextBuffer : ObjectG
 	 */
 	public TextTagTable getTagTable()
 	{
-		auto p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
+		auto __p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextTagTable)(cast(GtkTextTagTable*) p);
+		return ObjectG.getDObject!(TextTagTable)(cast(GtkTextTagTable*) __p);
 	}
 
 	/**
@@ -1523,9 +1524,9 @@ public class TextBuffer : ObjectG
 	{
 		size_t length;
 
-		auto p = gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), &length);
+		auto __p = gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**

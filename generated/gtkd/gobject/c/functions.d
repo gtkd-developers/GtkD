@@ -40,12 +40,24 @@ shared static this()
 	// gobject.Binding
 
 	Linker.link(g_binding_get_type, "g_binding_get_type", LIBRARY_GOBJECT);
+	Linker.link(g_binding_dup_source, "g_binding_dup_source", LIBRARY_GOBJECT);
+	Linker.link(g_binding_dup_target, "g_binding_dup_target", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_flags, "g_binding_get_flags", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_source, "g_binding_get_source", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_source_property, "g_binding_get_source_property", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_target, "g_binding_get_target", LIBRARY_GOBJECT);
 	Linker.link(g_binding_get_target_property, "g_binding_get_target_property", LIBRARY_GOBJECT);
 	Linker.link(g_binding_unbind, "g_binding_unbind", LIBRARY_GOBJECT);
+
+	// gobject.BindingGroup
+
+	Linker.link(g_binding_group_get_type, "g_binding_group_get_type", LIBRARY_GOBJECT);
+	Linker.link(g_binding_group_new, "g_binding_group_new", LIBRARY_GOBJECT);
+	Linker.link(g_binding_group_bind, "g_binding_group_bind", LIBRARY_GOBJECT);
+	Linker.link(g_binding_group_bind_full, "g_binding_group_bind_full", LIBRARY_GOBJECT);
+	Linker.link(g_binding_group_bind_with_closures, "g_binding_group_bind_with_closures", LIBRARY_GOBJECT);
+	Linker.link(g_binding_group_dup_source, "g_binding_group_dup_source", LIBRARY_GOBJECT);
+	Linker.link(g_binding_group_set_source, "g_binding_group_set_source", LIBRARY_GOBJECT);
 
 	// gobject.CClosure
 
@@ -168,6 +180,7 @@ shared static this()
 	Linker.link(g_object_setv, "g_object_setv", LIBRARY_GOBJECT);
 	Linker.link(g_object_steal_data, "g_object_steal_data", LIBRARY_GOBJECT);
 	Linker.link(g_object_steal_qdata, "g_object_steal_qdata", LIBRARY_GOBJECT);
+	Linker.link(g_object_take_ref, "g_object_take_ref", LIBRARY_GOBJECT);
 	Linker.link(g_object_thaw_notify, "g_object_thaw_notify", LIBRARY_GOBJECT);
 	Linker.link(g_object_unref, "g_object_unref", LIBRARY_GOBJECT);
 	Linker.link(g_object_watch_closure, "g_object_watch_closure", LIBRARY_GOBJECT);
@@ -186,6 +199,7 @@ shared static this()
 	// gobject.ParamSpec
 
 	Linker.link(g_param_spec_internal, "g_param_spec_internal", LIBRARY_GOBJECT);
+	Linker.link(g_param_spec_is_valid_name, "g_param_spec_is_valid_name", LIBRARY_GOBJECT);
 	Linker.link(g_param_spec_get_blurb, "g_param_spec_get_blurb", LIBRARY_GOBJECT);
 	Linker.link(g_param_spec_get_default_value, "g_param_spec_get_default_value", LIBRARY_GOBJECT);
 	Linker.link(g_param_spec_get_name, "g_param_spec_get_name", LIBRARY_GOBJECT);
@@ -216,6 +230,20 @@ shared static this()
 	Linker.link(g_param_spec_pool_remove, "g_param_spec_pool_remove", LIBRARY_GOBJECT);
 	Linker.link(g_param_spec_pool_new, "g_param_spec_pool_new", LIBRARY_GOBJECT);
 
+	// gobject.SignalGroup
+
+	Linker.link(g_signal_group_get_type, "g_signal_group_get_type", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_new, "g_signal_group_new", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_block, "g_signal_group_block", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_connect, "g_signal_group_connect", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_connect_after, "g_signal_group_connect_after", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_connect_data, "g_signal_group_connect_data", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_connect_object, "g_signal_group_connect_object", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_connect_swapped, "g_signal_group_connect_swapped", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_dup_target, "g_signal_group_dup_target", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_set_target, "g_signal_group_set_target", LIBRARY_GOBJECT);
+	Linker.link(g_signal_group_unblock, "g_signal_group_unblock", LIBRARY_GOBJECT);
+
 	// gobject.TypeClass
 
 	Linker.link(g_type_class_add_private, "g_type_class_add_private", LIBRARY_GOBJECT);
@@ -238,6 +266,7 @@ shared static this()
 	Linker.link(g_type_interface_peek_parent, "g_type_interface_peek_parent", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_add_prerequisite, "g_type_interface_add_prerequisite", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_get_plugin, "g_type_interface_get_plugin", LIBRARY_GOBJECT);
+	Linker.link(g_type_interface_instantiatable_prerequisite, "g_type_interface_instantiatable_prerequisite", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_peek, "g_type_interface_peek", LIBRARY_GOBJECT);
 	Linker.link(g_type_interface_prerequisites, "g_type_interface_prerequisites", LIBRARY_GOBJECT);
 
@@ -311,6 +340,7 @@ shared static this()
 	Linker.link(g_value_set_instance, "g_value_set_instance", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_int, "g_value_set_int", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_int64, "g_value_set_int64", LIBRARY_GOBJECT);
+	Linker.link(g_value_set_interned_string, "g_value_set_interned_string", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_long, "g_value_set_long", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_object, "g_value_set_object", LIBRARY_GOBJECT);
 	Linker.link(g_value_set_object_take_ownership, "g_value_set_object_take_ownership", LIBRARY_GOBJECT);
@@ -511,12 +541,24 @@ __gshared extern(C)
 	// gobject.Binding
 
 	GType function() c_g_binding_get_type;
+	GObject* function(GBinding* binding) c_g_binding_dup_source;
+	GObject* function(GBinding* binding) c_g_binding_dup_target;
 	GBindingFlags function(GBinding* binding) c_g_binding_get_flags;
 	GObject* function(GBinding* binding) c_g_binding_get_source;
 	const(char)* function(GBinding* binding) c_g_binding_get_source_property;
 	GObject* function(GBinding* binding) c_g_binding_get_target;
 	const(char)* function(GBinding* binding) c_g_binding_get_target_property;
 	void function(GBinding* binding) c_g_binding_unbind;
+
+	// gobject.BindingGroup
+
+	GType function() c_g_binding_group_get_type;
+	GBindingGroup* function() c_g_binding_group_new;
+	void function(GBindingGroup* self, const(char)* sourceProperty, void* target, const(char)* targetProperty, GBindingFlags flags) c_g_binding_group_bind;
+	void function(GBindingGroup* self, const(char)* sourceProperty, void* target, const(char)* targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, void* userData, GDestroyNotify userDataDestroy) c_g_binding_group_bind_full;
+	void function(GBindingGroup* self, const(char)* sourceProperty, void* target, const(char)* targetProperty, GBindingFlags flags, GClosure* transformTo, GClosure* transformFrom) c_g_binding_group_bind_with_closures;
+	void* function(GBindingGroup* self) c_g_binding_group_dup_source;
+	void function(GBindingGroup* self, void* source) c_g_binding_group_set_source;
 
 	// gobject.CClosure
 
@@ -639,6 +681,7 @@ __gshared extern(C)
 	void function(GObject* object, uint nProperties, char** names, GValue* values) c_g_object_setv;
 	void* function(GObject* object, const(char)* key) c_g_object_steal_data;
 	void* function(GObject* object, GQuark quark) c_g_object_steal_qdata;
+	void* function(void* object) c_g_object_take_ref;
 	void function(GObject* object) c_g_object_thaw_notify;
 	void function(void* object) c_g_object_unref;
 	void function(GObject* object, GClosure* closure) c_g_object_watch_closure;
@@ -657,6 +700,7 @@ __gshared extern(C)
 	// gobject.ParamSpec
 
 	void* function(GType paramType, const(char)* name, const(char)* nick, const(char)* blurb, GParamFlags flags) c_g_param_spec_internal;
+	int function(const(char)* name) c_g_param_spec_is_valid_name;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_blurb;
 	GValue* function(GParamSpec* pspec) c_g_param_spec_get_default_value;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_name;
@@ -687,6 +731,20 @@ __gshared extern(C)
 	void function(GParamSpecPool* pool, GParamSpec* pspec) c_g_param_spec_pool_remove;
 	GParamSpecPool* function(int typePrefixing) c_g_param_spec_pool_new;
 
+	// gobject.SignalGroup
+
+	GType function() c_g_signal_group_get_type;
+	GSignalGroup* function(GType targetType) c_g_signal_group_new;
+	void function(GSignalGroup* self) c_g_signal_group_block;
+	void function(GSignalGroup* self, const(char)* detailedSignal, GCallback cHandler, void* data) c_g_signal_group_connect;
+	void function(GSignalGroup* self, const(char)* detailedSignal, GCallback cHandler, void* data) c_g_signal_group_connect_after;
+	void function(GSignalGroup* self, const(char)* detailedSignal, GCallback cHandler, void* data, GClosureNotify notify, GConnectFlags flags) c_g_signal_group_connect_data;
+	void function(GSignalGroup* self, const(char)* detailedSignal, GCallback cHandler, void* object, GConnectFlags flags) c_g_signal_group_connect_object;
+	void function(GSignalGroup* self, const(char)* detailedSignal, GCallback cHandler, void* data) c_g_signal_group_connect_swapped;
+	void* function(GSignalGroup* self) c_g_signal_group_dup_target;
+	void function(GSignalGroup* self, void* target) c_g_signal_group_set_target;
+	void function(GSignalGroup* self) c_g_signal_group_unblock;
+
 	// gobject.TypeClass
 
 	void function(void* gClass, size_t privateSize) c_g_type_class_add_private;
@@ -709,6 +767,7 @@ __gshared extern(C)
 	void* function(void* gIface) c_g_type_interface_peek_parent;
 	void function(GType interfaceType, GType prerequisiteType) c_g_type_interface_add_prerequisite;
 	GTypePlugin* function(GType instanceType, GType interfaceType) c_g_type_interface_get_plugin;
+	GType function(GType interfaceType) c_g_type_interface_instantiatable_prerequisite;
 	void* function(void* instanceClass, GType ifaceType) c_g_type_interface_peek;
 	GType* function(GType interfaceType, uint* nPrerequisites) c_g_type_interface_prerequisites;
 
@@ -782,6 +841,7 @@ __gshared extern(C)
 	void function(GValue* value, void* instance_) c_g_value_set_instance;
 	void function(GValue* value, int vInt) c_g_value_set_int;
 	void function(GValue* value, long vInt64) c_g_value_set_int64;
+	void function(GValue* value, const(char)* vString) c_g_value_set_interned_string;
 	void function(GValue* value, glong vLong) c_g_value_set_long;
 	void function(GValue* value, void* vObject) c_g_value_set_object;
 	void function(GValue* value, void* vObject) c_g_value_set_object_take_ownership;
@@ -980,12 +1040,24 @@ __gshared extern(C)
 // gobject.Binding
 
 alias c_g_binding_get_type g_binding_get_type;
+alias c_g_binding_dup_source g_binding_dup_source;
+alias c_g_binding_dup_target g_binding_dup_target;
 alias c_g_binding_get_flags g_binding_get_flags;
 alias c_g_binding_get_source g_binding_get_source;
 alias c_g_binding_get_source_property g_binding_get_source_property;
 alias c_g_binding_get_target g_binding_get_target;
 alias c_g_binding_get_target_property g_binding_get_target_property;
 alias c_g_binding_unbind g_binding_unbind;
+
+// gobject.BindingGroup
+
+alias c_g_binding_group_get_type g_binding_group_get_type;
+alias c_g_binding_group_new g_binding_group_new;
+alias c_g_binding_group_bind g_binding_group_bind;
+alias c_g_binding_group_bind_full g_binding_group_bind_full;
+alias c_g_binding_group_bind_with_closures g_binding_group_bind_with_closures;
+alias c_g_binding_group_dup_source g_binding_group_dup_source;
+alias c_g_binding_group_set_source g_binding_group_set_source;
 
 // gobject.CClosure
 
@@ -1108,6 +1180,7 @@ alias c_g_object_set_valist g_object_set_valist;
 alias c_g_object_setv g_object_setv;
 alias c_g_object_steal_data g_object_steal_data;
 alias c_g_object_steal_qdata g_object_steal_qdata;
+alias c_g_object_take_ref g_object_take_ref;
 alias c_g_object_thaw_notify g_object_thaw_notify;
 alias c_g_object_unref g_object_unref;
 alias c_g_object_watch_closure g_object_watch_closure;
@@ -1126,6 +1199,7 @@ alias c_g_object_class_override_property g_object_class_override_property;
 // gobject.ParamSpec
 
 alias c_g_param_spec_internal g_param_spec_internal;
+alias c_g_param_spec_is_valid_name g_param_spec_is_valid_name;
 alias c_g_param_spec_get_blurb g_param_spec_get_blurb;
 alias c_g_param_spec_get_default_value g_param_spec_get_default_value;
 alias c_g_param_spec_get_name g_param_spec_get_name;
@@ -1156,6 +1230,20 @@ alias c_g_param_spec_pool_lookup g_param_spec_pool_lookup;
 alias c_g_param_spec_pool_remove g_param_spec_pool_remove;
 alias c_g_param_spec_pool_new g_param_spec_pool_new;
 
+// gobject.SignalGroup
+
+alias c_g_signal_group_get_type g_signal_group_get_type;
+alias c_g_signal_group_new g_signal_group_new;
+alias c_g_signal_group_block g_signal_group_block;
+alias c_g_signal_group_connect g_signal_group_connect;
+alias c_g_signal_group_connect_after g_signal_group_connect_after;
+alias c_g_signal_group_connect_data g_signal_group_connect_data;
+alias c_g_signal_group_connect_object g_signal_group_connect_object;
+alias c_g_signal_group_connect_swapped g_signal_group_connect_swapped;
+alias c_g_signal_group_dup_target g_signal_group_dup_target;
+alias c_g_signal_group_set_target g_signal_group_set_target;
+alias c_g_signal_group_unblock g_signal_group_unblock;
+
 // gobject.TypeClass
 
 alias c_g_type_class_add_private g_type_class_add_private;
@@ -1178,6 +1266,7 @@ alias c_g_type_instance_get_private g_type_instance_get_private;
 alias c_g_type_interface_peek_parent g_type_interface_peek_parent;
 alias c_g_type_interface_add_prerequisite g_type_interface_add_prerequisite;
 alias c_g_type_interface_get_plugin g_type_interface_get_plugin;
+alias c_g_type_interface_instantiatable_prerequisite g_type_interface_instantiatable_prerequisite;
 alias c_g_type_interface_peek g_type_interface_peek;
 alias c_g_type_interface_prerequisites g_type_interface_prerequisites;
 
@@ -1251,6 +1340,7 @@ alias c_g_value_set_gtype g_value_set_gtype;
 alias c_g_value_set_instance g_value_set_instance;
 alias c_g_value_set_int g_value_set_int;
 alias c_g_value_set_int64 g_value_set_int64;
+alias c_g_value_set_interned_string g_value_set_interned_string;
 alias c_g_value_set_long g_value_set_long;
 alias c_g_value_set_object g_value_set_object;
 alias c_g_value_set_object_take_ownership g_value_set_object_take_ownership;

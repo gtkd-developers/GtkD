@@ -130,14 +130,14 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public this()
 	{
-		auto p = gtk_toolbar_new();
+		auto __p = gtk_toolbar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkToolbar*) p);
+		this(cast(GtkToolbar*) __p);
 	}
 
 	/**
@@ -203,14 +203,14 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	public ToolItem getNthItem(int n)
 	{
-		auto p = gtk_toolbar_get_nth_item(gtkToolbar, n);
+		auto __p = gtk_toolbar_get_nth_item(gtkToolbar, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) __p);
 	}
 
 	/**

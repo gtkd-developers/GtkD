@@ -38,17 +38,11 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoFontMap represents the set of fonts available for a
- * particular rendering system. This is a virtual object with
- * implementations being specific to particular rendering systems.  To
- * create an implementation of a #PangoFontMap, the rendering-system
- * specific code should allocate a larger structure that contains a nested
- * #PangoFontMap, fill in the <structfield>klass</structfield> member of the nested #PangoFontMap with a
- * pointer to a appropriate #PangoFontMapClass, then call
- * pango_font_map_init() on the structure.
+ * A `PangoFontMap` represents the set of fonts available for a
+ * particular rendering system.
  * 
- * The #PangoFontMap structure contains one member which the implementation
- * fills in.
+ * This is a virtual object with implementations being specific to
+ * particular rendering systems.
  */
 public class PgFontMap : ObjectG
 {
@@ -86,13 +80,13 @@ public class PgFontMap : ObjectG
 	}
 
 	/**
-	 * Forces a change in the context, which will cause any #PangoContext
+	 * Forces a change in the context, which will cause any `PangoContext`
 	 * using this fontmap to change.
 	 *
 	 * This function is only useful when implementing a new backend
 	 * for Pango, something applications won't do. Backends should
-	 * call this function if they have attached extra data to the context
-	 * and such data is changed.
+	 * call this function if they have attached extra data to the
+	 * context and such data is changed.
 	 *
 	 * Since: 1.34
 	 */
@@ -102,44 +96,68 @@ public class PgFontMap : ObjectG
 	}
 
 	/**
-	 * Creates a #PangoContext connected to @fontmap.  This is equivalent
-	 * to pango_context_new() followed by pango_context_set_font_map().
+	 * Creates a `PangoContext` connected to @fontmap.
+	 *
+	 * This is equivalent to [ctor@Pango.Context.new] followed by
+	 * [method@Pango.Context.set_font_map].
 	 *
 	 * If you are using Pango as part of a higher-level system,
-	 * that system may have it's own way of create a #PangoContext.
-	 * For instance, the GTK+ toolkit has, among others,
-	 * gdk_pango_context_get_for_screen(), and
-	 * gtk_widget_get_pango_context().  Use those instead.
+	 * that system may have it's own way of create a `PangoContext`.
+	 * For instance, the GTK toolkit has, among others,
+	 * gtk_widget_get_pango_context(). Use those instead.
 	 *
-	 * Returns: the newly allocated #PangoContext,
+	 * Returns: the newly allocated `PangoContext`,
 	 *     which should be freed with g_object_unref().
 	 *
 	 * Since: 1.22
 	 */
 	public PgContext createContext()
 	{
-		auto p = pango_font_map_create_context(pangoFontMap);
+		auto __p = pango_font_map_create_context(pangoFontMap);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) __p, true);
 	}
 
 	/**
-	 * Returns the current serial number of @fontmap.  The serial number is
-	 * initialized to an small number larger than zero when a new fontmap
-	 * is created and is increased whenever the fontmap is changed. It may
-	 * wrap, but will never have the value 0. Since it can wrap, never compare
-	 * it with "less than", always use "not equals".
+	 * Gets a font family by name.
+	 *
+	 * Params:
+	 *     name = a family name
+	 *
+	 * Returns: the `PangoFontFamily`
+	 *
+	 * Since: 1.46
+	 */
+	public PgFontFamily getFamily(string name)
+	{
+		auto __p = pango_font_map_get_family(pangoFontMap, Str.toStringz(name));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) __p);
+	}
+
+	/**
+	 * Returns the current serial number of @fontmap.
+	 *
+	 * The serial number is initialized to an small number larger than zero
+	 * when a new fontmap is created and is increased whenever the fontmap
+	 * is changed. It may wrap, but will never have the value 0. Since it can
+	 * wrap, never compare it with "less than", always use "not equals".
 	 *
 	 * The fontmap can only be changed using backend-specific API, like changing
 	 * fontmap resolution.
 	 *
-	 * This can be used to automatically detect changes to a #PangoFontMap, like
-	 * in #PangoContext.
+	 * This can be used to automatically detect changes to a `PangoFontMap`,
+	 * like in `PangoContext`.
 	 *
 	 * Returns: The current serial number of @fontmap.
 	 *
@@ -151,26 +169,16 @@ public class PgFontMap : ObjectG
 	}
 
 	/**
-	 * Returns the render ID for shape engines for this fontmap.
-	 * See the <structfield>render_type</structfield> field of
-	 * #PangoEngineInfo.
-	 *
-	 * Returns: the ID string for shape engines for
-	 *     this fontmap. Owned by Pango, should not be modified
-	 *     or freed.
-	 *
-	 * Since: 1.4
-	 */
-	public string getShapeEngineType()
-	{
-		return Str.toString(pango_font_map_get_shape_engine_type(pangoFontMap));
-	}
-
-	/**
 	 * List all families for a fontmap.
 	 *
+	 * Note that the returned families are not in any particular order.
+	 *
+	 * `PangoFontMap` also implemented the [iface@Gio.ListModel] interface
+	 * for enumerating families.
+	 *
 	 * Params:
-	 *     families = location to store a pointer to an array of #PangoFontFamily *.
+	 *     families = location to
+	 *         store a pointer to an array of `PangoFontFamily` *.
 	 *         This array should be freed with g_free().
 	 */
 	public void listFamilies(out PgFontFamily[] families)
@@ -191,22 +199,22 @@ public class PgFontMap : ObjectG
 	 * Load the font in the fontmap that is the closest match for @desc.
 	 *
 	 * Params:
-	 *     context = the #PangoContext the font will be used with
-	 *     desc = a #PangoFontDescription describing the font to load
+	 *     context = the `PangoContext` the font will be used with
+	 *     desc = a `PangoFontDescription` describing the font to load
 	 *
-	 * Returns: the newly allocated #PangoFont
+	 * Returns: the newly allocated `PangoFont`
 	 *     loaded, or %NULL if no font matched.
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
-		auto p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		auto __p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p, true);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) __p, true);
 	}
 
 	/**
@@ -214,22 +222,22 @@ public class PgFontMap : ObjectG
 	 * a font matching @desc.
 	 *
 	 * Params:
-	 *     context = the #PangoContext the font will be used with
-	 *     desc = a #PangoFontDescription describing the font to load
-	 *     language = a #PangoLanguage the fonts will be used for
+	 *     context = the `PangoContext` the font will be used with
+	 *     desc = a `PangoFontDescription` describing the font to load
+	 *     language = a `PangoLanguage` the fonts will be used for
 	 *
 	 * Returns: the newly allocated
-	 *     #PangoFontset loaded, or %NULL if no font matched.
+	 *     `PangoFontset` loaded, or %NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{
-		auto p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) p, true);
+		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) __p, true);
 	}
 }

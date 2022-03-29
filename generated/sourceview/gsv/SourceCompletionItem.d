@@ -87,14 +87,14 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 */
 	public this()
 	{
-		auto p = gtk_source_completion_item_new();
+		auto __p = gtk_source_completion_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceCompletionItem*) p, true);
+		this(cast(GtkSourceCompletionItem*) __p, true);
 	}
 
 	/** */

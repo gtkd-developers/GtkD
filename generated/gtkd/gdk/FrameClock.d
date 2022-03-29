@@ -141,14 +141,14 @@ public class FrameClock : ObjectG
 	 */
 	public FrameTimings getCurrentTimings()
 	{
-		auto p = gdk_frame_clock_get_current_timings(gdkFrameClock);
+		auto __p = gdk_frame_clock_get_current_timings(gdkFrameClock);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) __p);
 	}
 
 	/**
@@ -243,14 +243,14 @@ public class FrameClock : ObjectG
 	 */
 	public FrameTimings getTimings(long frameCounter)
 	{
-		auto p = gdk_frame_clock_get_timings(gdkFrameClock, frameCounter);
+		auto __p = gdk_frame_clock_get_timings(gdkFrameClock, frameCounter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) __p);
 	}
 
 	/**

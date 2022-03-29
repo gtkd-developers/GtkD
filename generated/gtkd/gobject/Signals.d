@@ -25,6 +25,7 @@
 module gobject.Signals;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.Closure;
 private import gobject.DClosure;
 private import gobject.ObjectG;
@@ -166,7 +167,7 @@ public struct Signals
 	/**
 	 * Adds an emission hook for a signal, which will get called for any emission
 	 * of that signal, independent of the instance. This is possible only
-	 * for signals which don't have #G_SIGNAL_NO_HOOKS flag set.
+	 * for signals which don't have %G_SIGNAL_NO_HOOKS flag set.
 	 *
 	 * Params:
 	 *     signalId = the signal identifier, as returned by g_signal_lookup().
@@ -288,7 +289,8 @@ public struct Signals
 	}
 
 	/**
-	 * Emits a signal.
+	 * Emits a signal. Signal emission is done synchronously.
+	 * The method will only return control after all handlers are called or signal emission was stopped.
 	 *
 	 * Note that g_signal_emit_valist() resets the return value to the default
 	 * if no handlers are connected, in contrast to g_signal_emitv().
@@ -300,7 +302,7 @@ public struct Signals
 	 *     detail = the detail
 	 *     varArgs = a list of parameters to be passed to the signal, followed by a
 	 *         location for the return value. If the return type of the signal
-	 *         is #G_TYPE_NONE, the return value location can be omitted.
+	 *         is %G_TYPE_NONE, the return value location can be omitted.
 	 */
 	public static void emitValist(TypeInstance instance_, uint signalId, GQuark detail, void* varArgs)
 	{
@@ -308,7 +310,8 @@ public struct Signals
 	}
 
 	/**
-	 * Emits a signal.
+	 * Emits a signal. Signal emission is done synchronously.
+	 * The method will only return control after all handlers are called or signal emission was stopped.
 	 *
 	 * Note that g_signal_emitv() doesn't change @return_value if no handlers are
 	 * connected, in contrast to g_signal_emit() and g_signal_emit_valist().
@@ -340,7 +343,8 @@ public struct Signals
 	 * Params:
 	 *     instance_ = the instance to query
 	 *
-	 * Returns: the invocation hint of the innermost signal  emission.
+	 * Returns: the invocation hint of the innermost
+	 *     signal emission, or %NULL if not found.
 	 */
 	public static GSignalInvocationHint* getInvocationHint(ObjectG instance_)
 	{
@@ -350,7 +354,7 @@ public struct Signals
 	/**
 	 * Blocks a handler of an instance so it will not be called during any
 	 * signal emissions unless it is unblocked again. Thus "blocking" a
-	 * signal handler means to temporarily deactive it, a signal handler
+	 * signal handler means to temporarily deactivate it, a signal handler
 	 * has to be unblocked exactly the same amount of times it has been
 	 * blocked before to become active again.
 	 *
@@ -631,7 +635,7 @@ public struct Signals
 	 *     accuData = user data for the @accumulator.
 	 *     cMarshaller = the function to translate arrays of parameter
 	 *         values to signal emissions into C language callback invocations or %NULL.
-	 *     returnType = the type of return value, or #G_TYPE_NONE for a signal
+	 *     returnType = the type of return value, or %G_TYPE_NONE for a signal
 	 *         without a return value.
 	 *     nParams = the number of parameter types in @args.
 	 *     args = va_list of #GType, one for each parameter.
@@ -665,10 +669,10 @@ public struct Signals
 	 *     cMarshaller = the function to translate arrays of
 	 *         parameter values to signal emissions into C language callback
 	 *         invocations or %NULL
-	 *     returnType = the type of return value, or #G_TYPE_NONE for a signal
+	 *     returnType = the type of return value, or %G_TYPE_NONE for a signal
 	 *         without a return value
 	 *     paramTypes = an array of types, one for
-	 *         each parameter
+	 *         each parameter (may be %NULL if @n_params is zero)
 	 *
 	 * Returns: the signal id
 	 */
@@ -852,12 +856,13 @@ public struct Signals
 	 *
 	 * If the handler ID is 0 then this function does nothing.
 	 *
-	 * A macro is also included that allows this function to be used without
-	 * pointer casts.
+	 * There is also a macro version of this function so that the code
+	 * will be inlined.
 	 *
 	 * Params:
 	 *     handlerIdPtr = A pointer to a handler ID (of type #gulong) of the handler to be disconnected.
 	 *     instance_ = The instance to remove the signal handler from.
+	 *         This pointer may be %NULL or invalid, if the handler ID is zero.
 	 *
 	 * Since: 2.62
 	 */

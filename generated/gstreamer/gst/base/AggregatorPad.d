@@ -34,7 +34,7 @@ private import std.algorithm;
 
 
 /**
- * Pads managed by a #GstAggregor subclass.
+ * Pads managed by a #GstAggregator subclass.
  * 
  * This class used to live in gst-plugins-bad and was moved to core.
  *
@@ -108,20 +108,33 @@ public class AggregatorPad : Pad
 	}
 
 	/**
+	 * It is only valid to call this method from #GstAggregatorClass::aggregate()
+	 *
+	 * Returns: %TRUE if the pad is inactive, %FALSE otherwise.
+	 *     See gst_aggregator_ignore_inactive_pads() for more info.
+	 *
+	 * Since: 1.20
+	 */
+	public bool isInactive()
+	{
+		return gst_aggregator_pad_is_inactive(gstAggregatorPad) != 0;
+	}
+
+	/**
 	 * Returns: A reference to the buffer in @pad or
 	 *     NULL if no buffer was queued. You should unref the buffer after
 	 *     usage.
 	 */
 	public Buffer peekBuffer()
 	{
-		auto p = gst_aggregator_pad_peek_buffer(gstAggregatorPad);
+		auto __p = gst_aggregator_pad_peek_buffer(gstAggregatorPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -132,14 +145,14 @@ public class AggregatorPad : Pad
 	 */
 	public Buffer popBuffer()
 	{
-		auto p = gst_aggregator_pad_pop_buffer(gstAggregatorPad);
+		auto __p = gst_aggregator_pad_pop_buffer(gstAggregatorPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/** */

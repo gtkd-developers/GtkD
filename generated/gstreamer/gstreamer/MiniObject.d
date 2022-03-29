@@ -95,6 +95,12 @@ public class MiniObject
 	}
 
 
+	/** */
+	public static GType getType()
+	{
+		return gst_mini_object_get_type();
+	}
+
 	/**
 	 * This adds @parent as a parent for @object. Having one ore more parents affects the
 	 * writability of @object: if a @parent is not writable, @object is also not
@@ -125,14 +131,14 @@ public class MiniObject
 	 */
 	public MiniObject copy()
 	{
-		auto p = gst_mini_object_copy(gstMiniObject);
+		auto __p = gst_mini_object_copy(gstMiniObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) __p, true);
 	}
 
 	/**
@@ -210,14 +216,14 @@ public class MiniObject
 	 */
 	public MiniObject makeWritable()
 	{
-		auto p = gst_mini_object_make_writable(gstMiniObject);
+		auto __p = gst_mini_object_make_writable(gstMiniObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -235,14 +241,14 @@ public class MiniObject
 	 */
 	public MiniObject ref_()
 	{
-		auto p = gst_mini_object_ref(gstMiniObject);
+		auto __p = gst_mini_object_ref(gstMiniObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) __p, true);
 	}
 
 	/**
@@ -286,7 +292,7 @@ public class MiniObject
 
 	/**
 	 * This function gets back user data pointers stored via gst_mini_object_set_qdata()
-	 * and removes the data from @object without invoking its destroy() function (if
+	 * and removes the data from @object without invoking its `destroy()` function (if
 	 * any was set).
 	 *
 	 * Params:
@@ -367,11 +373,11 @@ public class MiniObject
 	{
 		GstMiniObject* outolddata = olddata.getMiniObjectStruct();
 
-		auto p = gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct()) != 0;
+		auto __p = gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct()) != 0;
 
 		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -388,16 +394,16 @@ public class MiniObject
 	{
 		GstMiniObject* outolddata = olddata.getMiniObjectStruct();
 
-		auto p = gst_mini_object_steal(&outolddata);
+		auto __p = gst_mini_object_steal(&outolddata);
 
 		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) __p, true);
 	}
 
 	/**
@@ -419,10 +425,10 @@ public class MiniObject
 	{
 		GstMiniObject* outolddata = olddata.getMiniObjectStruct();
 
-		auto p = gst_mini_object_take(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct()) != 0;
+		auto __p = gst_mini_object_take(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct()) != 0;
 
 		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
 
-		return p;
+		return __p;
 	}
 }

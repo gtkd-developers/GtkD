@@ -29,6 +29,7 @@ public  import glib.GException;
 public  import glib.ListG;
 public  import glib.ListSG;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtk.RecentFilter;
@@ -84,14 +85,14 @@ public template RecentChooserT(TStruct)
 	 */
 	public RecentInfo getCurrentItem()
 	{
-		auto p = gtk_recent_chooser_get_current_item(getRecentChooserStruct());
+		auto __p = gtk_recent_chooser_get_current_item(getRecentChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) __p, true);
 	}
 
 	/**
@@ -119,14 +120,14 @@ public template RecentChooserT(TStruct)
 	 */
 	public RecentFilter getFilter()
 	{
-		auto p = gtk_recent_chooser_get_filter(getRecentChooserStruct());
+		auto __p = gtk_recent_chooser_get_filter(getRecentChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentFilter)(cast(GtkRecentFilter*) p);
+		return ObjectG.getDObject!(RecentFilter)(cast(GtkRecentFilter*) __p);
 	}
 
 	/**
@@ -144,14 +145,14 @@ public template RecentChooserT(TStruct)
 	 */
 	public ListG getItems()
 	{
-		auto p = gtk_recent_chooser_get_items(getRecentChooserStruct());
+		auto __p = gtk_recent_chooser_get_items(getRecentChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -293,14 +294,14 @@ public template RecentChooserT(TStruct)
 	 */
 	public ListSG listFilters()
 	{
-		auto p = gtk_recent_chooser_list_filters(getRecentChooserStruct());
+		auto __p = gtk_recent_chooser_list_filters(getRecentChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -343,14 +344,14 @@ public template RecentChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_chooser_select_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
+		auto __p = gtk_recent_chooser_select_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -369,14 +370,14 @@ public template RecentChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_chooser_set_current_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
+		auto __p = gtk_recent_chooser_set_current_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

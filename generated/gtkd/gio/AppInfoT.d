@@ -36,6 +36,7 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.ListG;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -187,7 +188,7 @@ public template AppInfoT(TStruct)
 	/**
 	 * Checks if two #GAppInfos are equal.
 	 *
-	 * Note that the check <emphasis>may not</emphasis> compare each individual
+	 * Note that the check *may not* compare each individual
 	 * field, and only does an identity check. In case detecting changes in the
 	 * contents is needed, program code must additionally compare relevant fields.
 	 *

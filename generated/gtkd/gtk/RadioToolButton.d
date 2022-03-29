@@ -99,14 +99,14 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this(ListSG group)
 	{
-		auto p = gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct());
+		auto __p = gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRadioToolButton*) p);
+		this(cast(GtkRadioToolButton*) __p);
 	}
 
 	/**
@@ -129,14 +129,14 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this(ListSG group, string stockId)
 	{
-		auto p = gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId));
+		auto __p = gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
 
-		this(cast(GtkRadioToolButton*) p);
+		this(cast(GtkRadioToolButton*) __p);
 	}
 
 	/**
@@ -153,14 +153,14 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this(RadioToolButton group)
 	{
-		auto p = gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct());
+		auto __p = gtk_radio_tool_button_new_from_widget((group is null) ? null : group.getRadioToolButtonStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_widget");
 		}
 
-		this(cast(GtkRadioToolButton*) p);
+		this(cast(GtkRadioToolButton*) __p);
 	}
 
 	/**
@@ -182,14 +182,14 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this(RadioToolButton group, string stockId)
 	{
-		auto p = gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId));
+		auto __p = gtk_radio_tool_button_new_with_stock_from_widget((group is null) ? null : group.getRadioToolButtonStruct(), Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_stock_from_widget");
 		}
 
-		this(cast(GtkRadioToolButton*) p);
+		this(cast(GtkRadioToolButton*) __p);
 	}
 
 	/**
@@ -201,14 +201,14 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public ListSG getGroup()
 	{
-		auto p = gtk_radio_tool_button_get_group(gtkRadioToolButton);
+		auto __p = gtk_radio_tool_button_get_group(gtkRadioToolButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

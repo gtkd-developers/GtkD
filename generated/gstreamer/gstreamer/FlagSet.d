@@ -29,7 +29,10 @@ public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
 
 
-/** */
+/**
+ * A fundamental type that describes a 32-bit flag bitfield, with 32-bit
+ * mask indicating which of the bits in the field are explicitly set.
+ */
 public class FlagSet
 {
 	/** the main Gtk struct */

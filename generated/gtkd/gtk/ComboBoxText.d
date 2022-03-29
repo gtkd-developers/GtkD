@@ -27,6 +27,7 @@ module gtk.ComboBoxText;
 public  import gdk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.Signals;
 private import gtk.ComboBox;
 private import gtk.TreeIter;
@@ -60,13 +61,14 @@ private import std.algorithm;
  * # GtkComboBoxText as GtkBuildable
  * 
  * The GtkComboBoxText implementation of the GtkBuildable interface supports
- * adding items directly using the <items> element and specifying <item>
- * elements for each item. Each <item> element can specify the “id”
+ * adding items directly using the `<items>` element and specifying `<item>`
+ * elements for each item. Each `<item>` element can specify the “id”
  * corresponding to the appended text and also supports the regular
  * translation attributes “translatable”, “context” and “comments”.
  * 
  * Here is a UI definition fragment specifying GtkComboBoxText items:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkComboBoxText">
  * <items>
  * <item translatable="yes" id="factory">Factory</item>

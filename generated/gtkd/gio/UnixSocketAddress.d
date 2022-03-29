@@ -29,6 +29,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -45,9 +46,13 @@ public  import gtkc.giotypes;
  * errors. You can use g_unix_socket_address_abstract_names_supported()
  * to see if abstract names are supported.
  * 
- * Note that `<gio/gunixsocketaddress.h>` belongs to the UNIX-specific GIO
- * interfaces, thus you have to use the `gio-unix-2.0.pc` pkg-config file
- * when using it.
+ * Since GLib 2.72, #GUnixSocketAddress is available on all platforms. It
+ * requires underlying system support (such as Windows 10 with `AF_UNIX`) at
+ * run time.
+ * 
+ * Before GLib 2.72, `<gio/gunixsocketaddress.h>` belonged to the UNIX-specific
+ * GIO interfaces, thus you had to use the `gio-unix-2.0.pc` pkg-config file
+ * when using it. This is no longer necessary since GLib 2.72.
  */
 public class UnixSocketAddress : SocketAddress
 {

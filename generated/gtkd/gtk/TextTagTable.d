@@ -47,10 +47,11 @@ private import std.algorithm;
  * 
  * The GtkTextTagTable implementation of the GtkBuildable interface
  * supports adding tags by specifying “tag” as the “type” attribute
- * of a <child> element.
+ * of a `<child>` element.
  * 
  * An example of a UI definition fragment specifying tags:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkTextTagTable">
  * <child type="tag">
  * <object class="GtkTextTag"/>
@@ -106,14 +107,14 @@ public class TextTagTable : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_text_tag_table_new();
+		auto __p = gtk_text_tag_table_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextTagTable*) p, true);
+		this(cast(GtkTextTagTable*) __p, true);
 	}
 
 	/**
@@ -169,14 +170,14 @@ public class TextTagTable : ObjectG, BuildableIF
 	 */
 	public TextTag lookup(string name)
 	{
-		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
+		auto __p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) p);
+		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) __p);
 	}
 
 	/**

@@ -95,13 +95,13 @@ public class VButtonBox : ButtonBox
 	 */
 	public this()
 	{
-		auto p = gtk_vbutton_box_new();
+		auto __p = gtk_vbutton_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkVButtonBox*) p);
+		this(cast(GtkVButtonBox*) __p);
 	}
 }

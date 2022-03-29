@@ -22,54 +22,47 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module pango.PgEngineLang;
+module gtk.HeaderBarAccessible;
 
-public  import gtkc.pangotypes;
-private import pango.PgEngine;
-private import pango.c.functions;
-public  import pango.c.types;
+private import gtk.ContainerAccessible;
+private import gtk.c.functions;
+public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
-/**
- * The #PangoEngineLang class is implemented by engines that
- * customize the rendering-system independent part of the
- * Pango pipeline for a particular script or language. For
- * instance, a custom #PangoEngineLang could be provided for
- * Thai to implement the dictionary-based word boundary
- * lookups needed for that language.
- */
-public class PgEngineLang : PgEngine
+/** */
+public class HeaderBarAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
-	protected PangoEngineLang* pangoEngineLang;
+	protected GtkHeaderBarAccessible* gtkHeaderBarAccessible;
 
 	/** Get the main Gtk struct */
-	public PangoEngineLang* getPgEngineLangStruct(bool transferOwnership = false)
+	public GtkHeaderBarAccessible* getHeaderBarAccessibleStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;
-		return pangoEngineLang;
+		return gtkHeaderBarAccessible;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)pangoEngineLang;
+		return cast(void*)gtkHeaderBarAccessible;
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoEngineLang* pangoEngineLang, bool ownedRef = false)
+	public this (GtkHeaderBarAccessible* gtkHeaderBarAccessible, bool ownedRef = false)
 	{
-		this.pangoEngineLang = pangoEngineLang;
-		super(cast(PangoEngine*)pangoEngineLang, ownedRef);
+		this.gtkHeaderBarAccessible = gtkHeaderBarAccessible;
+		super(cast(GtkContainerAccessible*)gtkHeaderBarAccessible, ownedRef);
 	}
 
 
 	/** */
 	public static GType getType()
 	{
-		return pango_engine_lang_get_type();
+		return gtk_header_bar_accessible_get_type();
 	}
 }

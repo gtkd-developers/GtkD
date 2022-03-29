@@ -44,6 +44,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -173,7 +174,7 @@ public interface FileIF{
 	 * If the file doesn't already exist it is created.
 	 *
 	 * By default files created are generally readable by everyone,
-	 * but if you pass #G_FILE_CREATE_PRIVATE in @flags the file
+	 * but if you pass %G_FILE_CREATE_PRIVATE in @flags the file
 	 * will be made readable only to the current user, to the level that
 	 * is supported on the target filesystem.
 	 *
@@ -236,17 +237,42 @@ public interface FileIF{
 	public FileOutputStream appendToFinish(AsyncResultIF res);
 
 	/**
+	 * Prepares the file attribute query string for copying to @file.
+	 *
+	 * This function prepares an attribute query string to be
+	 * passed to g_file_query_info() to get a list of attributes
+	 * normally copied with the file (see g_file_copy_attributes()
+	 * for the detailed description). This function is used by the
+	 * implementation of g_file_copy_attributes() and is useful
+	 * when one needs to query and set the attributes in two
+	 * stages (e.g., for recursive move of a directory).
+	 *
+	 * Params:
+	 *     flags = a set of #GFileCopyFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 *
+	 * Returns: an attribute query string for g_file_query_info(),
+	 *     or %NULL if an error occurs.
+	 *
+	 * Since: 2.68
+	 *
+	 * Throws: GException on failure.
+	 */
+	public string buildAttributeListForCopy(GFileCopyFlags flags, Cancellable cancellable);
+
+	/**
 	 * Copies the file @source to the location specified by @destination.
 	 * Can not handle recursive copies of directories.
 	 *
-	 * If the flag #G_FILE_COPY_OVERWRITE is specified an already
+	 * If the flag %G_FILE_COPY_OVERWRITE is specified an already
 	 * existing @destination file is overwritten.
 	 *
-	 * If the flag #G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks
+	 * If the flag %G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks
 	 * will be copied as symlinks, otherwise the target of the
 	 * @source symlink will be copied.
 	 *
-	 * If the flag #G_FILE_COPY_ALL_METADATA is specified then all the metadata
+	 * If the flag %G_FILE_COPY_ALL_METADATA is specified then all the metadata
 	 * that is possible to copy is copied, not just the default subset (which,
 	 * for instance, does not include the owner, see #GFileInfo).
 	 *
@@ -263,7 +289,7 @@ public interface FileIF{
 	 * If the @source file does not exist, then the %G_IO_ERROR_NOT_FOUND error
 	 * is returned, independent on the status of the @destination.
 	 *
-	 * If #G_FILE_COPY_OVERWRITE is not specified and the target exists, then
+	 * If %G_FILE_COPY_OVERWRITE is not specified and the target exists, then
 	 * the error %G_IO_ERROR_EXISTS is returned.
 	 *
 	 * If trying to overwrite a file over a directory, the %G_IO_ERROR_IS_DIRECTORY
@@ -271,7 +297,7 @@ public interface FileIF{
 	 * %G_IO_ERROR_WOULD_MERGE error is returned.
 	 *
 	 * If the source is a directory and the target does not exist, or
-	 * #G_FILE_COPY_OVERWRITE is specified and the target is a file, then the
+	 * %G_FILE_COPY_OVERWRITE is specified and the target is a file, then the
 	 * %G_IO_ERROR_WOULD_RECURSE error is returned.
 	 *
 	 * If you are interested in copying the #GFile object itself (not the on-disk
@@ -324,7 +350,7 @@ public interface FileIF{
 	 * Normally only a subset of the file attributes are copied,
 	 * those that are copies in a normal file copy operation
 	 * (which for instance does not include e.g. owner). However
-	 * if #G_FILE_COPY_ALL_METADATA is specified in @flags, then
+	 * if %G_FILE_COPY_ALL_METADATA is specified in @flags, then
 	 * all the metadata that is possible to copy is copied. This
 	 * is useful when implementing move by copy + delete source.
 	 *
@@ -358,7 +384,7 @@ public interface FileIF{
 	 * The file must not already exist.
 	 *
 	 * By default files created are generally readable by everyone,
-	 * but if you pass #G_FILE_CREATE_PRIVATE in @flags the file
+	 * but if you pass %G_FILE_CREATE_PRIVATE in @flags the file
 	 * will be made readable only to the current user, to the level
 	 * that is supported on the target filesystem.
 	 *
@@ -428,7 +454,7 @@ public interface FileIF{
 	 * writing to it. The file must not already exist.
 	 *
 	 * By default files created are generally readable by everyone,
-	 * but if you pass #G_FILE_CREATE_PRIVATE in @flags the file
+	 * but if you pass %G_FILE_CREATE_PRIVATE in @flags the file
 	 * will be made readable only to the current user, to the level
 	 * that is supported on the target filesystem.
 	 *
@@ -507,6 +533,21 @@ public interface FileIF{
 	/**
 	 * Deletes a file. If the @file is a directory, it will only be
 	 * deleted if it is empty. This has the same semantics as g_unlink().
+	 *
+	 * If @file doesn’t exist, %G_IO_ERROR_NOT_FOUND will be returned. This allows
+	 * for deletion to be implemented avoiding
+	 * [time-of-check to time-of-use races](https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use):
+	 * |[
+	 * g_autoptr(GError) local_error = NULL;
+	 * if (!g_file_delete (my_file, my_cancellable, &local_error) &&
+	 * !g_error_matches (local_error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
+	 * {
+	 * // deletion failed for some reason other than the file not existing:
+	 * // so report the error
+	 * g_warning ("Failed to delete %s: %s",
+	 * g_file_peek_path (my_file), local_error->message);
+	 * }
+	 * ]|
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -663,7 +704,9 @@ public interface FileIF{
 	 * "standard::*" means all attributes in the standard namespace.
 	 * An example attribute query be "standard::*,owner::user".
 	 * The standard attributes are available as defines, like
-	 * #G_FILE_ATTRIBUTE_STANDARD_NAME.
+	 * %G_FILE_ATTRIBUTE_STANDARD_NAME. %G_FILE_ATTRIBUTE_STANDARD_NAME should
+	 * always be specified if you plan to call g_file_enumerator_get_child() or
+	 * g_file_enumerator_iterate() on the returned enumerator.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled
 	 * by triggering the cancellable object from another thread. If the
@@ -925,7 +968,8 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Returns: a string containing the #GFile's URI.
+	 * Returns: a string containing the #GFile's URI. If the #GFile was constructed
+	 *     with an invalid URI, an invalid URI is returned.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -939,11 +983,14 @@ public interface FileIF{
 	 * ]|
 	 * Common schemes include "file", "http", "ftp", etc.
 	 *
+	 * The scheme can be different from the one used to construct the #GFile,
+	 * in that it might be replaced with one that is logically equivalent to the #GFile.
+	 *
 	 * This call does no blocking I/O.
 	 *
 	 * Returns: a string containing the URI scheme for the given
-	 *     #GFile. The returned string should be freed with g_free()
-	 *     when no longer needed.
+	 *     #GFile or %NULL if the #GFile was constructed with an invalid URI. The
+	 *     returned string should be freed with g_free() when no longer needed.
 	 */
 	public string getUriScheme();
 
@@ -1558,7 +1605,7 @@ public interface FileIF{
 	 * implementation may support moving directories (for instance on moves
 	 * inside the same filesystem), but the fallback code does not.
 	 *
-	 * If the flag #G_FILE_COPY_OVERWRITE is specified an already
+	 * If the flag %G_FILE_COPY_OVERWRITE is specified an already
 	 * existing @destination file is overwritten.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
@@ -1574,7 +1621,7 @@ public interface FileIF{
 	 * If the @source file does not exist, then the %G_IO_ERROR_NOT_FOUND
 	 * error is returned, independent on the status of the @destination.
 	 *
-	 * If #G_FILE_COPY_OVERWRITE is not specified and the target exists,
+	 * If %G_FILE_COPY_OVERWRITE is not specified and the target exists,
 	 * then the error %G_IO_ERROR_EXISTS is returned.
 	 *
 	 * If trying to overwrite a file over a directory, the %G_IO_ERROR_IS_DIRECTORY
@@ -1582,7 +1629,7 @@ public interface FileIF{
 	 * %G_IO_ERROR_WOULD_MERGE error is returned.
 	 *
 	 * If the source is a directory and the target does not exist, or
-	 * #G_FILE_COPY_OVERWRITE is specified and the target is a file, then
+	 * %G_FILE_COPY_OVERWRITE is specified and the target is a file, then
 	 * the %G_IO_ERROR_WOULD_RECURSE error may be returned (if the native
 	 * move operation isn't available).
 	 *
@@ -1601,6 +1648,50 @@ public interface FileIF{
 	 * Throws: GException on failure.
 	 */
 	public bool move(FileIF destination, GFileCopyFlags flags, Cancellable cancellable, GFileProgressCallback progressCallback, void* progressCallbackData);
+
+	/**
+	 * Asynchronously moves a file @source to the location of @destination. For details of the behaviour, see g_file_move().
+	 *
+	 * If @progress_callback is not %NULL, then that function that will be called
+	 * just like in g_file_move(). The callback will run in the default main context
+	 * of the thread calling g_file_move_async() — the same context as @callback is
+	 * run in.
+	 *
+	 * When the operation is finished, @callback will be called. You can then call
+	 * g_file_move_finish() to get the result of the operation.
+	 *
+	 * Params:
+	 *     destination = #GFile pointing to the destination location
+	 *     flags = set of #GFileCopyFlags
+	 *     ioPriority = the [I/O priority][io-priority] of the request
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 *     progressCallback = #GFileProgressCallback
+	 *         function for updates
+	 *     progressCallbackData = gpointer to user data for
+	 *         the callback function
+	 *     callback = a #GAsyncReadyCallback to call
+	 *         when the request is satisfied
+	 *     userData = the data to pass to callback function
+	 *
+	 * Since: 2.72
+	 */
+	public void moveAsync(FileIF destination, GFileCopyFlags flags, int ioPriority, Cancellable cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData);
+
+	/**
+	 * Finishes an asynchronous file movement, started with
+	 * g_file_move_async().
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *
+	 * Returns: %TRUE on successful file move, %FALSE otherwise.
+	 *
+	 * Since: 2.72
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool moveFinish(AsyncResultIF result);
 
 	/**
 	 * Opens an existing file for reading and writing. The result is
@@ -1687,7 +1778,7 @@ public interface FileIF{
 	public string peekPath();
 
 	/**
-	 * Polls a file of type #G_FILE_TYPE_MOUNTABLE.
+	 * Polls a file of type %G_FILE_TYPE_MOUNTABLE.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -1818,7 +1909,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Returns: The #GFileType of the file and #G_FILE_TYPE_UNKNOWN
+	 * Returns: The #GFileType of the file and %G_FILE_TYPE_UNKNOWN
 	 *     if the file does not exist
 	 *
 	 * Since: 2.18
@@ -1839,9 +1930,9 @@ public interface FileIF{
 	 * attributes, and a wildcard like "filesystem::*" means all attributes
 	 * in the filesystem namespace. The standard namespace for filesystem
 	 * attributes is "filesystem". Common attributes of interest are
-	 * #G_FILE_ATTRIBUTE_FILESYSTEM_SIZE (the total size of the filesystem
-	 * in bytes), #G_FILE_ATTRIBUTE_FILESYSTEM_FREE (number of bytes available),
-	 * and #G_FILE_ATTRIBUTE_FILESYSTEM_TYPE (type of the filesystem).
+	 * %G_FILE_ATTRIBUTE_FILESYSTEM_SIZE (the total size of the filesystem
+	 * in bytes), %G_FILE_ATTRIBUTE_FILESYSTEM_FREE (number of bytes available),
+	 * and %G_FILE_ATTRIBUTE_FILESYSTEM_TYPE (type of the filesystem).
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled
 	 * by triggering the cancellable object from another thread. If the
@@ -1917,7 +2008,7 @@ public interface FileIF{
 	 * "standard::*" means all attributes in the standard namespace.
 	 * An example attribute query be "standard::*,owner::user".
 	 * The standard attributes are available as defines, like
-	 * #G_FILE_ATTRIBUTE_STANDARD_NAME.
+	 * %G_FILE_ATTRIBUTE_STANDARD_NAME.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled
 	 * by triggering the cancellable object from another thread. If the
@@ -1926,7 +2017,7 @@ public interface FileIF{
 	 *
 	 * For symlinks, normally the information about the target of the
 	 * symlink is returned, rather than information about the symlink
-	 * itself. However if you pass #G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS
+	 * itself. However if you pass %G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS
 	 * in @flags the information about the symlink itself will be returned.
 	 * Also, for symlinks that point to non-existing files the information
 	 * about the symlink itself will be returned.
@@ -2100,7 +2191,7 @@ public interface FileIF{
 	 * the destination when the stream is closed.
 	 *
 	 * By default files created are generally readable by everyone,
-	 * but if you pass #G_FILE_CREATE_PRIVATE in @flags the file
+	 * but if you pass %G_FILE_CREATE_PRIVATE in @flags the file
 	 * will be made readable only to the current user, to the level that
 	 * is supported on the target filesystem.
 	 *
@@ -2371,12 +2462,13 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
+	 * If the @relative_path is an absolute path name, the resolution
+	 * is done absolutely (without taking @file path as base).
+	 *
 	 * Params:
 	 *     relativePath = a given relative path string
 	 *
-	 * Returns: #GFile to the resolved path.
-	 *     %NULL if @relative_path is %NULL or if @file is invalid.
-	 *     Free the returned object with g_object_unref().
+	 * Returns: a #GFile for the resolved path.
 	 */
 	public FileIF resolveRelativePath(string relativePath);
 
@@ -2603,7 +2695,7 @@ public interface FileIF{
 	 * for the target filesystem if possible and the @file is renamed to this.
 	 *
 	 * If you want to implement a rename operation in the user interface the
-	 * edit name (#G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME) should be used as the
+	 * edit name (%G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME) should be used as the
 	 * initial value in the rename widget, and then the result after editing
 	 * should be passed to g_file_set_display_name().
 	 *
@@ -2662,7 +2754,7 @@ public interface FileIF{
 	public FileIF setDisplayNameFinish(AsyncResultIF res);
 
 	/**
-	 * Starts a file of type #G_FILE_TYPE_MOUNTABLE.
+	 * Starts a file of type %G_FILE_TYPE_MOUNTABLE.
 	 * Using @start_operation, you can request callbacks when, for instance,
 	 * passwords are needed during authentication.
 	 *
@@ -2704,7 +2796,7 @@ public interface FileIF{
 	public bool startMountableFinish(AsyncResultIF result);
 
 	/**
-	 * Stops a file of type #G_FILE_TYPE_MOUNTABLE.
+	 * Stops a file of type %G_FILE_TYPE_MOUNTABLE.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -2762,7 +2854,9 @@ public interface FileIF{
 	 * Sends @file to the "Trashcan", if possible. This is similar to
 	 * deleting it, but the user can recover it before emptying the trashcan.
 	 * Not all file systems support trashing, so this call can return the
-	 * %G_IO_ERROR_NOT_SUPPORTED error.
+	 * %G_IO_ERROR_NOT_SUPPORTED error. Since GLib 2.66, the `x-gvfs-notrash` unix
+	 * mount option can be used to disable g_file_trash() support for certain
+	 * mounts, the %G_IO_ERROR_NOT_SUPPORTED error will be returned in that case.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -2851,7 +2945,7 @@ public interface FileIF{
 	public bool unmountMountableFinish(AsyncResultIF result);
 
 	/**
-	 * Unmounts a file of type #G_FILE_TYPE_MOUNTABLE.
+	 * Unmounts a file of type %G_FILE_TYPE_MOUNTABLE.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation

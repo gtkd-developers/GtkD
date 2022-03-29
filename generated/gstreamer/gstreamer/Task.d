@@ -138,14 +138,14 @@ public class Task : ObjectGst
 	 */
 	public this(GstTaskFunction func, void* userData, GDestroyNotify notify)
 	{
-		auto p = gst_task_new(func, userData, notify);
+		auto __p = gst_task_new(func, userData, notify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstTask*) p, true);
+		this(cast(GstTask*) __p, true);
 	}
 
 	/**
@@ -170,14 +170,14 @@ public class Task : ObjectGst
 	 */
 	public TaskPool getPool()
 	{
-		auto p = gst_task_get_pool(gstTask);
+		auto __p = gst_task_get_pool(gstTask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TaskPool)(cast(GstTaskPool*) p, true);
+		return ObjectG.getDObject!(TaskPool)(cast(GstTaskPool*) __p, true);
 	}
 
 	/**
@@ -224,6 +224,21 @@ public class Task : ObjectGst
 	public bool pause()
 	{
 		return gst_task_pause(gstTask) != 0;
+	}
+
+	/**
+	 * Resume @task in case it was paused. If the task was stopped, it will
+	 * remain in that state and this function will return %FALSE.
+	 *
+	 * Returns: %TRUE if the task could be resumed.
+	 *
+	 *     MT safe.
+	 *
+	 * Since: 1.18
+	 */
+	public bool resume()
+	{
+		return gst_task_resume(gstTask) != 0;
 	}
 
 	/**

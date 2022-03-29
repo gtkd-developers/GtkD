@@ -28,6 +28,7 @@ private import glib.ArrayG;
 private import glib.MemorySlice;
 private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gst.mpegts.CableDeliverySystemDescriptor;
 private import gst.mpegts.ComponentDescriptor;
@@ -55,7 +56,7 @@ private import gtkd.Loader;
  * These are the base descriptor types and methods.
  * 
  * For more details, refer to the ITU H.222.0 or ISO/IEC 13818-1 specifications
- * and other specifications mentionned in the documentation.
+ * and other specifications mentioned in the documentation.
  */
 public class Descriptor
 {
@@ -130,6 +131,27 @@ public class Descriptor
 	}
 
 	/**
+	 * Parses out a list of audio preselection from the @descriptor.
+	 *
+	 * Params:
+	 *     list = the list of audio preselection
+	 *
+	 * Returns: %TRUE if the parsing happened correctly, else %FALSE.
+	 *
+	 * Since: 1.20
+	 */
+	public bool parseAudioPreselectionList(out PtrArray list)
+	{
+		GPtrArray* outlist = null;
+
+		auto __p = gst_mpegts_descriptor_parse_audio_preselection_list(gstMpegtsDescriptor, &outlist) != 0;
+
+		list = new PtrArray(outlist);
+
+		return __p;
+	}
+
+	/**
 	 * Extracts the Conditional Access information from @descriptor.
 	 *
 	 * Params:
@@ -141,14 +163,14 @@ public class Descriptor
 	 */
 	public bool parseCa(out ushort caSystemId, out ushort caPid, out ubyte[] privateData)
 	{
-		ubyte* outprivateData = null;
+		ubyte* outprivateData;
 		size_t privateDataSize;
 
-		auto p = gst_mpegts_descriptor_parse_ca(gstMpegtsDescriptor, &caSystemId, &caPid, &outprivateData, &privateDataSize) != 0;
+		auto __p = gst_mpegts_descriptor_parse_ca(gstMpegtsDescriptor, &caSystemId, &caPid, &outprivateData, &privateDataSize) != 0;
 
 		privateData = outprivateData[0 .. privateDataSize];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -163,11 +185,11 @@ public class Descriptor
 	{
 		GstMpegtsCableDeliverySystemDescriptor* outres = sliceNew!GstMpegtsCableDeliverySystemDescriptor();
 
-		auto p = gst_mpegts_descriptor_parse_cable_delivery_system(gstMpegtsDescriptor, outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_cable_delivery_system(gstMpegtsDescriptor, outres) != 0;
 
 		res = ObjectG.getDObject!(CableDeliverySystemDescriptor)(outres, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -182,11 +204,11 @@ public class Descriptor
 	{
 		char* outbouquetName = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_bouquet_name(gstMpegtsDescriptor, &outbouquetName) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_bouquet_name(gstMpegtsDescriptor, &outbouquetName) != 0;
 
 		bouquetName = Str.toString(outbouquetName);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -203,11 +225,11 @@ public class Descriptor
 	{
 		GArray* outlist = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_ca_identifier(gstMpegtsDescriptor, &outlist) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_ca_identifier(gstMpegtsDescriptor, &outlist) != 0;
 
 		list = new ArrayG(outlist);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -222,11 +244,11 @@ public class Descriptor
 	{
 		GstMpegtsComponentDescriptor* outres = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_component(gstMpegtsDescriptor, &outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_component(gstMpegtsDescriptor, &outres) != 0;
 
 		res = ObjectG.getDObject!(ComponentDescriptor)(outres);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -241,11 +263,11 @@ public class Descriptor
 	{
 		GPtrArray* outcontent = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_content(gstMpegtsDescriptor, &outcontent) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_content(gstMpegtsDescriptor, &outcontent) != 0;
 
 		content = new PtrArray(outcontent);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -260,11 +282,11 @@ public class Descriptor
 	{
 		GstMpegtsDataBroadcastDescriptor* outres = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_data_broadcast(gstMpegtsDescriptor, &outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_data_broadcast(gstMpegtsDescriptor, &outres) != 0;
 
 		res = ObjectG.getDObject!(DataBroadcastDescriptor)(outres);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -278,14 +300,14 @@ public class Descriptor
 	 */
 	public bool parseDvbDataBroadcastId(out ushort dataBroadcastId, out ubyte[] idSelectorBytes)
 	{
-		ubyte* outidSelectorBytes = null;
+		ubyte* outidSelectorBytes;
 		ubyte len;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_data_broadcast_id(gstMpegtsDescriptor, &dataBroadcastId, &outidSelectorBytes, &len) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_data_broadcast_id(gstMpegtsDescriptor, &dataBroadcastId, &outidSelectorBytes, &len) != 0;
 
 		idSelectorBytes = outidSelectorBytes[0 .. len];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -300,11 +322,11 @@ public class Descriptor
 	{
 		GstMpegtsExtendedEventDescriptor* outres = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_extended_event(gstMpegtsDescriptor, &outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_extended_event(gstMpegtsDescriptor, &outres) != 0;
 
 		res = ObjectG.getDObject!(ExtendedEventDescriptor)(outres);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -313,7 +335,7 @@ public class Descriptor
 	 * Params:
 	 *     offset = %FALSE in Hz, %TRUE in kHz
 	 *     list = a list of all frequencies in Hz/kHz
-	 *         depending on %offset
+	 *         depending on @offset
 	 *
 	 * Returns: %TRUE if the parsing happened correctly, else %FALSE.
 	 */
@@ -322,12 +344,12 @@ public class Descriptor
 		int outoffset;
 		GArray* outlist = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_frequency_list(gstMpegtsDescriptor, &outoffset, &outlist) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_frequency_list(gstMpegtsDescriptor, &outoffset, &outlist) != 0;
 
 		offset = (outoffset == 1);
 		list = new ArrayG(outlist);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -342,11 +364,11 @@ public class Descriptor
 	{
 		GstMpegtsDVBLinkageDescriptor* outres = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_linkage(gstMpegtsDescriptor, &outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_linkage(gstMpegtsDescriptor, &outres) != 0;
 
 		res = ObjectG.getDObject!(DVBLinkageDescriptor)(outres);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -361,11 +383,11 @@ public class Descriptor
 	{
 		GPtrArray* outbouquetNameItems = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_multilingual_bouquet_name(gstMpegtsDescriptor, &outbouquetNameItems) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_multilingual_bouquet_name(gstMpegtsDescriptor, &outbouquetNameItems) != 0;
 
 		bouquetNameItems = new PtrArray(outbouquetNameItems);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -381,11 +403,11 @@ public class Descriptor
 	{
 		GPtrArray* outcomponentDescriptionItems = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_multilingual_component(gstMpegtsDescriptor, &componentTag, &outcomponentDescriptionItems) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_multilingual_component(gstMpegtsDescriptor, &componentTag, &outcomponentDescriptionItems) != 0;
 
 		componentDescriptionItems = new PtrArray(outcomponentDescriptionItems);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -400,11 +422,11 @@ public class Descriptor
 	{
 		GPtrArray* outnetworkNameItems = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_multilingual_network_name(gstMpegtsDescriptor, &outnetworkNameItems) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_multilingual_network_name(gstMpegtsDescriptor, &outnetworkNameItems) != 0;
 
 		networkNameItems = new PtrArray(outnetworkNameItems);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -419,11 +441,11 @@ public class Descriptor
 	{
 		GPtrArray* outserviceNameItems = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_multilingual_service_name(gstMpegtsDescriptor, &outserviceNameItems) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_multilingual_service_name(gstMpegtsDescriptor, &outserviceNameItems) != 0;
 
 		serviceNameItems = new PtrArray(outserviceNameItems);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -438,11 +460,11 @@ public class Descriptor
 	{
 		char* outname = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_network_name(gstMpegtsDescriptor, &outname) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_network_name(gstMpegtsDescriptor, &outname) != 0;
 
 		name = Str.toString(outname);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -457,11 +479,11 @@ public class Descriptor
 	{
 		GPtrArray* outrating = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_parental_rating(gstMpegtsDescriptor, &outrating) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_parental_rating(gstMpegtsDescriptor, &outrating) != 0;
 
 		rating = new PtrArray(outrating);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -476,14 +498,14 @@ public class Descriptor
 	 */
 	public bool parseDvbPrivateDataSpecifier(out uint privateDataSpecifier, out ubyte[] privateData)
 	{
-		ubyte* outprivateData = null;
+		ubyte* outprivateData;
 		ubyte length;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_private_data_specifier(gstMpegtsDescriptor, &privateDataSpecifier, &outprivateData, &length) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_private_data_specifier(gstMpegtsDescriptor, &privateDataSpecifier, &outprivateData, &length) != 0;
 
 		privateData = outprivateData[0 .. length];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -518,12 +540,12 @@ public class Descriptor
 		char* outserviceName = null;
 		char* outproviderName = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_service(gstMpegtsDescriptor, &serviceType, &outserviceName, &outproviderName) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_service(gstMpegtsDescriptor, &serviceType, &outserviceName, &outproviderName) != 0;
 
 		serviceName = Str.toString(outserviceName);
 		providerName = Str.toString(outproviderName);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -538,11 +560,11 @@ public class Descriptor
 	{
 		GPtrArray* outlist = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_service_list(gstMpegtsDescriptor, &outlist) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_service_list(gstMpegtsDescriptor, &outlist) != 0;
 
 		list = new PtrArray(outlist);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -561,13 +583,13 @@ public class Descriptor
 		char* outeventName = null;
 		char* outtext = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_short_event(gstMpegtsDescriptor, &outlanguageCode, &outeventName, &outtext) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_short_event(gstMpegtsDescriptor, &outlanguageCode, &outeventName, &outtext) != 0;
 
 		languageCode = Str.toString(outlanguageCode);
 		eventName = Str.toString(outeventName);
 		text = Str.toString(outtext);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -576,7 +598,7 @@ public class Descriptor
 	 * Params:
 	 *     componentTag = the component tag
 	 *
-	 * Returns: %TRUE if the parsing happended correctly, else %FALSE.
+	 * Returns: %TRUE if the parsing happened correctly, else %FALSE.
 	 */
 	public bool parseDvbStreamIdentifier(out ubyte componentTag)
 	{
@@ -602,11 +624,11 @@ public class Descriptor
 	{
 		char* outlang = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_subtitling_idx(gstMpegtsDescriptor, idx, &outlang, &type, &compositionPageId, &ancillaryPageId) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_subtitling_idx(gstMpegtsDescriptor, idx, &outlang, &type, &compositionPageId, &ancillaryPageId) != 0;
 
 		lang = Str.toString(outlang);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -629,11 +651,11 @@ public class Descriptor
 	{
 		GstMpegtsT2DeliverySystemDescriptor* outres = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_t2_delivery_system(gstMpegtsDescriptor, &outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_t2_delivery_system(gstMpegtsDescriptor, &outres) != 0;
 
 		res = ObjectG.getDObject!(T2DeliverySystemDescriptor)(outres);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -650,11 +672,11 @@ public class Descriptor
 	{
 		char* outlanguageCode = null;
 
-		auto p = gst_mpegts_descriptor_parse_dvb_teletext_idx(gstMpegtsDescriptor, idx, &outlanguageCode, &teletextType, &magazineNumber, &pageNumber) != 0;
+		auto __p = gst_mpegts_descriptor_parse_dvb_teletext_idx(gstMpegtsDescriptor, idx, &outlanguageCode, &teletextType, &magazineNumber, &pageNumber) != 0;
 
 		languageCode = Str.toString(outlanguageCode);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -682,11 +704,11 @@ public class Descriptor
 	{
 		GstMpegtsISO639LanguageDescriptor* outres = null;
 
-		auto p = gst_mpegts_descriptor_parse_iso_639_language(gstMpegtsDescriptor, &outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_iso_639_language(gstMpegtsDescriptor, &outres) != 0;
 
 		res = ObjectG.getDObject!(ISO639LanguageDescriptor)(outres);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -706,11 +728,11 @@ public class Descriptor
 	{
 		char* outlang = null;
 
-		auto p = gst_mpegts_descriptor_parse_iso_639_language_idx(gstMpegtsDescriptor, idx, &outlang, &audioType) != 0;
+		auto __p = gst_mpegts_descriptor_parse_iso_639_language_idx(gstMpegtsDescriptor, idx, &outlang, &audioType) != 0;
 
 		lang = Str.toString(outlang);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -733,11 +755,34 @@ public class Descriptor
 	{
 		GstMpegtsLogicalChannelDescriptor* outres = sliceNew!GstMpegtsLogicalChannelDescriptor();
 
-		auto p = gst_mpegts_descriptor_parse_logical_channel(gstMpegtsDescriptor, outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_logical_channel(gstMpegtsDescriptor, outres) != 0;
 
 		res = ObjectG.getDObject!(LogicalChannelDescriptor)(outres, true);
 
-		return p;
+		return __p;
+	}
+
+	/**
+	 * Extracts the Registration information from @descriptor.
+	 *
+	 * Params:
+	 *     registrationId = The registration ID (in host endiannes)
+	 *     additionalInfo = The additional information
+	 *
+	 * Returns: %TRUE if parsing succeeded, else %FALSE.
+	 *
+	 * Since: 1.20
+	 */
+	public bool parseRegistration(out uint registrationId, out ubyte[] additionalInfo)
+	{
+		ubyte* outadditionalInfo;
+		size_t additionalInfoLength;
+
+		auto __p = gst_mpegts_descriptor_parse_registration(gstMpegtsDescriptor, &registrationId, &outadditionalInfo, &additionalInfoLength) != 0;
+
+		additionalInfo = outadditionalInfo[0 .. additionalInfoLength];
+
+		return __p;
 	}
 
 	/**
@@ -752,11 +797,11 @@ public class Descriptor
 	{
 		GstMpegtsSatelliteDeliverySystemDescriptor* outres = sliceNew!GstMpegtsSatelliteDeliverySystemDescriptor();
 
-		auto p = gst_mpegts_descriptor_parse_satellite_delivery_system(gstMpegtsDescriptor, outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_satellite_delivery_system(gstMpegtsDescriptor, outres) != 0;
 
 		res = ObjectG.getDObject!(SatelliteDeliverySystemDescriptor)(outres, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -771,11 +816,11 @@ public class Descriptor
 	{
 		GstMpegtsTerrestrialDeliverySystemDescriptor* outres = sliceNew!GstMpegtsTerrestrialDeliverySystemDescriptor();
 
-		auto p = gst_mpegts_descriptor_parse_terrestrial_delivery_system(gstMpegtsDescriptor, outres) != 0;
+		auto __p = gst_mpegts_descriptor_parse_terrestrial_delivery_system(gstMpegtsDescriptor, outres) != 0;
 
 		res = ObjectG.getDObject!(TerrestrialDeliverySystemDescriptor)(outres, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -789,14 +834,14 @@ public class Descriptor
 	 */
 	public static Descriptor fromCustom(ubyte tag, ubyte[] data)
 	{
-		auto p = gst_mpegts_descriptor_from_custom(tag, data.ptr, cast(size_t)data.length);
+		auto __p = gst_mpegts_descriptor_from_custom(tag, data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p, true);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p, true);
 	}
 
 	/**
@@ -808,17 +853,19 @@ public class Descriptor
 	 *     data = descriptor data (after tag and length field)
 	 *
 	 * Returns: #GstMpegtsDescriptor
+	 *
+	 * Since: 1.20
 	 */
 	public static Descriptor fromCustomWithExtension(ubyte tag, ubyte tagExtension, ubyte[] data)
 	{
-		auto p = gst_mpegts_descriptor_from_custom_with_extension(tag, tagExtension, data.ptr, cast(size_t)data.length);
+		auto __p = gst_mpegts_descriptor_from_custom_with_extension(tag, tagExtension, data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p, true);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p, true);
 	}
 
 	/**
@@ -833,14 +880,14 @@ public class Descriptor
 	 */
 	public static Descriptor fromDvbNetworkName(string name)
 	{
-		auto p = gst_mpegts_descriptor_from_dvb_network_name(Str.toStringz(name));
+		auto __p = gst_mpegts_descriptor_from_dvb_network_name(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p, true);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p, true);
 	}
 
 	/**
@@ -857,27 +904,27 @@ public class Descriptor
 	 */
 	public static Descriptor fromDvbService(GstMpegtsDVBServiceType serviceType, string serviceName, string serviceProvider)
 	{
-		auto p = gst_mpegts_descriptor_from_dvb_service(serviceType, Str.toStringz(serviceName), Str.toStringz(serviceProvider));
+		auto __p = gst_mpegts_descriptor_from_dvb_service(serviceType, Str.toStringz(serviceName), Str.toStringz(serviceProvider));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p, true);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p, true);
 	}
 
 	/** */
 	public static Descriptor fromDvbSubtitling(string lang, ubyte type, ushort composition, ushort ancillary)
 	{
-		auto p = gst_mpegts_descriptor_from_dvb_subtitling(Str.toStringz(lang), type, composition, ancillary);
+		auto __p = gst_mpegts_descriptor_from_dvb_subtitling(Str.toStringz(lang), type, composition, ancillary);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p, true);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p, true);
 	}
 
 	/**
@@ -891,14 +938,14 @@ public class Descriptor
 	 */
 	public static Descriptor fromIso639Language(string language)
 	{
-		auto p = gst_mpegts_descriptor_from_iso_639_language(Str.toStringz(language));
+		auto __p = gst_mpegts_descriptor_from_iso_639_language(Str.toStringz(language));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p, true);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p, true);
 	}
 
 	/**
@@ -912,14 +959,26 @@ public class Descriptor
 	 */
 	public static Descriptor fromRegistration(string formatIdentifier, ubyte[] additionalInfo)
 	{
-		auto p = gst_mpegts_descriptor_from_registration(Str.toStringz(formatIdentifier), additionalInfo.ptr, cast(size_t)additionalInfo.length);
+		auto __p = gst_mpegts_descriptor_from_registration(Str.toStringz(formatIdentifier), additionalInfo.ptr, cast(size_t)additionalInfo.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p, true);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p, true);
+	}
+
+	/** */
+	public static void parseAudioPreselectionDump(GstMpegtsAudioPreselectionDescriptor* source)
+	{
+		gst_mpegts_descriptor_parse_audio_preselection_dump(source);
+	}
+
+	/** */
+	public static void parseAudioPreselectionFree(GstMpegtsAudioPreselectionDescriptor* source)
+	{
+		gst_mpegts_descriptor_parse_audio_preselection_free(source);
 	}
 
 	/**
@@ -933,18 +992,18 @@ public class Descriptor
 	 *         of #GstMpegtsDescriptor
 	 *     tag = the tag to look for
 	 *
-	 * Returns: the first descriptor matchin @tag, else %NULL.
+	 * Returns: the first descriptor matching @tag, else %NULL.
 	 */
 	public static Descriptor findDescriptor(PtrArray descriptors, ubyte tag)
 	{
-		auto p = gst_mpegts_find_descriptor((descriptors is null) ? null : descriptors.getPtrArrayStruct(), tag);
+		auto __p = gst_mpegts_find_descriptor((descriptors is null) ? null : descriptors.getPtrArrayStruct(), tag);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) p);
+		return ObjectG.getDObject!(Descriptor)(cast(GstMpegtsDescriptor*) __p);
 	}
 
 	/**
@@ -963,13 +1022,13 @@ public class Descriptor
 	 */
 	public static PtrArray parseDescriptors(ubyte* buffer, size_t bufLen)
 	{
-		auto p = gst_mpegts_parse_descriptors(buffer, bufLen);
+		auto __p = gst_mpegts_parse_descriptors(buffer, bufLen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p, true);
+		return new PtrArray(cast(GPtrArray*) __p, true);
 	}
 }

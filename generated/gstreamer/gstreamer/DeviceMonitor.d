@@ -27,6 +27,7 @@ module gstreamer.DeviceMonitor;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.Bus;
 private import gstreamer.Caps;
@@ -147,14 +148,14 @@ public class DeviceMonitor : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_device_monitor_new();
+		auto __p = gst_device_monitor_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstDeviceMonitor*) p, true);
+		this(cast(GstDeviceMonitor*) __p, true);
 	}
 
 	/**
@@ -193,14 +194,14 @@ public class DeviceMonitor : ObjectGst
 	 */
 	public Bus getBus()
 	{
-		auto p = gst_device_monitor_get_bus(gstDeviceMonitor);
+		auto __p = gst_device_monitor_get_bus(gstDeviceMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
+		return ObjectG.getDObject!(Bus)(cast(GstBus*) __p, true);
 	}
 
 	/**
@@ -214,14 +215,14 @@ public class DeviceMonitor : ObjectGst
 	 */
 	public ListG getDevices()
 	{
-		auto p = gst_device_monitor_get_devices(gstDeviceMonitor);
+		auto __p = gst_device_monitor_get_devices(gstDeviceMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -243,7 +244,7 @@ public class DeviceMonitor : ObjectGst
 	}
 
 	/**
-	 * Get if @monitor is curretly showing all devices, even those from hidden
+	 * Get if @monitor is currently showing all devices, even those from hidden
 	 * providers.
 	 *
 	 * Returns: %TRUE when all devices will be shown.
@@ -290,7 +291,8 @@ public class DeviceMonitor : ObjectGst
 	 * %GST_MESSAGE_DEVICE_ADDED and %GST_MESSAGE_DEVICE_REMOVED messages
 	 * will be emitted on the bus when the list of devices changes.
 	 *
-	 * Returns: %TRUE if the device monitoring could be started
+	 * Returns: %TRUE if the device monitoring could be started, i.e. at least a
+	 *     single device provider was started successfully.
 	 *
 	 * Since: 1.4
 	 */

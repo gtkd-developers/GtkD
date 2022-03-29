@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.PageSetup;
@@ -155,14 +156,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public this()
 	{
-		auto p = gtk_print_operation_new();
+		auto __p = gtk_print_operation_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPrintOperation*) p, true);
+		this(cast(GtkPrintOperation*) __p, true);
 	}
 
 	/**
@@ -205,14 +206,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public PageSetup getDefaultPageSetup()
 	{
-		auto p = gtk_print_operation_get_default_page_setup(gtkPrintOperation);
+		auto __p = gtk_print_operation_get_default_page_setup(gtkPrintOperation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) __p);
 	}
 
 	/**
@@ -294,14 +295,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public PrintSettings getPrintSettings()
 	{
-		auto p = gtk_print_operation_get_print_settings(gtkPrintOperation);
+		auto __p = gtk_print_operation_get_print_settings(gtkPrintOperation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p);
+		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) __p);
 	}
 
 	/**
@@ -443,14 +444,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	{
 		GError* err = null;
 
-		auto p = gtk_print_operation_run(gtkPrintOperation, action, (parent is null) ? null : parent.getWindowStruct(), &err);
+		auto __p = gtk_print_operation_run(gtkPrintOperation, action, (parent is null) ? null : parent.getWindowStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -997,14 +998,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 */
 	public static PageSetup printRunPageSetupDialog(Window parent, PageSetup pageSetup, PrintSettings settings)
 	{
-		auto p = gtk_print_run_page_setup_dialog((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct());
+		auto __p = gtk_print_run_page_setup_dialog((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p, true);
+		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) __p, true);
 	}
 
 	/**

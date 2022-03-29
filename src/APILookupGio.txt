@@ -405,6 +405,7 @@ version 2.68: start
 	struct: TlsCertificate
 	#TODO: Proper solution
 	noCode: new_from_pkcs11_uris
+	version 2.72: noCode: new_from_file_with_password
 version: end
 
 struct: TlsPassword

@@ -26,6 +26,7 @@ module gstreamer.ValueGst;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.Caps;
@@ -138,11 +139,11 @@ public struct ValueGst
 	{
 		GValue* outdest = sliceNew!GValue();
 
-		auto p = gst_value_deserialize(outdest, Str.toStringz(src)) != 0;
+		auto __p = gst_value_deserialize(outdest, Str.toStringz(src)) != 0;
 
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -218,14 +219,14 @@ public struct ValueGst
 	 */
 	public static Caps getCaps(Value value)
 	{
-		auto p = gst_value_get_caps((value is null) ? null : value.getValueStruct());
+		auto __p = gst_value_get_caps((value is null) ? null : value.getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p);
 	}
 
 	/**
@@ -238,14 +239,14 @@ public struct ValueGst
 	 */
 	public static CapsFeatures getCapsFeatures(Value value)
 	{
-		auto p = gst_value_get_caps_features((value is null) ? null : value.getValueStruct());
+		auto __p = gst_value_get_caps_features((value is null) ? null : value.getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) __p);
 	}
 
 	/**
@@ -357,14 +358,14 @@ public struct ValueGst
 	 */
 	public static Value getFractionRangeMax(Value value)
 	{
-		auto p = gst_value_get_fraction_range_max((value is null) ? null : value.getValueStruct());
+		auto __p = gst_value_get_fraction_range_max((value is null) ? null : value.getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -377,14 +378,14 @@ public struct ValueGst
 	 */
 	public static Value getFractionRangeMin(Value value)
 	{
-		auto p = gst_value_get_fraction_range_min((value is null) ? null : value.getValueStruct());
+		auto __p = gst_value_get_fraction_range_min((value is null) ? null : value.getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -475,14 +476,14 @@ public struct ValueGst
 	 */
 	public static Structure getStructure(Value value)
 	{
-		auto p = gst_value_get_structure((value is null) ? null : value.getValueStruct());
+		auto __p = gst_value_get_structure((value is null) ? null : value.getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -521,11 +522,11 @@ public struct ValueGst
 	{
 		GValue* outdest = sliceNew!GValue();
 
-		auto p = gst_value_intersect(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
+		auto __p = gst_value_intersect(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
 
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -768,11 +769,11 @@ public struct ValueGst
 	{
 		GValue* outdest = sliceNew!GValue();
 
-		auto p = gst_value_subtract(outdest, (minuend is null) ? null : minuend.getValueStruct(), (subtrahend is null) ? null : subtrahend.getValueStruct()) != 0;
+		auto __p = gst_value_subtract(outdest, (minuend is null) ? null : minuend.getValueStruct(), (subtrahend is null) ? null : subtrahend.getValueStruct()) != 0;
 
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 
-		return p;
+		return __p;
 	}
 
 	alias unio = union_;
@@ -790,10 +791,10 @@ public struct ValueGst
 	{
 		GValue* outdest = sliceNew!GValue();
 
-		auto p = gst_value_union(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
+		auto __p = gst_value_union(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
 
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 
-		return p;
+		return __p;
 	}
 }

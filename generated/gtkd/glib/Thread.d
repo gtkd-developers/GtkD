@@ -234,7 +234,7 @@ public class Thread
 			return null;
 		}
 
-		return new Thread(cast(GThread*) __p, true);
+		return new Thread(cast(GThread*) __p);
 	}
 
 	/**
@@ -261,7 +261,8 @@ public class Thread
 	 *
 	 * This function accesses @address atomically.  All other accesses to
 	 * @address must be atomic in order for this function to work
-	 * reliably.
+	 * reliably. While @address has a `volatile` qualifier, this is a historical
+	 * artifact and the argument passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     address = a pointer to an integer
@@ -286,7 +287,8 @@ public class Thread
 	 *
 	 * This function accesses @address atomically.  All other accesses to
 	 * @address must be atomic in order for this function to work
-	 * reliably.
+	 * reliably. While @address has a `volatile` qualifier, this is a historical
+	 * artifact and the argument passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     address = a pointer to an integer
@@ -308,7 +310,8 @@ public class Thread
 	 *
 	 * This function accesses @address atomically.  All other accesses to
 	 * @address must be atomic in order for this function to work
-	 * reliably.
+	 * reliably. While @address has a `volatile` qualifier, this is a historical
+	 * artifact and the argument passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     address = a pointer to an integer
@@ -343,6 +346,9 @@ public class Thread
 	 * For portability reasons, you may only lock on the bottom 32 bits of
 	 * the pointer.
 	 *
+	 * While @address has a `volatile` qualifier, this is a historical
+	 * artifact and the argument passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     address = a pointer to a #gpointer-sized value
 	 *     lockBit = a bit value between 0 and 31
@@ -355,11 +361,14 @@ public class Thread
 	}
 
 	/**
-	 * This is equivalent to g_bit_trylock, but working on pointers (or
+	 * This is equivalent to g_bit_trylock(), but working on pointers (or
 	 * other pointer-sized values).
 	 *
 	 * For portability reasons, you may only lock on the bottom 32 bits of
 	 * the pointer.
+	 *
+	 * While @address has a `volatile` qualifier, this is a historical
+	 * artifact and the argument passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     address = a pointer to a #gpointer-sized value
@@ -380,6 +389,9 @@ public class Thread
 	 *
 	 * For portability reasons, you may only lock on the bottom 32 bits of
 	 * the pointer.
+	 *
+	 * While @address has a `volatile` qualifier, this is a historical
+	 * artifact and the argument passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     address = a pointer to a #gpointer-sized value

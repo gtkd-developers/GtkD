@@ -28,6 +28,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.OptionGroup;
 private import glib.Str;
+private import glib.c.functions;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
@@ -63,9 +64,9 @@ public struct GStreamer
 	 * <link linkend="gst-running">Running GStreamer Applications</link>
 	 * for how to disable automatic registry updates.
 	 *
-	 * > This function will terminate your program if it was unable to initialize
-	 * > GStreamer for some reason.  If you want your program to fall back,
-	 * > use gst_init_check() instead.
+	 * WARNING: This function will terminate your program if it was unable to
+	 * initialize GStreamer for some reason. If you want your program to fall back,
+	 * use gst_init_check() instead.
 	 *
 	 * WARNING: This function does not work in the same way as corresponding
 	 * functions in other glib-style libraries, such as gtk_init\(\). In
@@ -106,7 +107,7 @@ public struct GStreamer
 		char** outargv = Str.toStringzArray(argv);
 		GError* err = null;
 
-		auto p = gst_init_check(&argc, &outargv, &err) != 0;
+		auto __p = gst_init_check(&argc, &outargv, &err) != 0;
 
 		if (err !is null)
 		{
@@ -115,7 +116,7 @@ public struct GStreamer
 
 		argv = Str.toStringArray(outargv, argc);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -135,14 +136,14 @@ public struct GStreamer
 	 */
 	public static OptionGroup initGetOptionGroup()
 	{
-		auto p = gst_init_get_option_group();
+		auto __p = gst_init_get_option_group();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new OptionGroup(cast(GOptionGroup*) p, true);
+		return new OptionGroup(cast(GOptionGroup*) __p, true);
 	}
 
 	/**

@@ -100,14 +100,14 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	public this()
 	{
-		auto p = gtk_tool_item_new();
+		auto __p = gtk_tool_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkToolItem*) p);
+		this(cast(GtkToolItem*) __p);
 	}
 
 	/**
@@ -215,14 +215,14 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	public Widget getProxyMenuItem(string menuItemId)
 	{
-		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
+		auto __p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -282,14 +282,14 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	public SizeGroup getTextSizeGroup()
 	{
-		auto p = gtk_tool_item_get_text_size_group(gtkToolItem);
+		auto __p = gtk_tool_item_get_text_size_group(gtkToolItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SizeGroup)(cast(GtkSizeGroup*) p);
+		return ObjectG.getDObject!(SizeGroup)(cast(GtkSizeGroup*) __p);
 	}
 
 	/**
@@ -384,14 +384,14 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	public Widget retrieveProxyMenuItem()
 	{
-		auto p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
+		auto __p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

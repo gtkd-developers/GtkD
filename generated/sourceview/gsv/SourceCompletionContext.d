@@ -114,11 +114,11 @@ public class SourceCompletionContext : ObjectG
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		auto p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
+		auto __p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -26,6 +26,7 @@ module gtk.RecentFilter;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
@@ -57,14 +58,16 @@ public  import gtkc.gtktypes;
  * ## GtkRecentFilter as GtkBuildable
  * 
  * The GtkRecentFilter implementation of the GtkBuildable interface
- * supports adding rules using the <mime-types>, <patterns> and
- * <applications> elements and listing the rules within. Specifying
- * a <mime-type>, <pattern> or <application> has the same effect as
+ * supports adding rules using the `<mime-types>`, `<patterns>` and
+ * `<applications>` elements and listing the rules within. Specifying
+ * a `<mime-type>`, `<pattern>` or `<application>` has the same effect as
  * calling gtk_recent_filter_add_mime_type(),
  * gtk_recent_filter_add_pattern() or gtk_recent_filter_add_application().
  * 
- * An example of a UI definition fragment specifying GtkRecentFilter rules:
- * |[
+ * An example of a UI definition fragment specifying `GtkRecentFilter`
+ * rules:
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkRecentFilter">
  * <mime-types>
  * <mime-type>text/plain</mime-type>
@@ -140,14 +143,14 @@ public class RecentFilter : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_recent_filter_new();
+		auto __p = gtk_recent_filter_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRecentFilter*) p);
+		this(cast(GtkRecentFilter*) __p);
 	}
 
 	/**

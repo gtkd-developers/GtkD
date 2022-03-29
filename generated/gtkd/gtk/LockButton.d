@@ -115,14 +115,14 @@ public class LockButton : Button
 	 */
 	public this(Permission permission)
 	{
-		auto p = gtk_lock_button_new((permission is null) ? null : permission.getPermissionStruct());
+		auto __p = gtk_lock_button_new((permission is null) ? null : permission.getPermissionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLockButton*) p);
+		this(cast(GtkLockButton*) __p);
 	}
 
 	/**
@@ -134,14 +134,14 @@ public class LockButton : Button
 	 */
 	public Permission getPermission()
 	{
-		auto p = gtk_lock_button_get_permission(gtkLockButton);
+		auto __p = gtk_lock_button_get_permission(gtkLockButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Permission)(cast(GPermission*) p);
+		return ObjectG.getDObject!(Permission)(cast(GPermission*) __p);
 	}
 
 	/**

@@ -195,14 +195,14 @@ public class ScrolledWindow : Bin
 	 */
 	public this(Adjustment hadjustment, Adjustment vadjustment)
 	{
-		auto p = gtk_scrolled_window_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		auto __p = gtk_scrolled_window_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScrolledWindow*) p);
+		this(cast(GtkScrolledWindow*) __p);
 	}
 
 	/**
@@ -256,14 +256,14 @@ public class ScrolledWindow : Bin
 	 */
 	public Adjustment getHadjustment()
 	{
-		auto p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -275,14 +275,14 @@ public class ScrolledWindow : Bin
 	 */
 	public Widget getHscrollbar()
 	{
-		auto p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -431,14 +431,14 @@ public class ScrolledWindow : Bin
 	 */
 	public Adjustment getVadjustment()
 	{
-		auto p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -450,14 +450,14 @@ public class ScrolledWindow : Bin
 	 */
 	public Widget getVscrollbar()
 	{
-		auto p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
+		auto __p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -487,7 +487,7 @@ public class ScrolledWindow : Bin
 	 * Sets the #GtkAdjustment for the horizontal scrollbar.
 	 *
 	 * Params:
-	 *     hadjustment = horizontal scroll adjustment
+	 *     hadjustment = the #GtkAdjustment to use, or %NULL to create a new one
 	 */
 	public void setHadjustment(Adjustment hadjustment)
 	{
@@ -677,7 +677,7 @@ public class ScrolledWindow : Bin
 	 * Sets the #GtkAdjustment for the vertical scrollbar.
 	 *
 	 * Params:
-	 *     vadjustment = vertical scroll adjustment
+	 *     vadjustment = the #GtkAdjustment to use, or %NULL to create a new one
 	 */
 	public void setVadjustment(Adjustment vadjustment)
 	{

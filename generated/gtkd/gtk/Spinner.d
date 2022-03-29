@@ -91,14 +91,14 @@ public class Spinner : Widget
 	 */
 	public this()
 	{
-		auto p = gtk_spinner_new();
+		auto __p = gtk_spinner_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSpinner*) p);
+		this(cast(GtkSpinner*) __p);
 	}
 
 	/**

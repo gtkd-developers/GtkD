@@ -96,6 +96,11 @@ code: start
 	}
 code: end
 
+version 1.20: start
+	struct: Buffer
+	noCode: new_memdup
+version: end
+
 struct: BufferPool
 inout: config_get_allocator allocator
 
@@ -227,6 +232,7 @@ noCode: new_now_utc
 noCode: new_now_local_time
 noCode: new_from_unix_epoch_utc
 noCode: new_from_unix_epoch_local_time
+version 1.20: noCode: new_from_unix_epoch_local_time_usecs
 
 code: start
 	/**

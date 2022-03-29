@@ -97,7 +97,9 @@ shared static this()
 	Linker.link(g_bookmark_file_add_group, "g_bookmark_file_add_group", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_free, "g_bookmark_file_free", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_added, "g_bookmark_file_get_added", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_get_added_date_time, "g_bookmark_file_get_added_date_time", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_app_info, "g_bookmark_file_get_app_info", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_get_application_info, "g_bookmark_file_get_application_info", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_applications, "g_bookmark_file_get_applications", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_description, "g_bookmark_file_get_description", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_groups, "g_bookmark_file_get_groups", LIBRARY_GLIB);
@@ -105,10 +107,12 @@ shared static this()
 	Linker.link(g_bookmark_file_get_is_private, "g_bookmark_file_get_is_private", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_mime_type, "g_bookmark_file_get_mime_type", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_modified, "g_bookmark_file_get_modified", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_get_modified_date_time, "g_bookmark_file_get_modified_date_time", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_size, "g_bookmark_file_get_size", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_title, "g_bookmark_file_get_title", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_uris, "g_bookmark_file_get_uris", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_get_visited, "g_bookmark_file_get_visited", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_get_visited_date_time, "g_bookmark_file_get_visited_date_time", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_has_application, "g_bookmark_file_has_application", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_has_group, "g_bookmark_file_has_group", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_has_item, "g_bookmark_file_has_item", LIBRARY_GLIB);
@@ -120,15 +124,19 @@ shared static this()
 	Linker.link(g_bookmark_file_remove_group, "g_bookmark_file_remove_group", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_remove_item, "g_bookmark_file_remove_item", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_added, "g_bookmark_file_set_added", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_set_added_date_time, "g_bookmark_file_set_added_date_time", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_app_info, "g_bookmark_file_set_app_info", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_set_application_info, "g_bookmark_file_set_application_info", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_description, "g_bookmark_file_set_description", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_groups, "g_bookmark_file_set_groups", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_icon, "g_bookmark_file_set_icon", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_is_private, "g_bookmark_file_set_is_private", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_mime_type, "g_bookmark_file_set_mime_type", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_modified, "g_bookmark_file_set_modified", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_set_modified_date_time, "g_bookmark_file_set_modified_date_time", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_title, "g_bookmark_file_set_title", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_set_visited, "g_bookmark_file_set_visited", LIBRARY_GLIB);
+	Linker.link(g_bookmark_file_set_visited_date_time, "g_bookmark_file_set_visited_date_time", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_to_data, "g_bookmark_file_to_data", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_to_file, "g_bookmark_file_to_file", LIBRARY_GLIB);
 	Linker.link(g_bookmark_file_error_quark, "g_bookmark_file_error_quark", LIBRARY_GLIB);
@@ -162,6 +170,7 @@ shared static this()
 	Linker.link(g_bytes_compare, "g_bytes_compare", LIBRARY_GLIB);
 	Linker.link(g_bytes_equal, "g_bytes_equal", LIBRARY_GLIB);
 	Linker.link(g_bytes_get_data, "g_bytes_get_data", LIBRARY_GLIB);
+	Linker.link(g_bytes_get_region, "g_bytes_get_region", LIBRARY_GLIB);
 	Linker.link(g_bytes_get_size, "g_bytes_get_size", LIBRARY_GLIB);
 	Linker.link(g_bytes_hash, "g_bytes_hash", LIBRARY_GLIB);
 	Linker.link(g_bytes_new_from_bytes, "g_bytes_new_from_bytes", LIBRARY_GLIB);
@@ -267,7 +276,9 @@ shared static this()
 	Linker.link(g_date_time_add_seconds, "g_date_time_add_seconds", LIBRARY_GLIB);
 	Linker.link(g_date_time_add_weeks, "g_date_time_add_weeks", LIBRARY_GLIB);
 	Linker.link(g_date_time_add_years, "g_date_time_add_years", LIBRARY_GLIB);
+	Linker.link(g_date_time_compare, "g_date_time_compare", LIBRARY_GLIB);
 	Linker.link(g_date_time_difference, "g_date_time_difference", LIBRARY_GLIB);
+	Linker.link(g_date_time_equal, "g_date_time_equal", LIBRARY_GLIB);
 	Linker.link(g_date_time_format, "g_date_time_format", LIBRARY_GLIB);
 	Linker.link(g_date_time_format_iso8601, "g_date_time_format_iso8601", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_day_of_month, "g_date_time_get_day_of_month", LIBRARY_GLIB);
@@ -286,6 +297,7 @@ shared static this()
 	Linker.link(g_date_time_get_week_of_year, "g_date_time_get_week_of_year", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_year, "g_date_time_get_year", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_ymd, "g_date_time_get_ymd", LIBRARY_GLIB);
+	Linker.link(g_date_time_hash, "g_date_time_hash", LIBRARY_GLIB);
 	Linker.link(g_date_time_is_daylight_savings, "g_date_time_is_daylight_savings", LIBRARY_GLIB);
 	Linker.link(g_date_time_ref, "g_date_time_ref", LIBRARY_GLIB);
 	Linker.link(g_date_time_to_local, "g_date_time_to_local", LIBRARY_GLIB);
@@ -294,9 +306,6 @@ shared static this()
 	Linker.link(g_date_time_to_unix, "g_date_time_to_unix", LIBRARY_GLIB);
 	Linker.link(g_date_time_to_utc, "g_date_time_to_utc", LIBRARY_GLIB);
 	Linker.link(g_date_time_unref, "g_date_time_unref", LIBRARY_GLIB);
-	Linker.link(g_date_time_compare, "g_date_time_compare", LIBRARY_GLIB);
-	Linker.link(g_date_time_equal, "g_date_time_equal", LIBRARY_GLIB);
-	Linker.link(g_date_time_hash, "g_date_time_hash", LIBRARY_GLIB);
 
 	// glib.Directory
 
@@ -314,6 +323,8 @@ shared static this()
 	Linker.link(g_error_copy, "g_error_copy", LIBRARY_GLIB);
 	Linker.link(g_error_free, "g_error_free", LIBRARY_GLIB);
 	Linker.link(g_error_matches, "g_error_matches", LIBRARY_GLIB);
+	Linker.link(g_error_domain_register, "g_error_domain_register", LIBRARY_GLIB);
+	Linker.link(g_error_domain_register_static, "g_error_domain_register_static", LIBRARY_GLIB);
 	Linker.link(g_propagate_error, "g_propagate_error", LIBRARY_GLIB);
 	Linker.link(g_set_error_literal, "g_set_error_literal", LIBRARY_GLIB);
 	Linker.link(g_prefix_error, "g_prefix_error", LIBRARY_GLIB);
@@ -337,6 +348,7 @@ shared static this()
 	Linker.link(g_hash_table_lookup_extended, "g_hash_table_lookup_extended", LIBRARY_GLIB);
 	Linker.link(g_hash_table_new, "g_hash_table_new", LIBRARY_GLIB);
 	Linker.link(g_hash_table_new_full, "g_hash_table_new_full", LIBRARY_GLIB);
+	Linker.link(g_hash_table_new_similar, "g_hash_table_new_similar", LIBRARY_GLIB);
 	Linker.link(g_hash_table_ref, "g_hash_table_ref", LIBRARY_GLIB);
 	Linker.link(g_hash_table_remove, "g_hash_table_remove", LIBRARY_GLIB);
 	Linker.link(g_hash_table_remove_all, "g_hash_table_remove_all", LIBRARY_GLIB);
@@ -547,6 +559,7 @@ shared static this()
 	// glib.MainContext
 
 	Linker.link(g_main_context_new, "g_main_context_new", LIBRARY_GLIB);
+	Linker.link(g_main_context_new_with_flags, "g_main_context_new_with_flags", LIBRARY_GLIB);
 	Linker.link(g_main_context_acquire, "g_main_context_acquire", LIBRARY_GLIB);
 	Linker.link(g_main_context_add_poll, "g_main_context_add_poll", LIBRARY_GLIB);
 	Linker.link(g_main_context_check, "g_main_context_check", LIBRARY_GLIB);
@@ -719,9 +732,12 @@ shared static this()
 
 	// glib.Pattern
 
+	Linker.link(g_pattern_spec_new, "g_pattern_spec_new", LIBRARY_GLIB);
+	Linker.link(g_pattern_spec_copy, "g_pattern_spec_copy", LIBRARY_GLIB);
 	Linker.link(g_pattern_spec_equal, "g_pattern_spec_equal", LIBRARY_GLIB);
 	Linker.link(g_pattern_spec_free, "g_pattern_spec_free", LIBRARY_GLIB);
-	Linker.link(g_pattern_spec_new, "g_pattern_spec_new", LIBRARY_GLIB);
+	Linker.link(g_pattern_spec_match, "g_pattern_spec_match", LIBRARY_GLIB);
+	Linker.link(g_pattern_spec_match_string, "g_pattern_spec_match_string", LIBRARY_GLIB);
 	Linker.link(g_pattern_match, "g_pattern_match", LIBRARY_GLIB);
 	Linker.link(g_pattern_match_simple, "g_pattern_match_simple", LIBRARY_GLIB);
 	Linker.link(g_pattern_match_string, "g_pattern_match_string", LIBRARY_GLIB);
@@ -1007,6 +1023,7 @@ shared static this()
 	Linker.link(g_source_set_name, "g_source_set_name", LIBRARY_GLIB);
 	Linker.link(g_source_set_priority, "g_source_set_priority", LIBRARY_GLIB);
 	Linker.link(g_source_set_ready_time, "g_source_set_ready_time", LIBRARY_GLIB);
+	Linker.link(g_source_set_static_name, "g_source_set_static_name", LIBRARY_GLIB);
 	Linker.link(g_source_unref, "g_source_unref", LIBRARY_GLIB);
 	Linker.link(g_source_remove, "g_source_remove", LIBRARY_GLIB);
 	Linker.link(g_source_remove_by_funcs_user_data, "g_source_remove_by_funcs_user_data", LIBRARY_GLIB);
@@ -1015,6 +1032,9 @@ shared static this()
 
 	// glib.StringG
 
+	Linker.link(g_string_new, "g_string_new", LIBRARY_GLIB);
+	Linker.link(g_string_new_len, "g_string_new_len", LIBRARY_GLIB);
+	Linker.link(g_string_sized_new, "g_string_sized_new", LIBRARY_GLIB);
 	Linker.link(g_string_append, "g_string_append", LIBRARY_GLIB);
 	Linker.link(g_string_append_c, "g_string_append_c", LIBRARY_GLIB);
 	Linker.link(g_string_append_len, "g_string_append_len", LIBRARY_GLIB);
@@ -1042,13 +1062,11 @@ shared static this()
 	Linker.link(g_string_prepend_len, "g_string_prepend_len", LIBRARY_GLIB);
 	Linker.link(g_string_prepend_unichar, "g_string_prepend_unichar", LIBRARY_GLIB);
 	Linker.link(g_string_printf, "g_string_printf", LIBRARY_GLIB);
+	Linker.link(g_string_replace, "g_string_replace", LIBRARY_GLIB);
 	Linker.link(g_string_set_size, "g_string_set_size", LIBRARY_GLIB);
 	Linker.link(g_string_truncate, "g_string_truncate", LIBRARY_GLIB);
 	Linker.link(g_string_up, "g_string_up", LIBRARY_GLIB);
 	Linker.link(g_string_vprintf, "g_string_vprintf", LIBRARY_GLIB);
-	Linker.link(g_string_new, "g_string_new", LIBRARY_GLIB);
-	Linker.link(g_string_new_len, "g_string_new_len", LIBRARY_GLIB);
-	Linker.link(g_string_sized_new, "g_string_sized_new", LIBRARY_GLIB);
 
 	// glib.StringChunk
 
@@ -1058,6 +1076,20 @@ shared static this()
 	Linker.link(g_string_chunk_insert_const, "g_string_chunk_insert_const", LIBRARY_GLIB);
 	Linker.link(g_string_chunk_insert_len, "g_string_chunk_insert_len", LIBRARY_GLIB);
 	Linker.link(g_string_chunk_new, "g_string_chunk_new", LIBRARY_GLIB);
+
+	// glib.StrvBuilder
+
+	Linker.link(g_strv_builder_add, "g_strv_builder_add", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_add_many, "g_strv_builder_add_many", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_addv, "g_strv_builder_addv", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_end, "g_strv_builder_end", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_ref, "g_strv_builder_ref", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_unref, "g_strv_builder_unref", LIBRARY_GLIB);
+	Linker.link(g_strv_builder_new, "g_strv_builder_new", LIBRARY_GLIB);
+
+	// glib.TestCase
+
+	Linker.link(g_test_case_free, "g_test_case_free", LIBRARY_GLIB);
 
 	// glib.TestLogBuffer
 
@@ -1074,6 +1106,7 @@ shared static this()
 
 	Linker.link(g_test_suite_add, "g_test_suite_add", LIBRARY_GLIB);
 	Linker.link(g_test_suite_add_suite, "g_test_suite_add_suite", LIBRARY_GLIB);
+	Linker.link(g_test_suite_free, "g_test_suite_free", LIBRARY_GLIB);
 
 	// glib.Thread
 
@@ -1108,6 +1141,7 @@ shared static this()
 	Linker.link(g_thread_pool_get_max_unused_threads, "g_thread_pool_get_max_unused_threads", LIBRARY_GLIB);
 	Linker.link(g_thread_pool_get_num_unused_threads, "g_thread_pool_get_num_unused_threads", LIBRARY_GLIB);
 	Linker.link(g_thread_pool_new, "g_thread_pool_new", LIBRARY_GLIB);
+	Linker.link(g_thread_pool_new_full, "g_thread_pool_new_full", LIBRARY_GLIB);
 	Linker.link(g_thread_pool_set_max_idle_time, "g_thread_pool_set_max_idle_time", LIBRARY_GLIB);
 	Linker.link(g_thread_pool_set_max_unused_threads, "g_thread_pool_set_max_unused_threads", LIBRARY_GLIB);
 	Linker.link(g_thread_pool_stop_unused_threads, "g_thread_pool_stop_unused_threads", LIBRARY_GLIB);
@@ -1125,6 +1159,7 @@ shared static this()
 	// glib.TimeZone
 
 	Linker.link(g_time_zone_new, "g_time_zone_new", LIBRARY_GLIB);
+	Linker.link(g_time_zone_new_identifier, "g_time_zone_new_identifier", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_local, "g_time_zone_new_local", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_offset, "g_time_zone_new_offset", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_utc, "g_time_zone_new_utc", LIBRARY_GLIB);
@@ -1157,23 +1192,84 @@ shared static this()
 
 	// glib.BBTree
 
-	Linker.link(g_tree_destroy, "g_tree_destroy", LIBRARY_GLIB);
-	Linker.link(g_tree_foreach, "g_tree_foreach", LIBRARY_GLIB);
-	Linker.link(g_tree_height, "g_tree_height", LIBRARY_GLIB);
-	Linker.link(g_tree_insert, "g_tree_insert", LIBRARY_GLIB);
-	Linker.link(g_tree_lookup, "g_tree_lookup", LIBRARY_GLIB);
-	Linker.link(g_tree_lookup_extended, "g_tree_lookup_extended", LIBRARY_GLIB);
-	Linker.link(g_tree_nnodes, "g_tree_nnodes", LIBRARY_GLIB);
-	Linker.link(g_tree_ref, "g_tree_ref", LIBRARY_GLIB);
-	Linker.link(g_tree_remove, "g_tree_remove", LIBRARY_GLIB);
-	Linker.link(g_tree_replace, "g_tree_replace", LIBRARY_GLIB);
-	Linker.link(g_tree_search, "g_tree_search", LIBRARY_GLIB);
-	Linker.link(g_tree_steal, "g_tree_steal", LIBRARY_GLIB);
-	Linker.link(g_tree_traverse, "g_tree_traverse", LIBRARY_GLIB);
-	Linker.link(g_tree_unref, "g_tree_unref", LIBRARY_GLIB);
 	Linker.link(g_tree_new, "g_tree_new", LIBRARY_GLIB);
 	Linker.link(g_tree_new_full, "g_tree_new_full", LIBRARY_GLIB);
 	Linker.link(g_tree_new_with_data, "g_tree_new_with_data", LIBRARY_GLIB);
+	Linker.link(g_tree_destroy, "g_tree_destroy", LIBRARY_GLIB);
+	Linker.link(g_tree_foreach, "g_tree_foreach", LIBRARY_GLIB);
+	Linker.link(g_tree_foreach_node, "g_tree_foreach_node", LIBRARY_GLIB);
+	Linker.link(g_tree_height, "g_tree_height", LIBRARY_GLIB);
+	Linker.link(g_tree_insert, "g_tree_insert", LIBRARY_GLIB);
+	Linker.link(g_tree_insert_node, "g_tree_insert_node", LIBRARY_GLIB);
+	Linker.link(g_tree_lookup, "g_tree_lookup", LIBRARY_GLIB);
+	Linker.link(g_tree_lookup_extended, "g_tree_lookup_extended", LIBRARY_GLIB);
+	Linker.link(g_tree_lookup_node, "g_tree_lookup_node", LIBRARY_GLIB);
+	Linker.link(g_tree_lower_bound, "g_tree_lower_bound", LIBRARY_GLIB);
+	Linker.link(g_tree_nnodes, "g_tree_nnodes", LIBRARY_GLIB);
+	Linker.link(g_tree_node_first, "g_tree_node_first", LIBRARY_GLIB);
+	Linker.link(g_tree_node_last, "g_tree_node_last", LIBRARY_GLIB);
+	Linker.link(g_tree_ref, "g_tree_ref", LIBRARY_GLIB);
+	Linker.link(g_tree_remove, "g_tree_remove", LIBRARY_GLIB);
+	Linker.link(g_tree_remove_all, "g_tree_remove_all", LIBRARY_GLIB);
+	Linker.link(g_tree_replace, "g_tree_replace", LIBRARY_GLIB);
+	Linker.link(g_tree_replace_node, "g_tree_replace_node", LIBRARY_GLIB);
+	Linker.link(g_tree_search, "g_tree_search", LIBRARY_GLIB);
+	Linker.link(g_tree_search_node, "g_tree_search_node", LIBRARY_GLIB);
+	Linker.link(g_tree_steal, "g_tree_steal", LIBRARY_GLIB);
+	Linker.link(g_tree_traverse, "g_tree_traverse", LIBRARY_GLIB);
+	Linker.link(g_tree_unref, "g_tree_unref", LIBRARY_GLIB);
+	Linker.link(g_tree_upper_bound, "g_tree_upper_bound", LIBRARY_GLIB);
+
+	// glib.TreeNode
+
+	Linker.link(g_tree_node_key, "g_tree_node_key", LIBRARY_GLIB);
+	Linker.link(g_tree_node_next, "g_tree_node_next", LIBRARY_GLIB);
+	Linker.link(g_tree_node_previous, "g_tree_node_previous", LIBRARY_GLIB);
+	Linker.link(g_tree_node_value, "g_tree_node_value", LIBRARY_GLIB);
+
+	// glib.URI
+
+	Linker.link(g_uri_get_auth_params, "g_uri_get_auth_params", LIBRARY_GLIB);
+	Linker.link(g_uri_get_flags, "g_uri_get_flags", LIBRARY_GLIB);
+	Linker.link(g_uri_get_fragment, "g_uri_get_fragment", LIBRARY_GLIB);
+	Linker.link(g_uri_get_host, "g_uri_get_host", LIBRARY_GLIB);
+	Linker.link(g_uri_get_password, "g_uri_get_password", LIBRARY_GLIB);
+	Linker.link(g_uri_get_path, "g_uri_get_path", LIBRARY_GLIB);
+	Linker.link(g_uri_get_port, "g_uri_get_port", LIBRARY_GLIB);
+	Linker.link(g_uri_get_query, "g_uri_get_query", LIBRARY_GLIB);
+	Linker.link(g_uri_get_scheme, "g_uri_get_scheme", LIBRARY_GLIB);
+	Linker.link(g_uri_get_user, "g_uri_get_user", LIBRARY_GLIB);
+	Linker.link(g_uri_get_userinfo, "g_uri_get_userinfo", LIBRARY_GLIB);
+	Linker.link(g_uri_parse_relative, "g_uri_parse_relative", LIBRARY_GLIB);
+	Linker.link(g_uri_ref, "g_uri_ref", LIBRARY_GLIB);
+	Linker.link(g_uri_to_string, "g_uri_to_string", LIBRARY_GLIB);
+	Linker.link(g_uri_to_string_partial, "g_uri_to_string_partial", LIBRARY_GLIB);
+	Linker.link(g_uri_unref, "g_uri_unref", LIBRARY_GLIB);
+	Linker.link(g_uri_build, "g_uri_build", LIBRARY_GLIB);
+	Linker.link(g_uri_build_with_user, "g_uri_build_with_user", LIBRARY_GLIB);
+	Linker.link(g_uri_error_quark, "g_uri_error_quark", LIBRARY_GLIB);
+	Linker.link(g_uri_escape_bytes, "g_uri_escape_bytes", LIBRARY_GLIB);
+	Linker.link(g_uri_escape_string, "g_uri_escape_string", LIBRARY_GLIB);
+	Linker.link(g_uri_is_valid, "g_uri_is_valid", LIBRARY_GLIB);
+	Linker.link(g_uri_join, "g_uri_join", LIBRARY_GLIB);
+	Linker.link(g_uri_join_with_user, "g_uri_join_with_user", LIBRARY_GLIB);
+	Linker.link(g_uri_list_extract_uris, "g_uri_list_extract_uris", LIBRARY_GLIB);
+	Linker.link(g_uri_parse, "g_uri_parse", LIBRARY_GLIB);
+	Linker.link(g_uri_parse_params, "g_uri_parse_params", LIBRARY_GLIB);
+	Linker.link(g_uri_parse_scheme, "g_uri_parse_scheme", LIBRARY_GLIB);
+	Linker.link(g_uri_peek_scheme, "g_uri_peek_scheme", LIBRARY_GLIB);
+	Linker.link(g_uri_resolve_relative, "g_uri_resolve_relative", LIBRARY_GLIB);
+	Linker.link(g_uri_split, "g_uri_split", LIBRARY_GLIB);
+	Linker.link(g_uri_split_network, "g_uri_split_network", LIBRARY_GLIB);
+	Linker.link(g_uri_split_with_user, "g_uri_split_with_user", LIBRARY_GLIB);
+	Linker.link(g_uri_unescape_bytes, "g_uri_unescape_bytes", LIBRARY_GLIB);
+	Linker.link(g_uri_unescape_segment, "g_uri_unescape_segment", LIBRARY_GLIB);
+	Linker.link(g_uri_unescape_string, "g_uri_unescape_string", LIBRARY_GLIB);
+
+	// glib.UriParamsIter
+
+	Linker.link(g_uri_params_iter_init, "g_uri_params_iter_init", LIBRARY_GLIB);
+	Linker.link(g_uri_params_iter_next, "g_uri_params_iter_next", LIBRARY_GLIB);
 
 	// glib.Variant
 
@@ -1350,7 +1446,9 @@ shared static this()
 	Linker.link(g_module_symbol, "g_module_symbol", LIBRARY_GLIB);
 	Linker.link(g_module_build_path, "g_module_build_path", LIBRARY_GLIB);
 	Linker.link(g_module_error, "g_module_error", LIBRARY_GLIB);
+	Linker.link(g_module_error_quark, "g_module_error_quark", LIBRARY_GLIB);
 	Linker.link(g_module_open, "g_module_open", LIBRARY_GLIB);
+	Linker.link(g_module_open_full, "g_module_open_full", LIBRARY_GLIB);
 	Linker.link(g_module_supported, "g_module_supported", LIBRARY_GLIB);
 
 	// glib.Base64
@@ -1773,11 +1871,6 @@ shared static this()
 
 	Linker.link(g_filename_from_uri, "g_filename_from_uri", LIBRARY_GLIB);
 	Linker.link(g_filename_to_uri, "g_filename_to_uri", LIBRARY_GLIB);
-	Linker.link(g_uri_escape_string, "g_uri_escape_string", LIBRARY_GLIB);
-	Linker.link(g_uri_list_extract_uris, "g_uri_list_extract_uris", LIBRARY_GLIB);
-	Linker.link(g_uri_parse_scheme, "g_uri_parse_scheme", LIBRARY_GLIB);
-	Linker.link(g_uri_unescape_segment, "g_uri_unescape_segment", LIBRARY_GLIB);
-	Linker.link(g_uri_unescape_string, "g_uri_unescape_string", LIBRARY_GLIB);
 
 	// glib.Uuid
 
@@ -1857,7 +1950,9 @@ __gshared extern(C)
 	void function(GBookmarkFile* bookmark, const(char)* uri, const(char)* group) c_g_bookmark_file_add_group;
 	void function(GBookmarkFile* bookmark) c_g_bookmark_file_free;
 	uint function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_added;
+	GDateTime* function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_added_date_time;
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* name, char** exec, uint* count, uint* stamp, GError** err) c_g_bookmark_file_get_app_info;
+	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* name, char** exec, uint* count, GDateTime** stamp, GError** err) c_g_bookmark_file_get_application_info;
 	char** function(GBookmarkFile* bookmark, const(char)* uri, size_t* length, GError** err) c_g_bookmark_file_get_applications;
 	char* function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_description;
 	char** function(GBookmarkFile* bookmark, const(char)* uri, size_t* length, GError** err) c_g_bookmark_file_get_groups;
@@ -1865,10 +1960,12 @@ __gshared extern(C)
 	int function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_is_private;
 	char* function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_mime_type;
 	uint function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_modified;
+	GDateTime* function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_modified_date_time;
 	int function(GBookmarkFile* bookmark) c_g_bookmark_file_get_size;
 	char* function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_title;
 	char** function(GBookmarkFile* bookmark, size_t* length) c_g_bookmark_file_get_uris;
 	uint function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_visited;
+	GDateTime* function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_get_visited_date_time;
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* name, GError** err) c_g_bookmark_file_has_application;
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* group, GError** err) c_g_bookmark_file_has_group;
 	int function(GBookmarkFile* bookmark, const(char)* uri) c_g_bookmark_file_has_item;
@@ -1880,15 +1977,19 @@ __gshared extern(C)
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* group, GError** err) c_g_bookmark_file_remove_group;
 	int function(GBookmarkFile* bookmark, const(char)* uri, GError** err) c_g_bookmark_file_remove_item;
 	void function(GBookmarkFile* bookmark, const(char)* uri, uint added) c_g_bookmark_file_set_added;
+	void function(GBookmarkFile* bookmark, const(char)* uri, GDateTime* added) c_g_bookmark_file_set_added_date_time;
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* name, const(char)* exec, int count, uint stamp, GError** err) c_g_bookmark_file_set_app_info;
+	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* name, const(char)* exec, int count, GDateTime* stamp, GError** err) c_g_bookmark_file_set_application_info;
 	void function(GBookmarkFile* bookmark, const(char)* uri, const(char)* description) c_g_bookmark_file_set_description;
 	void function(GBookmarkFile* bookmark, const(char)* uri, char** groups, size_t length) c_g_bookmark_file_set_groups;
 	void function(GBookmarkFile* bookmark, const(char)* uri, const(char)* href, const(char)* mimeType) c_g_bookmark_file_set_icon;
 	void function(GBookmarkFile* bookmark, const(char)* uri, int isPrivate) c_g_bookmark_file_set_is_private;
 	void function(GBookmarkFile* bookmark, const(char)* uri, const(char)* mimeType) c_g_bookmark_file_set_mime_type;
 	void function(GBookmarkFile* bookmark, const(char)* uri, uint modified) c_g_bookmark_file_set_modified;
+	void function(GBookmarkFile* bookmark, const(char)* uri, GDateTime* modified) c_g_bookmark_file_set_modified_date_time;
 	void function(GBookmarkFile* bookmark, const(char)* uri, const(char)* title) c_g_bookmark_file_set_title;
 	void function(GBookmarkFile* bookmark, const(char)* uri, uint visited) c_g_bookmark_file_set_visited;
+	void function(GBookmarkFile* bookmark, const(char)* uri, GDateTime* visited) c_g_bookmark_file_set_visited_date_time;
 	char* function(GBookmarkFile* bookmark, size_t* length, GError** err) c_g_bookmark_file_to_data;
 	int function(GBookmarkFile* bookmark, char* filename, GError** err) c_g_bookmark_file_to_file;
 	GQuark function() c_g_bookmark_file_error_quark;
@@ -1922,6 +2023,7 @@ __gshared extern(C)
 	int function(void* bytes1, void* bytes2) c_g_bytes_compare;
 	int function(void* bytes1, void* bytes2) c_g_bytes_equal;
 	void* function(GBytes* bytes, size_t* size) c_g_bytes_get_data;
+	void* function(GBytes* bytes, size_t elementSize, size_t offset, size_t nElements) c_g_bytes_get_region;
 	size_t function(GBytes* bytes) c_g_bytes_get_size;
 	uint function(void* bytes) c_g_bytes_hash;
 	GBytes* function(GBytes* bytes, size_t offset, size_t length) c_g_bytes_new_from_bytes;
@@ -2027,7 +2129,9 @@ __gshared extern(C)
 	GDateTime* function(GDateTime* datetime, double seconds) c_g_date_time_add_seconds;
 	GDateTime* function(GDateTime* datetime, int weeks) c_g_date_time_add_weeks;
 	GDateTime* function(GDateTime* datetime, int years) c_g_date_time_add_years;
+	int function(void* dt1, void* dt2) c_g_date_time_compare;
 	GTimeSpan function(GDateTime* end, GDateTime* begin) c_g_date_time_difference;
+	int function(void* dt1, void* dt2) c_g_date_time_equal;
 	char* function(GDateTime* datetime, const(char)* format) c_g_date_time_format;
 	char* function(GDateTime* datetime) c_g_date_time_format_iso8601;
 	int function(GDateTime* datetime) c_g_date_time_get_day_of_month;
@@ -2046,6 +2150,7 @@ __gshared extern(C)
 	int function(GDateTime* datetime) c_g_date_time_get_week_of_year;
 	int function(GDateTime* datetime) c_g_date_time_get_year;
 	void function(GDateTime* datetime, int* year, int* month, int* day) c_g_date_time_get_ymd;
+	uint function(void* datetime) c_g_date_time_hash;
 	int function(GDateTime* datetime) c_g_date_time_is_daylight_savings;
 	GDateTime* function(GDateTime* datetime) c_g_date_time_ref;
 	GDateTime* function(GDateTime* datetime) c_g_date_time_to_local;
@@ -2054,9 +2159,6 @@ __gshared extern(C)
 	long function(GDateTime* datetime) c_g_date_time_to_unix;
 	GDateTime* function(GDateTime* datetime) c_g_date_time_to_utc;
 	void function(GDateTime* datetime) c_g_date_time_unref;
-	int function(void* dt1, void* dt2) c_g_date_time_compare;
-	int function(void* dt1, void* dt2) c_g_date_time_equal;
-	uint function(void* datetime) c_g_date_time_hash;
 
 	// glib.Directory
 
@@ -2074,6 +2176,8 @@ __gshared extern(C)
 	GError* function(GError* error) c_g_error_copy;
 	void function(GError* error) c_g_error_free;
 	int function(GError* error, GQuark domain, int code) c_g_error_matches;
+	GQuark function(const(char)* errorTypeName, size_t errorTypePrivateSize, GErrorInitFunc errorTypeInit, GErrorCopyFunc errorTypeCopy, GErrorClearFunc errorTypeClear) c_g_error_domain_register;
+	GQuark function(const(char)* errorTypeName, size_t errorTypePrivateSize, GErrorInitFunc errorTypeInit, GErrorCopyFunc errorTypeCopy, GErrorClearFunc errorTypeClear) c_g_error_domain_register_static;
 	void function(GError** dest, GError* src) c_g_propagate_error;
 	void function(GError** err, GQuark domain, int code, const(char)* message) c_g_set_error_literal;
 	void function(GError** err, const(char)* format, ... ) c_g_prefix_error;
@@ -2097,6 +2201,7 @@ __gshared extern(C)
 	int function(GHashTable* hashTable, void* lookupKey, void** origKey, void** value) c_g_hash_table_lookup_extended;
 	GHashTable* function(GHashFunc hashFunc, GEqualFunc keyEqualFunc) c_g_hash_table_new;
 	GHashTable* function(GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_hash_table_new_full;
+	GHashTable* function(GHashTable* otherHashTable) c_g_hash_table_new_similar;
 	GHashTable* function(GHashTable* hashTable) c_g_hash_table_ref;
 	int function(GHashTable* hashTable, void* key) c_g_hash_table_remove;
 	void function(GHashTable* hashTable) c_g_hash_table_remove_all;
@@ -2307,6 +2412,7 @@ __gshared extern(C)
 	// glib.MainContext
 
 	GMainContext* function() c_g_main_context_new;
+	GMainContext* function(GMainContextFlags flags) c_g_main_context_new_with_flags;
 	int function(GMainContext* context) c_g_main_context_acquire;
 	void function(GMainContext* context, GPollFD* fd, int priority) c_g_main_context_add_poll;
 	int function(GMainContext* context, int maxPriority, GPollFD* fds, int nFds) c_g_main_context_check;
@@ -2479,9 +2585,12 @@ __gshared extern(C)
 
 	// glib.Pattern
 
+	GPatternSpec* function(const(char)* pattern) c_g_pattern_spec_new;
+	GPatternSpec* function(GPatternSpec* pspec) c_g_pattern_spec_copy;
 	int function(GPatternSpec* pspec1, GPatternSpec* pspec2) c_g_pattern_spec_equal;
 	void function(GPatternSpec* pspec) c_g_pattern_spec_free;
-	GPatternSpec* function(const(char)* pattern) c_g_pattern_spec_new;
+	int function(GPatternSpec* pspec, size_t stringLength, const(char)* string_, const(char)* stringReversed) c_g_pattern_spec_match;
+	int function(GPatternSpec* pspec, const(char)* string_) c_g_pattern_spec_match_string;
 	int function(GPatternSpec* pspec, uint stringLength, const(char)* string_, const(char)* stringReversed) c_g_pattern_match;
 	int function(const(char)* pattern, const(char)* string_) c_g_pattern_match_simple;
 	int function(GPatternSpec* pspec, const(char)* string_) c_g_pattern_match_string;
@@ -2767,6 +2876,7 @@ __gshared extern(C)
 	void function(GSource* source, const(char)* name) c_g_source_set_name;
 	void function(GSource* source, int priority) c_g_source_set_priority;
 	void function(GSource* source, long readyTime) c_g_source_set_ready_time;
+	void function(GSource* source, const(char)* name) c_g_source_set_static_name;
 	void function(GSource* source) c_g_source_unref;
 	int function(uint tag) c_g_source_remove;
 	int function(GSourceFuncs* funcs, void* userData) c_g_source_remove_by_funcs_user_data;
@@ -2775,6 +2885,9 @@ __gshared extern(C)
 
 	// glib.StringG
 
+	GString* function(const(char)* init) c_g_string_new;
+	GString* function(const(char)* init, ptrdiff_t len) c_g_string_new_len;
+	GString* function(size_t dflSize) c_g_string_sized_new;
 	GString* function(GString* string_, const(char)* val) c_g_string_append;
 	GString* function(GString* string_, char c) c_g_string_append_c;
 	GString* function(GString* string_, const(char)* val, ptrdiff_t len) c_g_string_append_len;
@@ -2802,13 +2915,11 @@ __gshared extern(C)
 	GString* function(GString* string_, const(char)* val, ptrdiff_t len) c_g_string_prepend_len;
 	GString* function(GString* string_, dchar wc) c_g_string_prepend_unichar;
 	void function(GString* string_, const(char)* format, ... ) c_g_string_printf;
+	uint function(GString* string_, const(char)* find, const(char)* replace, uint limit) c_g_string_replace;
 	GString* function(GString* string_, size_t len) c_g_string_set_size;
 	GString* function(GString* string_, size_t len) c_g_string_truncate;
 	GString* function(GString* string_) c_g_string_up;
 	void function(GString* string_, const(char)* format, void* args) c_g_string_vprintf;
-	GString* function(const(char)* init) c_g_string_new;
-	GString* function(const(char)* init, ptrdiff_t len) c_g_string_new_len;
-	GString* function(size_t dflSize) c_g_string_sized_new;
 
 	// glib.StringChunk
 
@@ -2818,6 +2929,20 @@ __gshared extern(C)
 	char* function(GStringChunk* chunk, const(char)* string_) c_g_string_chunk_insert_const;
 	char* function(GStringChunk* chunk, const(char)* string_, ptrdiff_t len) c_g_string_chunk_insert_len;
 	GStringChunk* function(size_t size) c_g_string_chunk_new;
+
+	// glib.StrvBuilder
+
+	void function(GStrvBuilder* builder, const(char)* value) c_g_strv_builder_add;
+	void function(GStrvBuilder* builder, ... ) c_g_strv_builder_add_many;
+	void function(GStrvBuilder* builder, char** value) c_g_strv_builder_addv;
+	GStrv function(GStrvBuilder* builder) c_g_strv_builder_end;
+	GStrvBuilder* function(GStrvBuilder* builder) c_g_strv_builder_ref;
+	void function(GStrvBuilder* builder) c_g_strv_builder_unref;
+	GStrvBuilder* function() c_g_strv_builder_new;
+
+	// glib.TestCase
+
+	void function(GTestCase* testCase) c_g_test_case_free;
 
 	// glib.TestLogBuffer
 
@@ -2834,6 +2959,7 @@ __gshared extern(C)
 
 	void function(GTestSuite* suite, GTestCase* testCase) c_g_test_suite_add;
 	void function(GTestSuite* suite, GTestSuite* nestedsuite) c_g_test_suite_add_suite;
+	void function(GTestSuite* suite) c_g_test_suite_free;
 
 	// glib.Thread
 
@@ -2868,6 +2994,7 @@ __gshared extern(C)
 	int function() c_g_thread_pool_get_max_unused_threads;
 	uint function() c_g_thread_pool_get_num_unused_threads;
 	GThreadPool* function(GFunc func, void* userData, int maxThreads, int exclusive, GError** err) c_g_thread_pool_new;
+	GThreadPool* function(GFunc func, void* userData, GDestroyNotify itemFreeFunc, int maxThreads, int exclusive, GError** err) c_g_thread_pool_new_full;
 	void function(uint interval) c_g_thread_pool_set_max_idle_time;
 	void function(int maxThreads) c_g_thread_pool_set_max_unused_threads;
 	void function() c_g_thread_pool_stop_unused_threads;
@@ -2885,6 +3012,7 @@ __gshared extern(C)
 	// glib.TimeZone
 
 	GTimeZone* function(const(char)* identifier) c_g_time_zone_new;
+	GTimeZone* function(const(char)* identifier) c_g_time_zone_new_identifier;
 	GTimeZone* function() c_g_time_zone_new_local;
 	GTimeZone* function(int seconds) c_g_time_zone_new_offset;
 	GTimeZone* function() c_g_time_zone_new_utc;
@@ -2917,23 +3045,84 @@ __gshared extern(C)
 
 	// glib.BBTree
 
-	void function(GTree* tree) c_g_tree_destroy;
-	void function(GTree* tree, GTraverseFunc func, void* userData) c_g_tree_foreach;
-	int function(GTree* tree) c_g_tree_height;
-	void function(GTree* tree, void* key, void* value) c_g_tree_insert;
-	void* function(GTree* tree, void* key) c_g_tree_lookup;
-	int function(GTree* tree, void* lookupKey, void** origKey, void** value) c_g_tree_lookup_extended;
-	int function(GTree* tree) c_g_tree_nnodes;
-	GTree* function(GTree* tree) c_g_tree_ref;
-	int function(GTree* tree, void* key) c_g_tree_remove;
-	void function(GTree* tree, void* key, void* value) c_g_tree_replace;
-	void* function(GTree* tree, GCompareFunc searchFunc, void* userData) c_g_tree_search;
-	int function(GTree* tree, void* key) c_g_tree_steal;
-	void function(GTree* tree, GTraverseFunc traverseFunc, GTraverseType traverseType, void* userData) c_g_tree_traverse;
-	void function(GTree* tree) c_g_tree_unref;
 	GTree* function(GCompareFunc keyCompareFunc) c_g_tree_new;
 	GTree* function(GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_tree_new_full;
 	GTree* function(GCompareDataFunc keyCompareFunc, void* keyCompareData) c_g_tree_new_with_data;
+	void function(GTree* tree) c_g_tree_destroy;
+	void function(GTree* tree, GTraverseFunc func, void* userData) c_g_tree_foreach;
+	void function(GTree* tree, GTraverseNodeFunc func, void* userData) c_g_tree_foreach_node;
+	int function(GTree* tree) c_g_tree_height;
+	void function(GTree* tree, void* key, void* value) c_g_tree_insert;
+	GTreeNode* function(GTree* tree, void* key, void* value) c_g_tree_insert_node;
+	void* function(GTree* tree, void* key) c_g_tree_lookup;
+	int function(GTree* tree, void* lookupKey, void** origKey, void** value) c_g_tree_lookup_extended;
+	GTreeNode* function(GTree* tree, void* key) c_g_tree_lookup_node;
+	GTreeNode* function(GTree* tree, void* key) c_g_tree_lower_bound;
+	int function(GTree* tree) c_g_tree_nnodes;
+	GTreeNode* function(GTree* tree) c_g_tree_node_first;
+	GTreeNode* function(GTree* tree) c_g_tree_node_last;
+	GTree* function(GTree* tree) c_g_tree_ref;
+	int function(GTree* tree, void* key) c_g_tree_remove;
+	void function(GTree* tree) c_g_tree_remove_all;
+	void function(GTree* tree, void* key, void* value) c_g_tree_replace;
+	GTreeNode* function(GTree* tree, void* key, void* value) c_g_tree_replace_node;
+	void* function(GTree* tree, GCompareFunc searchFunc, void* userData) c_g_tree_search;
+	GTreeNode* function(GTree* tree, GCompareFunc searchFunc, void* userData) c_g_tree_search_node;
+	int function(GTree* tree, void* key) c_g_tree_steal;
+	void function(GTree* tree, GTraverseFunc traverseFunc, GTraverseType traverseType, void* userData) c_g_tree_traverse;
+	void function(GTree* tree) c_g_tree_unref;
+	GTreeNode* function(GTree* tree, void* key) c_g_tree_upper_bound;
+
+	// glib.TreeNode
+
+	void* function(GTreeNode* node) c_g_tree_node_key;
+	GTreeNode* function(GTreeNode* node) c_g_tree_node_next;
+	GTreeNode* function(GTreeNode* node) c_g_tree_node_previous;
+	void* function(GTreeNode* node) c_g_tree_node_value;
+
+	// glib.URI
+
+	const(char)* function(GUri* uri) c_g_uri_get_auth_params;
+	GUriFlags function(GUri* uri) c_g_uri_get_flags;
+	const(char)* function(GUri* uri) c_g_uri_get_fragment;
+	const(char)* function(GUri* uri) c_g_uri_get_host;
+	const(char)* function(GUri* uri) c_g_uri_get_password;
+	const(char)* function(GUri* uri) c_g_uri_get_path;
+	int function(GUri* uri) c_g_uri_get_port;
+	const(char)* function(GUri* uri) c_g_uri_get_query;
+	const(char)* function(GUri* uri) c_g_uri_get_scheme;
+	const(char)* function(GUri* uri) c_g_uri_get_user;
+	const(char)* function(GUri* uri) c_g_uri_get_userinfo;
+	GUri* function(GUri* baseUri, const(char)* uriRef, GUriFlags flags, GError** err) c_g_uri_parse_relative;
+	GUri* function(GUri* uri) c_g_uri_ref;
+	char* function(GUri* uri) c_g_uri_to_string;
+	char* function(GUri* uri, GUriHideFlags flags) c_g_uri_to_string_partial;
+	void function(GUri* uri) c_g_uri_unref;
+	GUri* function(GUriFlags flags, const(char)* scheme, const(char)* userinfo, const(char)* host, int port, const(char)* path, const(char)* query, const(char)* fragment) c_g_uri_build;
+	GUri* function(GUriFlags flags, const(char)* scheme, const(char)* user, const(char)* password, const(char)* authParams, const(char)* host, int port, const(char)* path, const(char)* query, const(char)* fragment) c_g_uri_build_with_user;
+	GQuark function() c_g_uri_error_quark;
+	char* function(ubyte* unescaped, size_t length, const(char)* reservedCharsAllowed) c_g_uri_escape_bytes;
+	char* function(const(char)* unescaped, const(char)* reservedCharsAllowed, int allowUtf8) c_g_uri_escape_string;
+	int function(const(char)* uriString, GUriFlags flags, GError** err) c_g_uri_is_valid;
+	char* function(GUriFlags flags, const(char)* scheme, const(char)* userinfo, const(char)* host, int port, const(char)* path, const(char)* query, const(char)* fragment) c_g_uri_join;
+	char* function(GUriFlags flags, const(char)* scheme, const(char)* user, const(char)* password, const(char)* authParams, const(char)* host, int port, const(char)* path, const(char)* query, const(char)* fragment) c_g_uri_join_with_user;
+	char** function(const(char)* uriList) c_g_uri_list_extract_uris;
+	GUri* function(const(char)* uriString, GUriFlags flags, GError** err) c_g_uri_parse;
+	GHashTable* function(const(char)* params, ptrdiff_t length, const(char)* separators, GUriParamsFlags flags, GError** err) c_g_uri_parse_params;
+	char* function(const(char)* uri) c_g_uri_parse_scheme;
+	const(char)* function(const(char)* uri) c_g_uri_peek_scheme;
+	char* function(const(char)* baseUriString, const(char)* uriRef, GUriFlags flags, GError** err) c_g_uri_resolve_relative;
+	int function(const(char)* uriRef, GUriFlags flags, char** scheme, char** userinfo, char** host, int* port, char** path, char** query, char** fragment, GError** err) c_g_uri_split;
+	int function(const(char)* uriString, GUriFlags flags, char** scheme, char** host, int* port, GError** err) c_g_uri_split_network;
+	int function(const(char)* uriRef, GUriFlags flags, char** scheme, char** user, char** password, char** authParams, char** host, int* port, char** path, char** query, char** fragment, GError** err) c_g_uri_split_with_user;
+	GBytes* function(const(char)* escapedString, ptrdiff_t length, const(char)* illegalCharacters, GError** err) c_g_uri_unescape_bytes;
+	char* function(const(char)* escapedString, const(char)* escapedStringEnd, const(char)* illegalCharacters) c_g_uri_unescape_segment;
+	char* function(const(char)* escapedString, const(char)* illegalCharacters) c_g_uri_unescape_string;
+
+	// glib.UriParamsIter
+
+	void function(GUriParamsIter* iter, const(char)* params, ptrdiff_t length, const(char)* separators, GUriParamsFlags flags) c_g_uri_params_iter_init;
+	int function(GUriParamsIter* iter, char** attribute, char** value, GError** err) c_g_uri_params_iter_next;
 
 	// glib.Variant
 
@@ -3110,7 +3299,9 @@ __gshared extern(C)
 	int function(GModule* module_, const(char)* symbolName, void** symbol) c_g_module_symbol;
 	char* function(const(char)* directory, const(char)* moduleName) c_g_module_build_path;
 	const(char)* function() c_g_module_error;
+	GQuark function() c_g_module_error_quark;
 	GModule* function(const(char)* fileName, GModuleFlags flags) c_g_module_open;
+	GModule* function(const(char)* fileName, GModuleFlags flags, GError** err) c_g_module_open_full;
 	int function() c_g_module_supported;
 
 	// glib.Base64
@@ -3144,13 +3335,13 @@ __gshared extern(C)
 
 	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** err) c_g_spawn_async;
 	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, int* standardInput, int* standardOutput, int* standardError, GError** err) c_g_spawn_async_with_pipes;
-	int function(int exitStatus, GError** err) c_g_spawn_check_exit_status;
+	int function(int waitStatus, GError** err) c_g_spawn_check_exit_status;
 	void function(GPid pid) c_g_spawn_close_pid;
 	int function(char* commandLine, GError** err) c_g_spawn_command_line_async;
-	int function(char* commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_command_line_sync;
+	int function(char* commandLine, char** standardOutput, char** standardError, int* waitStatus, GError** err) c_g_spawn_command_line_sync;
 	GQuark function() c_g_spawn_error_quark;
 	GQuark function() c_g_spawn_exit_error_quark;
-	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_sync;
+	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* waitStatus, GError** err) c_g_spawn_sync;
 	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, int stdinFd, int stdoutFd, int stderrFd, GError** err) c_g_spawn_async_with_fds;
 
 	// glib.Str
@@ -3533,11 +3724,6 @@ __gshared extern(C)
 
 	char* function(const(char)* uri, char** hostname, GError** err) c_g_filename_from_uri;
 	char* function(char* filename, const(char)* hostname, GError** err) c_g_filename_to_uri;
-	char* function(const(char)* unescaped, const(char)* reservedCharsAllowed, int allowUtf8) c_g_uri_escape_string;
-	char** function(const(char)* uriList) c_g_uri_list_extract_uris;
-	char* function(const(char)* uri) c_g_uri_parse_scheme;
-	char* function(const(char)* escapedString, const(char)* escapedStringEnd, const(char)* illegalCharacters) c_g_uri_unescape_segment;
-	char* function(const(char)* escapedString, const(char)* illegalCharacters) c_g_uri_unescape_string;
 
 	// glib.Uuid
 
@@ -3609,7 +3795,9 @@ alias c_g_bookmark_file_add_application g_bookmark_file_add_application;
 alias c_g_bookmark_file_add_group g_bookmark_file_add_group;
 alias c_g_bookmark_file_free g_bookmark_file_free;
 alias c_g_bookmark_file_get_added g_bookmark_file_get_added;
+alias c_g_bookmark_file_get_added_date_time g_bookmark_file_get_added_date_time;
 alias c_g_bookmark_file_get_app_info g_bookmark_file_get_app_info;
+alias c_g_bookmark_file_get_application_info g_bookmark_file_get_application_info;
 alias c_g_bookmark_file_get_applications g_bookmark_file_get_applications;
 alias c_g_bookmark_file_get_description g_bookmark_file_get_description;
 alias c_g_bookmark_file_get_groups g_bookmark_file_get_groups;
@@ -3617,10 +3805,12 @@ alias c_g_bookmark_file_get_icon g_bookmark_file_get_icon;
 alias c_g_bookmark_file_get_is_private g_bookmark_file_get_is_private;
 alias c_g_bookmark_file_get_mime_type g_bookmark_file_get_mime_type;
 alias c_g_bookmark_file_get_modified g_bookmark_file_get_modified;
+alias c_g_bookmark_file_get_modified_date_time g_bookmark_file_get_modified_date_time;
 alias c_g_bookmark_file_get_size g_bookmark_file_get_size;
 alias c_g_bookmark_file_get_title g_bookmark_file_get_title;
 alias c_g_bookmark_file_get_uris g_bookmark_file_get_uris;
 alias c_g_bookmark_file_get_visited g_bookmark_file_get_visited;
+alias c_g_bookmark_file_get_visited_date_time g_bookmark_file_get_visited_date_time;
 alias c_g_bookmark_file_has_application g_bookmark_file_has_application;
 alias c_g_bookmark_file_has_group g_bookmark_file_has_group;
 alias c_g_bookmark_file_has_item g_bookmark_file_has_item;
@@ -3632,15 +3822,19 @@ alias c_g_bookmark_file_remove_application g_bookmark_file_remove_application;
 alias c_g_bookmark_file_remove_group g_bookmark_file_remove_group;
 alias c_g_bookmark_file_remove_item g_bookmark_file_remove_item;
 alias c_g_bookmark_file_set_added g_bookmark_file_set_added;
+alias c_g_bookmark_file_set_added_date_time g_bookmark_file_set_added_date_time;
 alias c_g_bookmark_file_set_app_info g_bookmark_file_set_app_info;
+alias c_g_bookmark_file_set_application_info g_bookmark_file_set_application_info;
 alias c_g_bookmark_file_set_description g_bookmark_file_set_description;
 alias c_g_bookmark_file_set_groups g_bookmark_file_set_groups;
 alias c_g_bookmark_file_set_icon g_bookmark_file_set_icon;
 alias c_g_bookmark_file_set_is_private g_bookmark_file_set_is_private;
 alias c_g_bookmark_file_set_mime_type g_bookmark_file_set_mime_type;
 alias c_g_bookmark_file_set_modified g_bookmark_file_set_modified;
+alias c_g_bookmark_file_set_modified_date_time g_bookmark_file_set_modified_date_time;
 alias c_g_bookmark_file_set_title g_bookmark_file_set_title;
 alias c_g_bookmark_file_set_visited g_bookmark_file_set_visited;
+alias c_g_bookmark_file_set_visited_date_time g_bookmark_file_set_visited_date_time;
 alias c_g_bookmark_file_to_data g_bookmark_file_to_data;
 alias c_g_bookmark_file_to_file g_bookmark_file_to_file;
 alias c_g_bookmark_file_error_quark g_bookmark_file_error_quark;
@@ -3674,6 +3868,7 @@ alias c_g_bytes_new_with_free_func g_bytes_new_with_free_func;
 alias c_g_bytes_compare g_bytes_compare;
 alias c_g_bytes_equal g_bytes_equal;
 alias c_g_bytes_get_data g_bytes_get_data;
+alias c_g_bytes_get_region g_bytes_get_region;
 alias c_g_bytes_get_size g_bytes_get_size;
 alias c_g_bytes_hash g_bytes_hash;
 alias c_g_bytes_new_from_bytes g_bytes_new_from_bytes;
@@ -3779,7 +3974,9 @@ alias c_g_date_time_add_months g_date_time_add_months;
 alias c_g_date_time_add_seconds g_date_time_add_seconds;
 alias c_g_date_time_add_weeks g_date_time_add_weeks;
 alias c_g_date_time_add_years g_date_time_add_years;
+alias c_g_date_time_compare g_date_time_compare;
 alias c_g_date_time_difference g_date_time_difference;
+alias c_g_date_time_equal g_date_time_equal;
 alias c_g_date_time_format g_date_time_format;
 alias c_g_date_time_format_iso8601 g_date_time_format_iso8601;
 alias c_g_date_time_get_day_of_month g_date_time_get_day_of_month;
@@ -3798,6 +3995,7 @@ alias c_g_date_time_get_week_numbering_year g_date_time_get_week_numbering_year;
 alias c_g_date_time_get_week_of_year g_date_time_get_week_of_year;
 alias c_g_date_time_get_year g_date_time_get_year;
 alias c_g_date_time_get_ymd g_date_time_get_ymd;
+alias c_g_date_time_hash g_date_time_hash;
 alias c_g_date_time_is_daylight_savings g_date_time_is_daylight_savings;
 alias c_g_date_time_ref g_date_time_ref;
 alias c_g_date_time_to_local g_date_time_to_local;
@@ -3806,9 +4004,6 @@ alias c_g_date_time_to_timezone g_date_time_to_timezone;
 alias c_g_date_time_to_unix g_date_time_to_unix;
 alias c_g_date_time_to_utc g_date_time_to_utc;
 alias c_g_date_time_unref g_date_time_unref;
-alias c_g_date_time_compare g_date_time_compare;
-alias c_g_date_time_equal g_date_time_equal;
-alias c_g_date_time_hash g_date_time_hash;
 
 // glib.Directory
 
@@ -3826,6 +4021,8 @@ alias c_g_error_new_valist g_error_new_valist;
 alias c_g_error_copy g_error_copy;
 alias c_g_error_free g_error_free;
 alias c_g_error_matches g_error_matches;
+alias c_g_error_domain_register g_error_domain_register;
+alias c_g_error_domain_register_static g_error_domain_register_static;
 alias c_g_propagate_error g_propagate_error;
 alias c_g_set_error_literal g_set_error_literal;
 alias c_g_prefix_error g_prefix_error;
@@ -3849,6 +4046,7 @@ alias c_g_hash_table_lookup g_hash_table_lookup;
 alias c_g_hash_table_lookup_extended g_hash_table_lookup_extended;
 alias c_g_hash_table_new g_hash_table_new;
 alias c_g_hash_table_new_full g_hash_table_new_full;
+alias c_g_hash_table_new_similar g_hash_table_new_similar;
 alias c_g_hash_table_ref g_hash_table_ref;
 alias c_g_hash_table_remove g_hash_table_remove;
 alias c_g_hash_table_remove_all g_hash_table_remove_all;
@@ -4059,6 +4257,7 @@ alias c_g_clear_list g_clear_list;
 // glib.MainContext
 
 alias c_g_main_context_new g_main_context_new;
+alias c_g_main_context_new_with_flags g_main_context_new_with_flags;
 alias c_g_main_context_acquire g_main_context_acquire;
 alias c_g_main_context_add_poll g_main_context_add_poll;
 alias c_g_main_context_check g_main_context_check;
@@ -4231,9 +4430,12 @@ alias c_g_option_group_unref g_option_group_unref;
 
 // glib.Pattern
 
+alias c_g_pattern_spec_new g_pattern_spec_new;
+alias c_g_pattern_spec_copy g_pattern_spec_copy;
 alias c_g_pattern_spec_equal g_pattern_spec_equal;
 alias c_g_pattern_spec_free g_pattern_spec_free;
-alias c_g_pattern_spec_new g_pattern_spec_new;
+alias c_g_pattern_spec_match g_pattern_spec_match;
+alias c_g_pattern_spec_match_string g_pattern_spec_match_string;
 alias c_g_pattern_match g_pattern_match;
 alias c_g_pattern_match_simple g_pattern_match_simple;
 alias c_g_pattern_match_string g_pattern_match_string;
@@ -4519,6 +4721,7 @@ alias c_g_source_set_funcs g_source_set_funcs;
 alias c_g_source_set_name g_source_set_name;
 alias c_g_source_set_priority g_source_set_priority;
 alias c_g_source_set_ready_time g_source_set_ready_time;
+alias c_g_source_set_static_name g_source_set_static_name;
 alias c_g_source_unref g_source_unref;
 alias c_g_source_remove g_source_remove;
 alias c_g_source_remove_by_funcs_user_data g_source_remove_by_funcs_user_data;
@@ -4527,6 +4730,9 @@ alias c_g_source_set_name_by_id g_source_set_name_by_id;
 
 // glib.StringG
 
+alias c_g_string_new g_string_new;
+alias c_g_string_new_len g_string_new_len;
+alias c_g_string_sized_new g_string_sized_new;
 alias c_g_string_append g_string_append;
 alias c_g_string_append_c g_string_append_c;
 alias c_g_string_append_len g_string_append_len;
@@ -4554,13 +4760,11 @@ alias c_g_string_prepend_c g_string_prepend_c;
 alias c_g_string_prepend_len g_string_prepend_len;
 alias c_g_string_prepend_unichar g_string_prepend_unichar;
 alias c_g_string_printf g_string_printf;
+alias c_g_string_replace g_string_replace;
 alias c_g_string_set_size g_string_set_size;
 alias c_g_string_truncate g_string_truncate;
 alias c_g_string_up g_string_up;
 alias c_g_string_vprintf g_string_vprintf;
-alias c_g_string_new g_string_new;
-alias c_g_string_new_len g_string_new_len;
-alias c_g_string_sized_new g_string_sized_new;
 
 // glib.StringChunk
 
@@ -4570,6 +4774,20 @@ alias c_g_string_chunk_insert g_string_chunk_insert;
 alias c_g_string_chunk_insert_const g_string_chunk_insert_const;
 alias c_g_string_chunk_insert_len g_string_chunk_insert_len;
 alias c_g_string_chunk_new g_string_chunk_new;
+
+// glib.StrvBuilder
+
+alias c_g_strv_builder_add g_strv_builder_add;
+alias c_g_strv_builder_add_many g_strv_builder_add_many;
+alias c_g_strv_builder_addv g_strv_builder_addv;
+alias c_g_strv_builder_end g_strv_builder_end;
+alias c_g_strv_builder_ref g_strv_builder_ref;
+alias c_g_strv_builder_unref g_strv_builder_unref;
+alias c_g_strv_builder_new g_strv_builder_new;
+
+// glib.TestCase
+
+alias c_g_test_case_free g_test_case_free;
 
 // glib.TestLogBuffer
 
@@ -4586,6 +4804,7 @@ alias c_g_test_log_msg_free g_test_log_msg_free;
 
 alias c_g_test_suite_add g_test_suite_add;
 alias c_g_test_suite_add_suite g_test_suite_add_suite;
+alias c_g_test_suite_free g_test_suite_free;
 
 // glib.Thread
 
@@ -4620,6 +4839,7 @@ alias c_g_thread_pool_get_max_idle_time g_thread_pool_get_max_idle_time;
 alias c_g_thread_pool_get_max_unused_threads g_thread_pool_get_max_unused_threads;
 alias c_g_thread_pool_get_num_unused_threads g_thread_pool_get_num_unused_threads;
 alias c_g_thread_pool_new g_thread_pool_new;
+alias c_g_thread_pool_new_full g_thread_pool_new_full;
 alias c_g_thread_pool_set_max_idle_time g_thread_pool_set_max_idle_time;
 alias c_g_thread_pool_set_max_unused_threads g_thread_pool_set_max_unused_threads;
 alias c_g_thread_pool_stop_unused_threads g_thread_pool_stop_unused_threads;
@@ -4637,6 +4857,7 @@ alias c_g_usleep g_usleep;
 // glib.TimeZone
 
 alias c_g_time_zone_new g_time_zone_new;
+alias c_g_time_zone_new_identifier g_time_zone_new_identifier;
 alias c_g_time_zone_new_local g_time_zone_new_local;
 alias c_g_time_zone_new_offset g_time_zone_new_offset;
 alias c_g_time_zone_new_utc g_time_zone_new_utc;
@@ -4669,23 +4890,84 @@ alias c_g_trash_stack_push g_trash_stack_push;
 
 // glib.BBTree
 
-alias c_g_tree_destroy g_tree_destroy;
-alias c_g_tree_foreach g_tree_foreach;
-alias c_g_tree_height g_tree_height;
-alias c_g_tree_insert g_tree_insert;
-alias c_g_tree_lookup g_tree_lookup;
-alias c_g_tree_lookup_extended g_tree_lookup_extended;
-alias c_g_tree_nnodes g_tree_nnodes;
-alias c_g_tree_ref g_tree_ref;
-alias c_g_tree_remove g_tree_remove;
-alias c_g_tree_replace g_tree_replace;
-alias c_g_tree_search g_tree_search;
-alias c_g_tree_steal g_tree_steal;
-alias c_g_tree_traverse g_tree_traverse;
-alias c_g_tree_unref g_tree_unref;
 alias c_g_tree_new g_tree_new;
 alias c_g_tree_new_full g_tree_new_full;
 alias c_g_tree_new_with_data g_tree_new_with_data;
+alias c_g_tree_destroy g_tree_destroy;
+alias c_g_tree_foreach g_tree_foreach;
+alias c_g_tree_foreach_node g_tree_foreach_node;
+alias c_g_tree_height g_tree_height;
+alias c_g_tree_insert g_tree_insert;
+alias c_g_tree_insert_node g_tree_insert_node;
+alias c_g_tree_lookup g_tree_lookup;
+alias c_g_tree_lookup_extended g_tree_lookup_extended;
+alias c_g_tree_lookup_node g_tree_lookup_node;
+alias c_g_tree_lower_bound g_tree_lower_bound;
+alias c_g_tree_nnodes g_tree_nnodes;
+alias c_g_tree_node_first g_tree_node_first;
+alias c_g_tree_node_last g_tree_node_last;
+alias c_g_tree_ref g_tree_ref;
+alias c_g_tree_remove g_tree_remove;
+alias c_g_tree_remove_all g_tree_remove_all;
+alias c_g_tree_replace g_tree_replace;
+alias c_g_tree_replace_node g_tree_replace_node;
+alias c_g_tree_search g_tree_search;
+alias c_g_tree_search_node g_tree_search_node;
+alias c_g_tree_steal g_tree_steal;
+alias c_g_tree_traverse g_tree_traverse;
+alias c_g_tree_unref g_tree_unref;
+alias c_g_tree_upper_bound g_tree_upper_bound;
+
+// glib.TreeNode
+
+alias c_g_tree_node_key g_tree_node_key;
+alias c_g_tree_node_next g_tree_node_next;
+alias c_g_tree_node_previous g_tree_node_previous;
+alias c_g_tree_node_value g_tree_node_value;
+
+// glib.URI
+
+alias c_g_uri_get_auth_params g_uri_get_auth_params;
+alias c_g_uri_get_flags g_uri_get_flags;
+alias c_g_uri_get_fragment g_uri_get_fragment;
+alias c_g_uri_get_host g_uri_get_host;
+alias c_g_uri_get_password g_uri_get_password;
+alias c_g_uri_get_path g_uri_get_path;
+alias c_g_uri_get_port g_uri_get_port;
+alias c_g_uri_get_query g_uri_get_query;
+alias c_g_uri_get_scheme g_uri_get_scheme;
+alias c_g_uri_get_user g_uri_get_user;
+alias c_g_uri_get_userinfo g_uri_get_userinfo;
+alias c_g_uri_parse_relative g_uri_parse_relative;
+alias c_g_uri_ref g_uri_ref;
+alias c_g_uri_to_string g_uri_to_string;
+alias c_g_uri_to_string_partial g_uri_to_string_partial;
+alias c_g_uri_unref g_uri_unref;
+alias c_g_uri_build g_uri_build;
+alias c_g_uri_build_with_user g_uri_build_with_user;
+alias c_g_uri_error_quark g_uri_error_quark;
+alias c_g_uri_escape_bytes g_uri_escape_bytes;
+alias c_g_uri_escape_string g_uri_escape_string;
+alias c_g_uri_is_valid g_uri_is_valid;
+alias c_g_uri_join g_uri_join;
+alias c_g_uri_join_with_user g_uri_join_with_user;
+alias c_g_uri_list_extract_uris g_uri_list_extract_uris;
+alias c_g_uri_parse g_uri_parse;
+alias c_g_uri_parse_params g_uri_parse_params;
+alias c_g_uri_parse_scheme g_uri_parse_scheme;
+alias c_g_uri_peek_scheme g_uri_peek_scheme;
+alias c_g_uri_resolve_relative g_uri_resolve_relative;
+alias c_g_uri_split g_uri_split;
+alias c_g_uri_split_network g_uri_split_network;
+alias c_g_uri_split_with_user g_uri_split_with_user;
+alias c_g_uri_unescape_bytes g_uri_unescape_bytes;
+alias c_g_uri_unescape_segment g_uri_unescape_segment;
+alias c_g_uri_unescape_string g_uri_unescape_string;
+
+// glib.UriParamsIter
+
+alias c_g_uri_params_iter_init g_uri_params_iter_init;
+alias c_g_uri_params_iter_next g_uri_params_iter_next;
 
 // glib.Variant
 
@@ -4862,7 +5144,9 @@ alias c_g_module_name g_module_name;
 alias c_g_module_symbol g_module_symbol;
 alias c_g_module_build_path g_module_build_path;
 alias c_g_module_error g_module_error;
+alias c_g_module_error_quark g_module_error_quark;
 alias c_g_module_open g_module_open;
+alias c_g_module_open_full g_module_open_full;
 alias c_g_module_supported g_module_supported;
 
 // glib.Base64
@@ -5285,11 +5569,6 @@ alias c_g_unix_signal_source_new g_unix_signal_source_new;
 
 alias c_g_filename_from_uri g_filename_from_uri;
 alias c_g_filename_to_uri g_filename_to_uri;
-alias c_g_uri_escape_string g_uri_escape_string;
-alias c_g_uri_list_extract_uris g_uri_list_extract_uris;
-alias c_g_uri_parse_scheme g_uri_parse_scheme;
-alias c_g_uri_unescape_segment g_uri_unescape_segment;
-alias c_g_uri_unescape_string g_uri_unescape_string;
 
 // glib.Uuid
 

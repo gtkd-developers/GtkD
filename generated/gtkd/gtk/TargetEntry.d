@@ -27,6 +27,7 @@ module gtk.TargetEntry;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -141,14 +142,14 @@ public final class TargetEntry
 	 */
 	public this(string target, uint flags, uint info)
 	{
-		auto p = gtk_target_entry_new(Str.toStringz(target), flags, info);
+		auto __p = gtk_target_entry_new(Str.toStringz(target), flags, info);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTargetEntry*) p);
+		this(cast(GtkTargetEntry*) __p);
 	}
 
 	/**
@@ -159,14 +160,14 @@ public final class TargetEntry
 	 */
 	public TargetEntry copy()
 	{
-		auto p = gtk_target_entry_copy(gtkTargetEntry);
+		auto __p = gtk_target_entry_copy(gtkTargetEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p, true);
+		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) __p, true);
 	}
 
 	/**

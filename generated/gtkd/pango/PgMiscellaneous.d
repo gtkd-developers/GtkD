@@ -25,9 +25,9 @@
 module pango.PgMiscellaneous;
 
 private import core.stdc.stdio;
-private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 public  import gtkc.pangotypes;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -38,67 +38,12 @@ public struct PgMiscellaneous
 {
 
 	/**
-	 * Do not use.  Does not do anything.
+	 * Checks if a character that should not be normally rendered.
 	 *
-	 * Params:
-	 *     key = Key to look up, in the form "SECTION/KEY".
+	 * This includes all Unicode characters with "ZERO WIDTH" in their name,
+	 * as well as *bidi* formatting characters, and a few other ones.
 	 *
-	 * Returns: %NULL
-	 */
-	public static string configKeyGet(string key)
-	{
-		auto retStr = pango_config_key_get(Str.toStringz(key));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
-	}
-
-	/**
-	 * Do not use.  Does not do anything.
-	 *
-	 * Params:
-	 *     key = Key to look up, in the form "SECTION/KEY".
-	 *
-	 * Returns: %NULL
-	 */
-	public static string configKeyGetSystem(string key)
-	{
-		auto retStr = pango_config_key_get_system(Str.toStringz(key));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
-	}
-
-	/**
-	 * Returns the name of the "pango" subdirectory of LIBDIR
-	 * (which is set at compile time).
-	 *
-	 * Returns: the Pango lib directory. The returned string should
-	 *     not be freed.
-	 */
-	public static string getLibSubdirectory()
-	{
-		return Str.toString(pango_get_lib_subdirectory());
-	}
-
-	/**
-	 * Returns the name of the "pango" subdirectory of SYSCONFDIR
-	 * (which is set at compile time).
-	 *
-	 * Returns: the Pango sysconf directory. The returned string should
-	 *     not be freed.
-	 */
-	public static string getSysconfSubdirectory()
-	{
-		return Str.toString(pango_get_sysconf_subdirectory());
-	}
-
-	/**
-	 * Checks @ch to see if it is a character that should not be
-	 * normally rendered on the screen.  This includes all Unicode characters
-	 * with "ZERO WIDTH" in their name, as well as <firstterm>bidi</firstterm> formatting characters, and
-	 * a few other ones.  This is totally different from g_unichar_iszerowidth()
-	 * and is at best misnamed.
+	 * This is totally different from [func@GLib.unichar_iszerowidth] and is at best misnamed.
 	 *
 	 * Params:
 	 *     ch = a Unicode character
@@ -113,10 +58,10 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * This will return the bidirectional embedding levels of the input paragraph
-	 * as defined by the Unicode Bidirectional Algorithm available at:
+	 * Return the bidirectional embedding levels of the input paragraph.
 	 *
-	 * http://www.unicode.org/reports/tr9/
+	 * The bidirectional embedding levels are defined by the [Unicode Bidirectional
+	 * Algorithm](http://www.unicode.org/reports/tr9/).
 	 *
 	 * If the input base direction is a weak direction, the direction of the
 	 * characters in the text will determine the final resolved direction.
@@ -128,7 +73,7 @@ public struct PgMiscellaneous
 	 *     pbaseDir = input base direction, and output resolved direction.
 	 *
 	 * Returns: a newly allocated array of embedding levels, one item per
-	 *     character (not byte), that should be freed using g_free.
+	 *     character (not byte), that should be freed using [func@GLib.free].
 	 *
 	 * Since: 1.4
 	 */
@@ -138,46 +83,26 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Look up all user defined aliases for the alias @fontname.
-	 * The resulting font family names will be stored in @families,
-	 * and the number of families in @n_families.
-	 *
-	 * Deprecated: This function is not thread-safe.
-	 *
-	 * Params:
-	 *     fontname = an ascii string
-	 *     families = will be set to an array of font family names.
-	 *         this array is owned by pango and should not be freed.
-	 */
-	public static void lookupAliases(string fontname, out string[] families)
-	{
-		char** outfamilies = null;
-		int nFamilies;
-
-		pango_lookup_aliases(Str.toStringz(fontname), &outfamilies, &nFamilies);
-
-		families = Str.toStringArray(outfamilies, nFamilies);
-	}
-
-	/**
 	 * Parses an enum type and stores the result in @value.
 	 *
-	 * If @str does not match the nick name of any of the possible values for the
-	 * enum and is not an integer, %FALSE is returned, a warning is issued
-	 * if @warn is %TRUE, and a
-	 * string representing the list of possible values is stored in
-	 * @possible_values.  The list is slash-separated, eg.
-	 * "none/start/middle/end".  If failed and @possible_values is not %NULL,
-	 * returned string should be freed using g_free().
+	 * If @str does not match the nick name of any of the possible values
+	 * for the enum and is not an integer, %FALSE is returned, a warning
+	 * is issued if @warn is %TRUE, and a string representing the list of
+	 * possible values is stored in @possible_values. The list is
+	 * slash-separated, eg. "none/start/middle/end".
+	 *
+	 * If failed and @possible_values is not %NULL, returned string should
+	 * be freed using g_free().
 	 *
 	 * Params:
-	 *     type = enum type to parse, eg. %PANGO_TYPE_ELLIPSIZE_MODE.
-	 *     str = string to parse.  May be %NULL.
-	 *     value = integer to store the result in, or %NULL.
-	 *     warn = if %TRUE, issue a g_warning() on bad input.
-	 *     possibleValues = place to store list of possible values on failure, or %NULL.
+	 *     type = enum type to parse, eg. %PANGO_TYPE_ELLIPSIZE_MODE
+	 *     str = string to parse
+	 *     value = integer to store the result in
+	 *     warn = if %TRUE, issue a g_warning() on bad input
+	 *     possibleValues = place to store list of possible
+	 *         values on failure
 	 *
-	 * Returns: %TRUE if @str was successfully parsed.
+	 * Returns: %TRUE if @str was successfully parsed
 	 *
 	 * Since: 1.16
 	 */
@@ -185,15 +110,17 @@ public struct PgMiscellaneous
 	{
 		char* outpossibleValues = null;
 
-		auto p = pango_parse_enum(type, Str.toStringz(str), &value, warn, &outpossibleValues) != 0;
+		auto __p = pango_parse_enum(type, Str.toStringz(str), &value, warn, &outpossibleValues) != 0;
 
 		possibleValues = Str.toString(outpossibleValues);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Parses a font stretch. The allowed values are
+	 * Parses a font stretch.
+	 *
+	 * The allowed values are
 	 * "ultra_condensed", "extra_condensed", "condensed",
 	 * "semi_condensed", "normal", "semi_expanded", "expanded",
 	 * "extra_expanded" and "ultra_expanded". Case variations are
@@ -201,8 +128,7 @@ public struct PgMiscellaneous
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     stretch = a #PangoStretch to store the
-	 *         result in.
+	 *     stretch = a `PangoStretch` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -213,14 +139,15 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Parses a font style. The allowed values are "normal",
-	 * "italic" and "oblique", case variations being
+	 * Parses a font style.
+	 *
+	 * The allowed values are "normal", "italic" and "oblique", case
+	 * variations being
 	 * ignored.
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     style = a #PangoStyle to store the result
-	 *         in.
+	 *     style = a `PangoStyle` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -231,14 +158,15 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Parses a font variant. The allowed values are "normal"
-	 * and "smallcaps" or "small_caps", case variations being
-	 * ignored.
+	 * Parses a font variant.
+	 *
+	 * The allowed values are "normal", "small-caps", "all-small-caps",
+	 * "petite-caps", "all-petite-caps", "unicase" and "title-caps",
+	 * case variations being ignored.
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     variant = a #PangoVariant to store the
-	 *         result in.
+	 *     variant = a `PangoVariant` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -249,14 +177,15 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Parses a font weight. The allowed values are "heavy",
+	 * Parses a font weight.
+	 *
+	 * The allowed values are "heavy",
 	 * "ultrabold", "bold", "normal", "light", "ultraleight"
 	 * and integers. Case variations are ignored.
 	 *
 	 * Params:
 	 *     str = a string to parse.
-	 *     weight = a #PangoWeight to store the result
-	 *         in.
+	 *     weight = a `PangoWeight` to store the result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
 	 * Returns: %TRUE if @str was successfully parsed.
@@ -267,10 +196,10 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Quantizes the thickness and position of a line, typically an
-	 * underline or strikethrough, to whole device pixels, that is integer
-	 * multiples of %PANGO_SCALE. The purpose of this function is to avoid
-	 * such lines looking blurry.
+	 * Quantizes the thickness and position of a line to whole device pixels.
+	 *
+	 * This is typically used for underline or strikethrough. The purpose of
+	 * this function is to avoid such lines looking blurry.
 	 *
 	 * Care is taken to make sure @thickness is at least one pixel when this
 	 * function returns, but returned @position may become zero as a result
@@ -289,72 +218,71 @@ public struct PgMiscellaneous
 
 	/**
 	 * Scans an integer.
+	 *
 	 * Leading white space is skipped.
 	 *
 	 * Params:
 	 *     pos = in/out string position
 	 *     out_ = an int into which to write the result
 	 *
-	 * Returns: %FALSE if a parse error occurred.
+	 * Returns: %FALSE if a parse error occurred
 	 */
 	public static bool scanInt(ref string pos, out int out_)
 	{
 		char* outpos = Str.toStringz(pos);
 
-		auto p = pango_scan_int(&outpos, &out_) != 0;
+		auto __p = pango_scan_int(&outpos, &out_) != 0;
 
 		pos = Str.toString(outpos);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Scans a string into a #GString buffer. The string may either
-	 * be a sequence of non-white-space characters, or a quoted
-	 * string with '"'. Instead a quoted string, '\"' represents
+	 * Scans a string into a `GString` buffer.
+	 *
+	 * The string may either be a sequence of non-white-space characters,
+	 * or a quoted string with '"'. Instead a quoted string, '\"' represents
 	 * a literal quote. Leading white space outside of quotes is skipped.
 	 *
 	 * Params:
 	 *     pos = in/out string position
-	 *     out_ = a #GString into which to write the result
+	 *     out_ = a `GString` into which to write the result
 	 *
-	 * Returns: %FALSE if a parse error occurred.
+	 * Returns: %FALSE if a parse error occurred
 	 */
-	public static bool scanString(ref string pos, out StringG out_)
+	public static bool scanString(ref string pos, StringG out_)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outout_ = sliceNew!GString();
 
-		auto p = pango_scan_string(&outpos, outout_) != 0;
+		auto __p = pango_scan_string(&outpos, (out_ is null) ? null : out_.getStringGStruct()) != 0;
 
 		pos = Str.toString(outpos);
-		out_ = new StringG(outout_, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Scans a word into a #GString buffer. A word consists
-	 * of [A-Za-z_] followed by zero or more [A-Za-z_0-9]
-	 * Leading white space is skipped.
+	 * Scans a word into a `GString` buffer.
+	 *
+	 * A word consists of [A-Za-z_] followed by zero or more
+	 * [A-Za-z_0-9]. Leading white space is skipped.
 	 *
 	 * Params:
 	 *     pos = in/out string position
-	 *     out_ = a #GString into which to write the result
+	 *     out_ = a `GString` into which to write the result
 	 *
-	 * Returns: %FALSE if a parse error occurred.
+	 * Returns: %FALSE if a parse error occurred
 	 */
-	public static bool scanWord(ref string pos, out StringG out_)
+	public static bool scanWord(ref string pos, StringG out_)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outout_ = sliceNew!GString();
 
-		auto p = pango_scan_word(&outpos, outout_) != 0;
+		auto __p = pango_scan_word(&outpos, (out_ is null) ? null : out_.getStringGStruct()) != 0;
 
 		pos = Str.toString(outpos);
-		out_ = new StringG(outout_, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -370,11 +298,11 @@ public struct PgMiscellaneous
 	{
 		char* outpos = Str.toStringz(pos);
 
-		auto p = pango_skip_space(&outpos) != 0;
+		auto __p = pango_skip_space(&outpos) != 0;
 
 		pos = Str.toString(outpos);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -412,8 +340,9 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Reads an entire line from a file into a buffer. Lines may
-	 * be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
+	 * Reads an entire line from a file into a buffer.
+	 *
+	 * Lines may be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
 	 * is not written into the buffer. Text after a '#' character is treated as
 	 * a comment and skipped. '\' can be used to escape a # character.
 	 * '\' proceeding a line delimiter combines adjacent lines. A '\' proceeding
@@ -422,20 +351,14 @@ public struct PgMiscellaneous
 	 *
 	 * Params:
 	 *     stream = a stdio stream
-	 *     str = #GString buffer into which to write the result
+	 *     str = `GString` buffer into which to write the result
 	 *
-	 * Returns: 0 if the stream was already at an %EOF character, otherwise
-	 *     the number of lines read (this is useful for maintaining
+	 * Returns: 0 if the stream was already at an %EOF character,
+	 *     otherwise the number of lines read (this is useful for maintaining
 	 *     a line number counter which doesn't combine lines with '\')
 	 */
-	public static int readLine(FILE* stream, out StringG str)
+	public static int readLine(FILE* stream, StringG str)
 	{
-		GString* outstr = sliceNew!GString();
-
-		auto p = pango_read_line(stream, outstr);
-
-		str = new StringG(outstr, true);
-
-		return p;
+		return pango_read_line(stream, (str is null) ? null : str.getStringGStruct());
 	}
 }

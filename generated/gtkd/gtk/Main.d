@@ -147,14 +147,14 @@ public struct Main
 	 */
 	public static Event getCurrentEvent()
 	{
-		auto p = gtk_get_current_event();
+		auto __p = gtk_get_current_event();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**
@@ -165,14 +165,14 @@ public struct Main
 	 */
 	public static Device getCurrentEventDevice()
 	{
-		auto p = gtk_get_current_event_device();
+		auto __p = gtk_get_current_event_device();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -231,14 +231,14 @@ public struct Main
 	 */
 	public static PgLanguage getDefaultLanguage()
 	{
-		auto p = gtk_get_default_language();
+		auto __p = gtk_get_default_language();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) __p);
 	}
 
 	/**
@@ -254,14 +254,14 @@ public struct Main
 	 */
 	public static Widget getEventWidget(Event event)
 	{
-		auto p = gtk_get_event_widget((event is null) ? null : event.getEventStruct());
+		auto __p = gtk_get_event_widget((event is null) ? null : event.getEventStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -315,14 +315,14 @@ public struct Main
 	 */
 	public static OptionGroup getOptionGroup(bool openDefaultDisplay)
 	{
-		auto p = gtk_get_option_group(openDefaultDisplay);
+		auto __p = gtk_get_option_group(openDefaultDisplay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new OptionGroup(cast(GOptionGroup*) p, true);
+		return new OptionGroup(cast(GOptionGroup*) __p, true);
 	}
 
 	/**
@@ -333,14 +333,14 @@ public struct Main
 	 */
 	public static Widget grabGetCurrent()
 	{
-		auto p = gtk_grab_get_current();
+		auto __p = gtk_grab_get_current();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -402,6 +402,9 @@ public struct Main
 	 * communication with the user - for example a curses or command line
 	 * interface.
 	 *
+	 * Note that calling any GTK function or instantiating any GTK type after
+	 * this function returns %FALSE results in undefined behavior.
+	 *
 	 * Params:
 	 *     argv = Address of the
 	 *         `argv` parameter of main(), or %NULL. Any options
@@ -416,11 +419,11 @@ public struct Main
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
 
-		auto p = gtk_init_check(&argc, &outargv) != 0;
+		auto __p = gtk_init_check(&argc, &outargv) != 0;
 
 		argv = Str.toStringArray(outargv, argc);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -457,7 +460,7 @@ public struct Main
 		char** outargv = Str.toStringzArray(argv);
 		GError* err = null;
 
-		auto p = gtk_init_with_args(&argc, &outargv, Str.toStringz(parameterString), entries.ptr, Str.toStringz(translationDomain), &err) != 0;
+		auto __p = gtk_init_with_args(&argc, &outargv, Str.toStringz(parameterString), entries.ptr, Str.toStringz(translationDomain), &err) != 0;
 
 		if (err !is null)
 		{
@@ -466,7 +469,7 @@ public struct Main
 
 		argv = Str.toStringArray(outargv, argc);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -637,11 +640,11 @@ public struct Main
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
 
-		auto p = gtk_parse_args(&argc, &outargv) != 0;
+		auto __p = gtk_parse_args(&argc, &outargv) != 0;
 
 		argv = Str.toStringArray(outargv, argc);
 
-		return p;
+		return __p;
 	}
 
 	/**

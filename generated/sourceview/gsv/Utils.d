@@ -25,6 +25,7 @@
 module gsv.Utils;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gsv.c.functions;
 public  import gsv.c.types;
 public  import gsvc.gsvtypes;

@@ -31,6 +31,7 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -106,6 +107,25 @@ public class SubprocessLauncher : ObjectG
 		}
 
 		this(cast(GSubprocessLauncher*) __p, true);
+	}
+
+	/**
+	 * Closes all the file descriptors previously passed to the object with
+	 * g_subprocess_launcher_take_fd(), g_subprocess_launcher_take_stderr_fd(), etc.
+	 *
+	 * After calling this method, any subsequent calls to g_subprocess_launcher_spawn() or g_subprocess_launcher_spawnv() will
+	 * return %G_IO_ERROR_CLOSED. This method is idempotent if
+	 * called more than once.
+	 *
+	 * This function is called automatically when the #GSubprocessLauncher
+	 * is disposed, but is provided separately so that garbage collected
+	 * language bindings can call it earlier to guarantee when FDs are closed.
+	 *
+	 * Since: 2.68
+	 */
+	public void close()
+	{
+		g_subprocess_launcher_close(gSubprocessLauncher);
 	}
 
 	/**
@@ -349,16 +369,16 @@ public class SubprocessLauncher : ObjectG
 
 	/**
 	 * Transfer an arbitrary file descriptor from parent process to the
-	 * child.  This function takes "ownership" of the fd; it will be closed
+	 * child.  This function takes ownership of the @source_fd; it will be closed
 	 * in the parent when @self is freed.
 	 *
 	 * By default, all file descriptors from the parent will be closed.
-	 * This function allows you to create (for example) a custom pipe() or
-	 * socketpair() before launching the process, and choose the target
+	 * This function allows you to create (for example) a custom `pipe()` or
+	 * `socketpair()` before launching the process, and choose the target
 	 * descriptor in the child.
 	 *
 	 * An example use case is GNUPG, which has a command line argument
-	 * --passphrase-fd providing a file descriptor number where it expects
+	 * `--passphrase-fd` providing a file descriptor number where it expects
 	 * the passphrase to be written.
 	 *
 	 * Params:

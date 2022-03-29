@@ -138,14 +138,14 @@ public template TagSetterT(TStruct)
 	 */
 	public TagList getTagList()
 	{
-		auto p = gst_tag_setter_get_tag_list(getTagSetterStruct());
+		auto __p = gst_tag_setter_get_tag_list(getTagSetterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) __p);
 	}
 
 	/**

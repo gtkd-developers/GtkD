@@ -22,56 +22,54 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module pango.PgEngineShape;
+module gtk.SocketAccessible;
 
-public  import gtkc.pangotypes;
-private import pango.PgEngine;
-private import pango.c.functions;
-public  import pango.c.types;
+private import glib.Str;
+private import gtk.ContainerAccessible;
+private import gtk.c.functions;
+public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
-/**
- * The #PangoEngineShape class is implemented by engines that
- * customize the rendering-system dependent part of the
- * Pango pipeline for a particular script or language.
- * A #PangoEngineShape implementation is then specific to both
- * a particular rendering system or group of rendering systems
- * and to a particular script. For instance, there is one
- * #PangoEngineShape implementation to handle shaping Arabic
- * for Fontconfig-based backends.
- */
-public class PgEngineShape : PgEngine
+/** */
+public class SocketAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
-	protected PangoEngineShape* pangoEngineShape;
+	protected GtkSocketAccessible* gtkSocketAccessible;
 
 	/** Get the main Gtk struct */
-	public PangoEngineShape* getPgEngineShapeStruct(bool transferOwnership = false)
+	public GtkSocketAccessible* getSocketAccessibleStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;
-		return pangoEngineShape;
+		return gtkSocketAccessible;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)pangoEngineShape;
+		return cast(void*)gtkSocketAccessible;
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoEngineShape* pangoEngineShape, bool ownedRef = false)
+	public this (GtkSocketAccessible* gtkSocketAccessible, bool ownedRef = false)
 	{
-		this.pangoEngineShape = pangoEngineShape;
-		super(cast(PangoEngine*)pangoEngineShape, ownedRef);
+		this.gtkSocketAccessible = gtkSocketAccessible;
+		super(cast(GtkContainerAccessible*)gtkSocketAccessible, ownedRef);
 	}
 
 
 	/** */
 	public static GType getType()
 	{
-		return pango_engine_shape_get_type();
+		return gtk_socket_accessible_get_type();
+	}
+
+	/** */
+	public void embed(string path)
+	{
+		gtk_socket_accessible_embed(gtkSocketAccessible, Str.toStringz(path));
 	}
 }

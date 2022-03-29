@@ -264,7 +264,7 @@ public class QueueG
 	/**
 	 * A statically-allocated #GQueue must be initialized with this function
 	 * before it can be used. Alternatively you can initialize it with
-	 * #G_QUEUE_INIT. It is not necessary to initialize queues created with
+	 * %G_QUEUE_INIT. It is not necessary to initialize queues created with
 	 * g_queue_new().
 	 *
 	 * Since: 2.14

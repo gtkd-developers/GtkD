@@ -25,6 +25,8 @@
 module pango.PgTabArray;
 
 private import glib.ConstructionException;
+private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -33,8 +35,11 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoTabArray struct contains an array
- * of tab stops. Each tab stop has an alignment and a position.
+ * A `PangoTabArray` contains an array of tab stops.
+ * 
+ * `PangoTabArray` can be used to set tab stops in a `PangoLayout`.
+ * Each tab stop has an alignment, a position, and optionally
+ * a character to use as decimal point.
  */
 public class PgTabArray
 {
@@ -79,47 +84,48 @@ public class PgTabArray
 	}
 
 	/**
-	 * Creates an array of @initial_size tab stops. Tab stops are specified in
-	 * pixel units if @positions_in_pixels is %TRUE, otherwise in Pango
-	 * units. All stops are initially at position 0.
+	 * Creates an array of @initial_size tab stops.
+	 *
+	 * Tab stops are specified in pixel units if @positions_in_pixels is %TRUE,
+	 * otherwise in Pango units. All stops are initially at position 0.
 	 *
 	 * Params:
 	 *     initialSize = Initial number of tab stops to allocate, can be 0
 	 *     positionsInPixels = whether positions are in pixel units
 	 *
-	 * Returns: the newly allocated #PangoTabArray, which should
-	 *     be freed with pango_tab_array_free().
+	 * Returns: the newly allocated `PangoTabArray`, which should
+	 *     be freed with [method@Pango.TabArray.free].
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(int initialSize, bool positionsInPixels)
 	{
-		auto p = pango_tab_array_new(initialSize, positionsInPixels);
+		auto __p = pango_tab_array_new(initialSize, positionsInPixels);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoTabArray*) p);
+		this(cast(PangoTabArray*) __p);
 	}
 
 	/**
-	 * Copies a #PangoTabArray
+	 * Copies a `PangoTabArray`.
 	 *
-	 * Returns: the newly allocated #PangoTabArray, which should
-	 *     be freed with pango_tab_array_free().
+	 * Returns: the newly allocated `PangoTabArray`, which should
+	 *     be freed with [method@Pango.TabArray.free].
 	 */
 	public PgTabArray copy()
 	{
-		auto p = pango_tab_array_copy(pangoTabArray);
+		auto __p = pango_tab_array_copy(pangoTabArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) __p, true);
 	}
 
 	/**
@@ -132,8 +138,28 @@ public class PgTabArray
 	}
 
 	/**
-	 * Returns %TRUE if the tab positions are in pixels, %FALSE if they are
-	 * in Pango units.
+	 * Gets the Unicode character to use as decimal point.
+	 *
+	 * This is only relevant for tabs with %PANGO_TAB_DECIMAL alignment,
+	 * which align content at the first occurrence of the decimal point
+	 * character.
+	 *
+	 * The default value of 0 means that Pango will use the
+	 * decimal point according to the current locale.
+	 *
+	 * Params:
+	 *     tabIndex = the index of a tab stop
+	 *
+	 * Since: 1.50
+	 */
+	public dchar getDecimalPoint(int tabIndex)
+	{
+		return pango_tab_array_get_decimal_point(pangoTabArray, tabIndex);
+	}
+
+	/**
+	 * Returns %TRUE if the tab positions are in pixels,
+	 * %FALSE if they are in Pango units.
 	 *
 	 * Returns: whether positions are in pixels.
 	 */
@@ -157,8 +183,8 @@ public class PgTabArray
 	 *
 	 * Params:
 	 *     tabIndex = tab stop index
-	 *     alignment = location to store alignment, or %NULL
-	 *     location = location to store tab position, or %NULL
+	 *     alignment = location to store alignment
+	 *     location = location to store tab position
 	 */
 	public void getTab(int tabIndex, out PangoTabAlign alignment, out int location)
 	{
@@ -167,18 +193,20 @@ public class PgTabArray
 
 	/**
 	 * If non-%NULL, @alignments and @locations are filled with allocated
-	 * arrays of length pango_tab_array_get_size(). You must free the
-	 * returned array.
+	 * arrays.
+	 *
+	 * The arrays are of length [method@Pango.TabArray.get_size].
+	 * You must free the returned array.
 	 *
 	 * Params:
 	 *     alignments = location to store an array of tab
-	 *         stop alignments, or %NULL
+	 *         stop alignments
 	 *     locations = location to store an array
-	 *         of tab positions, or %NULL
+	 *         of tab positions
 	 */
 	public void getTabs(out PangoTabAlign* alignments, out int[] locations)
 	{
-		int* outlocations = null;
+		int* outlocations;
 
 		pango_tab_array_get_tabs(pangoTabArray, &alignments, &outlocations);
 
@@ -186,8 +214,10 @@ public class PgTabArray
 	}
 
 	/**
-	 * Resizes a tab array. You must subsequently initialize any tabs that
-	 * were added as a result of growing the array.
+	 * Resizes a tab array.
+	 *
+	 * You must subsequently initialize any tabs
+	 * that were added as a result of growing the array.
 	 *
 	 * Params:
 	 *     newSize = new size of the array
@@ -198,9 +228,42 @@ public class PgTabArray
 	}
 
 	/**
+	 * Sets the Unicode character to use as decimal point.
+	 *
+	 * This is only relevant for tabs with %PANGO_TAB_DECIMAL alignment,
+	 * which align content at the first occurrence of the decimal point
+	 * character.
+	 *
+	 * By default, Pango uses the decimal point according
+	 * to the current locale.
+	 *
+	 * Params:
+	 *     tabIndex = the index of a tab stop
+	 *     decimalPoint = the decimal point to use
+	 *
+	 * Since: 1.50
+	 */
+	public void setDecimalPoint(int tabIndex, dchar decimalPoint)
+	{
+		pango_tab_array_set_decimal_point(pangoTabArray, tabIndex, decimalPoint);
+	}
+
+	/**
+	 * Sets whether positions in this array are specified in
+	 * pixels.
+	 *
+	 * Params:
+	 *     positionsInPixels = whether positions are in pixels
+	 *
+	 * Since: 1.50
+	 */
+	public void setPositionsInPixels(bool positionsInPixels)
+	{
+		pango_tab_array_set_positions_in_pixels(pangoTabArray, positionsInPixels);
+	}
+
+	/**
 	 * Sets the alignment and location of a tab stop.
-	 * @alignment must always be #PANGO_TAB_LEFT in the current
-	 * implementation.
 	 *
 	 * Params:
 	 *     tabIndex = the index of a tab stop
@@ -210,5 +273,62 @@ public class PgTabArray
 	public void setTab(int tabIndex, PangoTabAlign alignment, int location)
 	{
 		pango_tab_array_set_tab(pangoTabArray, tabIndex, alignment, location);
+	}
+
+	/**
+	 * Utility function to ensure that the tab stops are in increasing order.
+	 *
+	 * Since: 1.50
+	 */
+	public void sort()
+	{
+		pango_tab_array_sort(pangoTabArray);
+	}
+
+	/**
+	 * Serializes a `PangoTabArray` to a string.
+	 *
+	 * No guarantees are made about the format of the string,
+	 * it may change between Pango versions.
+	 *
+	 * The intended use of this function is testing and
+	 * debugging. The format is not meant as a permanent
+	 * storage format.
+	 *
+	 * Returns: a newly allocated string
+	 *
+	 * Since: 1.50
+	 */
+	public override string toString()
+	{
+		auto retStr = pango_tab_array_to_string(pangoTabArray);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
+	 * Deserializes a `PangoTabArray` from a string.
+	 *
+	 * This is the counterpart to [method@Pango.TabArray.to_string].
+	 * See that functions for details about the format.
+	 *
+	 * Params:
+	 *     text = a string
+	 *
+	 * Returns: a new `PangoTabArray`
+	 *
+	 * Since: 1.50
+	 */
+	public static PgTabArray fromString(string text)
+	{
+		auto __p = pango_tab_array_from_string(Str.toStringz(text));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) __p, true);
 	}
 }

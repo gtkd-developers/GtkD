@@ -198,6 +198,15 @@ public class SocketClient : ObjectG
 	/**
 	 * This is the asynchronous version of g_socket_client_connect().
 	 *
+	 * You may wish to prefer the asynchronous version even in synchronous
+	 * command line programs because, since 2.60, it implements
+	 * [RFC 8305](https://tools.ietf.org/html/rfc8305) "Happy Eyeballs"
+	 * recommendations to work around long connection timeouts in networks
+	 * where IPv6 is broken by performing an IPv4 connection simultaneously
+	 * without waiting for IPv6 to time out, which is not supported by the
+	 * synchronous call. (This is not an API guarantee, and may change in
+	 * the future.)
+	 *
 	 * When the operation is finished @callback will be
 	 * called. You can then call g_socket_client_connect_finish() to get
 	 * the result of the operation.
@@ -686,6 +695,12 @@ public class SocketClient : ObjectG
 	 * Gets the TLS validation flags used creating TLS connections via
 	 * @client.
 	 *
+	 * This function does not work as originally designed and is impossible
+	 * to use correctly. See #GSocketClient:tls-validation-flags for more
+	 * information.
+	 *
+	 * Deprecated: Do not attempt to ignore validation errors.
+	 *
 	 * Returns: the TLS validation flags
 	 *
 	 * Since: 2.28
@@ -860,6 +875,12 @@ public class SocketClient : ObjectG
 	 * Sets the TLS validation flags used when creating TLS connections
 	 * via @client. The default value is %G_TLS_CERTIFICATE_VALIDATE_ALL.
 	 *
+	 * This function does not work as originally designed and is impossible
+	 * to use correctly. See #GSocketClient:tls-validation-flags for more
+	 * information.
+	 *
+	 * Deprecated: Do not attempt to ignore validation errors.
+	 *
 	 * Params:
 	 *     flags = the validation flags
 	 *
@@ -915,7 +936,7 @@ public class SocketClient : ObjectG
 	 * multiple times (or not at all) for a given connectable (in
 	 * particular, if @client ends up attempting to connect to more than
 	 * one address). However, if @client emits the #GSocketClient::event
-	 * signal at all for a given connectable, that it will always emit
+	 * signal at all for a given connectable, then it will always emit
 	 * it with %G_SOCKET_CLIENT_COMPLETE when it is done.
 	 *
 	 * Note that there may be additional #GSocketClientEvent values in

@@ -27,6 +27,7 @@ module gstreamer.Message;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.Clock;
@@ -42,6 +43,7 @@ private import gstreamer.Toc;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -88,6 +90,12 @@ public class Message
 	{
 		this.gstMessage = gstMessage;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_message_unref(gstMessage);
 	}
 
 	/**
@@ -639,14 +647,14 @@ public class Message
 	 */
 	public this(ObjectGst src, Structure structure)
 	{
-		auto p = gst_message_new_application((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct(true));
+		auto __p = gst_message_new_application((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_application");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -668,14 +676,14 @@ public class Message
 	 */
 	public this(ObjectGst src, GstClockTime runningTime)
 	{
-		auto p = gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime);
+		auto __p = gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_async_done");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -702,14 +710,14 @@ public class Message
 	 */
 	public this(ObjectGst src, int percent)
 	{
-		auto p = gst_message_new_buffering((src is null) ? null : src.getObjectGstStruct(), percent);
+		auto __p = gst_message_new_buffering((src is null) ? null : src.getObjectGstStruct(), percent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_buffering");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -732,14 +740,14 @@ public class Message
 	 */
 	public this(ObjectGst src, Clock clock)
 	{
-		auto p = gst_message_new_clock_lost((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
+		auto __p = gst_message_new_clock_lost((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_clock_lost");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -763,14 +771,14 @@ public class Message
 	 */
 	public this(ObjectGst src, Clock clock, bool ready)
 	{
-		auto p = gst_message_new_clock_provide((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct(), ready);
+		auto __p = gst_message_new_clock_provide((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct(), ready);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_clock_provide");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -792,14 +800,14 @@ public class Message
 	 */
 	public this(GstMessageType type, ObjectGst src, Structure structure)
 	{
-		auto p = gst_message_new_custom(type, (src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct(true));
+		auto __p = gst_message_new_custom(type, (src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_custom");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -820,14 +828,14 @@ public class Message
 	 */
 	public this(ObjectGst src, Device device, Device changedDevice)
 	{
-		auto p = gst_message_new_device_changed((src is null) ? null : src.getObjectGstStruct(), (device is null) ? null : device.getDeviceStruct(), (changedDevice is null) ? null : changedDevice.getDeviceStruct());
+		auto __p = gst_message_new_device_changed((src is null) ? null : src.getObjectGstStruct(), (device is null) ? null : device.getDeviceStruct(), (changedDevice is null) ? null : changedDevice.getDeviceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_device_changed");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -847,14 +855,44 @@ public class Message
 	 */
 	public this(ObjectGst src, Context context)
 	{
-		auto p = gst_message_new_have_context((src is null) ? null : src.getObjectGstStruct(), (context is null) ? null : context.getContextStruct());
+		auto __p = gst_message_new_have_context((src is null) ? null : src.getObjectGstStruct(), (context is null) ? null : context.getContextStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_have_context");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
+	}
+
+	/**
+	 * Creates a new instant-rate-request message. Elements handling the
+	 * instant-rate-change event must post this message. The message is
+	 * handled at the pipeline, and allows the pipeline to select the
+	 * running time when the rate change should happen and to send an
+	 * @GST_EVENT_INSTANT_RATE_SYNC_TIME event to notify the elements
+	 * in the pipeline.
+	 *
+	 * Params:
+	 *     src = The #GstObject that posted the message
+	 *     rateMultiplier = the rate multiplier factor that should be applied
+	 *
+	 * Returns: a newly allocated #GstMessage
+	 *
+	 * Since: 1.18
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ObjectGst src, double rateMultiplier)
+	{
+		auto __p = gst_message_new_instant_rate_request((src is null) ? null : src.getObjectGstStruct(), rateMultiplier);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_instant_rate_request");
+		}
+
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -874,14 +912,14 @@ public class Message
 	 */
 	public this(ObjectGst src, string contextType)
 	{
-		auto p = gst_message_new_need_context((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(contextType));
+		auto __p = gst_message_new_need_context((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(contextType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_need_context");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -903,14 +941,14 @@ public class Message
 	 */
 	public this(ObjectGst src, GstProgressType type, string code, string text)
 	{
-		auto p = gst_message_new_progress((src is null) ? null : src.getObjectGstStruct(), type, Str.toStringz(code), Str.toStringz(text));
+		auto __p = gst_message_new_progress((src is null) ? null : src.getObjectGstStruct(), type, Str.toStringz(code), Str.toStringz(text));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_progress");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -927,14 +965,14 @@ public class Message
 	 */
 	public this(ObjectGst src, string propertyName, Value val)
 	{
-		auto p = gst_message_new_property_notify((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(propertyName), (val is null) ? null : val.getValueStruct());
+		auto __p = gst_message_new_property_notify((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(propertyName), (val is null) ? null : val.getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_property_notify");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -968,14 +1006,14 @@ public class Message
 	 */
 	public this(ObjectGst src, bool live, ulong runningTime, ulong streamTime, ulong timestamp, ulong duration)
 	{
-		auto p = gst_message_new_qos((src is null) ? null : src.getObjectGstStruct(), live, runningTime, streamTime, timestamp, duration);
+		auto __p = gst_message_new_qos((src is null) ? null : src.getObjectGstStruct(), live, runningTime, streamTime, timestamp, duration);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_qos");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -995,8 +1033,8 @@ public class Message
 	 * such as bitrate statistics for the given location.
 	 *
 	 * By default, message recipients should treat entries in the order they are
-	 * stored. The recipient should therefore try entry #0 first, and if this
-	 * entry is not acceptable or working, try entry #1 etc. Senders must make
+	 * stored. The recipient should therefore try entry \#0 first, and if this
+	 * entry is not acceptable or working, try entry \#1 etc. Senders must make
 	 * sure that they add entries in this order. However, recipients are free to
 	 * ignore the order and pick an entry that is "best" for them. One example
 	 * would be a recipient that scans the entries for the one with the highest
@@ -1019,14 +1057,14 @@ public class Message
 	 */
 	public this(ObjectGst src, string location, TagList tagList, Structure entryStruct)
 	{
-		auto p = gst_message_new_redirect((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
+		auto __p = gst_message_new_redirect((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(true), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_redirect");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1046,14 +1084,14 @@ public class Message
 	 */
 	public this(ObjectGst src, GstState state)
 	{
-		auto p = gst_message_new_request_state((src is null) ? null : src.getObjectGstStruct(), state);
+		auto __p = gst_message_new_request_state((src is null) ? null : src.getObjectGstStruct(), state);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_request_state");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1074,14 +1112,14 @@ public class Message
 	 */
 	public this(ObjectGst src, GstState oldstate, GstState newstate, GstState pending)
 	{
-		auto p = gst_message_new_state_changed((src is null) ? null : src.getObjectGstStruct(), oldstate, newstate, pending);
+		auto __p = gst_message_new_state_changed((src is null) ? null : src.getObjectGstStruct(), oldstate, newstate, pending);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_state_changed");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1109,14 +1147,14 @@ public class Message
 	 */
 	public this(ObjectGst src, GstFormat format, ulong amount, double rate, bool flush, bool intermediate, ulong duration, bool eos)
 	{
-		auto p = gst_message_new_step_done((src is null) ? null : src.getObjectGstStruct(), format, amount, rate, flush, intermediate, duration, eos);
+		auto __p = gst_message_new_step_done((src is null) ? null : src.getObjectGstStruct(), format, amount, rate, flush, intermediate, duration, eos);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_step_done");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1148,14 +1186,14 @@ public class Message
 	 */
 	public this(ObjectGst src, bool active, GstFormat format, ulong amount, double rate, bool flush, bool intermediate)
 	{
-		auto p = gst_message_new_step_start((src is null) ? null : src.getObjectGstStruct(), active, format, amount, rate, flush, intermediate);
+		auto __p = gst_message_new_step_start((src is null) ? null : src.getObjectGstStruct(), active, format, amount, rate, flush, intermediate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_step_start");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1174,14 +1212,14 @@ public class Message
 	 */
 	public this(ObjectGst src)
 	{
-		auto p = gst_message_new_stream_start((src is null) ? null : src.getObjectGstStruct());
+		auto __p = gst_message_new_stream_start((src is null) ? null : src.getObjectGstStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_start");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1201,14 +1239,14 @@ public class Message
 	 */
 	public this(ObjectGst src, GstStreamStatusType type, Element owner)
 	{
-		auto p = gst_message_new_stream_status((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct());
+		auto __p = gst_message_new_stream_status((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_status");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1232,14 +1270,14 @@ public class Message
 	 */
 	public this(ObjectGst src, GstStructureChangeType type, Element owner, bool busy)
 	{
-		auto p = gst_message_new_structure_change((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct(), busy);
+		auto __p = gst_message_new_structure_change((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct(), busy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_structure_change");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1258,14 +1296,14 @@ public class Message
 	 */
 	public this(ObjectGst src, TagList tagList)
 	{
-		auto p = gst_message_new_tag((src is null) ? null : src.getObjectGstStruct(), (tagList is null) ? null : tagList.getTagListStruct());
+		auto __p = gst_message_new_tag((src is null) ? null : src.getObjectGstStruct(), (tagList is null) ? null : tagList.getTagListStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_tag");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1285,14 +1323,14 @@ public class Message
 	 */
 	public this(ObjectGst src, Toc toc, bool updated)
 	{
-		auto p = gst_message_new_toc((src is null) ? null : src.getObjectGstStruct(), (toc is null) ? null : toc.getTocStruct(), updated);
+		auto __p = gst_message_new_toc((src is null) ? null : src.getObjectGstStruct(), (toc is null) ? null : toc.getTocStruct(), updated);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_toc");
 		}
 
-		this(cast(GstMessage*) p);
+		this(cast(GstMessage*) __p);
 	}
 
 	/**
@@ -1310,7 +1348,26 @@ public class Message
 	 */
 	public void addRedirectEntry(string location, TagList tagList, Structure entryStruct)
 	{
-		gst_message_add_redirect_entry(gstMessage, Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
+		gst_message_add_redirect_entry(gstMessage, Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(true), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
+	}
+
+	/**
+	 * Creates a copy of the message. Returns a copy of the message.
+	 *
+	 * Returns: a new copy of @msg.
+	 *
+	 *     MT safe
+	 */
+	public Message copy()
+	{
+		auto __p = gst_message_copy(gstMessage);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -1356,14 +1413,14 @@ public class Message
 	 */
 	public Value getStreamStatusObject()
 	{
-		auto p = gst_message_get_stream_status_object(gstMessage);
+		auto __p = gst_message_get_stream_status_object(gstMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -1377,14 +1434,14 @@ public class Message
 	 */
 	public Structure getStructure()
 	{
-		auto p = gst_message_get_structure(gstMessage);
+		auto __p = gst_message_get_structure(gstMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -1497,11 +1554,11 @@ public class Message
 	{
 		char* outcontextType = null;
 
-		auto p = gst_message_parse_context_type(gstMessage, &outcontextType) != 0;
+		auto __p = gst_message_parse_context_type(gstMessage, &outcontextType) != 0;
 
 		contextType = Str.toString(outcontextType);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1581,7 +1638,7 @@ public class Message
 	 * GError *err = NULL;
 	 * gchar *dbg_info = NULL;
 	 *
-	 * gst_message_parse_error (msg, &amp;err, &amp;dbg_info);
+	 * gst_message_parse_error (msg, &err, &dbg_info);
 	 * g_printerr ("ERROR from element %s: %s\n",
 	 * GST_OBJECT_NAME (msg->src), err->message);
 	 * g_printerr ("Debugging info: %s\n", (dbg_info) ? dbg_info : "none");
@@ -1706,6 +1763,19 @@ public class Message
 		gst_message_parse_info_details(gstMessage, &outstructure);
 
 		structure = ObjectG.getDObject!(Structure)(outstructure);
+	}
+
+	/**
+	 * Parses the rate_multiplier from the instant-rate-request message.
+	 *
+	 * Params:
+	 *     rateMultiplier = return location for the rate, or %NULL
+	 *
+	 * Since: 1.18
+	 */
+	public void parseInstantRateRequest(out double rateMultiplier)
+	{
+		gst_message_parse_instant_rate_request(gstMessage, &rateMultiplier);
 	}
 
 	/**
@@ -1942,7 +2012,7 @@ public class Message
 	 * case GST_MESSAGE_STATE_CHANGED: {
 	 * GstState old_state, new_state;
 	 *
-	 * gst_message_parse_state_changed (msg, &amp;old_state, &amp;new_state, NULL);
+	 * gst_message_parse_state_changed (msg, &old_state, &new_state, NULL);
 	 * g_print ("Element %s changed state from %s to %s.\n",
 	 * GST_OBJECT_NAME (msg->src),
 	 * gst_element_state_get_name (old_state),
@@ -2109,7 +2179,7 @@ public class Message
 	 * case GST_MESSAGE_TAG: {
 	 * GstTagList *tags = NULL;
 	 *
-	 * gst_message_parse_tag (msg, &amp;tags);
+	 * gst_message_parse_tag (msg, &tags);
 	 * g_print ("Got tags from element %s\n", GST_OBJECT_NAME (msg->src));
 	 * handle_tags (tags);
 	 * gst_tag_list_unref (tags);
@@ -2194,6 +2264,24 @@ public class Message
 		gst_message_parse_warning_details(gstMessage, &outstructure);
 
 		structure = ObjectG.getDObject!(Structure)(outstructure);
+	}
+
+	alias doref = ref_;
+	/**
+	 * Convenience macro to increase the reference count of the message.
+	 *
+	 * Returns: @msg (for convenience when doing assignments)
+	 */
+	public Message ref_()
+	{
+		auto __p = gst_message_ref(gstMessage);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
@@ -2337,14 +2425,23 @@ public class Message
 	 */
 	public Stream streamsSelectedGetStream(uint idx)
 	{
-		auto p = gst_message_streams_selected_get_stream(gstMessage, idx);
+		auto __p = gst_message_streams_selected_get_stream(gstMessage, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Stream)(cast(GstStream*) p, true);
+		return ObjectG.getDObject!(Stream)(cast(GstStream*) __p, true);
+	}
+
+	/**
+	 * Convenience macro to decrease the reference count of the message, possibly
+	 * freeing it.
+	 */
+	public void unref()
+	{
+		gst_message_unref(gstMessage);
 	}
 
 	/**
@@ -2362,14 +2459,67 @@ public class Message
 	 */
 	public Structure writableStructure()
 	{
-		auto p = gst_message_writable_structure(gstMessage);
+		auto __p = gst_message_writable_structure(gstMessage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstMessage to point to a different #GstMessage. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * message is unreffed, the new one is reffed).
+	 *
+	 * Either @new_message or the #GstMessage pointed to by @old_message may be %NULL.
+	 *
+	 * Params:
+	 *     oldMessage = pointer to a
+	 *         pointer to a #GstMessage to be replaced.
+	 *     newMessage = pointer to a #GstMessage that will
+	 *         replace the message pointed to by @old_message.
+	 *
+	 * Returns: %TRUE if @new_message was different from @old_message
+	 */
+	public static bool replace(ref Message oldMessage, Message newMessage)
+	{
+		GstMessage* outoldMessage = oldMessage.getMessageStruct();
+
+		auto __p = gst_message_replace(&outoldMessage, (newMessage is null) ? null : newMessage.getMessageStruct()) != 0;
+
+		oldMessage = ObjectG.getDObject!(Message)(outoldMessage);
+
+		return __p;
+	}
+
+	/**
+	 * Modifies a pointer to a #GstMessage to point to a different #GstMessage. This
+	 * function is similar to gst_message_replace() except that it takes ownership
+	 * of @new_message.
+	 *
+	 * Params:
+	 *     oldMessage = pointer to a pointer to a #GstMessage
+	 *         to be replaced.
+	 *     newMessage = pointer to a #GstMessage that
+	 *         will replace the message pointed to by @old_message.
+	 *
+	 * Returns: %TRUE if @new_message was different from @old_message
+	 *
+	 * Since: 1.16
+	 */
+	public static bool take(ref Message oldMessage, Message newMessage)
+	{
+		GstMessage* outoldMessage = oldMessage.getMessageStruct();
+
+		auto __p = gst_message_take(&outoldMessage, (newMessage is null) ? null : newMessage.getMessageStruct(true)) != 0;
+
+		oldMessage = ObjectG.getDObject!(Message)(outoldMessage);
+
+		return __p;
 	}
 
 	/**

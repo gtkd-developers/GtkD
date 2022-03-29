@@ -25,6 +25,7 @@
 module gobject.Binding;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.c.functions;
 public  import gobject.c.types;
@@ -34,9 +35,10 @@ public  import gtkc.gobjecttypes;
 /**
  * #GBinding is the representation of a binding between a property on a
  * #GObject instance (or source) and another property on another #GObject
- * instance (or target). Whenever the source property changes, the same
- * value is applied to the target property; for instance, the following
- * binding:
+ * instance (or target).
+ * 
+ * Whenever the source property changes, the same value is applied to the
+ * target property; for instance, the following binding:
  * 
  * |[<!-- language="C" -->
  * g_object_bind_property (object1, "property-a",
@@ -148,6 +150,54 @@ public class Binding : ObjectG
 	}
 
 	/**
+	 * Retrieves the #GObject instance used as the source of the binding.
+	 *
+	 * A #GBinding can outlive the source #GObject as the binding does not hold a
+	 * strong reference to the source. If the source is destroyed before the
+	 * binding then this function will return %NULL.
+	 *
+	 * Returns: the source #GObject, or %NULL if the
+	 *     source does not exist any more.
+	 *
+	 * Since: 2.68
+	 */
+	public ObjectG dupSource()
+	{
+		auto __p = g_binding_dup_source(gBinding);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
+	}
+
+	/**
+	 * Retrieves the #GObject instance used as the target of the binding.
+	 *
+	 * A #GBinding can outlive the target #GObject as the binding does not hold a
+	 * strong reference to the target. If the target is destroyed before the
+	 * binding then this function will return %NULL.
+	 *
+	 * Returns: the target #GObject, or %NULL if the
+	 *     target does not exist any more.
+	 *
+	 * Since: 2.68
+	 */
+	public ObjectG dupTarget()
+	{
+		auto __p = g_binding_dup_target(gBinding);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
+	}
+
+	/**
 	 * Retrieves the flags passed when constructing the #GBinding.
 	 *
 	 * Returns: the #GBindingFlags used by the #GBinding
@@ -162,7 +212,19 @@ public class Binding : ObjectG
 	/**
 	 * Retrieves the #GObject instance used as the source of the binding.
 	 *
-	 * Returns: the source #GObject
+	 * A #GBinding can outlive the source #GObject as the binding does not hold a
+	 * strong reference to the source. If the source is destroyed before the
+	 * binding then this function will return %NULL.
+	 *
+	 * Use g_binding_dup_source() if the source or binding are used from different
+	 * threads as otherwise the pointer returned from this function might become
+	 * invalid if the source is finalized from another thread in the meantime.
+	 *
+	 * Deprecated: Use g_binding_dup_source() for a safer version of this
+	 * function.
+	 *
+	 * Returns: the source #GObject, or %NULL if the
+	 *     source does not exist any more.
 	 *
 	 * Since: 2.26
 	 */
@@ -194,7 +256,19 @@ public class Binding : ObjectG
 	/**
 	 * Retrieves the #GObject instance used as the target of the binding.
 	 *
-	 * Returns: the target #GObject
+	 * A #GBinding can outlive the target #GObject as the binding does not hold a
+	 * strong reference to the target. If the target is destroyed before the
+	 * binding then this function will return %NULL.
+	 *
+	 * Use g_binding_dup_target() if the target or binding are used from different
+	 * threads as otherwise the pointer returned from this function might become
+	 * invalid if the target is finalized from another thread in the meantime.
+	 *
+	 * Deprecated: Use g_binding_dup_target() for a safer version of this
+	 * function.
+	 *
+	 * Returns: the target #GObject, or %NULL if the
+	 *     target does not exist any more.
 	 *
 	 * Since: 2.26
 	 */
@@ -228,9 +302,13 @@ public class Binding : ObjectG
 	 * property expressed by @binding.
 	 *
 	 * This function will release the reference that is being held on
-	 * the @binding instance; if you want to hold on to the #GBinding instance
-	 * after calling g_binding_unbind(), you will need to hold a reference
-	 * to it.
+	 * the @binding instance if the binding is still bound; if you want to hold on
+	 * to the #GBinding instance after calling g_binding_unbind(), you will need
+	 * to hold a reference to it.
+	 *
+	 * Note however that this function does not take ownership of @binding, it
+	 * only unrefs the reference that was initially created by
+	 * g_object_bind_property() and is owned by the binding.
 	 *
 	 * Since: 2.38
 	 */

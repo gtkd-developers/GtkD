@@ -25,6 +25,9 @@
 module gstreamer.ProtectionMeta;
 
 private import glib.Str;
+private import glib.c.functions;
+private import gobject.ObjectG;
+private import gstreamer.MetaInfo;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
@@ -67,9 +70,16 @@ public class ProtectionMeta
 
 
 	/** */
-	public static GstMetaInfo* getInfo()
+	public static MetaInfo getInfo()
 	{
-		return gst_protection_meta_get_info();
+		auto __p = gst_protection_meta_get_info();
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(MetaInfo)(cast(GstMetaInfo*) __p);
 	}
 
 	/** */

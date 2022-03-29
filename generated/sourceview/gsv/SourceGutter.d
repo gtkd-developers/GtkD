@@ -79,14 +79,14 @@ public class SourceGutter : ObjectG
 	 */
 	public SourceGutterRenderer getRendererAtPos(int x, int y)
 	{
-		auto p = gtk_source_gutter_get_renderer_at_pos(gtkSourceGutter, x, y);
+		auto __p = gtk_source_gutter_get_renderer_at_pos(gtkSourceGutter, x, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceGutterRenderer)(cast(GtkSourceGutterRenderer*) p);
+		return ObjectG.getDObject!(SourceGutterRenderer)(cast(GtkSourceGutterRenderer*) __p);
 	}
 
 	/**
@@ -96,14 +96,14 @@ public class SourceGutter : ObjectG
 	 */
 	public SourceView getView()
 	{
-		auto p = gtk_source_gutter_get_view(gtkSourceGutter);
+		auto __p = gtk_source_gutter_get_view(gtkSourceGutter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
+		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) __p);
 	}
 
 	/**

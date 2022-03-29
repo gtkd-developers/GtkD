@@ -34,6 +34,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.giotypes;
@@ -53,7 +54,7 @@ private import std.algorithm;
  * 
  * If the #GDrive reports that media isn't automatically detected, one
  * can poll for media; typically one should not do this periodically
- * as a poll for media operation is potententially expensive and may
+ * as a poll for media operation is potentially expensive and may
  * spin up the drive creating noise.
  * 
  * #GDrive supports starting and stopping drives with authentication
@@ -210,7 +211,7 @@ public interface DriveIF{
 	/**
 	 * Gets the identifier of the given kind for @drive. The only
 	 * identifier currently available is
-	 * #G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
+	 * %G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
 	 *
 	 * Params:
 	 *     kind = the kind of identifier to return
@@ -284,9 +285,9 @@ public interface DriveIF{
 	public bool hasVolumes();
 
 	/**
-	 * Checks if @drive is capabable of automatically detecting media changes.
+	 * Checks if @drive is capable of automatically detecting media changes.
 	 *
-	 * Returns: %TRUE if the @drive is capabable of automatically detecting
+	 * Returns: %TRUE if the @drive is capable of automatically detecting
 	 *     media changes, %FALSE otherwise.
 	 */
 	public bool isMediaCheckAutomatic();

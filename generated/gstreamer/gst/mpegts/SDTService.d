@@ -169,13 +169,13 @@ public final class SDTService
 	 */
 	public this()
 	{
-		auto p = gst_mpegts_sdt_service_new();
+		auto __p = gst_mpegts_sdt_service_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsSDTService*) p);
+		this(cast(GstMpegtsSDTService*) __p);
 	}
 }

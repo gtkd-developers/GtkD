@@ -196,14 +196,14 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this(ListSG group)
 	{
-		auto p = gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct());
+		auto __p = gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRadioMenuItem*) p);
+		this(cast(GtkRadioMenuItem*) __p);
 	}
 
 	/**
@@ -220,14 +220,14 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this(RadioMenuItem group)
 	{
-		auto p = gtk_radio_menu_item_new_from_widget((group is null) ? null : group.getRadioMenuItemStruct());
+		auto __p = gtk_radio_menu_item_new_from_widget((group is null) ? null : group.getRadioMenuItemStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_widget");
 		}
 
-		this(cast(GtkRadioMenuItem*) p);
+		this(cast(GtkRadioMenuItem*) __p);
 	}
 
 	/**
@@ -239,14 +239,14 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public ListSG getGroup()
 	{
-		auto p = gtk_radio_menu_item_get_group(gtkRadioMenuItem);
+		auto __p = gtk_radio_menu_item_get_group(gtkRadioMenuItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

@@ -235,7 +235,7 @@ struct PeasGtkPluginManagerViewClass
 struct PeasGtkPluginManagerViewPrivate;
 
 /**
- * This function is passed to peas_extension_set_foreach() and
+ * This function is passed to [method@ExtensionSet.foreach] and
  * will be called for each extension in @set.
  *
  * Params:
@@ -250,9 +250,9 @@ public alias extern(C) void function(PeasExtensionSet* set, PeasPluginInfo* info
 
 /**
  * A #PeasFactoryFunc is a factory function which will instanciate a new
- * extension of a given type. g_object_newv() is such a function.
+ * extension of a given type. [ctor@GObject.Object.newv] is such a function.
  *
- * It is used with peas_object_module_register_extension_factory().
+ * It is used with [method@ObjectModule.register_extension_factory].
  *
  * Params:
  *     nParameters = The number of paramteters.

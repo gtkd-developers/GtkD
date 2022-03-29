@@ -93,14 +93,14 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public this()
 	{
-		auto p = gtk_separator_tool_item_new();
+		auto __p = gtk_separator_tool_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSeparatorToolItem*) p);
+		this(cast(GtkSeparatorToolItem*) __p);
 	}
 
 	/**

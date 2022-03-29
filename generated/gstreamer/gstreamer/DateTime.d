@@ -27,6 +27,7 @@ module gstreamer.DateTime;
 private import glib.ConstructionException;
 private import glib.DateTime : GLibDateTime = DateTime;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
@@ -38,9 +39,11 @@ private import gtkd.Loader;
  * Struct to store date, time and timezone information altogether.
  * #GstDateTime is refcounted and immutable.
  * 
- * Date information is handled using the proleptic Gregorian calendar.
+ * Date information is handled using the [proleptic Gregorian calendar].
  * 
  * Provides basic creation functions and accessor functions to its fields.
+ * 
+ * [proleptic Gregorian calendar]: https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar
  */
 public class DateTime
 {
@@ -154,11 +157,9 @@ public class DateTime
 	 * representing it in hours for most timezones.
 	 *
 	 * If value is -1 then all over value will be ignored. For example
-	 * if @month == -1, then #GstDateTime will created only for @year. If
-	 * @day == -1, then #GstDateTime will created for @year and @month and
+	 * if @month == -1, then #GstDateTime will be created only for @year. If
+	 * @day == -1, then #GstDateTime will be created for @year and @month and
 	 * so on.
-	 *
-	 * Free-function: gst_date_time_unref
 	 *
 	 * Params:
 	 *     tzoffset = Offset from UTC in hours.
@@ -169,58 +170,55 @@ public class DateTime
 	 *     minute = the minute of the hour
 	 *     seconds = the second of the minute
 	 *
-	 * Returns: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime,
+	 *     or %NULL on error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(float tzoffset, int year, int month, int day, int hour, int minute, double seconds)
 	{
-		auto p = gst_date_time_new(tzoffset, year, month, day, hour, minute, seconds);
+		auto __p = gst_date_time_new(tzoffset, year, month, day, hour, minute, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
 	 * Creates a new #GstDateTime from a #GDateTime object.
 	 *
-	 * Free-function: gst_date_time_unref
-	 *
 	 * Params:
-	 *     dt = the #GDateTime. The new #GstDateTime takes ownership.
+	 *     dt = the #GDateTime.
 	 *
 	 * Returns: a newly created #GstDateTime,
-	 *     or %NULL on error
+	 *     or %NULL if @dt is %NULL.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(GLibDateTime dt)
 	{
-		auto p = gst_date_time_new_from_g_date_time((dt is null) ? null : dt.getDateTimeStruct(true));
+		auto __p = gst_date_time_new_from_g_date_time((dt is null) ? null : dt.getDateTimeStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_g_date_time");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
 	 * Tries to parse common variants of ISO-8601 datetime strings into a
 	 * #GstDateTime. Possible input formats are (for example):
-	 * 2012-06-30T22:46:43Z, 2012, 2012-06, 2012-06-30, 2012-06-30T22:46:43-0430,
-	 * 2012-06-30T22:46Z, 2012-06-30T22:46-0430, 2012-06-30 22:46,
-	 * 2012-06-30 22:46:43, 2012-06-00, 2012-00-00, 2012-00-30, 22:46:43Z, 22:46Z,
-	 * 22:46:43-0430, 22:46-0430, 22:46:30, 22:46
+	 * `2012-06-30T22:46:43Z`, `2012`, `2012-06`, `2012-06-30`, `2012-06-30T22:46:43-0430`,
+	 * `2012-06-30T22:46Z`, `2012-06-30T22:46-0430`, `2012-06-30 22:46`,
+	 * `2012-06-30 22:46:43`, `2012-06-00`, `2012-00-00`, `2012-00-30`, `22:46:43Z`, `22:46Z`,
+	 * `22:46:43-0430`, `22:46-0430`, `22:46:30`, `22:46`
 	 * If no date is provided, it is assumed to be "today" in the timezone
 	 * provided (if any), otherwise UTC.
-	 *
-	 * Free-function: gst_date_time_unref
 	 *
 	 * Params:
 	 *     string_ = ISO 8601-formatted datetime string.
@@ -232,14 +230,40 @@ public class DateTime
 	 */
 	public this(string string_)
 	{
-		auto p = gst_date_time_new_from_iso8601_string(Str.toStringz(string_));
+		auto __p = gst_date_time_new_from_iso8601_string(Str.toStringz(string_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_iso8601_string");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
+	}
+
+	/**
+	 * Creates a new #GstDateTime using the time since Jan 1, 1970 specified by
+	 * @usecs. The #GstDateTime is in UTC.
+	 *
+	 * Params:
+	 *     usecs = microseconds from the Unix epoch
+	 *
+	 * Returns: a newly created #GstDateTime, or %NULL
+	 *     on error.
+	 *
+	 * Since: 1.18
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(long usecs)
+	{
+		auto __p = gst_date_time_new_from_unix_epoch_utc_usecs(usecs);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_unix_epoch_utc_usecs");
+		}
+
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -259,8 +283,6 @@ public class DateTime
 	 * @month and @day, and the time fields will be considered not set. In this
 	 * case @minute and @seconds should also be -1.
 	 *
-	 * Free-function: gst_date_time_unref
-	 *
 	 * Params:
 	 *     year = the gregorian year
 	 *     month = the gregorian month, or -1
@@ -269,20 +291,21 @@ public class DateTime
 	 *     minute = the minute of the hour, or -1
 	 *     seconds = the second of the minute, or -1
 	 *
-	 * Returns: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime,
+	 *     or %NULL on error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(int year, int month, int day, int hour, int minute, double seconds)
 	{
-		auto p = gst_date_time_new_local_time(year, month, day, hour, minute, seconds);
+		auto __p = gst_date_time_new_local_time(year, month, day, hour, minute, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_local_time");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -291,25 +314,24 @@ public class DateTime
 	 *
 	 * @year should be from 1 to 9999.
 	 *
-	 * Free-function: gst_date_time_unref
-	 *
 	 * Params:
 	 *     year = the gregorian year
 	 *
-	 * Returns: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime,
+	 *     or %NULL on error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(int year)
 	{
-		auto p = gst_date_time_new_y(year);
+		auto __p = gst_date_time_new_y(year);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_y");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -321,26 +343,25 @@ public class DateTime
 	 * If value is -1 then all over value will be ignored. For example
 	 * if @month == -1, then #GstDateTime will created only for @year.
 	 *
-	 * Free-function: gst_date_time_unref
-	 *
 	 * Params:
 	 *     year = the gregorian year
 	 *     month = the gregorian month
 	 *
-	 * Returns: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime,
+	 *     or %NULL on error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(int year, int month)
 	{
-		auto p = gst_date_time_new_ym(year, month);
+		auto __p = gst_date_time_new_ym(year, month);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_ym");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
@@ -355,34 +376,32 @@ public class DateTime
 	 * @day == -1, then #GstDateTime will created for @year and @month and
 	 * so on.
 	 *
-	 * Free-function: gst_date_time_unref
-	 *
 	 * Params:
 	 *     year = the gregorian year
 	 *     month = the gregorian month
 	 *     day = the day of the gregorian month
 	 *
-	 * Returns: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime,
+	 *     or %NULL on error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(int year, int month, int day)
 	{
-		auto p = gst_date_time_new_ymd(year, month, day);
+		auto __p = gst_date_time_new_ymd(year, month, day);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_ymd");
 		}
 
-		this(cast(GstDateTime*) p);
+		this(cast(GstDateTime*) __p);
 	}
 
 	/**
 	 * Returns the day of the month of this #GstDateTime.
-	 * Call gst_date_time_has_day() before, to avoid warnings.
 	 *
-	 * Returns: The day of this #GstDateTime
+	 * Returns: The day of this #GstDateTime, or -1 if none is set.
 	 */
 	public int getDay()
 	{
@@ -392,9 +411,8 @@ public class DateTime
 	/**
 	 * Retrieves the hour of the day represented by @datetime in the gregorian
 	 * calendar. The return is in the range of 0 to 23.
-	 * Call gst_date_time_has_time() before, to avoid warnings.
 	 *
-	 * Returns: the hour of the day
+	 * Returns: the hour of the day, or -1 if none is set.
 	 */
 	public int getHour()
 	{
@@ -405,7 +423,7 @@ public class DateTime
 	 * Retrieves the fractional part of the seconds in microseconds represented by
 	 * @datetime in the gregorian calendar.
 	 *
-	 * Returns: the microsecond of the second
+	 * Returns: the microsecond of the second, or -1 if none is set.
 	 */
 	public int getMicrosecond()
 	{
@@ -415,9 +433,8 @@ public class DateTime
 	/**
 	 * Retrieves the minute of the hour represented by @datetime in the gregorian
 	 * calendar.
-	 * Call gst_date_time_has_time() before, to avoid warnings.
 	 *
-	 * Returns: the minute of the hour
+	 * Returns: the minute of the hour, or -1 if none is set.
 	 */
 	public int getMinute()
 	{
@@ -426,9 +443,8 @@ public class DateTime
 
 	/**
 	 * Returns the month of this #GstDateTime. January is 1, February is 2, etc..
-	 * Call gst_date_time_has_month() before, to avoid warnings.
 	 *
-	 * Returns: The month of this #GstDateTime
+	 * Returns: The month of this #GstDateTime, or -1 if none is set.
 	 */
 	public int getMonth()
 	{
@@ -438,9 +454,8 @@ public class DateTime
 	/**
 	 * Retrieves the second of the minute represented by @datetime in the gregorian
 	 * calendar.
-	 * Call gst_date_time_has_time() before, to avoid warnings.
 	 *
-	 * Returns: the second represented by @datetime
+	 * Returns: the second represented by @datetime, or -1 if none is set.
 	 */
 	public int getSecond()
 	{
@@ -453,7 +468,7 @@ public class DateTime
 	 * values, timezones before (to the west) of UTC have negative values.
 	 * If @datetime represents UTC time, then the offset is zero.
 	 *
-	 * Returns: the offset from UTC in hours
+	 * Returns: the offset from UTC in hours, or %G_MAXDOUBLE if none is set.
 	 */
 	public float getTimeZoneOffset()
 	{
@@ -461,7 +476,7 @@ public class DateTime
 	}
 
 	/**
-	 * Returns the year of this #GstDateTime
+	 * Returns the year of this #GstDateTime.
 	 * Call gst_date_time_has_year() before, to avoid warnings.
 	 *
 	 * Returns: The year of this #GstDateTime
@@ -521,45 +536,43 @@ public class DateTime
 	 */
 	public DateTime ref_()
 	{
-		auto p = gst_date_time_ref(gstDateTime);
+		auto __p = gst_date_time_ref(gstDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) p, true);
+		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) __p, true);
 	}
 
 	/**
 	 * Creates a new #GDateTime from a fully defined #GstDateTime object.
 	 *
-	 * Free-function: g_date_time_unref
-	 *
 	 * Returns: a newly created #GDateTime, or
-	 *     %NULL on error
+	 *     %NULL on error or if @datetime does not have a year, month, day, hour,
+	 *     minute and second.
 	 */
 	public GLibDateTime toGDateTime()
 	{
-		auto p = gst_date_time_to_g_date_time(gstDateTime);
+		auto __p = gst_date_time_to_g_date_time(gstDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new GLibDateTime(cast(GDateTime*) p, true);
+		return new GLibDateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
 	 * Create a minimal string compatible with ISO-8601. Possible output formats
-	 * are (for example): 2012, 2012-06, 2012-06-23, 2012-06-23T23:30Z,
-	 * 2012-06-23T23:30+0100, 2012-06-23T23:30:59Z, 2012-06-23T23:30:59+0100
+	 * are (for example): `2012`, `2012-06`, `2012-06-23`, `2012-06-23T23:30Z`,
+	 * `2012-06-23T23:30+0100`, `2012-06-23T23:30:59Z`, `2012-06-23T23:30:59+0100`
 	 *
 	 * Returns: a newly allocated string formatted according
 	 *     to ISO 8601 and only including the datetime fields that are
-	 *     valid, or %NULL in case there was an error. The string should
-	 *     be freed with g_free().
+	 *     valid, or %NULL in case there was an error.
 	 */
 	public string toIso8601String()
 	{

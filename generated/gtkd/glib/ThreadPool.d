@@ -126,10 +126,10 @@ public final class ThreadPool
 	 * processing a task. Instead at least all still running threads
 	 * can finish their tasks before the @pool is freed.
 	 *
-	 * If @wait_ is %TRUE, the functions does not return before all
+	 * If @wait_ is %TRUE, this function does not return before all
 	 * tasks to be processed (dependent on @immediate, whether all
 	 * or only the currently running) are ready.
-	 * Otherwise the function returns immediately.
+	 * Otherwise this function returns immediately.
 	 *
 	 * After calling this function @pool must not be used anymore.
 	 *
@@ -346,6 +346,10 @@ public final class ThreadPool
 	 * with the two arguments. The first one is the parameter to
 	 * g_thread_pool_push() and the second one is @user_data.
 	 *
+	 * Pass g_get_num_processors() to @max_threads to create as many threads as
+	 * there are logical processors on the system. This will not pin each thread to
+	 * a specific processor.
+	 *
 	 * The parameter @exclusive determines whether the thread pool owns
 	 * all threads exclusive or shares them with other thread pools.
 	 * If @exclusive is %TRUE, @max_threads threads are started
@@ -391,6 +395,48 @@ public final class ThreadPool
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GThreadPool*) __p);
+	}
+
+	/**
+	 * This function creates a new thread pool similar to g_thread_pool_new()
+	 * but allowing @item_free_func to be specified to free the data passed
+	 * to g_thread_pool_push() in the case that the #GThreadPool is stopped
+	 * and freed before all tasks have been executed.
+	 *
+	 * Params:
+	 *     func = a function to execute in the threads of the new thread pool
+	 *     userData = user data that is handed over to @func every time it
+	 *         is called
+	 *     itemFreeFunc = used to pass as a free function to
+	 *         g_async_queue_new_full()
+	 *     maxThreads = the maximal number of threads to execute concurrently
+	 *         in the new thread pool, `-1` means no limit
+	 *     exclusive = should this thread pool be exclusive?
+	 *
+	 * Returns: the new #GThreadPool
+	 *
+	 * Since: 2.70
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GFunc func, void* userData, GDestroyNotify itemFreeFunc, int maxThreads, bool exclusive)
+	{
+		GError* err = null;
+
+		auto __p = g_thread_pool_new_full(func, userData, itemFreeFunc, maxThreads, exclusive, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_full");
 		}
 
 		this(cast(GThreadPool*) __p);

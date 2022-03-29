@@ -178,14 +178,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public this()
 	{
-		auto p = gtk_text_view_new();
+		auto __p = gtk_text_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextView*) p);
+		this(cast(GtkTextView*) __p);
 	}
 
 	/**
@@ -205,14 +205,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public this(TextBuffer buffer)
 	{
-		auto p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
+		auto __p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_buffer");
 		}
 
-		this(cast(GtkTextView*) p);
+		this(cast(GtkTextView*) __p);
 	}
 
 	/**
@@ -398,14 +398,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public TextBuffer getBuffer()
 	{
-		auto p = gtk_text_view_get_buffer(gtkTextView);
+		auto __p = gtk_text_view_get_buffer(gtkTextView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) __p);
 	}
 
 	/**
@@ -467,14 +467,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public TextAttributes getDefaultAttributes()
 	{
-		auto p = gtk_text_view_get_default_attributes(gtkTextView);
+		auto __p = gtk_text_view_get_default_attributes(gtkTextView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p, true);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) __p, true);
 	}
 
 	/**
@@ -538,11 +538,11 @@ public class TextView : Container, ScrollableIF
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y) != 0;
+		auto __p = gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -574,11 +574,11 @@ public class TextView : Container, ScrollableIF
 	{
 		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
-		auto p = gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y) != 0;
+		auto __p = gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y) != 0;
 
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -735,14 +735,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public PgTabArray getTabs()
 	{
-		auto p = gtk_text_view_get_tabs(gtkTextView);
+		auto __p = gtk_text_view_get_tabs(gtkTextView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) __p, true);
 	}
 
 	/**
@@ -785,14 +785,14 @@ public class TextView : Container, ScrollableIF
 	 */
 	public Window getWindow(GtkTextWindowType win)
 	{
-		auto p = gtk_text_view_get_window(gtkTextView, win);
+		auto __p = gtk_text_view_get_window(gtkTextView, win);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**

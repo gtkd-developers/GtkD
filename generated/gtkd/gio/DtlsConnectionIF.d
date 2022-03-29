@@ -31,9 +31,12 @@ private import gio.TlsDatabase;
 private import gio.TlsInteraction;
 private import gio.c.functions;
 public  import gio.c.types;
+private import glib.ByteArray;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.giotypes;
@@ -165,6 +168,50 @@ public interface DtlsConnectionIF{
 	public TlsCertificate getCertificate();
 
 	/**
+	 * Query the TLS backend for TLS channel binding data of @type for @conn.
+	 *
+	 * This call retrieves TLS channel binding data as specified in RFC
+	 * [5056](https://tools.ietf.org/html/rfc5056), RFC
+	 * [5929](https://tools.ietf.org/html/rfc5929), and related RFCs.  The
+	 * binding data is returned in @data.  The @data is resized by the callee
+	 * using #GByteArray buffer management and will be freed when the @data
+	 * is destroyed by g_byte_array_unref(). If @data is %NULL, it will only
+	 * check whether TLS backend is able to fetch the data (e.g. whether @type
+	 * is supported by the TLS backend). It does not guarantee that the data
+	 * will be available though.  That could happen if TLS connection does not
+	 * support @type or the binding data is not available yet due to additional
+	 * negotiation or input required.
+	 *
+	 * Params:
+	 *     type = #GTlsChannelBindingType type of data to fetch
+	 *     data = #GByteArray is
+	 *         filled with the binding data, or %NULL
+	 *
+	 * Returns: %TRUE on success, %FALSE otherwise
+	 *
+	 * Since: 2.66
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool getChannelBindingData(GTlsChannelBindingType type, out ByteArray data);
+
+	/**
+	 * Returns the name of the current DTLS ciphersuite, or %NULL if the
+	 * connection has not handshaked or has been closed. Beware that the TLS
+	 * backend may use any of multiple different naming conventions, because
+	 * OpenSSL and GnuTLS have their own ciphersuite naming conventions that
+	 * are different from each other and different from the standard, IANA-
+	 * registered ciphersuite names. The ciphersuite name is intended to be
+	 * displayed to the user for informative purposes only, and parsing it
+	 * is not recommended.
+	 *
+	 * Returns: The name of the current DTLS ciphersuite, or %NULL
+	 *
+	 * Since: 2.70
+	 */
+	public string getCiphersuiteName();
+
+	/**
 	 * Gets the certificate database that @conn uses to verify
 	 * peer certificates. See g_dtls_connection_set_database().
 	 *
@@ -201,8 +248,8 @@ public interface DtlsConnectionIF{
 	public string getNegotiatedProtocol();
 
 	/**
-	 * Gets @conn's peer's certificate after the handshake has completed.
-	 * (It is not set during the emission of
+	 * Gets @conn's peer's certificate after the handshake has completed
+	 * or failed. (It is not set during the emission of
 	 * #GDtlsConnection::accept-certificate.)
 	 *
 	 * Returns: @conn's peer's certificate, or %NULL
@@ -213,14 +260,26 @@ public interface DtlsConnectionIF{
 
 	/**
 	 * Gets the errors associated with validating @conn's peer's
-	 * certificate, after the handshake has completed. (It is not set
-	 * during the emission of #GDtlsConnection::accept-certificate.)
+	 * certificate, after the handshake has completed or failed. (It is
+	 * not set during the emission of #GDtlsConnection::accept-certificate.)
 	 *
 	 * Returns: @conn's peer's certificate errors
 	 *
 	 * Since: 2.48
 	 */
 	public GTlsCertificateFlags getPeerCertificateErrors();
+
+	/**
+	 * Returns the current DTLS protocol version, which may be
+	 * %G_TLS_PROTOCOL_VERSION_UNKNOWN if the connection has not handshaked, or
+	 * has been closed, or if the TLS backend has implemented a protocol version
+	 * that is not a recognized #GTlsProtocolVersion.
+	 *
+	 * Returns: The current DTLS protocol version
+	 *
+	 * Since: 2.70
+	 */
+	public GTlsProtocolVersion getProtocolVersion();
 
 	/**
 	 * Gets @conn rehandshaking mode. See
@@ -373,6 +432,9 @@ public interface DtlsConnectionIF{
 	 * client-side connections, unless that bit is not set in
 	 * #GDtlsClientConnection:validation-flags).
 	 *
+	 * There are nonintuitive security implications when using a non-default
+	 * database. See #GDtlsConnection:database for details.
+	 *
 	 * Params:
 	 *     database = a #GTlsDatabase
 	 *
@@ -521,6 +583,15 @@ public interface DtlsConnectionIF{
 	 * certificate to be accepted despite @errors, return %TRUE from the
 	 * signal handler. Otherwise, if no handler accepts the certificate,
 	 * the handshake will fail with %G_TLS_ERROR_BAD_CERTIFICATE.
+	 *
+	 * GLib guarantees that if certificate verification fails, this signal
+	 * will be emitted with at least one error will be set in @errors, but
+	 * it does not guarantee that all possible errors will be set.
+	 * Accordingly, you may not safely decide to ignore any particular
+	 * type of error. For example, it would be incorrect to ignore
+	 * %G_TLS_CERTIFICATE_EXPIRED if you want to allow expired
+	 * certificates, because this could potentially be the only error flag
+	 * set even if other problems exist with the certificate.
 	 *
 	 * For a server-side connection, @peer_cert is the certificate
 	 * presented by the client, if this was requested via the server's

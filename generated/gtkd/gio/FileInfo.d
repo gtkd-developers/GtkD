@@ -33,6 +33,7 @@ private import glib.DateTime;
 private import glib.MemorySlice;
 private import glib.Str;
 private import glib.TimeVal;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -59,6 +60,11 @@ public  import gtkc.giotypes;
  * You may call g_file_query_settable_attributes() and
  * g_file_query_writable_namespaces() to discover the settable attributes
  * of a particular file at runtime.
+ * 
+ * The direct accessors, such as g_file_info_get_name(), are slightly more
+ * optimized than the generic attribute accessors, such as
+ * g_file_info_get_attribute_byte_string().This optimization will matter
+ * only if calling the API in a tight loop.
  * 
  * #GFileAttributeMatcher allows for searching through a #GFileInfo for
  * attributes.
@@ -155,7 +161,31 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets the value of a attribute, formated as a string.
+	 * Gets the access time of the current @info and returns it as a
+	 * #GDateTime.
+	 *
+	 * This requires the %G_FILE_ATTRIBUTE_TIME_ACCESS attribute. If
+	 * %G_FILE_ATTRIBUTE_TIME_ACCESS_USEC is provided, the resulting #GDateTime
+	 * will have microsecond precision.
+	 *
+	 * Returns: access time, or %NULL if unknown
+	 *
+	 * Since: 2.70
+	 */
+	public DateTime getAccessDateTime()
+	{
+		auto __p = g_file_info_get_access_date_time(gFileInfo);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p, true);
+	}
+
+	/**
+	 * Gets the value of a attribute, formatted as a string.
 	 * This escapes things as needed to make the string valid
 	 * UTF-8.
 	 *
@@ -258,8 +288,8 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: a #GObject associated with the given @attribute, or
-	 *     %NULL otherwise.
+	 * Returns: a #GObject associated with the given @attribute,
+	 *     or %NULL otherwise.
 	 */
 	public ObjectG getAttributeObject(string attribute)
 	{
@@ -294,8 +324,8 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: the contents of the @attribute value as a UTF-8 string, or
-	 *     %NULL otherwise.
+	 * Returns: the contents of the @attribute value as a UTF-8 string,
+	 *     or %NULL otherwise.
 	 */
 	public string getAttributeString(string attribute)
 	{
@@ -309,8 +339,8 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Returns: the contents of the @attribute value as a stringv, or
-	 *     %NULL otherwise. Do not free. These returned strings are UTF-8.
+	 * Returns: the contents of the @attribute value as a stringv,
+	 *     or %NULL otherwise. Do not free. These returned strings are UTF-8.
 	 *
 	 * Since: 2.22
 	 */
@@ -366,11 +396,36 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the file's content type.
 	 *
-	 * Returns: a string containing the file's content type.
+	 * Returns: a string containing the file's content type,
+	 *     or %NULL if unknown.
 	 */
 	public string getContentType()
 	{
 		return Str.toString(g_file_info_get_content_type(gFileInfo));
+	}
+
+	/**
+	 * Gets the creation time of the current @info and returns it as a
+	 * #GDateTime.
+	 *
+	 * This requires the %G_FILE_ATTRIBUTE_TIME_CREATED attribute. If
+	 * %G_FILE_ATTRIBUTE_TIME_CREATED_USEC is provided, the resulting #GDateTime
+	 * will have microsecond precision.
+	 *
+	 * Returns: creation time, or %NULL if unknown
+	 *
+	 * Since: 2.70
+	 */
+	public DateTime getCreationDateTime()
+	{
+		auto __p = g_file_info_get_creation_date_time(gFileInfo);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -395,7 +450,7 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets a display name for a file.
+	 * Gets a display name for a file. This is guaranteed to always be set.
 	 *
 	 * Returns: a string containing the display name.
 	 */
@@ -527,7 +582,7 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets the name for a file.
+	 * Gets the name for a file. This is guaranteed to always be set.
 	 *
 	 * Returns: a string containing the file name.
 	 */
@@ -537,9 +592,11 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Gets the file's size.
+	 * Gets the file's size (in bytes). The size is retrieved through the value of
+	 * the %G_FILE_ATTRIBUTE_STANDARD_SIZE attribute and is converted
+	 * from #guint64 to #goffset before returning the result.
 	 *
-	 * Returns: a #goffset containing the file's size.
+	 * Returns: a #goffset containing the file's size (in bytes).
 	 */
 	public long getSize()
 	{
@@ -645,6 +702,21 @@ public class FileInfo : ObjectG
 	public void removeAttribute(string attribute)
 	{
 		g_file_info_remove_attribute(gFileInfo, Str.toStringz(attribute));
+	}
+
+	/**
+	 * Sets the %G_FILE_ATTRIBUTE_TIME_ACCESS and
+	 * %G_FILE_ATTRIBUTE_TIME_ACCESS_USEC attributes in the file info to the
+	 * given date/time value.
+	 *
+	 * Params:
+	 *     atime = a #GDateTime.
+	 *
+	 * Since: 2.70
+	 */
+	public void setAccessDateTime(DateTime atime)
+	{
+		g_file_info_set_access_date_time(gFileInfo, (atime is null) ? null : atime.getDateTimeStruct());
 	}
 
 	/**
@@ -823,6 +895,21 @@ public class FileInfo : ObjectG
 	public void setContentType(string contentType)
 	{
 		g_file_info_set_content_type(gFileInfo, Str.toStringz(contentType));
+	}
+
+	/**
+	 * Sets the %G_FILE_ATTRIBUTE_TIME_CREATED and
+	 * %G_FILE_ATTRIBUTE_TIME_CREATED_USEC attributes in the file info to the
+	 * given date/time value.
+	 *
+	 * Params:
+	 *     creationTime = a #GDateTime.
+	 *
+	 * Since: 2.70
+	 */
+	public void setCreationDateTime(DateTime creationTime)
+	{
+		g_file_info_set_creation_date_time(gFileInfo, (creationTime is null) ? null : creationTime.getDateTimeStruct());
 	}
 
 	/**

@@ -180,7 +180,7 @@ public enum GBusNameOwnerFlags
 	ALLOW_REPLACEMENT = 1,
 	/**
 	 * If another message bus connection owns the name and have
-	 * specified #G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
+	 * specified %G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
 	 */
 	REPLACE = 2,
 	/**
@@ -297,25 +297,33 @@ public enum GCredentialsType
 	 */
 	INVALID = 0,
 	/**
-	 * The native credentials type is a struct ucred.
+	 * The native credentials type is a `struct ucred`.
 	 */
 	LINUX_UCRED = 1,
 	/**
-	 * The native credentials type is a struct cmsgcred.
+	 * The native credentials type is a `struct cmsgcred`.
 	 */
 	FREEBSD_CMSGCRED = 2,
 	/**
-	 * The native credentials type is a struct sockpeercred. Added in 2.30.
+	 * The native credentials type is a `struct sockpeercred`. Added in 2.30.
 	 */
 	OPENBSD_SOCKPEERCRED = 3,
 	/**
-	 * The native credentials type is a ucred_t. Added in 2.40.
+	 * The native credentials type is a `ucred_t`. Added in 2.40.
 	 */
 	SOLARIS_UCRED = 4,
 	/**
-	 * The native credentials type is a struct unpcbid.
+	 * The native credentials type is a `struct unpcbid`. Added in 2.42.
 	 */
 	NETBSD_UNPCBID = 5,
+	/**
+	 * The native credentials type is a `struct xucred`. Added in 2.66.
+	 */
+	APPLE_XUCRED = 6,
+	/**
+	 * The native credentials type is a PID `DWORD`. Added in 2.72.
+	 */
+	WIN32_PID = 7,
 }
 alias GCredentialsType CredentialsType;
 
@@ -398,6 +406,11 @@ public enum GDBusConnectionFlags
 	 * delayed until g_dbus_connection_start_message_processing() is called.
 	 */
 	DELAY_MESSAGE_PROCESSING = 16,
+	/**
+	 * When authenticating
+	 * as a server, require the UID of the peer to be the same as the UID of the server. (Since: 2.68)
+	 */
+	AUTHENTICATION_REQUIRE_SAME_USER = 32,
 }
 alias GDBusConnectionFlags DBusConnectionFlags;
 
@@ -828,6 +841,12 @@ public enum GDBusProxyFlags
 	 * and only if %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START is not also specified.
 	 */
 	DO_NOT_AUTO_START_AT_CONSTRUCTION = 16,
+	/**
+	 * Don't actually send the AddMatch D-Bus
+	 * call for this signal subscription. This gives you more control
+	 * over which match rules you add (but you must add them manually). (Since: 2.72)
+	 */
+	NO_MATCH_RULE = 32,
 }
 alias GDBusProxyFlags DBusProxyFlags;
 
@@ -873,6 +892,11 @@ public enum GDBusServerFlags
 	 * authentication method.
 	 */
 	AUTHENTICATION_ALLOW_ANONYMOUS = 2,
+	/**
+	 * Require the UID of the
+	 * peer to be the same as the UID of the server when authenticating. (Since: 2.68)
+	 */
+	AUTHENTICATION_REQUIRE_SAME_USER = 4,
 }
 alias GDBusServerFlags DBusServerFlags;
 
@@ -1097,7 +1121,7 @@ alias GFileAttributeStatus FileAttributeStatus;
 public enum GFileAttributeType
 {
 	/**
-	 * indicates an invalid or uninitalized type.
+	 * indicates an invalid or uninitialized type.
 	 */
 	INVALID = 0,
 	/**
@@ -1197,7 +1221,9 @@ public enum GFileCreateFlags
 	 * rather than a "save new version of" replace operation.
 	 * You can think of it as "unlink destination" before
 	 * writing to it, although the implementation may not
-	 * be exactly like that. Since 2.20
+	 * be exactly like that. This flag can only be used with
+	 * g_file_replace() and its variants, including g_file_replace_contents().
+	 * Since 2.20
 	 */
 	REPLACE_DESTINATION = 2,
 }
@@ -1397,7 +1423,7 @@ alias GFileType FileType;
 /**
  * Indicates a hint from the file system whether files should be
  * previewed in a file manager. Returned as the value of the key
- * #G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
+ * %G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
  */
 public enum GFilesystemPreviewType
 {
@@ -1431,7 +1457,7 @@ alias GFilesystemPreviewType FilesystemPreviewType;
  * }
  * ]|
  * but should instead treat all unrecognized error codes the same as
- * #G_IO_ERROR_FAILED.
+ * %G_IO_ERROR_FAILED.
  *
  * See also #GPollableReturn for a cheaper way of returning
  * %G_IO_ERROR_WOULD_BLOCK to callers without allocating a #GError.
@@ -2108,7 +2134,7 @@ public enum GSettingsBindFlags
 	 */
 	NO_SENSITIVITY = 4,
 	/**
-	 * When set in addition to #G_SETTINGS_BIND_GET, set the #GObject property
+	 * When set in addition to %G_SETTINGS_BIND_GET, set the #GObject property
 	 * value initially from the setting, but do not listen for changes of the setting
 	 */
 	GET_NO_CHANGES = 8,
@@ -2398,6 +2424,12 @@ public enum GSubprocessFlags
 	 * over the "standard" file descriptors (stdin, stdout, stderr).
 	 */
 	INHERIT_FDS = 128,
+	/**
+	 * if path searching is
+	 * needed when spawning the subprocess, use the `PATH` in the launcher
+	 * environment. (Since: 2.72)
+	 */
+	SEARCH_PATH_FROM_ENVP = 256,
 }
 alias GSubprocessFlags SubprocessFlags;
 
@@ -2439,10 +2471,16 @@ alias GTlsAuthenticationMode TlsAuthenticationMode;
 
 /**
  * A set of flags describing TLS certification validation. This can be
- * used to set which validation steps to perform (eg, with
- * g_tls_client_connection_set_validation_flags()), or to describe why
- * a particular certificate was rejected (eg, in
- * #GTlsConnection::accept-certificate).
+ * used to describe why a particular certificate was rejected (for
+ * example, in #GTlsConnection::accept-certificate).
+ *
+ * GLib guarantees that if certificate verification fails, at least one
+ * flag will be set, but it does not guarantee that all possible flags
+ * will be set. Accordingly, you may not safely decide to ignore any
+ * particular type of error. For example, it would be incorrect to mask
+ * %G_TLS_CERTIFICATE_EXPIRED if you want to allow expired certificates,
+ * because this could potentially be the only error flag set even if
+ * other problems exist with the certificate.
  *
  * Since: 2.28
  */
@@ -2505,6 +2543,71 @@ public enum GTlsCertificateRequestFlags
 	NONE = 0,
 }
 alias GTlsCertificateRequestFlags TlsCertificateRequestFlags;
+
+/**
+ * An error code used with %G_TLS_CHANNEL_BINDING_ERROR in a #GError to
+ * indicate a TLS channel binding retrieval error.
+ *
+ * Since: 2.66
+ */
+public enum GTlsChannelBindingError
+{
+	/**
+	 * Either entire binding
+	 * retrieval facility or specific binding type is not implemented in the
+	 * TLS backend.
+	 */
+	NOT_IMPLEMENTED = 0,
+	/**
+	 * The handshake is not yet
+	 * complete on the connection which is a strong requirement for any existing
+	 * binding type.
+	 */
+	INVALID_STATE = 1,
+	/**
+	 * Handshake is complete but
+	 * binding data is not available. That normally indicates the TLS
+	 * implementation failed to provide the binding data. For example, some
+	 * implementations do not provide a peer certificate for resumed connections.
+	 */
+	NOT_AVAILABLE = 2,
+	/**
+	 * Binding type is not supported
+	 * on the current connection. This error could be triggered when requesting
+	 * `tls-server-end-point` binding data for a certificate which has no hash
+	 * function or uses multiple hash functions.
+	 */
+	NOT_SUPPORTED = 3,
+	/**
+	 * Any other backend error
+	 * preventing binding data retrieval.
+	 */
+	GENERAL_ERROR = 4,
+}
+alias GTlsChannelBindingError TlsChannelBindingError;
+
+/**
+ * The type of TLS channel binding data to retrieve from #GTlsConnection
+ * or #GDtlsConnection, as documented by RFC 5929. The
+ * [`tls-unique-for-telnet`](https://tools.ietf.org/html/rfc5929#section-5)
+ * binding type is not currently implemented.
+ *
+ * Since: 2.66
+ */
+public enum GTlsChannelBindingType
+{
+	/**
+	 * [`tls-unique`](https://tools.ietf.org/html/rfc5929#section-3) binding
+	 * type
+	 */
+	UNIQUE = 0,
+	/**
+	 * [`tls-server-end-point`](https://tools.ietf.org/html/rfc5929#section-4)
+	 * binding type
+	 */
+	SERVER_END_POINT = 1,
+}
+alias GTlsChannelBindingType TlsChannelBindingType;
 
 /**
  * Flags for g_tls_database_lookup_certificate_for_handle(),
@@ -2590,6 +2693,11 @@ public enum GTlsError
 	 * downgrade attack. Since: 2.60
 	 */
 	INAPPROPRIATE_FALLBACK = 7,
+	/**
+	 * The certificate failed
+	 * to load because a password was incorrect. Since: 2.72
+	 */
+	BAD_CERTIFICATE_PASSWORD = 8,
 }
 alias GTlsError TlsError;
 
@@ -2644,8 +2752,73 @@ public enum GTlsPasswordFlags
 	 * this password right.
 	 */
 	FINAL_TRY = 8,
+	/**
+	 * For PKCS #11, the user PIN is required.
+	 * Since: 2.70.
+	 */
+	PKCS11_USER = 16,
+	/**
+	 * For PKCS #11, the security officer
+	 * PIN is required. Since: 2.70.
+	 */
+	PKCS11_SECURITY_OFFICER = 32,
+	/**
+	 * For PKCS #11, the context-specific
+	 * PIN is required. Since: 2.70.
+	 */
+	PKCS11_CONTEXT_SPECIFIC = 64,
 }
 alias GTlsPasswordFlags TlsPasswordFlags;
+
+/**
+ * The TLS or DTLS protocol version used by a #GTlsConnection or
+ * #GDtlsConnection. The integer values of these versions are sequential
+ * to ensure newer known protocol versions compare greater than older
+ * known versions. Any known DTLS protocol version will compare greater
+ * than any SSL or TLS protocol version. The protocol version may be
+ * %G_TLS_PROTOCOL_VERSION_UNKNOWN if the TLS backend supports a newer
+ * protocol version that GLib does not yet know about. This means that
+ * it's possible for an unknown DTLS protocol version to compare less
+ * than the TLS protocol versions.
+ *
+ * Since: 2.70
+ */
+public enum GTlsProtocolVersion
+{
+	/**
+	 * No protocol version or unknown protocol version
+	 */
+	UNKNOWN = 0,
+	/**
+	 * SSL 3.0, which is insecure and should not be used
+	 */
+	SSL_3_0 = 1,
+	/**
+	 * TLS 1.0, which is insecure and should not be used
+	 */
+	TLS_1_0 = 2,
+	/**
+	 * TLS 1.1, which is insecure and should not be used
+	 */
+	TLS_1_1 = 3,
+	/**
+	 * TLS 1.2, defined by [RFC 5246](https://datatracker.ietf.org/doc/html/rfc5246)
+	 */
+	TLS_1_2 = 4,
+	/**
+	 * TLS 1.3, defined by [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446)
+	 */
+	TLS_1_3 = 5,
+	/**
+	 * DTLS 1.0, which is insecure and should not be used
+	 */
+	DTLS_1_0 = 201,
+	/**
+	 * DTLS 1.2, defined by [RFC 6347](https://datatracker.ietf.org/doc/html/rfc6347)
+	 */
+	DTLS_1_2 = 202,
+}
+alias GTlsProtocolVersion TlsProtocolVersion;
 
 /**
  * When to allow rehandshaking. See
@@ -3002,8 +3175,14 @@ struct GAppInfoIface
 	 *     application @appinfo, or %NULL if none.
 	 */
 	extern(C) const(char)* function(GAppInfo* appinfo) getDescription;
-	/** */
-	extern(C) const(char)* function(GAppInfo* appinfo) getExecutable;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 * Returns: a string containing the @appinfo's application
+	 *     binaries name
+	 */
+	extern(C) char* function(GAppInfo* appinfo) getExecutable;
 	/**
 	 *
 	 * Params:
@@ -3118,8 +3297,14 @@ struct GAppInfoIface
 	 * Returns: %TRUE if @appinfo has been deleted
 	 */
 	extern(C) int function(GAppInfo* appinfo) doDelete;
-	/** */
-	extern(C) const(char)* function(GAppInfo* appinfo) getCommandline;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 * Returns: a string containing the @appinfo's commandline,
+	 *     or %NULL if this information is not available
+	 */
+	extern(C) char* function(GAppInfo* appinfo) getCommandline;
 	/**
 	 *
 	 * Params:
@@ -3194,13 +3379,13 @@ struct GAppLaunchContextClass
 	/** */
 	extern(C) void function(GAppLaunchContext* context, GAppInfo* info, GVariant* platformData) launched;
 	/** */
+	extern(C) void function(GAppLaunchContext* context, GAppInfo* info, GVariant* platformData) launchStarted;
+	/** */
 	extern(C) void function() GReserved1;
 	/** */
 	extern(C) void function() GReserved2;
 	/** */
 	extern(C) void function() GReserved3;
-	/** */
-	extern(C) void function() GReserved4;
 }
 
 struct GAppLaunchContextPrivate;
@@ -4265,6 +4450,42 @@ struct GDatagramBasedInterface
 	extern(C) int function(GDatagramBased* datagramBased, GIOCondition condition, long timeout, GCancellable* cancellable, GError** err) conditionWait;
 }
 
+struct GDebugController;
+
+struct GDebugControllerDBus
+{
+	GObject parentInstance;
+}
+
+/**
+ * The virtual function table for #GDebugControllerDBus.
+ *
+ * Since: 2.72
+ */
+struct GDebugControllerDBusClass
+{
+	/**
+	 * The parent class.
+	 */
+	GObjectClass parentClass;
+	/** */
+	extern(C) int function(GDebugControllerDBus* controller, GDBusMethodInvocation* invocation) authorize;
+	void*[12] padding;
+}
+
+/**
+ * The virtual function table for #GDebugController.
+ *
+ * Since: 2.72
+ */
+struct GDebugControllerInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+}
+
 struct GDesktopAppInfo;
 
 struct GDesktopAppInfoClass
@@ -4286,7 +4507,8 @@ struct GDesktopAppInfoLookupIface
 	 * Params:
 	 *     lookup = a #GDesktopAppInfoLookup
 	 *     uriScheme = a string containing a URI scheme.
-	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or
+	 *     %NULL on error.
 	 */
 	extern(C) GAppInfo* function(GDesktopAppInfoLookup* lookup, const(char)* uriScheme) getDefaultForUriScheme;
 }
@@ -4356,7 +4578,7 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Returns: %TRUE if the @drive is capabable of automatically detecting
+	 * Returns: %TRUE if the @drive is capable of automatically detecting
 	 *     media changes, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) isMediaCheckAutomatic;
@@ -4599,6 +4821,8 @@ struct GDtlsConnectionInterface
 	 * Returns: the negotiated protocol, or %NULL
 	 */
 	extern(C) const(char)* function(GDtlsConnection* conn) getNegotiatedProtocol;
+	/** */
+	extern(C) int function(GDtlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) getBindingData;
 }
 
 struct GDtlsServerConnection;
@@ -4879,19 +5103,34 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 * Returns: a string containing the URI scheme for the given
-	 *     #GFile. The returned string should be freed with g_free()
-	 *     when no longer needed.
+	 *     #GFile or %NULL if the #GFile was constructed with an invalid URI. The
+	 *     returned string should be freed with g_free() when no longer needed.
 	 */
 	extern(C) char* function(GFile* file) getUriScheme;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Returns: string containing the #GFile's
+	 *     base name, or %NULL if given #GFile is invalid. The returned string
+	 *     should be freed with g_free() when no longer needed.
+	 */
 	extern(C) char* function(GFile* file) getBasename;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Returns: string containing the #GFile's path,
+	 *     or %NULL if no such path exists. The returned string should be freed
+	 *     with g_free() when no longer needed.
+	 */
 	extern(C) char* function(GFile* file) getPath;
 	/**
 	 *
 	 * Params:
 	 *     file = input #GFile
-	 * Returns: a string containing the #GFile's URI.
+	 * Returns: a string containing the #GFile's URI. If the #GFile was constructed
+	 *     with an invalid URI, an invalid URI is returned.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -4923,16 +5162,23 @@ struct GFileIface
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GFile* prefix, GFile* file) prefixMatches;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     parent = input #GFile
+	 *     descendant = input #GFile
+	 * Returns: string with the relative path from
+	 *     @descendant to @parent, or %NULL if @descendant doesn't have @parent as
+	 *     prefix. The returned string should be freed with g_free() when
+	 *     no longer needed.
+	 */
 	extern(C) char* function(GFile* parent, GFile* descendant) getRelativePath;
 	/**
 	 *
 	 * Params:
 	 *     file = input #GFile
 	 *     relativePath = a given relative path string
-	 * Returns: #GFile to the resolved path.
-	 *     %NULL if @relative_path is %NULL or if @file is invalid.
-	 *     Free the returned object with g_object_unref().
+	 * Returns: a #GFile for the resolved path.
 	 */
 	extern(C) GFile* function(GFile* file, char* relativePath) resolveRelativePath;
 	/**
@@ -5398,9 +5644,17 @@ struct GFileIface
 	 */
 	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) move;
 	/** */
-	extern(C) void function() MoveAsync;
-	/** */
-	extern(C) void function() MoveFinish;
+	extern(C) void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) moveAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input source #GFile
+	 *     result = a #GAsyncResult
+	 * Returns: %TRUE on successful file move, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) moveFinish;
 	/** */
 	extern(C) void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountMountable;
 	/**
@@ -5986,7 +6240,7 @@ struct GIconIface
 	 *
 	 * Params:
 	 *     icon = a #GIcon
-	 * Returns: a #GVariant, or %NULL when serialization fails.
+	 * Returns: a #GVariant, or %NULL when serialization fails. The #GVariant will not be floating.
 	 */
 	extern(C) GVariant* function(GIcon* icon) serialize;
 }
@@ -7142,8 +7396,8 @@ struct GPollableInputStreamInterface
 	 *
 	 * Params:
 	 *     stream = a #GPollableInputStream
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least @count bytes long).
+	 *     buffer = a
+	 *         buffer to read data into (which should be at least @count bytes long).
 	 *     count = the number of bytes you want to read
 	 * Returns: the number of bytes read, or -1 on error (including
 	 *     %G_IO_ERROR_WOULD_BLOCK).
@@ -7235,6 +7489,21 @@ struct GPollableOutputStreamInterface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GPollableReturn function(GPollableOutputStream* stream, GOutputVector* vectors, size_t nVectors, size_t* bytesWritten, GError** err) writevNonblocking;
+}
+
+struct GPowerProfileMonitor;
+
+/**
+ * The virtual function table for #GPowerProfileMonitor.
+ *
+ * Since: 2.70
+ */
+struct GPowerProfileMonitorInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
 }
 
 struct GPropertyAction;
@@ -7558,7 +7827,8 @@ struct GSeekableIface
 	 *
 	 * Params:
 	 *     seekable = a #GSeekable.
-	 * Returns: the offset from the beginning of the buffer.
+	 * Returns: the (positive or zero) offset from the beginning of the
+	 *     buffer, zero if the target is not seekable.
 	 */
 	extern(C) long function(GSeekable* seekable) tell;
 	/**
@@ -8186,8 +8456,16 @@ struct GTlsConnection
 	GTlsConnectionPrivate* priv;
 }
 
+/**
+ * The class structure for the #GTlsConnection type.
+ *
+ * Since: 2.28
+ */
 struct GTlsConnectionClass
 {
+	/**
+	 * The parent class.
+	 */
 	GIOStreamClass parentClass;
 	/** */
 	extern(C) int function(GTlsConnection* connection, GTlsCertificate* peerCert, GTlsCertificateFlags errors) acceptCertificate;
@@ -8214,7 +8492,16 @@ struct GTlsConnectionClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GTlsConnection* conn, GAsyncResult* result, GError** err) handshakeFinish;
-	void*[8] padding;
+	/** */
+	extern(C) int function(GTlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) getBindingData;
+	/**
+	 *
+	 * Params:
+	 *     conn = a #GTlsConnection
+	 * Returns: the negotiated protocol, or %NULL
+	 */
+	extern(C) const(char)* function(GTlsConnection* conn) getNegotiatedProtocol;
+	void*[6] padding;
 }
 
 struct GTlsConnectionPrivate;
@@ -8468,7 +8755,6 @@ struct GTlsPasswordClass
 	 *
 	 * Params:
 	 *     password = a #GTlsPassword object
-	 *     length = location to place the length of the password.
 	 * Returns: The password value (owned by the password object).
 	 */
 	extern(C) char* function(GTlsPassword* password, size_t* length) getValue;
@@ -8995,6 +9281,10 @@ struct GZlibDecompressorClass
  * #GAsyncReadyCallback must likewise call it asynchronously in a
  * later iteration of the main context.
  *
+ * The asynchronous operation is guaranteed to have held a reference to
+ * @source_object from the time when the `*_async()` function was called, until
+ * after this callback returns.
+ *
  * Params:
  *     sourceObject = the object the asynchronous operation was started with.
  *     res = a #GAsyncResult.
@@ -9243,7 +9533,8 @@ public alias extern(C) GType function(GDBusObjectManagerClient* manager, const(c
  *
  * Params:
  *     connection = A #GDBusConnection.
- *     senderName = The unique bus name of the sender of the signal.
+ *     senderName = The unique bus name of the sender of the signal,
+ *         or %NULL on a peer-to-peer D-Bus connection.
  *     objectPath = The object path that the signal was emitted on.
  *     interfaceName = The name of the interface.
  *     signalName = The name of the signal.
@@ -9284,7 +9575,7 @@ public alias extern(C) GDBusInterfaceVTable* function(GDBusConnection* connectio
  * specified (ie: to verify that the object path is valid).
  *
  * Hierarchies are not supported; the items that you return should not
- * contain the '/' character.
+ * contain the `/` character.
  *
  * The return value will be freed with g_strfreev().
  *
@@ -9597,6 +9888,42 @@ public alias extern(C) void function(GTask* task, void* sourceObject, void* task
 public alias extern(C) GFile* function(GVfs* vfs, const(char)* identifier, void* userData) GVfsFileLookupFunc;
 
 /**
+ * The value returned by handlers of the signals generated by
+ * the `gdbus-codegen` tool to indicate that a method call has been
+ * handled by an implementation. It is equal to %TRUE, but using
+ * this macro is sometimes more readable.
+ *
+ * In code that needs to be backwards-compatible with older GLib,
+ * use %TRUE instead, often written like this:
+ *
+ * |[
+ * g_dbus_method_invocation_return_error (invocation, ...);
+ * return TRUE;    // handled
+ * ]|
+ */
+enum DBUS_METHOD_INVOCATION_HANDLED = true;
+alias G_DBUS_METHOD_INVOCATION_HANDLED = DBUS_METHOD_INVOCATION_HANDLED;
+
+/**
+ * The value returned by handlers of the signals generated by
+ * the `gdbus-codegen` tool to indicate that a method call has not been
+ * handled by an implementation. It is equal to %FALSE, but using
+ * this macro is sometimes more readable.
+ *
+ * In code that needs to be backwards-compatible with older GLib,
+ * use %FALSE instead.
+ */
+enum DBUS_METHOD_INVOCATION_UNHANDLED = false;
+alias G_DBUS_METHOD_INVOCATION_UNHANDLED = DBUS_METHOD_INVOCATION_UNHANDLED;
+
+/**
+ * Extension point for debug control functionality.
+ * See [Extending GIO][extending-gio].
+ */
+enum DEBUG_CONTROLLER_EXTENSION_POINT_NAME = "gio-debug-controller";
+alias G_DEBUG_CONTROLLER_EXTENSION_POINT_NAME = DEBUG_CONTROLLER_EXTENSION_POINT_NAME;
+
+/**
  * Extension point for default handler to URI association. See
  * [Extending GIO][extending-gio].
  *
@@ -9614,7 +9941,9 @@ alias G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE = DRIVE_IDENTIFIER_KIND_UNIX_DEVICE;
 
 /**
  * A key in the "access" namespace for checking deletion privileges.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ *
  * This attribute will be %TRUE if the user is able to delete the file.
  */
 enum FILE_ATTRIBUTE_ACCESS_CAN_DELETE = "access::can-delete";
@@ -9622,7 +9951,9 @@ alias G_FILE_ATTRIBUTE_ACCESS_CAN_DELETE = FILE_ATTRIBUTE_ACCESS_CAN_DELETE;
 
 /**
  * A key in the "access" namespace for getting execution privileges.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ *
  * This attribute will be %TRUE if the user is able to execute the file.
  */
 enum FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE = "access::can-execute";
@@ -9630,7 +9961,9 @@ alias G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE = FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE;
 
 /**
  * A key in the "access" namespace for getting read privileges.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ *
  * This attribute will be %TRUE if the user is able to read the file.
  */
 enum FILE_ATTRIBUTE_ACCESS_CAN_READ = "access::can-read";
@@ -9638,7 +9971,9 @@ alias G_FILE_ATTRIBUTE_ACCESS_CAN_READ = FILE_ATTRIBUTE_ACCESS_CAN_READ;
 
 /**
  * A key in the "access" namespace for checking renaming privileges.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ *
  * This attribute will be %TRUE if the user is able to rename the file.
  */
 enum FILE_ATTRIBUTE_ACCESS_CAN_RENAME = "access::can-rename";
@@ -9646,7 +9981,9 @@ alias G_FILE_ATTRIBUTE_ACCESS_CAN_RENAME = FILE_ATTRIBUTE_ACCESS_CAN_RENAME;
 
 /**
  * A key in the "access" namespace for checking trashing privileges.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ *
  * This attribute will be %TRUE if the user is able to move the file to
  * the trash.
  */
@@ -9655,7 +9992,9 @@ alias G_FILE_ATTRIBUTE_ACCESS_CAN_TRASH = FILE_ATTRIBUTE_ACCESS_CAN_TRASH;
 
 /**
  * A key in the "access" namespace for getting write privileges.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ *
  * This attribute will be %TRUE if the user is able to write to the file.
  */
 enum FILE_ATTRIBUTE_ACCESS_CAN_WRITE = "access::can-write";
@@ -9663,9 +10002,13 @@ alias G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE = FILE_ATTRIBUTE_ACCESS_CAN_WRITE;
 
 /**
  * A key in the "dos" namespace for checking if the file's archive flag
- * is set. This attribute is %TRUE if the archive flag is set. This attribute
- * is only available for DOS file systems. Corresponding #GFileAttributeType
- * is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ * is set.
+ *
+ * This attribute is %TRUE if the archive flag is set.
+ *
+ * This attribute is only available for DOS file systems.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_DOS_IS_ARCHIVE = "dos::is-archive";
 alias G_FILE_ATTRIBUTE_DOS_IS_ARCHIVE = FILE_ATTRIBUTE_DOS_IS_ARCHIVE;
@@ -9673,9 +10016,12 @@ alias G_FILE_ATTRIBUTE_DOS_IS_ARCHIVE = FILE_ATTRIBUTE_DOS_IS_ARCHIVE;
 /**
  * A key in the "dos" namespace for checking if the file is a NTFS mount point
  * (a volume mount or a junction point).
+ *
  * This attribute is %TRUE if file is a reparse point of type
  * [IO_REPARSE_TAG_MOUNT_POINT](https://msdn.microsoft.com/en-us/library/dd541667.aspx).
+ *
  * This attribute is only available for DOS file systems.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT = "dos::is-mountpoint";
@@ -9683,42 +10029,54 @@ alias G_FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT = FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT;
 
 /**
  * A key in the "dos" namespace for checking if the file's backup flag
- * is set. This attribute is %TRUE if the backup flag is set. This attribute
- * is only available for DOS file systems. Corresponding #GFileAttributeType
- * is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ * is set.
+ *
+ * This attribute is %TRUE if the backup flag is set.
+ *
+ * This attribute is only available for DOS file systems.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_DOS_IS_SYSTEM = "dos::is-system";
 alias G_FILE_ATTRIBUTE_DOS_IS_SYSTEM = FILE_ATTRIBUTE_DOS_IS_SYSTEM;
 
 /**
  * A key in the "dos" namespace for getting the file NTFS reparse tag.
+ *
  * This value is 0 for files that are not reparse points.
+ *
  * See the [Reparse Tags](https://msdn.microsoft.com/en-us/library/dd541667.aspx)
- * page for possible reparse tag values. Corresponding #GFileAttributeType
- * is %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * page for possible reparse tag values.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG = "dos::reparse-point-tag";
 alias G_FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG = FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG;
 
 /**
  * A key in the "etag" namespace for getting the value of the file's
- * entity tag. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_STRING.
+ * entity tag.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_ETAG_VALUE = "etag::value";
 alias G_FILE_ATTRIBUTE_ETAG_VALUE = FILE_ATTRIBUTE_ETAG_VALUE;
 
 /**
- * A key in the "filesystem" namespace for getting the number of bytes of free space left on the
- * file system. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT64.
+ * A key in the "filesystem" namespace for getting the number of bytes
+ * of free space left on the file system.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
  */
 enum FILE_ATTRIBUTE_FILESYSTEM_FREE = "filesystem::free";
 alias G_FILE_ATTRIBUTE_FILESYSTEM_FREE = FILE_ATTRIBUTE_FILESYSTEM_FREE;
 
 /**
  * A key in the "filesystem" namespace for checking if the file system
- * is read only. Is set to %TRUE if the file system is read only.
+ * is read only.
+ *
+ * Is set to %TRUE if the file system is read only.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_FILESYSTEM_READONLY = "filesystem::readonly";
@@ -9726,31 +10084,37 @@ alias G_FILE_ATTRIBUTE_FILESYSTEM_READONLY = FILE_ATTRIBUTE_FILESYSTEM_READONLY;
 
 /**
  * A key in the "filesystem" namespace for checking if the file system
- * is remote. Is set to %TRUE if the file system is remote.
+ * is remote.
+ *
+ * Is set to %TRUE if the file system is remote.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_FILESYSTEM_REMOTE = "filesystem::remote";
 alias G_FILE_ATTRIBUTE_FILESYSTEM_REMOTE = FILE_ATTRIBUTE_FILESYSTEM_REMOTE;
 
 /**
- * A key in the "filesystem" namespace for getting the total size (in bytes) of the file system,
- * used in g_file_query_filesystem_info(). Corresponding #GFileAttributeType
- * is %G_FILE_ATTRIBUTE_TYPE_UINT64.
+ * A key in the "filesystem" namespace for getting the total size (in
+ * bytes) of the file system, used in g_file_query_filesystem_info().
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
  */
 enum FILE_ATTRIBUTE_FILESYSTEM_SIZE = "filesystem::size";
 alias G_FILE_ATTRIBUTE_FILESYSTEM_SIZE = FILE_ATTRIBUTE_FILESYSTEM_SIZE;
 
 /**
  * A key in the "filesystem" namespace for getting the file system's type.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_FILESYSTEM_TYPE = "filesystem::type";
 alias G_FILE_ATTRIBUTE_FILESYSTEM_TYPE = FILE_ATTRIBUTE_FILESYSTEM_TYPE;
 
 /**
- * A key in the "filesystem" namespace for getting the number of bytes of used on the
- * file system. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT64.
+ * A key in the "filesystem" namespace for getting the number of bytes
+ * used by data on the file system.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
  */
 enum FILE_ATTRIBUTE_FILESYSTEM_USED = "filesystem::used";
 alias G_FILE_ATTRIBUTE_FILESYSTEM_USED = FILE_ATTRIBUTE_FILESYSTEM_USED;
@@ -9758,23 +10122,27 @@ alias G_FILE_ATTRIBUTE_FILESYSTEM_USED = FILE_ATTRIBUTE_FILESYSTEM_USED;
 /**
  * A key in the "filesystem" namespace for hinting a file manager
  * application whether it should preview (e.g. thumbnail) files on the
- * file system. The value for this key contain a
- * #GFilesystemPreviewType.
+ * file system.
+ *
+ * The value for this key contain a #GFilesystemPreviewType.
  */
 enum FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW = "filesystem::use-preview";
 alias G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW = FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW;
 
 /**
  * A key in the "gvfs" namespace that gets the name of the current
- * GVFS backend in use. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_STRING.
+ * GVFS backend in use.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_GVFS_BACKEND = "gvfs::backend";
 alias G_FILE_ATTRIBUTE_GVFS_BACKEND = FILE_ATTRIBUTE_GVFS_BACKEND;
 
 /**
  * A key in the "id" namespace for getting a file identifier.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
+ *
  * An example use would be during listing files, to avoid recursive
  * directory scanning.
  */
@@ -9783,7 +10151,9 @@ alias G_FILE_ATTRIBUTE_ID_FILE = FILE_ATTRIBUTE_ID_FILE;
 
 /**
  * A key in the "id" namespace for getting the file system identifier.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
+ *
  * An example use would be during drag and drop to see if the source
  * and target are on the same filesystem (default to move) or not (default
  * to copy).
@@ -9792,50 +10162,63 @@ enum FILE_ATTRIBUTE_ID_FILESYSTEM = "id::filesystem";
 alias G_FILE_ATTRIBUTE_ID_FILESYSTEM = FILE_ATTRIBUTE_ID_FILESYSTEM;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE) can be ejected.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE) can be ejected.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_CAN_EJECT = "mountable::can-eject";
 alias G_FILE_ATTRIBUTE_MOUNTABLE_CAN_EJECT = FILE_ATTRIBUTE_MOUNTABLE_CAN_EJECT;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE) is mountable.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE) is mountable.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_CAN_MOUNT = "mountable::can-mount";
 alias G_FILE_ATTRIBUTE_MOUNTABLE_CAN_MOUNT = FILE_ATTRIBUTE_MOUNTABLE_CAN_MOUNT;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE) can be polled.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE) can be polled.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_CAN_POLL = "mountable::can-poll";
 alias G_FILE_ATTRIBUTE_MOUNTABLE_CAN_POLL = FILE_ATTRIBUTE_MOUNTABLE_CAN_POLL;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE) can be started.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE) can be started.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_CAN_START = "mountable::can-start";
 alias G_FILE_ATTRIBUTE_MOUNTABLE_CAN_START = FILE_ATTRIBUTE_MOUNTABLE_CAN_START;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE) can be started
- * degraded.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE) can be started degraded.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_CAN_START_DEGRADED = "mountable::can-start-degraded";
 alias G_FILE_ATTRIBUTE_MOUNTABLE_CAN_START_DEGRADED = FILE_ATTRIBUTE_MOUNTABLE_CAN_START_DEGRADED;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE) can be stopped.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE) can be stopped.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_CAN_STOP = "mountable::can-stop";
 alias G_FILE_ATTRIBUTE_MOUNTABLE_CAN_STOP = FILE_ATTRIBUTE_MOUNTABLE_CAN_STOP;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE)  is unmountable.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE)  is unmountable.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_CAN_UNMOUNT = "mountable::can-unmount";
@@ -9843,14 +10226,17 @@ alias G_FILE_ATTRIBUTE_MOUNTABLE_CAN_UNMOUNT = FILE_ATTRIBUTE_MOUNTABLE_CAN_UNMO
 
 /**
  * A key in the "mountable" namespace for getting the HAL UDI for the mountable
- * file. Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
+ * file.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_HAL_UDI = "mountable::hal-udi";
 alias G_FILE_ATTRIBUTE_MOUNTABLE_HAL_UDI = FILE_ATTRIBUTE_MOUNTABLE_HAL_UDI;
 
 /**
- * A key in the "mountable" namespace for checking if a file (of type G_FILE_TYPE_MOUNTABLE)
- * is automatically polled for media.
+ * A key in the "mountable" namespace for checking if a file (of
+ * type G_FILE_TYPE_MOUNTABLE) is automatically polled for media.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_IS_MEDIA_CHECK_AUTOMATIC = "mountable::is-media-check-automatic";
@@ -9858,6 +10244,7 @@ alias G_FILE_ATTRIBUTE_MOUNTABLE_IS_MEDIA_CHECK_AUTOMATIC = FILE_ATTRIBUTE_MOUNT
 
 /**
  * A key in the "mountable" namespace for getting the #GDriveStartStopType.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_START_STOP_TYPE = "mountable::start-stop-type";
@@ -9865,6 +10252,7 @@ alias G_FILE_ATTRIBUTE_MOUNTABLE_START_STOP_TYPE = FILE_ATTRIBUTE_MOUNTABLE_STAR
 
 /**
  * A key in the "mountable" namespace for getting the unix device.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE = "mountable::unix-device";
@@ -9872,6 +10260,7 @@ alias G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE = FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEV
 
 /**
  * A key in the "mountable" namespace for getting the unix device file.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE = "mountable::unix-device-file";
@@ -9879,6 +10268,7 @@ alias G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE = FILE_ATTRIBUTE_MOUNTABLE_UNI
 
 /**
  * A key in the "owner" namespace for getting the file owner's group.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_OWNER_GROUP = "owner::group";
@@ -9886,52 +10276,63 @@ alias G_FILE_ATTRIBUTE_OWNER_GROUP = FILE_ATTRIBUTE_OWNER_GROUP;
 
 /**
  * A key in the "owner" namespace for getting the user name of the
- * file's owner. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_STRING.
+ * file's owner.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_OWNER_USER = "owner::user";
 alias G_FILE_ATTRIBUTE_OWNER_USER = FILE_ATTRIBUTE_OWNER_USER;
 
 /**
  * A key in the "owner" namespace for getting the real name of the
- * user that owns the file. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_STRING.
+ * user that owns the file.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_OWNER_USER_REAL = "owner::user-real";
 alias G_FILE_ATTRIBUTE_OWNER_USER_REAL = FILE_ATTRIBUTE_OWNER_USER_REAL;
 
 /**
  * A key in the "preview" namespace for getting a #GIcon that can be
- * used to get preview of the file. For example, it may be a low
- * resolution thumbnail without metadata. Corresponding
- * #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_OBJECT.  The value
- * for this key should contain a #GIcon.
+ * used to get preview of the file.
+ *
+ * For example, it may be a low resolution thumbnail without metadata.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_OBJECT.
+ *
+ * The value for this key should contain a #GIcon.
  */
 enum FILE_ATTRIBUTE_PREVIEW_ICON = "preview::icon";
 alias G_FILE_ATTRIBUTE_PREVIEW_ICON = FILE_ATTRIBUTE_PREVIEW_ICON;
 
 /**
  * A key in the "recent" namespace for getting time, when the metadata for the
- * file in `recent:///` was last changed. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_INT64.
+ * file in `recent:///` was last changed.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_INT64.
  */
 enum FILE_ATTRIBUTE_RECENT_MODIFIED = "recent::modified";
 alias G_FILE_ATTRIBUTE_RECENT_MODIFIED = FILE_ATTRIBUTE_RECENT_MODIFIED;
 
 /**
  * A key in the "selinux" namespace for getting the file's SELinux
- * context. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_STRING. Note that this attribute is only
- * available if GLib has been built with SELinux support.
+ * context.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
+ *
+ * Note that this attribute is only available if GLib has been built
+ * with SELinux support.
  */
 enum FILE_ATTRIBUTE_SELINUX_CONTEXT = "selinux::context";
 alias G_FILE_ATTRIBUTE_SELINUX_CONTEXT = FILE_ATTRIBUTE_SELINUX_CONTEXT;
 
 /**
  * A key in the "standard" namespace for getting the amount of disk space
- * that is consumed by the file (in bytes).  This will generally be larger
- * than the file size (due to block size overhead) but can occasionally be
- * smaller (for example, for sparse files).
+ * that is consumed by the file (in bytes).
+ *
+ * This will generally be larger than the file size (due to block size
+ * overhead) but can occasionally be smaller (for example, for sparse files).
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
  */
 enum FILE_ATTRIBUTE_STANDARD_ALLOCATED_SIZE = "standard::allocated-size";
@@ -9939,7 +10340,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_ALLOCATED_SIZE = FILE_ATTRIBUTE_STANDARD_ALLOCAT
 
 /**
  * A key in the "standard" namespace for getting the content type of the file.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
+ *
  * The value for this key should contain a valid content type.
  */
 enum FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE = "standard::content-type";
@@ -9947,6 +10350,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE = FILE_ATTRIBUTE_STANDARD_CONTENT_T
 
 /**
  * A key in the "standard" namespace for getting the copy name of the file.
+ *
  * The copy name is an optional version of the name. If available it's always
  * in UTF8, and corresponds directly to the original filename (only transcoded to
  * UTF8). This is useful if you want to copy the file to another filesystem that
@@ -9960,8 +10364,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_COPY_NAME = FILE_ATTRIBUTE_STANDARD_COPY_NAME;
 
 /**
  * A key in the "standard" namespace for getting the description of the file.
+ *
  * The description is a utf8 string that describes the file, generally containing
- * the filename, but can also contain furter information. Example descriptions
+ * the filename, but can also contain further information. Example descriptions
  * could be "filename (on hostname)" for a remote file or "filename (in trash)"
  * for a file in the trash. This is useful for instance as the window title
  * when displaying a directory or for a bookmarks menu.
@@ -9973,8 +10378,10 @@ alias G_FILE_ATTRIBUTE_STANDARD_DESCRIPTION = FILE_ATTRIBUTE_STANDARD_DESCRIPTIO
 
 /**
  * A key in the "standard" namespace for getting the display name of the file.
- * A display name is guaranteed to be in UTF8 and can thus be displayed in
- * the UI.
+ *
+ * A display name is guaranteed to be in UTF-8 and can thus be displayed in
+ * the UI. It is guaranteed to be set on every file.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME = "standard::display-name";
@@ -9982,6 +10389,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME = FILE_ATTRIBUTE_STANDARD_DISPLAY_N
 
 /**
  * A key in the "standard" namespace for edit name of the file.
+ *
  * An edit name is similar to the display name, but it is meant to be
  * used when you want to rename the file in the UI. The display name
  * might contain information you don't want in the new filename (such as
@@ -9994,9 +10402,11 @@ alias G_FILE_ATTRIBUTE_STANDARD_EDIT_NAME = FILE_ATTRIBUTE_STANDARD_EDIT_NAME;
 
 /**
  * A key in the "standard" namespace for getting the fast content type.
+ *
  * The fast content type isn't as reliable as the regular one, as it
  * only uses the filename to guess it, but it is faster to calculate than the
  * regular content type.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE = "standard::fast-content-type";
@@ -10004,7 +10414,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE = FILE_ATTRIBUTE_STANDARD_FAST
 
 /**
  * A key in the "standard" namespace for getting the icon for the file.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_OBJECT.
+ *
  * The value for this key should contain a #GIcon.
  */
 enum FILE_ATTRIBUTE_STANDARD_ICON = "standard::icon";
@@ -10012,6 +10424,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_ICON = FILE_ATTRIBUTE_STANDARD_ICON;
 
 /**
  * A key in the "standard" namespace for checking if a file is a backup file.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_STANDARD_IS_BACKUP = "standard::is-backup";
@@ -10019,6 +10432,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_IS_BACKUP = FILE_ATTRIBUTE_STANDARD_IS_BACKUP;
 
 /**
  * A key in the "standard" namespace for checking if a file is hidden.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_STANDARD_IS_HIDDEN = "standard::is-hidden";
@@ -10028,7 +10442,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN = FILE_ATTRIBUTE_STANDARD_IS_HIDDEN;
  * A key in the "standard" namespace for checking if the file is a symlink.
  * Typically the actual type is something else, if we followed the symlink
  * to get the type.
+ *
  * On Windows NTFS mountpoints are considered to be symlinks as well.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_STANDARD_IS_SYMLINK = "standard::is-symlink";
@@ -10036,6 +10452,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_IS_SYMLINK = FILE_ATTRIBUTE_STANDARD_IS_SYMLINK;
 
 /**
  * A key in the "standard" namespace for checking if a file is virtual.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_STANDARD_IS_VIRTUAL = "standard::is-virtual";
@@ -10045,7 +10462,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_IS_VIRTUAL = FILE_ATTRIBUTE_STANDARD_IS_VIRTUAL;
  * A key in the "standard" namespace for checking if a file is
  * volatile. This is meant for opaque, non-POSIX-like backends to
  * indicate that the URI is not persistent. Applications should look
- * at #G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET for the persistent URI.
+ * at %G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET for the persistent URI.
  *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
@@ -10054,10 +10471,14 @@ alias G_FILE_ATTRIBUTE_STANDARD_IS_VOLATILE = FILE_ATTRIBUTE_STANDARD_IS_VOLATIL
 
 /**
  * A key in the "standard" namespace for getting the name of the file.
+ *
  * The name is the on-disk filename which may not be in any known encoding,
- * and can thus not be generally displayed as is.
- * Use #G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME if you need to display the
+ * and can thus not be generally displayed as is. It is guaranteed to be set on
+ * every file.
+ *
+ * Use %G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME if you need to display the
  * name in a user interface.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
  */
 enum FILE_ATTRIBUTE_STANDARD_NAME = "standard::name";
@@ -10065,6 +10486,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_NAME = FILE_ATTRIBUTE_STANDARD_NAME;
 
 /**
  * A key in the "standard" namespace for getting the file's size (in bytes).
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
  */
 enum FILE_ATTRIBUTE_STANDARD_SIZE = "standard::size";
@@ -10072,7 +10494,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_SIZE = FILE_ATTRIBUTE_STANDARD_SIZE;
 
 /**
  * A key in the "standard" namespace for setting the sort order of a file.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_INT32.
+ *
  * An example use would be in file managers, which would use this key
  * to set the order files are displayed. Files with smaller sort order
  * should be sorted first, and files without sort order as if sort order
@@ -10083,7 +10507,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_SORT_ORDER = FILE_ATTRIBUTE_STANDARD_SORT_ORDER;
 
 /**
  * A key in the "standard" namespace for getting the symbolic icon for the file.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_OBJECT.
+ *
  * The value for this key should contain a #GIcon.
  */
 enum FILE_ATTRIBUTE_STANDARD_SYMBOLIC_ICON = "standard::symbolic-icon";
@@ -10091,8 +10517,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_SYMBOLIC_ICON = FILE_ATTRIBUTE_STANDARD_SYMBOLIC
 
 /**
  * A key in the "standard" namespace for getting the symlink target, if the file
- * is a symlink. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
+ * is a symlink.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
  */
 enum FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET = "standard::symlink-target";
 alias G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET = FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET;
@@ -10100,6 +10527,7 @@ alias G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET = FILE_ATTRIBUTE_STANDARD_SYMLINK
 /**
  * A key in the "standard" namespace for getting the target URI for the file, in
  * the case of %G_FILE_TYPE_SHORTCUT or %G_FILE_TYPE_MOUNTABLE files.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_STANDARD_TARGET_URI = "standard::target-uri";
@@ -10107,7 +10535,9 @@ alias G_FILE_ATTRIBUTE_STANDARD_TARGET_URI = FILE_ATTRIBUTE_STANDARD_TARGET_URI;
 
 /**
  * A key in the "standard" namespace for storing file types.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ *
  * The value for this key should contain a #GFileType.
  */
 enum FILE_ATTRIBUTE_STANDARD_TYPE = "standard::type";
@@ -10115,14 +10545,17 @@ alias G_FILE_ATTRIBUTE_STANDARD_TYPE = FILE_ATTRIBUTE_STANDARD_TYPE;
 
 /**
  * A key in the "thumbnail" namespace for checking if thumbnailing failed.
- * This attribute is %TRUE if thumbnailing failed. Corresponding
- * #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
+ *
+ * This attribute is %TRUE if thumbnailing failed.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_THUMBNAILING_FAILED = "thumbnail::failed";
 alias G_FILE_ATTRIBUTE_THUMBNAILING_FAILED = FILE_ATTRIBUTE_THUMBNAILING_FAILED;
 
 /**
  * A key in the "thumbnail" namespace for checking whether the thumbnail is outdated.
+ *
  * This attribute is %TRUE if the thumbnail is up-to-date with the file it represents,
  * and %FALSE if the file has been modified since the thumbnail was generated.
  *
@@ -10136,35 +10569,42 @@ alias G_FILE_ATTRIBUTE_THUMBNAIL_IS_VALID = FILE_ATTRIBUTE_THUMBNAIL_IS_VALID;
 
 /**
  * A key in the "thumbnail" namespace for getting the path to the thumbnail
- * image. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
+ * image.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
  */
 enum FILE_ATTRIBUTE_THUMBNAIL_PATH = "thumbnail::path";
 alias G_FILE_ATTRIBUTE_THUMBNAIL_PATH = FILE_ATTRIBUTE_THUMBNAIL_PATH;
 
 /**
  * A key in the "time" namespace for getting the time the file was last
- * accessed. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT64, and contains the time since the
- * file was last accessed, in seconds since the UNIX epoch.
+ * accessed.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64, and
+ * contains the time since the file was last accessed, in seconds since the
+ * UNIX epoch.
  */
 enum FILE_ATTRIBUTE_TIME_ACCESS = "time::access";
 alias G_FILE_ATTRIBUTE_TIME_ACCESS = FILE_ATTRIBUTE_TIME_ACCESS;
 
 /**
  * A key in the "time" namespace for getting the microseconds of the time
- * the file was last accessed. This should be used in conjunction with
- * #G_FILE_ATTRIBUTE_TIME_ACCESS. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * the file was last accessed.
+ *
+ * This should be used in conjunction with %G_FILE_ATTRIBUTE_TIME_ACCESS.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_TIME_ACCESS_USEC = "time::access-usec";
 alias G_FILE_ATTRIBUTE_TIME_ACCESS_USEC = FILE_ATTRIBUTE_TIME_ACCESS_USEC;
 
 /**
  * A key in the "time" namespace for getting the time the file was last
- * changed. Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64,
- * and contains the time since the file was last changed, in seconds since the
- * UNIX epoch.
+ * changed.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64,
+ * and contains the time since the file was last changed, in seconds since
+ * the UNIX epoch.
  *
  * This corresponds to the traditional UNIX ctime.
  */
@@ -10173,80 +10613,96 @@ alias G_FILE_ATTRIBUTE_TIME_CHANGED = FILE_ATTRIBUTE_TIME_CHANGED;
 
 /**
  * A key in the "time" namespace for getting the microseconds of the time
- * the file was last changed. This should be used in conjunction with
- * #G_FILE_ATTRIBUTE_TIME_CHANGED. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * the file was last changed.
+ *
+ * This should be used in conjunction with %G_FILE_ATTRIBUTE_TIME_CHANGED.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_TIME_CHANGED_USEC = "time::changed-usec";
 alias G_FILE_ATTRIBUTE_TIME_CHANGED_USEC = FILE_ATTRIBUTE_TIME_CHANGED_USEC;
 
 /**
  * A key in the "time" namespace for getting the time the file was created.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64,
  * and contains the time since the file was created, in seconds since the UNIX
  * epoch.
  *
- * This corresponds to the NTFS ctime.
+ * This may correspond to Linux `stx_btime`, FreeBSD `st_birthtim`, NetBSD
+ * `st_birthtime` or NTFS `ctime`.
  */
 enum FILE_ATTRIBUTE_TIME_CREATED = "time::created";
 alias G_FILE_ATTRIBUTE_TIME_CREATED = FILE_ATTRIBUTE_TIME_CREATED;
 
 /**
  * A key in the "time" namespace for getting the microseconds of the time
- * the file was created. This should be used in conjunction with
- * #G_FILE_ATTRIBUTE_TIME_CREATED. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * the file was created.
+ *
+ * This should be used in conjunction with %G_FILE_ATTRIBUTE_TIME_CREATED.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_TIME_CREATED_USEC = "time::created-usec";
 alias G_FILE_ATTRIBUTE_TIME_CREATED_USEC = FILE_ATTRIBUTE_TIME_CREATED_USEC;
 
 /**
  * A key in the "time" namespace for getting the time the file was last
- * modified. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT64, and contains the time since the
- * file was modified, in seconds since the UNIX epoch.
+ * modified.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64, and
+ * contains the time since the file was modified, in seconds since the UNIX
+ * epoch.
  */
 enum FILE_ATTRIBUTE_TIME_MODIFIED = "time::modified";
 alias G_FILE_ATTRIBUTE_TIME_MODIFIED = FILE_ATTRIBUTE_TIME_MODIFIED;
 
 /**
  * A key in the "time" namespace for getting the microseconds of the time
- * the file was last modified. This should be used in conjunction with
- * #G_FILE_ATTRIBUTE_TIME_MODIFIED. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * the file was last modified.
+ *
+ * This should be used in conjunction with %G_FILE_ATTRIBUTE_TIME_MODIFIED.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_TIME_MODIFIED_USEC = "time::modified-usec";
 alias G_FILE_ATTRIBUTE_TIME_MODIFIED_USEC = FILE_ATTRIBUTE_TIME_MODIFIED_USEC;
 
 /**
- * A key in the "trash" namespace.  When requested against
- * items in `trash:///`, will return the date and time when the file
- * was trashed. The format of the returned string is YYYY-MM-DDThh:mm:ss.
+ * A key in the "trash" namespace for getting the deletion date and time
+ * of a file inside the `trash:///` folder.
+ *
+ * The format of the returned string is `YYYY-MM-DDThh:mm:ss`.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_STRING.
  */
 enum FILE_ATTRIBUTE_TRASH_DELETION_DATE = "trash::deletion-date";
 alias G_FILE_ATTRIBUTE_TRASH_DELETION_DATE = FILE_ATTRIBUTE_TRASH_DELETION_DATE;
 
 /**
- * A key in the "trash" namespace.  When requested against
- * `trash:///` returns the number of (toplevel) items in the trash folder.
+ * A key in the "trash" namespace for getting the number of (toplevel) items
+ * that are present in the `trash:///` folder.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_TRASH_ITEM_COUNT = "trash::item-count";
 alias G_FILE_ATTRIBUTE_TRASH_ITEM_COUNT = FILE_ATTRIBUTE_TRASH_ITEM_COUNT;
 
 /**
- * A key in the "trash" namespace.  When requested against
- * items in `trash:///`, will return the original path to the file before it
- * was trashed. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
+ * A key in the "trash" namespace for getting the original path of a file
+ * inside the `trash:///` folder before it was trashed.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BYTE_STRING.
  */
 enum FILE_ATTRIBUTE_TRASH_ORIG_PATH = "trash::orig-path";
 alias G_FILE_ATTRIBUTE_TRASH_ORIG_PATH = FILE_ATTRIBUTE_TRASH_ORIG_PATH;
 
 /**
  * A key in the "unix" namespace for getting the number of blocks allocated
- * for the file. This attribute is only available for UNIX file systems.
+ * for the file.
+ *
+ * This attribute is only available for UNIX file systems.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
  */
 enum FILE_ATTRIBUTE_UNIX_BLOCKS = "unix::blocks";
@@ -10254,7 +10710,10 @@ alias G_FILE_ATTRIBUTE_UNIX_BLOCKS = FILE_ATTRIBUTE_UNIX_BLOCKS;
 
 /**
  * A key in the "unix" namespace for getting the block size for the file
- * system. This attribute is only available for UNIX file systems.
+ * system.
+ *
+ * This attribute is only available for UNIX file systems.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_BLOCK_SIZE = "unix::block-size";
@@ -10262,16 +10721,20 @@ alias G_FILE_ATTRIBUTE_UNIX_BLOCK_SIZE = FILE_ATTRIBUTE_UNIX_BLOCK_SIZE;
 
 /**
  * A key in the "unix" namespace for getting the device id of the device the
- * file is located on (see stat() documentation). This attribute is only
- * available for UNIX file systems. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * file is located on (see stat() documentation).
+ *
+ * This attribute is only available for UNIX file systems.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_DEVICE = "unix::device";
 alias G_FILE_ATTRIBUTE_UNIX_DEVICE = FILE_ATTRIBUTE_UNIX_DEVICE;
 
 /**
  * A key in the "unix" namespace for getting the group ID for the file.
+ *
  * This attribute is only available for UNIX file systems.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_GID = "unix::gid";
@@ -10279,17 +10742,24 @@ alias G_FILE_ATTRIBUTE_UNIX_GID = FILE_ATTRIBUTE_UNIX_GID;
 
 /**
  * A key in the "unix" namespace for getting the inode of the file.
- * This attribute is only available for UNIX file systems. Corresponding
- * #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
+ *
+ * This attribute is only available for UNIX file systems.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT64.
  */
 enum FILE_ATTRIBUTE_UNIX_INODE = "unix::inode";
 alias G_FILE_ATTRIBUTE_UNIX_INODE = FILE_ATTRIBUTE_UNIX_INODE;
 
 /**
  * A key in the "unix" namespace for checking if the file represents a
- * UNIX mount point. This attribute is %TRUE if the file is a UNIX mount
- * point. Since 2.58, `/` is considered to be a mount point.
+ * UNIX mount point.
+ *
+ * This attribute is %TRUE if the file is a UNIX mount point.
+ *
+ * Since 2.58, `/` is considered to be a mount point.
+ *
  * This attribute is only available for UNIX file systems.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT = "unix::is-mountpoint";
@@ -10297,10 +10767,14 @@ alias G_FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT = FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT;
 
 /**
  * A key in the "unix" namespace for getting the mode of the file
- * (e.g. whether the file is a regular file, symlink, etc). See the
- * documentation for `lstat()`: this attribute is equivalent to the `st_mode`
- * member of `struct stat`, and includes both the file type and permissions.
+ * (e.g. whether the file is a regular file, symlink, etc).
+ *
+ * See the documentation for `lstat()`: this attribute is equivalent to
+ * the `st_mode` member of `struct stat`, and includes both the file type
+ * and permissions.
+ *
  * This attribute is only available for UNIX file systems.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_MODE = "unix::mode";
@@ -10308,25 +10782,35 @@ alias G_FILE_ATTRIBUTE_UNIX_MODE = FILE_ATTRIBUTE_UNIX_MODE;
 
 /**
  * A key in the "unix" namespace for getting the number of hard links
- * for a file. See lstat() documentation. This attribute is only available
- * for UNIX file systems. Corresponding #GFileAttributeType is
- * %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * for a file.
+ *
+ * See the documentation for `lstat()`.
+ *
+ * This attribute is only available for UNIX file systems.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_NLINK = "unix::nlink";
 alias G_FILE_ATTRIBUTE_UNIX_NLINK = FILE_ATTRIBUTE_UNIX_NLINK;
 
 /**
  * A key in the "unix" namespace for getting the device ID for the file
- * (if it is a special file). See lstat() documentation. This attribute
- * is only available for UNIX file systems. Corresponding #GFileAttributeType
- * is %G_FILE_ATTRIBUTE_TYPE_UINT32.
+ * (if it is a special file).
+ *
+ * See the documentation for `lstat()`.
+ *
+ * This attribute is only available for UNIX file systems.
+ *
+ * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_RDEV = "unix::rdev";
 alias G_FILE_ATTRIBUTE_UNIX_RDEV = FILE_ATTRIBUTE_UNIX_RDEV;
 
 /**
  * A key in the "unix" namespace for getting the user ID for the file.
+ *
  * This attribute is only available for UNIX file systems.
+ *
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_UINT32.
  */
 enum FILE_ATTRIBUTE_UNIX_UID = "unix::uid";
@@ -10411,6 +10895,13 @@ alias G_NATIVE_VOLUME_MONITOR_EXTENSION_POINT_NAME = NATIVE_VOLUME_MONITOR_EXTEN
  */
 enum NETWORK_MONITOR_EXTENSION_POINT_NAME = "gio-network-monitor";
 alias G_NETWORK_MONITOR_EXTENSION_POINT_NAME = NETWORK_MONITOR_EXTENSION_POINT_NAME;
+
+/**
+ * Extension point for power profile usage monitoring functionality.
+ * See [Extending GIO][extending-gio].
+ */
+enum POWER_PROFILE_MONITOR_EXTENSION_POINT_NAME = "gio-power-profile-monitor";
+alias G_POWER_PROFILE_MONITOR_EXTENSION_POINT_NAME = POWER_PROFILE_MONITOR_EXTENSION_POINT_NAME;
 
 /**
  * Extension point for proxy functionality.

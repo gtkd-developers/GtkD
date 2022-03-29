@@ -27,6 +27,7 @@ module gstreamer.Query;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
@@ -37,6 +38,7 @@ private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -56,7 +58,7 @@ public  import gstreamerc.gstreamertypes;
  * res = gst_element_query (pipeline, query);
  * if (res) {
  * gint64 duration;
- * gst_query_parse_duration (query, NULL, &amp;duration);
+ * gst_query_parse_duration (query, NULL, &duration);
  * g_print ("duration = %"GST_TIME_FORMAT, GST_TIME_ARGS (duration));
  * } else {
  * g_print ("duration query failed...");
@@ -91,6 +93,12 @@ public class Query
 	{
 		this.gstQuery = gstQuery;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_query_unref(gstQuery);
 	}
 
 	/**
@@ -309,14 +317,14 @@ public class Query
 	 */
 	public this(Caps caps, bool needPool)
 	{
-		auto p = gst_query_new_allocation((caps is null) ? null : caps.getCapsStruct(), needPool);
+		auto __p = gst_query_new_allocation((caps is null) ? null : caps.getCapsStruct(), needPool);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_allocation");
 		}
 
-		this(cast(GstQuery*) p);
+		this(cast(GstQuery*) __p);
 	}
 
 	/**
@@ -332,14 +340,14 @@ public class Query
 	 */
 	public this()
 	{
-		auto p = gst_query_new_bitrate();
+		auto __p = gst_query_new_bitrate();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_bitrate");
 		}
 
-		this(cast(GstQuery*) p);
+		this(cast(GstQuery*) __p);
 	}
 
 	/**
@@ -357,14 +365,14 @@ public class Query
 	 */
 	public this(GstFormat format)
 	{
-		auto p = gst_query_new_buffering(format);
+		auto __p = gst_query_new_buffering(format);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_buffering");
 		}
 
-		this(cast(GstQuery*) p);
+		this(cast(GstQuery*) __p);
 	}
 
 	/**
@@ -398,14 +406,14 @@ public class Query
 	 */
 	public this(Caps filter)
 	{
-		auto p = gst_query_new_caps((filter is null) ? null : filter.getCapsStruct());
+		auto __p = gst_query_new_caps((filter is null) ? null : filter.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_caps");
 		}
 
-		this(cast(GstQuery*) p);
+		this(cast(GstQuery*) __p);
 	}
 
 	/**
@@ -424,14 +432,14 @@ public class Query
 	 */
 	public this(string contextType)
 	{
-		auto p = gst_query_new_context(Str.toStringz(contextType));
+		auto __p = gst_query_new_context(Str.toStringz(contextType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_context");
 		}
 
-		this(cast(GstQuery*) p);
+		this(cast(GstQuery*) __p);
 	}
 
 	/**
@@ -452,14 +460,14 @@ public class Query
 	 */
 	public this(GstFormat srcFormat, long value, GstFormat destFormat)
 	{
-		auto p = gst_query_new_convert(srcFormat, value, destFormat);
+		auto __p = gst_query_new_convert(srcFormat, value, destFormat);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_convert");
 		}
 
-		this(cast(GstQuery*) p);
+		this(cast(GstQuery*) __p);
 	}
 
 	/**
@@ -478,14 +486,14 @@ public class Query
 	 */
 	public this(GstQueryType type, Structure structure)
 	{
-		auto p = gst_query_new_custom(type, (structure is null) ? null : structure.getStructureStruct(true));
+		auto __p = gst_query_new_custom(type, (structure is null) ? null : structure.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_custom");
 		}
 
-		this(cast(GstQuery*) p);
+		this(cast(GstQuery*) __p);
 	}
 
 	/**
@@ -550,6 +558,25 @@ public class Query
 	public void addSchedulingMode(GstPadMode mode)
 	{
 		gst_query_add_scheduling_mode(gstQuery, mode);
+	}
+
+	/**
+	 * Copies the given query using the copy function of the parent #GstStructure.
+	 *
+	 * Free-function: gst_query_unref
+	 *
+	 * Returns: a new copy of @q.
+	 */
+	public Query copy()
+	{
+		auto __p = gst_query_copy(gstQuery);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Query)(cast(GstQuery*) __p, true);
 	}
 
 	/**
@@ -637,14 +664,14 @@ public class Query
 	 */
 	public Structure getStructure()
 	{
-		auto p = gst_query_get_structure(gstQuery);
+		auto __p = gst_query_get_structure(gstQuery);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -863,11 +890,11 @@ public class Query
 	{
 		char* outcontextType = null;
 
-		auto p = gst_query_parse_context_type(gstQuery, &outcontextType) != 0;
+		auto __p = gst_query_parse_context_type(gstQuery, &outcontextType) != 0;
 
 		contextType = Str.toString(outcontextType);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -944,11 +971,11 @@ public class Query
 	{
 		GstStructure* outparams = null;
 
-		auto p = gst_query_parse_nth_allocation_meta(gstQuery, index, &outparams);
+		auto __p = gst_query_parse_nth_allocation_meta(gstQuery, index, &outparams);
 
 		params = ObjectG.getDObject!(Structure)(outparams);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1160,6 +1187,24 @@ public class Query
 		gst_query_parse_uri_redirection_permanent(gstQuery, &outpermanent);
 
 		permanent = (outpermanent == 1);
+	}
+
+	alias doref = ref_;
+	/**
+	 * Increases the refcount of the given query by one.
+	 *
+	 * Returns: @q
+	 */
+	public Query ref_()
+	{
+		auto __p = gst_query_ref(gstQuery);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Query)(cast(GstQuery*) __p, true);
 	}
 
 	/**
@@ -1475,6 +1520,15 @@ public class Query
 	}
 
 	/**
+	 * Decreases the refcount of the query. If the refcount reaches 0, the query
+	 * will be freed.
+	 */
+	public void unref()
+	{
+		gst_query_unref(gstQuery);
+	}
+
+	/**
 	 * Get the structure of a query. This method should be called with a writable
 	 * @query so that the returned structure is guaranteed to be writable.
 	 *
@@ -1484,14 +1538,69 @@ public class Query
 	 */
 	public Structure writableStructure()
 	{
-		auto p = gst_query_writable_structure(gstQuery);
+		auto __p = gst_query_writable_structure(gstQuery);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstQuery to point to a different #GstQuery. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * query is unreffed, the new one is reffed).
+	 *
+	 * Either @new_query or the #GstQuery pointed to by @old_query may be %NULL.
+	 *
+	 * Params:
+	 *     oldQuery = pointer to a pointer to a
+	 *         #GstQuery to be replaced.
+	 *     newQuery = pointer to a #GstQuery that will
+	 *         replace the query pointed to by @old_query.
+	 *
+	 * Returns: %TRUE if @new_query was different from @old_query
+	 */
+	public static bool replace(ref Query oldQuery, Query newQuery)
+	{
+		GstQuery* outoldQuery = oldQuery.getQueryStruct();
+
+		auto __p = gst_query_replace(&outoldQuery, (newQuery is null) ? null : newQuery.getQueryStruct()) != 0;
+
+		oldQuery = ObjectG.getDObject!(Query)(outoldQuery);
+
+		return __p;
+	}
+
+	/**
+	 * Modifies a pointer to a #GstQuery to point to a different #GstQuery. This
+	 * function is similar to gst_query_replace() except that it takes ownership of
+	 * @new_query.
+	 *
+	 * Either @new_query or the #GstQuery pointed to by @old_query may be %NULL.
+	 *
+	 * Params:
+	 *     oldQuery = pointer to a
+	 *         pointer to a #GstQuery to be stolen.
+	 *     newQuery = pointer to a #GstQuery that will
+	 *         replace the query pointed to by @old_query.
+	 *
+	 * Returns: %TRUE if @new_query was different from @old_query
+	 *
+	 * Since: 1.16
+	 */
+	public static bool take(ref Query oldQuery, Query newQuery)
+	{
+		GstQuery* outoldQuery = oldQuery.getQueryStruct();
+
+		auto __p = gst_query_take(&outoldQuery, (newQuery is null) ? null : newQuery.getQueryStruct(true)) != 0;
+
+		oldQuery = ObjectG.getDObject!(Query)(outoldQuery);
+
+		return __p;
 	}
 
 	/**

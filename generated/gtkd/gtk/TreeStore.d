@@ -58,12 +58,13 @@ public  import gtkc.gtktypes;
  * # GtkTreeStore as GtkBuildable
  * 
  * The GtkTreeStore implementation of the #GtkBuildable interface allows
- * to specify the model columns with a <columns> element that may contain
- * multiple <column> elements, each specifying one model column. The “type”
+ * to specify the model columns with a `<columns>` element that may contain
+ * multiple `<column>` elements, each specifying one model column. The “type”
  * attribute specifies the data type for the column.
  * 
  * An example of a UI Definition fragment for a tree store:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkTreeStore">
  * <columns>
  * <column type="gchararray"/>
@@ -262,14 +263,14 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public this(GType[] types)
 	{
-		auto p = gtk_tree_store_newv(cast(int)types.length, types.ptr);
+		auto __p = gtk_tree_store_newv(cast(int)types.length, types.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
 
-		this(cast(GtkTreeStore*) p, true);
+		this(cast(GtkTreeStore*) __p, true);
 	}
 
 	/**

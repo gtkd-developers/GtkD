@@ -87,13 +87,13 @@ public class Tag : TextTag
 	 */
 	public this(string name)
 	{
-		auto p = gtk_source_tag_new(Str.toStringz(name));
+		auto __p = gtk_source_tag_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceTag*) p, true);
+		this(cast(GtkSourceTag*) __p, true);
 	}
 }

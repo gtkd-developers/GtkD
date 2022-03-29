@@ -48,15 +48,17 @@ public interface ConfigurableIF{
 	}
 
 	/**
-	 * Creates the configure widget for the plugin. The returned widget
-	 * should allow configuring all the relevant aspects of the plugin, and should
-	 * allow instant-apply, as promoted by the Gnome Human Interface Guidelines.
+	 * Creates the configure widget for the plugin.
 	 *
-	 * #PeasGtkPluginManager will embed the returned widget into a dialog box,
+	 * The returned widget should allow configuring all the relevant aspects of the
+	 * plugin, and should allow instant-apply, as promoted by the Gnome Human
+	 * Interface Guidelines.
+	 *
+	 * [class@PluginManager] will embed the returned widget into a dialog box,
 	 * but you shouldn't take this behaviour for granted as other implementations
 	 * of a plugin manager UI might do otherwise.
 	 *
-	 * This method should always return a valid #GtkWidget instance, never %NULL.
+	 * This method should always return a valid [class@Gtk.Widget] instance, never %NULL.
 	 *
 	 * Returns: A #GtkWidget used for configuration.
 	 */

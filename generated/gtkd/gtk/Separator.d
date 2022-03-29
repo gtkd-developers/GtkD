@@ -97,13 +97,13 @@ public class Separator : Widget, OrientableIF
 	 */
 	public this(GtkOrientation orientation)
 	{
-		auto p = gtk_separator_new(orientation);
+		auto __p = gtk_separator_new(orientation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSeparator*) p);
+		this(cast(GtkSeparator*) __p);
 	}
 }

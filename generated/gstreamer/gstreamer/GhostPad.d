@@ -103,14 +103,14 @@ public class GhostPad : ProxyPad
 	 */
 	public this(string name, Pad target)
 	{
-		auto p = gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct());
+		auto __p = gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstGhostPad*) p);
+		this(cast(GstGhostPad*) __p);
 	}
 
 	/**
@@ -131,14 +131,14 @@ public class GhostPad : ProxyPad
 	 */
 	public this(string name, Pad target, PadTemplate templ)
 	{
-		auto p = gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), (templ is null) ? null : templ.getPadTemplateStruct());
+		auto __p = gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), (templ is null) ? null : templ.getPadTemplateStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_template");
 		}
 
-		this(cast(GstGhostPad*) p);
+		this(cast(GstGhostPad*) __p);
 	}
 
 	/**
@@ -159,14 +159,14 @@ public class GhostPad : ProxyPad
 	 */
 	public this(string name, GstPadDirection dir)
 	{
-		auto p = gst_ghost_pad_new_no_target(Str.toStringz(name), dir);
+		auto __p = gst_ghost_pad_new_no_target(Str.toStringz(name), dir);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_no_target");
 		}
 
-		this(cast(GstGhostPad*) p);
+		this(cast(GstGhostPad*) __p);
 	}
 
 	/**
@@ -184,14 +184,14 @@ public class GhostPad : ProxyPad
 	 */
 	public this(string name, PadTemplate templ)
 	{
-		auto p = gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), (templ is null) ? null : templ.getPadTemplateStruct());
+		auto __p = gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), (templ is null) ? null : templ.getPadTemplateStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_no_target_from_template");
 		}
 
-		this(cast(GstGhostPad*) p);
+		this(cast(GstGhostPad*) __p);
 	}
 
 	/**
@@ -235,6 +235,9 @@ public class GhostPad : ProxyPad
 	 * function. Call this function directly after a call to g_object_new
 	 * (GST_TYPE_GHOST_PAD, "direction", @dir, ..., NULL).
 	 *
+	 * Deprecated: This function is deprecated since 1.18 and does nothing
+	 * anymore.
+	 *
 	 * Returns: %TRUE if the construction succeeds, %FALSE otherwise.
 	 */
 	public bool construct()
@@ -251,14 +254,14 @@ public class GhostPad : ProxyPad
 	 */
 	public Pad getTarget()
 	{
-		auto p = gst_ghost_pad_get_target(gstGhostPad);
+		auto __p = gst_ghost_pad_get_target(gstGhostPad);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**

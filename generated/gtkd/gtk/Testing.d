@@ -25,6 +25,7 @@
 module gtk.Testing;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.SpinButton;
 private import gtk.Widget;
@@ -78,14 +79,14 @@ public struct Testing
 	 */
 	public static Widget createSimpleWindow(string windowTitle, string dialogText)
 	{
-		auto p = gtk_test_create_simple_window(Str.toStringz(windowTitle), Str.toStringz(dialogText));
+		auto __p = gtk_test_create_simple_window(Str.toStringz(windowTitle), Str.toStringz(dialogText));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -107,14 +108,14 @@ public struct Testing
 	 */
 	public static Widget findLabel(Widget widget, string labelPattern)
 	{
-		auto p = gtk_test_find_label((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern));
+		auto __p = gtk_test_find_label((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -136,14 +137,14 @@ public struct Testing
 	 */
 	public static Widget findSibling(Widget baseWidget, GType widgetType)
 	{
-		auto p = gtk_test_find_sibling((baseWidget is null) ? null : baseWidget.getWidgetStruct(), widgetType);
+		auto __p = gtk_test_find_sibling((baseWidget is null) ? null : baseWidget.getWidgetStruct(), widgetType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -166,14 +167,14 @@ public struct Testing
 	 */
 	public static Widget findWidget(Widget widget, string labelPattern, GType widgetType)
 	{
-		auto p = gtk_test_find_widget((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern), widgetType);
+		auto __p = gtk_test_find_widget((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern), widgetType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -188,9 +189,9 @@ public struct Testing
 	{
 		uint nTypes;
 
-		auto p = gtk_test_list_all_types(&nTypes);
+		auto __p = gtk_test_list_all_types(&nTypes);
 
-		return p[0 .. nTypes];
+		return __p[0 .. nTypes];
 	}
 
 	/**

@@ -113,14 +113,14 @@ public class Style : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_style_new();
+		auto __p = gtk_style_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStyle*) p, true);
+		this(cast(GtkStyle*) __p, true);
 	}
 
 	/**
@@ -156,14 +156,14 @@ public class Style : ObjectG
 	 */
 	public Style attach(Window window)
 	{
-		auto p = gtk_style_attach(gtkStyle, (window is null) ? null : window.getWindowStruct());
+		auto __p = gtk_style_attach(gtkStyle, (window is null) ? null : window.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) __p);
 	}
 
 	/**
@@ -175,14 +175,14 @@ public class Style : ObjectG
 	 */
 	public Style copy()
 	{
-		auto p = gtk_style_copy(gtkStyle);
+		auto __p = gtk_style_copy(gtkStyle);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p, true);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) __p, true);
 	}
 
 	/**
@@ -268,11 +268,11 @@ public class Style : ObjectG
 	{
 		GdkColor* outcolor = sliceNew!GdkColor();
 
-		auto p = gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), outcolor) != 0;
+		auto __p = gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), outcolor) != 0;
 
 		color = ObjectG.getDObject!(Color)(outcolor, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -289,14 +289,14 @@ public class Style : ObjectG
 	 */
 	public IconSet lookupIconSet(string stockId)
 	{
-		auto p = gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
+		auto __p = gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) __p);
 	}
 
 	/**
@@ -321,14 +321,14 @@ public class Style : ObjectG
 	 */
 	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{
-		auto p = gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
+		auto __p = gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**

@@ -27,6 +27,7 @@ module gio.IOExtension;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.TypeClass;
 public  import gtkc.giotypes;

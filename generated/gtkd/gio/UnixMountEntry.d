@@ -29,6 +29,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -97,6 +98,8 @@ public class UnixMountEntry
 	 *
 	 * If more mounts have the same mount path, the last matching mount
 	 * is returned.
+	 *
+	 * This will return %NULL if there is no mount point at @mount_path.
 	 *
 	 * Params:
 	 *     mountPath = path for a possible unix mount.
@@ -362,6 +365,9 @@ public class UnixMountEntry
 	 *
 	 * If more mounts have the same mount path, the last matching mount
 	 * is returned.
+	 *
+	 * This will return %NULL if looking up the mount entry fails, if
+	 * @file_path doesn’t exist or there is an I/O error.
 	 *
 	 * Params:
 	 *     filePath = file path on some unix mount.

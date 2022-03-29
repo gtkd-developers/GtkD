@@ -96,13 +96,13 @@ public class ColorChooserDialog : Dialog, ColorChooserIF
 	 */
 	public this(string title, Window parent)
 	{
-		auto p = gtk_color_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
+		auto __p = gtk_color_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkColorChooserDialog*) p);
+		this(cast(GtkColorChooserDialog*) __p);
 	}
 }

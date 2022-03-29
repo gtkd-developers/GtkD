@@ -28,6 +28,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Type;
@@ -233,19 +234,19 @@ public class Element : ObjectGst
 	{
 		GError* err = null;
 
-		auto p = gst_element_make_from_uri(type, Str.toStringz(uri), Str.toStringz(elementname), &err);
+		auto __p = gst_element_make_from_uri(type, Str.toStringz(uri), Str.toStringz(elementname), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -291,6 +292,35 @@ public class Element : ObjectGst
 	public static string stateGetName(GstState state)
 	{
 		return Str.toString(gst_element_state_get_name(state));
+	}
+
+	/**
+	 * Marks @type as "documentation should be skipped".
+	 * Can be useful for dynamically registered element to be excluded from
+	 * plugin documentation system.
+	 *
+	 * Example:
+	 * ```c
+	 * GType my_type;
+	 * GTypeInfo my_type_info;
+	 *
+	 * // Fill "my_type_info"
+	 * ...
+	 *
+	 * my_type = g_type_register_static (GST_TYPE_MY_ELEMENT, "my-type-name",
+	 * &my_type_info, 0);
+	 * gst_element_type_set_skip_documentation (my_type);
+	 * gst_element_register (plugin, "my-plugin-feature-name", rank, my_type);
+	 * ```
+	 *
+	 * Params:
+	 *     type = a #GType of element
+	 *
+	 * Since: 1.20
+	 */
+	public static void typeSetSkipDocumentation(GType type)
+	{
+		gst_element_type_set_skip_documentation(type);
 	}
 
 	/**
@@ -533,14 +563,14 @@ public class Element : ObjectGst
 	 */
 	public Bus getBus()
 	{
-		auto p = gst_element_get_bus(gstElement);
+		auto __p = gst_element_get_bus(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
+		return ObjectG.getDObject!(Bus)(cast(GstBus*) __p, true);
 	}
 
 	/**
@@ -556,14 +586,14 @@ public class Element : ObjectGst
 	 */
 	public Clock getClock()
 	{
-		auto p = gst_element_get_clock(gstElement);
+		auto __p = gst_element_get_clock(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**
@@ -585,14 +615,14 @@ public class Element : ObjectGst
 	 */
 	public Pad getCompatiblePad(Pad pad, Caps caps)
 	{
-		auto p = gst_element_get_compatible_pad(gstElement, (pad is null) ? null : pad.getPadStruct(), (caps is null) ? null : caps.getCapsStruct());
+		auto __p = gst_element_get_compatible_pad(gstElement, (pad is null) ? null : pad.getPadStruct(), (caps is null) ? null : caps.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -608,14 +638,14 @@ public class Element : ObjectGst
 	 */
 	public PadTemplate getCompatiblePadTemplate(PadTemplate compattempl)
 	{
-		auto p = gst_element_get_compatible_pad_template(gstElement, (compattempl is null) ? null : compattempl.getPadTemplateStruct());
+		auto __p = gst_element_get_compatible_pad_template(gstElement, (compattempl is null) ? null : compattempl.getPadTemplateStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) __p);
 	}
 
 	/**
@@ -632,14 +662,14 @@ public class Element : ObjectGst
 	 */
 	public Context getContext(string contextType)
 	{
-		auto p = gst_element_get_context(gstElement, Str.toStringz(contextType));
+		auto __p = gst_element_get_context(gstElement, Str.toStringz(contextType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Context)(cast(GstContext*) p, true);
+		return ObjectG.getDObject!(Context)(cast(GstContext*) __p, true);
 	}
 
 	/**
@@ -654,14 +684,14 @@ public class Element : ObjectGst
 	 */
 	public Context getContextUnlocked(string contextType)
 	{
-		auto p = gst_element_get_context_unlocked(gstElement, Str.toStringz(contextType));
+		auto __p = gst_element_get_context_unlocked(gstElement, Str.toStringz(contextType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Context)(cast(GstContext*) p, true);
+		return ObjectG.getDObject!(Context)(cast(GstContext*) __p, true);
 	}
 
 	/**
@@ -675,14 +705,43 @@ public class Element : ObjectGst
 	 */
 	public ListG getContexts()
 	{
-		auto p = gst_element_get_contexts(gstElement);
+		auto __p = gst_element_get_contexts(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
+	}
+
+	/**
+	 * Returns the current clock time of the element, as in, the time of the
+	 * element's clock, or GST_CLOCK_TIME_NONE if there is no clock.
+	 *
+	 * Returns: the clock time of the element, or GST_CLOCK_TIME_NONE if there is
+	 *     no clock.
+	 *
+	 * Since: 1.18
+	 */
+	public GstClockTime getCurrentClockTime()
+	{
+		return gst_element_get_current_clock_time(gstElement);
+	}
+
+	/**
+	 * Returns the running time of the element. The running time is the
+	 * element's clock time minus its base time. Will return GST_CLOCK_TIME_NONE
+	 * if the element has no clock, or if its base time has not been set.
+	 *
+	 * Returns: the running time of the element, or GST_CLOCK_TIME_NONE if the
+	 *     element has no clock or its base time has not been set.
+	 *
+	 * Since: 1.18
+	 */
+	public GstClockTime getCurrentRunningTime()
+	{
+		return gst_element_get_current_running_time(gstElement);
 	}
 
 	/**
@@ -693,14 +752,14 @@ public class Element : ObjectGst
 	 */
 	public ElementFactory getFactory()
 	{
-		auto p = gst_element_get_factory(gstElement);
+		auto __p = gst_element_get_factory(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) p);
+		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) __p);
 	}
 
 	/**
@@ -732,14 +791,14 @@ public class Element : ObjectGst
 	 */
 	public PadTemplate getPadTemplate(string name)
 	{
-		auto p = gst_element_get_pad_template(gstElement, Str.toStringz(name));
+		auto __p = gst_element_get_pad_template(gstElement, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) __p);
 	}
 
 	/**
@@ -753,24 +812,23 @@ public class Element : ObjectGst
 	 */
 	public ListG getPadTemplateList()
 	{
-		auto p = gst_element_get_pad_template_list(gstElement);
+		auto __p = gst_element_get_pad_template_list(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
-	 * Retrieves a pad from the element by name (e.g. "src_\%d"). This version only
-	 * retrieves request pads. The pad should be released with
-	 * gst_element_release_request_pad().
+	 * The name of this function is confusing to people learning GStreamer.
+	 * gst_element_request_pad_simple() aims at making it more explicit it is
+	 * a simplified gst_element_request_pad().
 	 *
-	 * This method is slower than manually getting the pad template and calling
-	 * gst_element_request_pad() if the pads should have a specific name (e.g.
-	 * @name is "src_1" instead of "src_\%u").
+	 * Deprecated: Prefer using gst_element_request_pad_simple() which
+	 * provides the exact same functionality.
 	 *
 	 * Params:
 	 *     name = the name of the request #GstPad to retrieve.
@@ -780,14 +838,14 @@ public class Element : ObjectGst
 	 */
 	public Pad getRequestPad(string name)
 	{
-		auto p = gst_element_get_request_pad(gstElement, Str.toStringz(name));
+		auto __p = gst_element_get_request_pad(gstElement, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -862,14 +920,14 @@ public class Element : ObjectGst
 	 */
 	public Pad getStaticPad(string name)
 	{
-		auto p = gst_element_get_static_pad(gstElement, Str.toStringz(name));
+		auto __p = gst_element_get_static_pad(gstElement, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -902,14 +960,14 @@ public class Element : ObjectGst
 	 */
 	public Iterator iteratePads()
 	{
-		auto p = gst_element_iterate_pads(gstElement);
+		auto __p = gst_element_iterate_pads(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -924,14 +982,14 @@ public class Element : ObjectGst
 	 */
 	public Iterator iterateSinkPads()
 	{
-		auto p = gst_element_iterate_sink_pads(gstElement);
+		auto __p = gst_element_iterate_sink_pads(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -946,14 +1004,14 @@ public class Element : ObjectGst
 	 */
 	public Iterator iterateSrcPads()
 	{
-		auto p = gst_element_iterate_src_pads(gstElement);
+		auto __p = gst_element_iterate_src_pads(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) __p, true);
 	}
 
 	/**
@@ -1176,7 +1234,7 @@ public class Element : ObjectGst
 	 */
 	public bool postMessage(Message message)
 	{
-		return gst_element_post_message(gstElement, (message is null) ? null : message.getMessageStruct()) != 0;
+		return gst_element_post_message(gstElement, (message is null) ? null : message.getMessageStruct(true)) != 0;
 	}
 
 	/**
@@ -1191,14 +1249,14 @@ public class Element : ObjectGst
 	 */
 	public Clock provideClock()
 	{
-		auto p = gst_element_provide_clock(gstElement);
+		auto __p = gst_element_provide_clock(gstElement);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) __p, true);
 	}
 
 	/**
@@ -1356,14 +1414,48 @@ public class Element : ObjectGst
 	 */
 	public Pad requestPad(PadTemplate templ, string name, Caps caps)
 	{
-		auto p = gst_element_request_pad(gstElement, (templ is null) ? null : templ.getPadTemplateStruct(), Str.toStringz(name), (caps is null) ? null : caps.getCapsStruct());
+		auto __p = gst_element_request_pad(gstElement, (templ is null) ? null : templ.getPadTemplateStruct(), Str.toStringz(name), (caps is null) ? null : caps.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
+	}
+
+	/**
+	 * Retrieves a pad from the element by name (e.g. "src_\%d"). This version only
+	 * retrieves request pads. The pad should be released with
+	 * gst_element_release_request_pad().
+	 *
+	 * This method is slower than manually getting the pad template and calling
+	 * gst_element_request_pad() if the pads should have a specific name (e.g.
+	 * @name is "src_1" instead of "src_\%u").
+	 *
+	 * Note that this function was introduced in GStreamer 1.20 in order to provide
+	 * a better name to gst_element_get_request_pad(). Prior to 1.20, users
+	 * should use gst_element_get_request_pad() which provides the same
+	 * functionality.
+	 *
+	 * Params:
+	 *     name = the name of the request #GstPad to retrieve.
+	 *
+	 * Returns: requested #GstPad if found,
+	 *     otherwise %NULL.  Release after usage.
+	 *
+	 * Since: 1.20
+	 */
+	public Pad requestPadSimple(string name)
+	{
+		auto __p = gst_element_request_pad_simple(gstElement, Str.toStringz(name));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Pad)(cast(GstPad*) __p, true);
 	}
 
 	/**
@@ -1441,7 +1533,7 @@ public class Element : ObjectGst
 	 */
 	public bool sendEvent(Event event)
 	{
-		return gst_element_send_event(gstElement, (event is null) ? null : event.getEventStruct()) != 0;
+		return gst_element_send_event(gstElement, (event is null) ? null : event.getEventStruct(true)) != 0;
 	}
 
 	/**

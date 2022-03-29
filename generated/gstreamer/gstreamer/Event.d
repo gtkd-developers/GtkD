@@ -27,6 +27,7 @@ module gstreamer.Event;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.Buffer;
 private import gstreamer.Caps;
@@ -40,6 +41,7 @@ private import gstreamer.Toc;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -112,6 +114,12 @@ public class Event
 	{
 		this.gstEvent = gstEvent;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_event_unref(gstEvent);
 	}
 
 	/**
@@ -209,14 +217,14 @@ public class Event
 	 */
 	public this(GstFormat format, long minsize, long maxsize, bool async)
 	{
-		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
+		auto __p = gst_event_new_buffer_size(format, minsize, maxsize, async);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_buffer_size");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -233,14 +241,14 @@ public class Event
 	 */
 	public this(Caps caps)
 	{
-		auto p = gst_event_new_caps((caps is null) ? null : caps.getCapsStruct());
+		auto __p = gst_event_new_caps((caps is null) ? null : caps.getCapsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_caps");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -266,14 +274,14 @@ public class Event
 	 */
 	public this(GstEventType type, Structure structure)
 	{
-		auto p = gst_event_new_custom(type, (structure is null) ? null : structure.getStructureStruct(true));
+		auto __p = gst_event_new_custom(type, (structure is null) ? null : structure.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_custom");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -297,14 +305,14 @@ public class Event
 	 */
 	public this(bool resetTime)
 	{
-		auto p = gst_event_new_flush_stop(resetTime);
+		auto __p = gst_event_new_flush_stop(resetTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_flush_stop");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -324,14 +332,85 @@ public class Event
 	 */
 	public this(GstClockTime timestamp, GstClockTime duration)
 	{
-		auto p = gst_event_new_gap(timestamp, duration);
+		auto __p = gst_event_new_gap(timestamp, duration);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_gap");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
+	}
+
+	/**
+	 * Create a new instant-rate-change event. This event is sent by seek
+	 * handlers (e.g. demuxers) when receiving a seek with the
+	 * %GST_SEEK_FLAG_INSTANT_RATE_CHANGE and signals to downstream elements that
+	 * the playback rate in the existing segment should be immediately multiplied
+	 * by the @rate_multiplier factor.
+	 *
+	 * The flags provided replace any flags in the existing segment, for the
+	 * flags within the %GST_SEGMENT_INSTANT_FLAGS set. Other GstSegmentFlags
+	 * are ignored and not transferred in the event.
+	 *
+	 * Params:
+	 *     rateMultiplier = the multiplier to be applied to the playback rate
+	 *     newFlags = A new subset of segment flags to replace in segments
+	 *
+	 * Returns: the new instant-rate-change event.
+	 *
+	 * Since: 1.18
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(double rateMultiplier, GstSegmentFlags newFlags)
+	{
+		auto __p = gst_event_new_instant_rate_change(rateMultiplier, newFlags);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_instant_rate_change");
+		}
+
+		this(cast(GstEvent*) __p);
+	}
+
+	/**
+	 * Create a new instant-rate-sync-time event. This event is sent by the
+	 * pipeline to notify elements handling the instant-rate-change event about
+	 * the running-time when the new rate should be applied. The running time
+	 * may be in the past when elements handle this event, which can lead to
+	 * switching artifacts. The magnitude of those depends on the exact timing
+	 * of event delivery to each element and the magnitude of the change in
+	 * playback rate being applied.
+	 *
+	 * The @running_time and @upstream_running_time are the same if this
+	 * is the first instant-rate adjustment, but will differ for later ones
+	 * to compensate for the accumulated offset due to playing at a rate
+	 * different to the one indicated in the playback segments.
+	 *
+	 * Params:
+	 *     rateMultiplier = the new playback rate multiplier to be applied
+	 *     runningTime = Running time when the rate change should be applied
+	 *     upstreamRunningTime = The upstream-centric running-time when the
+	 *         rate change should be applied.
+	 *
+	 * Returns: the new instant-rate-sync-time event.
+	 *
+	 * Since: 1.18
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(double rateMultiplier, GstClockTime runningTime, GstClockTime upstreamRunningTime)
+	{
+		auto __p = gst_event_new_instant_rate_sync_time(rateMultiplier, runningTime, upstreamRunningTime);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_instant_rate_sync_time");
+		}
+
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -351,14 +430,14 @@ public class Event
 	 */
 	public this(GstClockTime latency)
 	{
-		auto p = gst_event_new_latency(latency);
+		auto __p = gst_event_new_latency(latency);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_latency");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -374,14 +453,14 @@ public class Event
 	 */
 	public this(Structure structure)
 	{
-		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct(true));
+		auto __p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_navigation");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -433,14 +512,14 @@ public class Event
 	 */
 	public this(string systemId, Buffer data, string origin)
 	{
-		auto p = gst_event_new_protection(Str.toStringz(systemId), (data is null) ? null : data.getBufferStruct(), Str.toStringz(origin));
+		auto __p = gst_event_new_protection(Str.toStringz(systemId), (data is null) ? null : data.getBufferStruct(), Str.toStringz(origin));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_protection");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -499,14 +578,14 @@ public class Event
 	 */
 	public this(GstQOSType type, double proportion, GstClockTimeDiff diff, GstClockTime timestamp)
 	{
-		auto p = gst_event_new_qos(type, proportion, diff, timestamp);
+		auto __p = gst_event_new_qos(type, proportion, diff, timestamp);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_qos");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -521,14 +600,14 @@ public class Event
 	 */
 	public this()
 	{
-		auto p = gst_event_new_reconfigure();
+		auto __p = gst_event_new_reconfigure();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_reconfigure");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -579,14 +658,14 @@ public class Event
 	 */
 	public this(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop)
 	{
-		auto p = gst_event_new_seek(rate, format, flags, startType, start, stopType, stop);
+		auto __p = gst_event_new_seek(rate, format, flags, startType, start, stopType, stop);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_seek");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -631,14 +710,14 @@ public class Event
 	 */
 	public this(Segment segment)
 	{
-		auto p = gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct());
+		auto __p = gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_segment");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -655,14 +734,14 @@ public class Event
 	 */
 	public this(GstFormat format, long position)
 	{
-		auto p = gst_event_new_segment_done(format, position);
+		auto __p = gst_event_new_segment_done(format, position);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_segment_done");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -690,14 +769,14 @@ public class Event
 	 */
 	public this(ListG streams)
 	{
-		auto p = gst_event_new_select_streams((streams is null) ? null : streams.getListGStruct());
+		auto __p = gst_event_new_select_streams((streams is null) ? null : streams.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_select_streams");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -717,14 +796,14 @@ public class Event
 	 */
 	public this(string name, Message msg)
 	{
-		auto p = gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct());
+		auto __p = gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sink_message");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -755,14 +834,14 @@ public class Event
 	 */
 	public this(GstFormat format, ulong amount, double rate, bool flush, bool intermediate)
 	{
-		auto p = gst_event_new_step(format, amount, rate, flush, intermediate);
+		auto __p = gst_event_new_step(format, amount, rate, flush, intermediate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_step");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -786,14 +865,14 @@ public class Event
 	 */
 	public this(StreamCollection collection)
 	{
-		auto p = gst_event_new_stream_collection((collection is null) ? null : collection.getStreamCollectionStruct());
+		auto __p = gst_event_new_stream_collection((collection is null) ? null : collection.getStreamCollectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_collection");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -818,14 +897,14 @@ public class Event
 	 */
 	public this(uint groupId)
 	{
-		auto p = gst_event_new_stream_group_done(groupId);
+		auto __p = gst_event_new_stream_group_done(groupId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_group_done");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -860,14 +939,14 @@ public class Event
 	 */
 	public this(string streamId)
 	{
-		auto p = gst_event_new_stream_start(Str.toStringz(streamId));
+		auto __p = gst_event_new_stream_start(Str.toStringz(streamId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_start");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -889,14 +968,14 @@ public class Event
 	 */
 	public this(TagList taglist)
 	{
-		auto p = gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct());
+		auto __p = gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_tag");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -913,14 +992,31 @@ public class Event
 	 */
 	public this(Toc toc, bool updated)
 	{
-		auto p = gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated);
+		auto __p = gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_toc");
 		}
 
-		this(cast(GstEvent*) p);
+		this(cast(GstEvent*) __p);
+	}
+
+	/**
+	 * Copy the event using the event specific copy function.
+	 *
+	 * Returns: the new event
+	 */
+	public Event copy()
+	{
+		auto __p = gst_event_copy(gstEvent);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p, true);
 	}
 
 	/**
@@ -991,14 +1087,14 @@ public class Event
 	 */
 	public Structure getStructure()
 	{
-		auto p = gst_event_get_structure(gstEvent);
+		auto __p = gst_event_get_structure(gstEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -1013,6 +1109,22 @@ public class Event
 	public bool hasName(string name)
 	{
 		return gst_event_has_name(gstEvent, Str.toStringz(name)) != 0;
+	}
+
+	/**
+	 * Checks if @event has the given @name. This function is usually used to
+	 * check the name of a custom event.
+	 *
+	 * Params:
+	 *     name = name to check as a GQuark
+	 *
+	 * Returns: %TRUE if @name matches the name of the event structure.
+	 *
+	 * Since: 1.18
+	 */
+	public bool hasNameId(GQuark name)
+	{
+		return gst_event_has_name_id(gstEvent, name) != 0;
 	}
 
 	/**
@@ -1079,6 +1191,20 @@ public class Event
 	}
 
 	/**
+	 * Retrieve the gap flags that may have been set on a gap event with
+	 * gst_event_set_gap_flags().
+	 *
+	 * Params:
+	 *     flags = a #GstGapFlags or %NULL
+	 *
+	 * Since: 1.20
+	 */
+	public void parseGapFlags(out GstGapFlags flags)
+	{
+		gst_event_parse_gap_flags(gstEvent, &flags);
+	}
+
+	/**
 	 *
 	 * Params:
 	 *     groupId = address of variable where to store the group id
@@ -1090,6 +1216,40 @@ public class Event
 	public bool parseGroupId(out uint groupId)
 	{
 		return gst_event_parse_group_id(gstEvent, &groupId) != 0;
+	}
+
+	/**
+	 * Extract rate and flags from an instant-rate-change event.
+	 *
+	 * Params:
+	 *     rateMultiplier = location in which to store the rate
+	 *         multiplier of the instant-rate-change event, or %NULL
+	 *     newFlags = location in which to store the new
+	 *         segment flags of the instant-rate-change event, or %NULL
+	 *
+	 * Since: 1.18
+	 */
+	public void parseInstantRateChange(out double rateMultiplier, out GstSegmentFlags newFlags)
+	{
+		gst_event_parse_instant_rate_change(gstEvent, &rateMultiplier, &newFlags);
+	}
+
+	/**
+	 * Extract the rate multiplier and running times from an instant-rate-sync-time event.
+	 *
+	 * Params:
+	 *     rateMultiplier = location where to store the rate of
+	 *         the instant-rate-sync-time event, or %NULL
+	 *     runningTime = location in which to store the running time
+	 *         of the instant-rate-sync-time event, or %NULL
+	 *     upstreamRunningTime = location in which to store the
+	 *         upstream running time of the instant-rate-sync-time event, or %NULL
+	 *
+	 * Since: 1.18
+	 */
+	public void parseInstantRateSyncTime(out double rateMultiplier, out GstClockTime runningTime, out GstClockTime upstreamRunningTime)
+	{
+		gst_event_parse_instant_rate_sync_time(gstEvent, &rateMultiplier, &runningTime, &upstreamRunningTime);
 	}
 
 	/**
@@ -1383,6 +1543,38 @@ public class Event
 		uid = Str.toString(outuid);
 	}
 
+	alias doref = ref_;
+	/**
+	 * Increase the refcount of this event.
+	 *
+	 * Returns: @event (for convenience when doing assignments)
+	 */
+	public Event ref_()
+	{
+		auto __p = gst_event_ref(gstEvent);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p, true);
+	}
+
+	/**
+	 * Sets @flags on @event to give additional information about the reason for
+	 * the #GST_EVENT_GAP.
+	 *
+	 * Params:
+	 *     flags = a #GstGapFlags
+	 *
+	 * Since: 1.20
+	 */
+	public void setGapFlags(GstGapFlags flags)
+	{
+		gst_event_set_gap_flags(gstEvent, flags);
+	}
+
 	/**
 	 * All streams that have the same group id are supposed to be played
 	 * together, i.e. all streams inside a container file should have the
@@ -1467,6 +1659,14 @@ public class Event
 	}
 
 	/**
+	 * Decrease the refcount of an event, freeing it if the refcount reaches 0.
+	 */
+	public void unref()
+	{
+		gst_event_unref(gstEvent);
+	}
+
+	/**
 	 * Get a writable version of the structure.
 	 *
 	 * Returns: The structure of the event. The structure
@@ -1479,14 +1679,93 @@ public class Event
 	 */
 	public Structure writableStructure()
 	{
-		auto p = gst_event_writable_structure(gstEvent);
+		auto __p = gst_event_writable_structure(gstEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstEvent to point to a different #GstEvent. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * event is unreffed, the new one is reffed).
+	 *
+	 * Either @new_event or the #GstEvent pointed to by @old_event may be %NULL.
+	 *
+	 * Params:
+	 *     oldEvent = pointer to a
+	 *         pointer to a #GstEvent to be replaced.
+	 *     newEvent = pointer to a #GstEvent that will
+	 *         replace the event pointed to by @old_event.
+	 *
+	 * Returns: %TRUE if @new_event was different from @old_event
+	 */
+	public static bool replace(ref Event oldEvent, Event newEvent)
+	{
+		GstEvent* outoldEvent = oldEvent.getEventStruct();
+
+		auto __p = gst_event_replace(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct()) != 0;
+
+		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
+
+		return __p;
+	}
+
+	/**
+	 * Atomically replace the #GstEvent pointed to by @old_event with %NULL and
+	 * return the original event.
+	 *
+	 * Params:
+	 *     oldEvent = pointer to a
+	 *         pointer to a #GstEvent to be stolen.
+	 *
+	 * Returns: the #GstEvent that was in @old_event
+	 */
+	public static Event steal(ref Event oldEvent)
+	{
+		GstEvent* outoldEvent = oldEvent.getEventStruct();
+
+		auto __p = gst_event_steal(&outoldEvent);
+
+		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p, true);
+	}
+
+	/**
+	 * Modifies a pointer to a #GstEvent to point to a different #GstEvent. This
+	 * function is similar to gst_event_replace() except that it takes ownership of
+	 * @new_event.
+	 *
+	 * Either @new_event or the #GstEvent pointed to by @old_event may be %NULL.
+	 *
+	 * Params:
+	 *     oldEvent = pointer to a
+	 *         pointer to a #GstEvent to be stolen.
+	 *     newEvent = pointer to a #GstEvent that will
+	 *         replace the event pointed to by @old_event.
+	 *
+	 * Returns: %TRUE if @new_event was different from @old_event
+	 */
+	public static bool take(ref Event oldEvent, Event newEvent)
+	{
+		GstEvent* outoldEvent = oldEvent.getEventStruct();
+
+		auto __p = gst_event_take(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct(true)) != 0;
+
+		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
+
+		return __p;
 	}
 
 	/**

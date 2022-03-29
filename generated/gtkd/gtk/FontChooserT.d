@@ -25,6 +25,7 @@
 module gtk.FontChooserT;
 
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtk.c.functions;
@@ -100,14 +101,14 @@ public template FontChooserT(TStruct)
 	 */
 	public PgFontDescription getFontDesc()
 	{
-		auto p = gtk_font_chooser_get_font_desc(getFontChooserStruct());
+		auto __p = gtk_font_chooser_get_font_desc(getFontChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p, true);
 	}
 
 	/**
@@ -124,14 +125,14 @@ public template FontChooserT(TStruct)
 	 */
 	public PgFontFace getFontFace()
 	{
-		auto p = gtk_font_chooser_get_font_face(getFontChooserStruct());
+		auto __p = gtk_font_chooser_get_font_face(getFontChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) p);
+		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) __p);
 	}
 
 	/**
@@ -148,14 +149,14 @@ public template FontChooserT(TStruct)
 	 */
 	public PgFontFamily getFontFamily()
 	{
-		auto p = gtk_font_chooser_get_font_family(getFontChooserStruct());
+		auto __p = gtk_font_chooser_get_font_family(getFontChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) p);
+		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) __p);
 	}
 
 	/**
@@ -183,14 +184,14 @@ public template FontChooserT(TStruct)
 	 */
 	public override PgFontMap getFontMap()
 	{
-		auto p = gtk_font_chooser_get_font_map(getFontChooserStruct());
+		auto __p = gtk_font_chooser_get_font_map(getFontChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p, true);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) __p, true);
 	}
 
 	/**

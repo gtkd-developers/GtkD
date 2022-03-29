@@ -25,6 +25,7 @@
 module gtk.NativeDialog;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Window;
@@ -141,14 +142,14 @@ public class NativeDialog : ObjectG
 	 */
 	public Window getTransientFor()
 	{
-		auto p = gtk_native_dialog_get_transient_for(gtkNativeDialog);
+		auto __p = gtk_native_dialog_get_transient_for(gtkNativeDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -206,7 +207,7 @@ public class NativeDialog : ObjectG
 	 * modal dialog (it prevents the user from interacting with other
 	 * windows in the same window group while the dialog is run), callbacks
 	 * such as timeouts, IO channel watches, DND drops, etc, will
-	 * be triggered during a gtk_nautilus_dialog_run() call.
+	 * be triggered during a gtk_native_dialog_run() call.
 	 *
 	 * Returns: response ID
 	 *

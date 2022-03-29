@@ -87,14 +87,14 @@ public class PixbufSimpleAnimation : PixbufAnimation
 	 */
 	public this(int width, int height, float rate)
 	{
-		auto p = gdk_pixbuf_simple_anim_new(width, height, rate);
+		auto __p = gdk_pixbuf_simple_anim_new(width, height, rate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GdkPixbufSimpleAnim*) p, true);
+		this(cast(GdkPixbufSimpleAnim*) __p, true);
 	}
 
 	/**

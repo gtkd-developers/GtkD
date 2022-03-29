@@ -1543,6 +1543,10 @@ public enum GtkInputPurpose
 	 * Like @GTK_INPUT_PURPOSE_DIGITS, but characters are hidden
 	 */
 	PIN = 9,
+	/**
+	 * Allow any character, in addition to control codes
+	 */
+	TERMINAL = 10,
 }
 alias GtkInputPurpose InputPurpose;
 
@@ -1705,6 +1709,18 @@ public enum GtkLicense
 	 * The GNU Affero General Public License, version 3.0 only. Since: 3.22.27.
 	 */
 	AGPL_3_0_ONLY = 14,
+	/**
+	 * The 3-clause BSD licence. Since: 3.24.20.
+	 */
+	BSD_3 = 15,
+	/**
+	 * The Apache License, version 2.0. Since: 3.24.20.
+	 */
+	APACHE_2_0 = 16,
+	/**
+	 * The Mozilla Public License, version 2.0. Since: 3.24.20.
+	 */
+	MPL_2_0 = 17,
 }
 alias GtkLicense License;
 
@@ -6296,6 +6312,19 @@ struct GtkFileChooserWidget
 	GtkFileChooserWidgetPrivate* priv;
 }
 
+struct GtkFileChooserWidgetAccessible
+{
+	GtkContainerAccessible parent;
+	GtkFileChooserWidgetAccessiblePrivate* priv;
+}
+
+struct GtkFileChooserWidgetAccessibleClass
+{
+	GtkContainerAccessibleClass parentClass;
+}
+
+struct GtkFileChooserWidgetAccessiblePrivate;
+
 struct GtkFileChooserWidgetClass
 {
 	/**
@@ -6869,6 +6898,18 @@ struct GtkHeaderBar
 {
 	GtkContainer container;
 }
+
+struct GtkHeaderBarAccessible
+{
+	GtkContainerAccessible parent;
+}
+
+struct GtkHeaderBarAccessibleClass
+{
+	GtkContainerAccessibleClass parentClass;
+}
+
+struct GtkHeaderBarAccessiblePrivate;
 
 struct GtkHeaderBarClass
 {
@@ -8126,6 +8167,19 @@ struct GtkPlug
 	GtkPlugPrivate* priv;
 }
 
+struct GtkPlugAccessible
+{
+	GtkWindowAccessible parent;
+	GtkPlugAccessiblePrivate* priv;
+}
+
+struct GtkPlugAccessibleClass
+{
+	GtkWindowAccessibleClass parentClass;
+}
+
+struct GtkPlugAccessiblePrivate;
+
 struct GtkPlugClass
 {
 	GtkWindowClass parentClass;
@@ -9286,6 +9340,19 @@ struct GtkSocket
 	GtkContainer container;
 	GtkSocketPrivate* priv;
 }
+
+struct GtkSocketAccessible
+{
+	GtkContainerAccessible parent;
+	GtkSocketAccessiblePrivate* priv;
+}
+
+struct GtkSocketAccessibleClass
+{
+	GtkContainerAccessibleClass parentClass;
+}
+
+struct GtkSocketAccessiblePrivate;
 
 struct GtkSocketClass
 {
@@ -12474,7 +12541,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDia
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2408;
+enum BINARY_AGE = 2433;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -12489,7 +12556,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 4;
+enum INTERFACE_AGE = 29;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -12529,7 +12596,7 @@ alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 8;
+enum MICRO_VERSION = 33;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**

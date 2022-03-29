@@ -26,6 +26,7 @@ module gstreamer.PluginFeature;
 
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gstreamer.ObjectGst;
 private import gstreamer.Plugin;
@@ -85,14 +86,14 @@ public class PluginFeature : ObjectGst
 	 */
 	public static ListG listCopy(ListG list)
 	{
-		auto p = gst_plugin_feature_list_copy((list is null) ? null : list.getListGStruct());
+		auto __p = gst_plugin_feature_list_copy((list is null) ? null : list.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -163,14 +164,14 @@ public class PluginFeature : ObjectGst
 	 */
 	public Plugin getPlugin()
 	{
-		auto p = gst_plugin_feature_get_plugin(gstPluginFeature);
+		auto __p = gst_plugin_feature_get_plugin(gstPluginFeature);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) __p, true);
 	}
 
 	/**
@@ -216,14 +217,14 @@ public class PluginFeature : ObjectGst
 	 */
 	public PluginFeature load()
 	{
-		auto p = gst_plugin_feature_load(gstPluginFeature);
+		auto __p = gst_plugin_feature_load(gstPluginFeature);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p, true);
+		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) __p, true);
 	}
 
 	/**

@@ -28,6 +28,7 @@ public  import atk.TextRange;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtkc.atktypes;
@@ -148,6 +149,9 @@ public template TextT(TStruct)
 	}
 
 	/**
+	 * If the extent can not be obtained (e.g. missing support), all of x, y, width,
+	 * height are set to -1.
+	 *
 	 * Get the bounding box containing the glyph representing the character at
 	 * a particular text offset.
 	 *
@@ -210,6 +214,9 @@ public template TextT(TStruct)
 
 	/**
 	 * Get the bounding box for text within the specified range.
+	 *
+	 * If the extents can not be obtained (e.g. or missing support), the rectangle
+	 * fields are set to -1.
 	 *
 	 * Params:
 	 *     startOffset = The offset of the first text character for which boundary
@@ -462,15 +469,11 @@ public template TextT(TStruct)
 	}
 
 	/**
-	 * Makes @text visible on the screen by scrolling all necessary parents.
-	 *
-	 * Contrary to atk_text_set_position, this does not actually move
-	 * @text in its parent, this only makes the parents scroll so that the
-	 * object shows up on the screen, given its current position within the parents.
+	 * Makes a substring of @text visible on the screen by scrolling all necessary parents.
 	 *
 	 * Params:
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
+	 *     startOffset = start offset in the @text
+	 *     endOffset = end offset in the @text, or -1 for the end of the text.
 	 *     type = specify where the object should be made visible.
 	 *
 	 * Returns: whether scrolling was successful.
@@ -483,12 +486,12 @@ public template TextT(TStruct)
 	}
 
 	/**
-	 * Makes an object visible on the screen at a given position by scrolling all
-	 * necessary parents.
+	 * Move the top-left of a substring of @text to a given position of the screen
+	 * by scrolling all necessary parents.
 	 *
 	 * Params:
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
+	 *     startOffset = start offset in the @text
+	 *     endOffset = end offset in the @text, or -1 for the end of the text.
 	 *     coords = specify whether coordinates are relative to the screen or to the
 	 *         parent object.
 	 *     x = x-position where to scroll to
@@ -505,6 +508,22 @@ public template TextT(TStruct)
 
 	/**
 	 * Sets the caret (cursor) position to the specified @offset.
+	 *
+	 * In the case of rich-text content, this method should either grab focus
+	 * or move the sequential focus navigation starting point (if the application
+	 * supports this concept) as if the user had clicked on the new caret position.
+	 * Typically, this means that the target of this operation is the node containing
+	 * the new caret position or one of its ancestors. In other words, after this
+	 * method is called, if the user advances focus, it should move to the first
+	 * focusable node following the new caret position.
+	 *
+	 * Calling this method should also scroll the application viewport in a way
+	 * that matches the behavior of the application's typical caret motion or tab
+	 * navigation as closely as possible. This also means that if the application's
+	 * caret motion or focus navigation does not trigger a scroll operation, this
+	 * method should not trigger one either. If the application does not have a caret
+	 * motion or focus navigation operation, this method should try to scroll the new
+	 * caret position into view while minimizing unnecessary scroll motion.
 	 *
 	 * Params:
 	 *     offset = the character offset of the new caret position

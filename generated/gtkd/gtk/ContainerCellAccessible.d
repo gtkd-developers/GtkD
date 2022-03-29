@@ -72,14 +72,14 @@ public class ContainerCellAccessible : CellAccessible
 	/** */
 	public this()
 	{
-		auto p = gtk_container_cell_accessible_new();
+		auto __p = gtk_container_cell_accessible_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkContainerCellAccessible*) p, true);
+		this(cast(GtkContainerCellAccessible*) __p, true);
 	}
 
 	/** */
@@ -93,14 +93,14 @@ public class ContainerCellAccessible : CellAccessible
 	 */
 	public ListG getChildren()
 	{
-		auto p = gtk_container_cell_accessible_get_children(gtkContainerCellAccessible);
+		auto __p = gtk_container_cell_accessible_get_children(gtkContainerCellAccessible);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/** */

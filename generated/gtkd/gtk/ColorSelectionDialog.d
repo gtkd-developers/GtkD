@@ -104,13 +104,13 @@ public class ColorSelectionDialog : Dialog
 	 */
 	public this(string title)
 	{
-		auto p = gtk_color_selection_dialog_new(Str.toStringz(title));
+		auto __p = gtk_color_selection_dialog_new(Str.toStringz(title));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkColorSelectionDialog*) p);
+		this(cast(GtkColorSelectionDialog*) __p);
 	}
 }

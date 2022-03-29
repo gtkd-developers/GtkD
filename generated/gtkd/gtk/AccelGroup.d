@@ -28,6 +28,7 @@ private import gdk.Display;
 private import glib.ConstructionException;
 private import glib.ListSG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -98,14 +99,14 @@ public class AccelGroup : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_accel_group_new();
+		auto __p = gtk_accel_group_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAccelGroup*) p, true);
+		this(cast(GtkAccelGroup*) __p, true);
 	}
 
 	/**
@@ -120,14 +121,14 @@ public class AccelGroup : ObjectG
 	 */
 	public static AccelGroup fromAccelClosure(Closure closure)
 	{
-		auto p = gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct());
+		auto __p = gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) __p);
 	}
 
 	/**
@@ -303,9 +304,9 @@ public class AccelGroup : ObjectG
 	{
 		uint nEntries;
 
-		auto p = gtk_accel_group_query(gtkAccelGroup, accelKey, accelMods, &nEntries);
+		auto __p = gtk_accel_group_query(gtkAccelGroup, accelKey, accelMods, &nEntries);
 
-		return p[0 .. nEntries];
+		return __p[0 .. nEntries];
 	}
 
 	/**
@@ -380,14 +381,14 @@ public class AccelGroup : ObjectG
 	 */
 	public static ListSG accelGroupsFromObject(ObjectG object)
 	{
-		auto p = gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct());
+		auto __p = gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -550,7 +551,7 @@ public class AccelGroup : ObjectG
 	 */
 	public static void acceleratorParseWithKeycode(string accelerator, out uint acceleratorKey, out uint[] acceleratorCodes, out GdkModifierType acceleratorMods)
 	{
-		uint* outacceleratorCodes = null;
+		uint* outacceleratorCodes;
 
 		gtk_accelerator_parse_with_keycode(Str.toStringz(accelerator), &acceleratorKey, &outacceleratorCodes, &acceleratorMods);
 

@@ -26,6 +26,7 @@ module gstreamer.StreamCollection;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Signals;
@@ -106,14 +107,14 @@ public class StreamCollection : ObjectGst
 	 */
 	public this(string upstreamId)
 	{
-		auto p = gst_stream_collection_new(Str.toStringz(upstreamId));
+		auto __p = gst_stream_collection_new(Str.toStringz(upstreamId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstStreamCollection*) p, true);
+		this(cast(GstStreamCollection*) __p, true);
 	}
 
 	/**
@@ -157,14 +158,14 @@ public class StreamCollection : ObjectGst
 	 */
 	public Stream getStream(uint index)
 	{
-		auto p = gst_stream_collection_get_stream(gstStreamCollection, index);
+		auto __p = gst_stream_collection_get_stream(gstStreamCollection, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Stream)(cast(GstStream*) p);
+		return ObjectG.getDObject!(Stream)(cast(GstStream*) __p);
 	}
 
 	/**

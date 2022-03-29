@@ -43,6 +43,9 @@ public alias ulong GstClockTime;
  */
 public alias long GstClockTimeDiff;
 
+/**
+ * A type defining the type of an element factory.
+ */
 public alias ulong GstElementFactoryListType;
 /**
  * Available details for pipeline graphs produced by GST_DEBUG_BIN_TO_DOT_FILE()
@@ -102,25 +105,23 @@ alias GstAllocatorFlags AllocatorFlags;
 
 /**
  * GstBinFlags are a set of flags specific to bins. Most are set/used
- * internally. They can be checked using the GST_OBJECT_FLAG_IS_SET () macro,
- * and (un)set using GST_OBJECT_FLAG_SET () and GST_OBJECT_FLAG_UNSET ().
+ * internally. They can be checked using the GST_OBJECT_FLAG_IS_SET() macro,
+ * and (un)set using GST_OBJECT_FLAG_SET() and GST_OBJECT_FLAG_UNSET().
  */
 public enum GstBinFlags
 {
 	/**
-	 * don't resync a state change when elements are
-	 * added or linked in the bin (Since 1.0.5)
+	 * Don't resync a state change when elements are added or linked in the bin
 	 */
 	NO_RESYNC = 16384,
 	/**
-	 * Indicates whether the bin can handle elements
-	 * that add/remove source pads at any point in time without
-	 * first posting a no-more-pads signal (Since 1.10)
+	 * Indicates whether the bin can handle elements that add/remove source pads
+	 * at any point in time without first posting a no-more-pads signal.
 	 */
 	STREAMS_AWARE = 32768,
 	/**
-	 * the last enum in the series of flags for bins.
-	 * Derived classes can use this as first value in a list of flags.
+	 * The last enum in the series of flags for bins. Derived classes can use this
+	 * as first value in a list of flags.
 	 */
 	LAST = 524288,
 }
@@ -163,8 +164,7 @@ public enum GstBufferCopyFlags
 	 */
 	MERGE = 16,
 	/**
-	 * flag indicating that memory should always be
-	 * copied instead of reffed (Since 1.2)
+	 * flag indicating that memory should always be copied instead of reffed
 	 */
 	DEEP = 32,
 }
@@ -204,8 +204,8 @@ public enum GstBufferFlags
 	CORRUPTED = 256,
 	/**
 	 * the buffer contains a media specific marker. for
-	 * video this is typically the end of a frame boundary, for audio
-	 * this is usually the start of a talkspurt.
+	 * video this is the end of a frame boundary, for audio
+	 * this is the start of a talkspurt.
 	 */
 	MARKER = 512,
 	/**
@@ -235,17 +235,17 @@ public enum GstBufferFlags
 	 */
 	TAG_MEMORY = 16384,
 	/**
-	 * Elements which write to disk or permanent
-	 * storage should ensure the data is synced after
-	 * writing the contents of this buffer. (Since 1.6)
+	 * Elements which write to disk or permanent storage should ensure the data
+	 * is synced after writing the contents of this buffer.
 	 */
 	SYNC_AFTER = 32768,
 	/**
 	 * This buffer is important and should not be dropped.
-	 * This can be used to mark important buffers, e.g. to flag
-	 * RTP packets carrying keyframes or codec setup data for RTP
-	 * Forward Error Correction purposes, or to prevent still video
-	 * frames from being dropped by elements due to QoS. (Since 1.14)
+	 *
+	 * This can be used to mark important buffers, e.g. to flag RTP packets
+	 * carrying keyframes or codec setup data for RTP Forward Error Correction
+	 * purposes, or to prevent still video frames from being dropped by elements
+	 * due to QoS.
 	 */
 	NON_DROPPABLE = 65536,
 	/**
@@ -363,23 +363,25 @@ alias GstCapsFlags CapsFlags;
 /**
  * Modes of caps intersection
  *
- * @GST_CAPS_INTERSECT_ZIG_ZAG tries to preserve overall order of both caps
+ * %GST_CAPS_INTERSECT_ZIG_ZAG tries to preserve overall order of both caps
  * by iterating on the caps' structures as the following matrix shows:
- * |[
+ *
+ * ```
  * caps1
  * +-------------
  * | 1  2  4  7
  * caps2 | 3  5  8 10
  * | 6  9 11 12
- * ]|
+ * ```
+ *
  * Used when there is no explicit precedence of one caps over the other. e.g.
  * tee's sink pad getcaps function, it will probe its src pad peers' for their
  * caps and intersect them with this mode.
  *
- * @GST_CAPS_INTERSECT_FIRST is useful when an element wants to preserve
+ * %GST_CAPS_INTERSECT_FIRST is useful when an element wants to preserve
  * another element's caps priority order when intersecting with its own caps.
- * Example: If caps1 is [A, B, C] and caps2 is [E, B, D, A], the result
- * would be [A, B], maintaining the first caps priority on the intersection.
+ * Example: If caps1 is `[A, B, C]` and caps2 is `[E, B, D, A]`, the result
+ * would be `[A, B]`, maintaining the first caps priority on the intersection.
  */
 public enum GstCapsIntersectMode
 {
@@ -441,7 +443,6 @@ public enum GstClockFlags
 	CAN_SET_MASTER = 512,
 	/**
 	 * clock needs to be synced before it can be used
-	 * (Since 1.6)
 	 */
 	NEEDS_STARTUP_SYNC = 1024,
 	/**
@@ -506,9 +507,14 @@ public enum GstClockType
 	 */
 	MONOTONIC = 1,
 	/**
-	 * some other time source is used (Since 1.0.5)
+	 * some other time source is used (Since: 1.0.5)
 	 */
 	OTHER = 2,
+	/**
+	 * time since Epoch, but using International Atomic Time
+	 * as reference (Since: 1.18)
+	 */
+	TAI = 3,
 }
 alias GstClockType ClockType;
 
@@ -838,7 +844,7 @@ public enum GstEventType
 	 */
 	SEGMENT = 17934,
 	/**
-	 * A new #GstStreamCollection is available (Since 1.10)
+	 * A new #GstStreamCollection is available (Since: 1.10)
 	 */
 	STREAM_COLLECTION = 19230,
 	/**
@@ -859,7 +865,7 @@ public enum GstEventType
 	/**
 	 * Indicates that there is no more data for
 	 * the stream group ID in the message. Sent before EOS
-	 * in some instances and should be handled mostly the same. (Since 1.10)
+	 * in some instances and should be handled mostly the same. (Since: 1.10)
 	 */
 	STREAM_GROUP_DONE = 26894,
 	/**
@@ -886,6 +892,11 @@ public enum GstEventType
 	 * Marks a gap in the datastream.
 	 */
 	GAP = 40966,
+	/**
+	 * Notify downstream that a playback rate override
+	 * should be applied as soon as possible. (Since: 1.18)
+	 */
+	INSTANT_RATE_CHANGE = 46090,
 	/**
 	 * A quality message. Used to indicate to upstream elements
 	 * that the downstream elements should adjust their processing
@@ -922,9 +933,15 @@ public enum GstEventType
 	 */
 	TOC_SELECT = 64001,
 	/**
-	 * A request to select one or more streams (Since 1.10)
+	 * A request to select one or more streams (Since: 1.10)
 	 */
 	SELECT_STREAMS = 66561,
+	/**
+	 * Sent by the pipeline to notify elements that handle the
+	 * instant-rate-change event about the running-time when
+	 * the rate multiplier should be applied (or was applied). (Since: 1.18)
+	 */
+	INSTANT_RATE_SYNC_TIME = 66817,
 	/**
 	 * Upstream custom event
 	 */
@@ -1032,8 +1049,8 @@ public enum GstFlowReturn
 	NOT_NEGOTIATED = -4,
 	/**
 	 * Some (fatal) error occurred. Element generating
-	 * this error should post an error message with more
-	 * details.
+	 * this error should post an error message using
+	 * GST_ELEMENT_ERROR() with more details.
 	 */
 	ERROR = -5,
 	/**
@@ -1094,6 +1111,22 @@ public enum GstFormat
 	PERCENT = 5,
 }
 alias GstFormat Format;
+
+/**
+ * The different flags that can be set on #GST_EVENT_GAP events. See
+ * gst_event_set_gap_flags() for details.
+ *
+ * Since: 1.20
+ */
+public enum GstGapFlags
+{
+	/**
+	 * The #GST_EVENT_GAP signals missing data,
+	 * for example because of packet loss.
+	 */
+	DATA = 1,
+}
+alias GstGapFlags GapFlags;
 
 /**
  * The result of a #GstIteratorItemFunction.
@@ -1234,7 +1267,10 @@ public enum GstMemoryFlags
 	READONLY = 2,
 	/**
 	 * memory must not be shared. Copies will have to be
-	 * made when this memory needs to be shared between buffers.
+	 * made when this memory needs to be shared between buffers. (DEPRECATED:
+	 * do not use in new code, instead you should create a custom GstAllocator for
+	 * memory pooling instead of relying on the GstBuffer they were originally
+	 * attached to.)
 	 */
 	NO_SHARE = 16,
 	/**
@@ -1246,11 +1282,13 @@ public enum GstMemoryFlags
 	 */
 	ZERO_PADDED = 64,
 	/**
-	 * the memory is physically contiguous. (Since 1.2)
+	 * the memory is physically
+	 * contiguous. (Since: 1.2)
 	 */
 	PHYSICALLY_CONTIGUOUS = 128,
 	/**
-	 * the memory can't be mapped via gst_memory_map() without any preconditions. (Since 1.2)
+	 * the memory can't be mapped via
+	 * gst_memory_map() without any preconditions. (Since: 1.2)
 	 */
 	NOT_MAPPABLE = 256,
 	/**
@@ -1279,7 +1317,9 @@ public enum GstMessageType : uint
 	/**
 	 * an error occurred. When the application receives an error
 	 * message it should stop playback of the pipeline and not assume that more
-	 * data will be played.
+	 * data will be played. It is possible to specify a redirection url to the error
+	 * messages by setting a `redirect-location` field into the error message, application
+	 * or high level bins might use the information as required.
 	 */
 	ERROR = 2,
 	/**
@@ -1425,11 +1465,11 @@ public enum GstMessageType : uint
 	 */
 	STREAM_START = 268435456,
 	/**
-	 * Message indicating that an element wants a specific context (Since 1.2)
+	 * Message indicating that an element wants a specific context (Since: 1.2)
 	 */
 	NEED_CONTEXT = 536870912,
 	/**
-	 * Message indicating that an element created a context (Since 1.2)
+	 * Message indicating that an element created a context (Since: 1.2)
 	 */
 	HAVE_CONTEXT = 1073741824,
 	/**
@@ -1437,45 +1477,51 @@ public enum GstMessageType : uint
 	 * These extended message IDs can't be used directly with mask-based API
 	 * like gst_bus_poll() or gst_bus_timed_pop_filtered(), but you can still
 	 * filter for GST_MESSAGE_EXTENDED and then check the result for the
-	 * specific type. (Since 1.4)
+	 * specific type. (Since: 1.4)
 	 */
 	EXTENDED = 2147483648,
 	/**
 	 * Message indicating a #GstDevice was added to
-	 * a #GstDeviceProvider (Since 1.4)
+	 * a #GstDeviceProvider (Since: 1.4)
 	 */
 	DEVICE_ADDED = 2147483649,
 	/**
 	 * Message indicating a #GstDevice was removed
-	 * from a #GstDeviceProvider (Since 1.4)
+	 * from a #GstDeviceProvider (Since: 1.4)
 	 */
 	DEVICE_REMOVED = 2147483650,
 	/**
 	 * Message indicating a #GObject property has
-	 * changed (Since 1.10)
+	 * changed (Since: 1.10)
 	 */
 	PROPERTY_NOTIFY = 2147483651,
 	/**
 	 * Message indicating a new #GstStreamCollection
-	 * is available (Since 1.10)
+	 * is available (Since: 1.10)
 	 */
 	STREAM_COLLECTION = 2147483652,
 	/**
 	 * Message indicating the active selection of
-	 * #GstStreams has changed (Since 1.10)
+	 * #GstStreams has changed (Since: 1.10)
 	 */
 	STREAMS_SELECTED = 2147483653,
 	/**
 	 * Message indicating to request the application to
 	 * try to play the given URL(s). Useful if for example a HTTP 302/303
-	 * response is received with a non-HTTP URL inside. (Since 1.10)
+	 * response is received with a non-HTTP URL inside. (Since: 1.10)
 	 */
 	REDIRECT = 2147483654,
 	/**
 	 * Message indicating a #GstDevice was changed
-	 * a #GstDeviceProvider (Since 1.16)
+	 * a #GstDeviceProvider (Since: 1.16)
 	 */
-	DEVICE_CHANGED = 2147483654,
+	DEVICE_CHANGED = 2147483655,
+	/**
+	 * Message sent by elements to request the
+	 * running time from the pipeline when an instant rate change should
+	 * be applied (which may be in the past when the answer arrives). (Since: 1.18)
+	 */
+	INSTANT_RATE_REQUEST = 2147483656,
 	/**
 	 * mask for all of the above messages.
 	 */
@@ -1529,7 +1575,7 @@ public enum GstMiniObjectFlags
 	/**
 	 * the object is expected to stay alive
 	 * even after gst_deinit() has been called and so should be ignored by leak
-	 * detection tools. (Since 1.10)
+	 * detection tools. (Since: 1.10)
 	 */
 	MAY_BE_LEAKED = 4,
 	/**
@@ -1547,7 +1593,7 @@ public enum GstObjectFlags
 	/**
 	 * the object is expected to stay alive even
 	 * after gst_deinit() has been called and so should be ignored by leak
-	 * detection tools. (Since 1.10)
+	 * detection tools. (Since: 1.10)
 	 */
 	MAY_BE_LEAKED = 1,
 	/**
@@ -1648,7 +1694,7 @@ public enum GstPadFlags
 	 * the default accept-caps handler will use
 	 * the template pad caps instead of query caps to
 	 * compare with the accept caps. Use this in combination
-	 * with %GST_PAD_FLAG_ACCEPT_INTERSECT. (Since 1.6)
+	 * with %GST_PAD_FLAG_ACCEPT_INTERSECT. (Since: 1.6)
 	 */
 	ACCEPT_TEMPLATE = 65536,
 	/**
@@ -1805,12 +1851,15 @@ public enum GstPadProbeReturn
 	 */
 	OK = 1,
 	/**
-	 * remove this probe.
+	 * remove this probe, passing the data. For blocking probes
+	 * this will cause data flow to unblock, unless there are also other
+	 * blocking probes installed.
 	 */
 	REMOVE = 2,
 	/**
 	 * pass the data item in the block probe and block on the
-	 * next item.
+	 * next item. Note, that if there are multiple pad probes installed and
+	 * any probe returns PASS, the data will be passed.
 	 */
 	PASS = 3,
 	/**
@@ -2003,7 +2052,7 @@ public enum GstParseFlags
 	/**
 	 * If more than one toplevel element is described
 	 * by the pipeline description string, put them in a #GstBin instead of a
-	 * #GstPipeline. (Since 1.10)
+	 * #GstPipeline. (Since: 1.10)
 	 */
 	PLACE_IN_BIN = 4,
 }
@@ -2024,6 +2073,17 @@ public enum GstPipelineFlags
 	LAST = 8388608,
 }
 alias GstPipelineFlags PipelineFlags;
+
+public enum GstPluginAPIFlags
+{
+	/**
+	 * Ignore enum members when generating
+	 * the plugins cache. This is useful if the members of the enum are generated
+	 * dynamically, in order not to expose incorrect documentation to the end user.
+	 */
+	MEMBERS = 1,
+}
+alias GstPluginAPIFlags PluginAPIFlags;
 
 /**
  * Flags used in connection with gst_plugin_add_dependency().
@@ -2052,7 +2112,7 @@ public enum GstPluginDependencyFlags
 	/**
 	 * interpret
 	 * filename argument as filter prefix and check all matching files in
-	 * the directory. Since 1.8.
+	 * the directory. Since: 1.8.
 	 */
 	FILE_NAME_IS_PREFIX = 8,
 	/**
@@ -2397,7 +2457,7 @@ public enum GstResourceError
 	/**
 	 * used when the resource can't be opened
 	 * due to missing authorization.
-	 * (Since 1.2.4)
+	 * (Since: 1.2.4)
 	 */
 	NOT_AUTHORIZED = 15,
 	/**
@@ -2465,6 +2525,16 @@ alias GstSearchMode SearchMode;
  * continue playback. With this seek method it is possible to perform seamless
  * looping or simple linear editing.
  *
+ * When only changing the playback rate and not the direction, the
+ * %GST_SEEK_FLAG_INSTANT_RATE_CHANGE flag can be used for a non-flushing seek
+ * to signal that the rate change should be applied immediately. This requires
+ * special support in the seek handlers (e.g. demuxers) and any elements
+ * synchronizing to the clock, and in general can't work in all cases (for example
+ * UDP streaming where the delivery rate is controlled by a remote server). The
+ * instant-rate-change mode supports changing the trickmode-related GST_SEEK_ flags,
+ * but can't be used in conjunction with other seek flags that affect the new
+ * playback position - as the playback position will not be changing.
+ *
  * When doing fast forward (rate > 1.0) or fast reverse (rate < -1.0) trickmode
  * playback, the %GST_SEEK_FLAG_TRICKMODE flag can be used to instruct decoders
  * and demuxers to adjust the playback rate by skipping frames. This can improve
@@ -2517,7 +2587,7 @@ public enum GstSeekFlags
 	/**
 	 * when doing fast forward or fast reverse playback, allow
 	 * elements to skip frames instead of generating all
-	 * frames. (Since 1.6)
+	 * frames. (Since: 1.6)
 	 */
 	TRICKMODE = 16,
 	/**
@@ -2548,15 +2618,30 @@ public enum GstSeekFlags
 	 * when doing fast forward or fast reverse
 	 * playback, request that elements only decode keyframes
 	 * and skip all other content, for formats that have
-	 * keyframes. (Since 1.6)
+	 * keyframes. (Since: 1.6)
 	 */
 	TRICKMODE_KEY_UNITS = 128,
 	/**
 	 * when doing fast forward or fast reverse
 	 * playback, request that audio decoder elements skip
-	 * decoding and output only gap events or silence. (Since 1.6)
+	 * decoding and output only gap events or silence. (Since: 1.6)
 	 */
 	TRICKMODE_NO_AUDIO = 256,
+	/**
+	 * When doing fast forward or fast reverse
+	 * playback, request that elements only decode keyframes and
+	 * forward predicted frames and skip all other content (for example
+	 * B-Frames), for formats that have keyframes and forward predicted
+	 * frames. (Since: 1.18)
+	 */
+	TRICKMODE_FORWARD_PREDICTED = 512,
+	/**
+	 * Signals that a rate change should be
+	 * applied immediately. Only valid if start/stop position
+	 * are GST_CLOCK_TIME_NONE, the playback direction does not change
+	 * and the seek is not flushing. (Since: 1.18)
+	 */
+	INSTANT_RATE_CHANGE = 1024,
 }
 alias GstSeekFlags SeekFlags;
 
@@ -2597,7 +2682,7 @@ public enum GstSegmentFlags
 	 */
 	RESET = 1,
 	/**
-	 * perform skip playback (Since 1.6)
+	 * perform skip playback (Since: 1.6)
 	 */
 	TRICKMODE = 16,
 	/**
@@ -2611,22 +2696,48 @@ public enum GstSegmentFlags
 	SEGMENT = 8,
 	/**
 	 * Decode only keyframes, where
-	 * possible (Since 1.6)
+	 * possible (Since: 1.6)
 	 */
 	TRICKMODE_KEY_UNITS = 128,
 	/**
+	 * Decode only keyframes or forward
+	 * predicted frames, where possible (Since: 1.18)
+	 */
+	TRICKMODE_FORWARD_PREDICTED = 512,
+	/**
 	 * Do not decode any audio, where
-	 * possible (Since 1.6)
+	 * possible (Since: 1.6)
 	 */
 	TRICKMODE_NO_AUDIO = 256,
 }
 alias GstSegmentFlags SegmentFlags;
 
+public enum GstSerializeFlags
+{
+	/**
+	 * No special flags specified.
+	 */
+	NONE = 0,
+	/**
+	 * Serialize using the old format for
+	 * nested structures.
+	 */
+	BACKWARD_COMPAT = 1,
+}
+alias GstSerializeFlags SerializeFlags;
+
 public enum GstStackTraceFlags
 {
 	/**
-	 * Try to retrieve as much information as
-	 * possible when getting the stack trace
+	 * Try to retrieve the minimum information
+	 * available, which may be none on some platforms
+	 * (Since: 1.18)
+	 */
+	NONE = 0,
+	/**
+	 * Try to retrieve as much information as possible,
+	 * including source information when getting the
+	 * stack trace
 	 */
 	FULL = 1,
 }
@@ -2744,23 +2855,23 @@ public enum GstStateChange
 	 */
 	READY_TO_NULL = 17,
 	/**
-	 * state change from NULL to NULL. (Since 1.14)
+	 * state change from NULL to NULL. (Since: 1.14)
 	 */
 	NULL_TO_NULL = 9,
 	/**
 	 * state change from READY to READY,
 	 * This might happen when going to PAUSED asynchronously failed, in that case
-	 * elements should make sure they are in a proper, coherent READY state. (Since 1.14)
+	 * elements should make sure they are in a proper, coherent READY state. (Since: 1.14)
 	 */
 	READY_TO_READY = 18,
 	/**
 	 * state change from PAUSED to PAUSED.
 	 * This might happen when elements were in PLAYING state and 'lost state',
-	 * they should make sure to go back to real 'PAUSED' state (prerolling for example). (Since 1.14)
+	 * they should make sure to go back to real 'PAUSED' state (prerolling for example). (Since: 1.14)
 	 */
 	PAUSED_TO_PAUSED = 27,
 	/**
-	 * state change from PLAYING to PLAYING. (Since 1.14)
+	 * state change from PLAYING to PLAYING. (Since: 1.14)
 	 */
 	PLAYING_TO_PLAYING = 36,
 }
@@ -3022,64 +3133,14 @@ alias GstTagFlag TagFlag;
  * In the table below this is shown for the cases that a tag exists in the list
  * (A) or does not exists (!A) and combinations thereof.
  *
- * <table frame="all" colsep="1" rowsep="1">
- * <title>merge mode</title>
- * <tgroup cols='5' align='left'>
- * <thead>
- * <row>
- * <entry>merge mode</entry>
- * <entry>A + B</entry>
- * <entry>A + !B</entry>
- * <entry>!A + B</entry>
- * <entry>!A + !B</entry>
- * </row>
- * </thead>
- * <tbody>
- * <row>
- * <entry>REPLACE_ALL</entry>
- * <entry>B</entry>
- * <entry>-</entry>
- * <entry>B</entry>
- * <entry>-</entry>
- * </row>
- * <row>
- * <entry>REPLACE</entry>
- * <entry>B</entry>
- * <entry>A</entry>
- * <entry>B</entry>
- * <entry>-</entry>
- * </row>
- * <row>
- * <entry>APPEND</entry>
- * <entry>A, B</entry>
- * <entry>A</entry>
- * <entry>B</entry>
- * <entry>-</entry>
- * </row>
- * <row>
- * <entry>PREPEND</entry>
- * <entry>B, A</entry>
- * <entry>A</entry>
- * <entry>B</entry>
- * <entry>-</entry>
- * </row>
- * <row>
- * <entry>KEEP</entry>
- * <entry>A</entry>
- * <entry>A</entry>
- * <entry>B</entry>
- * <entry>-</entry>
- * </row>
- * <row>
- * <entry>KEEP_ALL</entry>
- * <entry>A</entry>
- * <entry>A</entry>
- * <entry>-</entry>
- * <entry>-</entry>
- * </row>
- * </tbody>
- * </tgroup>
- * </table>
+ * | merge mode  | A + B | A + !B | !A + B | !A + !B |
+ * | ----------- | ----- | ------ | ------ | ------- |
+ * | REPLACE_ALL | B     | ø      | B      | ø       |
+ * | REPLACE     | B     | A      | B      | ø       |
+ * | APPEND      | A, B  | A      | B      | ø       |
+ * | PREPEND     | B, A  | A      | B      | ø       |
+ * | KEEP        | A     | A      | B      | ø       |
+ * | KEEP_ALL    | A     | A      | ø      | ø       |
  */
 public enum GstTagMergeMode
 {
@@ -3422,12 +3483,12 @@ struct GstAllocator
 	GstMemoryIsSpanFunction memIsSpan;
 	/**
 	 * the implementation of the GstMemoryMapFullFunction.
-	 * Will be used instead of @mem_map if present. (Since 1.6)
+	 * Will be used instead of @mem_map if present. (Since: 1.6)
 	 */
 	GstMemoryMapFullFunction memMapFull;
 	/**
 	 * the implementation of the GstMemoryUnmapFullFunction.
-	 * Will be used instead of @mem_unmap if present. (Since 1.6)
+	 * Will be used instead of @mem_unmap if present. (Since: 1.6)
 	 */
 	GstMemoryUnmapFullFunction memUnmapFull;
 	void*[2] GstReserved;
@@ -3509,18 +3570,17 @@ struct GstBin
 }
 
 /**
- * Subclasses can override the @add_element and @remove_element to
- * update the list of children in the bin.
+ * Subclasses can override #GstBinClass::add_element and #GstBinClass::remove_element
+ * to update the list of children in the bin.
  *
- * The @handle_message method can be overridden to implement custom
- * message handling.  @handle_message takes ownership of the message, just like
- * #gst_element_post_message.
+ * The #GstBinClass::handle_message method can be overridden to implement custom
+ * message handling.
  *
- * The @deep_element_added vfunc will be called when a new element has been
+ * #GstBinClass::deep_element_added will be called when a new element has been
  * added to any bin inside this bin, so it will also be called if a new child
  * was added to a sub-bin of this bin. #GstBin implementations that override
  * this message should chain up to the parent class implementation so the
- * element-added-deep signal is emitted on all parents.
+ * #GstBin::deep-element-added signal is emitted on all parents.
  */
 struct GstBinClass
 {
@@ -3533,9 +3593,21 @@ struct GstBinClass
 	extern(C) void function(GstBin* bin, GstElement* child) elementAdded;
 	/** */
 	extern(C) void function(GstBin* bin, GstElement* child) elementRemoved;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     bin = the #GstBin
+	 *     element = the element to be added
+	 * Returns: %TRUE if the @element was added
+	 */
 	extern(C) int function(GstBin* bin, GstElement* element) addElement;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     bin = the #GstBin
+	 *     element = the element to be removed
+	 * Returns: %TRUE if the @element was removed
+	 */
 	extern(C) int function(GstBin* bin, GstElement* element) removeElement;
 	/** */
 	extern(C) void function(GstBin* bin, GstMessage* message) handleMessage;
@@ -3598,7 +3670,13 @@ struct GstBufferList;
 
 struct GstBufferPool
 {
+	/**
+	 * the parent structure
+	 */
 	GstObject object;
+	/**
+	 * whether the pool is currently gathering back outstanding buffers
+	 */
 	int flushing;
 	GstBufferPoolPrivate* priv;
 	void*[4] GstReserved;
@@ -3634,7 +3712,7 @@ struct GstBufferPoolAcquireParams
 }
 
 /**
- * The GstBufferPool class.
+ * The #GstBufferPool class.
  */
 struct GstBufferPoolClass
 {
@@ -3658,9 +3736,19 @@ struct GstBufferPoolClass
 	 * Returns: %TRUE when the configuration could be set.
 	 */
 	extern(C) int function(GstBufferPool* pool, GstStructure* config) setConfig;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     pool = the #GstBufferPool
+	 * Returns: whether the pool could be started.
+	 */
 	extern(C) int function(GstBufferPool* pool) start;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     pool = the #GstBufferPool
+	 * Returns: whether the pool could be stopped.
+	 */
 	extern(C) int function(GstBufferPool* pool) stop;
 	/**
 	 *
@@ -3672,7 +3760,15 @@ struct GstBufferPoolClass
 	 *     inactive.
 	 */
 	extern(C) GstFlowReturn function(GstBufferPool* pool, GstBuffer** buffer, GstBufferPoolAcquireParams* params) acquireBuffer;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     pool = the #GstBufferPool
+	 *     buffer = a location for a #GstBuffer
+	 *     params = parameters.
+	 * Returns: a #GstFlowReturn to indicate whether the allocation was
+	 *     successful.
+	 */
 	extern(C) GstFlowReturn function(GstBufferPool* pool, GstBuffer** buffer, GstBufferPoolAcquireParams* params) allocBuffer;
 	/** */
 	extern(C) void function(GstBufferPool* pool, GstBuffer* buffer) resetBuffer;
@@ -3691,13 +3787,22 @@ struct GstBufferPoolPrivate;
 
 struct GstBus
 {
+	/**
+	 * the parent structure
+	 */
 	GstObject object;
 	GstBusPrivate* priv;
 	void*[4] GstReserved;
 }
 
+/**
+ * GStreamer bus class.
+ */
 struct GstBusClass
 {
+	/**
+	 * the parent class structure
+	 */
 	GstObjectClass parentClass;
 	/** */
 	extern(C) void function(GstBus* bus, GstMessage* message) message;
@@ -3735,9 +3840,7 @@ struct GstChildProxyInterface
 	 *     parent = the parent object to get the child from
 	 *     name = the child's name
 	 * Returns: the child object or %NULL if
-	 *     not found. Unref after usage.
-	 *
-	 *     MT safe.
+	 *     not found.
 	 */
 	extern(C) GObject* function(GstChildProxy* parent, const(char)* name) getChildByName;
 	/**
@@ -3746,9 +3849,7 @@ struct GstChildProxyInterface
 	 *     parent = the parent object to get the child from
 	 *     index = the child's position in the child list
 	 * Returns: the child object or %NULL if
-	 *     not found (index too high). Unref after usage.
-	 *
-	 *     MT safe.
+	 *     not found (index too high).
 	 */
 	extern(C) GObject* function(GstChildProxy* parent, uint index) getChildByIndex;
 	/**
@@ -3756,8 +3857,6 @@ struct GstChildProxyInterface
 	 * Params:
 	 *     parent = the parent object
 	 * Returns: the number of child objects
-	 *
-	 *     MT safe.
 	 */
 	extern(C) uint function(GstChildProxy* parent) getChildrenCount;
 	/** */
@@ -3769,6 +3868,9 @@ struct GstChildProxyInterface
 
 struct GstClock
 {
+	/**
+	 * the parent structure
+	 */
 	GstObject object;
 	GstClockPrivate* priv;
 	void*[4] GstReserved;
@@ -3784,30 +3886,49 @@ struct GstClockClass
 	 * the parent class structure
 	 */
 	GstObjectClass parentClass;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     clock = the #GstClock
+	 *     oldResolution = the previous resolution
+	 *     newResolution = the new resolution
+	 * Returns: the new resolution
+	 */
 	extern(C) GstClockTime function(GstClock* clock, GstClockTime oldResolution, GstClockTime newResolution) changeResolution;
 	/**
 	 *
 	 * Params:
 	 *     clock = a #GstClock
 	 * Returns: the resolution of the clock in units of #GstClockTime.
-	 *
-	 *     MT safe.
 	 */
 	extern(C) GstClockTime function(GstClock* clock) getResolution;
 	/**
 	 *
 	 * Params:
 	 *     clock = a #GstClock to query
-	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE when
+	 * Returns: the internal time of the clock. Or %GST_CLOCK_TIME_NONE when
 	 *     given invalid input.
-	 *
-	 *     MT safe.
 	 */
 	extern(C) GstClockTime function(GstClock* clock) getInternalTime;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     clock = the #GstClock
+	 *     entry = the entry to wait on
+	 *     jitter = a pointer that will contain the jitter
+	 * Returns: the result of the blocking wait. #GST_CLOCK_EARLY will be returned
+	 *     if the current clock time is past the time of @id, #GST_CLOCK_OK if
+	 *     @id was scheduled in time. #GST_CLOCK_UNSCHEDULED if @id was
+	 *     unscheduled with gst_clock_id_unschedule().
+	 */
 	extern(C) GstClockReturn function(GstClock* clock, GstClockEntry* entry, GstClockTimeDiff* jitter) wait;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     clock = the #GstClock
+	 *     entry = the entry to wait on
+	 * Returns: the result of the non blocking wait.
+	 */
 	extern(C) GstClockReturn function(GstClock* clock, GstClockEntry* entry) waitAsync;
 	/** */
 	extern(C) void function(GstClock* clock, GstClockEntry* entry) unschedule;
@@ -3845,6 +3966,9 @@ struct GstContext;
 
 struct GstControlBinding
 {
+	/**
+	 * the parent structure
+	 */
 	GstObject parent;
 	/**
 	 * name of the property of this binding
@@ -3926,6 +4050,9 @@ struct GstControlBindingPrivate;
 
 struct GstControlSource
 {
+	/**
+	 * the parent structure
+	 */
 	GstObject parent;
 	/**
 	 * Function for returning a value for a given timestamp
@@ -3948,6 +4075,11 @@ struct GstControlSourceClass
 	 */
 	GstObjectClass parentClass;
 	void*[4] GstReserved;
+}
+
+struct GstCustomMeta
+{
+	GstMeta meta;
 }
 
 struct GstDateTime;
@@ -4552,10 +4684,6 @@ struct GstMeta
 	GstMetaInfo* info;
 }
 
-/**
- * The #GstMetaInfo provides information about a specific metadata
- * structure.
- */
 struct GstMetaInfo
 {
 	/**
@@ -4811,6 +4939,7 @@ struct GstPadTemplate
 		struct Abi
 		{
 			GType gtype;
+			GstCaps* documentationCaps;
 		}
 		Abi abi;
 	}
@@ -5160,10 +5289,10 @@ struct GstQuery
  * captured.
  *
  * The reference is stored as a #GstCaps in @reference. Examples of valid
- * references would be "timestamp/x-drivername-stream" for timestamps that are locally
- * generated by some driver named "drivername" when generating the stream,
- * e.g. based on a frame counter, or "timestamp/x-ntp, host=pool.ntp.org,
- * port=123" for timestamps based on a specific NTP server.
+ * references would be `timestamp/x-drivername-stream` for timestamps that are locally
+ * generated by some driver named `drivername` when generating the stream,
+ * e.g. based on a frame counter, or `timestamp/x-ntp, host=pool.ntp.org,
+ * port=123` for timestamps based on a specific NTP server.
  *
  * Since: 1.14
  */
@@ -5209,49 +5338,114 @@ struct GstSegment
 	 */
 	GstSegmentFlags flags;
 	/**
-	 * the playback rate of the segment
+	 * the playback rate of the segment is set in response to a seek
+	 * event and, without any seek, the value should be `1.0`. This
+	 * value is used by elements that synchronize buffer [running
+	 * times](additional/design/synchronisation.md#running-time) on
+	 * the clock (usually the sink elements), leading to consuming
+	 * buffers faster (for a value `> 1.0`) or slower (for `0.0 <
+	 * value < 1.0`) than normal playback speed. The rate also
+	 * defines the playback direction, meaning that when the value is
+	 * lower than `0.0`, the playback happens in reverse, and the
+	 * [stream-time](additional/design/synchronisation.md#stream-time)
+	 * is going backward. The `rate` value should never be `0.0`.
 	 */
 	double rate;
 	/**
-	 * the already applied rate to the segment
+	 * The applied rate is the rate that has been applied to the stream.
+	 * The effective/resulting playback rate of a stream is
+	 * `rate * applied_rate`.
+	 * The applied rate can be set by source elements when a server is
+	 * sending the stream with an already modified playback speed
+	 * rate. Filter elements that modify the stream in a way that
+	 * modifies the playback speed should also modify the applied
+	 * rate. For example the #videorate element when its
+	 * #videorate:rate property is set will set the applied rate of
+	 * the segment it pushed downstream. Also #scaletempo applies the
+	 * input segment rate to the stream and outputs a segment with
+	 * rate=1.0 and applied_rate=<inputsegment.rate>.
 	 */
 	double appliedRate;
 	/**
-	 * the format of the segment values
+	 * the unit used for all of the segment's values.
 	 */
 	GstFormat format;
 	/**
-	 * the running time (plus elapsed time, see offset) of the segment start
+	 * the running time (plus elapsed time, see offset) of the
+	 * segment [start](GstSegment.start) ([stop](GstSegment.stop) if
+	 * rate < 0.0).
 	 */
 	ulong base;
 	/**
-	 * the amount (in buffer timestamps) that has already been elapsed in
-	 * the segment
+	 * the offset expresses the elapsed time (in buffer timestamps)
+	 * before a seek with its start (stop if rate < 0.0) seek type
+	 * set to #GST_SEEK_TYPE_NONE, the value is set to the position
+	 * of the segment at the time of the seek.
 	 */
 	ulong offset;
 	/**
-	 * the start of the segment in buffer timestamp time (PTS)
+	 * the start time of the segment (in buffer timestamps)
+	 * [(PTS)](GstBuffer.pts), that is the timestamp of the first
+	 * buffer to output inside the segment (last one during
+	 * reverse playback). For example decoders will
+	 * [clip](gst_segment_clip) out the buffers before the start
+	 * time.
 	 */
 	ulong start;
 	/**
-	 * the stop of the segment in buffer timestamp time (PTS)
+	 * the stop time of the segment (in buffer timestamps)
+	 * [(PTS)](GstBuffer.pts), that is the timestamp of the last
+	 * buffer to output inside the segment (first one during
+	 * reverse playback). For example decoders will
+	 * [clip](gst_segment_clip) out buffers after the stop time.
 	 */
 	ulong stop;
 	/**
-	 * the stream time of the segment start
+	 * the stream time of the segment [start](GstSegment.start)
+	 * ([stop](GstSegment.stop) if rate < 0.0).
 	 */
 	ulong time;
 	/**
-	 * the buffer timestamp position in the segment (used internally by
-	 * elements such as sources, demuxers or parsers to track progress)
+	 * the buffer timestamp position in the segment is supposed to be
+	 * updated by elements such as sources, demuxers or parsers to
+	 * track progress by setting it to the last pushed buffer' end time
+	 * ([timestamp](GstBuffer.pts) + #GstBuffer.duration) for that
+	 * specific segment. The position is used when reconfiguring the
+	 * segment with #gst_segment_do_seek when the seek is only
+	 * updating the segment (see [offset](GstSegment.offset)).
 	 */
 	ulong position;
 	/**
-	 * the duration of the stream
+	 * the duration of the segment is the maximum absolute difference
+	 * between #GstSegment.start and #GstSegment.stop if stop is not
+	 * set, otherwise it should be the difference between those
+	 * two values. This should be set by elements that know the
+	 * overall stream duration (like demuxers) and will be used when
+	 * seeking with #GST_SEEK_TYPE_END.
 	 */
 	ulong duration;
 	void*[4] GstReserved;
 }
+
+struct GstSharedTaskPool
+{
+	GstTaskPool parent;
+	GstSharedTaskPoolPrivate* priv;
+	void*[4] GstReserved;
+}
+
+/**
+ * The #GstSharedTaskPoolClass object.
+ *
+ * Since: 1.20
+ */
+struct GstSharedTaskPoolClass
+{
+	GstTaskPoolClass parentClass;
+	void*[4] GstReserved;
+}
+
+struct GstSharedTaskPoolPrivate;
 
 struct GstStaticCaps
 {
@@ -5451,20 +5645,24 @@ struct GstTaskPoolClass
 	 *     userData = data to pass to @func
 	 * Returns: a pointer that should be used
 	 *     for the gst_task_pool_join function. This pointer can be %NULL, you
-	 *     must check @error to detect errors.
+	 *     must check @error to detect errors. If the pointer is not %NULL and
+	 *     gst_task_pool_join() is not used, call gst_task_pool_dispose_handle()
+	 *     instead.
 	 *
 	 * Throws: GException on failure.
 	 */
 	extern(C) void* function(GstTaskPool* pool, GstTaskPoolFunction func, void* userData, GError** err) push;
 	/** */
 	extern(C) void function(GstTaskPool* pool, void* id) join;
-	void*[4] GstReserved;
+	/** */
+	extern(C) void function(GstTaskPool* pool, void* id) disposeHandle;
+	void*[3] GstReserved;
 }
 
 struct GstTaskPrivate;
 
 /**
- * Structure for saving a timestamp and a value.
+ * Structure for storing a timestamp and a value.
  */
 struct GstTimedValue
 {
@@ -5601,7 +5799,11 @@ struct GstValueTable
 	 * a #GstValueDeserializeFunc
 	 */
 	GstValueDeserializeFunc deserialize;
-	void*[4] GstReserved;
+	/**
+	 * a #GstValueDeserializeWithPSpecFunc
+	 */
+	GstValueDeserializeWithPSpecFunc deserializeWithPspec;
+	void*[3] GstReserved;
 }
 
 /**
@@ -5637,7 +5839,7 @@ public alias extern(C) int function(GstBuffer* buffer, GstMeta** meta, void* use
  * removing or modifying.
  *
  * Params:
- *     buffer = pointer the buffer
+ *     buffer = pointer to the buffer
  *     idx = the index of @buffer
  *     userData = user data passed to gst_buffer_list_foreach()
  *
@@ -5653,8 +5855,8 @@ public alias extern(C) int function(GstBuffer** buffer, uint idx, void* userData
  * The message passed to the function will be unreffed after execution of this
  * function so it should not be freed in the function.
  *
- * Note that this function is used as a GSourceFunc which means that returning
- * %FALSE will remove the GSource from the mainloop.
+ * Note that this function is used as a #GSourceFunc which means that returning
+ * %FALSE will remove the #GSource from the mainloop.
  *
  * Params:
  *     bus = the #GstBus that sent the message
@@ -5670,7 +5872,7 @@ public alias extern(C) int function(GstBus* bus, GstMessage* message, void* user
  * into the bus. This function is mostly used internally. Only one sync handler
  * can be attached to a given bus.
  *
- * If the handler returns GST_BUS_DROP, it should unref the message, else the
+ * If the handler returns %GST_BUS_DROP, it should unref the message, else the
  * message should not be unreffed by the sync handler.
  *
  * Params:
@@ -5740,7 +5942,9 @@ public alias extern(C) int function(GstCapsFeatures* features, GstStructure* str
  */
 public alias extern(C) int function(GstClock* clock, GstClockTime time, GstClockID id, void* userData) GstClockCallback;
 
-/** */
+/**
+ * FIXME(2.0): remove, this is unused
+ */
 public alias extern(C) void function(GstControlBinding* binding, double srcValue, GValue* destValue) GstControlBindingConvert;
 
 /**
@@ -5756,7 +5960,7 @@ public alias extern(C) void function(GstControlBinding* binding, double srcValue
 public alias extern(C) int function(GstControlSource* self, GstClockTime timestamp, double* value) GstControlSourceGetValue;
 
 /**
- * Function for returning an array of values for starting at a given timestamp.
+ * Function for returning an array of values starting at a given timestamp.
  *
  * Params:
  *     self = the #GstControlSource instance
@@ -5769,10 +5973,43 @@ public alias extern(C) int function(GstControlSource* self, GstClockTime timesta
  */
 public alias extern(C) int function(GstControlSource* self, GstClockTime timestamp, GstClockTime interval, uint nValues, double* values) GstControlSourceGetValueArray;
 
-/** */
+/**
+ * Function called for each @meta in @buffer as a result of performing a
+ * transformation on @transbuf. Additional @type specific transform data
+ * is passed to the function as @data.
+ *
+ * Implementations should check the @type of the transform and parse
+ * additional type specific fields in @data that should be used to update
+ * the metadata on @transbuf.
+ *
+ * Params:
+ *     transbuf = a #GstBuffer
+ *     meta = a #GstCustomMeta
+ *     buffer = a #GstBuffer
+ *     type = the transform type
+ *     data = transform specific data.
+ *     userData = user data passed when registering the meta
+ *
+ * Returns: %TRUE if the transform could be performed
+ *
+ * Since: 1.20
+ */
+public alias extern(C) int function(GstBuffer* transbuf, GstCustomMeta* meta, GstBuffer* buffer, GQuark type, void* data, void* userData) GstCustomMetaTransformFunction;
+
+/**
+ * we define this to avoid a compiler warning regarding a cast from a function
+ * pointer to a void pointer
+ * (see https://bugzilla.gnome.org/show_bug.cgi?id=309253)
+ */
 public alias extern(C) void function() GstDebugFuncPtr;
 
-/** */
+/**
+ * Callback prototype used in #gst_element_call_async
+ *
+ * Params:
+ *     element = The #GstElement this function has been called against
+ *     userData = Data passed in the function where that callback has been passed
+ */
 public alias extern(C) void function(GstElement* element, void* userData) GstElementCallAsyncFunc;
 
 /**
@@ -5970,7 +6207,7 @@ public alias extern(C) void* function(GstMemory* mem, size_t maxsize, GstMapFlag
 public alias extern(C) GstMemory* function(GstMemory* mem, ptrdiff_t offset, ptrdiff_t size) GstMemoryShareFunction;
 
 /**
- * Return the pointer previously retrieved with gst_memory_map() with @info.
+ * Release the pointer previously retrieved with gst_memory_map() with @info.
  *
  * Params:
  *     mem = a #GstMemory
@@ -5979,7 +6216,7 @@ public alias extern(C) GstMemory* function(GstMemory* mem, ptrdiff_t offset, ptr
 public alias extern(C) void function(GstMemory* mem, GstMapInfo* info) GstMemoryUnmapFullFunction;
 
 /**
- * Return the pointer previously retrieved with gst_memory_map().
+ * Release the pointer previously retrieved with gst_memory_map().
  *
  * Params:
  *     mem = a #GstMemory
@@ -6509,6 +6746,20 @@ public alias extern(C) int function(GValue* value1, GValue* value2) GstValueComp
 public alias extern(C) int function(GValue* dest, const(char)* s) GstValueDeserializeFunc;
 
 /**
+ * Used by gst_value_deserialize_with_pspec() to parse a non-binary form into the #GValue.
+ *
+ * Params:
+ *     dest = a #GValue
+ *     s = a string
+ *     pspec = a #GParamSpec describing the expected value
+ *
+ * Returns: %TRUE for success
+ *
+ * Since: 1.20
+ */
+public alias extern(C) int function(GValue* dest, const(char)* s, GParamSpec* pspec) GstValueDeserializeWithPSpecFunc;
+
+/**
  * Used by gst_value_serialize() to obtain a non-binary form of the #GValue.
  *
  * Free-function: g_free
@@ -6671,6 +6922,9 @@ alias GST_ELEMENT_FACTORY_TYPE_ENCRYPTOR = ELEMENT_FACTORY_TYPE_ENCRYPTOR;
 enum ELEMENT_FACTORY_TYPE_FORMATTER = 512UL;
 alias GST_ELEMENT_FACTORY_TYPE_FORMATTER = ELEMENT_FACTORY_TYPE_FORMATTER;
 
+enum ELEMENT_FACTORY_TYPE_HARDWARE = 4096UL;
+alias GST_ELEMENT_FACTORY_TYPE_HARDWARE = ELEMENT_FACTORY_TYPE_HARDWARE;
+
 enum ELEMENT_FACTORY_TYPE_MAX_ELEMENTS = 281474976710656UL;
 alias GST_ELEMENT_FACTORY_TYPE_MAX_ELEMENTS = ELEMENT_FACTORY_TYPE_MAX_ELEMENTS;
 
@@ -6803,7 +7057,7 @@ alias GST_FORMAT_PERCENT_SCALE = FORMAT_PERCENT_SCALE;
 
 /**
  * Can be used together with #GST_FOURCC_ARGS to properly output a
- * #guint32 fourcc value in a printf()-style text message.
+ * #guint32 fourcc value in a printf\()-style text message.
  *
  * |[
  * printf ("fourcc: %" GST_FOURCC_FORMAT "\n", GST_FOURCC_ARGS (fcc));
@@ -6858,11 +7112,28 @@ enum NSECOND = 1UL;
 alias GST_NSECOND = NSECOND;
 
 /**
+ * Use this flag on GObject properties of GstObject to indicate that
+ * they might not be available depending on environment such as OS, device, etc,
+ * so such properties will be installed conditionally only if the GstObject is
+ * able to support it.
+ */
+enum PARAM_CONDITIONALLY_AVAILABLE = 16384;
+alias GST_PARAM_CONDITIONALLY_AVAILABLE = PARAM_CONDITIONALLY_AVAILABLE;
+
+/**
  * Use this flag on GObject properties to signal they can make sense to be.
  * controlled over time. This hint is used by the GstController.
  */
 enum PARAM_CONTROLLABLE = 512;
 alias GST_PARAM_CONTROLLABLE = PARAM_CONTROLLABLE;
+
+/**
+ * Use this flag on GObject properties of GstObject to indicate that
+ * during `gst-inspect` and friends, the default value should be used
+ * as default instead of the current value.
+ */
+enum PARAM_DOC_SHOW_DEFAULT = 8192;
+alias GST_PARAM_DOC_SHOW_DEFAULT = PARAM_DOC_SHOW_DEFAULT;
 
 /**
  * Use this flag on GObject properties of GstElements to indicate that
@@ -6955,6 +7226,9 @@ alias GST_SECOND = SECOND;
 enum SEGMENT_FORMAT = "paB";
 alias GST_SEGMENT_FORMAT = SEGMENT_FORMAT;
 
+enum SEGMENT_INSTANT_FLAGS = 912;
+alias GST_SEGMENT_INSTANT_FLAGS = SEGMENT_INSTANT_FLAGS;
+
 /**
  * A value which is guaranteed to never be returned by
  * gst_util_seqnum_next().
@@ -6965,14 +7239,25 @@ enum SEQNUM_INVALID = 0;
 alias GST_SEQNUM_INVALID = SEQNUM_INVALID;
 
 /**
+ * printf format type used to debug GStreamer signed time value pointers. You
+ * can use this in combination with GStreamer's debug logging system as well as
+ * the functions gst_info_vasprintf(), gst_info_strdup_vprintf() and
+ * gst_info_strdup_printf() to pretty-print signed time (pointers to
+ * #GstClockTimeDiff or #gint64).
+ */
+enum STIMEP_FORMAT = "paS";
+alias GST_STIMEP_FORMAT = STIMEP_FORMAT;
+
+/**
  * A string that can be used in printf-like format strings to display a signed
- * #GstClockTimeDiff or #gint64 value in h:m:s format.  Use GST_TIME_ARGS() to
+ * #GstClockTimeDiff or #gint64 value in `h:m:s` format.  Use GST_TIME_ARGS() to
  * construct the matching arguments.
  *
  * Example:
- * |[
+ *
+ * ``` C
  * printf("%" GST_STIME_FORMAT "\n", GST_STIME_ARGS(ts));
- * ]|
+ * ```
  */
 enum STIME_FORMAT = "c%";
 alias GST_STIME_FORMAT = STIME_FORMAT;
@@ -7323,7 +7608,7 @@ alias GST_TAG_HOMEPAGE = TAG_HOMEPAGE;
 
 /**
  * image (sample) (sample taglist should specify the content type and preferably
- * also set "image-type" field as #GstTagImageType)
+ * also set "image-type" field as `GstTagImageType`)
  */
 enum TAG_IMAGE = "image";
 alias GST_TAG_IMAGE = TAG_IMAGE;
@@ -7375,7 +7660,7 @@ alias GST_TAG_KEYWORDS = TAG_KEYWORDS;
  * ISO-639-2 or ISO-639-1 code for the language the content is in (string)
  *
  * There is utility API in libgsttag in gst-plugins-base to obtain a translated
- * language name from the language code: gst_tag_get_language_name()
+ * language name from the language code: `gst_tag_get_language_name()`
  */
 enum TAG_LANGUAGE_CODE = "language-code";
 alias GST_TAG_LANGUAGE_CODE = TAG_LANGUAGE_CODE;
@@ -7422,7 +7707,7 @@ enum TAG_MAXIMUM_BITRATE = "maximum-bitrate";
 alias GST_TAG_MAXIMUM_BITRATE = TAG_MAXIMUM_BITRATE;
 
 /**
- * <ulink url="http://en.wikipedia.org/wiki/Note#Note_designation_in_accordance_with_octave_name">Midi note number</ulink>
+ * [Midi note number](http://en.wikipedia.org/wiki/Note#Note_designation_in_accordance_with_octave_name)
  * of the audio track. This is useful for sample instruments and in particular
  * for multi-samples.
  */
@@ -7585,14 +7870,25 @@ enum TAG_VIDEO_CODEC = "video-codec";
 alias GST_TAG_VIDEO_CODEC = TAG_VIDEO_CODEC;
 
 /**
+ * printf format type used to debug GStreamer ClockTime pointers. You can use
+ * this in combination with GStreamer's debug logging system as well as the
+ * functions gst_info_vasprintf(), gst_info_strdup_vprintf() and
+ * gst_info_strdup_printf() to pretty-print #GstClockTime pointers. This can
+ * only be used on pointers to GstClockTime values.
+ */
+enum TIMEP_FORMAT = "paT";
+alias GST_TIMEP_FORMAT = TIMEP_FORMAT;
+
+/**
  * A string that can be used in printf-like format strings to display a
- * #GstClockTime value in h:m:s format.  Use GST_TIME_ARGS() to construct
+ * #GstClockTime value in `h:m:s` format.  Use GST_TIME_ARGS() to construct
  * the matching arguments.
  *
  * Example:
- * |[<!-- language="C" -->
+ *
+ * ``` C
  * printf("%" GST_TIME_FORMAT "\n", GST_TIME_ARGS(ts));
- * ]|
+ * ```
  */
 enum TIME_FORMAT = "u:%02u:%02u.%09u";
 alias GST_TIME_FORMAT = TIME_FORMAT;
@@ -7653,13 +7949,13 @@ alias GST_VERSION_MAJOR = VERSION_MAJOR;
 /**
  * The micro version of GStreamer at compile time:
  */
-enum VERSION_MICRO = 0;
+enum VERSION_MICRO = 1;
 alias GST_VERSION_MICRO = VERSION_MICRO;
 
 /**
  * The minor version of GStreamer at compile time:
  */
-enum VERSION_MINOR = 16;
+enum VERSION_MINOR = 20;
 alias GST_VERSION_MINOR = VERSION_MINOR;
 
 /**

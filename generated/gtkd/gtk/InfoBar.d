@@ -100,8 +100,8 @@ private import std.algorithm;
  * the content area and action area as internal children with the names
  * “content_area” and “action_area”.
  * 
- * GtkInfoBar supports a custom <action-widgets> element, which can contain
- * multiple <action-widget> elements. The “response” attribute specifies a
+ * GtkInfoBar supports a custom `<action-widgets>` element, which can contain
+ * multiple `<action-widget>` elements. The “response” attribute specifies a
  * numeric response, and the content of the element is the id of widget
  * (which should be a child of the dialogs @action_area).
  * 
@@ -244,14 +244,14 @@ public class InfoBar : Box
 	 */
 	public this()
 	{
-		auto p = gtk_info_bar_new();
+		auto __p = gtk_info_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkInfoBar*) p);
+		this(cast(GtkInfoBar*) __p);
 	}
 
 	/**
@@ -289,14 +289,14 @@ public class InfoBar : Box
 	 */
 	public Button addButton(string buttonText, int responseId)
 	{
-		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
+		auto __p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) __p);
 	}
 
 	/**

@@ -28,6 +28,7 @@ private import gdkpixbuf.Pixbuf;
 private import gio.IconIF;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gsv.SourceCompletionContext;
 private import gsv.SourceCompletionInfo;

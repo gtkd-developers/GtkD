@@ -26,14 +26,24 @@ module gdkpixbuf.PixbufFormat;
 
 private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
+private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.gdkpixbuftypes;
 private import gtkd.Loader;
 
 
-/** */
-public class PixbufFormat
+/**
+ * A `GdkPixbufFormat` contains information about the image format accepted
+ * by a module.
+ * 
+ * Only modules should access the fields directly, applications should
+ * use the `gdk_pixbuf_format_*` family of functions.
+ *
+ * Since: 2.2
+ */
+public final class PixbufFormat
 {
 	/** the main Gtk struct */
 	protected GdkPixbufFormat* gdkPixbufFormat;
@@ -69,6 +79,134 @@ public class PixbufFormat
 	}
 
 
+	/**
+	 * the name of the image format
+	 */
+	public @property string name()
+	{
+		return Str.toString(gdkPixbufFormat.name);
+	}
+
+	/** Ditto */
+	public @property void name(string value)
+	{
+		gdkPixbufFormat.name = Str.toStringz(value);
+	}
+
+	/**
+	 * the signature of the module
+	 */
+	public @property GdkPixbufModulePattern* signature()
+	{
+		return gdkPixbufFormat.signature;
+	}
+
+	/** Ditto */
+	public @property void signature(GdkPixbufModulePattern* value)
+	{
+		gdkPixbufFormat.signature = value;
+	}
+
+	/**
+	 * the message domain for the `description`
+	 */
+	public @property string domain()
+	{
+		return Str.toString(gdkPixbufFormat.domain);
+	}
+
+	/** Ditto */
+	public @property void domain(string value)
+	{
+		gdkPixbufFormat.domain = Str.toStringz(value);
+	}
+
+	/**
+	 * a description of the image format
+	 */
+	public @property string description()
+	{
+		return Str.toString(gdkPixbufFormat.description);
+	}
+
+	/** Ditto */
+	public @property void description(string value)
+	{
+		gdkPixbufFormat.description = Str.toStringz(value);
+	}
+
+	/**
+	 * the MIME types for the image format
+	 */
+	public @property string[] mimeTypes()
+	{
+		return Str.toStringArray(gdkPixbufFormat.mimeTypes);
+	}
+
+	/** Ditto */
+	public @property void mimeTypes(string[] value)
+	{
+		gdkPixbufFormat.mimeTypes = Str.toStringzArray(value);
+	}
+
+	/**
+	 * typical filename extensions for the
+	 * image format
+	 */
+	public @property string[] extensions()
+	{
+		return Str.toStringArray(gdkPixbufFormat.extensions);
+	}
+
+	/** Ditto */
+	public @property void extensions(string[] value)
+	{
+		gdkPixbufFormat.extensions = Str.toStringzArray(value);
+	}
+
+	/**
+	 * a combination of `GdkPixbufFormatFlags`
+	 */
+	public @property uint flags()
+	{
+		return gdkPixbufFormat.flags;
+	}
+
+	/** Ditto */
+	public @property void flags(uint value)
+	{
+		gdkPixbufFormat.flags = value;
+	}
+
+	/**
+	 * a boolean determining whether the loader is disabled`
+	 */
+	public @property bool disabled()
+	{
+		return gdkPixbufFormat.disabled != 0;
+	}
+
+	/** Ditto */
+	public @property void disabled(bool value)
+	{
+		gdkPixbufFormat.disabled = value;
+	}
+
+	/**
+	 * a string containing license information, typically set to
+	 * shorthands like "GPL", "LGPL", etc.
+	 */
+	public @property string license()
+	{
+		return Str.toString(gdkPixbufFormat.license);
+	}
+
+	/** Ditto */
+	public @property void license(string value)
+	{
+		gdkPixbufFormat.license = Str.toStringz(value);
+	}
+
 	/** */
 	public static GType getType()
 	{
@@ -76,27 +214,27 @@ public class PixbufFormat
 	}
 
 	/**
-	 * Creates a copy of @format
+	 * Creates a copy of `format`.
 	 *
-	 * Returns: the newly allocated copy of a #GdkPixbufFormat. Use
+	 * Returns: the newly allocated copy of a `GdkPixbufFormat`. Use
 	 *     gdk_pixbuf_format_free() to free the resources when done
 	 *
 	 * Since: 2.22
 	 */
 	public PixbufFormat copy()
 	{
-		auto p = gdk_pixbuf_format_copy(gdkPixbufFormat);
+		auto __p = gdk_pixbuf_format_copy(gdkPixbufFormat);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p, true);
+		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) __p, true);
 	}
 
 	/**
-	 * Frees the resources allocated when copying a #GdkPixbufFormat
+	 * Frees the resources allocated when copying a `GdkPixbufFormat`
 	 * using gdk_pixbuf_format_copy()
 	 *
 	 * Since: 2.22
@@ -126,8 +264,8 @@ public class PixbufFormat
 	 * Returns the filename extensions typically used for files in the
 	 * given format.
 	 *
-	 * Returns: a %NULL-terminated array of filename extensions which must be
-	 *     freed with g_strfreev() when it is no longer needed.
+	 * Returns: an array of
+	 *     filename extensions
 	 *
 	 * Since: 2.2
 	 */
@@ -140,12 +278,12 @@ public class PixbufFormat
 	}
 
 	/**
-	 * Returns information about the license of the image loader for the format. The
-	 * returned string should be a shorthand for a wellknown license, e.g. "LGPL",
-	 * "GPL", "QPL", "GPL/QPL", or "other" to indicate some other license.  This
-	 * string should be freed with g_free() when it's no longer needed.
+	 * Returns information about the license of the image loader for the format.
 	 *
-	 * Returns: a string describing the license of @format.
+	 * The returned string should be a shorthand for a well known license, e.g.
+	 * "LGPL", "GPL", "QPL", "GPL/QPL", or "other" to indicate some other license.
+	 *
+	 * Returns: a string describing the license of the pixbuf format
 	 *
 	 * Since: 2.6
 	 */
@@ -160,8 +298,7 @@ public class PixbufFormat
 	/**
 	 * Returns the mime types supported by the format.
 	 *
-	 * Returns: a %NULL-terminated array of mime types which must be freed with
-	 *     g_strfreev() when it is no longer needed.
+	 * Returns: an array of mime types
 	 *
 	 * Since: 2.2
 	 */
@@ -189,8 +326,9 @@ public class PixbufFormat
 	}
 
 	/**
-	 * Returns whether this image format is disabled. See
-	 * gdk_pixbuf_format_set_disabled().
+	 * Returns whether this image format is disabled.
+	 *
+	 * See gdk_pixbuf_format_set_disabled().
 	 *
 	 * Returns: whether this image format is disabled.
 	 *
@@ -202,14 +340,15 @@ public class PixbufFormat
 	}
 
 	/**
-	 * Returns %TRUE if the save option specified by @option_key is supported when
+	 * Returns `TRUE` if the save option specified by @option_key is supported when
 	 * saving a pixbuf using the module implementing @format.
+	 *
 	 * See gdk_pixbuf_save() for more information about option keys.
 	 *
 	 * Params:
 	 *     optionKey = the name of an option
 	 *
-	 * Returns: %TRUE if the specified option is supported
+	 * Returns: `TRUE` if the specified option is supported
 	 *
 	 * Since: 2.36
 	 */
@@ -219,10 +358,11 @@ public class PixbufFormat
 	}
 
 	/**
-	 * Returns whether this image format is scalable. If a file is in a
-	 * scalable format, it is preferable to load it at the desired size,
-	 * rather than loading it at the default size and scaling the
-	 * resulting pixbuf to the desired size.
+	 * Returns whether this image format is scalable.
+	 *
+	 * If a file is in a scalable format, it is preferable to load it at
+	 * the desired size, rather than loading it at the default size and
+	 * scaling the resulting pixbuf to the desired size.
 	 *
 	 * Returns: whether this image format is scalable.
 	 *
@@ -246,13 +386,16 @@ public class PixbufFormat
 	}
 
 	/**
-	 * Disables or enables an image format. If a format is disabled,
-	 * gdk-pixbuf won't use the image loader for this format to load
-	 * images. Applications can use this to avoid using image loaders
-	 * with an inappropriate license, see gdk_pixbuf_format_get_license().
+	 * Disables or enables an image format.
+	 *
+	 * If a format is disabled, GdkPixbuf won't use the image loader for
+	 * this format to load images.
+	 *
+	 * Applications can use this to avoid using image loaders with an
+	 * inappropriate license, see gdk_pixbuf_format_get_license().
 	 *
 	 * Params:
-	 *     disabled = %TRUE to disable the format @format
+	 *     disabled = `TRUE` to disable the format @format
 	 *
 	 * Since: 2.6
 	 */

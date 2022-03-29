@@ -92,7 +92,7 @@ public class MappedFile
 	 * If @filename is the name of an empty, regular file, the function
 	 * will successfully return an empty #GMappedFile. In other cases of
 	 * size 0 (e.g. device files such as /dev/null), @error will be set
-	 * to the #GFileError value #G_FILE_ERROR_INVAL.
+	 * to the #GFileError value %G_FILE_ERROR_INVAL.
 	 *
 	 * Params:
 	 *     filename = The path of the file to load, in the GLib

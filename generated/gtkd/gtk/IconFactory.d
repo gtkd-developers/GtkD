@@ -55,8 +55,8 @@ public  import gtkc.gtktypes;
  * 
  * # GtkIconFactory as GtkBuildable # {#GtkIconFactory-BUILDER-UI}
  * 
- * GtkIconFactory supports a custom <sources> element, which can contain
- * multiple <source> elements. The following attributes are allowed:
+ * GtkIconFactory supports a custom `<sources>` element, which can contain
+ * multiple `<source>` elements. The following attributes are allowed:
  * 
  * - stock-id
  * 
@@ -168,14 +168,14 @@ public class IconFactory : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_icon_factory_new();
+		auto __p = gtk_icon_factory_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIconFactory*) p, true);
+		this(cast(GtkIconFactory*) __p, true);
 	}
 
 	/**
@@ -194,14 +194,14 @@ public class IconFactory : ObjectG, BuildableIF
 	 */
 	public static IconSet lookupDefault(string stockId)
 	{
-		auto p = gtk_icon_factory_lookup_default(Str.toStringz(stockId));
+		auto __p = gtk_icon_factory_lookup_default(Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) __p);
 	}
 
 	/**
@@ -258,14 +258,14 @@ public class IconFactory : ObjectG, BuildableIF
 	 */
 	public IconSet lookup(string stockId)
 	{
-		auto p = gtk_icon_factory_lookup(gtkIconFactory, Str.toStringz(stockId));
+		auto __p = gtk_icon_factory_lookup(gtkIconFactory, Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) __p);
 	}
 
 	/**

@@ -679,6 +679,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * - OpenBSD since GLib 2.30
 	 * - Solaris, Illumos and OpenSolaris since GLib 2.40
 	 * - NetBSD since GLib 2.42
+	 * - macOS, tvOS, iOS since GLib 2.66
 	 *
 	 * Other ways to obtain credentials from a foreign peer includes the
 	 * #GUnixCredentialsMessage type and
@@ -1186,8 +1187,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * On error -1 is returned and @error is set accordingly.
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least @size bytes long).
+	 *     buffer = a buffer to read data into (which should be at least @size bytes long).
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes read, or 0 if the connection was closed by
@@ -1223,8 +1223,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     address = a pointer to a #GSocketAddress
 	 *         pointer, or %NULL
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least @size bytes long).
+	 *     buffer = a buffer to read data into (which should be at least @size bytes long).
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes read, or 0 if the connection was closed by
@@ -1442,8 +1441,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * the @blocking argument rather than by @socket's properties.
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least @size bytes long).
+	 *     buffer = a buffer to read data into (which should be at least @size bytes long).
 	 *     blocking = whether to do blocking or non-blocking I/O
 	 *     cancellable = a %GCancellable or %NULL
 	 *
@@ -1454,11 +1452,11 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Throws: GException on failure.
 	 */
-	public ptrdiff_t receiveWithBlocking(string buffer, bool blocking, Cancellable cancellable)
+	public ptrdiff_t receiveWithBlocking(out char[] buffer, bool blocking, Cancellable cancellable)
 	{
 		GError* err = null;
 
-		auto __p = g_socket_receive_with_blocking(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_receive_with_blocking(gSocket, buffer.ptr, cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -1546,6 +1544,11 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * %G_IO_ERROR_WOULD_BLOCK from g_socket_send() even if you were previously
 	 * notified of a %G_IO_OUT condition. (On Windows in particular, this is
 	 * very common due to the way the underlying APIs work.)
+	 *
+	 * The sum of the sizes of each #GOutputVector in vectors must not be
+	 * greater than %G_MAXSSIZE. If the message can be larger than this,
+	 * then it is mandatory to use the g_socket_send_message_with_timeout()
+	 * function.
 	 *
 	 * On error -1 is returned and @error is set accordingly.
 	 *

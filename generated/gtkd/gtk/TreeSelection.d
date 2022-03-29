@@ -186,29 +186,34 @@ public class TreeSelection : ObjectG
 	}
 
 	/**
-	 * Sets @iter to the currently selected node if @selection is set to
-	 * #GTK_SELECTION_SINGLE or #GTK_SELECTION_BROWSE.  @iter may be NULL if you
-	 * just want to test if @selection has any selected nodes.  @model is filled
-	 * with the current model as a convenience.  This function will not work if you
-	 * use @selection is #GTK_SELECTION_MULTIPLE.
+	 * Sets @iter to the currently selected node, if @selection is set to
+	 * %GTK_SELECTION_SINGLE or %GTK_SELECTION_BROWSE.
+	 *
+	 * The @iter argument may be %NULL if you just want to test if @selection
+	 * has any selected nodes.
+	 *
+	 * The @model argument is filled with the current model as a convenience.
+	 *
+	 * This function will not work with %GTK_SELECTION_MULTIPLE. See
+	 * gtk_tree_selection_get_selected_rows() instead.
 	 *
 	 * Params:
-	 *     model = A pointer to set to the #GtkTreeModel, or NULL.
-	 *     iter = The #GtkTreeIter, or NULL.
+	 *     model = the model
+	 *     iter = the iterator for the selected row
 	 *
-	 * Returns: TRUE, if there is a selected node.
+	 * Returns: %TRUE, if there is a selected node.
 	 */
 	public bool getSelected(out TreeModelIF model, out TreeIter iter)
 	{
 		GtkTreeModel* outmodel = null;
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
+		auto __p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
 
 		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -218,14 +223,14 @@ public class TreeSelection : ObjectG
 	 */
 	public TreeView getTreeView()
 	{
-		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
+		auto __p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
+		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) __p);
 	}
 
 	/**

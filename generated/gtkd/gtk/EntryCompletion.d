@@ -26,6 +26,7 @@ module gtk.EntryCompletion;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.BuildableIF;
@@ -136,14 +137,14 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public this()
 	{
-		auto p = gtk_entry_completion_new();
+		auto __p = gtk_entry_completion_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEntryCompletion*) p, true);
+		this(cast(GtkEntryCompletion*) __p, true);
 	}
 
 	/**
@@ -162,14 +163,14 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public this(CellArea area)
 	{
-		auto p = gtk_entry_completion_new_with_area((area is null) ? null : area.getCellAreaStruct());
+		auto __p = gtk_entry_completion_new_with_area((area is null) ? null : area.getCellAreaStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
 
-		this(cast(GtkEntryCompletion*) p, true);
+		this(cast(GtkEntryCompletion*) __p, true);
 	}
 
 	/**
@@ -244,14 +245,14 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public Widget getEntry()
 	{
-		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
+		auto __p = gtk_entry_completion_get_entry(gtkEntryCompletion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -302,14 +303,14 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
+		auto __p = gtk_entry_completion_get_model(gtkEntryCompletion);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**

@@ -120,14 +120,14 @@ public class Settings : ObjectG, StyleProviderIF
 	 */
 	public static Settings getDefault()
 	{
-		auto p = gtk_settings_get_default();
+		auto __p = gtk_settings_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
+		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) __p);
 	}
 
 	/**
@@ -142,14 +142,14 @@ public class Settings : ObjectG, StyleProviderIF
 	 */
 	public static Settings getForScreen(Screen screen)
 	{
-		auto p = gtk_settings_get_for_screen((screen is null) ? null : screen.getScreenStruct());
+		auto __p = gtk_settings_get_for_screen((screen is null) ? null : screen.getScreenStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
+		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) __p);
 	}
 
 	/**

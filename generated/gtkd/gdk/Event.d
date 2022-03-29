@@ -260,14 +260,14 @@ public class Event
 	 */
 	public this(GdkEventType type)
 	{
-		auto p = gdk_event_new(type);
+		auto __p = gdk_event_new(type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GdkEvent*) p);
+		this(cast(GdkEvent*) __p);
 	}
 
 	/**
@@ -336,14 +336,14 @@ public class Event
 	 */
 	public Event copy()
 	{
-		auto p = gdk_event_copy(gdkEvent);
+		auto __p = gdk_event_copy(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**
@@ -427,14 +427,14 @@ public class Event
 	 */
 	public Device getDevice()
 	{
-		auto p = gdk_event_get_device(gdkEvent);
+		auto __p = gdk_event_get_device(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -453,14 +453,14 @@ public class Event
 	 */
 	public DeviceTool getDeviceTool()
 	{
-		auto p = gdk_event_get_device_tool(gdkEvent);
+		auto __p = gdk_event_get_device_tool(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) p);
+		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) __p);
 	}
 
 	/**
@@ -580,24 +580,27 @@ public class Event
 	 */
 	public Screen getScreen()
 	{
-		auto p = gdk_event_get_screen(gdkEvent);
+		auto __p = gdk_event_get_screen(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
 	 * Retrieves the scroll deltas from a #GdkEvent
+	 *
+	 * See also: gdk_event_get_scroll_direction()
 	 *
 	 * Params:
 	 *     deltaX = return location for X delta
 	 *     deltaY = return location for Y delta
 	 *
 	 * Returns: %TRUE if the event contains smooth scroll information
+	 *     and %FALSE otherwise
 	 *
 	 * Since: 3.4
 	 */
@@ -609,10 +612,48 @@ public class Event
 	/**
 	 * Extracts the scroll direction from an event.
 	 *
+	 * If @event is not of type %GDK_SCROLL, the contents of @direction
+	 * are undefined.
+	 *
+	 * If you wish to handle both discrete and smooth scrolling, you
+	 * should check the return value of this function, or of
+	 * gdk_event_get_scroll_deltas(); for instance:
+	 *
+	 * |[<!-- language="C" -->
+	 * GdkScrollDirection direction;
+	 * double vscroll_factor = 0.0;
+	 * double x_scroll, y_scroll;
+	 *
+	 * if (gdk_event_get_scroll_direction (event, &direction))
+	 * {
+	 * // Handle discrete scrolling with a known constant delta;
+	 * const double delta = 12.0;
+	 *
+	 * switch (direction)
+	 * {
+	 * case GDK_SCROLL_UP:
+	 * vscroll_factor = -delta;
+	 * break;
+	 * case GDK_SCROLL_DOWN:
+	 * vscroll_factor = delta;
+	 * break;
+	 * default:
+	 * // no scrolling
+	 * break;
+	 * }
+	 * }
+	 * else if (gdk_event_get_scroll_deltas (event, &x_scroll, &y_scroll))
+	 * {
+	 * // Handle smooth scrolling directly
+	 * vscroll_factor = y_scroll;
+	 * }
+	 * ]|
+	 *
 	 * Params:
 	 *     direction = location to store the scroll direction
 	 *
 	 * Returns: %TRUE if the event delivered a scroll direction
+	 *     and %FALSE otherwise
 	 *
 	 * Since: 3.2
 	 */
@@ -630,14 +671,14 @@ public class Event
 	 */
 	public Seat getSeat()
 	{
-		auto p = gdk_event_get_seat(gdkEvent);
+		auto __p = gdk_event_get_seat(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) __p);
 	}
 
 	/**
@@ -657,14 +698,14 @@ public class Event
 	 */
 	public Device getSourceDevice()
 	{
-		auto p = gdk_event_get_source_device(gdkEvent);
+		auto __p = gdk_event_get_source_device(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -703,14 +744,14 @@ public class Event
 	 */
 	public Window getWindow()
 	{
-		auto p = gdk_event_get_window(gdkEvent);
+		auto __p = gdk_event_get_window(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -831,14 +872,14 @@ public class Event
 	 */
 	public static Event get()
 	{
-		auto p = gdk_event_get();
+		auto __p = gdk_event_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**
@@ -870,14 +911,14 @@ public class Event
 	 */
 	public static Event peek()
 	{
-		auto p = gdk_event_peek();
+		auto __p = gdk_event_peek();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**

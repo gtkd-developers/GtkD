@@ -25,6 +25,7 @@
 module gstreamer.Device;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gstreamer.Caps;
@@ -97,14 +98,14 @@ public class Device : ObjectGst
 	 */
 	public Element createElement(string name)
 	{
-		auto p = gst_device_create_element(gstDevice, Str.toStringz(name));
+		auto __p = gst_device_create_element(gstDevice, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
+		return ObjectG.getDObject!(Element)(cast(GstElement*) __p);
 	}
 
 	/**
@@ -117,14 +118,14 @@ public class Device : ObjectGst
 	 */
 	public Caps getCaps()
 	{
-		auto p = gst_device_get_caps(gstDevice);
+		auto __p = gst_device_get_caps(gstDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) __p, true);
 	}
 
 	/**
@@ -169,14 +170,14 @@ public class Device : ObjectGst
 	 */
 	public Structure getProperties()
 	{
-		auto p = gst_device_get_properties(gstDevice);
+		auto __p = gst_device_get_properties(gstDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**

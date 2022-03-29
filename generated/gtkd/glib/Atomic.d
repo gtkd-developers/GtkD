@@ -44,6 +44,9 @@ public struct Atomic
 	 * Before version 2.30, this function did not return a value
 	 * (but g_atomic_int_exchange_and_add() did, and had the same meaning).
 	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
 	 *     val = the value to add
@@ -65,6 +68,9 @@ public struct Atomic
 	 *
 	 * Think of this operation as an atomic version of
 	 * `{ tmp = *atomic; *atomic &= val; return tmp; }`.
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
@@ -90,6 +96,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
 	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
 	 *     oldval = the value to compare with
@@ -111,6 +120,9 @@ public struct Atomic
 	 * `{ *atomic -= 1; return (*atomic == 0); }`.
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
@@ -150,6 +162,9 @@ public struct Atomic
 	 * This call acts as a full compiler and hardware
 	 * memory barrier (before the get).
 	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
 	 *
@@ -168,6 +183,9 @@ public struct Atomic
 	 * Think of this operation as an atomic version of `{ *atomic += 1; }`.
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
@@ -188,6 +206,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
 	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
 	 *     val = the value to 'or'
@@ -206,6 +227,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware
 	 * memory barrier (after the set).
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
@@ -226,6 +250,9 @@ public struct Atomic
 	 * `{ tmp = *atomic; *atomic ^= val; return tmp; }`.
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
@@ -248,6 +275,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
 	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *     val = the value to add
@@ -269,6 +299,9 @@ public struct Atomic
 	 * `{ tmp = *atomic; *atomic &= val; return tmp; }`.
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value
@@ -294,6 +327,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
 	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *     oldval = the value to compare with
@@ -313,6 +349,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware
 	 * memory barrier (before the get).
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value
@@ -335,6 +374,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
 	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
+	 *
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *     val = the value to 'or'
@@ -353,6 +395,9 @@ public struct Atomic
 	 *
 	 * This call acts as a full compiler and hardware
 	 * memory barrier (after the set).
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value
@@ -373,6 +418,9 @@ public struct Atomic
 	 * `{ tmp = *atomic; *atomic ^= val; return tmp; }`.
 	 *
 	 * This call acts as a full compiler and hardware memory barrier.
+	 *
+	 * While @atomic has a `volatile` qualifier, this is a historical artifact and
+	 * the pointer passed to it should not be `volatile`.
 	 *
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value

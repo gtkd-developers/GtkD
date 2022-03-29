@@ -121,13 +121,13 @@ public final class NITStream
 	 */
 	public this()
 	{
-		auto p = gst_mpegts_nit_stream_new();
+		auto __p = gst_mpegts_nit_stream_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsNITStream*) p);
+		this(cast(GstMpegtsNITStream*) __p);
 	}
 }

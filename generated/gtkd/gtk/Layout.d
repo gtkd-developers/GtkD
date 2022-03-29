@@ -104,14 +104,14 @@ public class Layout : Container, ScrollableIF
 	 */
 	public this(Adjustment hadjustment, Adjustment vadjustment)
 	{
-		auto p = gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		auto __p = gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLayout*) p);
+		this(cast(GtkLayout*) __p);
 	}
 
 	/**
@@ -123,14 +123,14 @@ public class Layout : Container, ScrollableIF
 	 */
 	public Window getBinWindow()
 	{
-		auto p = gtk_layout_get_bin_window(gtkLayout);
+		auto __p = gtk_layout_get_bin_window(gtkLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -147,14 +147,14 @@ public class Layout : Container, ScrollableIF
 	 */
 	public Adjustment getHadjustment()
 	{
-		auto p = gtk_layout_get_hadjustment(gtkLayout);
+		auto __p = gtk_layout_get_hadjustment(gtkLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -187,14 +187,14 @@ public class Layout : Container, ScrollableIF
 	 */
 	public Adjustment getVadjustment()
 	{
-		auto p = gtk_layout_get_vadjustment(gtkLayout);
+		auto __p = gtk_layout_get_vadjustment(gtkLayout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**

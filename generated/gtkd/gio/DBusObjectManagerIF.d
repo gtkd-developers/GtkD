@@ -30,6 +30,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.giotypes;
@@ -75,7 +76,7 @@ public interface DBusObjectManagerIF{
 	public DBusInterfaceIF getInterface(string objectPath, string interfaceName);
 
 	/**
-	 * Gets the #GDBusObjectProxy at @object_path, if any.
+	 * Gets the #GDBusObject at @object_path, if any.
 	 *
 	 * Params:
 	 *     objectPath = Object path to look up.

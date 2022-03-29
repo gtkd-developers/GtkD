@@ -33,12 +33,12 @@ public  import pango.c.types;
 
 
 /**
- * A #PangoFontset represents a set of #PangoFont to use
- * when rendering text. It is the result of resolving a
- * #PangoFontDescription against a particular #PangoContext.
- * It has operations for finding the component font for
- * a particular Unicode character, and for finding a composite
- * set of metrics for the entire fontset.
+ * A `PangoFontset` represents a set of `PangoFont` to use when rendering text.
+ * 
+ * A `PangoFontset` is the result of resolving a `PangoFontDescription`
+ * against a particular `PangoContext`. It has operations for finding the
+ * component font for a particular Unicode character, and for finding a
+ * composite set of metrics for the entire fontset.
  */
 public class PgFontset : ObjectG
 {
@@ -78,7 +78,9 @@ public class PgFontset : ObjectG
 	alias foreac = foreach_;
 	/**
 	 * Iterates through all the fonts in a fontset, calling @func for
-	 * each one. If @func returns %TRUE, that stops the iteration.
+	 * each one.
+	 *
+	 * If @func returns %TRUE, that stops the iteration.
 	 *
 	 * Params:
 	 *     func = Callback function
@@ -92,42 +94,40 @@ public class PgFontset : ObjectG
 	}
 
 	/**
-	 * Returns the font in the fontset that contains the best glyph for the
-	 * Unicode character @wc.
+	 * Returns the font in the fontset that contains the best
+	 * glyph for a Unicode character.
 	 *
 	 * Params:
 	 *     wc = a Unicode character
 	 *
-	 * Returns: a #PangoFont. The caller must call
-	 *     g_object_unref when finished with the font.
+	 * Returns: a `PangoFont`
 	 */
 	public PgFont getFont(uint wc)
 	{
-		auto p = pango_fontset_get_font(pangoFontset, wc);
+		auto __p = pango_fontset_get_font(pangoFontset, wc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p, true);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) __p, true);
 	}
 
 	/**
 	 * Get overall metric information for the fonts in the fontset.
 	 *
-	 * Returns: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
-	 *     when finished using the object.
+	 * Returns: a `PangoFontMetrics` object
 	 */
 	public PgFontMetrics getMetrics()
 	{
-		auto p = pango_fontset_get_metrics(pangoFontset);
+		auto __p = pango_fontset_get_metrics(pangoFontset);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) __p, true);
 	}
 }

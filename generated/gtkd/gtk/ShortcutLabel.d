@@ -26,6 +26,7 @@ module gtk.ShortcutLabel;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.Box;
 private import gtk.Widget;
@@ -87,14 +88,14 @@ public class ShortcutLabel : Box
 	 */
 	public this(string accelerator)
 	{
-		auto p = gtk_shortcut_label_new(Str.toStringz(accelerator));
+		auto __p = gtk_shortcut_label_new(Str.toStringz(accelerator));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkShortcutLabel*) p, true);
+		this(cast(GtkShortcutLabel*) __p, true);
 	}
 
 	/**

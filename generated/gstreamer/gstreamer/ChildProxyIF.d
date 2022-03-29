@@ -47,9 +47,9 @@ private import std.algorithm;
  * By implementing this interface the child properties can be accessed from the
  * parent element by using gst_child_proxy_get() and gst_child_proxy_set().
  * 
- * Property names are written as "child-name::property-name". The whole naming
- * scheme is recursive. Thus "child1::child2::property" is valid too, if
- * "child1" and "child2" implement the #GstChildProxy interface.
+ * Property names are written as `child-name::property-name`. The whole naming
+ * scheme is recursive. Thus `child1::child2::property` is valid too, if
+ * `child1` and `child2` implement the #GstChildProxy interface.
  */
 public interface ChildProxyIF{
 	/** Get the main Gtk struct */
@@ -66,7 +66,7 @@ public interface ChildProxyIF{
 	}
 
 	/**
-	 * Emits the "child-added" signal.
+	 * Emits the #GstChildProxy::child-added signal.
 	 *
 	 * Params:
 	 *     child = the newly added child
@@ -75,7 +75,7 @@ public interface ChildProxyIF{
 	public void childAdded(ObjectG child, string name);
 
 	/**
-	 * Emits the "child-removed" signal.
+	 * Emits the #GstChildProxy::child-removed signal.
 	 *
 	 * Params:
 	 *     child = the removed child
@@ -90,9 +90,7 @@ public interface ChildProxyIF{
 	 *     index = the child's position in the child list
 	 *
 	 * Returns: the child object or %NULL if
-	 *     not found (index too high). Unref after usage.
-	 *
-	 *     MT safe.
+	 *     not found (index too high).
 	 */
 	public ObjectG getChildByIndex(uint index);
 
@@ -107,9 +105,7 @@ public interface ChildProxyIF{
 	 *     name = the child's name
 	 *
 	 * Returns: the child object or %NULL if
-	 *     not found. Unref after usage.
-	 *
-	 *     MT safe.
+	 *     not found.
 	 */
 	public ObjectG getChildByName(string name);
 
@@ -117,8 +113,6 @@ public interface ChildProxyIF{
 	 * Gets the number of child objects this parent contains.
 	 *
 	 * Returns: the number of child objects
-	 *
-	 *     MT safe.
 	 */
 	public uint getChildrenCount();
 
@@ -144,8 +138,6 @@ public interface ChildProxyIF{
 	/**
 	 * Looks up which object and #GParamSpec would be effected by the given @name.
 	 *
-	 * MT safe.
-	 *
 	 * Params:
 	 *     name = name of the property to look up
 	 *     target = pointer to a #GObject that
@@ -155,7 +147,7 @@ public interface ChildProxyIF{
 	 *
 	 * Returns: %TRUE if @target and @pspec could be found. %FALSE otherwise. In that
 	 *     case the values for @pspec and @target are not modified. Unref @target after
-	 *     usage. For plain GObjects @target is the same as @object.
+	 *     usage. For plain #GObject @target is the same as @object.
 	 */
 	public bool lookup(string name, out ObjectG target, out ParamSpec pspec);
 

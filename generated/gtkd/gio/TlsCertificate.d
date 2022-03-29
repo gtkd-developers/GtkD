@@ -28,10 +28,13 @@ private import gio.SocketConnectableIF;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
+private import glib.DateTime;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
+private import glib.PtrArray;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -81,22 +84,18 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
-	 * Creates a #GTlsCertificate from the PEM-encoded data in @file. The
-	 * returned certificate will be the first certificate found in @file. As
-	 * of GLib 2.44, if @file contains more certificates it will try to load
-	 * a certificate chain. All certificates will be verified in the order
-	 * found (top-level certificate should be the last one in the file) and
-	 * the #GTlsCertificate:issuer property of each certificate will be set
-	 * accordingly if the verification succeeds. If any certificate in the
-	 * chain cannot be verified, the first certificate in the file will
-	 * still be returned.
+	 * Creates a #GTlsCertificate from the data in @file.
+	 *
+	 * As of 2.72, if the filename ends in `.p12` or `.pfx` the data is loaded by
+	 * g_tls_certificate_new_from_pkcs12() otherwise it is loaded by
+	 * g_tls_certificate_new_from_pem(). See those functions for
+	 * exact details.
 	 *
 	 * If @file cannot be read or parsed, the function will return %NULL and
-	 * set @error. Otherwise, this behaves like
-	 * g_tls_certificate_new_from_pem().
+	 * set @error.
 	 *
 	 * Params:
-	 *     file = file containing a PEM-encoded certificate to import
+	 *     file = file containing a certificate to import
 	 *
 	 * Returns: the new certificate, or %NULL on error
 	 *
@@ -219,6 +218,55 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
+	 * Creates a #GTlsCertificate from the data in @data. It must contain
+	 * a certificate and matching private key.
+	 *
+	 * If extra certificates are included they will be verified as a chain
+	 * and the #GTlsCertificate:issuer property will be set.
+	 * All other data will be ignored.
+	 *
+	 * You can pass as single password for all of the data which will be
+	 * used both for the PKCS #12 container as well as encrypted
+	 * private keys. If decryption fails it will error with
+	 * %G_TLS_ERROR_BAD_CERTIFICATE_PASSWORD.
+	 *
+	 * This constructor requires support in the current #GTlsBackend.
+	 * If support is missing it will error with
+	 * %G_IO_ERROR_NOT_SUPPORTED.
+	 *
+	 * Other parsing failures will error with %G_TLS_ERROR_BAD_CERTIFICATE.
+	 *
+	 * Params:
+	 *     data = DER-encoded PKCS #12 format certificate data
+	 *     password = optional password for encrypted certificate data
+	 *
+	 * Returns: the new certificate, or %NULL if @data is invalid
+	 *
+	 * Since: 2.72
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ubyte[] data, string password)
+	{
+		GError* err = null;
+
+		auto __p = g_tls_certificate_new_from_pkcs12(data.ptr, cast(size_t)data.length, Str.toStringz(password), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_pkcs12");
+		}
+
+		this(cast(GTlsCertificate*) __p, true);
+	}
+
+	/**
 	 * Creates one or more #GTlsCertificates from the PEM-encoded
 	 * data in @file. If @file cannot be read or parsed, the function will
 	 * return %NULL and set @error. If @file does not contain any
@@ -256,6 +304,46 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
+	 * Gets the value of #GTlsCertificate:dns-names.
+	 *
+	 * Returns: A #GPtrArray of
+	 *     #GBytes elements, or %NULL if it's not available.
+	 *
+	 * Since: 2.70
+	 */
+	public PtrArray getDnsNames()
+	{
+		auto __p = g_tls_certificate_get_dns_names(gTlsCertificate);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new PtrArray(cast(GPtrArray*) __p);
+	}
+
+	/**
+	 * Gets the value of #GTlsCertificate:ip-addresses.
+	 *
+	 * Returns: A #GPtrArray
+	 *     of #GInetAddress elements, or %NULL if it's not available.
+	 *
+	 * Since: 2.70
+	 */
+	public PtrArray getIpAddresses()
+	{
+		auto __p = g_tls_certificate_get_ip_addresses(gTlsCertificate);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new PtrArray(cast(GPtrArray*) __p);
+	}
+
+	/**
 	 * Gets the #GTlsCertificate representing @cert's issuer, if known
 	 *
 	 * Returns: The certificate of @cert's issuer,
@@ -274,6 +362,74 @@ public class TlsCertificate : ObjectG
 		}
 
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p);
+	}
+
+	/**
+	 * Returns the issuer name from the certificate.
+	 *
+	 * Returns: The issuer name, or %NULL if it's not available.
+	 *
+	 * Since: 2.70
+	 */
+	public string getIssuerName()
+	{
+		auto retStr = g_tls_certificate_get_issuer_name(gTlsCertificate);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
+	 * Returns the time at which the certificate became or will become invalid.
+	 *
+	 * Returns: The not-valid-after date, or %NULL if it's not available.
+	 *
+	 * Since: 2.70
+	 */
+	public DateTime getNotValidAfter()
+	{
+		auto __p = g_tls_certificate_get_not_valid_after(gTlsCertificate);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p, true);
+	}
+
+	/**
+	 * Returns the time at which the certificate became or will become valid.
+	 *
+	 * Returns: The not-valid-before date, or %NULL if it's not available.
+	 *
+	 * Since: 2.70
+	 */
+	public DateTime getNotValidBefore()
+	{
+		auto __p = g_tls_certificate_get_not_valid_before(gTlsCertificate);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new DateTime(cast(GDateTime*) __p, true);
+	}
+
+	/**
+	 * Returns the subject name from the certificate.
+	 *
+	 * Returns: The subject name, or %NULL if it's not available.
+	 *
+	 * Since: 2.70
+	 */
+	public string getSubjectName()
+	{
+		auto retStr = g_tls_certificate_get_subject_name(gTlsCertificate);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -313,8 +469,20 @@ public class TlsCertificate : ObjectG
 	 * @trusted_ca is %NULL, that bit will never be set in the return
 	 * value.
 	 *
-	 * (All other #GTlsCertificateFlags values will always be set or unset
-	 * as appropriate.)
+	 * GLib guarantees that if certificate verification fails, at least one
+	 * error will be set in the return value, but it does not guarantee
+	 * that all possible errors will be set. Accordingly, you may not safely
+	 * decide to ignore any particular type of error. For example, it would
+	 * be incorrect to mask %G_TLS_CERTIFICATE_EXPIRED if you want to allow
+	 * expired certificates, because this could potentially be the only
+	 * error flag set even if other problems exist with the certificate.
+	 *
+	 * Because TLS session context is not used, #GTlsCertificate may not
+	 * perform as many checks on the certificates as #GTlsConnection would.
+	 * For example, certificate constraints may not be honored, and
+	 * revocation checks may not be performed. The best way to verify TLS
+	 * certificates used by a TLS connection is to let #GTlsConnection
+	 * handle the verification.
 	 *
 	 * Params:
 	 *     identity = the expected peer identity

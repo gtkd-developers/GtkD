@@ -97,14 +97,14 @@ public class WindowGroup : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_window_group_new();
+		auto __p = gtk_window_group_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkWindowGroup*) p, true);
+		this(cast(GtkWindowGroup*) __p, true);
 	}
 
 	/**
@@ -130,14 +130,14 @@ public class WindowGroup : ObjectG
 	 */
 	public Widget getCurrentDeviceGrab(Device device)
 	{
-		auto p = gtk_window_group_get_current_device_grab(gtkWindowGroup, (device is null) ? null : device.getDeviceStruct());
+		auto __p = gtk_window_group_get_current_device_grab(gtkWindowGroup, (device is null) ? null : device.getDeviceStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -150,14 +150,14 @@ public class WindowGroup : ObjectG
 	 */
 	public Widget getCurrentGrab()
 	{
-		auto p = gtk_window_group_get_current_grab(gtkWindowGroup);
+		auto __p = gtk_window_group_get_current_grab(gtkWindowGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -170,14 +170,14 @@ public class WindowGroup : ObjectG
 	 */
 	public ListG listWindows()
 	{
-		auto p = gtk_window_group_list_windows(gtkWindowGroup);
+		auto __p = gtk_window_group_list_windows(gtkWindowGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

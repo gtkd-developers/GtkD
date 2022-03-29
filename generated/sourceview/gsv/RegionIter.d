@@ -85,12 +85,12 @@ public class RegionIter
 		GtkTextIter* outstart = sliceNew!GtkTextIter();
 		GtkTextIter* outend = sliceNew!GtkTextIter();
 
-		auto p = gtk_source_region_iter_get_subregion(gtkSourceRegionIter, outstart, outend) != 0;
+		auto __p = gtk_source_region_iter_get_subregion(gtkSourceRegionIter, outstart, outend) != 0;
 
 		start = ObjectG.getDObject!(TextIter)(outstart, true);
 		end = ObjectG.getDObject!(TextIter)(outend, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

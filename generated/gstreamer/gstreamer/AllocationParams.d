@@ -24,6 +24,7 @@
 
 module gstreamer.AllocationParams;
 
+private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
@@ -77,23 +78,47 @@ public class AllocationParams
 	}
 
 	/**
+	 * Create a new #GstAllocationParams on the heap.  This function is for
+	 * use in GStreamer language bindings.  In your own code, you can just
+	 * declare a #GstAllocationParams on the stack or in a struct, and
+	 * call gst_allocation_params_init() to initialize it.
+	 *
+	 * You do not need to call gst_allocation_params_init() on the instance
+	 * returned by this function.
+	 *
+	 * Returns: a new #GstAllocationParams
+	 *
+	 * Since: 1.20
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto __p = gst_allocation_params_new();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GstAllocationParams*) __p);
+	}
+
+	/**
 	 * Create a copy of @params.
 	 *
-	 * Free-function: gst_allocation_params_free
-	 *
-	 * Returns: a new ##GstAllocationParams, free with
-	 *     gst_allocation_params_free().
+	 * Returns: a new #GstAllocationParams.
 	 */
 	public AllocationParams copy()
 	{
-		auto p = gst_allocation_params_copy(gstAllocationParams);
+		auto __p = gst_allocation_params_copy(gstAllocationParams);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AllocationParams)(cast(GstAllocationParams*) p, true);
+		return ObjectG.getDObject!(AllocationParams)(cast(GstAllocationParams*) __p, true);
 	}
 
 	/**

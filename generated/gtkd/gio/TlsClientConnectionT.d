@@ -159,6 +159,12 @@ public template TlsClientConnectionT(TStruct)
 	/**
 	 * Gets @conn's validation flags
 	 *
+	 * This function does not work as originally designed and is impossible
+	 * to use correctly. See #GTlsClientConnection:validation-flags for more
+	 * information.
+	 *
+	 * Deprecated: Do not attempt to ignore validation errors.
+	 *
 	 * Returns: the validation flags
 	 *
 	 * Since: 2.28
@@ -212,6 +218,12 @@ public template TlsClientConnectionT(TStruct)
 	 * Sets @conn's validation flags, to override the default set of
 	 * checks performed when validating a server certificate. By default,
 	 * %G_TLS_CERTIFICATE_VALIDATE_ALL is used.
+	 *
+	 * This function does not work as originally designed and is impossible
+	 * to use correctly. See #GTlsClientConnection:validation-flags for more
+	 * information.
+	 *
+	 * Deprecated: Do not attempt to ignore validation errors.
 	 *
 	 * Params:
 	 *     flags = the #GTlsCertificateFlags to use

@@ -85,14 +85,14 @@ public class TaskPool : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_task_pool_new();
+		auto __p = gst_task_pool_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstTaskPool*) p, true);
+		this(cast(GstTaskPool*) __p, true);
 	}
 
 	/**
@@ -107,8 +107,33 @@ public class TaskPool : ObjectGst
 	}
 
 	/**
+	 * Dispose of the handle returned by gst_task_pool_push(). This does
+	 * not need to be called with the default implementation as the default
+	 * #GstTaskPoolClass::push implementation always returns %NULL. This does not need to be
+	 * called either when calling gst_task_pool_join(), but should be called
+	 * when joining is not necessary, but gst_task_pool_push() returned a
+	 * non-%NULL value.
+	 *
+	 * This method should only be called with the same @pool instance that provided
+	 * @id.
+	 *
+	 * Params:
+	 *     id = the id
+	 *
+	 * Since: 1.20
+	 */
+	public void disposeHandle(void* id)
+	{
+		gst_task_pool_dispose_handle(gstTaskPool, id);
+	}
+
+	/**
 	 * Join a task and/or return it to the pool. @id is the id obtained from
-	 * gst_task_pool_push().
+	 * gst_task_pool_push(). The default implementation does nothing, as the
+	 * default #GstTaskPoolClass::push implementation always returns %NULL.
+	 *
+	 * This method should only be called with the same @pool instance that provided
+	 * @id.
 	 *
 	 * Params:
 	 *     id = the id
@@ -146,7 +171,9 @@ public class TaskPool : ObjectGst
 	 *
 	 * Returns: a pointer that should be used
 	 *     for the gst_task_pool_join function. This pointer can be %NULL, you
-	 *     must check @error to detect errors.
+	 *     must check @error to detect errors. If the pointer is not %NULL and
+	 *     gst_task_pool_join() is not used, call gst_task_pool_dispose_handle()
+	 *     instead.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -154,13 +181,13 @@ public class TaskPool : ObjectGst
 	{
 		GError* err = null;
 
-		auto p = gst_task_pool_push(gstTaskPool, func, userData, &err);
+		auto __p = gst_task_pool_push(gstTaskPool, func, userData, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

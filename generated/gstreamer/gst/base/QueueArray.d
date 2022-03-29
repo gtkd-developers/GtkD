@@ -352,14 +352,14 @@ public class QueueArray
 	 */
 	public this(uint initialSize)
 	{
-		auto p = gst_queue_array_new(initialSize);
+		auto __p = gst_queue_array_new(initialSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstQueueArray*) p);
+		this(cast(GstQueueArray*) __p);
 	}
 
 	/**
@@ -378,13 +378,13 @@ public class QueueArray
 	 */
 	public this(size_t structSize, uint initialSize)
 	{
-		auto p = gst_queue_array_new_for_struct(structSize, initialSize);
+		auto __p = gst_queue_array_new_for_struct(structSize, initialSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_struct");
 		}
 
-		this(cast(GstQueueArray*) p);
+		this(cast(GstQueueArray*) __p);
 	}
 }

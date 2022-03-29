@@ -67,14 +67,14 @@ public  import gtkc.gdktypes;
  */
 public Context createContext(Window window)
 {
-	auto p = gdk_cairo_create((window is null) ? null : window.getWindowStruct());
+	auto __p = gdk_cairo_create((window is null) ? null : window.getWindowStruct());
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return new Context(cast(cairo_t*) p);
+	return new Context(cast(cairo_t*) __p);
 }
 
 /**
@@ -172,14 +172,14 @@ public void region(Context cr, Region region)
  */
 public Region regionCreateFromSurface(Surface surface)
 {
-	auto p = gdk_cairo_region_create_from_surface((surface is null) ? null : surface.getSurfaceStruct());
+	auto __p = gdk_cairo_region_create_from_surface((surface is null) ? null : surface.getSurfaceStruct());
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return new Region(cast(cairo_region_t*) p);
+	return new Region(cast(cairo_region_t*) __p);
 }
 
 /**
@@ -269,14 +269,14 @@ public void setSourceWindow(Context cr, Window window, double x, double y)
  */
 public Surface surfaceCreateFromPixbuf(Pixbuf pixbuf, int scale, Window forWindow)
 {
-	auto p = gdk_cairo_surface_create_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct(), scale, (forWindow is null) ? null : forWindow.getWindowStruct());
+	auto __p = gdk_cairo_surface_create_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct(), scale, (forWindow is null) ? null : forWindow.getWindowStruct());
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return new Surface(cast(cairo_surface_t*) p);
+	return new Surface(cast(cairo_surface_t*) __p);
 }
 
 /**
@@ -292,12 +292,12 @@ public Surface surfaceCreateFromPixbuf(Pixbuf pixbuf, int scale, Window forWindo
  */
 public DrawingContext getDrawingContext(Context cr)
 {
-	auto p = gdk_cairo_get_drawing_context((cr is null) ? null : cr.getContextStruct());
+	auto __p = gdk_cairo_get_drawing_context((cr is null) ? null : cr.getContextStruct());
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) p);
+	return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) __p);
 }

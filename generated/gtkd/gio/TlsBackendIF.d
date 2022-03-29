@@ -54,7 +54,8 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the default #GTlsBackend for the system.
 	 *
-	 * Returns: a #GTlsBackend
+	 * Returns: a #GTlsBackend, which will be a
+	 *     dummy object if no TLS backend is available
 	 *
 	 * Since: 2.28
 	 */

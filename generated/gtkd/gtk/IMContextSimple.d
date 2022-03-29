@@ -44,6 +44,8 @@ public  import gtkc.gtktypes;
  * Compose file). The syntax of these files is described in the Compose(5)
  * manual page.
  * 
+ * ## Unicode characters
+ * 
  * GtkIMContextSimple also supports numeric entry of Unicode characters
  * by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint.
  * For example, Ctrl-Shift-u 1 2 3 Enter yields U+0123 LATIN SMALL LETTER
@@ -93,17 +95,22 @@ public class IMContextSimple : IMContext
 	 */
 	public this()
 	{
-		auto p = gtk_im_context_simple_new();
+		auto __p = gtk_im_context_simple_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIMContextSimple*) p, true);
+		this(cast(GtkIMContextSimple*) __p, true);
 	}
 
-	/** */
+	/**
+	 * Adds an additional table from the X11 compose file.
+	 *
+	 * Params:
+	 *     composeFile = The path of compose file
+	 */
 	public void addComposeFile(string composeFile)
 	{
 		gtk_im_context_simple_add_compose_file(gtkIMContextSimple, Str.toStringz(composeFile));
@@ -123,7 +130,6 @@ public class IMContextSimple : IMContext
 	 * Params:
 	 *     data = the table
 	 *     maxSeqLen = Maximum length of a sequence in the table
-	 *         (cannot be greater than #GTK_MAX_COMPOSE_LEN)
 	 *     nSeqs = number of sequences in the table
 	 */
 	public void addTable(ushort[] data, int maxSeqLen, int nSeqs)

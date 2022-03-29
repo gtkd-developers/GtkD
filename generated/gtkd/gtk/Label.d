@@ -26,6 +26,7 @@ module gtk.Label;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Menu;
@@ -68,13 +69,14 @@ private import std.algorithm;
  * # GtkLabel as GtkBuildable
  * 
  * The GtkLabel implementation of the GtkBuildable interface supports a
- * custom <attributes> element, which supports any number of <attribute>
- * elements. The <attribute> element has attributes named “name“, “value“,
+ * custom `<attributes>` element, which supports any number of `<attribute>`
+ * elements. The `<attribute>` element has attributes named “name“, “value“,
  * “start“ and “end“ and allows you to specify #PangoAttribute values for
  * this label.
  * 
  * An example of a UI definition fragment specifying Pango attributes:
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkLabel">
  * <attributes>
  * <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
@@ -323,14 +325,14 @@ public class Label : Misc
 	 */
 	public PgAttributeList getAttributes()
 	{
-		auto p = gtk_label_get_attributes(gtkLabel);
+		auto __p = gtk_label_get_attributes(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p);
 	}
 
 	/**
@@ -399,14 +401,14 @@ public class Label : Misc
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = gtk_label_get_layout(gtkLabel);
+		auto __p = gtk_label_get_layout(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**
@@ -499,14 +501,14 @@ public class Label : Misc
 	 */
 	public Widget getMnemonicWidget()
 	{
-		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
+		auto __p = gtk_label_get_mnemonic_widget(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

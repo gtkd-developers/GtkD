@@ -26,17 +26,21 @@ module gstreamer.Buffer;
 
 private import glib.Bytes;
 private import glib.ConstructionException;
+private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
 private import gstreamer.Caps;
+private import gstreamer.CustomMeta;
 private import gstreamer.Memory;
 private import gstreamer.Meta;
+private import gstreamer.MetaInfo;
 private import gstreamer.ProtectionMeta;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -48,7 +52,8 @@ public  import gstreamerc.gstreamertypes;
  * created one will typically allocate memory for it and add it to the buffer.
  * The following example creates a buffer that can hold a given video frame
  * with a given width, height and bits per plane.
- * |[<!-- language="C" -->
+ * 
+ * ``` C
  * GstBuffer *buffer;
  * GstMemory *memory;
  * gint size, width, height, bpp;
@@ -58,7 +63,7 @@ public  import gstreamerc.gstreamertypes;
  * memory = gst_allocator_alloc (NULL, size, NULL);
  * gst_buffer_insert_memory (buffer, -1, memory);
  * ...
- * ]|
+ * ```
  * 
  * Alternatively, use gst_buffer_new_allocate() to create a buffer with
  * preallocated data of a given size.
@@ -98,7 +103,7 @@ public  import gstreamerc.gstreamertypes;
  * 
  * If a plug-in wants to modify the buffer data or metadata in-place, it should
  * first obtain a buffer that is safe to modify by using
- * gst_buffer_make_writable().  This function is optimized so that a copy will
+ * gst_buffer_make_writable(). This function is optimized so that a copy will
  * only be made when it is necessary.
  * 
  * Several flags of the buffer can be set and unset with the
@@ -110,7 +115,7 @@ public  import gstreamerc.gstreamertypes;
  * needed.
  * 
  * Arbitrary extra metadata can be set on a buffer with gst_buffer_add_meta().
- * Metadata can be retrieved with gst_buffer_get_meta(). See also #GstMeta
+ * Metadata can be retrieved with gst_buffer_get_meta(). See also #GstMeta.
  * 
  * An element should either unref the buffer or push it out on a src pad
  * using gst_pad_push() (see #GstPad).
@@ -127,7 +132,7 @@ public  import gstreamerc.gstreamertypes;
  * Typically, #GstParentBufferMeta is used when the child buffer is directly
  * using the #GstMemory of the parent buffer, and wants to prevent the parent
  * buffer from being returned to a buffer pool until the #GstMemory is available
- * for re-use. (Since 1.6)
+ * for re-use. (Since: 1.6)
  */
 public class Buffer
 {
@@ -158,6 +163,12 @@ public class Buffer
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_buffer_unref(gstBuffer);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -168,22 +179,20 @@ public class Buffer
 	/**
 	 * Creates a newly allocated buffer without any data.
 	 *
-	 * MT safe.
-	 *
 	 * Returns: the new #GstBuffer.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gst_buffer_new();
+		auto __p = gst_buffer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -195,36 +204,31 @@ public class Buffer
 	 *
 	 * Note that when @size == 0, the buffer will not have memory associated with it.
 	 *
-	 * MT safe.
-	 *
 	 * Params:
 	 *     allocator = the #GstAllocator to use, or %NULL to use the
 	 *         default allocator
 	 *     size = the size in bytes of the new buffer's data.
 	 *     params = optional parameters
 	 *
-	 * Returns: a new #GstBuffer, or %NULL if
-	 *     the memory couldn't be allocated.
+	 * Returns: a new #GstBuffer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(Allocator allocator, size_t size, AllocationParams params)
 	{
-		auto p = gst_buffer_new_allocate((allocator is null) ? null : allocator.getAllocatorStruct(), size, (params is null) ? null : params.getAllocationParamsStruct());
+		auto __p = gst_buffer_new_allocate((allocator is null) ? null : allocator.getAllocatorStruct(), size, (params is null) ? null : params.getAllocationParamsStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_allocate");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
 	 * Creates a new buffer that wraps the given @data. The memory will be freed
-	 * with g_free and will be marked writable.
-	 *
-	 * MT safe.
+	 * with g_free() and will be marked writable.
 	 *
 	 * Params:
 	 *     data = data to wrap
@@ -235,21 +239,19 @@ public class Buffer
 	 */
 	public this(ubyte[] data)
 	{
-		auto p = gst_buffer_new_wrapped(data.ptr, cast(size_t)data.length);
+		auto __p = gst_buffer_new_wrapped(data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
 	 * Creates a new #GstBuffer that wraps the given @bytes. The data inside
 	 * @bytes cannot be %NULL and the resulting buffer will be marked as read only.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     bytes = a #GBytes to wrap
@@ -262,18 +264,18 @@ public class Buffer
 	 */
 	public this(Bytes bytes)
 	{
-		auto p = gst_buffer_new_wrapped_bytes((bytes is null) ? null : bytes.getBytesStruct());
+		auto __p = gst_buffer_new_wrapped_bytes((bytes is null) ? null : bytes.getBytesStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped_bytes");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
-	 * Allocate a new buffer that wraps the given memory. @data must point to
+	 * Allocates a new buffer that wraps the given memory. @data must point to
 	 * @maxsize of memory, the wrapped buffer will have the region from @offset and
 	 * @size visible.
 	 *
@@ -296,18 +298,41 @@ public class Buffer
 	 */
 	public this(GstMemoryFlags flags, ubyte[] data, size_t maxsize, size_t offset, void* userData, GDestroyNotify notify)
 	{
-		auto p = gst_buffer_new_wrapped_full(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
+		auto __p = gst_buffer_new_wrapped_full(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped_full");
 		}
 
-		this(cast(GstBuffer*) p);
+		this(cast(GstBuffer*) __p);
 	}
 
 	/**
-	 * Add metadata for @info to @buffer using the parameters in @params.
+	 * Creates and adds a #GstCustomMeta for the desired @name. @name must have
+	 * been successfully registered with gst_meta_register_custom().
+	 *
+	 * Params:
+	 *     name = the registered name of the desired custom meta
+	 *
+	 * Returns: The #GstCustomMeta that was added to the buffer
+	 *
+	 * Since: 1.20
+	 */
+	public CustomMeta addCustomMeta(string name)
+	{
+		auto __p = gst_buffer_add_custom_meta(gstBuffer, Str.toStringz(name));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(CustomMeta)(cast(GstCustomMeta*) __p);
+	}
+
+	/**
+	 * Adds metadata for @info to @buffer using the parameters in @params.
 	 *
 	 * Params:
 	 *     info = a #GstMetaInfo
@@ -315,20 +340,20 @@ public class Buffer
 	 *
 	 * Returns: the metadata for the api in @info on @buffer.
 	 */
-	public Meta addMeta(GstMetaInfo* info, void* params)
+	public Meta addMeta(MetaInfo info, void* params)
 	{
-		auto p = gst_buffer_add_meta(gstBuffer, info, params);
+		auto __p = gst_buffer_add_meta(gstBuffer, (info is null) ? null : info.getMetaInfoStruct(), params);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
-	 * Add a #GstParentBufferMeta to @buffer that holds a reference on
+	 * Adds a #GstParentBufferMeta to @buffer that holds a reference on
 	 * @ref until the buffer is freed.
 	 *
 	 * Params:
@@ -351,25 +376,24 @@ public class Buffer
 	 *         information relating to the sample contained in @buffer. This
 	 *         function takes ownership of @info.
 	 *
-	 * Returns: a pointer to the added #GstProtectionMeta if successful; %NULL if
-	 *     unsuccessful.
+	 * Returns: a pointer to the added #GstProtectionMeta if successful
 	 *
 	 * Since: 1.6
 	 */
 	public ProtectionMeta addProtectionMeta(Structure info)
 	{
-		auto p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct(true));
+		auto __p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProtectionMeta)(cast(GstProtectionMeta*) p);
+		return ObjectG.getDObject!(ProtectionMeta)(cast(GstProtectionMeta*) __p);
 	}
 
 	/**
-	 * Add a #GstReferenceTimestampMeta to @buffer that holds a @timestamp and
+	 * Adds a #GstReferenceTimestampMeta to @buffer that holds a @timestamp and
 	 * optionally @duration based on a specific timestamp @reference. See the
 	 * documentation of #GstReferenceTimestampMeta for details.
 	 *
@@ -388,7 +412,7 @@ public class Buffer
 	}
 
 	/**
-	 * Append all the memory from @buf2 to @buf1. The result buffer will contain a
+	 * Appends all the memory from @buf2 to @buf1. The result buffer will contain a
 	 * concatenation of the memory of @buf1 and @buf2.
 	 *
 	 * Params:
@@ -399,18 +423,18 @@ public class Buffer
 	 */
 	public Buffer append(Buffer buf2)
 	{
-		auto p = gst_buffer_append(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct());
+		auto __p = gst_buffer_append(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(true));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
-	 * Append the memory block @mem to @buffer. This function takes
+	 * Appends the memory block @mem to @buffer. This function takes
 	 * ownership of @mem and thus doesn't increase its refcount.
 	 *
 	 * This function is identical to gst_buffer_insert_memory() with an index of -1.
@@ -421,11 +445,11 @@ public class Buffer
 	 */
 	public void appendMemory(Memory mem)
 	{
-		gst_buffer_append_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_append_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
-	 * Append @size bytes at @offset from @buf2 to @buf1. The result buffer will
+	 * Appends @size bytes at @offset from @buf2 to @buf1. The result buffer will
 	 * contain a concatenation of the memory of @buf1 and the requested region of
 	 * @buf2.
 	 *
@@ -439,18 +463,39 @@ public class Buffer
 	 */
 	public Buffer appendRegion(Buffer buf2, ptrdiff_t offset, ptrdiff_t size)
 	{
-		auto p = gst_buffer_append_region(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(), offset, size);
+		auto __p = gst_buffer_append_region(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(true), offset, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
-	 * Create a copy of the given buffer. This will make a newly allocated
+	 * Creates a copy of the given buffer. This will only copy the buffer's
+	 * data to a newly allocated memory if needed (if the type of memory
+	 * requires it), otherwise the underlying data is just referenced.
+	 * Check gst_buffer_copy_deep() if you want to force the data
+	 * to be copied to newly allocated memory.
+	 *
+	 * Returns: a new copy of @buf.
+	 */
+	public Buffer copy()
+	{
+		auto __p = gst_buffer_copy(gstBuffer);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
+	}
+
+	/**
+	 * Creates a copy of the given buffer. This will make a newly allocated
 	 * copy of the data the source buffer contains.
 	 *
 	 * Returns: a new copy of @buf.
@@ -459,14 +504,14 @@ public class Buffer
 	 */
 	public Buffer copyDeep()
 	{
-		auto p = gst_buffer_copy_deep(gstBuffer);
+		auto __p = gst_buffer_copy_deep(gstBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
@@ -500,8 +545,6 @@ public class Buffer
 	 * duration and offset end fields are also copied. If not they will be set
 	 * to #GST_CLOCK_TIME_NONE and #GST_BUFFER_OFFSET_NONE.
 	 *
-	 * MT safe.
-	 *
 	 * Params:
 	 *     flags = the #GstBufferCopyFlags
 	 *     offset = the offset into parent #GstBuffer at which the new sub-buffer
@@ -514,18 +557,18 @@ public class Buffer
 	 */
 	public Buffer copyRegion(GstBufferCopyFlags flags, size_t offset, size_t size)
 	{
-		auto p = gst_buffer_copy_region(gstBuffer, flags, offset, size);
+		auto __p = gst_buffer_copy_region(gstBuffer, flags, offset, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
-	 * Copy @size bytes starting from @offset in @buffer to @dest.
+	 * Copies @size bytes starting from @offset in @buffer to @dest.
 	 *
 	 * Params:
 	 *     offset = the offset to extract
@@ -553,7 +596,7 @@ public class Buffer
 	 */
 	public void extractDup(size_t offset, size_t size, out ubyte[] dest)
 	{
-		ubyte* outdest = null;
+		ubyte* outdest;
 		size_t destSize;
 
 		gst_buffer_extract_dup(gstBuffer, offset, size, cast(void**)&outdest, &destSize);
@@ -562,7 +605,7 @@ public class Buffer
 	}
 
 	/**
-	 * Copy @size bytes from @src to @buffer at @offset.
+	 * Copies @size bytes from @src to @buffer at @offset.
 	 *
 	 * Params:
 	 *     offset = the offset to fill
@@ -577,7 +620,7 @@ public class Buffer
 	}
 
 	/**
-	 * Find the memory blocks that span @size bytes starting from @offset
+	 * Finds the memory blocks that span @size bytes starting from @offset
 	 * in @buffer.
 	 *
 	 * When this function returns %TRUE, @idx will contain the index of the first
@@ -604,10 +647,10 @@ public class Buffer
 	}
 
 	/**
-	 * Call @func with @user_data for each meta in @buffer.
+	 * Calls @func with @user_data for each meta in @buffer.
 	 *
 	 * @func can modify the passed meta pointer or its contents. The return value
-	 * of @func define if this function returns or if the remaining metadata items
+	 * of @func defines if this function returns or if the remaining metadata items
 	 * in the buffer should be skipped.
 	 *
 	 * Params:
@@ -622,26 +665,47 @@ public class Buffer
 	}
 
 	/**
-	 * Get all the memory block in @buffer. The memory blocks will be merged
+	 * Gets all the memory blocks in @buffer. The memory blocks will be merged
 	 * into one large #GstMemory.
 	 *
 	 * Returns: a #GstMemory that contains the merged memory.
-	 *     Use gst_memory_unref () after usage.
 	 */
 	public Memory getAllMemory()
 	{
-		auto p = gst_buffer_get_all_memory(gstBuffer);
+		auto __p = gst_buffer_get_all_memory(gstBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
-	 * Get the #GstBufferFlags flags set on this buffer.
+	 * Finds the first #GstCustomMeta on @buffer for the desired @name.
+	 *
+	 * Params:
+	 *     name = the registered name of the custom meta to retrieve.
+	 *
+	 * Returns: the #GstCustomMeta
+	 *
+	 * Since: 1.20
+	 */
+	public CustomMeta getCustomMeta(string name)
+	{
+		auto __p = gst_buffer_get_custom_meta(gstBuffer, Str.toStringz(name));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(CustomMeta)(cast(GstCustomMeta*) __p);
+	}
+
+	/**
+	 * Gets the #GstBufferFlags flags set on this buffer.
 	 *
 	 * Returns: the flags set on this buffer.
 	 *
@@ -653,28 +717,28 @@ public class Buffer
 	}
 
 	/**
-	 * Get the memory block at index @idx in @buffer.
+	 * Gets the memory block at index @idx in @buffer.
 	 *
 	 * Params:
 	 *     idx = an index
 	 *
 	 * Returns: a #GstMemory that contains the data of the
-	 *     memory block at @idx. Use gst_memory_unref () after usage.
+	 *     memory block at @idx.
 	 */
 	public Memory getMemory(uint idx)
 	{
-		auto p = gst_buffer_get_memory(gstBuffer, idx);
+		auto __p = gst_buffer_get_memory(gstBuffer, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
-	 * Get @length memory blocks in @buffer starting at @idx. The memory blocks will
+	 * Gets @length memory blocks in @buffer starting at @idx. The memory blocks will
 	 * be merged into one large #GstMemory.
 	 *
 	 * If @length is -1, all memory starting from @idx is merged.
@@ -684,43 +748,42 @@ public class Buffer
 	 *     length = a length
 	 *
 	 * Returns: a #GstMemory that contains the merged data of @length
-	 *     blocks starting at @idx. Use gst_memory_unref () after usage.
+	 *     blocks starting at @idx.
 	 */
 	public Memory getMemoryRange(uint idx, int length)
 	{
-		auto p = gst_buffer_get_memory_range(gstBuffer, idx, length);
+		auto __p = gst_buffer_get_memory_range(gstBuffer, idx, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
-	 * Get the metadata for @api on buffer. When there is no such metadata, %NULL is
+	 * Gets the metadata for @api on buffer. When there is no such metadata, %NULL is
 	 * returned. If multiple metadata with the given @api are attached to this
 	 * buffer only the first one is returned.  To handle multiple metadata with a
 	 * given API use gst_buffer_iterate_meta() or gst_buffer_foreach_meta() instead
-	 * and check the meta->info.api member for the API type.
+	 * and check the `meta->info.api` member for the API type.
 	 *
 	 * Params:
 	 *     api = the #GType of an API
 	 *
-	 * Returns: the metadata for @api on
-	 *     @buffer.
+	 * Returns: the metadata for @api on @buffer.
 	 */
 	public Meta getMeta(GType api)
 	{
-		auto p = gst_buffer_get_meta(gstBuffer, api);
+		auto __p = gst_buffer_get_meta(gstBuffer, api);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
@@ -737,7 +800,7 @@ public class Buffer
 	}
 
 	/**
-	 * Find the first #GstReferenceTimestampMeta on @buffer that conforms to
+	 * Finds the first #GstReferenceTimestampMeta on @buffer that conforms to
 	 * @reference. Conformance is tested by checking if the meta's reference is a
 	 * subset of @reference.
 	 *
@@ -757,7 +820,7 @@ public class Buffer
 	}
 
 	/**
-	 * Get the total size of the memory blocks in @buffer.
+	 * Gets the total size of the memory blocks in @buffer.
 	 *
 	 * Returns: total size of the memory blocks in @buffer.
 	 */
@@ -767,7 +830,7 @@ public class Buffer
 	}
 
 	/**
-	 * Get the total size of the memory blocks in @b.
+	 * Gets the total size of the memory blocks in @buffer.
 	 *
 	 * When not %NULL, @offset will contain the offset of the data in the
 	 * first memory block in @buffer and @maxsize will contain the sum of
@@ -787,7 +850,7 @@ public class Buffer
 	}
 
 	/**
-	 * Get the total size of @length memory blocks stating from @idx in @buffer.
+	 * Gets the total size of @length memory blocks stating from @idx in @buffer.
 	 *
 	 * When not %NULL, @offset will contain the offset of the data in the
 	 * memory block in @buffer at @idx and @maxsize will contain the sum of the size
@@ -809,14 +872,23 @@ public class Buffer
 		return gst_buffer_get_sizes_range(gstBuffer, idx, length, &offset, &maxsize);
 	}
 
-	/** */
+	/**
+	 * Gives the status of a specific flag on a buffer.
+	 *
+	 * Params:
+	 *     flags = the #GstBufferFlags flag to check.
+	 *
+	 * Returns: %TRUE if all flags in @flags are found on @buffer.
+	 *
+	 * Since: 1.10
+	 */
 	public bool hasFlags(GstBufferFlags flags)
 	{
 		return gst_buffer_has_flags(gstBuffer, flags) != 0;
 	}
 
 	/**
-	 * Insert the memory block @mem to @buffer at @idx. This function takes ownership
+	 * Inserts the memory block @mem into @buffer at @idx. This function takes ownership
 	 * of @mem and thus doesn't increase its refcount.
 	 *
 	 * Only gst_buffer_get_max_memory() can be added to a buffer. If more memory is
@@ -829,11 +901,11 @@ public class Buffer
 	 */
 	public void insertMemory(int idx, Memory mem)
 	{
-		gst_buffer_insert_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_insert_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
-	 * Check if all memory blocks in @buffer are writable.
+	 * Checks if all memory blocks in @buffer are writable.
 	 *
 	 * Note that this function does not check if @buffer is writable, use
 	 * gst_buffer_is_writable() to check that if needed.
@@ -848,7 +920,7 @@ public class Buffer
 	}
 
 	/**
-	 * Check if @length memory blocks in @buffer starting from @idx are writable.
+	 * Checks if @length memory blocks in @buffer starting from @idx are writable.
 	 *
 	 * @length can be -1 to check all the memory blocks after @idx.
 	 *
@@ -857,7 +929,7 @@ public class Buffer
 	 *
 	 * Params:
 	 *     idx = an index
-	 *     length = a length should not be 0
+	 *     length = a length, should not be 0
 	 *
 	 * Returns: %TRUE if the memory range is writable
 	 *
@@ -869,7 +941,7 @@ public class Buffer
 	}
 
 	/**
-	 * Retrieve the next #GstMeta after @current. If @state points
+	 * Retrieves the next #GstMeta after @current. If @state points
 	 * to %NULL, the first metadata is returned.
 	 *
 	 * @state will be updated with an opaque state pointer
@@ -882,18 +954,18 @@ public class Buffer
 	 */
 	public Meta iterateMeta(out void* state)
 	{
-		auto p = gst_buffer_iterate_meta(gstBuffer, &state);
+		auto __p = gst_buffer_iterate_meta(gstBuffer, &state);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
-	 * Retrieve the next #GstMeta of type @meta_api_type after the current one
+	 * Retrieves the next #GstMeta of type @meta_api_type after the current one
 	 * according to @state. If @state points to %NULL, the first metadata of
 	 * type @meta_api_type is returned.
 	 *
@@ -910,19 +982,18 @@ public class Buffer
 	 */
 	public Meta iterateMetaFiltered(out void* state, GType metaApiType)
 	{
-		auto p = gst_buffer_iterate_meta_filtered(gstBuffer, &state, metaApiType);
+		auto __p = gst_buffer_iterate_meta_filtered(gstBuffer, &state, metaApiType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) __p);
 	}
 
 	/**
-	 * This function fills @info with the #GstMapInfo of all merged memory
-	 * blocks in @buffer.
+	 * Fills @info with the #GstMapInfo of all merged memory blocks in @buffer.
 	 *
 	 * @flags describe the desired access of the memory. When @flags is
 	 * #GST_MAP_WRITE, @buffer should be writable (as returned from
@@ -947,7 +1018,7 @@ public class Buffer
 	}
 
 	/**
-	 * This function fills @info with the #GstMapInfo of @length merged memory blocks
+	 * Fills @info with the #GstMapInfo of @length merged memory blocks
 	 * starting at @idx in @buffer. When @length is -1, all memory blocks starting
 	 * from @idx are merged and mapped.
 	 *
@@ -976,7 +1047,7 @@ public class Buffer
 	}
 
 	/**
-	 * Compare @size bytes starting from @offset in @buffer with the memory in @mem.
+	 * Compares @size bytes starting from @offset in @buffer with the memory in @mem.
 	 *
 	 * Params:
 	 *     offset = the offset in @buffer
@@ -990,7 +1061,7 @@ public class Buffer
 	}
 
 	/**
-	 * Fill @buf with @size bytes with @val starting from @offset.
+	 * Fills @buf with @size bytes with @val starting from @offset.
 	 *
 	 * Params:
 	 *     offset = the offset in @buffer
@@ -1006,7 +1077,7 @@ public class Buffer
 	}
 
 	/**
-	 * Get the amount of memory blocks that this buffer has. This amount is never
+	 * Gets the amount of memory blocks that this buffer has. This amount is never
 	 * larger than what gst_buffer_get_max_memory() returns.
 	 *
 	 * Returns: the number of memory blocks this buffer is made of.
@@ -1017,7 +1088,7 @@ public class Buffer
 	}
 
 	/**
-	 * Get the memory block at @idx in @buffer. The memory block stays valid until
+	 * Gets the memory block at @idx in @buffer. The memory block stays valid until
 	 * the memory block in @buffer is removed, replaced or merged, typically with
 	 * any call that modifies the memory in @buffer.
 	 *
@@ -1028,18 +1099,18 @@ public class Buffer
 	 */
 	public Memory peekMemory(uint idx)
 	{
-		auto p = gst_buffer_peek_memory(gstBuffer, idx);
+		auto __p = gst_buffer_peek_memory(gstBuffer, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p);
 	}
 
 	/**
-	 * Prepend the memory block @mem to @buffer. This function takes
+	 * Prepends the memory block @mem to @buffer. This function takes
 	 * ownership of @mem and thus doesn't increase its refcount.
 	 *
 	 * This function is identical to gst_buffer_insert_memory() with an index of 0.
@@ -1050,11 +1121,35 @@ public class Buffer
 	 */
 	public void prependMemory(Memory mem)
 	{
-		gst_buffer_prepend_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_prepend_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
+	}
+
+	alias doref = ref_;
+	/**
+	 * Increases the refcount of the given buffer by one.
+	 *
+	 * Note that the refcount affects the writability
+	 * of @buf and its metadata, see gst_buffer_is_writable().
+	 * It is important to note that keeping additional references to
+	 * GstBuffer instances can potentially increase the number
+	 * of `memcpy` operations in a pipeline.
+	 *
+	 * Returns: @buf
+	 */
+	public Buffer ref_()
+	{
+		auto __p = gst_buffer_ref(gstBuffer);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p, true);
 	}
 
 	/**
-	 * Remove all the memory blocks in @buffer.
+	 * Removes all the memory blocks in @buffer.
 	 */
 	public void removeAllMemory()
 	{
@@ -1062,7 +1157,7 @@ public class Buffer
 	}
 
 	/**
-	 * Remove the memory block in @b at index @i.
+	 * Removes the memory block in @b at index @i.
 	 *
 	 * Params:
 	 *     idx = an index
@@ -1073,7 +1168,7 @@ public class Buffer
 	}
 
 	/**
-	 * Remove @length memory blocks in @buffer starting from @idx.
+	 * Removes @length memory blocks in @buffer starting from @idx.
 	 *
 	 * @length can be -1, in which case all memory starting from @idx is removed.
 	 *
@@ -1087,7 +1182,7 @@ public class Buffer
 	}
 
 	/**
-	 * Remove the metadata for @meta on @buffer.
+	 * Removes the metadata for @meta on @buffer.
 	 *
 	 * Params:
 	 *     meta = a #GstMeta
@@ -1108,7 +1203,7 @@ public class Buffer
 	 */
 	public void replaceAllMemory(Memory mem)
 	{
-		gst_buffer_replace_all_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_replace_all_memory(gstBuffer, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
@@ -1120,7 +1215,7 @@ public class Buffer
 	 */
 	public void replaceMemory(uint idx, Memory mem)
 	{
-		gst_buffer_replace_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_replace_memory(gstBuffer, idx, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
@@ -1133,16 +1228,16 @@ public class Buffer
 	 *
 	 * Params:
 	 *     idx = an index
-	 *     length = a length should not be 0
+	 *     length = a length, should not be 0
 	 *     mem = a #GstMemory
 	 */
 	public void replaceMemoryRange(uint idx, int length, Memory mem)
 	{
-		gst_buffer_replace_memory_range(gstBuffer, idx, length, (mem is null) ? null : mem.getMemoryStruct());
+		gst_buffer_replace_memory_range(gstBuffer, idx, length, (mem is null) ? null : mem.getMemoryStruct(true));
 	}
 
 	/**
-	 * Set the offset and total size of the memory blocks in @buffer.
+	 * Sets the offset and total size of the memory blocks in @buffer.
 	 *
 	 * Params:
 	 *     offset = the offset adjustment
@@ -1154,7 +1249,7 @@ public class Buffer
 	}
 
 	/**
-	 * Set the total size of the @length memory blocks starting at @idx in
+	 * Sets the total size of the @length memory blocks starting at @idx in
 	 * @buffer
 	 *
 	 * Params:
@@ -1186,7 +1281,7 @@ public class Buffer
 	}
 
 	/**
-	 * Set the total size of the memory blocks in @buffer.
+	 * Sets the total size of the memory blocks in @buffer.
 	 *
 	 * Params:
 	 *     size = the new size
@@ -1197,7 +1292,7 @@ public class Buffer
 	}
 
 	/**
-	 * Release the memory previously mapped with gst_buffer_map().
+	 * Releases the memory previously mapped with gst_buffer_map().
 	 *
 	 * Params:
 	 *     info = a #GstMapInfo
@@ -1205,6 +1300,15 @@ public class Buffer
 	public void unmap(GstMapInfo* info)
 	{
 		gst_buffer_unmap(gstBuffer, info);
+	}
+
+	/**
+	 * Decreases the refcount of the buffer. If the refcount reaches 0, the buffer
+	 * with the associated metadata and memory will be freed.
+	 */
+	public void unref()
+	{
+		gst_buffer_unref(gstBuffer);
 	}
 
 	/**
@@ -1223,7 +1327,7 @@ public class Buffer
 	}
 
 	/**
-	 * Get the maximum amount of memory blocks that a buffer can hold. This is a
+	 * Gets the maximum amount of memory blocks that a buffer can hold. This is a
 	 * compile time constant that can be queried with the function.
 	 *
 	 * When more memory blocks are added, existing memory blocks will be merged
@@ -1236,5 +1340,32 @@ public class Buffer
 	public static uint getMaxMemory()
 	{
 		return gst_buffer_get_max_memory();
+	}
+
+	/**
+	 * Modifies a pointer to a #GstBuffer to point to a different #GstBuffer. The
+	 * modification is done atomically (so this is useful for ensuring thread safety
+	 * in some cases), and the reference counts are updated appropriately (the old
+	 * buffer is unreffed, the new is reffed).
+	 *
+	 * Either @nbuf or the #GstBuffer pointed to by @obuf may be %NULL.
+	 *
+	 * Params:
+	 *     obuf = pointer to a pointer to
+	 *         a #GstBuffer to be replaced.
+	 *     nbuf = pointer to a #GstBuffer that will
+	 *         replace the buffer pointed to by @obuf.
+	 *
+	 * Returns: %TRUE when @obuf was different from @nbuf.
+	 */
+	public static bool replace(ref Buffer obuf, Buffer nbuf)
+	{
+		GstBuffer* outobuf = obuf.getBufferStruct();
+
+		auto __p = gst_buffer_replace(&outobuf, (nbuf is null) ? null : nbuf.getBufferStruct()) != 0;
+
+		obuf = ObjectG.getDObject!(Buffer)(outobuf);
+
+		return __p;
 	}
 }

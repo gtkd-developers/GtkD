@@ -42,6 +42,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.giotypes;
@@ -71,6 +72,13 @@ private import std.algorithm;
  * the message bus launching an owner (unless
  * %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START is set).
  * 
+ * If the proxy is for a stateless D-Bus service, where the name owner may
+ * be started and stopped between calls, the #GDBusProxy:g-name-owner tracking
+ * of #GDBusProxy will cause the proxy to drop signal and property changes from
+ * the service after it has restarted for the first time. When interacting
+ * with a stateless D-Bus service, do not use #GDBusProxy — use direct D-Bus
+ * method calls and signal connections.
+ * 
  * The generic #GDBusProxy::g-properties-changed and
  * #GDBusProxy::g-signal signals are not very convenient to work with.
  * Therefore, the recommended way of working with proxies is to subclass
@@ -85,7 +93,7 @@ private import std.algorithm;
  * of the thread where the instance was constructed.
  * 
  * An example using a proxy for a well-known name can be found in
- * [gdbus-example-watch-proxy.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-watch-proxy.c)
+ * [gdbus-example-watch-proxy.c](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/tests/gdbus-example-watch-proxy.c)
  *
  * Since: 2.26
  */
@@ -747,6 +755,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the name that @proxy was constructed for.
 	 *
+	 * When connected to a message bus, this will usually be non-%NULL.
+	 * However, it may be %NULL for a proxy that communicates using a peer-to-peer
+	 * pattern.
+	 *
 	 * Returns: A string owned by @proxy. Do not free.
 	 *
 	 * Since: 2.26
@@ -893,6 +905,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 
 	/**
 	 * Emitted when a signal from the remote object and interface that @proxy is for, has been received.
+	 *
+	 * Since 2.72 this signal supports detailed connections. You can connect to
+	 * the detailed signal `g-signal::x` in order to receive callbacks only when
+	 * signal `x` is received from the remote object.
 	 *
 	 * Params:
 	 *     senderName = The sender of the signal or %NULL if the connection is not a bus connection.

@@ -27,6 +27,7 @@ module atk.ImageT;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.Str;
+public  import glib.c.functions;
 public  import gtkc.atktypes;
 
 
@@ -84,6 +85,9 @@ public template ImageT(TStruct)
 	 * Gets the position of the image in the form of a point specifying the
 	 * images top-left corner.
 	 *
+	 * If the position can not be obtained (e.g. missing support), x and y are set
+	 * to -1.
+	 *
 	 * Params:
 	 *     x = address of #gint to put x coordinate position; otherwise, -1 if value cannot be obtained.
 	 *     y = address of #gint to put y coordinate position; otherwise, -1 if value cannot be obtained.
@@ -99,6 +103,9 @@ public template ImageT(TStruct)
 	 * Get the width and height in pixels for the specified image.
 	 * The values of @width and @height are returned as -1 if the
 	 * values cannot be obtained (for instance, if the object is not onscreen).
+	 *
+	 * If the size can not be obtained (e.g. missing support), x and y are set
+	 * to -1.
 	 *
 	 * Params:
 	 *     width = filled with the image width, or -1 if the value cannot be obtained.

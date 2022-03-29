@@ -119,8 +119,9 @@ public struct FileUtils
 
 	/**
 	 * Gets a #GFileError constant based on the passed-in @err_no.
+	 *
 	 * For example, if you pass in `EEXIST` this function returns
-	 * #G_FILE_ERROR_EXIST. Unlike `errno` values, you can portably
+	 * %G_FILE_ERROR_EXIST. Unlike `errno` values, you can portably
 	 * assume that all #GFileError values will exist.
 	 *
 	 * Normally a #GFileError value goes into a #GError returned
@@ -130,7 +131,7 @@ public struct FileUtils
 	 * Params:
 	 *     errNo = an "errno" value
 	 *
-	 * Returns: #GFileError corresponding to the given @errno
+	 * Returns: #GFileError corresponding to the given @err_no
 	 */
 	public static GFileError fileErrorFromErrno(int errNo)
 	{
@@ -151,7 +152,7 @@ public struct FileUtils
 	 * contents and @length to the length of the file contents in bytes. The string
 	 * stored in @contents will be nul-terminated, so for text files you can pass
 	 * %NULL for the @length argument. If the call was not successful, it returns
-	 * %FALSE and sets @error. The error domain is #G_FILE_ERROR. Possible error
+	 * %FALSE and sets @error. The error domain is %G_FILE_ERROR. Possible error
 	 * codes are those in the #GFileError enumeration. In the error case,
 	 * @contents is set to %NULL and @length is set to zero.
 	 *
@@ -238,8 +239,8 @@ public struct FileUtils
 	 * Params:
 	 *     filename = the symbolic link
 	 *
-	 * Returns: A newly-allocated string with the contents of
-	 *     the symbolic link, or %NULL if an error occurred.
+	 * Returns: A newly-allocated string with
+	 *     the contents of the symbolic link, or %NULL if an error occurred.
 	 *
 	 * Since: 2.4
 	 *
@@ -261,42 +262,10 @@ public struct FileUtils
 	}
 
 	/**
-	 * Writes all of @contents to a file named @filename, with good error checking.
-	 * If a file called @filename already exists it will be overwritten.
-	 *
-	 * This write is atomic in the sense that it is first written to a temporary
-	 * file which is then renamed to the final name. Notes:
-	 *
-	 * - On UNIX, if @filename already exists hard links to @filename will break.
-	 * Also since the file is recreated, existing permissions, access control
-	 * lists, metadata etc. may be lost. If @filename is a symbolic link,
-	 * the link itself will be replaced, not the linked file.
-	 *
-	 * - On UNIX, if @filename already exists and is non-empty, and if the system
-	 * supports it (via a journalling filesystem or equivalent), the fsync()
-	 * call (or equivalent) will be used to ensure atomic replacement: @filename
-	 * will contain either its old contents or @contents, even in the face of
-	 * system power loss, the disk being unsafely removed, etc.
-	 *
-	 * - On UNIX, if @filename does not already exist or is empty, there is a
-	 * possibility that system power loss etc. after calling this function will
-	 * leave @filename empty or full of NUL bytes, depending on the underlying
-	 * filesystem.
-	 *
-	 * - On Windows renaming a file will not remove an existing file with the
-	 * new name, so on Windows there is a race condition between the existing
-	 * file being removed and the temporary file being renamed.
-	 *
-	 * - On Windows there is no way to remove a file that is open to some
-	 * process, or mapped into memory. Thus, this function will fail if
-	 * @filename already exists and is open.
-	 *
-	 * If the call was successful, it returns %TRUE. If the call was not successful,
-	 * it returns %FALSE and sets @error. The error domain is #G_FILE_ERROR.
-	 * Possible error codes are those in the #GFileError enumeration.
-	 *
-	 * Note that the name for the temporary file is constructed by appending up
-	 * to 7 characters to @filename.
+	 * Writes all of @contents to a file named @filename. This is a convenience
+	 * wrapper around calling g_file_set_contents_full() with `flags` set to
+	 * `G_FILE_SET_CONTENTS_CONSISTENT | G_FILE_SET_CONTENTS_ONLY_EXISTING` and
+	 * `mode` set to `0666`.
 	 *
 	 * Params:
 	 *     filename = name of a file to write @contents to, in the GLib file name

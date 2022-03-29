@@ -27,6 +27,7 @@ module gstreamer.Structure;
 private import glib.ConstructionException;
 private import glib.Date;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.ValueArray;
@@ -38,22 +39,23 @@ private import gtkd.Loader;
 
 
 /**
- * A #GstStructure is a collection of key/value pairs. The keys are expressed
- * as GQuarks and the values can be of any GType.
+ * A #GstStructure is a collection of key/value pairs. The keys are expressed as
+ * GQuarks and the values can be of any GType.
  * 
  * In addition to the key/value pairs, a #GstStructure also has a name. The name
- * starts with a letter and can be filled by letters, numbers and any of "/-_.:".
+ * starts with a letter and can be filled by letters, numbers and any of
+ * "/-_.:".
  * 
- * #GstStructure is used by various GStreamer subsystems to store information
- * in a flexible and extensible way. A #GstStructure does not have a refcount
+ * #GstStructure is used by various GStreamer subsystems to store information in
+ * a flexible and extensible way. A #GstStructure does not have a refcount
  * because it usually is part of a higher level object such as #GstCaps,
  * #GstMessage, #GstEvent, #GstQuery. It provides a means to enforce mutability
  * using the refcount of the parent with the gst_structure_set_parent_refcount()
  * method.
  * 
  * A #GstStructure can be created with gst_structure_new_empty() or
- * gst_structure_new(), which both take a name and an optional set of
- * key/value pairs along with the types of the values.
+ * gst_structure_new(), which both take a name and an optional set of key/value
+ * pairs along with the types of the values.
  * 
  * Field values can be changed with gst_structure_set_value() or
  * gst_structure_set().
@@ -64,14 +66,83 @@ private import gtkd.Loader;
  * Fields can be removed with gst_structure_remove_field() or
  * gst_structure_remove_fields().
  * 
- * Strings in structures must be ASCII or UTF-8 encoded. Other encodings are
- * not allowed. Strings may be %NULL however.
+ * Strings in structures must be ASCII or UTF-8 encoded. Other encodings are not
+ * allowed. Strings may be %NULL however.
  * 
- * Be aware that the current #GstCaps / #GstStructure serialization into string
- * has limited support for nested #GstCaps / #GstStructure fields. It can only
- * support one level of nesting. Using more levels will lead to unexpected
- * behavior when using serialization features, such as gst_caps_to_string() or
- * gst_value_serialize() and their counterparts.
+ * ## The serialization format
+ * 
+ * GstStructure serialization format serialize the GstStructure name,
+ * keys/GType/values in a comma separated list with the structure name as first
+ * field without value followed by separated key/value pairs in the form
+ * `key=value`, for example:
+ * 
+ * ```
+ * a-structure, key=value
+ * ````
+ * 
+ * The values type will be inferred if not explicitly specified with the
+ * `(GTypeName)value` syntax, for example the following struct will have one
+ * field called 'is-string' which has the string 'true' as a value:
+ * 
+ * ```
+ * a-struct, field-is-string=(string)true, field-is-boolean=true
+ * ```
+ * 
+ * *Note*: without specifying `(string), `field-is-string` type would have been
+ * inferred as boolean.
+ * 
+ * *Note*: we specified `(string)` as a type even if `gchararray` is the actual
+ * GType name as for convenience some well known types have been aliased or
+ * abbreviated.
+ * 
+ * To avoid specifying the type, you can give some hints to the "type system".
+ * For example to specify a value as a double, you should add a decimal (ie. `1`
+ * is an `int` while `1.0` is a `double`).
+ * 
+ * *Note*: when a structure is serialized with #gst_structure_to_string, all
+ * values are explicitly typed.
+ * 
+ * Some types have special delimiters:
+ * 
+ * - [GstValueArray](GST_TYPE_ARRAY) are inside curly brackets (`{` and `}`).
+ * For example `a-structure, array={1, 2, 3}`
+ * - Ranges are inside brackets (`[` and `]`). For example `a-structure,
+ * range=[1, 6, 2]` 1 being the min value, 6 the maximum and 2 the step. To
+ * specify a #GST_TYPE_INT64_RANGE you need to explicitly specify it like:
+ * `a-structure, a-int64-range=(gint64) [1, 5]`
+ * - [GstValueList](GST_TYPE_LIST) are inside "less and greater than" (`<` and
+ * `>`). For example `a-structure, list=<1, 2, 3>
+ * 
+ * Structures are delimited either by a null character `\0` or a semicolon `;`
+ * the latter allowing to store multiple structures in the same string (see
+ * #GstCaps).
+ * 
+ * Quotes are used as "default" delimiters and can be used around any types that
+ * don't use other delimiters (for example `a-struct, i=(int)"1"`). They are use
+ * to allow adding spaces or special characters (such as delimiters,
+ * semicolumns, etc..) inside strings and you can use backslashes `\` to escape
+ * characters inside them, for example:
+ * 
+ * ```
+ * a-struct, special="\"{[(;)]}\" can be used inside quotes"
+ * ```
+ * 
+ * They also allow for nested structure, such as:
+ * 
+ * ```
+ * a-struct, nested=(GstStructure)"nested-struct, nested=true"
+ * ```
+ * 
+ * Since 1.20, nested structures and caps can be specified using brackets (`[`
+ * and `]`), for example:
+ * 
+ * ```
+ * a-struct, nested=[nested-struct, nested=true]
+ * ```
+ * 
+ * > *note*: gst_structure_to_string() won't use that syntax for backward
+ * > compatibility reason, gst_structure_serialize() has been added for
+ * > that purpose.
  */
 public class Structure
 {
@@ -130,6 +201,39 @@ public class Structure
 	}
 
 	/**
+	 * Creates a #GstStructure from a string representation.
+	 * If end is not %NULL, a pointer to the place inside the given string
+	 * where parsing ended will be returned.
+	 *
+	 * Free-function: gst_structure_free
+	 *
+	 * Params:
+	 *     string_ = a string representation of a #GstStructure.
+	 *     end = pointer to store the end of the string in.
+	 *
+	 * Returns: a new #GstStructure or %NULL
+	 *     when the string could not be parsed. Free with
+	 *     gst_structure_free() after use.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string string_, out string end)
+	{
+		char* outend = null;
+
+		auto __p = gst_structure_from_string(Str.toStringz(string_), &outend);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by from_string");
+		}
+
+		end = Str.toString(outend);
+
+		this(cast(GstStructure*) __p);
+	}
+
+	/**
 	 * Creates a new, empty #GstStructure with the given @name.
 	 *
 	 * See gst_structure_set_name() for constraints on the @name parameter.
@@ -145,14 +249,14 @@ public class Structure
 	 */
 	public this(string name)
 	{
-		auto p = gst_structure_new_empty(Str.toStringz(name));
+		auto __p = gst_structure_new_empty(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
 
-		this(cast(GstStructure*) p);
+		this(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -169,14 +273,14 @@ public class Structure
 	 */
 	public this(GQuark quark)
 	{
-		auto p = gst_structure_new_id_empty(quark);
+		auto __p = gst_structure_new_id_empty(quark);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_id_empty");
 		}
 
-		this(cast(GstStructure*) p);
+		this(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -199,14 +303,14 @@ public class Structure
 	 */
 	public this(string name, string firstfield, void* varargs)
 	{
-		auto p = gst_structure_new_valist(Str.toStringz(name), Str.toStringz(firstfield), varargs);
+		auto __p = gst_structure_new_valist(Str.toStringz(name), Str.toStringz(firstfield), varargs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(GstStructure*) p);
+		this(cast(GstStructure*) __p);
 	}
 
 	/**
@@ -232,14 +336,14 @@ public class Structure
 	 */
 	public Structure copy()
 	{
-		auto p = gst_structure_copy(gstStructure);
+		auto __p = gst_structure_copy(gstStructure);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
@@ -400,16 +504,18 @@ public class Structure
 	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a %GST_TYPE_ARRAY,
 	 *     this function returns %FALSE.
+	 *
+	 * Since: 1.12
 	 */
 	public bool getArray(string fieldname, out ValueArray array)
 	{
 		GValueArray* outarray = null;
 
-		auto p = gst_structure_get_array(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
+		auto __p = gst_structure_get_array(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
 
 		array = ObjectG.getDObject!(ValueArray)(outarray);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -429,11 +535,11 @@ public class Structure
 	{
 		int outvalue;
 
-		auto p = gst_structure_get_boolean(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
+		auto __p = gst_structure_get_boolean(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
 
 		value = (outvalue == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -476,11 +582,11 @@ public class Structure
 	{
 		GDate* outvalue = null;
 
-		auto p = gst_structure_get_date(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
+		auto __p = gst_structure_get_date(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
 
 		value = new Date(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -505,11 +611,11 @@ public class Structure
 	{
 		GstDateTime* outvalue = null;
 
-		auto p = gst_structure_get_date_time(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
+		auto __p = gst_structure_get_date_time(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
 
 		value = ObjectG.getDObject!(DateTime)(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -655,17 +761,17 @@ public class Structure
 	 *     with @fieldname or the existing field did not contain a %GST_TYPE_LIST, this
 	 *     function returns %FALSE.
 	 *
-	 *     Since 1.12
+	 * Since: 1.12
 	 */
 	public bool getList(string fieldname, out ValueArray array)
 	{
 		GValueArray* outarray = null;
 
-		auto p = gst_structure_get_list(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
+		auto __p = gst_structure_get_list(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
 
 		array = ObjectG.getDObject!(ValueArray)(outarray);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -772,14 +878,14 @@ public class Structure
 	 */
 	public Value getValue(string fieldname)
 	{
-		auto p = gst_structure_get_value(gstStructure, Str.toStringz(fieldname));
+		auto __p = gst_structure_get_value(gstStructure, Str.toStringz(fieldname));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -849,14 +955,14 @@ public class Structure
 	 */
 	public Value idGetValue(GQuark field)
 	{
-		auto p = gst_structure_id_get_value(gstStructure, field);
+		auto __p = gst_structure_id_get_value(gstStructure, field);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -936,14 +1042,14 @@ public class Structure
 	 */
 	public Structure intersect(Structure struct2)
 	{
-		auto p = gst_structure_intersect(gstStructure, (struct2 is null) ? null : struct2.getStructureStruct());
+		auto __p = gst_structure_intersect(gstStructure, (struct2 is null) ? null : struct2.getStructureStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) __p, true);
 	}
 
 	/**
@@ -1047,16 +1153,42 @@ public class Structure
 	}
 
 	/**
+	 * Converts @structure to a human-readable string representation.
+	 *
+	 * This version of the caps serialization function introduces support for nested
+	 * structures and caps but the resulting strings won't be parsable with
+	 * GStreamer prior to 1.20 unless #GST_SERIALIZE_FLAG_BACKWARD_COMPAT is passed
+	 * as @flag.
+	 *
+	 * Free-function: g_free
+	 *
+	 * Params:
+	 *     flags = The flags to use to serialize structure
+	 *
+	 * Returns: a pointer to string allocated by g_malloc().
+	 *     g_free() after usage.
+	 *
+	 * Since: 1.20
+	 */
+	public string serialize(GstSerializeFlags flags)
+	{
+		auto retStr = gst_structure_serialize(gstStructure, flags);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
 	 * This is useful in language bindings where unknown GValue types are not
 	 * supported. This function will convert a @array to %GST_TYPE_ARRAY and set
 	 * the field specified by @fieldname.  Be aware that this is slower then using
 	 * %GST_TYPE_ARRAY in a #GValue directly.
 	 *
-	 * Since 1.12
-	 *
 	 * Params:
 	 *     fieldname = the name of a field
 	 *     array = a pointer to a #GValueArray
+	 *
+	 * Since: 1.12
 	 */
 	public void setArray(string fieldname, ValueArray array)
 	{
@@ -1069,11 +1201,11 @@ public class Structure
 	 * the field specified by @fieldname. Be aware that this is slower then using
 	 * %GST_TYPE_LIST in a #GValue directly.
 	 *
-	 * Since 1.12
-	 *
 	 * Params:
 	 *     fieldname = the name of a field
 	 *     array = a pointer to a #GValueArray
+	 *
+	 * Since: 1.12
 	 */
 	public void setList(string fieldname, ValueArray array)
 	{
@@ -1152,14 +1284,14 @@ public class Structure
 	/**
 	 * Converts @structure to a human-readable string representation.
 	 *
-	 * For debugging purposes its easier to do something like this:
-	 * |[<!-- language="C" -->
-	 * GST_LOG ("structure is %" GST_PTR_FORMAT, structure);
+	 * For debugging purposes its easier to do something like this: |[<!--
+	 * language="C" --> GST_LOG ("structure is %" GST_PTR_FORMAT, structure);
 	 * ]|
 	 * This prints the structure in human readable form.
 	 *
-	 * The current implementation of serialization will lead to unexpected results
-	 * when there are nested #GstCaps / #GstStructure deeper than one level.
+	 * This function will lead to unexpected results when there are nested #GstCaps
+	 * / #GstStructure deeper than one level, you should user
+	 * gst_structure_serialize() instead for those cases.
 	 *
 	 * Free-function: g_free
 	 *
@@ -1175,33 +1307,32 @@ public class Structure
 	}
 
 	/**
-	 * Creates a #GstStructure from a string representation.
-	 * If end is not %NULL, a pointer to the place inside the given string
-	 * where parsing ended will be returned.
+	 * Atomically modifies a pointer to point to a new structure.
+	 * The #GstStructure @oldstr_ptr is pointing to is freed and
+	 * @newstr is taken ownership over.
 	 *
-	 * Free-function: gst_structure_free
+	 * Either @newstr and the value pointed to by @oldstr_ptr may be %NULL.
+	 *
+	 * It is a programming error if both @newstr and the value pointed to by
+	 * @oldstr_ptr refer to the same, non-%NULL structure.
 	 *
 	 * Params:
-	 *     string_ = a string representation of a #GstStructure.
-	 *     end = pointer to store the end of the string in.
+	 *     oldstrPtr = pointer to a place of
+	 *         a #GstStructure to take
+	 *     newstr = a new #GstStructure
 	 *
-	 * Returns: a new #GstStructure or %NULL
-	 *     when the string could not be parsed. Free with
-	 *     gst_structure_free() after use.
+	 * Returns: %TRUE if @newstr was different from @oldstr_ptr
+	 *
+	 * Since: 1.18
 	 */
-	public static Structure fromString(string string_, out string end)
+	public static bool take(ref Structure oldstrPtr, Structure newstr)
 	{
-		char* outend = null;
+		GstStructure* outoldstrPtr = oldstrPtr.getStructureStruct();
 
-		auto p = gst_structure_from_string(Str.toStringz(string_), &outend);
+		auto __p = gst_structure_take(&outoldstrPtr, (newstr is null) ? null : newstr.getStructureStruct(true)) != 0;
 
-		end = Str.toString(outend);
+		oldstrPtr = ObjectG.getDObject!(Structure)(outoldstrPtr);
 
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
+		return __p;
 	}
 }

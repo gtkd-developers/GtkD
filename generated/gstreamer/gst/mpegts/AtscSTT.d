@@ -24,6 +24,7 @@
 
 module gst.mpegts.AtscSTT;
 
+private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.PtrArray;
 private import gobject.ObjectG;
@@ -189,15 +190,28 @@ public final class AtscSTT
 	}
 
 	/** */
+	public this()
+	{
+		auto __p = gst_mpegts_atsc_stt_new();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GstMpegtsAtscSTT*) __p);
+	}
+
+	/** */
 	public DateTime getDatetimeUtc()
 	{
-		auto p = gst_mpegts_atsc_stt_get_datetime_utc(gstMpegtsAtscSTT);
+		auto __p = gst_mpegts_atsc_stt_get_datetime_utc(gstMpegtsAtscSTT);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) p, true);
+		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) __p, true);
 	}
 }

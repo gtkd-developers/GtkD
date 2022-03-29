@@ -29,6 +29,7 @@ private import gdk.RGBA;
 private import glib.ConstructionException;
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Button;
@@ -106,14 +107,14 @@ public class ColorButton : Button, ColorChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_color_button_new();
+		auto __p = gtk_color_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkColorButton*) p);
+		this(cast(GtkColorButton*) __p);
 	}
 
 	/**
@@ -132,14 +133,14 @@ public class ColorButton : Button, ColorChooserIF
 	 */
 	public this(Color color)
 	{
-		auto p = gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct());
+		auto __p = gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_color");
 		}
 
-		this(cast(GtkColorButton*) p);
+		this(cast(GtkColorButton*) __p);
 	}
 
 	/**
@@ -156,14 +157,14 @@ public class ColorButton : Button, ColorChooserIF
 	 */
 	public this(RGBA rgba)
 	{
-		auto p = gtk_color_button_new_with_rgba((rgba is null) ? null : rgba.getRGBAStruct());
+		auto __p = gtk_color_button_new_with_rgba((rgba is null) ? null : rgba.getRGBAStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_rgba");
 		}
 
-		this(cast(GtkColorButton*) p);
+		this(cast(GtkColorButton*) __p);
 	}
 
 	/**

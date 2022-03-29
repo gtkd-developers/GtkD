@@ -103,14 +103,14 @@ public class CellAreaBox : CellArea, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_cell_area_box_new();
+		auto __p = gtk_cell_area_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellAreaBox*) p);
+		this(cast(GtkCellAreaBox*) __p);
 	}
 
 	/**

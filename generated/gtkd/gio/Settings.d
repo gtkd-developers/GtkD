@@ -32,6 +32,7 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.giotypes;
@@ -121,7 +122,7 @@ private import std.algorithm;
  * utility. The input is a schema description in an XML format.
  * 
  * A DTD for the gschema XML format can be found here:
- * [gschema.dtd](https://git.gnome.org/browse/glib/tree/gio/gschema.dtd)
+ * [gschema.dtd](https://gitlab.gnome.org/GNOME/glib/-/blob/HEAD/gio/gschema.dtd)
  * 
  * The [glib-compile-schemas][glib-compile-schemas] tool expects schema
  * files to have the extension `.gschema.xml`.
@@ -248,7 +249,7 @@ private import std.algorithm;
  * looks for a boolean property with the name "sensitivity" and
  * automatically binds it to the writability of the bound setting.
  * If this 'magic' gets in the way, it can be suppressed with the
- * #G_SETTINGS_BIND_NO_SENSITIVITY flag.
+ * %G_SETTINGS_BIND_NO_SENSITIVITY flag.
  * 
  * ## Relocatable schemas # {#gsettings-relocatable}
  * 
@@ -365,6 +366,12 @@ public class Settings : ObjectG
 	/**
 	 * Creates a new #GSettings object with the schema specified by
 	 * @schema_id.
+	 *
+	 * It is an error for the schema to not exist: schemas are an
+	 * essential part of a program, as they provide type information.
+	 * If schemas need to be dynamically loaded (for example, from an
+	 * optional runtime dependency), g_settings_schema_source_lookup()
+	 * can be used to test for their existence before loading them.
 	 *
 	 * Signals on the newly created #GSettings object will be dispatched
 	 * via the thread-default #GMainContext in effect at the time of the
@@ -544,9 +551,9 @@ public class Settings : ObjectG
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead
 	 *
-	 * Returns: a list of relocatable
-	 *     #GSettings schemas that are available, in no defined order.  The list must
-	 *     not be modified or freed.
+	 * Returns: a list of
+	 *     relocatable #GSettings schemas that are available, in no defined order.
+	 *     The list must not be modified or freed.
 	 *
 	 * Since: 2.28
 	 */
@@ -563,9 +570,9 @@ public class Settings : ObjectG
 	 * a particular schema, use g_settings_schema_source_lookup() instead
 	 * of your whole loop.
 	 *
-	 * Returns: a list of #GSettings
-	 *     schemas that are available, in no defined order.  The list must not be
-	 *     modified or freed.
+	 * Returns: a list of
+	 *     #GSettings schemas that are available, in no defined order.  The list
+	 *     must not be modified or freed.
 	 *
 	 * Since: 2.26
 	 */
@@ -791,7 +798,10 @@ public class Settings : ObjectG
 	 * @settings.
 	 *
 	 * The schema for the child settings object must have been declared
-	 * in the schema of @settings using a <child> element.
+	 * in the schema of @settings using a `<child>` element.
+	 *
+	 * The created child settings object will inherit the #GSettings:delay-apply
+	 * mode from @settings.
 	 *
 	 * Params:
 	 *     name = the name of the child schema
@@ -1223,8 +1233,8 @@ public class Settings : ObjectG
 	 * You should free the return value with g_strfreev() when you are done
 	 * with it.
 	 *
-	 * Returns: a list of the children on
-	 *     @settings, in no defined order
+	 * Returns: a list of the children
+	 *     on @settings, in no defined order
 	 */
 	public string[] listChildren()
 	{
@@ -1246,8 +1256,8 @@ public class Settings : ObjectG
 	 *
 	 * Deprecated: Use g_settings_schema_list_keys() instead.
 	 *
-	 * Returns: a list of the keys on
-	 *     @settings, in no defined order
+	 * Returns: a list
+	 *     of the keys on @settings, in no defined order
 	 */
 	public string[] listKeys()
 	{

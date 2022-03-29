@@ -27,6 +27,7 @@ module peas.ObjectModule;
 private import glib.ConstructionException;
 private import glib.Module;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.TypeModule;
 private import gobject.TypePluginIF;
@@ -88,14 +89,14 @@ public class ObjectModule : TypeModule
 	 */
 	public this(string moduleName, string path, bool resident)
 	{
-		auto p = peas_object_module_new(Str.toStringz(moduleName), Str.toStringz(path), resident);
+		auto __p = peas_object_module_new(Str.toStringz(moduleName), Str.toStringz(path), resident);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PeasObjectModule*) p, true);
+		this(cast(PeasObjectModule*) __p, true);
 	}
 
 	/**
@@ -112,14 +113,14 @@ public class ObjectModule : TypeModule
 	 */
 	public this(string moduleName, string symbol)
 	{
-		auto p = peas_object_module_new_embedded(Str.toStringz(moduleName), Str.toStringz(symbol));
+		auto __p = peas_object_module_new_embedded(Str.toStringz(moduleName), Str.toStringz(symbol));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_embedded");
 		}
 
-		this(cast(PeasObjectModule*) p, true);
+		this(cast(PeasObjectModule*) __p, true);
 	}
 
 	/**
@@ -139,41 +140,42 @@ public class ObjectModule : TypeModule
 	 */
 	public this(string moduleName, string path, bool resident, bool localLinkage)
 	{
-		auto p = peas_object_module_new_full(Str.toStringz(moduleName), Str.toStringz(path), resident, localLinkage);
+		auto __p = peas_object_module_new_full(Str.toStringz(moduleName), Str.toStringz(path), resident, localLinkage);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(PeasObjectModule*) p, true);
+		this(cast(PeasObjectModule*) __p, true);
 	}
 
 	/**
 	 * Creates an object for the @exten_type passing @n_parameters
-	 * and @parameters to the #PeasFactoryFunc. If @module does
-	 * not provide a #PeasFactoryFunc for @exten_type then
-	 * %NULL is returned.
+	 * and @parameters to the [callback@FactoryFunc].
 	 *
-	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * If @module does not provide a #PeasFactoryFunc for @exten_type then %NULL is
+	 * returned.
+	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
 	 * Params:
 	 *     extenType = The #GType of the extension.
 	 *     parameters = The parameters.
 	 *
-	 * Returns: The created object, or %NULL.
+	 * Returns: The created object
 	 */
 	public ObjectG createObject(GType extenType, GParameter[] parameters)
 	{
-		auto p = peas_object_module_create_object(peasObjectModule, extenType, cast(uint)parameters.length, parameters.ptr);
+		auto __p = peas_object_module_create_object(peasObjectModule, extenType, cast(uint)parameters.length, parameters.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -183,14 +185,14 @@ public class ObjectModule : TypeModule
 	 */
 	public Module getLibrary()
 	{
-		auto p = peas_object_module_get_library(peasObjectModule);
+		auto __p = peas_object_module_get_library(peasObjectModule);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Module(cast(GModule*) p);
+		return new Module(cast(GModule*) __p);
 	}
 
 	/**
@@ -228,8 +230,8 @@ public class ObjectModule : TypeModule
 	/**
 	 * Determines if the module provides an extension for @exten_type.
 	 *
-	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @exten_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
 	 * Params:
 	 *     extenType = The #GType of the extension.
@@ -248,11 +250,11 @@ public class ObjectModule : TypeModule
 	 *
 	 * This method is primarily meant to be used by native bindings (like gtkmm),
 	 * creating native types which cannot be instantiated correctly using
-	 * g_object_new().  For other uses, you will usually prefer relying on
+	 * [ctor@GObject.Object.new].  For other uses, you will usually prefer relying on
 	 * peas_object_module_register_extension_type().
 	 *
-	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @exten_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
 	 * Params:
 	 *     extenType = The #GType of the extension you implement.
@@ -269,8 +271,8 @@ public class ObjectModule : TypeModule
 	/**
 	 * Register @impl_type as an extension which implements @extension_type.
 	 *
-	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @exten_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
 	 * Params:
 	 *     extenType = The #GType of the extension you implement.

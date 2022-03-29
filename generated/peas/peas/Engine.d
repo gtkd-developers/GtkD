@@ -27,8 +27,10 @@ module peas.Engine;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gobject.Value;
 private import peas.PluginInfo;
 private import peas.c.functions;
 public  import peas.c.types;
@@ -108,6 +110,7 @@ public class Engine : ObjectG
 
 	/**
 	 * Return the existing instance of #PeasEngine or a subclass of it.
+	 *
 	 * If no #PeasEngine subclass has been instantiated yet, the first call
 	 * of this function will return a new instance of #PeasEngine.
 	 *
@@ -118,19 +121,18 @@ public class Engine : ObjectG
 	 */
 	public static Engine getDefault()
 	{
-		auto p = peas_engine_get_default();
+		auto __p = peas_engine_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Engine)(cast(PeasEngine*) p);
+		return ObjectG.getDObject!(Engine)(cast(PeasEngine*) __p);
 	}
 
 	/**
-	 * This function appends a search path to the list of paths where to
-	 * look for plugins.
+	 * Appends a search path to the list of paths where to look for plugins.
 	 *
 	 * A so-called "search path" actually consists of both a
 	 * module directory (where the shared libraries or language modules
@@ -141,7 +143,7 @@ public class Engine : ObjectG
 	 * when it comes to installation location: the same plugin can be
 	 * installed either in the system path or in the user's home directory,
 	 * without taking other special care than using
-	 * peas_plugin_info_get_data_dir() when looking for its data files.
+	 * [method@PluginInfo.get_data_dir] when looking for its data files.
 	 *
 	 * If @data_dir is %NULL, then it is set to the same value as
 	 * @module_dir.
@@ -158,12 +160,12 @@ public class Engine : ObjectG
 	/**
 	 * If the plugin identified by @info implements the @extension_type,
 	 * then this function will return a new instance of this implementation,
-	 * wrapped in a new #PeasExtension instance. Otherwise, it will return %NULL.
+	 * wrapped in a new [alias@Extension] instance. Otherwise, it will return %NULL.
 	 *
-	 * Since libpeas 1.22, @extension_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @extension_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
-	 * See peas_engine_create_extension() for more information.
+	 * See [method@Engine.create_extension] for more information.
 	 *
 	 * Params:
 	 *     info = A loaded #PeasPluginInfo.
@@ -183,12 +185,46 @@ public class Engine : ObjectG
 	/**
 	 * If the plugin identified by @info implements the @extension_type,
 	 * then this function will return a new instance of this implementation,
-	 * wrapped in a new #PeasExtension instance. Otherwise, it will return %NULL.
+	 * wrapped in a new [alias@Extension] instance. Otherwise, it will return %NULL.
 	 *
-	 * Since libpeas 1.22, @extension_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @extension_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
-	 * See peas_engine_create_extension() for more information.
+	 * See [method@Engine.create_extension] for more information.
+	 *
+	 * Params:
+	 *     info = A loaded #PeasPluginInfo.
+	 *     extensionType = The implemented extension #GType.
+	 *     propNames = an array of property names.
+	 *     propValues = an array of property values.
+	 *
+	 * Returns: a new instance of #PeasExtension wrapping
+	 *     the @extension_type instance, or %NULL.
+	 *
+	 * Since: 1.24
+	 */
+	public PeasExtension* createExtensionWithProperties(PluginInfo info, GType extensionType, string[] propNames, Value[] propValues)
+	{
+		GValue[] propValuesArray = new GValue[propValues.length];
+		for ( int i = 0; i < propValues.length; i++ )
+		{
+			propValuesArray[i] = *(propValues[i].getValueStruct());
+		}
+
+		return peas_engine_create_extension_with_properties(peasEngine, (info is null) ? null : info.getPluginInfoStruct(), extensionType, cast(uint)propValues.length, Str.toStringzArray(propNames), propValuesArray.ptr);
+	}
+
+	/**
+	 * If the plugin identified by @info implements the @extension_type,
+	 * then this function will return a new instance of this implementation,
+	 * wrapped in a new [alias@Extension] instance.
+	 *
+	 * Otherwise, it will return %NULL.
+	 *
+	 * Since libpeas 1.22, @extension_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
+	 *
+	 * See [method@Engine.create_extension] for more information.
 	 *
 	 * Params:
 	 *     info = A loaded #PeasPluginInfo.
@@ -205,16 +241,18 @@ public class Engine : ObjectG
 
 	/**
 	 * Enable a loader, enables a loader for plugins.
+	 *
 	 * The C plugin loader is always enabled. The other plugin
 	 * loaders are: lua5.1, python and python3.
 	 *
 	 * For instance, the following code will enable Python 2 plugins
 	 * to be loaded:
-	 * |[
-	 * peas_engine_enable_loader (engine, "python");
-	 * ]|
 	 *
-	 * Note: plugin loaders used to be shared across #PeasEngines so enabling
+	 * ```c
+	 * peas_engine_enable_loader (engine, "python");
+	 * ```
+	 *
+	 * Note: plugin loaders used to be shared across `PeasEngine`s so enabling
 	 * a loader on one #PeasEngine would enable it on all #PeasEngines.
 	 * This behavior has been kept to avoid breaking applications,
 	 * however a warning has been added to help applications transition.
@@ -228,8 +266,10 @@ public class Engine : ObjectG
 	}
 
 	/**
-	 * This function triggers garbage collection on all the loaders currently
-	 * owned by the #PeasEngine.  This can be used to force the loaders to destroy
+	 * Triggers garbage collection on all the loaders currently owned by the
+	 * #PeasEngine.
+	 *
+	 * This can be used to force the loaders to destroy
 	 * managed objects that still hold references to objects that are about to
 	 * disappear.
 	 */
@@ -239,11 +279,13 @@ public class Engine : ObjectG
 	}
 
 	/**
-	 * Returns the list of the names of all the loaded plugins, or an array
-	 * containing a single %NULL element if there is no plugin currently loaded.
+	 * Returns the list of the names of all the loaded plugins.
+	 *
+	 * If there is no plugin currently loaded, it will return an array containing a
+	 * single %NULL element.
 	 *
 	 * Please note that the returned array is a newly allocated one: you will need
-	 * to free it using g_strfreev().
+	 * to free it using [func@GLib.strfreev].
 	 *
 	 * Returns: A newly-allocated
 	 *     %NULL-terminated array of strings.
@@ -257,7 +299,7 @@ public class Engine : ObjectG
 	}
 
 	/**
-	 * Gets the #PeasPluginInfo corresponding with @plugin_name,
+	 * Gets the [struct@PluginInfo] corresponding with @plugin_name,
 	 * or %NULL if @plugin_name was not found.
 	 *
 	 * Params:
@@ -268,18 +310,18 @@ public class Engine : ObjectG
 	 */
 	public PluginInfo getPluginInfo(string pluginName)
 	{
-		auto p = peas_engine_get_plugin_info(peasEngine, Str.toStringz(pluginName));
+		auto __p = peas_engine_get_plugin_info(peasEngine, Str.toStringz(pluginName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
+		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) __p);
 	}
 
 	/**
-	 * Returns the list of #PeasPluginInfo known to the engine.
+	 * Returns the list of [struct@PluginInfo] known to the engine.
 	 *
 	 * Returns: a #GList of
 	 *     #PeasPluginInfo. Note that the list belongs to the engine and should
@@ -287,19 +329,20 @@ public class Engine : ObjectG
 	 */
 	public ListG getPluginList()
 	{
-		auto p = peas_engine_get_plugin_list(peasEngine);
+		auto __p = peas_engine_get_plugin_list(peasEngine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
 	 * Loads the plugin corresponding to @info if it's not currently loaded.
-	 * Emits the "load-plugin" signal; loading the plugin
+	 *
+	 * Emits the [signal@Engine::load-plugin] signal; loading the plugin
 	 * actually occurs in the default signal handler.
 	 *
 	 * Params:
@@ -313,10 +356,9 @@ public class Engine : ObjectG
 	}
 
 	/**
-	 * This function prepends a search path to the list of paths where to
-	 * look for plugins.
+	 * Prepends a search path to the list of paths where to look for plugins.
 	 *
-	 * See Also: peas_engine_add_search_path()
+	 * See Also: [method@Engine.add_search_path]
 	 *
 	 * Params:
 	 *     moduleDir = the plugin module directory.
@@ -331,10 +373,11 @@ public class Engine : ObjectG
 
 	/**
 	 * Returns if @info provides an extension for @extension_type.
+	 *
 	 * If the @info is not loaded than %FALSE will always be returned.
 	 *
-	 * Since libpeas 1.22, @extension_type can be an Abstract #GType
-	 * and not just an Interface #GType.
+	 * Since libpeas 1.22, @extension_type can be an Abstract [alias@GObject.Type]
+	 * and not just an Interface [alias@GObject.Type].
 	 *
 	 * Params:
 	 *     info = A #PeasPluginInfo.
@@ -360,9 +403,11 @@ public class Engine : ObjectG
 	}
 
 	/**
-	 * Sets the list of loaded plugins for @engine. When this function is called,
-	 * the #PeasEngine will load all the plugins whose names are in @plugin_names,
-	 * and ensures all other active plugins are unloaded.
+	 * Sets the list of loaded plugins for @engine.
+	 *
+	 * When this function is called, the #PeasEngine will load all the plugins whose
+	 * names are in @plugin_names, and ensures all other active plugins are
+	 * unloaded.
 	 *
 	 * If @plugin_names is %NULL, all plugins will be unloaded.
 	 *
@@ -377,7 +422,8 @@ public class Engine : ObjectG
 
 	/**
 	 * Unloads the plugin corresponding to @info.
-	 * Emits the "unload-plugin" signal; unloading the plugin
+	 *
+	 * Emits the [signal@Engine::unload-plugin] signal; unloading the plugin
 	 * actually occurs in the default signal handler.
 	 *
 	 * Params:
@@ -395,9 +441,9 @@ public class Engine : ObjectG
 	 *
 	 * The plugin is being loaded in the default handler. Hence, if you want to
 	 * perform some action before the plugin is loaded, you should use
-	 * g_signal_connect(), but if you want to perform some action *after* the
+	 * [func@GObject.signal_connect], but if you want to perform some action *after* the
 	 * plugin is loaded (the most common case), you should use
-	 * g_signal_connect_after().
+	 * [func@GObject.signal_connect_after].
 	 *
 	 * Params:
 	 *     info = A #PeasPluginInfo.
@@ -410,11 +456,11 @@ public class Engine : ObjectG
 	/**
 	 * The unload-plugin signal is emitted when a plugin is being unloaded.
 	 *
-	 * The plugin is being unloaded in the default handler. Hence, if you want
-	 * to perform some action before the plugin is unloaded (the most common
-	 * case), you should use g_signal_connect(), but if you want to perform some
-	 * action after the plugin is unloaded (the most common case), you should
-	 * use g_signal_connect_after().
+	 * The plugin is being unloaded in the default handler. Hence, if you want to
+	 * perform some action before the plugin is unloaded (the most common case),
+	 * you should use [func@GObject.signal_connect], but if you want to perform
+	 * some action after the plugin is unloaded (the most common case), you should
+	 * use [func@GObject.signal_connect_after].
 	 *
 	 * Params:
 	 *     info = A #PeasPluginInfo.

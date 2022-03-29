@@ -104,14 +104,14 @@ public class StackSwitcher : Box
 	 */
 	public this()
 	{
-		auto p = gtk_stack_switcher_new();
+		auto __p = gtk_stack_switcher_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStackSwitcher*) p);
+		this(cast(GtkStackSwitcher*) __p);
 	}
 
 	/**
@@ -125,14 +125,14 @@ public class StackSwitcher : Box
 	 */
 	public Stack getStack()
 	{
-		auto p = gtk_stack_switcher_get_stack(gtkStackSwitcher);
+		auto __p = gtk_stack_switcher_get_stack(gtkStackSwitcher);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Stack)(cast(GtkStack*) p);
+		return ObjectG.getDObject!(Stack)(cast(GtkStack*) __p);
 	}
 
 	/**

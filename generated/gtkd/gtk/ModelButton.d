@@ -180,13 +180,13 @@ public class ModelButton : Button
 	 */
 	public this()
 	{
-		auto p = gtk_model_button_new();
+		auto __p = gtk_model_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkModelButton*) p);
+		this(cast(GtkModelButton*) __p);
 	}
 }

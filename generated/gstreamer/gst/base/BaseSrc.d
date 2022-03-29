@@ -34,6 +34,7 @@ private import gstreamer.BufferList;
 private import gstreamer.BufferPool;
 private import gstreamer.Caps;
 private import gstreamer.Element;
+private import gstreamer.Segment;
 
 
 /**
@@ -53,25 +54,25 @@ private import gstreamer.Element;
  * conditions are met, it also supports pull mode scheduling:
  * 
  * * The format is set to %GST_FORMAT_BYTES (default).
- * * #GstBaseSrcClass.is_seekable() returns %TRUE.
+ * * #GstBaseSrcClass::is_seekable returns %TRUE.
  * 
  * If all the conditions are met for operating in pull mode, #GstBaseSrc is
  * automatically seekable in push mode as well. The following conditions must
  * be met to make the element seekable in push mode when the format is not
  * %GST_FORMAT_BYTES:
  * 
- * * #GstBaseSrcClass.is_seekable() returns %TRUE.
- * * #GstBaseSrcClass.query() can convert all supported seek formats to the
+ * * #GstBaseSrcClass::is_seekable returns %TRUE.
+ * * #GstBaseSrcClass::query can convert all supported seek formats to the
  * internal format as set with gst_base_src_set_format().
- * * #GstBaseSrcClass.do_seek() is implemented, performs the seek and returns
+ * * #GstBaseSrcClass::do_seek is implemented, performs the seek and returns
  * %TRUE.
  * 
  * When the element does not meet the requirements to operate in pull mode, the
- * offset and length in the #GstBaseSrcClass.create() method should be ignored.
+ * offset and length in the #GstBaseSrcClass::create method should be ignored.
  * It is recommended to subclass #GstPushSrc instead, in this situation. If the
  * element can operate in pull mode but only with specific offsets and
  * lengths, it is allowed to generate an error when the wrong values are passed
- * to the #GstBaseSrcClass.create() function.
+ * to the #GstBaseSrcClass::create function.
  * 
  * #GstBaseSrc has support for live sources. Live sources are sources that when
  * paused discard data, such as audio or video capture devices. A typical live
@@ -80,7 +81,7 @@ private import gstreamer.Element;
  * Use gst_base_src_set_live() to activate the live source mode.
  * 
  * A live source does not produce data in the PAUSED state. This means that the
- * #GstBaseSrcClass.create() method will not be called in PAUSED but only in
+ * #GstBaseSrcClass::create method will not be called in PAUSED but only in
  * PLAYING. To signal the pipeline that the element will not produce data, the
  * return value from the READY to PAUSED state will be
  * %GST_STATE_CHANGE_NO_PREROLL.
@@ -92,12 +93,12 @@ private import gstreamer.Element;
  * 
  * Live sources that synchronize and block on the clock (an audio source, for
  * example) can use gst_base_src_wait_playing() when the
- * #GstBaseSrcClass.create() function was interrupted by a state change to
+ * #GstBaseSrcClass::create function was interrupted by a state change to
  * PAUSED.
  * 
- * The #GstBaseSrcClass.get_times() method can be used to implement pseudo-live
- * sources. It only makes sense to implement the #GstBaseSrcClass.get_times()
- * function if the source is a live source. The #GstBaseSrcClass.get_times()
+ * The #GstBaseSrcClass::get_times method can be used to implement pseudo-live
+ * sources. It only makes sense to implement the #GstBaseSrcClass::get_times
+ * function if the source is a live source. The #GstBaseSrcClass::get_times
  * function should return timestamps starting from 0, as if it were a non-live
  * source. The base class will make sure that the timestamps are transformed
  * into the current running_time. The base source will then wait for the
@@ -120,7 +121,7 @@ private import gstreamer.Element;
  * GstElementClass *gstelement_class = GST_ELEMENT_CLASS (klass);
  * // srctemplate should be a #GstStaticPadTemplate with direction
  * // %GST_PAD_SRC and name "src"
- * gst_element_class_add_static_pad_template (gstelement_class, &amp;srctemplate);
+ * gst_element_class_add_static_pad_template (gstelement_class, &srctemplate);
  * 
  * gst_element_class_set_static_metadata (gstelement_class,
  * "Source name",
@@ -194,8 +195,7 @@ public class BaseSrc : Element
 	 * Params:
 	 *     allocator = the #GstAllocator
 	 *         used
-	 *     params = the
-	 *         #GstAllocationParams of @allocator
+	 *     params = the #GstAllocationParams of @allocator
 	 */
 	public void getAllocator(out Allocator allocator, out AllocationParams params)
 	{
@@ -224,14 +224,14 @@ public class BaseSrc : Element
 	 */
 	public BufferPool getBufferPool()
 	{
-		auto p = gst_base_src_get_buffer_pool(gstBaseSrc);
+		auto __p = gst_base_src_get_buffer_pool(gstBaseSrc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) p, true);
+		return ObjectG.getDObject!(BufferPool)(cast(GstBufferPool*) __p, true);
 	}
 
 	/**
@@ -265,12 +265,32 @@ public class BaseSrc : Element
 	}
 
 	/**
+	 * Negotiates src pad caps with downstream elements.
+	 * Unmarks GST_PAD_FLAG_NEED_RECONFIGURE in any case. But marks it again
+	 * if #GstBaseSrcClass::negotiate fails.
+	 *
+	 * Do not call this in the #GstBaseSrcClass::fill vmethod. Call this in
+	 * #GstBaseSrcClass::create or in #GstBaseSrcClass::alloc, _before_ any
+	 * buffer is allocated.
+	 *
+	 * Returns: %TRUE if the negotiation succeeded, else %FALSE.
+	 *
+	 * Since: 1.18
+	 */
+	public bool negotiate()
+	{
+		return gst_base_src_negotiate(gstBaseSrc) != 0;
+	}
+
+	/**
 	 * Prepare a new seamless segment for emission downstream. This function must
-	 * only be called by derived sub-classes, and only from the create() function,
+	 * only be called by derived sub-classes, and only from the #GstBaseSrcClass::create function,
 	 * as the stream-lock needs to be held.
 	 *
 	 * The format for the new segment will be the current format of the source, as
 	 * configured with gst_base_src_set_format()
+	 *
+	 * Deprecated: Use gst_base_src_new_segment()
 	 *
 	 * Params:
 	 *     start = The new start value for the segment
@@ -282,6 +302,29 @@ public class BaseSrc : Element
 	public bool newSeamlessSegment(long start, long stop, long time)
 	{
 		return gst_base_src_new_seamless_segment(gstBaseSrc, start, stop, time) != 0;
+	}
+
+	/**
+	 * Prepare a new segment for emission downstream. This function must
+	 * only be called by derived sub-classes, and only from the #GstBaseSrcClass::create function,
+	 * as the stream-lock needs to be held.
+	 *
+	 * The format for the @segment must be identical with the current format
+	 * of the source, as configured with gst_base_src_set_format().
+	 *
+	 * The format of @src must not be %GST_FORMAT_UNDEFINED and the format
+	 * should be configured via gst_base_src_set_format() before calling this method.
+	 *
+	 * Params:
+	 *     segment = a pointer to a #GstSegment
+	 *
+	 * Returns: %TRUE if preparation of new segment succeeded.
+	 *
+	 * Since: 1.18
+	 */
+	public bool newSegment(Segment segment)
+	{
+		return gst_base_src_new_segment(gstBaseSrc, (segment is null) ? null : segment.getSegmentStruct()) != 0;
 	}
 
 	/**
@@ -303,11 +346,11 @@ public class BaseSrc : Element
 	{
 		int outlive;
 
-		auto p = gst_base_src_query_latency(gstBaseSrc, &outlive, &minLatency, &maxLatency) != 0;
+		auto __p = gst_base_src_query_latency(gstBaseSrc, &outlive, &minLatency, &maxLatency) != 0;
 
 		live = (outlive == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -333,7 +376,7 @@ public class BaseSrc : Element
 	 * When @src operates in %GST_FORMAT_TIME, #GstBaseSrc will send an EOS
 	 * when a buffer outside of the currently configured segment is pushed if
 	 * @automatic_eos is %TRUE. Since 1.16, if @automatic_eos is %FALSE an
-	 * EOS will be pushed only when the #GstBaseSrc.create implementation
+	 * EOS will be pushed only when the #GstBaseSrcClass::create implementation
 	 * returns %GST_FLOW_EOS.
 	 *
 	 * Params:
@@ -402,7 +445,7 @@ public class BaseSrc : Element
 	 * for sending SEGMENT events and for performing seeks.
 	 *
 	 * If a format of GST_FORMAT_BYTES is set, the element will be able to
-	 * operate in pull mode if the #GstBaseSrcClass.is_seekable() returns %TRUE.
+	 * operate in pull mode if the #GstBaseSrcClass::is_seekable returns %TRUE.
 	 *
 	 * This function must only be called in states < %GST_STATE_PAUSED.
 	 *
@@ -481,11 +524,11 @@ public class BaseSrc : Element
 	 */
 	public void submitBufferList(BufferList bufferList)
 	{
-		gst_base_src_submit_buffer_list(gstBaseSrc, (bufferList is null) ? null : bufferList.getBufferListStruct());
+		gst_base_src_submit_buffer_list(gstBaseSrc, (bufferList is null) ? null : bufferList.getBufferListStruct(true));
 	}
 
 	/**
-	 * If the #GstBaseSrcClass.create() method performs its own synchronisation
+	 * If the #GstBaseSrcClass::create method performs its own synchronisation
 	 * against the clock it must unblock when going from PLAYING to the PAUSED state
 	 * and call this method before continuing to produce the remaining data.
 	 *

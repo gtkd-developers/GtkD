@@ -32,6 +32,7 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
@@ -98,14 +99,14 @@ public class Screen : ObjectG
 	 */
 	public static Screen getDefault()
 	{
-		auto p = gdk_screen_get_default();
+		auto __p = gdk_screen_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -187,14 +188,14 @@ public class Screen : ObjectG
 	 */
 	public Window getActiveWindow()
 	{
-		auto p = gdk_screen_get_active_window(gdkScreen);
+		auto __p = gdk_screen_get_active_window(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p, true);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p, true);
 	}
 
 	/**
@@ -206,14 +207,14 @@ public class Screen : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		auto p = gdk_screen_get_display(gdkScreen);
+		auto __p = gdk_screen_get_display(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -226,14 +227,14 @@ public class Screen : ObjectG
 	 */
 	public FontOption getFontOptions()
 	{
-		auto p = gdk_screen_get_font_options(gdkScreen);
+		auto __p = gdk_screen_get_font_options(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new FontOption(cast(cairo_font_options_t*) p);
+		return new FontOption(cast(cairo_font_options_t*) __p);
 	}
 
 	/**
@@ -531,14 +532,14 @@ public class Screen : ObjectG
 	 */
 	public Visual getRgbaVisual()
 	{
-		auto p = gdk_screen_get_rgba_visual(gdkScreen);
+		auto __p = gdk_screen_get_rgba_visual(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -550,14 +551,14 @@ public class Screen : ObjectG
 	 */
 	public Window getRootWindow()
 	{
-		auto p = gdk_screen_get_root_window(gdkScreen);
+		auto __p = gdk_screen_get_root_window(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -592,14 +593,14 @@ public class Screen : ObjectG
 	 */
 	public Visual getSystemVisual()
 	{
-		auto p = gdk_screen_get_system_visual(gdkScreen);
+		auto __p = gdk_screen_get_system_visual(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -616,14 +617,14 @@ public class Screen : ObjectG
 	 */
 	public ListG getToplevelWindows()
 	{
-		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
+		auto __p = gdk_screen_get_toplevel_windows(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -684,14 +685,14 @@ public class Screen : ObjectG
 	 */
 	public ListG getWindowStack()
 	{
-		auto p = gdk_screen_get_window_stack(gdkScreen);
+		auto __p = gdk_screen_get_window_stack(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -726,14 +727,14 @@ public class Screen : ObjectG
 	 */
 	public ListG listVisuals()
 	{
-		auto p = gdk_screen_list_visuals(gdkScreen);
+		auto __p = gdk_screen_list_visuals(gdkScreen);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

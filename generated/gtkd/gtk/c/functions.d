@@ -1392,6 +1392,10 @@ shared static this()
 	Linker.link(gtk_file_chooser_widget_get_type, "gtk_file_chooser_widget_get_type", LIBRARY_GTK);
 	Linker.link(gtk_file_chooser_widget_new, "gtk_file_chooser_widget_new", LIBRARY_GTK);
 
+	// gtk.FileChooserWidgetAccessible
+
+	Linker.link(gtk_file_chooser_widget_accessible_get_type, "gtk_file_chooser_widget_accessible_get_type", LIBRARY_GTK);
+
 	// gtk.FileFilter
 
 	Linker.link(gtk_file_filter_get_type, "gtk_file_filter_get_type", LIBRARY_GTK);
@@ -1782,6 +1786,10 @@ shared static this()
 	Linker.link(gtk_header_bar_set_show_close_button, "gtk_header_bar_set_show_close_button", LIBRARY_GTK);
 	Linker.link(gtk_header_bar_set_subtitle, "gtk_header_bar_set_subtitle", LIBRARY_GTK);
 	Linker.link(gtk_header_bar_set_title, "gtk_header_bar_set_title", LIBRARY_GTK);
+
+	// gtk.HeaderBarAccessible
+
+	Linker.link(gtk_header_bar_accessible_get_type, "gtk_header_bar_accessible_get_type", LIBRARY_GTK);
 
 	// gtk.IMContext
 
@@ -2680,6 +2688,11 @@ shared static this()
 	Linker.link(gtk_plug_get_id, "gtk_plug_get_id", LIBRARY_GTK);
 	Linker.link(gtk_plug_get_socket_window, "gtk_plug_get_socket_window", LIBRARY_GTK);
 
+	// gtk.PlugAccessible
+
+	Linker.link(gtk_plug_accessible_get_type, "gtk_plug_accessible_get_type", LIBRARY_GTK);
+	Linker.link(gtk_plug_accessible_get_id, "gtk_plug_accessible_get_id", LIBRARY_GTK);
+
 	// gtk.Popover
 
 	Linker.link(gtk_popover_get_type, "gtk_popover_get_type", LIBRARY_GTK);
@@ -3366,6 +3379,11 @@ shared static this()
 	Linker.link(gtk_socket_add_id, "gtk_socket_add_id", LIBRARY_GTK);
 	Linker.link(gtk_socket_get_id, "gtk_socket_get_id", LIBRARY_GTK);
 	Linker.link(gtk_socket_get_plug_window, "gtk_socket_get_plug_window", LIBRARY_GTK);
+
+	// gtk.SocketAccessible
+
+	Linker.link(gtk_socket_accessible_get_type, "gtk_socket_accessible_get_type", LIBRARY_GTK);
+	Linker.link(gtk_socket_accessible_embed, "gtk_socket_accessible_embed", LIBRARY_GTK);
 
 	// gtk.SpinButton
 
@@ -4325,6 +4343,7 @@ shared static this()
 	// gtk.TreeModelSort
 
 	Linker.link(gtk_tree_model_sort_get_type, "gtk_tree_model_sort_get_type", LIBRARY_GTK);
+	Linker.link(gtk_tree_model_sort_new_with_model, "gtk_tree_model_sort_new_with_model", LIBRARY_GTK);
 	Linker.link(gtk_tree_model_sort_clear_cache, "gtk_tree_model_sort_clear_cache", LIBRARY_GTK);
 	Linker.link(gtk_tree_model_sort_convert_child_iter_to_iter, "gtk_tree_model_sort_convert_child_iter_to_iter", LIBRARY_GTK);
 	Linker.link(gtk_tree_model_sort_convert_child_path_to_path, "gtk_tree_model_sort_convert_child_path_to_path", LIBRARY_GTK);
@@ -4333,7 +4352,6 @@ shared static this()
 	Linker.link(gtk_tree_model_sort_get_model, "gtk_tree_model_sort_get_model", LIBRARY_GTK);
 	Linker.link(gtk_tree_model_sort_iter_is_valid, "gtk_tree_model_sort_iter_is_valid", LIBRARY_GTK);
 	Linker.link(gtk_tree_model_sort_reset_default_sort_func, "gtk_tree_model_sort_reset_default_sort_func", LIBRARY_GTK);
-	Linker.link(gtk_tree_model_sort_new_with_model, "gtk_tree_model_sort_new_with_model", LIBRARY_GTK);
 
 	// gtk.TreePath
 
@@ -6540,7 +6558,7 @@ __gshared extern(C)
 	int function(GtkFileChooser* chooser, char* filename) c_gtk_file_chooser_set_current_folder;
 	int function(GtkFileChooser* chooser, GFile* file, GError** err) c_gtk_file_chooser_set_current_folder_file;
 	int function(GtkFileChooser* chooser, const(char)* uri) c_gtk_file_chooser_set_current_folder_uri;
-	void function(GtkFileChooser* chooser, char* name) c_gtk_file_chooser_set_current_name;
+	void function(GtkFileChooser* chooser, const(char)* name) c_gtk_file_chooser_set_current_name;
 	void function(GtkFileChooser* chooser, int doOverwriteConfirmation) c_gtk_file_chooser_set_do_overwrite_confirmation;
 	void function(GtkFileChooser* chooser, GtkWidget* extraWidget) c_gtk_file_chooser_set_extra_widget;
 	int function(GtkFileChooser* chooser, GFile* file, GError** err) c_gtk_file_chooser_set_file;
@@ -6588,6 +6606,10 @@ __gshared extern(C)
 
 	GType function() c_gtk_file_chooser_widget_get_type;
 	GtkWidget* function(GtkFileChooserAction action) c_gtk_file_chooser_widget_new;
+
+	// gtk.FileChooserWidgetAccessible
+
+	GType function() c_gtk_file_chooser_widget_accessible_get_type;
 
 	// gtk.FileFilter
 
@@ -6979,6 +7001,10 @@ __gshared extern(C)
 	void function(GtkHeaderBar* bar, int setting) c_gtk_header_bar_set_show_close_button;
 	void function(GtkHeaderBar* bar, const(char)* subtitle) c_gtk_header_bar_set_subtitle;
 	void function(GtkHeaderBar* bar, const(char)* title) c_gtk_header_bar_set_title;
+
+	// gtk.HeaderBarAccessible
+
+	GType function() c_gtk_header_bar_accessible_get_type;
 
 	// gtk.IMContext
 
@@ -7746,7 +7772,7 @@ __gshared extern(C)
 	GtkWidget* function() c_gtk_overlay_new;
 	void function(GtkOverlay* overlay, GtkWidget* widget) c_gtk_overlay_add_overlay;
 	int function(GtkOverlay* overlay, GtkWidget* widget) c_gtk_overlay_get_overlay_pass_through;
-	void function(GtkOverlay* overlay, GtkWidget* child, int position) c_gtk_overlay_reorder_overlay;
+	void function(GtkOverlay* overlay, GtkWidget* child, int index) c_gtk_overlay_reorder_overlay;
 	void function(GtkOverlay* overlay, GtkWidget* widget, int passThrough) c_gtk_overlay_set_overlay_pass_through;
 
 	// gtk.PadController
@@ -7876,6 +7902,11 @@ __gshared extern(C)
 	int function(GtkPlug* plug) c_gtk_plug_get_embedded;
 	ulong function(GtkPlug* plug) c_gtk_plug_get_id;
 	GdkWindow* function(GtkPlug* plug) c_gtk_plug_get_socket_window;
+
+	// gtk.PlugAccessible
+
+	GType function() c_gtk_plug_accessible_get_type;
+	char* function(GtkPlugAccessible* plug) c_gtk_plug_accessible_get_id;
 
 	// gtk.Popover
 
@@ -8563,6 +8594,11 @@ __gshared extern(C)
 	void function(GtkSocket* socket, ulong window) c_gtk_socket_add_id;
 	ulong function(GtkSocket* socket) c_gtk_socket_get_id;
 	GdkWindow* function(GtkSocket* socket) c_gtk_socket_get_plug_window;
+
+	// gtk.SocketAccessible
+
+	GType function() c_gtk_socket_accessible_get_type;
+	void function(GtkSocketAccessible* socket, char* path) c_gtk_socket_accessible_embed;
 
 	// gtk.SpinButton
 
@@ -9522,6 +9558,7 @@ __gshared extern(C)
 	// gtk.TreeModelSort
 
 	GType function() c_gtk_tree_model_sort_get_type;
+	GtkTreeModel* function(GtkTreeModel* childModel) c_gtk_tree_model_sort_new_with_model;
 	void function(GtkTreeModelSort* treeModelSort) c_gtk_tree_model_sort_clear_cache;
 	int function(GtkTreeModelSort* treeModelSort, GtkTreeIter* sortIter, GtkTreeIter* childIter) c_gtk_tree_model_sort_convert_child_iter_to_iter;
 	GtkTreePath* function(GtkTreeModelSort* treeModelSort, GtkTreePath* childPath) c_gtk_tree_model_sort_convert_child_path_to_path;
@@ -9530,7 +9567,6 @@ __gshared extern(C)
 	GtkTreeModel* function(GtkTreeModelSort* treeModel) c_gtk_tree_model_sort_get_model;
 	int function(GtkTreeModelSort* treeModelSort, GtkTreeIter* iter) c_gtk_tree_model_sort_iter_is_valid;
 	void function(GtkTreeModelSort* treeModelSort) c_gtk_tree_model_sort_reset_default_sort_func;
-	GtkTreeModel* function(GtkTreeModel* childModel) c_gtk_tree_model_sort_new_with_model;
 
 	// gtk.TreePath
 
@@ -11784,6 +11820,10 @@ alias c_gtk_file_chooser_native_set_cancel_label gtk_file_chooser_native_set_can
 alias c_gtk_file_chooser_widget_get_type gtk_file_chooser_widget_get_type;
 alias c_gtk_file_chooser_widget_new gtk_file_chooser_widget_new;
 
+// gtk.FileChooserWidgetAccessible
+
+alias c_gtk_file_chooser_widget_accessible_get_type gtk_file_chooser_widget_accessible_get_type;
+
 // gtk.FileFilter
 
 alias c_gtk_file_filter_get_type gtk_file_filter_get_type;
@@ -12174,6 +12214,10 @@ alias c_gtk_header_bar_set_has_subtitle gtk_header_bar_set_has_subtitle;
 alias c_gtk_header_bar_set_show_close_button gtk_header_bar_set_show_close_button;
 alias c_gtk_header_bar_set_subtitle gtk_header_bar_set_subtitle;
 alias c_gtk_header_bar_set_title gtk_header_bar_set_title;
+
+// gtk.HeaderBarAccessible
+
+alias c_gtk_header_bar_accessible_get_type gtk_header_bar_accessible_get_type;
 
 // gtk.IMContext
 
@@ -13072,6 +13116,11 @@ alias c_gtk_plug_get_embedded gtk_plug_get_embedded;
 alias c_gtk_plug_get_id gtk_plug_get_id;
 alias c_gtk_plug_get_socket_window gtk_plug_get_socket_window;
 
+// gtk.PlugAccessible
+
+alias c_gtk_plug_accessible_get_type gtk_plug_accessible_get_type;
+alias c_gtk_plug_accessible_get_id gtk_plug_accessible_get_id;
+
 // gtk.Popover
 
 alias c_gtk_popover_get_type gtk_popover_get_type;
@@ -13758,6 +13807,11 @@ alias c_gtk_socket_new gtk_socket_new;
 alias c_gtk_socket_add_id gtk_socket_add_id;
 alias c_gtk_socket_get_id gtk_socket_get_id;
 alias c_gtk_socket_get_plug_window gtk_socket_get_plug_window;
+
+// gtk.SocketAccessible
+
+alias c_gtk_socket_accessible_get_type gtk_socket_accessible_get_type;
+alias c_gtk_socket_accessible_embed gtk_socket_accessible_embed;
 
 // gtk.SpinButton
 
@@ -14717,6 +14771,7 @@ alias c_gtk_tree_model_filter_new gtk_tree_model_filter_new;
 // gtk.TreeModelSort
 
 alias c_gtk_tree_model_sort_get_type gtk_tree_model_sort_get_type;
+alias c_gtk_tree_model_sort_new_with_model gtk_tree_model_sort_new_with_model;
 alias c_gtk_tree_model_sort_clear_cache gtk_tree_model_sort_clear_cache;
 alias c_gtk_tree_model_sort_convert_child_iter_to_iter gtk_tree_model_sort_convert_child_iter_to_iter;
 alias c_gtk_tree_model_sort_convert_child_path_to_path gtk_tree_model_sort_convert_child_path_to_path;
@@ -14725,7 +14780,6 @@ alias c_gtk_tree_model_sort_convert_path_to_child_path gtk_tree_model_sort_conve
 alias c_gtk_tree_model_sort_get_model gtk_tree_model_sort_get_model;
 alias c_gtk_tree_model_sort_iter_is_valid gtk_tree_model_sort_iter_is_valid;
 alias c_gtk_tree_model_sort_reset_default_sort_func gtk_tree_model_sort_reset_default_sort_func;
-alias c_gtk_tree_model_sort_new_with_model gtk_tree_model_sort_new_with_model;
 
 // gtk.TreePath
 

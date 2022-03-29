@@ -28,6 +28,7 @@ private import gdk.Display;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -88,14 +89,14 @@ public class MonitorG : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		auto p = gdk_monitor_get_display(gdkMonitor);
+		auto __p = gdk_monitor_get_display(gdkMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -126,7 +127,12 @@ public class MonitorG : ObjectG
 	}
 
 	/**
-	 * Gets the name of the monitor's manufacturer, if available.
+	 * Gets the name or PNP ID of the monitor's manufacturer, if available.
+	 *
+	 * Note that this value might also vary depending on actual
+	 * display backend.
+	 *
+	 * PNP ID registry is located at https://uefi.org/pnp_id_list
 	 *
 	 * Returns: the name of the manufacturer, or %NULL
 	 */

@@ -358,7 +358,7 @@ public class IOStream : ObjectG
 	}
 
 	/**
-	 * Asyncronously splice the output stream of @stream1 to the input stream of
+	 * Asynchronously splice the output stream of @stream1 to the input stream of
 	 * @stream2, and splice the output stream of @stream2 to the input stream of
 	 * @stream1.
 	 *

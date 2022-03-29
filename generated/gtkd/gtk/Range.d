@@ -93,14 +93,14 @@ public class Range : Widget, OrientableIF
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_range_get_adjustment(gtkRange);
+		auto __p = gtk_range_get_adjustment(gtkRange);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**

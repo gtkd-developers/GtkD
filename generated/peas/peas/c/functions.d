@@ -53,6 +53,7 @@ shared static this()
 	Linker.link(peas_engine_add_search_path, "peas_engine_add_search_path", LIBRARY_PEAS);
 	Linker.link(peas_engine_create_extension, "peas_engine_create_extension", LIBRARY_PEAS);
 	Linker.link(peas_engine_create_extension_valist, "peas_engine_create_extension_valist", LIBRARY_PEAS);
+	Linker.link(peas_engine_create_extension_with_properties, "peas_engine_create_extension_with_properties", LIBRARY_PEAS);
 	Linker.link(peas_engine_create_extensionv, "peas_engine_create_extensionv", LIBRARY_PEAS);
 	Linker.link(peas_engine_enable_loader, "peas_engine_enable_loader", LIBRARY_PEAS);
 	Linker.link(peas_engine_garbage_collect, "peas_engine_garbage_collect", LIBRARY_PEAS);
@@ -77,6 +78,7 @@ shared static this()
 	Linker.link(peas_extension_set_get_type, "peas_extension_set_get_type", LIBRARY_PEAS);
 	Linker.link(peas_extension_set_new, "peas_extension_set_new", LIBRARY_PEAS);
 	Linker.link(peas_extension_set_new_valist, "peas_extension_set_new_valist", LIBRARY_PEAS);
+	Linker.link(peas_extension_set_new_with_properties, "peas_extension_set_new_with_properties", LIBRARY_PEAS);
 	Linker.link(peas_extension_set_newv, "peas_extension_set_newv", LIBRARY_PEAS);
 	Linker.link(peas_extension_set_foreach, "peas_extension_set_foreach", LIBRARY_PEAS);
 	Linker.link(peas_extension_set_get_extension, "peas_extension_set_get_extension", LIBRARY_PEAS);
@@ -160,6 +162,7 @@ __gshared extern(C)
 	void function(PeasEngine* engine, const(char)* moduleDir, const(char)* dataDir) c_peas_engine_add_search_path;
 	PeasExtension* function(PeasEngine* engine, PeasPluginInfo* info, GType extensionType, const(char)* firstProperty, ... ) c_peas_engine_create_extension;
 	PeasExtension* function(PeasEngine* engine, PeasPluginInfo* info, GType extensionType, const(char)* firstProperty, void* varArgs) c_peas_engine_create_extension_valist;
+	PeasExtension* function(PeasEngine* engine, PeasPluginInfo* info, GType extensionType, uint nProperties, char** propNames, GValue* propValues) c_peas_engine_create_extension_with_properties;
 	PeasExtension* function(PeasEngine* engine, PeasPluginInfo* info, GType extensionType, uint nParameters, GParameter* parameters) c_peas_engine_create_extensionv;
 	void function(PeasEngine* engine, const(char)* loaderName) c_peas_engine_enable_loader;
 	void function(PeasEngine* engine) c_peas_engine_garbage_collect;
@@ -184,6 +187,7 @@ __gshared extern(C)
 	GType function() c_peas_extension_set_get_type;
 	PeasExtensionSet* function(PeasEngine* engine, GType extenType, const(char)* firstProperty, ... ) c_peas_extension_set_new;
 	PeasExtensionSet* function(PeasEngine* engine, GType extenType, const(char)* firstProperty, void* varArgs) c_peas_extension_set_new_valist;
+	PeasExtensionSet* function(PeasEngine* engine, GType extenType, uint nProperties, char** propNames, GValue* propValues) c_peas_extension_set_new_with_properties;
 	PeasExtensionSet* function(PeasEngine* engine, GType extenType, uint nParameters, GParameter* parameters) c_peas_extension_set_newv;
 	void function(PeasExtensionSet* set, PeasExtensionSetForeachFunc func, void* data) c_peas_extension_set_foreach;
 	PeasExtension* function(PeasExtensionSet* set, PeasPluginInfo* info) c_peas_extension_set_get_extension;
@@ -265,6 +269,7 @@ alias c_peas_engine_get_default peas_engine_get_default;
 alias c_peas_engine_add_search_path peas_engine_add_search_path;
 alias c_peas_engine_create_extension peas_engine_create_extension;
 alias c_peas_engine_create_extension_valist peas_engine_create_extension_valist;
+alias c_peas_engine_create_extension_with_properties peas_engine_create_extension_with_properties;
 alias c_peas_engine_create_extensionv peas_engine_create_extensionv;
 alias c_peas_engine_enable_loader peas_engine_enable_loader;
 alias c_peas_engine_garbage_collect peas_engine_garbage_collect;
@@ -289,6 +294,7 @@ alias c_peas_extension_base_get_plugin_info peas_extension_base_get_plugin_info;
 alias c_peas_extension_set_get_type peas_extension_set_get_type;
 alias c_peas_extension_set_new peas_extension_set_new;
 alias c_peas_extension_set_new_valist peas_extension_set_new_valist;
+alias c_peas_extension_set_new_with_properties peas_extension_set_new_with_properties;
 alias c_peas_extension_set_newv peas_extension_set_newv;
 alias c_peas_extension_set_foreach peas_extension_set_foreach;
 alias c_peas_extension_set_get_extension peas_extension_set_get_extension;

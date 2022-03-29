@@ -26,6 +26,7 @@ module gsv.SourceSearchSettings;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gsv.c.functions;
 public  import gsv.c.types;
@@ -79,14 +80,14 @@ public class SourceSearchSettings : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_source_search_settings_new();
+		auto __p = gtk_source_search_settings_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceSearchSettings*) p, true);
+		this(cast(GtkSourceSearchSettings*) __p, true);
 	}
 
 	/**

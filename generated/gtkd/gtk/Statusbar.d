@@ -132,14 +132,14 @@ public class Statusbar : Box
 	 */
 	public this()
 	{
-		auto p = gtk_statusbar_new();
+		auto __p = gtk_statusbar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStatusbar*) p);
+		this(cast(GtkStatusbar*) __p);
 	}
 
 	/**

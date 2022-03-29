@@ -473,14 +473,14 @@ public class CellRenderer : ObjectG
 	 */
 	public CellEditableIF startEditing(Event event, Widget widget, string path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
-		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), backgroundArea, cellArea, flags);
+		auto __p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), backgroundArea, cellArea, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) __p);
 	}
 
 	/**

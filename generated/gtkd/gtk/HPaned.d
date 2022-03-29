@@ -102,13 +102,13 @@ public class HPaned : Paned
 	 */
 	public this()
 	{
-		auto p = gtk_hpaned_new();
+		auto __p = gtk_hpaned_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHPaned*) p);
+		this(cast(GtkHPaned*) __p);
 	}
 }

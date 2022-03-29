@@ -288,13 +288,13 @@ public class BitReader
 	 */
 	public this(ubyte[] data)
 	{
-		auto p = gst_bit_reader_new(data.ptr, cast(uint)data.length);
+		auto __p = gst_bit_reader_new(data.ptr, cast(uint)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBitReader*) p);
+		this(cast(GstBitReader*) __p);
 	}
 }

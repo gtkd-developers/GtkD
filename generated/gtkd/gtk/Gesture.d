@@ -216,14 +216,14 @@ public class Gesture : EventController
 	 */
 	public Device getDevice()
 	{
-		auto p = gtk_gesture_get_device(gtkGesture);
+		auto __p = gtk_gesture_get_device(gtkGesture);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -236,14 +236,14 @@ public class Gesture : EventController
 	 */
 	public ListG getGroup()
 	{
-		auto p = gtk_gesture_get_group(gtkGesture);
+		auto __p = gtk_gesture_get_group(gtkGesture);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -260,14 +260,14 @@ public class Gesture : EventController
 	 */
 	public Event getLastEvent(GdkEventSequence* sequence)
 	{
-		auto p = gtk_gesture_get_last_event(gtkGesture, sequence);
+		auto __p = gtk_gesture_get_last_event(gtkGesture, sequence);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p);
 	}
 
 	/**
@@ -330,14 +330,14 @@ public class Gesture : EventController
 	 */
 	public ListG getSequences()
 	{
-		auto p = gtk_gesture_get_sequences(gtkGesture);
+		auto __p = gtk_gesture_get_sequences(gtkGesture);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -351,14 +351,14 @@ public class Gesture : EventController
 	 */
 	public Window getWindow()
 	{
-		auto p = gtk_gesture_get_window(gtkGesture);
+		auto __p = gtk_gesture_get_window(gtkGesture);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**

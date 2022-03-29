@@ -73,13 +73,13 @@ public class ToplevelAccessible : ObjectAtk
 	 */
 	public ListG getChildren()
 	{
-		auto p = gtk_toplevel_accessible_get_children(gtkToplevelAccessible);
+		auto __p = gtk_toplevel_accessible_get_children(gtkToplevelAccessible);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 }

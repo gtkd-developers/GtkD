@@ -28,7 +28,7 @@ private import gdk.Display;
 private import gdk.Screen;
 private import gdk.c.functions;
 public  import gdk.c.types;
-private import gio.AppLaunchContext : GioAppLaunchContext = AppLaunchContext;
+private import gio.AppLaunchContext : DGioAppLaunchContext = AppLaunchContext;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -58,7 +58,7 @@ public  import gtkc.gdktypes;
  * g_object_unref (context);
  * ]|
  */
-public class AppLaunchContext : GioAppLaunchContext
+public class AppLaunchContext : DGioAppLaunchContext
 {
 	/** the main Gtk struct */
 	protected GdkAppLaunchContext* gdkAppLaunchContext;
@@ -106,14 +106,14 @@ public class AppLaunchContext : GioAppLaunchContext
 	 */
 	public this()
 	{
-		auto p = gdk_app_launch_context_new();
+		auto __p = gdk_app_launch_context_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GdkAppLaunchContext*) p, true);
+		this(cast(GdkAppLaunchContext*) __p, true);
 	}
 
 	/**
@@ -194,6 +194,9 @@ public class AppLaunchContext : GioAppLaunchContext
 	/**
 	 * Sets the screen on which applications will be launched when
 	 * using this context. See also gdk_app_launch_context_set_display().
+	 *
+	 * Note that, typically, a #GdkScreen represents a logical screen,
+	 * not a physical monitor.
 	 *
 	 * If both @screen and @display are set, the @screen takes priority.
 	 * If neither @screen or @display are set, the default screen and

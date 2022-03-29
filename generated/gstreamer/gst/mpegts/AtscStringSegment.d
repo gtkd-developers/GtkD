@@ -26,6 +26,7 @@ module gst.mpegts.AtscStringSegment;
 
 private import glib.MemorySlice;
 private import glib.Str;
+private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
@@ -136,5 +137,11 @@ public final class AtscStringSegment
 	public string getString()
 	{
 		return Str.toString(gst_mpegts_atsc_string_segment_get_string(gstMpegtsAtscStringSegment));
+	}
+
+	/** */
+	public bool setString(string string_, ubyte compressionType, ubyte mode)
+	{
+		return gst_mpegts_atsc_string_segment_set_string(gstMpegtsAtscStringSegment, Str.toStringz(string_), compressionType, mode) != 0;
 	}
 }

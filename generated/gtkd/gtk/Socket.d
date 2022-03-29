@@ -133,14 +133,14 @@ public class Socket : Container
 	 */
 	public this()
 	{
-		auto p = gtk_socket_new();
+		auto __p = gtk_socket_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSocket*) p);
+		this(cast(GtkSocket*) __p);
 	}
 
 	/**
@@ -191,14 +191,14 @@ public class Socket : Container
 	 */
 	public Window getPlugWindow()
 	{
-		auto p = gtk_socket_get_plug_window(gtkSocket);
+		auto __p = gtk_socket_get_plug_window(gtkSocket);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**

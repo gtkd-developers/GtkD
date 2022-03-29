@@ -107,8 +107,8 @@ private import std.algorithm;
  * # GtkLevelBar as GtkBuildable
  * 
  * The GtkLevelBar implementation of the GtkBuildable interface supports a
- * custom <offsets> element, which can contain any number of <offset> elements,
- * each of which must have name and value attributes.
+ * custom `<offsets>` element, which can contain any number of `<offset>` elements,
+ * each of which must have "name" and "value" attributes.
  * 
  * # CSS nodes
  * 
@@ -181,14 +181,14 @@ public class LevelBar : Widget, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_level_bar_new();
+		auto __p = gtk_level_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLevelBar*) p);
+		this(cast(GtkLevelBar*) __p);
 	}
 
 	/**
@@ -207,14 +207,14 @@ public class LevelBar : Widget, OrientableIF
 	 */
 	public this(double minValue, double maxValue)
 	{
-		auto p = gtk_level_bar_new_for_interval(minValue, maxValue);
+		auto __p = gtk_level_bar_new_for_interval(minValue, maxValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_interval");
 		}
 
-		this(cast(GtkLevelBar*) p);
+		this(cast(GtkLevelBar*) __p);
 	}
 
 	/**

@@ -31,6 +31,7 @@ private import gstreamer.Allocator;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -100,6 +101,12 @@ public class Memory
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			gst_memory_unref(gstMemory);
+	}
+
 
 	/** */
 	public static GType getType()
@@ -128,14 +135,14 @@ public class Memory
 	 */
 	public this(GstMemoryFlags flags, ubyte[] data, size_t maxsize, size_t offset, void* userData, GDestroyNotify notify)
 	{
-		auto p = gst_memory_new_wrapped(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
+		auto __p = gst_memory_new_wrapped(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped");
 		}
 
-		this(cast(GstMemory*) p);
+		this(cast(GstMemory*) __p);
 	}
 
 	/**
@@ -151,14 +158,14 @@ public class Memory
 	 */
 	public Memory copy(ptrdiff_t offset, ptrdiff_t size)
 	{
-		auto p = gst_memory_copy(gstMemory, offset, size);
+		auto __p = gst_memory_copy(gstMemory, offset, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -168,7 +175,7 @@ public class Memory
 	 *     offset = pointer to offset
 	 *     maxsize = pointer to maxsize
 	 *
-	 * Returns: the current sizes of @mem
+	 * Returns: the current size of @mem
 	 */
 	public size_t getSizes(out size_t offset, out size_t maxsize)
 	{
@@ -244,14 +251,14 @@ public class Memory
 	 */
 	public Memory makeMapped(out GstMapInfo info, GstMapFlags flags)
 	{
-		auto p = gst_memory_make_mapped(gstMemory, &info, flags);
+		auto __p = gst_memory_make_mapped(gstMemory, &info, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -277,6 +284,24 @@ public class Memory
 	public bool map(out GstMapInfo info, GstMapFlags flags)
 	{
 		return gst_memory_map(gstMemory, &info, flags) != 0;
+	}
+
+	alias doref = ref_;
+	/**
+	 * Increase the refcount of this memory.
+	 *
+	 * Returns: @memory (for convenience when doing assignments)
+	 */
+	public Memory ref_()
+	{
+		auto __p = gst_memory_ref(gstMemory);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -309,14 +334,14 @@ public class Memory
 	 */
 	public Memory share(ptrdiff_t offset, ptrdiff_t size)
 	{
-		auto p = gst_memory_share(gstMemory, offset, size);
+		auto __p = gst_memory_share(gstMemory, offset, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) __p, true);
 	}
 
 	/**
@@ -328,5 +353,13 @@ public class Memory
 	public void unmap(GstMapInfo* info)
 	{
 		gst_memory_unmap(gstMemory, info);
+	}
+
+	/**
+	 * Decrease the refcount of a memory, freeing it if the refcount reaches 0.
+	 */
+	public void unref()
+	{
+		gst_memory_unref(gstMemory);
 	}
 }

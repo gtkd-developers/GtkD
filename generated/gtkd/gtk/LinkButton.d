@@ -26,6 +26,7 @@ module gtk.LinkButton;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Button;
@@ -107,14 +108,14 @@ public class LinkButton : Button
 	 */
 	public this(string uri)
 	{
-		auto p = gtk_link_button_new(Str.toStringz(uri));
+		auto __p = gtk_link_button_new(Str.toStringz(uri));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLinkButton*) p);
+		this(cast(GtkLinkButton*) __p);
 	}
 
 	/**
@@ -132,14 +133,14 @@ public class LinkButton : Button
 	 */
 	public this(string uri, string label)
 	{
-		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
+		auto __p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_label");
 		}
 
-		this(cast(GtkLinkButton*) p);
+		this(cast(GtkLinkButton*) __p);
 	}
 
 	/**

@@ -112,6 +112,24 @@ public class TypeFind
 	}
 
 	/**
+	 * If a #GstTypeFindFunction calls this function it suggests caps of the
+	 * given @media_type with the given @probability.
+	 *
+	 * This function is similar to gst_type_find_suggest_simple(), but uses
+	 * a #GstCaps with no fields.
+	 *
+	 * Params:
+	 *     probability = The probability in percent that the suggestion is right
+	 *     mediaType = the media type of the suggested caps
+	 *
+	 * Since: 1.20
+	 */
+	public void suggestEmptySimple(uint probability, string mediaType)
+	{
+		gst_type_find_suggest_empty_simple(gstTypeFind, probability, Str.toStringz(mediaType));
+	}
+
+	/**
 	 * Registers a new typefind function to be used for typefinding. After
 	 * registering this function will be available for typefinding.
 	 * This function is typically called during an element's plugin initialization.

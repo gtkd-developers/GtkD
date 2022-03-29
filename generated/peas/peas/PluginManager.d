@@ -77,7 +77,7 @@ public class PluginManager : Box
 	}
 
 	/**
-	 * Creates a new plugin manager for the given #PeasEngine.
+	 * Creates a new plugin manager for the given [class@Peas.Engine].
 	 *
 	 * If @engine is %NULL, then the default engine will be used.
 	 *
@@ -90,30 +90,30 @@ public class PluginManager : Box
 	 */
 	public this(Engine engine)
 	{
-		auto p = peas_gtk_plugin_manager_new((engine is null) ? null : engine.getEngineStruct());
+		auto __p = peas_gtk_plugin_manager_new((engine is null) ? null : engine.getEngineStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PeasGtkPluginManager*) p);
+		this(cast(PeasGtkPluginManager*) __p);
 	}
 
 	/**
-	 * Returns the #PeasGtkPluginManagerView of @pm.
+	 * Returns the [class@PluginManagerView] of @pm.
 	 *
 	 * Returns: the #GtkTreeView of @pm.
 	 */
 	public Widget getView()
 	{
-		auto p = peas_gtk_plugin_manager_get_view(peasGtkPluginManager);
+		auto __p = peas_gtk_plugin_manager_get_view(peasGtkPluginManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 }

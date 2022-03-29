@@ -29,6 +29,7 @@ public  import gio.c.types;
 private import glib.BBTree;
 private import glib.Str;
 private import glib.Variant;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -38,7 +39,7 @@ public  import gtkc.giotypes;
  * non-strictly-typed data that is stored in a hierarchy. To implement
  * an alternative storage backend for #GSettings, you need to implement
  * the #GSettingsBackend interface and then make it implement the
- * extension point #G_SETTINGS_BACKEND_EXTENSION_POINT_NAME.
+ * extension point %G_SETTINGS_BACKEND_EXTENSION_POINT_NAME.
  * 
  * The interface defines methods for reading and writing values, a
  * method for determining if writing of certain values will fail
@@ -137,7 +138,9 @@ public class SettingsBackend : ObjectG
 	 *
 	 * The user gets a reference to the backend.
 	 *
-	 * Returns: the default #GSettingsBackend
+	 * Returns: the default #GSettingsBackend,
+	 *     which will be a dummy (memory) settings backend if no other settings
+	 *     backend is available.
 	 *
 	 * Since: 2.28
 	 */

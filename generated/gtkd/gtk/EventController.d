@@ -93,14 +93,14 @@ public class EventController : ObjectG
 	 */
 	public Widget getWidget()
 	{
-		auto p = gtk_event_controller_get_widget(gtkEventController);
+		auto __p = gtk_event_controller_get_widget(gtkEventController);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

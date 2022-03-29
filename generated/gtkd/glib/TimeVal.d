@@ -34,7 +34,8 @@ private import gtkd.Loader;
 
 /**
  * Represents a precise time, with seconds and microseconds.
- * Similar to the struct timeval returned by the gettimeofday()
+ * 
+ * Similar to the struct timeval returned by the `gettimeofday()`
  * UNIX system call.
  * 
  * GLib is attempting to unify around the use of 64-bit integers to
@@ -278,7 +279,7 @@ public final class TimeVal
 	 * Pauses the current thread for the given number of microseconds.
 	 *
 	 * There are 1 million microseconds per second (represented by the
-	 * #G_USEC_PER_SEC macro). g_usleep() may have limited precision,
+	 * %G_USEC_PER_SEC macro). g_usleep() may have limited precision,
 	 * depending on hardware and operating system; don't rely on the exact
 	 * length of the sleep.
 	 *

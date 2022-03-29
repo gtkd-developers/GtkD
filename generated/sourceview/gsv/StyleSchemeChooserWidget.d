@@ -87,13 +87,13 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_source_style_scheme_chooser_widget_new();
+		auto __p = gtk_source_style_scheme_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceStyleSchemeChooserWidget*) p);
+		this(cast(GtkSourceStyleSchemeChooserWidget*) __p);
 	}
 }

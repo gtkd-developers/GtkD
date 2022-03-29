@@ -115,30 +115,31 @@ public final class PatProgram
 	 */
 	public this()
 	{
-		auto p = gst_mpegts_pat_program_new();
+		auto __p = gst_mpegts_pat_program_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstMpegtsPatProgram*) p);
+		this(cast(GstMpegtsPatProgram*) __p);
 	}
 
 	/**
-	 * Allocates a new #GPtrArray for #GstMpegtsPatProgram
+	 * Allocates a new #GPtrArray for #GstMpegtsPatProgram. The array can be filled
+	 * and then converted to a PAT section with gst_mpegts_section_from_pat().
 	 *
 	 * Returns: A newly allocated #GPtrArray
 	 */
 	public static PtrArray patNew()
 	{
-		auto p = gst_mpegts_pat_new();
+		auto __p = gst_mpegts_pat_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p, true);
+		return new PtrArray(cast(GPtrArray*) __p, true);
 	}
 }

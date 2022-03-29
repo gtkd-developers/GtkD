@@ -25,6 +25,7 @@
 module vte.Version;
 
 private import glib.Str;
+private import glib.c.functions;
 private import vte.c.functions;
 public  import vte.c.types;
 public  import vtec.vtetypes;

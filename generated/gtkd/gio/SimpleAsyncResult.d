@@ -500,7 +500,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Deprecated: Use #GTask and g_task_return_error() instead.
 	 *
 	 * Params:
-	 *     domain = a #GQuark (usually #G_IO_ERROR).
+	 *     domain = a #GQuark (usually %G_IO_ERROR).
 	 *     code = an error code.
 	 *     format = a formatted error reporting string.
 	 *     args = va_list of arguments.

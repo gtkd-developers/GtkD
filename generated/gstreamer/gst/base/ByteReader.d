@@ -91,13 +91,13 @@ public class ByteReader
 	 */
 	public bool dupData(out ubyte[] val)
 	{
-		ubyte* outval = null;
+		ubyte* outval;
 
-		auto p = gst_byte_reader_dup_data(gstByteReader, cast(uint)val.length, &outval) != 0;
+		auto __p = gst_byte_reader_dup_data(gstByteReader, cast(uint)val.length, &outval) != 0;
 
 		val = outval[0 .. cast(uint)val.length];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -125,13 +125,13 @@ public class ByteReader
 	 */
 	public bool dupStringUtf16(out ushort[] str)
 	{
-		ushort* outstr = null;
+		ushort* outstr;
 
-		auto p = gst_byte_reader_dup_string_utf16(gstByteReader, &outstr) != 0;
+		auto __p = gst_byte_reader_dup_string_utf16(gstByteReader, &outstr) != 0;
 
 		str = outstr[0 .. getArrayLength(outstr)];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -159,13 +159,13 @@ public class ByteReader
 	 */
 	public bool dupStringUtf32(out uint[] str)
 	{
-		uint* outstr = null;
+		uint* outstr;
 
-		auto p = gst_byte_reader_dup_string_utf32(gstByteReader, &outstr) != 0;
+		auto __p = gst_byte_reader_dup_string_utf32(gstByteReader, &outstr) != 0;
 
 		str = outstr[0 .. getArrayLength(outstr)];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -189,11 +189,11 @@ public class ByteReader
 	{
 		char* outstr = null;
 
-		auto p = gst_byte_reader_dup_string_utf8(gstByteReader, &outstr) != 0;
+		auto __p = gst_byte_reader_dup_string_utf8(gstByteReader, &outstr) != 0;
 
 		str = Str.toString(outstr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -219,13 +219,13 @@ public class ByteReader
 	 */
 	public bool getData(out ubyte[] val)
 	{
-		ubyte* outval = null;
+		ubyte* outval;
 
-		auto p = gst_byte_reader_get_data(gstByteReader, cast(uint)val.length, &outval) != 0;
+		auto __p = gst_byte_reader_get_data(gstByteReader, cast(uint)val.length, &outval) != 0;
 
 		val = outval[0 .. cast(uint)val.length];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -460,11 +460,11 @@ public class ByteReader
 	{
 		char* outstr = null;
 
-		auto p = gst_byte_reader_get_string_utf8(gstByteReader, &outstr) != 0;
+		auto __p = gst_byte_reader_get_string_utf8(gstByteReader, &outstr) != 0;
 
 		str = Str.toString(outstr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -715,13 +715,13 @@ public class ByteReader
 	 */
 	public bool peekData(out ubyte[] val)
 	{
-		ubyte* outval = null;
+		ubyte* outval;
 
-		auto p = gst_byte_reader_peek_data(gstByteReader, cast(uint)val.length, &outval) != 0;
+		auto __p = gst_byte_reader_peek_data(gstByteReader, cast(uint)val.length, &outval) != 0;
 
 		val = outval[0 .. cast(uint)val.length];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -926,11 +926,11 @@ public class ByteReader
 	{
 		char* outstr = null;
 
-		auto p = gst_byte_reader_peek_string_utf8(gstByteReader, &outstr) != 0;
+		auto __p = gst_byte_reader_peek_string_utf8(gstByteReader, &outstr) != 0;
 
 		str = Str.toString(outstr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1167,13 +1167,13 @@ public class ByteReader
 	 */
 	public this(ubyte[] data)
 	{
-		auto p = gst_byte_reader_new(data.ptr, cast(uint)data.length);
+		auto __p = gst_byte_reader_new(data.ptr, cast(uint)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstByteReader*) p);
+		this(cast(GstByteReader*) __p);
 	}
 }

@@ -111,14 +111,14 @@ public class SearchEntry : Entry
 	 */
 	public this()
 	{
-		auto p = gtk_search_entry_new();
+		auto __p = gtk_search_entry_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSearchEntry*) p);
+		this(cast(GtkSearchEntry*) __p);
 	}
 
 	/**

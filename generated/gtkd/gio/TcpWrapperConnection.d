@@ -105,7 +105,7 @@ public class TcpWrapperConnection : TcpConnection
 	}
 
 	/**
-	 * Get's @conn's base #GIOStream
+	 * Gets @conn's base #GIOStream
 	 *
 	 * Returns: @conn's base #GIOStream
 	 */

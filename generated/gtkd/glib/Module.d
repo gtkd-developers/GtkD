@@ -24,6 +24,8 @@
 
 module glib.Module;
 
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
@@ -98,7 +100,7 @@ public class Module
 
 	/**
 	 * Gets a symbol pointer from a module, such as one exported
-	 * by #G_MODULE_EXPORT. Note that a valid symbol can be %NULL.
+	 * by %G_MODULE_EXPORT. Note that a valid symbol can be %NULL.
 	 *
 	 * Params:
 	 *     symbolName = the name of the symbol to find
@@ -153,17 +155,46 @@ public class Module
 		return Str.toString(g_module_error());
 	}
 
+	/** */
+	public static GQuark errorQuark()
+	{
+		return g_module_error_quark();
+	}
+
+	/**
+	 * A thin wrapper function around g_module_open_full()
+	 *
+	 * Params:
+	 *     fileName = the name of the file containing the module, or %NULL
+	 *         to obtain a #GModule representing the main program itself
+	 *     flags = the flags used for opening the module. This can be the
+	 *         logical OR of any of the #GModuleFlags.
+	 *
+	 * Returns: a #GModule on success, or %NULL on failure
+	 */
+	public static Module open(string fileName, GModuleFlags flags)
+	{
+		auto __p = g_module_open(Str.toStringz(fileName), flags);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return new Module(cast(GModule*) __p);
+	}
+
 	/**
 	 * Opens a module. If the module has already been opened,
 	 * its reference count is incremented.
 	 *
-	 * First of all g_module_open() tries to open @file_name as a module.
+	 * First of all g_module_open_full() tries to open @file_name as a module.
 	 * If that fails and @file_name has the ".la"-suffix (and is a libtool
 	 * archive) it tries to open the corresponding module. If that fails
 	 * and it doesn't have the proper module suffix for the platform
-	 * (#G_MODULE_SUFFIX), this suffix will be appended and the corresponding
+	 * (%G_MODULE_SUFFIX), this suffix will be appended and the corresponding
 	 * module will be opened. If that fails and @file_name doesn't have the
-	 * ".la"-suffix, this suffix is appended and g_module_open() tries to open
+	 * ".la"-suffix, this suffix is appended and g_module_open_full() tries to open
 	 * the corresponding module. If eventually that fails as well, %NULL is
 	 * returned.
 	 *
@@ -174,10 +205,21 @@ public class Module
 	 *         logical OR of any of the #GModuleFlags
 	 *
 	 * Returns: a #GModule on success, or %NULL on failure
+	 *
+	 * Since: 2.70
+	 *
+	 * Throws: GException on failure.
 	 */
-	public static Module open(string fileName, GModuleFlags flags)
+	public static Module openFull(string fileName, GModuleFlags flags)
 	{
-		auto __p = g_module_open(Str.toStringz(fileName), flags);
+		GError* err = null;
+
+		auto __p = g_module_open_full(Str.toStringz(fileName), flags, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
 
 		if(__p is null)
 		{

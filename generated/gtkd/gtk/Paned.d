@@ -165,14 +165,14 @@ public class Paned : Container, OrientableIF
 	 */
 	public this(GtkOrientation orientation)
 	{
-		auto p = gtk_paned_new(orientation);
+		auto __p = gtk_paned_new(orientation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPaned*) p);
+		this(cast(GtkPaned*) __p);
 	}
 
 	/**
@@ -210,14 +210,14 @@ public class Paned : Container, OrientableIF
 	 */
 	public Widget getChild1()
 	{
-		auto p = gtk_paned_get_child1(gtkPaned);
+		auto __p = gtk_paned_get_child1(gtkPaned);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -229,14 +229,14 @@ public class Paned : Container, OrientableIF
 	 */
 	public Widget getChild2()
 	{
-		auto p = gtk_paned_get_child2(gtkPaned);
+		auto __p = gtk_paned_get_child2(gtkPaned);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -251,14 +251,14 @@ public class Paned : Container, OrientableIF
 	 */
 	public Window getHandleWindow()
 	{
-		auto p = gtk_paned_get_handle_window(gtkPaned);
+		auto __p = gtk_paned_get_handle_window(gtkPaned);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**

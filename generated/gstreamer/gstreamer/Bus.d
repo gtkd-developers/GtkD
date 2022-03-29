@@ -47,7 +47,7 @@ private import std.algorithm;
  * is done in another thread than the application.
  * 
  * The GstBus provides support for #GSource based notifications. This makes it
- * possible to handle the delivery in the glib mainloop.
+ * possible to handle the delivery in the glib #GMainLoop.
  * 
  * The #GSource callback function gst_bus_async_signal_func() can be used to
  * convert all bus messages into signal emissions.
@@ -177,19 +177,19 @@ public class Bus : ObjectGst
 	 */
 	public this()
 	{
-		auto p = gst_bus_new();
+		auto __p = gst_bus_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBus*) p, true);
+		this(cast(GstBus*) __p, true);
 	}
 
 	/**
 	 * Adds a bus signal watch to the default main context with the default priority
-	 * (%G_PRIORITY_DEFAULT). It is also possible to use a non-default
+	 * ( %G_PRIORITY_DEFAULT ). It is also possible to use a non-default
 	 * main context set up using g_main_context_push_thread_default() (before
 	 * one had to create a bus watch source and attach it to the desired main
 	 * context 'manually').
@@ -200,8 +200,6 @@ public class Bus : ObjectGst
 	 * This function may be called multiple times. To clean up, the caller is
 	 * responsible for calling gst_bus_remove_signal_watch() as many times as this
 	 * function is called.
-	 *
-	 * MT safe.
 	 */
 	public void addSignalWatch()
 	{
@@ -216,7 +214,7 @@ public class Bus : ObjectGst
 	 * main context 'manually').
 	 *
 	 * After calling this statement, the bus will emit the "message" signal for each
-	 * message posted on the bus when the main loop is running.
+	 * message posted on the bus when the #GMainLoop is running.
 	 *
 	 * This function may be called multiple times. To clean up, the caller is
 	 * responsible for calling gst_bus_remove_signal_watch() as many times as this
@@ -224,8 +222,6 @@ public class Bus : ObjectGst
 	 *
 	 * There can only be a single bus watch per bus, you must remove any signal
 	 * watch before you can set another type of watch.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     priority = The priority of the watch.
@@ -246,7 +242,7 @@ public class Bus : ObjectGst
 	 * There can only be a single bus watch per bus, you must remove it before you
 	 * can set a new one.
 	 *
-	 * The bus watch will only work if a GLib main loop is being run.
+	 * The bus watch will only work if a #GMainLoop is being run.
 	 *
 	 * When @func is called, the message belongs to the caller; if you want to
 	 * keep a copy of it, call gst_message_ref() before leaving @func.
@@ -257,8 +253,6 @@ public class Bus : ObjectGst
 	 *
 	 * The bus watch will take its own reference to the @bus, so it is safe to unref
 	 * @bus using gst_object_unref() after setting the bus watch.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     priority = The priority of the watch.
@@ -289,22 +283,25 @@ public class Bus : ObjectGst
 	}
 
 	/**
-	 * Create watch for this bus. The GSource will be dispatched whenever
+	 * Create watch for this bus. The #GSource will be dispatched whenever
 	 * a message is on the bus. After the GSource is dispatched, the
 	 * message is popped off the bus and unreffed.
 	 *
-	 * Returns: a #GSource that can be added to a mainloop.
+	 * As with other watches, there can only be one watch on the bus, including
+	 * any signal watch added with #gst_bus_add_signal_watch.
+	 *
+	 * Returns: a #GSource that can be added to a #GMainLoop.
 	 */
 	public Source createWatch()
 	{
-		auto p = gst_bus_create_watch(gstBus);
+		auto __p = gst_bus_create_watch(gstBus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -317,8 +314,6 @@ public class Bus : ObjectGst
 	 * "cancelled" by calling this function. In this way the semantics are exactly
 	 * the same as gst_object_ref() that which calls enable should also call
 	 * disable.
-	 *
-	 * MT safe.
 	 */
 	public void disableSyncMessageEmission()
 	{
@@ -336,13 +331,11 @@ public class Bus : ObjectGst
 	 * as this function is called.
 	 *
 	 * While this function looks similar to gst_bus_add_signal_watch(), it is not
-	 * exactly the same -- this function enables <emphasis>synchronous</emphasis> emission of
+	 * exactly the same -- this function enables *synchronous* emission of
 	 * signals when messages arrive; gst_bus_add_signal_watch() adds an idle callback
-	 * to pop messages off the bus <emphasis>asynchronously</emphasis>. The sync-message signal
+	 * to pop messages off the bus *asynchronously*. The sync-message signal
 	 * comes from the thread of whatever object posted the message; the "message"
-	 * signal is marshalled to the main thread via the main loop.
-	 *
-	 * MT safe.
+	 * signal is marshalled to the main thread via the #GMainLoop.
 	 */
 	public void enableSyncMessageEmission()
 	{
@@ -370,13 +363,11 @@ public class Bus : ObjectGst
 	}
 
 	/**
-	 * Check if there are pending messages on the bus that
+	 * Checks if there are pending messages on the bus that
 	 * should be handled.
 	 *
 	 * Returns: %TRUE if there are messages on the bus to be handled, %FALSE
 	 *     otherwise.
-	 *
-	 *     MT safe.
 	 */
 	public bool havePending()
 	{
@@ -384,29 +375,26 @@ public class Bus : ObjectGst
 	}
 
 	/**
-	 * Peek the message on the top of the bus' queue. The message will remain
-	 * on the bus' message queue. A reference is returned, and needs to be unreffed
-	 * by the caller.
+	 * Peeks the message on the top of the bus' queue. The message will remain
+	 * on the bus' message queue.
 	 *
 	 * Returns: the #GstMessage that is on the
 	 *     bus, or %NULL if the bus is empty.
-	 *
-	 *     MT safe.
 	 */
 	public Message peek()
 	{
-		auto p = gst_bus_peek(gstBus);
+		auto __p = gst_bus_peek(gstBus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
-	 * Poll the bus for messages. Will block while waiting for messages to come.
+	 * Polls the bus for messages. Will block while waiting for messages to come.
 	 * You can specify a maximum time to poll with the @timeout parameter. If
 	 * @timeout is negative, this function will block indefinitely.
 	 *
@@ -420,7 +408,7 @@ public class Bus : ObjectGst
 	 * signal handler will see the same messages that this function sees -- neither
 	 * will steal messages from the other.
 	 *
-	 * This function will run a main loop from the default main context when
+	 * This function will run a #GMainLoop from the default main context when
 	 * polling.
 	 *
 	 * You should never use this function, since it is pure evil. This is
@@ -447,46 +435,40 @@ public class Bus : ObjectGst
 	 *         indefinitely.
 	 *
 	 * Returns: the message that was received,
-	 *     or %NULL if the poll timed out. The message is taken from the
-	 *     bus and needs to be unreffed with gst_message_unref() after
-	 *     usage.
+	 *     or %NULL if the poll timed out.
 	 */
 	public Message poll(GstMessageType events, GstClockTime timeout)
 	{
-		auto p = gst_bus_poll(gstBus, events, timeout);
+		auto __p = gst_bus_poll(gstBus, events, timeout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
-	 * Get a message from the bus.
+	 * Gets a message from the bus.
 	 *
 	 * Returns: the #GstMessage that is on the
-	 *     bus, or %NULL if the bus is empty. The message is taken from
-	 *     the bus and needs to be unreffed with gst_message_unref() after
-	 *     usage.
-	 *
-	 *     MT safe.
+	 *     bus, or %NULL if the bus is empty.
 	 */
 	public Message pop()
 	{
-		auto p = gst_bus_pop(gstBus);
+		auto __p = gst_bus_pop(gstBus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
-	 * Get a message matching @type from the bus.  Will discard all messages on
+	 * Gets a message matching @type from the bus.  Will discard all messages on
 	 * the bus that do not match @type and that have been posted before the first
 	 * message that does match @type.  If there is no message matching @type on
 	 * the bus, all messages will be discarded. It is not possible to use message
@@ -497,43 +479,36 @@ public class Bus : ObjectGst
 	 *
 	 * Returns: the next #GstMessage matching
 	 *     @type that is on the bus, or %NULL if the bus is empty or there
-	 *     is no message matching @type. The message is taken from the bus
-	 *     and needs to be unreffed with gst_message_unref() after usage.
-	 *
-	 *     MT safe.
+	 *     is no message matching @type.
 	 */
 	public Message popFiltered(GstMessageType types)
 	{
-		auto p = gst_bus_pop_filtered(gstBus, types);
+		auto __p = gst_bus_pop_filtered(gstBus, types);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
-	 * Post a message on the given bus. Ownership of the message
+	 * Posts a message on the given bus. Ownership of the message
 	 * is taken by the bus.
 	 *
 	 * Params:
 	 *     message = the #GstMessage to post
 	 *
 	 * Returns: %TRUE if the message could be posted, %FALSE if the bus is flushing.
-	 *
-	 *     MT safe.
 	 */
 	public bool post(Message message)
 	{
-		return gst_bus_post(gstBus, (message is null) ? null : message.getMessageStruct()) != 0;
+		return gst_bus_post(gstBus, (message is null) ? null : message.getMessageStruct(true)) != 0;
 	}
 
 	/**
 	 * Removes a signal watch previously added with gst_bus_add_signal_watch().
-	 *
-	 * MT safe.
 	 */
 	public void removeSignalWatch()
 	{
@@ -553,11 +528,9 @@ public class Bus : ObjectGst
 	}
 
 	/**
-	 * If @flushing, flush out and unref any messages queued in the bus. Releases
+	 * If @flushing, flushes out and unrefs any messages queued in the bus. Releases
 	 * references to the message origin objects. Will flush future messages until
 	 * gst_bus_set_flushing() sets @flushing to %FALSE.
-	 *
-	 * MT safe.
 	 *
 	 * Params:
 	 *     flushing = whether or not to flush the bus
@@ -568,14 +541,14 @@ public class Bus : ObjectGst
 	}
 
 	/**
-	 * A helper GstBusSyncHandler that can be used to convert all synchronous
+	 * A helper #GstBusSyncHandler that can be used to convert all synchronous
 	 * messages into signals.
 	 *
 	 * Params:
 	 *     message = the #GstMessage received
 	 *     data = user data
 	 *
-	 * Returns: GST_BUS_PASS
+	 * Returns: %GST_BUS_PASS
 	 */
 	public GstBusSyncReply syncSignalHandler(Message message, void* data)
 	{
@@ -583,7 +556,7 @@ public class Bus : ObjectGst
 	}
 
 	/**
-	 * Get a message from the bus, waiting up to the specified timeout.
+	 * Gets a message from the bus, waiting up to the specified timeout.
 	 *
 	 * If @timeout is 0, this function behaves like gst_bus_pop(). If @timeout is
 	 * #GST_CLOCK_TIME_NONE, this function will block forever until a message was
@@ -594,25 +567,22 @@ public class Bus : ObjectGst
 	 *
 	 * Returns: the #GstMessage that is on the
 	 *     bus after the specified timeout or %NULL if the bus is empty
-	 *     after the timeout expired.  The message is taken from the bus
-	 *     and needs to be unreffed with gst_message_unref() after usage.
-	 *
-	 *     MT safe.
+	 *     after the timeout expired.
 	 */
 	public Message timedPop(GstClockTime timeout)
 	{
-		auto p = gst_bus_timed_pop(gstBus, timeout);
+		auto __p = gst_bus_timed_pop(gstBus, timeout);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
-	 * Get a message from the bus whose type matches the message type mask @types,
+	 * Gets a message from the bus whose type matches the message type mask @types,
 	 * waiting up to the specified timeout (and discarding any messages that do not
 	 * match the mask provided).
 	 *
@@ -621,33 +591,29 @@ public class Bus : ObjectGst
 	 * matching message was posted on the bus.
 	 *
 	 * Params:
-	 *     timeout = a timeout in nanoseconds, or GST_CLOCK_TIME_NONE to wait forever
-	 *     types = message types to take into account, GST_MESSAGE_ANY for any type
+	 *     timeout = a timeout in nanoseconds, or %GST_CLOCK_TIME_NONE to wait forever
+	 *     types = message types to take into account, %GST_MESSAGE_ANY for any type
 	 *
 	 * Returns: a #GstMessage matching the
 	 *     filter in @types, or %NULL if no matching message was found on
-	 *     the bus until the timeout expired. The message is taken from
-	 *     the bus and needs to be unreffed with gst_message_unref() after
-	 *     usage.
-	 *
-	 *     MT safe.
+	 *     the bus until the timeout expired.
 	 */
 	public Message timedPopFiltered(GstClockTime timeout, GstMessageType types)
 	{
-		auto p = gst_bus_timed_pop_filtered(gstBus, timeout, types);
+		auto __p = gst_bus_timed_pop_filtered(gstBus, timeout, types);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) __p, true);
 	}
 
 	/**
 	 * A message has been posted on the bus. This signal is emitted from a
-	 * GSource added to the mainloop. this signal will only be emitted when
-	 * there is a mainloop running.
+	 * #GSource added to the mainloop. this signal will only be emitted when
+	 * there is a #GMainLoop running.
 	 *
 	 * Params:
 	 *     message = the message that has been posted asynchronously

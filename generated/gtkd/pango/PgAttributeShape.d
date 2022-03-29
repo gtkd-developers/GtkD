@@ -33,7 +33,7 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoAttrShape structure is used to represent attributes which
+ * The `PangoAttrShape` structure is used to represent attributes which
  * impose shape restrictions.
  */
 public class PgAttributeShape : PgAttribute
@@ -66,35 +66,40 @@ public class PgAttributeShape : PgAttribute
 
 
 	/**
-	 * Create a new shape attribute. A shape is used to impose a
-	 * particular ink and logical rectangle on the result of shaping a
-	 * particular glyph. This might be used, for instance, for
-	 * embedding a picture or a widget inside a #PangoLayout.
+	 * Create a new shape attribute.
+	 *
+	 * A shape is used to impose a particular ink and logical
+	 * rectangle on the result of shaping a particular glyph.
+	 * This might be used, for instance, for embedding a picture
+	 * or a widget inside a `PangoLayout`.
 	 *
 	 * Params:
 	 *     inkRect = ink rectangle to assign to each character
 	 *     logicalRect = logical rectangle to assign to each character
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated
+	 *     `PangoAttribute`, which should be freed with
+	 *     [method@Pango.Attribute.destroy]
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
-		auto p = pango_attr_shape_new(inkRect, logicalRect);
+		auto __p = pango_attr_shape_new(inkRect, logicalRect);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoAttrShape*) p);
+		this(cast(PangoAttrShape*) __p);
 	}
 
 	/**
-	 * Like pango_attr_shape_new(), but a user data pointer is also
-	 * provided; this pointer can be accessed when later
+	 * Creates a new shape attribute.
+	 *
+	 * Like [func@Pango.AttrShape.new], but a user data pointer
+	 * is also provided; this pointer can be accessed when later
 	 * rendering the glyph.
 	 *
 	 * Params:
@@ -102,13 +107,14 @@ public class PgAttributeShape : PgAttribute
 	 *     logicalRect = logical rectangle to assign to each character
 	 *     data = user data pointer
 	 *     copyFunc = function to copy @data when the
-	 *         attribute is copied. If %NULL, @data is simply
-	 *         copied as a pointer.
+	 *         attribute is copied. If %NULL, @data is simply copied
+	 *         as a pointer
 	 *     destroyFunc = function to free @data when the
-	 *         attribute is freed, or %NULL
+	 *         attribute is freed
 	 *
-	 * Returns: the newly allocated #PangoAttribute, which should be
-	 *     freed with pango_attribute_destroy().
+	 * Returns: the newly allocated
+	 *     `PangoAttribute`, which should be freed with
+	 *     [method@Pango.Attribute.destroy]
 	 *
 	 * Since: 1.8
 	 *
@@ -116,13 +122,13 @@ public class PgAttributeShape : PgAttribute
 	 */
 	public this(PangoRectangle* inkRect, PangoRectangle* logicalRect, void* data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc)
 	{
-		auto p = pango_attr_shape_new_with_data(inkRect, logicalRect, data, copyFunc, destroyFunc);
+		auto __p = pango_attr_shape_new_with_data(inkRect, logicalRect, data, copyFunc, destroyFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_data");
 		}
 
-		this(cast(PangoAttrShape*) p);
+		this(cast(PangoAttrShape*) __p);
 	}
 }

@@ -34,7 +34,7 @@ public  import pango.c.types;
 
 
 /**
- * The #PangoAttrLanguage structure is used to represent attributes that
+ * The `PangoAttrLanguage` structure is used to represent attributes that
  * are languages.
  */
 public class PgAttributeLanguage : PgAttribute
@@ -72,20 +72,21 @@ public class PgAttributeLanguage : PgAttribute
 	 * Params:
 	 *     language = language tag
 	 *
-	 * Returns: the newly allocated #PangoAttribute,
-	 *     which should be freed with pango_attribute_destroy().
+	 * Returns: the newly allocated
+	 *     `PangoAttribute`, which should be freed with
+	 *     [method@Pango.Attribute.destroy]
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(PgLanguage language)
 	{
-		auto p = pango_attr_language_new((language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_attr_language_new((language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoAttrLanguage*) p);
+		this(cast(PangoAttrLanguage*) __p);
 	}
 }

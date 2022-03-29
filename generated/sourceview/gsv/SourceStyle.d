@@ -97,13 +97,13 @@ public class SourceStyle : ObjectG
 	 */
 	public SourceStyle copy()
 	{
-		auto p = gtk_source_style_copy(gtkSourceStyle);
+		auto __p = gtk_source_style_copy(gtkSourceStyle);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) p, true);
+		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) __p, true);
 	}
 }

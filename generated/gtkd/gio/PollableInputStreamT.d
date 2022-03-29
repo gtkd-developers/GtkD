@@ -135,8 +135,8 @@ public template PollableInputStreamT(TStruct)
 	 * to having been cancelled.
 	 *
 	 * Params:
-	 *     buffer = a buffer to
-	 *         read data into (which should be at least @count bytes long).
+	 *     buffer = a
+	 *         buffer to read data into (which should be at least @count bytes long).
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
 	 * Returns: the number of bytes read, or -1 on error (including
@@ -144,16 +144,19 @@ public template PollableInputStreamT(TStruct)
 	 *
 	 * Throws: GException on failure.
 	 */
-	public ptrdiff_t readNonblocking(ubyte[] buffer, Cancellable cancellable)
+	public ptrdiff_t readNonblocking(out ubyte[] buffer, Cancellable cancellable)
 	{
+		ubyte* outbuffer;
 		GError* err = null;
 
-		auto __p = g_pollable_input_stream_read_nonblocking(getPollableInputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_pollable_input_stream_read_nonblocking(getPollableInputStreamStruct(), cast(void*)&outbuffer, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
+
+		buffer = outbuffer[0 .. cast(size_t)buffer.length];
 
 		return __p;
 	}

@@ -24,6 +24,8 @@
 
 module gstreamer.ParentBufferMeta;
 
+private import gobject.ObjectG;
+private import gstreamer.MetaInfo;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
@@ -45,15 +47,22 @@ public struct ParentBufferMeta
 {
 
 	/**
-	 * Get the global #GstMetaInfo describing  the #GstParentBufferMeta meta.
+	 * Gets the global #GstMetaInfo describing  the #GstParentBufferMeta meta.
 	 *
 	 * Returns: The #GstMetaInfo
 	 *
 	 * Since: 1.6
 	 */
-	public static GstMetaInfo* getInfo()
+	public static MetaInfo getInfo()
 	{
-		return gst_parent_buffer_meta_get_info();
+		auto __p = gst_parent_buffer_meta_get_info();
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(MetaInfo)(cast(GstMetaInfo*) __p);
 	}
 
 	/** */

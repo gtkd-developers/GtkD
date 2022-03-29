@@ -36,9 +36,10 @@ public  import gtkc.gobjecttypes;
 
 /**
  * A #GParamSpecPool maintains a collection of #GParamSpecs which can be
- * quickly accessed by owner and name. The implementation of the #GObject property
- * system uses such a pool to store the #GParamSpecs of the properties all object
- * types.
+ * quickly accessed by owner and name.
+ * 
+ * The implementation of the #GObject property system uses such a pool to
+ * store the #GParamSpecs of the properties all object types.
  */
 public class ParamSpecPool
 {

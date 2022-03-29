@@ -51,6 +51,8 @@ public  import gstreamerc.gstreamertypes;
  * return gst_dynamic_type_register (plugin, GST_TYPE_CUSTOM_CAPS_FIELD);
  * }
  * ]|
+ *
+ * Since: 1.12
  */
 public class DynamicTypeFactory : PluginFeature
 {

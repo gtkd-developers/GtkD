@@ -667,6 +667,18 @@ shared static this()
 	Linker.link(g_datagram_based_receive_messages, "g_datagram_based_receive_messages", LIBRARY_GIO);
 	Linker.link(g_datagram_based_send_messages, "g_datagram_based_send_messages", LIBRARY_GIO);
 
+	// gio.DebugController
+
+	Linker.link(g_debug_controller_get_type, "g_debug_controller_get_type", LIBRARY_GIO);
+	Linker.link(g_debug_controller_get_debug_enabled, "g_debug_controller_get_debug_enabled", LIBRARY_GIO);
+	Linker.link(g_debug_controller_set_debug_enabled, "g_debug_controller_set_debug_enabled", LIBRARY_GIO);
+
+	// gio.DebugControllerDBus
+
+	Linker.link(g_debug_controller_dbus_get_type, "g_debug_controller_dbus_get_type", LIBRARY_GIO);
+	Linker.link(g_debug_controller_dbus_new, "g_debug_controller_dbus_new", LIBRARY_GIO);
+	Linker.link(g_debug_controller_dbus_stop, "g_debug_controller_dbus_stop", LIBRARY_GIO);
+
 	// gio.DesktopAppInfo
 
 	Linker.link(g_desktop_app_info_get_type, "g_desktop_app_info_get_type", LIBRARY_GIO);
@@ -750,11 +762,14 @@ shared static this()
 	Linker.link(g_dtls_connection_close_finish, "g_dtls_connection_close_finish", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_emit_accept_certificate, "g_dtls_connection_emit_accept_certificate", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_certificate, "g_dtls_connection_get_certificate", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_channel_binding_data, "g_dtls_connection_get_channel_binding_data", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_ciphersuite_name, "g_dtls_connection_get_ciphersuite_name", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_database, "g_dtls_connection_get_database", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_interaction, "g_dtls_connection_get_interaction", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_negotiated_protocol, "g_dtls_connection_get_negotiated_protocol", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_peer_certificate, "g_dtls_connection_get_peer_certificate", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_peer_certificate_errors, "g_dtls_connection_get_peer_certificate_errors", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_protocol_version, "g_dtls_connection_get_protocol_version", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_rehandshake_mode, "g_dtls_connection_get_rehandshake_mode", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_require_close_notify, "g_dtls_connection_get_require_close_notify", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_handshake, "g_dtls_connection_handshake", LIBRARY_GIO);
@@ -805,6 +820,7 @@ shared static this()
 	Linker.link(g_file_append_to, "g_file_append_to", LIBRARY_GIO);
 	Linker.link(g_file_append_to_async, "g_file_append_to_async", LIBRARY_GIO);
 	Linker.link(g_file_append_to_finish, "g_file_append_to_finish", LIBRARY_GIO);
+	Linker.link(g_file_build_attribute_list_for_copy, "g_file_build_attribute_list_for_copy", LIBRARY_GIO);
 	Linker.link(g_file_copy, "g_file_copy", LIBRARY_GIO);
 	Linker.link(g_file_copy_async, "g_file_copy_async", LIBRARY_GIO);
 	Linker.link(g_file_copy_attributes, "g_file_copy_attributes", LIBRARY_GIO);
@@ -868,6 +884,8 @@ shared static this()
 	Linker.link(g_file_mount_mountable, "g_file_mount_mountable", LIBRARY_GIO);
 	Linker.link(g_file_mount_mountable_finish, "g_file_mount_mountable_finish", LIBRARY_GIO);
 	Linker.link(g_file_move, "g_file_move", LIBRARY_GIO);
+	Linker.link(g_file_move_async, "g_file_move_async", LIBRARY_GIO);
+	Linker.link(g_file_move_finish, "g_file_move_finish", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite, "g_file_open_readwrite", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite_async, "g_file_open_readwrite_async", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite_finish, "g_file_open_readwrite_finish", LIBRARY_GIO);
@@ -992,6 +1010,7 @@ shared static this()
 	Linker.link(g_file_info_clear_status, "g_file_info_clear_status", LIBRARY_GIO);
 	Linker.link(g_file_info_copy_into, "g_file_info_copy_into", LIBRARY_GIO);
 	Linker.link(g_file_info_dup, "g_file_info_dup", LIBRARY_GIO);
+	Linker.link(g_file_info_get_access_date_time, "g_file_info_get_access_date_time", LIBRARY_GIO);
 	Linker.link(g_file_info_get_attribute_as_string, "g_file_info_get_attribute_as_string", LIBRARY_GIO);
 	Linker.link(g_file_info_get_attribute_boolean, "g_file_info_get_attribute_boolean", LIBRARY_GIO);
 	Linker.link(g_file_info_get_attribute_byte_string, "g_file_info_get_attribute_byte_string", LIBRARY_GIO);
@@ -1006,6 +1025,7 @@ shared static this()
 	Linker.link(g_file_info_get_attribute_uint32, "g_file_info_get_attribute_uint32", LIBRARY_GIO);
 	Linker.link(g_file_info_get_attribute_uint64, "g_file_info_get_attribute_uint64", LIBRARY_GIO);
 	Linker.link(g_file_info_get_content_type, "g_file_info_get_content_type", LIBRARY_GIO);
+	Linker.link(g_file_info_get_creation_date_time, "g_file_info_get_creation_date_time", LIBRARY_GIO);
 	Linker.link(g_file_info_get_deletion_date, "g_file_info_get_deletion_date", LIBRARY_GIO);
 	Linker.link(g_file_info_get_display_name, "g_file_info_get_display_name", LIBRARY_GIO);
 	Linker.link(g_file_info_get_edit_name, "g_file_info_get_edit_name", LIBRARY_GIO);
@@ -1026,6 +1046,7 @@ shared static this()
 	Linker.link(g_file_info_has_namespace, "g_file_info_has_namespace", LIBRARY_GIO);
 	Linker.link(g_file_info_list_attributes, "g_file_info_list_attributes", LIBRARY_GIO);
 	Linker.link(g_file_info_remove_attribute, "g_file_info_remove_attribute", LIBRARY_GIO);
+	Linker.link(g_file_info_set_access_date_time, "g_file_info_set_access_date_time", LIBRARY_GIO);
 	Linker.link(g_file_info_set_attribute, "g_file_info_set_attribute", LIBRARY_GIO);
 	Linker.link(g_file_info_set_attribute_boolean, "g_file_info_set_attribute_boolean", LIBRARY_GIO);
 	Linker.link(g_file_info_set_attribute_byte_string, "g_file_info_set_attribute_byte_string", LIBRARY_GIO);
@@ -1039,6 +1060,7 @@ shared static this()
 	Linker.link(g_file_info_set_attribute_uint32, "g_file_info_set_attribute_uint32", LIBRARY_GIO);
 	Linker.link(g_file_info_set_attribute_uint64, "g_file_info_set_attribute_uint64", LIBRARY_GIO);
 	Linker.link(g_file_info_set_content_type, "g_file_info_set_content_type", LIBRARY_GIO);
+	Linker.link(g_file_info_set_creation_date_time, "g_file_info_set_creation_date_time", LIBRARY_GIO);
 	Linker.link(g_file_info_set_display_name, "g_file_info_set_display_name", LIBRARY_GIO);
 	Linker.link(g_file_info_set_edit_name, "g_file_info_set_edit_name", LIBRARY_GIO);
 	Linker.link(g_file_info_set_file_type, "g_file_info_set_file_type", LIBRARY_GIO);
@@ -1467,6 +1489,7 @@ shared static this()
 	Linker.link(g_notification_add_button_with_target, "g_notification_add_button_with_target", LIBRARY_GIO);
 	Linker.link(g_notification_add_button_with_target_value, "g_notification_add_button_with_target_value", LIBRARY_GIO);
 	Linker.link(g_notification_set_body, "g_notification_set_body", LIBRARY_GIO);
+	Linker.link(g_notification_set_category, "g_notification_set_category", LIBRARY_GIO);
 	Linker.link(g_notification_set_default_action, "g_notification_set_default_action", LIBRARY_GIO);
 	Linker.link(g_notification_set_default_action_and_target, "g_notification_set_default_action_and_target", LIBRARY_GIO);
 	Linker.link(g_notification_set_default_action_and_target_value, "g_notification_set_default_action_and_target_value", LIBRARY_GIO);
@@ -1540,6 +1563,12 @@ shared static this()
 	Linker.link(g_pollable_output_stream_is_writable, "g_pollable_output_stream_is_writable", LIBRARY_GIO);
 	Linker.link(g_pollable_output_stream_write_nonblocking, "g_pollable_output_stream_write_nonblocking", LIBRARY_GIO);
 	Linker.link(g_pollable_output_stream_writev_nonblocking, "g_pollable_output_stream_writev_nonblocking", LIBRARY_GIO);
+
+	// gio.PowerProfileMonitor
+
+	Linker.link(g_power_profile_monitor_get_type, "g_power_profile_monitor_get_type", LIBRARY_GIO);
+	Linker.link(g_power_profile_monitor_dup_default, "g_power_profile_monitor_dup_default", LIBRARY_GIO);
+	Linker.link(g_power_profile_monitor_get_power_saver_enabled, "g_power_profile_monitor_get_power_saver_enabled", LIBRARY_GIO);
 
 	// gio.PropertyAction
 
@@ -2025,6 +2054,7 @@ shared static this()
 
 	Linker.link(g_subprocess_launcher_get_type, "g_subprocess_launcher_get_type", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_new, "g_subprocess_launcher_new", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_close, "g_subprocess_launcher_close", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_getenv, "g_subprocess_launcher_getenv", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_set_child_setup, "g_subprocess_launcher_set_child_setup", LIBRARY_GIO);
 	Linker.link(g_subprocess_launcher_set_cwd, "g_subprocess_launcher_set_cwd", LIBRARY_GIO);
@@ -2139,10 +2169,19 @@ shared static this()
 
 	Linker.link(g_tls_certificate_get_type, "g_tls_certificate_get_type", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_file, "g_tls_certificate_new_from_file", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_file_with_password, "g_tls_certificate_new_from_file_with_password", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_files, "g_tls_certificate_new_from_files", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_pem, "g_tls_certificate_new_from_pem", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_pkcs11_uris, "g_tls_certificate_new_from_pkcs11_uris", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_pkcs12, "g_tls_certificate_new_from_pkcs12", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_list_new_from_file, "g_tls_certificate_list_new_from_file", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_get_dns_names, "g_tls_certificate_get_dns_names", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_get_ip_addresses, "g_tls_certificate_get_ip_addresses", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_get_issuer, "g_tls_certificate_get_issuer", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_get_issuer_name, "g_tls_certificate_get_issuer_name", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_get_not_valid_after, "g_tls_certificate_get_not_valid_after", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_get_not_valid_before, "g_tls_certificate_get_not_valid_before", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_get_subject_name, "g_tls_certificate_get_subject_name", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_is_same, "g_tls_certificate_is_same", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_verify, "g_tls_certificate_verify", LIBRARY_GIO);
 
@@ -2164,11 +2203,14 @@ shared static this()
 	Linker.link(g_tls_connection_get_type, "g_tls_connection_get_type", LIBRARY_GIO);
 	Linker.link(g_tls_connection_emit_accept_certificate, "g_tls_connection_emit_accept_certificate", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_certificate, "g_tls_connection_get_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_channel_binding_data, "g_tls_connection_get_channel_binding_data", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_ciphersuite_name, "g_tls_connection_get_ciphersuite_name", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_database, "g_tls_connection_get_database", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_interaction, "g_tls_connection_get_interaction", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_negotiated_protocol, "g_tls_connection_get_negotiated_protocol", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_peer_certificate, "g_tls_connection_get_peer_certificate", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_peer_certificate_errors, "g_tls_connection_get_peer_certificate_errors", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_protocol_version, "g_tls_connection_get_protocol_version", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_rehandshake_mode, "g_tls_connection_get_rehandshake_mode", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_require_close_notify, "g_tls_connection_get_require_close_notify", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_use_system_certdb, "g_tls_connection_get_use_system_certdb", LIBRARY_GIO);
@@ -2334,6 +2376,7 @@ shared static this()
 	Linker.link(g_unix_mount_point_is_loopback, "g_unix_mount_point_is_loopback", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_is_readonly, "g_unix_mount_point_is_readonly", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_is_user_mountable, "g_unix_mount_point_is_user_mountable", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_at, "g_unix_mount_point_at", LIBRARY_GIO);
 
 	// gio.UnixOutputStream
 
@@ -3124,6 +3167,18 @@ __gshared extern(C)
 	int function(GDatagramBased* datagramBased, GInputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) c_g_datagram_based_receive_messages;
 	int function(GDatagramBased* datagramBased, GOutputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) c_g_datagram_based_send_messages;
 
+	// gio.DebugController
+
+	GType function() c_g_debug_controller_get_type;
+	int function(GDebugController* self) c_g_debug_controller_get_debug_enabled;
+	void function(GDebugController* self, int debugEnabled) c_g_debug_controller_set_debug_enabled;
+
+	// gio.DebugControllerDBus
+
+	GType function() c_g_debug_controller_dbus_get_type;
+	GDebugControllerDBus* function(GDBusConnection* connection, GCancellable* cancellable, GError** err) c_g_debug_controller_dbus_new;
+	void function(GDebugControllerDBus* self) c_g_debug_controller_dbus_stop;
+
 	// gio.DesktopAppInfo
 
 	GType function() c_g_desktop_app_info_get_type;
@@ -3207,11 +3262,14 @@ __gshared extern(C)
 	int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) c_g_dtls_connection_close_finish;
 	int function(GDtlsConnection* conn, GTlsCertificate* peerCert, GTlsCertificateFlags errors) c_g_dtls_connection_emit_accept_certificate;
 	GTlsCertificate* function(GDtlsConnection* conn) c_g_dtls_connection_get_certificate;
+	int function(GDtlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) c_g_dtls_connection_get_channel_binding_data;
+	char* function(GDtlsConnection* conn) c_g_dtls_connection_get_ciphersuite_name;
 	GTlsDatabase* function(GDtlsConnection* conn) c_g_dtls_connection_get_database;
 	GTlsInteraction* function(GDtlsConnection* conn) c_g_dtls_connection_get_interaction;
 	const(char)* function(GDtlsConnection* conn) c_g_dtls_connection_get_negotiated_protocol;
 	GTlsCertificate* function(GDtlsConnection* conn) c_g_dtls_connection_get_peer_certificate;
 	GTlsCertificateFlags function(GDtlsConnection* conn) c_g_dtls_connection_get_peer_certificate_errors;
+	GTlsProtocolVersion function(GDtlsConnection* conn) c_g_dtls_connection_get_protocol_version;
 	GTlsRehandshakeMode function(GDtlsConnection* conn) c_g_dtls_connection_get_rehandshake_mode;
 	int function(GDtlsConnection* conn) c_g_dtls_connection_get_require_close_notify;
 	int function(GDtlsConnection* conn, GCancellable* cancellable, GError** err) c_g_dtls_connection_handshake;
@@ -3262,6 +3320,7 @@ __gshared extern(C)
 	GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) c_g_file_append_to;
 	void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_append_to_async;
 	GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** err) c_g_file_append_to_finish;
+	char* function(GFile* file, GFileCopyFlags flags, GCancellable* cancellable, GError** err) c_g_file_build_attribute_list_for_copy;
 	int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) c_g_file_copy;
 	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) c_g_file_copy_async;
 	int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GError** err) c_g_file_copy_attributes;
@@ -3325,6 +3384,8 @@ __gshared extern(C)
 	void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_mount_mountable;
 	GFile* function(GFile* file, GAsyncResult* result, GError** err) c_g_file_mount_mountable_finish;
 	int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) c_g_file_move;
+	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) c_g_file_move_async;
+	int function(GFile* file, GAsyncResult* result, GError** err) c_g_file_move_finish;
 	GFileIOStream* function(GFile* file, GCancellable* cancellable, GError** err) c_g_file_open_readwrite;
 	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_open_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) c_g_file_open_readwrite_finish;
@@ -3449,6 +3510,7 @@ __gshared extern(C)
 	void function(GFileInfo* info) c_g_file_info_clear_status;
 	void function(GFileInfo* srcInfo, GFileInfo* destInfo) c_g_file_info_copy_into;
 	GFileInfo* function(GFileInfo* other) c_g_file_info_dup;
+	GDateTime* function(GFileInfo* info) c_g_file_info_get_access_date_time;
 	char* function(GFileInfo* info, const(char)* attribute) c_g_file_info_get_attribute_as_string;
 	int function(GFileInfo* info, const(char)* attribute) c_g_file_info_get_attribute_boolean;
 	const(char)* function(GFileInfo* info, const(char)* attribute) c_g_file_info_get_attribute_byte_string;
@@ -3463,6 +3525,7 @@ __gshared extern(C)
 	uint function(GFileInfo* info, const(char)* attribute) c_g_file_info_get_attribute_uint32;
 	ulong function(GFileInfo* info, const(char)* attribute) c_g_file_info_get_attribute_uint64;
 	const(char)* function(GFileInfo* info) c_g_file_info_get_content_type;
+	GDateTime* function(GFileInfo* info) c_g_file_info_get_creation_date_time;
 	GDateTime* function(GFileInfo* info) c_g_file_info_get_deletion_date;
 	const(char)* function(GFileInfo* info) c_g_file_info_get_display_name;
 	const(char)* function(GFileInfo* info) c_g_file_info_get_edit_name;
@@ -3483,6 +3546,7 @@ __gshared extern(C)
 	int function(GFileInfo* info, const(char)* nameSpace) c_g_file_info_has_namespace;
 	char** function(GFileInfo* info, const(char)* nameSpace) c_g_file_info_list_attributes;
 	void function(GFileInfo* info, const(char)* attribute) c_g_file_info_remove_attribute;
+	void function(GFileInfo* info, GDateTime* atime) c_g_file_info_set_access_date_time;
 	void function(GFileInfo* info, const(char)* attribute, GFileAttributeType type, void* valueP) c_g_file_info_set_attribute;
 	void function(GFileInfo* info, const(char)* attribute, int attrValue) c_g_file_info_set_attribute_boolean;
 	void function(GFileInfo* info, const(char)* attribute, const(char)* attrValue) c_g_file_info_set_attribute_byte_string;
@@ -3496,6 +3560,7 @@ __gshared extern(C)
 	void function(GFileInfo* info, const(char)* attribute, uint attrValue) c_g_file_info_set_attribute_uint32;
 	void function(GFileInfo* info, const(char)* attribute, ulong attrValue) c_g_file_info_set_attribute_uint64;
 	void function(GFileInfo* info, const(char)* contentType) c_g_file_info_set_content_type;
+	void function(GFileInfo* info, GDateTime* creationTime) c_g_file_info_set_creation_date_time;
 	void function(GFileInfo* info, const(char)* displayName) c_g_file_info_set_display_name;
 	void function(GFileInfo* info, const(char)* editName) c_g_file_info_set_edit_name;
 	void function(GFileInfo* info, GFileType type) c_g_file_info_set_file_type;
@@ -3924,6 +3989,7 @@ __gshared extern(C)
 	void function(GNotification* notification, const(char)* label, const(char)* action, const(char)* targetFormat, ... ) c_g_notification_add_button_with_target;
 	void function(GNotification* notification, const(char)* label, const(char)* action, GVariant* target) c_g_notification_add_button_with_target_value;
 	void function(GNotification* notification, const(char)* body_) c_g_notification_set_body;
+	void function(GNotification* notification, const(char)* category) c_g_notification_set_category;
 	void function(GNotification* notification, const(char)* detailedAction) c_g_notification_set_default_action;
 	void function(GNotification* notification, const(char)* action, const(char)* targetFormat, ... ) c_g_notification_set_default_action_and_target;
 	void function(GNotification* notification, const(char)* action, GVariant* target) c_g_notification_set_default_action_and_target_value;
@@ -3997,6 +4063,12 @@ __gshared extern(C)
 	int function(GPollableOutputStream* stream) c_g_pollable_output_stream_is_writable;
 	ptrdiff_t function(GPollableOutputStream* stream, void* buffer, size_t count, GCancellable* cancellable, GError** err) c_g_pollable_output_stream_write_nonblocking;
 	GPollableReturn function(GPollableOutputStream* stream, GOutputVector* vectors, size_t nVectors, size_t* bytesWritten, GCancellable* cancellable, GError** err) c_g_pollable_output_stream_writev_nonblocking;
+
+	// gio.PowerProfileMonitor
+
+	GType function() c_g_power_profile_monitor_get_type;
+	GPowerProfileMonitor* function() c_g_power_profile_monitor_dup_default;
+	int function(GPowerProfileMonitor* monitor) c_g_power_profile_monitor_get_power_saver_enabled;
 
 	// gio.PropertyAction
 
@@ -4482,6 +4554,7 @@ __gshared extern(C)
 
 	GType function() c_g_subprocess_launcher_get_type;
 	GSubprocessLauncher* function(GSubprocessFlags flags) c_g_subprocess_launcher_new;
+	void function(GSubprocessLauncher* self) c_g_subprocess_launcher_close;
 	char* function(GSubprocessLauncher* self, char* variable) c_g_subprocess_launcher_getenv;
 	void function(GSubprocessLauncher* self, GSpawnChildSetupFunc childSetup, void* userData, GDestroyNotify destroyNotify) c_g_subprocess_launcher_set_child_setup;
 	void function(GSubprocessLauncher* self, char* cwd) c_g_subprocess_launcher_set_cwd;
@@ -4596,10 +4669,19 @@ __gshared extern(C)
 
 	GType function() c_g_tls_certificate_get_type;
 	GTlsCertificate* function(char* file, GError** err) c_g_tls_certificate_new_from_file;
+	GTlsCertificate* function(char* file, const(char)* password, GError** err) c_g_tls_certificate_new_from_file_with_password;
 	GTlsCertificate* function(char* certFile, char* keyFile, GError** err) c_g_tls_certificate_new_from_files;
 	GTlsCertificate* function(const(char)* data, ptrdiff_t length, GError** err) c_g_tls_certificate_new_from_pem;
+	GTlsCertificate* function(const(char)* pkcs11Uri, const(char)* privateKeyPkcs11Uri, GError** err) c_g_tls_certificate_new_from_pkcs11_uris;
+	GTlsCertificate* function(ubyte* data, size_t length, const(char)* password, GError** err) c_g_tls_certificate_new_from_pkcs12;
 	GList* function(char* file, GError** err) c_g_tls_certificate_list_new_from_file;
+	GPtrArray* function(GTlsCertificate* cert) c_g_tls_certificate_get_dns_names;
+	GPtrArray* function(GTlsCertificate* cert) c_g_tls_certificate_get_ip_addresses;
 	GTlsCertificate* function(GTlsCertificate* cert) c_g_tls_certificate_get_issuer;
+	char* function(GTlsCertificate* cert) c_g_tls_certificate_get_issuer_name;
+	GDateTime* function(GTlsCertificate* cert) c_g_tls_certificate_get_not_valid_after;
+	GDateTime* function(GTlsCertificate* cert) c_g_tls_certificate_get_not_valid_before;
+	char* function(GTlsCertificate* cert) c_g_tls_certificate_get_subject_name;
 	int function(GTlsCertificate* certOne, GTlsCertificate* certTwo) c_g_tls_certificate_is_same;
 	GTlsCertificateFlags function(GTlsCertificate* cert, GSocketConnectable* identity, GTlsCertificate* trustedCa) c_g_tls_certificate_verify;
 
@@ -4621,11 +4703,14 @@ __gshared extern(C)
 	GType function() c_g_tls_connection_get_type;
 	int function(GTlsConnection* conn, GTlsCertificate* peerCert, GTlsCertificateFlags errors) c_g_tls_connection_emit_accept_certificate;
 	GTlsCertificate* function(GTlsConnection* conn) c_g_tls_connection_get_certificate;
+	int function(GTlsConnection* conn, GTlsChannelBindingType type, GByteArray* data, GError** err) c_g_tls_connection_get_channel_binding_data;
+	char* function(GTlsConnection* conn) c_g_tls_connection_get_ciphersuite_name;
 	GTlsDatabase* function(GTlsConnection* conn) c_g_tls_connection_get_database;
 	GTlsInteraction* function(GTlsConnection* conn) c_g_tls_connection_get_interaction;
 	const(char)* function(GTlsConnection* conn) c_g_tls_connection_get_negotiated_protocol;
 	GTlsCertificate* function(GTlsConnection* conn) c_g_tls_connection_get_peer_certificate;
 	GTlsCertificateFlags function(GTlsConnection* conn) c_g_tls_connection_get_peer_certificate_errors;
+	GTlsProtocolVersion function(GTlsConnection* conn) c_g_tls_connection_get_protocol_version;
 	GTlsRehandshakeMode function(GTlsConnection* conn) c_g_tls_connection_get_rehandshake_mode;
 	int function(GTlsConnection* conn) c_g_tls_connection_get_require_close_notify;
 	int function(GTlsConnection* conn) c_g_tls_connection_get_use_system_certdb;
@@ -4791,6 +4876,7 @@ __gshared extern(C)
 	int function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_loopback;
 	int function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_readonly;
 	int function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_is_user_mountable;
+	GUnixMountPoint* function(char* mountPath, ulong* timeRead) c_g_unix_mount_point_at;
 
 	// gio.UnixOutputStream
 
@@ -4903,7 +4989,7 @@ __gshared extern(C)
 	GIcon* function(const(char)* type) c_g_content_type_get_icon;
 	char* function(const(char)* type) c_g_content_type_get_mime_type;
 	GIcon* function(const(char)* type) c_g_content_type_get_symbolic_icon;
-	char* function(const(char)* filename, char* data, size_t dataSize, int* resultUncertain) c_g_content_type_guess;
+	char* function(char* filename, char* data, size_t dataSize, int* resultUncertain) c_g_content_type_guess;
 	char** function(GFile* root) c_g_content_type_guess_for_tree;
 	int function(const(char)* type, const(char)* supertype) c_g_content_type_is_a;
 	int function(const(char)* type) c_g_content_type_is_unknown;
@@ -5579,6 +5665,18 @@ alias c_g_datagram_based_create_source g_datagram_based_create_source;
 alias c_g_datagram_based_receive_messages g_datagram_based_receive_messages;
 alias c_g_datagram_based_send_messages g_datagram_based_send_messages;
 
+// gio.DebugController
+
+alias c_g_debug_controller_get_type g_debug_controller_get_type;
+alias c_g_debug_controller_get_debug_enabled g_debug_controller_get_debug_enabled;
+alias c_g_debug_controller_set_debug_enabled g_debug_controller_set_debug_enabled;
+
+// gio.DebugControllerDBus
+
+alias c_g_debug_controller_dbus_get_type g_debug_controller_dbus_get_type;
+alias c_g_debug_controller_dbus_new g_debug_controller_dbus_new;
+alias c_g_debug_controller_dbus_stop g_debug_controller_dbus_stop;
+
 // gio.DesktopAppInfo
 
 alias c_g_desktop_app_info_get_type g_desktop_app_info_get_type;
@@ -5662,11 +5760,14 @@ alias c_g_dtls_connection_close_async g_dtls_connection_close_async;
 alias c_g_dtls_connection_close_finish g_dtls_connection_close_finish;
 alias c_g_dtls_connection_emit_accept_certificate g_dtls_connection_emit_accept_certificate;
 alias c_g_dtls_connection_get_certificate g_dtls_connection_get_certificate;
+alias c_g_dtls_connection_get_channel_binding_data g_dtls_connection_get_channel_binding_data;
+alias c_g_dtls_connection_get_ciphersuite_name g_dtls_connection_get_ciphersuite_name;
 alias c_g_dtls_connection_get_database g_dtls_connection_get_database;
 alias c_g_dtls_connection_get_interaction g_dtls_connection_get_interaction;
 alias c_g_dtls_connection_get_negotiated_protocol g_dtls_connection_get_negotiated_protocol;
 alias c_g_dtls_connection_get_peer_certificate g_dtls_connection_get_peer_certificate;
 alias c_g_dtls_connection_get_peer_certificate_errors g_dtls_connection_get_peer_certificate_errors;
+alias c_g_dtls_connection_get_protocol_version g_dtls_connection_get_protocol_version;
 alias c_g_dtls_connection_get_rehandshake_mode g_dtls_connection_get_rehandshake_mode;
 alias c_g_dtls_connection_get_require_close_notify g_dtls_connection_get_require_close_notify;
 alias c_g_dtls_connection_handshake g_dtls_connection_handshake;
@@ -5717,6 +5818,7 @@ alias c_g_file_parse_name g_file_parse_name;
 alias c_g_file_append_to g_file_append_to;
 alias c_g_file_append_to_async g_file_append_to_async;
 alias c_g_file_append_to_finish g_file_append_to_finish;
+alias c_g_file_build_attribute_list_for_copy g_file_build_attribute_list_for_copy;
 alias c_g_file_copy g_file_copy;
 alias c_g_file_copy_async g_file_copy_async;
 alias c_g_file_copy_attributes g_file_copy_attributes;
@@ -5780,6 +5882,8 @@ alias c_g_file_mount_enclosing_volume_finish g_file_mount_enclosing_volume_finis
 alias c_g_file_mount_mountable g_file_mount_mountable;
 alias c_g_file_mount_mountable_finish g_file_mount_mountable_finish;
 alias c_g_file_move g_file_move;
+alias c_g_file_move_async g_file_move_async;
+alias c_g_file_move_finish g_file_move_finish;
 alias c_g_file_open_readwrite g_file_open_readwrite;
 alias c_g_file_open_readwrite_async g_file_open_readwrite_async;
 alias c_g_file_open_readwrite_finish g_file_open_readwrite_finish;
@@ -5904,6 +6008,7 @@ alias c_g_file_info_new g_file_info_new;
 alias c_g_file_info_clear_status g_file_info_clear_status;
 alias c_g_file_info_copy_into g_file_info_copy_into;
 alias c_g_file_info_dup g_file_info_dup;
+alias c_g_file_info_get_access_date_time g_file_info_get_access_date_time;
 alias c_g_file_info_get_attribute_as_string g_file_info_get_attribute_as_string;
 alias c_g_file_info_get_attribute_boolean g_file_info_get_attribute_boolean;
 alias c_g_file_info_get_attribute_byte_string g_file_info_get_attribute_byte_string;
@@ -5918,6 +6023,7 @@ alias c_g_file_info_get_attribute_type g_file_info_get_attribute_type;
 alias c_g_file_info_get_attribute_uint32 g_file_info_get_attribute_uint32;
 alias c_g_file_info_get_attribute_uint64 g_file_info_get_attribute_uint64;
 alias c_g_file_info_get_content_type g_file_info_get_content_type;
+alias c_g_file_info_get_creation_date_time g_file_info_get_creation_date_time;
 alias c_g_file_info_get_deletion_date g_file_info_get_deletion_date;
 alias c_g_file_info_get_display_name g_file_info_get_display_name;
 alias c_g_file_info_get_edit_name g_file_info_get_edit_name;
@@ -5938,6 +6044,7 @@ alias c_g_file_info_has_attribute g_file_info_has_attribute;
 alias c_g_file_info_has_namespace g_file_info_has_namespace;
 alias c_g_file_info_list_attributes g_file_info_list_attributes;
 alias c_g_file_info_remove_attribute g_file_info_remove_attribute;
+alias c_g_file_info_set_access_date_time g_file_info_set_access_date_time;
 alias c_g_file_info_set_attribute g_file_info_set_attribute;
 alias c_g_file_info_set_attribute_boolean g_file_info_set_attribute_boolean;
 alias c_g_file_info_set_attribute_byte_string g_file_info_set_attribute_byte_string;
@@ -5951,6 +6058,7 @@ alias c_g_file_info_set_attribute_stringv g_file_info_set_attribute_stringv;
 alias c_g_file_info_set_attribute_uint32 g_file_info_set_attribute_uint32;
 alias c_g_file_info_set_attribute_uint64 g_file_info_set_attribute_uint64;
 alias c_g_file_info_set_content_type g_file_info_set_content_type;
+alias c_g_file_info_set_creation_date_time g_file_info_set_creation_date_time;
 alias c_g_file_info_set_display_name g_file_info_set_display_name;
 alias c_g_file_info_set_edit_name g_file_info_set_edit_name;
 alias c_g_file_info_set_file_type g_file_info_set_file_type;
@@ -6379,6 +6487,7 @@ alias c_g_notification_add_button g_notification_add_button;
 alias c_g_notification_add_button_with_target g_notification_add_button_with_target;
 alias c_g_notification_add_button_with_target_value g_notification_add_button_with_target_value;
 alias c_g_notification_set_body g_notification_set_body;
+alias c_g_notification_set_category g_notification_set_category;
 alias c_g_notification_set_default_action g_notification_set_default_action;
 alias c_g_notification_set_default_action_and_target g_notification_set_default_action_and_target;
 alias c_g_notification_set_default_action_and_target_value g_notification_set_default_action_and_target_value;
@@ -6452,6 +6561,12 @@ alias c_g_pollable_output_stream_create_source g_pollable_output_stream_create_s
 alias c_g_pollable_output_stream_is_writable g_pollable_output_stream_is_writable;
 alias c_g_pollable_output_stream_write_nonblocking g_pollable_output_stream_write_nonblocking;
 alias c_g_pollable_output_stream_writev_nonblocking g_pollable_output_stream_writev_nonblocking;
+
+// gio.PowerProfileMonitor
+
+alias c_g_power_profile_monitor_get_type g_power_profile_monitor_get_type;
+alias c_g_power_profile_monitor_dup_default g_power_profile_monitor_dup_default;
+alias c_g_power_profile_monitor_get_power_saver_enabled g_power_profile_monitor_get_power_saver_enabled;
 
 // gio.PropertyAction
 
@@ -6937,6 +7052,7 @@ alias c_g_subprocess_wait_finish g_subprocess_wait_finish;
 
 alias c_g_subprocess_launcher_get_type g_subprocess_launcher_get_type;
 alias c_g_subprocess_launcher_new g_subprocess_launcher_new;
+alias c_g_subprocess_launcher_close g_subprocess_launcher_close;
 alias c_g_subprocess_launcher_getenv g_subprocess_launcher_getenv;
 alias c_g_subprocess_launcher_set_child_setup g_subprocess_launcher_set_child_setup;
 alias c_g_subprocess_launcher_set_cwd g_subprocess_launcher_set_cwd;
@@ -7051,10 +7167,19 @@ alias c_g_tls_backend_supports_tls g_tls_backend_supports_tls;
 
 alias c_g_tls_certificate_get_type g_tls_certificate_get_type;
 alias c_g_tls_certificate_new_from_file g_tls_certificate_new_from_file;
+alias c_g_tls_certificate_new_from_file_with_password g_tls_certificate_new_from_file_with_password;
 alias c_g_tls_certificate_new_from_files g_tls_certificate_new_from_files;
 alias c_g_tls_certificate_new_from_pem g_tls_certificate_new_from_pem;
+alias c_g_tls_certificate_new_from_pkcs11_uris g_tls_certificate_new_from_pkcs11_uris;
+alias c_g_tls_certificate_new_from_pkcs12 g_tls_certificate_new_from_pkcs12;
 alias c_g_tls_certificate_list_new_from_file g_tls_certificate_list_new_from_file;
+alias c_g_tls_certificate_get_dns_names g_tls_certificate_get_dns_names;
+alias c_g_tls_certificate_get_ip_addresses g_tls_certificate_get_ip_addresses;
 alias c_g_tls_certificate_get_issuer g_tls_certificate_get_issuer;
+alias c_g_tls_certificate_get_issuer_name g_tls_certificate_get_issuer_name;
+alias c_g_tls_certificate_get_not_valid_after g_tls_certificate_get_not_valid_after;
+alias c_g_tls_certificate_get_not_valid_before g_tls_certificate_get_not_valid_before;
+alias c_g_tls_certificate_get_subject_name g_tls_certificate_get_subject_name;
 alias c_g_tls_certificate_is_same g_tls_certificate_is_same;
 alias c_g_tls_certificate_verify g_tls_certificate_verify;
 
@@ -7076,11 +7201,14 @@ alias c_g_tls_client_connection_set_validation_flags g_tls_client_connection_set
 alias c_g_tls_connection_get_type g_tls_connection_get_type;
 alias c_g_tls_connection_emit_accept_certificate g_tls_connection_emit_accept_certificate;
 alias c_g_tls_connection_get_certificate g_tls_connection_get_certificate;
+alias c_g_tls_connection_get_channel_binding_data g_tls_connection_get_channel_binding_data;
+alias c_g_tls_connection_get_ciphersuite_name g_tls_connection_get_ciphersuite_name;
 alias c_g_tls_connection_get_database g_tls_connection_get_database;
 alias c_g_tls_connection_get_interaction g_tls_connection_get_interaction;
 alias c_g_tls_connection_get_negotiated_protocol g_tls_connection_get_negotiated_protocol;
 alias c_g_tls_connection_get_peer_certificate g_tls_connection_get_peer_certificate;
 alias c_g_tls_connection_get_peer_certificate_errors g_tls_connection_get_peer_certificate_errors;
+alias c_g_tls_connection_get_protocol_version g_tls_connection_get_protocol_version;
 alias c_g_tls_connection_get_rehandshake_mode g_tls_connection_get_rehandshake_mode;
 alias c_g_tls_connection_get_require_close_notify g_tls_connection_get_require_close_notify;
 alias c_g_tls_connection_get_use_system_certdb g_tls_connection_get_use_system_certdb;
@@ -7246,6 +7374,7 @@ alias c_g_unix_mount_point_guess_symbolic_icon g_unix_mount_point_guess_symbolic
 alias c_g_unix_mount_point_is_loopback g_unix_mount_point_is_loopback;
 alias c_g_unix_mount_point_is_readonly g_unix_mount_point_is_readonly;
 alias c_g_unix_mount_point_is_user_mountable g_unix_mount_point_is_user_mountable;
+alias c_g_unix_mount_point_at g_unix_mount_point_at;
 
 // gio.UnixOutputStream
 

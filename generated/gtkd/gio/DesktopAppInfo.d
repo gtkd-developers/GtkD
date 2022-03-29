@@ -35,6 +35,7 @@ private import glib.GException;
 private import glib.KeyFile;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 
@@ -202,6 +203,13 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * The algorithm for determining matches is undefined and may change at
 	 * any time.
 	 *
+	 * None of the search results are subjected to the normal validation
+	 * checks performed by g_desktop_app_info_new() (for example, checking that
+	 * the executable referenced by a result exists), and so it is possible for
+	 * g_desktop_app_info_new() to return %NULL when passed an app ID returned by
+	 * this function. It is expected that calling code will do this when
+	 * subsequently creating a #GDesktopAppInfo for each result.
+	 *
 	 * Params:
 	 *     searchString = the search string to use
 	 *
@@ -305,7 +313,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 
 	/**
-	 * Gets the generic name from the destkop file.
+	 * Gets the generic name from the desktop file.
 	 *
 	 * Returns: The value of the GenericName key
 	 */
@@ -362,7 +370,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	/**
 	 * Gets the value of the NoDisplay key, which helps determine if the
 	 * application info should be shown in menus. See
-	 * #G_KEY_FILE_DESKTOP_KEY_NO_DISPLAY and g_app_info_should_show().
+	 * %G_KEY_FILE_DESKTOP_KEY_NO_DISPLAY and g_app_info_should_show().
 	 *
 	 * Returns: The value of the NoDisplay key
 	 *

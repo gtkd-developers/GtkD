@@ -26,6 +26,7 @@ module gtk.EntryBuffer;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
@@ -101,14 +102,14 @@ public class EntryBuffer : ObjectG
 	 */
 	public this(string initialChars, int nInitialChars)
 	{
-		auto p = gtk_entry_buffer_new(Str.toStringz(initialChars), nInitialChars);
+		auto __p = gtk_entry_buffer_new(Str.toStringz(initialChars), nInitialChars);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEntryBuffer*) p, true);
+		this(cast(GtkEntryBuffer*) __p, true);
 	}
 
 	/**

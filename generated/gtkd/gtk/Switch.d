@@ -108,14 +108,14 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 */
 	public this()
 	{
-		auto p = gtk_switch_new();
+		auto __p = gtk_switch_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSwitch*) p);
+		this(cast(GtkSwitch*) __p);
 	}
 
 	/**

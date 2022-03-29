@@ -25,6 +25,7 @@
 module gstreamer.DebugCategory;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
@@ -73,6 +74,8 @@ public class DebugCategory
 
 	/**
 	 * Removes and frees the category and all associated resources.
+	 *
+	 * Deprecated: This function can easily cause memory corruption, don't use it.
 	 */
 	public void free()
 	{

@@ -91,14 +91,14 @@ public class AtomicQueue
 	 */
 	public this(uint initialSize)
 	{
-		auto p = gst_atomic_queue_new(initialSize);
+		auto __p = gst_atomic_queue_new(initialSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstAtomicQueue*) p);
+		this(cast(GstAtomicQueue*) __p);
 	}
 
 	/**

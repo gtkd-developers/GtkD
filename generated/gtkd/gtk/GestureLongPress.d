@@ -94,14 +94,14 @@ public class GestureLongPress : GestureSingle
 	 */
 	public this(Widget widget)
 	{
-		auto p = gtk_gesture_long_press_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_long_press_new((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureLongPress*) p, true);
+		this(cast(GtkGestureLongPress*) __p, true);
 	}
 
 	/**

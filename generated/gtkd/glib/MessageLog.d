@@ -48,7 +48,7 @@ public struct MessageLog
 	 *
 	 * - `G_MESSAGES_PREFIXED`: A :-separated list of log levels for which
 	 * messages should be prefixed by the program name and PID of the
-	 * aplication.
+	 * application.
 	 *
 	 * - `G_MESSAGES_DEBUG`: A space-separated list of log domains for
 	 * which debug and informational messages are printed. By default
@@ -56,7 +56,8 @@ public struct MessageLog
 	 *
 	 * stderr is used for levels %G_LOG_LEVEL_ERROR, %G_LOG_LEVEL_CRITICAL,
 	 * %G_LOG_LEVEL_WARNING and %G_LOG_LEVEL_MESSAGE. stdout is used for
-	 * the rest.
+	 * the rest, unless stderr was requested by
+	 * g_log_writer_default_set_use_stderr().
 	 *
 	 * This has no effect if structured logging is enabled; see
 	 * [Using Structured Logging][using-structured-logging].
@@ -168,31 +169,35 @@ public struct MessageLog
 
 	/**
 	 * Sets the log handler for a domain and a set of log levels.
+	 *
 	 * To handle fatal and recursive messages the @log_levels parameter
-	 * must be combined with the #G_LOG_FLAG_FATAL and #G_LOG_FLAG_RECURSION
+	 * must be combined with the %G_LOG_FLAG_FATAL and %G_LOG_FLAG_RECURSION
 	 * bit flags.
 	 *
-	 * Note that since the #G_LOG_LEVEL_ERROR log level is always fatal, if
+	 * Note that since the %G_LOG_LEVEL_ERROR log level is always fatal, if
 	 * you want to set a handler for this log level you must combine it with
-	 * #G_LOG_FLAG_FATAL.
+	 * %G_LOG_FLAG_FATAL.
 	 *
 	 * This has no effect if structured logging is enabled; see
 	 * [Using Structured Logging][using-structured-logging].
 	 *
 	 * Here is an example for adding a log handler for all warning messages
 	 * in the default domain:
+	 *
 	 * |[<!-- language="C" -->
 	 * g_log_set_handler (NULL, G_LOG_LEVEL_WARNING | G_LOG_FLAG_FATAL
 	 * | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
 	 * ]|
 	 *
 	 * This example adds a log handler for all critical messages from GTK+:
+	 *
 	 * |[<!-- language="C" -->
 	 * g_log_set_handler ("Gtk", G_LOG_LEVEL_CRITICAL | G_LOG_FLAG_FATAL
 	 * | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
 	 * ]|
 	 *
 	 * This example adds a log handler for all messages from GLib:
+	 *
 	 * |[<!-- language="C" -->
 	 * g_log_set_handler ("GLib", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
 	 * | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
@@ -203,8 +208,8 @@ public struct MessageLog
 	 *         application domain
 	 *     logLevels = the log levels to apply the log handler for.
 	 *         To handle fatal and recursive messages as well, combine
-	 *         the log levels with the #G_LOG_FLAG_FATAL and
-	 *         #G_LOG_FLAG_RECURSION bit flags.
+	 *         the log levels with the %G_LOG_FLAG_FATAL and
+	 *         %G_LOG_FLAG_RECURSION bit flags.
 	 *     logFunc = the log handler function
 	 *     userData = data passed to the log handler
 	 *
@@ -226,8 +231,8 @@ public struct MessageLog
 	 *         application domain
 	 *     logLevels = the log levels to apply the log handler for.
 	 *         To handle fatal and recursive messages as well, combine
-	 *         the log levels with the #G_LOG_FLAG_FATAL and
-	 *         #G_LOG_FLAG_RECURSION bit flags.
+	 *         the log levels with the %G_LOG_FLAG_FATAL and
+	 *         %G_LOG_FLAG_RECURSION bit flags.
 	 *     logFunc = the log handler function
 	 *     userData = data passed to the log handler
 	 *     destroy = destroy notify for @user_data, or %NULL

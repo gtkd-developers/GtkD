@@ -101,14 +101,14 @@ public class Calendar : Widget
 	 */
 	public this()
 	{
-		auto p = gtk_calendar_new();
+		auto __p = gtk_calendar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCalendar*) p);
+		this(cast(GtkCalendar*) __p);
 	}
 
 	/**

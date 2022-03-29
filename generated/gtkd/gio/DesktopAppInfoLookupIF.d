@@ -69,7 +69,8 @@ public interface DesktopAppInfoLookupIF{
 	 * Params:
 	 *     uriScheme = a string containing a URI scheme.
 	 *
-	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or
+	 *     %NULL on error.
 	 */
 	public AppInfoIF getDefaultForUriScheme(string uriScheme);
 }

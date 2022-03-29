@@ -24,6 +24,10 @@ wrap: gdkpixbuf
 file: GdkPixbuf-2.0.gir
 file: GdkPixdata-2.0.gir
 
+addEnums: start
+	import core.stdc.stdio : FILE;
+addEnums: stop
+
 struct: Pixbuf
 array: new_from_inline data data_length
 noCode: save_to_bufferv
@@ -222,5 +226,31 @@ noCode: true
 
 struct: Pixdata
 noProperty: pixel_data
+import: gdkpixbuf.Pixbuf
+noCode: from_pixbuf
+code: start
+	/**
+	 * Converts a `GdkPixbuf` to a `GdkPixdata`.
+	 *
+	 * If `use_rle` is `TRUE`, the pixel data is run-length encoded into
+	 * newly-allocated memory and a pointer to that memory is returned.
+	 *
+	 * Deprecated: Use #GResource instead.
+	 *
+	 * Params:
+	 *     pixbuf = the data to fill `pixdata` with.
+	 *     useRle = whether to use run-length encoding for the pixel data.
+	 *
+	 * Returns: If `use_rle` is
+	 *     `TRUE`, a pointer to the newly-allocated memory for the run-length
+	 *     encoded pixel data, otherwise `NULL`.
+	 */
+	public ubyte[] fromPixbuf(Pixbuf pixbuf, bool useRle)
+	{
+		auto __p = gdk_pixdata_from_pixbuf(gdkPixdata, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), useRle);
+
+		return cast(ubyte[])__p[0 .. getArrayLength(cast(ubyte*)__p)];
+	}
+code: end
 
 move: pixbuf_from_pixdata Pixbuf from_pixdata

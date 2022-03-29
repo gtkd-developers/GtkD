@@ -36,6 +36,7 @@ private import glib.GException;
 private import glib.MemorySlice;
 private import glib.Regex;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.BuildableIF;
@@ -101,14 +102,14 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public this()
 	{
-		auto p = vte_terminal_new();
+		auto __p = vte_terminal_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(VteTerminal*) p);
+		this(cast(VteTerminal*) __p);
 	}
 
 	/**
@@ -180,10 +181,48 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Like vte_terminal_event_check_regex_simple(), but returns an array of strings,
+	 * containing the matching text (or %NULL if no match) corresponding to each of the
+	 * regexes in @regexes.
+	 *
+	 * You must free each string and the array; but note that this is *not* a %NULL-terminated
+	 * string array, and so you must *not* use g_strfreev() on it.
+	 *
+	 * Params:
+	 *     event = a #GdkEvent
+	 *     regexes = an array of #VteRegex
+	 *     matchFlags = PCRE2 match flags, or 0
+	 *
+	 * Returns: a newly allocated array of strings,
+	 *     or %NULL if none of the regexes matched
+	 *
+	 * Since: 0.62
+	 */
+	public string[] eventCheckRegexArray(Event event, RegexVte[] regexes, uint matchFlags)
+	{
+		VteRegex*[] regexesArray = new VteRegex*[regexes.length];
+		for ( int i = 0; i < regexes.length; i++ )
+		{
+			regexesArray[i] = regexes[i].getRegexStruct();
+		}
+
+		size_t nMatches;
+
+		auto retStr = vte_terminal_event_check_regex_array(vteTerminal, (event is null) ? null : event.getEventStruct(), regexesArray.ptr, cast(size_t)regexes.length, matchFlags, &nMatches);
+
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, nMatches);
+	}
+
+	/**
 	 * Checks each regex in @regexes if the text in and around the position of
 	 * the event matches the regular expressions.  If a match exists, the matched
 	 * text is stored in @matches at the position of the regex in @regexes; otherwise
-	 * %NULL is stored there.
+	 * %NULL is stored there.  Each non-%NULL element of @matches should be freed with
+	 * g_free().
+	 *
+	 * Note that the regexes in @regexes should have been created using the
+	 * <literal>PCRE2_MULTILINE</literal> flag.
 	 *
 	 * Params:
 	 *     event = a #GdkEvent
@@ -207,9 +246,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Interprets @data as if it were data received from a child process.  This
-	 * can either be used to drive the terminal without a child process, or just
-	 * to mess with your users.
+	 * Interprets @data as if it were data received from a child process.
 	 *
 	 * Params:
 	 *     data = a string in the terminal's current encoding
@@ -234,6 +271,9 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Sends a block of binary data to the child.
 	 *
+	 * Deprecated: Don't send binary data. Use vte_terminal_feed_child() instead to send
+	 * UTF-8 text
+	 *
 	 * Params:
 	 *     data = data to send to the child
 	 */
@@ -244,8 +284,9 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Checks whether or not the terminal will attempt to draw bold text,
-	 * either by using a bold font variant or by repainting text with a different
-	 * offset.
+	 * by using a bold font variant.
+	 *
+	 * Deprecated: There's probably no reason for this feature to exist.
 	 *
 	 * Returns: %TRUE if bolding is enabled, %FALSE if not
 	 */
@@ -359,7 +400,7 @@ public class Terminal : Widget, ScrollableIF
 	 * and then need to draw the background yourself.
 	 *
 	 * Params:
-	 *     color = a location to store a #GdbRGBA color
+	 *     color = a location to store a #GdkRGBA color
 	 *
 	 * Since: 0.54
 	 */
@@ -413,6 +454,8 @@ public class Terminal : Widget, ScrollableIF
 	 * Reads the location of the insertion cursor and returns it.  The row
 	 * coordinate is absolute.
 	 *
+	 * This method is unaware of BiDi. The returned column is logical column.
+	 *
 	 * Params:
 	 *     column = a location to store the column, or %NULL
 	 *     row = a location to store the row, or %NULL
@@ -430,6 +473,50 @@ public class Terminal : Widget, ScrollableIF
 	public VteCursorShape getCursorShape()
 	{
 		return vte_terminal_get_cursor_shape(vteTerminal);
+	}
+
+	/**
+	 * Checks whether the terminal performs bidirectional text rendering.
+	 *
+	 * Returns: %TRUE if BiDi is enabled, %FALSE if not
+	 *
+	 * Since: 0.58
+	 */
+	public bool getEnableBidi()
+	{
+		return vte_terminal_get_enable_bidi(vteTerminal) != 0;
+	}
+
+	/**
+	 * Returns: %TRUE if fallback scrolling is enabled
+	 *
+	 * Since: 0.64
+	 */
+	public bool getEnableFallbackScrolling()
+	{
+		return vte_terminal_get_enable_fallback_scrolling(vteTerminal) != 0;
+	}
+
+	/**
+	 * Checks whether the terminal shapes Arabic text.
+	 *
+	 * Returns: %TRUE if Arabic shaping is enabled, %FALSE if not
+	 *
+	 * Since: 0.58
+	 */
+	public bool getEnableShaping()
+	{
+		return vte_terminal_get_enable_shaping(vteTerminal) != 0;
+	}
+
+	/**
+	 * Returns: %FALSE
+	 *
+	 * Since: 0.62
+	 */
+	public bool getEnableSixel()
+	{
+		return vte_terminal_get_enable_sixel(vteTerminal) != 0;
 	}
 
 	/**
@@ -456,14 +543,14 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public PgFontDescription getFont()
 	{
-		auto p = vte_terminal_get_font(vteTerminal);
+		auto __p = vte_terminal_get_font(vteTerminal);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p);
 	}
 
 	/**
@@ -541,14 +628,14 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public Pty getPty()
 	{
-		auto p = vte_terminal_get_pty(vteTerminal);
+		auto __p = vte_terminal_get_pty(vteTerminal);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pty)(cast(VtePty*) p);
+		return ObjectG.getDObject!(Pty)(cast(VtePty*) __p);
 	}
 
 	/**
@@ -593,6 +680,16 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Returns: %TRUE if the scroll unit is pixels; or %FALSE if the unit is lines
+	 *
+	 * Since: 0.66
+	 */
+	public bool getScrollUnitIsPixels()
+	{
+		return vte_terminal_get_scroll_unit_is_pixels(vteTerminal) != 0;
+	}
+
+	/**
 	 * Returns: length of the scrollback buffer used by the terminal.
 	 *     A negative value means "infinite scrollback".
 	 *
@@ -610,10 +707,16 @@ public class Terminal : Widget, ScrollableIF
 	 * is added to @attributes for each byte added to the returned string detailing
 	 * the character's position, colors, and other characteristics.
 	 *
+	 * This method is unaware of BiDi. The columns returned in @attributes are
+	 * logical columns.
+	 *
+	 * Note: since 0.68, passing a non-%NULL @array parameter is deprecated. Starting with
+	 * 0.70, passing a non-%NULL @array parameter will make this function itself return %NULL.
+	 *
 	 * Params:
 	 *     isSelected = a #VteSelectionFunc callback
 	 *     userData = user data to be passed to the callback
-	 *     attributes = location for storing text attributes
+	 *     attributes = location for storing text attributes. Deprecated: 0.68: Always pass %NULL here.
 	 *
 	 * Returns: a newly allocated text string, or %NULL.
 	 */
@@ -648,12 +751,18 @@ public class Terminal : Widget, ScrollableIF
 	 * is added to @attributes for each byte added to the returned string detailing
 	 * the character's position, colors, and other characteristics.
 	 *
+	 * This method is unaware of BiDi. The columns returned in @attributes are
+	 * logical columns.
+	 *
+	 * Note: since 0.68, passing a non-%NULL @array parameter is deprecated. Starting with
+	 * 0.70, passing a non-%NULL @array parameter will make this function itself return %NULL.
+	 *
 	 * Deprecated: Use vte_terminal_get_text() instead.
 	 *
 	 * Params:
 	 *     isSelected = a #VteSelectionFunc callback
 	 *     userData = user data to be passed to the callback
-	 *     attributes = location for storing text attributes
+	 *     attributes = location for storing text attributes. Deprecated: 0.68: Always pass %NULL here.
 	 *
 	 * Returns: a newly allocated text string, or %NULL.
 	 */
@@ -678,6 +787,12 @@ public class Terminal : Widget, ScrollableIF
 	 * entire scrollback buffer is scanned, so it is possible to read the entire
 	 * contents of the buffer using this function.
 	 *
+	 * This method is unaware of BiDi. The columns passed in @start_col and @end_row,
+	 * and returned in @attributes are logical columns.
+	 *
+	 * Note: since 0.68, passing a non-%NULL @array parameter is deprecated. Starting with
+	 * 0.70, passing a non-%NULL @array parameter will make this function itself return %NULL.
+	 *
 	 * Params:
 	 *     startRow = first row to search for data
 	 *     startCol = first column to search for data
@@ -685,7 +800,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     endCol = last column to search for data
 	 *     isSelected = a #VteSelectionFunc callback
 	 *     userData = user data to be passed to the callback
-	 *     attributes = location for storing text attributes
+	 *     attributes = location for storing text attributes. Deprecated: 0.68: Always pass %NULL here.
 	 *
 	 * Returns: a newly allocated text string, or %NULL.
 	 */
@@ -736,7 +851,8 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 *     event = a #GdkEvent
 	 *
-	 * Returns: a newly allocated string containing the target of the hyperlink
+	 * Returns: a newly allocated string containing the target of the hyperlink,
+	 *     or %NULL
 	 *
 	 * Since: 0.50
 	 */
@@ -749,18 +865,15 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Adds the regular expression @regex to the list of matching expressions.  When the
-	 * user moves the mouse cursor over a section of displayed text which matches
-	 * this expression, the text will be highlighted.
+	 * This function does nothing since version 0.60.
 	 *
-	 * Deprecated: Use vte_terminal_match_add_regex() or vte_terminal_match_add_regex_full() instead.
+	 * Deprecated: Use vte_terminal_match_add_regex() instead.
 	 *
 	 * Params:
 	 *     gregex = a #GRegex
 	 *     gflags = the #GRegexMatchFlags to use when matching the regex
 	 *
-	 * Returns: an integer associated with this expression, or -1 if @gregex could not be
-	 *     transformed into a #VteRegex or @gflags were incompatible
+	 * Returns: -1
 	 */
 	public int matchAddGregex(Regex gregex, GRegexMatchFlags gflags)
 	{
@@ -771,6 +884,9 @@ public class Terminal : Widget, ScrollableIF
 	 * Adds the regular expression @regex to the list of matching expressions.  When the
 	 * user moves the mouse cursor over a section of displayed text which matches
 	 * this expression, the text will be highlighted.
+	 *
+	 * Note that @regex should have been created using the <literal>PCRE2_MULTILINE</literal>
+	 * flag.
 	 *
 	 * Params:
 	 *     regex = a #VteRegex
@@ -828,7 +944,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     tag = a location to store the tag, or %NULL
 	 *
 	 * Returns: a newly allocated string which matches one of the previously
-	 *     set regular expressions
+	 *     set regular expressions, or %NULL if there is no match
 	 */
 	public string matchCheckEvent(Event event, out int tag)
 	{
@@ -926,8 +1042,24 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Creates a new #VtePty, and sets the emulation property
-	 * from #VteTerminal:emulation.
+	 * Sends @text to the terminal's child as if retrived from the clipboard,
+	 * this differs from vte_terminal_feed_child() in that it may process
+	 * @text before passing it to the child (e.g. apply bracketed mode)
+	 *
+	 * Params:
+	 *     text = a string to paste
+	 *
+	 * Since: 0.68
+	 */
+	public void pasteText(string text)
+	{
+		vte_terminal_paste_text(vteTerminal, Str.toStringz(text));
+	}
+
+	/**
+	 * Creates a new #VtePty, sets the emulation property
+	 * from #VteTerminal:emulation, and sets the size using
+	 * @terminal's size.
 	 *
 	 * See vte_pty_new() for more information.
 	 *
@@ -943,19 +1075,19 @@ public class Terminal : Widget, ScrollableIF
 	{
 		GError* err = null;
 
-		auto p = vte_terminal_pty_new_sync(vteTerminal, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = vte_terminal_pty_new_sync(vteTerminal, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pty)(cast(VtePty*) p, true);
+		return ObjectG.getDObject!(Pty)(cast(VtePty*) __p, true);
 	}
 
 	/**
@@ -1004,14 +1136,14 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public Regex searchGetGregex()
 	{
-		auto p = vte_terminal_search_get_gregex(vteTerminal);
+		auto __p = vte_terminal_search_get_gregex(vteTerminal);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Regex(cast(GRegex*) p);
+		return new Regex(cast(GRegex*) __p);
 	}
 
 	/**
@@ -1021,14 +1153,14 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public RegexVte searchGetRegex()
 	{
-		auto p = vte_terminal_search_get_regex(vteTerminal);
+		auto __p = vte_terminal_search_get_regex(vteTerminal);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RegexVte)(cast(VteRegex*) p);
+		return ObjectG.getDObject!(RegexVte)(cast(VteRegex*) __p);
 	}
 
 	/**
@@ -1040,7 +1172,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Sets the #GRegex regex to search for. Unsets the search regex when passed %NULL.
+	 * This function does nothing since version 0.60.
 	 *
 	 * Deprecated: use vte_terminal_search_set_regex() instead.
 	 *
@@ -1055,6 +1187,9 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Sets the regex to search for. Unsets the search regex when passed %NULL.
+	 *
+	 * Note that @regex should have been created using the
+	 * <literal>PCRE2_MULTILINE</literal> flag.
 	 *
 	 * Params:
 	 *     regex = a #VteRegex, or %NULL
@@ -1080,7 +1215,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Selects all text within the terminal (including the scrollback buffer).
+	 * Selects all text within the terminal (not including the scrollback buffer).
 	 */
 	public void selectAll()
 	{
@@ -1089,8 +1224,9 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Controls whether or not the terminal will attempt to draw bold text,
-	 * either by using a bold font variant or by repainting text with a different
-	 * offset.
+	 * by using a bold font variant.
+	 *
+	 * Deprecated: There's probably no reason for this feature to exist.
 	 *
 	 * Params:
 	 *     allowBold = %TRUE if the terminal should attempt to draw bold text
@@ -1205,6 +1341,9 @@ public class Terminal : Widget, ScrollableIF
 	 *
 	 * This function is rarely useful. One use for it is to add a background
 	 * image to the terminal.
+	 *
+	 * Params:
+	 *     setting = whether to clear the background
 	 *
 	 * Since: 0.52
 	 */
@@ -1377,6 +1516,63 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Controls whether or not the terminal will perform bidirectional text rendering.
+	 *
+	 * Params:
+	 *     enableBidi = %TRUE to enable BiDi support
+	 *
+	 * Since: 0.58
+	 */
+	public void setEnableBidi(bool enableBidi)
+	{
+		vte_terminal_set_enable_bidi(vteTerminal, enableBidi);
+	}
+
+	/**
+	 * Controls whether the terminal uses scroll events to scroll the history
+	 * if the event was not otherwise consumed by it.
+	 *
+	 * This function is rarely useful, except when the terminal is added to a
+	 * #GtkScrolledWindow, to perform kinetic scrolling (while vte itself does
+	 * not, yet, implement kinetic scrolling by itself).
+	 *
+	 * Params:
+	 *     enable = whether to enable fallback scrolling
+	 *
+	 * Since: 0.64
+	 */
+	public void setEnableFallbackScrolling(bool enable)
+	{
+		vte_terminal_set_enable_fallback_scrolling(vteTerminal, enable);
+	}
+
+	/**
+	 * Controls whether or not the terminal will shape Arabic text.
+	 *
+	 * Params:
+	 *     enableShaping = %TRUE to enable Arabic shaping
+	 *
+	 * Since: 0.58
+	 */
+	public void setEnableShaping(bool enableShaping)
+	{
+		vte_terminal_set_enable_shaping(vteTerminal, enableShaping);
+	}
+
+	/**
+	 * Set whether to enable SIXEL images.
+	 *
+	 * Params:
+	 *     enabled = whether to enable SIXEL images
+	 *
+	 * Since: 0.62
+	 */
+	public void setEnableSixel(bool enabled)
+	{
+		vte_terminal_set_enable_sixel(vteTerminal, enabled);
+	}
+
+	/**
 	 * Changes the encoding the terminal will expect data from the child to
 	 * be encoded with.  For certain terminal types, applications executing in the
 	 * terminal can change the encoding. If @codeset is %NULL, it uses "UTF-8".
@@ -1388,7 +1584,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Deprecated: Support for non-UTF-8 is deprecated.
 	 *
 	 * Params:
-	 *     codeset = a valid #GIConv target, or %NULL to use UTF-8
+	 *     codeset = target charset, or %NULL to use UTF-8
 	 *
 	 * Returns: %TRUE if the encoding could be changed to the specified one,
 	 *     or %FALSE with @error set to %G_CONVERT_ERROR_NO_CONVERSION.
@@ -1399,14 +1595,14 @@ public class Terminal : Widget, ScrollableIF
 	{
 		GError* err = null;
 
-		auto p = vte_terminal_set_encoding(vteTerminal, Str.toStringz(codeset), &err) != 0;
+		auto __p = vte_terminal_set_encoding(vteTerminal, Str.toStringz(codeset), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1526,6 +1722,22 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Controls whether the terminal's scroll unit is lines or pixels.
+	 *
+	 * This function is rarely useful, except when the terminal is added to a
+	 * #GtkScrolledWindow.
+	 *
+	 * Params:
+	 *     enable = whether to use pixels as scroll unit
+	 *
+	 * Since: 0.66
+	 */
+	public void setScrollUnitIsPixels(bool enable)
+	{
+		vte_terminal_set_scroll_unit_is_pixels(vteTerminal, enable);
+	}
+
+	/**
 	 * Sets the length of the scrollback buffer used by the terminal.  The size of
 	 * the scrollback buffer will be set to the larger of this value and the number
 	 * of visible rows the widget can display, so 0 can safely be used to disable
@@ -1594,26 +1806,10 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * A convenience function that wraps creating the #VtePty and spawning
-	 * the child process on it. See vte_pty_new_sync(), vte_pty_spawn_async(),
-	 * and vte_pty_spawn_finish() for more information.
-	 *
-	 * When the operation is finished successfully, @callback will be called
-	 * with the child #GPid, and a %NULL #GError. The child PID will already be
-	 * watched via vte_terminal_watch_child().
-	 *
-	 * When the operation fails, @callback will be called with a -1 #GPid,
-	 * and a non-%NULL #GError containing the error information.
-	 *
-	 * Note that if @terminal has been destroyed before the operation is called,
-	 * @callback will be called with a %NULL @terminal; you must not do anything
-	 * in the callback besides freeing any resources associated with @user_data,
-	 * but taking care not to access the now-destroyed #VteTerminal. Note that
-	 * in this case, if spawning was successful, the child process will be aborted
-	 * automatically.
-	 *
-	 * Beginning with 0.52, sets PWD to @working_directory in order to preserve symlink components.
-	 * The caller should also make sure that symlinks were preserved while constructing the value of @working_directory,
-	 * e.g. by using vte_terminal_get_current_directory_uri(), g_get_current_dir() or get_current_dir_name().
+	 * the child process on it. Like vte_terminal_spawn_with_fds_async(),
+	 * except that this function does not allow passing file descriptors to
+	 * the child process. See vte_terminal_spawn_with_fds_async() for more
+	 * information.
 	 *
 	 * Params:
 	 *     ptyFlags = flags from #VtePtyFlags
@@ -1626,7 +1822,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     childSetup = an extra child setup function to run in the child just before exec(), or %NULL
 	 *     childSetupData = user data for @child_setup, or %NULL
 	 *     childSetupDataDestroy = a #GDestroyNotify for @child_setup_data, or %NULL
-	 *     timeout = a timeout value in ms, or -1 to wait indefinitely
+	 *     timeout = a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
 	 *     cancellable = a #GCancellable, or %NULL
 	 *     callback = a #VteTerminalSpawnAsyncCallback, or %NULL
 	 *     userData = user data for @callback, or %NULL
@@ -1646,6 +1842,11 @@ public class Terminal : Widget, ScrollableIF
 	 * @pty_flags controls logging the session to the specified system log files.
 	 *
 	 * Note that %G_SPAWN_DO_NOT_REAP_CHILD will always be added to @spawn_flags.
+	 *
+	 * Note also that %G_SPAWN_STDOUT_TO_DEV_NULL, %G_SPAWN_STDERR_TO_DEV_NULL,
+	 * and %G_SPAWN_CHILD_INHERITS_STDIN are not supported in @spawn_flags, since
+	 * stdin, stdout and stderr of the child process will always be connected to
+	 * the PTY.
 	 *
 	 * Note that all open file descriptors will be closed in the child. If you want
 	 * to keep some file descriptor open for use in the child process, you need to
@@ -1681,14 +1882,85 @@ public class Terminal : Widget, ScrollableIF
 	{
 		GError* err = null;
 
-		auto p = vte_terminal_spawn_sync(vteTerminal, ptyFlags, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), spawnFlags, childSetup, childSetupData, &childPid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = vte_terminal_spawn_sync(vteTerminal, ptyFlags, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), spawnFlags, childSetup, childSetupData, &childPid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
+	}
+
+	/**
+	 * A convenience function that wraps creating the #VtePty and spawning
+	 * the child process on it. See vte_pty_new_sync(), vte_pty_spawn_with_fds_async(),
+	 * and vte_pty_spawn_finish() for more information.
+	 *
+	 * When the operation is finished successfully, @callback will be called
+	 * with the child #GPid, and a %NULL #GError. The child PID will already be
+	 * watched via vte_terminal_watch_child().
+	 *
+	 * When the operation fails, @callback will be called with a -1 #GPid,
+	 * and a non-%NULL #GError containing the error information.
+	 *
+	 * Note that %G_SPAWN_STDOUT_TO_DEV_NULL, %G_SPAWN_STDERR_TO_DEV_NULL,
+	 * and %G_SPAWN_CHILD_INHERITS_STDIN are not supported in @spawn_flags, since
+	 * stdin, stdout and stderr of the child process will always be connected to
+	 * the PTY.
+	 *
+	 * If @fds is not %NULL, the child process will map the file descriptors from
+	 * @fds according to @map_fds; @n_map_fds must be less or equal to @n_fds.
+	 * This function will take ownership of the file descriptors in @fds;
+	 * you must not use or close them after this call.
+	 *
+	 * Note that all  open file descriptors apart from those mapped as above
+	 * will be closed in the child. (If you want to keep some other file descriptor
+	 * open for use in the child process, you need to use a child setup function
+	 * that unsets the FD_CLOEXEC flag on that file descriptor manually.)
+	 *
+	 * Beginning with 0.60, and on linux only, and unless %VTE_SPAWN_NO_SYSTEMD_SCOPE is
+	 * passed in @spawn_flags, the newly created child process will be moved to its own
+	 * systemd user scope; and if %VTE_SPAWN_REQUIRE_SYSTEMD_SCOPE is passed, and creation
+	 * of the systemd user scope fails, the whole spawn will fail.
+	 * You can override the options used for the systemd user scope by
+	 * providing a systemd override file for 'vte-spawn-.scope' unit. See man:systemd.unit(5)
+	 * for further information.
+	 *
+	 * Note that if @terminal has been destroyed before the operation is called,
+	 * @callback will be called with a %NULL @terminal; you must not do anything
+	 * in the callback besides freeing any resources associated with @user_data,
+	 * but taking care not to access the now-destroyed #VteTerminal. Note that
+	 * in this case, if spawning was successful, the child process will be aborted
+	 * automatically.
+	 *
+	 * Beginning with 0.52, sets PWD to @working_directory in order to preserve symlink components.
+	 * The caller should also make sure that symlinks were preserved while constructing the value of @working_directory,
+	 * e.g. by using vte_terminal_get_current_directory_uri(), g_get_current_dir() or get_current_dir_name().
+	 *
+	 * Params:
+	 *     ptyFlags = flags from #VtePtyFlags
+	 *     workingDirectory = the name of a directory the command should start
+	 *         in, or %NULL to use the current working directory
+	 *     argv = child's argument vector
+	 *     envv = a list of environment
+	 *         variables to be added to the environment before starting the process, or %NULL
+	 *     fds = an array of file descriptors, or %NULL
+	 *     mapFds = an array of integers, or %NULL
+	 *     spawnFlags = flags from #GSpawnFlags
+	 *     childSetup = an extra child setup function to run in the child just before exec(), or %NULL
+	 *     childSetupData = user data for @child_setup, or %NULL
+	 *     childSetupDataDestroy = a #GDestroyNotify for @child_setup_data, or %NULL
+	 *     timeout = a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
+	 *     cancellable = a #GCancellable, or %NULL
+	 *     callback = a #VteTerminalSpawnAsyncCallback, or %NULL
+	 *     userData = user data for @callback, or %NULL
+	 *
+	 * Since: 0.62
+	 */
+	public void spawnWithFdsAsync(VtePtyFlags ptyFlags, string workingDirectory, string[] argv, string[] envv, int[] fds, int[] mapFds, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, Cancellable cancellable, VteTerminalSpawnAsyncCallback callback, void* userData)
+	{
+		vte_terminal_spawn_with_fds_async(vteTerminal, ptyFlags, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), fds.ptr, cast(int)fds.length, mapFds.ptr, cast(int)mapFds.length, spawnFlags, childSetup, childSetupData, childSetupDataDestroy, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 
 	/**
@@ -1747,14 +2019,14 @@ public class Terminal : Widget, ScrollableIF
 	{
 		GError* err = null;
 
-		auto p = vte_terminal_write_contents_sync(vteTerminal, (stream is null) ? null : stream.getOutputStreamStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = vte_terminal_write_contents_sync(vteTerminal, (stream is null) ? null : stream.getOutputStreamStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1795,8 +2067,7 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Emitted whenever the terminal receives input from the user and
-	 * prepares to send it to the child process.  The signal is emitted even
-	 * when there is no child process.
+	 * prepares to send it to the child process.
 	 *
 	 * Params:
 	 *     text = a string of text
@@ -1858,7 +2129,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 */
 	gulong addOnDeiconifyWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1916,7 +2187,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 */
 	gulong addOnIconifyWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1932,7 +2203,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 */
 	gulong addOnLowerWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1940,7 +2211,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 */
 	gulong addOnMaximizeWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1948,7 +2219,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 *
 	 * Params:
 	 *     x = the terminal's desired location, X coordinate
@@ -1968,7 +2239,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 */
 	gulong addOnRaiseWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1976,7 +2247,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 */
 	gulong addOnRefreshWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1996,7 +2267,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted at the child application's request.
+	 * Never emitted.
 	 */
 	gulong addOnRestoreWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2012,9 +2283,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * An internal signal used for communication between the terminal and
-	 * its accessibility peer. May not be emitted under certain
-	 * circumstances.
+	 *
+	 *
+	 * Deprecated: This signal is never emitted.
 	 */
 	gulong addOnTextDeleted(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2022,9 +2293,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * An internal signal used for communication between the terminal and
-	 * its accessibility peer. May not be emitted under certain
-	 * circumstances.
+	 *
+	 *
+	 * Deprecated: This signal is never emitted.
 	 */
 	gulong addOnTextInserted(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2032,9 +2303,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * An internal signal used for communication between the terminal and
-	 * its accessibility peer. May not be emitted under certain
-	 * circumstances.
+	 *
+	 *
+	 * Deprecated: This signal is never emitted.
 	 */
 	gulong addOnTextModified(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2042,12 +2313,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * An internal signal used for communication between the terminal and
-	 * its accessibility peer. May not be emitted under certain
-	 * circumstances.
 	 *
-	 * Params:
-	 *     delta = the number of lines scrolled
+	 *
+	 * Deprecated: This signal is never emitted.
 	 */
 	gulong addOnTextScrolled(void delegate(int, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2055,7 +2323,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted when the terminal's %window_title field is modified.
+	 * Emitted when the #VteTerminal:window-title property is modified.
 	 */
 	gulong addOnWindowTitleChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

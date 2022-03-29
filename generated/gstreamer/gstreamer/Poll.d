@@ -35,7 +35,7 @@ private import gtkd.Loader;
 
 /**
  * A #GstPoll keeps track of file descriptors much like fd_set (used with
- * select()) or a struct pollfd array (used with poll()). Once created with
+ * select ()) or a struct pollfd array (used with poll ()). Once created with
  * gst_poll_new(), the set can be used to wait for file descriptors to be
  * readable and/or writable. It is possible to make this wait be controlled
  * by specifying %TRUE for the @controllable flag when creating the set (or
@@ -405,14 +405,14 @@ public class Poll
 	 */
 	public this(bool controllable)
 	{
-		auto p = gst_poll_new(controllable);
+		auto __p = gst_poll_new(controllable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstPoll*) p);
+		this(cast(GstPoll*) __p);
 	}
 
 	/**
@@ -431,13 +431,13 @@ public class Poll
 	 */
 	public this()
 	{
-		auto p = gst_poll_new_timer();
+		auto __p = gst_poll_new_timer();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_timer");
 		}
 
-		this(cast(GstPoll*) p);
+		this(cast(GstPoll*) __p);
 	}
 }

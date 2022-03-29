@@ -179,11 +179,11 @@ public class SourceGutterRenderer : ObjectG
 	{
 		GdkRGBA* outcolor = sliceNew!GdkRGBA();
 
-		auto p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
+		auto __p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
 
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -217,14 +217,14 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	public TextView getView()
 	{
-		auto p = gtk_source_gutter_renderer_get_view(gtkSourceGutterRenderer);
+		auto __p = gtk_source_gutter_renderer_get_view(gtkSourceGutterRenderer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextView)(cast(GtkTextView*) p);
+		return ObjectG.getDObject!(TextView)(cast(GtkTextView*) __p);
 	}
 
 	/**

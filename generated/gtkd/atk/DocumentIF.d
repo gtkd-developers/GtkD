@@ -27,6 +27,7 @@ module atk.DocumentIF;
 private import atk.c.functions;
 public  import atk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.Signals;
 public  import gtkc.atktypes;
 private import std.algorithm;

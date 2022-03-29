@@ -27,6 +27,7 @@ module gtk.ActionGroup;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.AccelGroup;
@@ -66,19 +67,20 @@ private import std.algorithm;
  * # GtkActionGroup as GtkBuildable # {#GtkActionGroup-BUILDER-UI}
  * 
  * The #GtkActionGroup implementation of the #GtkBuildable interface accepts
- * #GtkAction objects as <child> elements in UI definitions.
+ * #GtkAction objects as `<child>` elements in UI definitions.
  * 
  * Note that it is probably more common to define actions and action groups
  * in the code, since they are directly related to what the code can do.
  * 
  * The GtkActionGroup implementation of the GtkBuildable interface supports
- * a custom <accelerator> element, which has attributes named “key“ and
+ * a custom `<accelerator>` element, which has attributes named “key“ and
  * “modifiers“ and allows to specify accelerators. This is similar to the
- * <accelerator> element of #GtkWidget, the main difference is that
+ * `<accelerator>` element of #GtkWidget, the main difference is that
  * it doesn’t allow you to specify a signal.
  * 
  * ## A #GtkDialog UI definition fragment. ##
- * |[
+ * 
+ * |[<!-- language="xml" -->
  * <object class="GtkActionGroup" id="actiongroup">
  * <child>
  * <object class="GtkAction" id="About">
@@ -145,14 +147,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public this(string name)
 	{
-		auto p = gtk_action_group_new(Str.toStringz(name));
+		auto __p = gtk_action_group_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkActionGroup*) p, true);
+		this(cast(GtkActionGroup*) __p, true);
 	}
 
 	/**
@@ -313,14 +315,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		auto p = gtk_action_group_get_accel_group(gtkActionGroup);
+		auto __p = gtk_action_group_get_accel_group(gtkActionGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) __p);
 	}
 
 	/**
@@ -335,14 +337,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public Action getAction(string actionName)
 	{
-		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
+		auto __p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) __p);
 	}
 
 	/**
@@ -396,14 +398,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public ListG listActions()
 	{
-		auto p = gtk_action_group_list_actions(gtkActionGroup);
+		auto __p = gtk_action_group_list_actions(gtkActionGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

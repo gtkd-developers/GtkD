@@ -103,14 +103,19 @@ alias void* GIConv;
 
 /**
  * Integer representing a day of the month; between 1 and 31.
- * #G_DATE_BAD_DAY represents an invalid day of the month.
+ *
+ * The %G_DATE_BAD_DAY value represents an invalid day of the month.
  */
 public alias ubyte GDateDay;
 
 /**
- * Integer representing a year; #G_DATE_BAD_YEAR is the invalid
- * value. The year must be 1 or higher; negative (BC) years are not
- * allowed. The year is represented with four digits.
+ * Integer type representing a year.
+ *
+ * The %G_DATE_BAD_YEAR value is the invalid value. The year
+ * must be 1 or higher; negative ([BCE](https://en.wikipedia.org/wiki/Common_Era))
+ * years are not allowed.
+ *
+ * The year is represented with four digits.
  */
 public alias ushort GDateYear;
 
@@ -176,7 +181,9 @@ public alias char** GStrv;
 /**
  * Simply a replacement for `time_t`. It has been deprecated
  * since it is not equivalent to `time_t` on 64-bit platforms
- * with a 64-bit `time_t`. Unrelated to #GTimer.
+ * with a 64-bit `time_t`.
+ *
+ * Unrelated to #GTimer.
  *
  * Note that #GTime is defined to always be a 32-bit integer,
  * unlike `time_t` which may be 64-bit on some systems. Therefore,
@@ -185,6 +192,7 @@ public alias char** GStrv;
  * function.
  *
  * Instead, do the following:
+ *
  * |[<!-- language="C" -->
  * time_t ttime;
  * GTime gtime;
@@ -372,8 +380,8 @@ public enum GDateDMY
 alias GDateDMY DateDMY;
 
 /**
- * Enumeration representing a month; values are #G_DATE_JANUARY,
- * #G_DATE_FEBRUARY, etc. #G_DATE_BAD_MONTH is the invalid value.
+ * Enumeration representing a month; values are %G_DATE_JANUARY,
+ * %G_DATE_FEBRUARY, etc. %G_DATE_BAD_MONTH is the invalid value.
  */
 public enum GDateMonth
 {
@@ -433,8 +441,8 @@ public enum GDateMonth
 alias GDateMonth DateMonth;
 
 /**
- * Enumeration representing a day of the week; #G_DATE_MONDAY,
- * #G_DATE_TUESDAY, etc. #G_DATE_BAD_WEEKDAY is an invalid weekday.
+ * Enumeration representing a day of the week; %G_DATE_MONDAY,
+ * %G_DATE_TUESDAY, etc. %G_DATE_BAD_WEEKDAY is an invalid weekday.
  */
 public enum GDateWeekday
 {
@@ -674,6 +682,45 @@ public enum GFileError
 	FAILED = 24,
 }
 alias GFileError FileError;
+
+/**
+ * Flags to pass to g_file_set_contents_full() to affect its safety and
+ * performance.
+ *
+ * Since: 2.66
+ */
+public enum GFileSetContentsFlags
+{
+	/**
+	 * No guarantees about file consistency or durability.
+	 * The most dangerous setting, which is slightly faster than other settings.
+	 */
+	NONE = 0,
+	/**
+	 * Guarantee file consistency: after a crash,
+	 * either the old version of the file or the new version of the file will be
+	 * available, but not a mixture. On Unix systems this equates to an `fsync()`
+	 * on the file and use of an atomic `rename()` of the new version of the file
+	 * over the old.
+	 */
+	CONSISTENT = 1,
+	/**
+	 * Guarantee file durability: after a crash, the
+	 * new version of the file will be available. On Unix systems this equates to
+	 * an `fsync()` on the file (if %G_FILE_SET_CONTENTS_CONSISTENT is unset), or
+	 * the effects of %G_FILE_SET_CONTENTS_CONSISTENT plus an `fsync()` on the
+	 * directory containing the file after calling `rename()`.
+	 */
+	DURABLE = 2,
+	/**
+	 * Only apply consistency and durability
+	 * guarantees if the file already exists. This may speed up file operations
+	 * if the file doesn’t currently exist, but may result in a corrupted version
+	 * of the new file if the system crashes while writing it.
+	 */
+	ONLY_EXISTING = 4,
+}
+alias GFileSetContentsFlags FileSetContentsFlags;
 
 /**
  * A test to perform on a file using g_file_test().
@@ -917,7 +964,7 @@ public enum GIOFlags
 alias GIOFlags IOFlags;
 
 /**
- * Stati returned by most of the #GIOFuncs functions.
+ * Statuses returned by most of the #GIOFuncs functions.
  */
 public enum GIOStatus
 {
@@ -1072,6 +1119,28 @@ public enum GLogWriterOutput
 	UNHANDLED = 0,
 }
 alias GLogWriterOutput LogWriterOutput;
+
+/**
+ * Flags to pass to g_main_context_new_with_flags() which affect the behaviour
+ * of a #GMainContext.
+ *
+ * Since: 2.72
+ */
+public enum GMainContextFlags
+{
+	/**
+	 * Default behaviour.
+	 */
+	NONE = 0,
+	/**
+	 * Assume that polling for events will
+	 * free the thread to process other jobs. That's useful if you're using
+	 * `g_main_context_{prepare,query,check,dispatch}` to integrate GMainContext in
+	 * other event loops.
+	 */
+	OWNERLESS_POLLING = 1,
+}
+alias GMainContextFlags MainContextFlags;
 
 /**
  * A mixed enumerated type and flags field. You must specify one type
@@ -1443,8 +1512,8 @@ public enum GRegexCompileFlags
 	 * newlines). The "start of line" metacharacter ("^") matches only
 	 * at the start of the string, while the "end of line" metacharacter
 	 * ("$") matches only at the end of the string, or before a terminating
-	 * newline (unless #G_REGEX_DOLLAR_ENDONLY is set). When
-	 * #G_REGEX_MULTILINE is set, the "start of line" and "end of line"
+	 * newline (unless %G_REGEX_DOLLAR_ENDONLY is set). When
+	 * %G_REGEX_MULTILINE is set, the "start of line" and "end of line"
 	 * constructs match immediately following or immediately before any
 	 * newline in the string, respectively, as well as at the very start
 	 * and end. This can be changed within a pattern by a "(?m)" option
@@ -1479,7 +1548,7 @@ public enum GRegexCompileFlags
 	 * matches only at the end of the string. Without this option, a
 	 * dollar also matches immediately before the final character if
 	 * it is a newline (but not before any other newlines). This option
-	 * is ignored if #G_REGEX_MULTILINE is set.
+	 * is ignored if %G_REGEX_MULTILINE is set.
 	 */
 	DOLLAR_ENDONLY = 32,
 	/**
@@ -1856,7 +1925,7 @@ public enum GRegexMatchFlags
 	/**
 	 * Specifies that first character of the string is
 	 * not the beginning of a line, so the circumflex metacharacter should
-	 * not match before it. Setting this without #G_REGEX_MULTILINE (at
+	 * not match before it. Setting this without %G_REGEX_MULTILINE (at
 	 * compile time) causes circumflex never to match. This option affects
 	 * only the behaviour of the circumflex metacharacter, it does not
 	 * affect "\A".
@@ -1866,7 +1935,7 @@ public enum GRegexMatchFlags
 	 * Specifies that the end of the subject string is
 	 * not the end of a line, so the dollar metacharacter should not match
 	 * it nor (except in multiline mode) a newline immediately before it.
-	 * Setting this without #G_REGEX_MULTILINE (at compile time) causes
+	 * Setting this without %G_REGEX_MULTILINE (at compile time) causes
 	 * dollar never to match. This option affects only the behaviour of
 	 * the dollar metacharacter, it does not affect "\Z" or "\z".
 	 */
@@ -1933,18 +2002,18 @@ public enum GRegexMatchFlags
 	 */
 	BSR_ANY = 16777216,
 	/**
-	 * An alias for #G_REGEX_MATCH_PARTIAL. Since: 2.34
+	 * An alias for %G_REGEX_MATCH_PARTIAL. Since: 2.34
 	 */
 	PARTIAL_SOFT = 32768,
 	/**
 	 * Turns on the partial matching feature. In contrast to
-	 * to #G_REGEX_MATCH_PARTIAL_SOFT, this stops matching as soon as a partial match
+	 * to %G_REGEX_MATCH_PARTIAL_SOFT, this stops matching as soon as a partial match
 	 * is found, without continuing to search for a possible complete match. See
 	 * g_match_info_is_partial_match() for more information. Since: 2.34
 	 */
 	PARTIAL_HARD = 134217728,
 	/**
-	 * Like #G_REGEX_MATCH_NOTEMPTY, but only applied to
+	 * Like %G_REGEX_MATCH_NOTEMPTY, but only applied to
 	 * the start of the matched string. For anchored
 	 * patterns this can only happen for pattern containing "\K". Since: 2.34
 	 */
@@ -2141,7 +2210,7 @@ public enum GSpawnFlags
 	 */
 	FILE_AND_ARGV_ZERO = 64,
 	/**
-	 * if `argv[0]` is not an abolute path,
+	 * if `argv[0]` is not an absolute path,
 	 * it will be looked for in the `PATH` from the passed child environment.
 	 * Since: 2.34
 	 */
@@ -2456,7 +2525,7 @@ public enum GTraverseFlags
 alias GTraverseFlags TraverseFlags;
 
 /**
- * Specifies the type of traveral performed by g_tree_traverse(),
+ * Specifies the type of traversal performed by g_tree_traverse(),
  * g_node_traverse() and g_node_find(). The different orders are
  * illustrated here:
  * - In order: A, B, C, D, E, F, G, H, I
@@ -2652,9 +2721,13 @@ public enum GUnicodeBreakType
 	 */
 	HANGUL_LVT_SYLLABLE = 35,
 	/**
-	 * Closing Parenthesis (CP). Since 2.28
+	 * Closing Parenthesis (CP). Since 2.28. Deprecated: 2.70: Use %G_UNICODE_BREAK_CLOSE_PARENTHESIS instead.
 	 */
 	CLOSE_PARANTHESIS = 36,
+	/**
+	 * Closing Parenthesis (CP). Since 2.70
+	 */
+	CLOSE_PARENTHESIS = 36,
 	/**
 	 * Conditional Japanese Starter (CJ). Since: 2.32
 	 */
@@ -3311,6 +3384,46 @@ public enum GUnicodeScript
 	 * Wcho. Since: 2.62
 	 */
 	WANCHO = 152,
+	/**
+	 * Chorasmian. Since: 2.66
+	 */
+	CHORASMIAN = 153,
+	/**
+	 * Dives Akuru. Since: 2.66
+	 */
+	DIVES_AKURU = 154,
+	/**
+	 * Khitan small script. Since: 2.66
+	 */
+	KHITAN_SMALL_SCRIPT = 155,
+	/**
+	 * Yezidi. Since: 2.66
+	 */
+	YEZIDI = 156,
+	/**
+	 * Cypro-Minoan. Since: 2.72
+	 */
+	CYPRO_MINOAN = 157,
+	/**
+	 * Old Uyghur. Since: 2.72
+	 */
+	OLD_UYGHUR = 158,
+	/**
+	 * Tangsa. Since: 2.72
+	 */
+	TANGSA = 159,
+	/**
+	 * Toto. Since: 2.72
+	 */
+	TOTO = 160,
+	/**
+	 * Vithkuqi. Since: 2.72
+	 */
+	VITHKUQI = 161,
+	/**
+	 * Mathematical notation. Since: 2.72
+	 */
+	MATH = 162,
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -3443,6 +3556,196 @@ public enum GUnicodeType
 	SPACE_SEPARATOR = 29,
 }
 alias GUnicodeType UnicodeType;
+
+/**
+ * Error codes returned by #GUri methods.
+ *
+ * Since: 2.66
+ */
+public enum GUriError
+{
+	/**
+	 * Generic error if no more specific error is available.
+	 * See the error message for details.
+	 */
+	FAILED = 0,
+	/**
+	 * The scheme of a URI could not be parsed.
+	 */
+	BAD_SCHEME = 1,
+	/**
+	 * The user/userinfo of a URI could not be parsed.
+	 */
+	BAD_USER = 2,
+	/**
+	 * The password of a URI could not be parsed.
+	 */
+	BAD_PASSWORD = 3,
+	/**
+	 * The authentication parameters of a URI could not be parsed.
+	 */
+	BAD_AUTH_PARAMS = 4,
+	/**
+	 * The host of a URI could not be parsed.
+	 */
+	BAD_HOST = 5,
+	/**
+	 * The port of a URI could not be parsed.
+	 */
+	BAD_PORT = 6,
+	/**
+	 * The path of a URI could not be parsed.
+	 */
+	BAD_PATH = 7,
+	/**
+	 * The query of a URI could not be parsed.
+	 */
+	BAD_QUERY = 8,
+	/**
+	 * The fragment of a URI could not be parsed.
+	 */
+	BAD_FRAGMENT = 9,
+}
+alias GUriError UriError;
+
+/**
+ * Flags that describe a URI.
+ *
+ * When parsing a URI, if you need to choose different flags based on
+ * the type of URI, you can use g_uri_peek_scheme() on the URI string
+ * to check the scheme first, and use that to decide what flags to
+ * parse it with.
+ *
+ * Since: 2.66
+ */
+public enum GUriFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Parse the URI more relaxedly than the
+	 * [RFC 3986](https://tools.ietf.org/html/rfc3986) grammar specifies,
+	 * fixing up or ignoring common mistakes in URIs coming from external
+	 * sources. This is also needed for some obscure URI schemes where `;`
+	 * separates the host from the path. Don’t use this flag unless you need to.
+	 */
+	PARSE_RELAXED = 1,
+	/**
+	 * The userinfo field may contain a password,
+	 * which will be separated from the username by `:`.
+	 */
+	HAS_PASSWORD = 2,
+	/**
+	 * The userinfo may contain additional
+	 * authentication-related parameters, which will be separated from
+	 * the username and/or password by `;`.
+	 */
+	HAS_AUTH_PARAMS = 4,
+	/**
+	 * When parsing a URI, this indicates that `%`-encoded
+	 * characters in the userinfo, path, query, and fragment fields
+	 * should not be decoded. (And likewise the host field if
+	 * %G_URI_FLAGS_NON_DNS is also set.) When building a URI, it indicates
+	 * that you have already `%`-encoded the components, and so #GUri
+	 * should not do any encoding itself.
+	 */
+	ENCODED = 8,
+	/**
+	 * The host component should not be assumed to be a
+	 * DNS hostname or IP address (for example, for `smb` URIs with NetBIOS
+	 * hostnames).
+	 */
+	NON_DNS = 16,
+	/**
+	 * Same as %G_URI_FLAGS_ENCODED, for the query
+	 * field only.
+	 */
+	ENCODED_QUERY = 32,
+	/**
+	 * Same as %G_URI_FLAGS_ENCODED, for the path only.
+	 */
+	ENCODED_PATH = 64,
+	/**
+	 * Same as %G_URI_FLAGS_ENCODED, for the
+	 * fragment only.
+	 */
+	ENCODED_FRAGMENT = 128,
+	/**
+	 * A scheme-based normalization will be applied.
+	 * For example, when parsing an HTTP URI changing omitted path to `/` and
+	 * omitted port to `80`; and when building a URI, changing empty path to `/`
+	 * and default port `80`). This only supports a subset of known schemes. (Since: 2.68)
+	 */
+	SCHEME_NORMALIZE = 256,
+}
+alias GUriFlags UriFlags;
+
+/**
+ * Flags describing what parts of the URI to hide in
+ * g_uri_to_string_partial(). Note that %G_URI_HIDE_PASSWORD and
+ * %G_URI_HIDE_AUTH_PARAMS will only work if the #GUri was parsed with
+ * the corresponding flags.
+ *
+ * Since: 2.66
+ */
+public enum GUriHideFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Hide the userinfo.
+	 */
+	USERINFO = 1,
+	/**
+	 * Hide the password.
+	 */
+	PASSWORD = 2,
+	/**
+	 * Hide the auth_params.
+	 */
+	AUTH_PARAMS = 4,
+	/**
+	 * Hide the query.
+	 */
+	QUERY = 8,
+	/**
+	 * Hide the fragment.
+	 */
+	FRAGMENT = 16,
+}
+alias GUriHideFlags UriHideFlags;
+
+/**
+ * Flags modifying the way parameters are handled by g_uri_parse_params() and
+ * #GUriParamsIter.
+ *
+ * Since: 2.66
+ */
+public enum GUriParamsFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Parameter names are case insensitive.
+	 */
+	CASE_INSENSITIVE = 1,
+	/**
+	 * Replace `+` with space character. Only useful for
+	 * URLs on the web, using the `https` or `http` schemas.
+	 */
+	WWW_FORM = 2,
+	/**
+	 * See %G_URI_FLAGS_PARSE_RELAXED.
+	 */
+	PARSE_RELAXED = 4,
+}
+alias GUriParamsFlags UriParamsFlags;
 
 /**
  * These are logical ids for special directories which are defined
@@ -3665,6 +3968,24 @@ public enum GVariantParseError
 alias GVariantParseError VariantParseError;
 
 /**
+ * Errors returned by g_module_open_full().
+ *
+ * Since: 2.70
+ */
+public enum GModuleError
+{
+	/**
+	 * there was an error loading or opening a module file
+	 */
+	FAILED = 0,
+	/**
+	 * a module returned an error from its `g_module_check_init()` function
+	 */
+	CHECK_FAILED = 1,
+}
+alias GModuleError ModuleError;
+
+/**
  * Flags passed to g_module_open().
  * Note that these flags are not supported on all platforms.
  */
@@ -3738,9 +4059,9 @@ struct GCond
 }
 
 /**
- * The #GData struct is an opaque data structure to represent a
- * [Keyed Data List][glib-Keyed-Data-Lists]. It should only be
- * accessed via the following functions.
+ * An opaque data structure that represents a keyed data list.
+ *
+ * See also: [Keyed data lists][glib-Keyed-Data-Lists].
  */
 struct GData;
 
@@ -3809,7 +4130,7 @@ struct GDoubleIEEE754
 struct GError
 {
 	/**
-	 * error domain, e.g. #G_FILE_ERROR
+	 * error domain, e.g. %G_FILE_ERROR
 	 */
 	GQuark domain;
 	/**
@@ -4399,14 +4720,14 @@ struct GScannerConfig
 	char* csetSkipCharacters;
 	/**
 	 * specifies the characters which can start
-	 * identifiers (the default is #G_CSET_a_2_z, "_", and #G_CSET_A_2_Z).
+	 * identifiers (the default is %G_CSET_a_2_z, "_", and %G_CSET_A_2_Z).
 	 */
 	char* csetIdentifierFirst;
 	/**
 	 * specifies the characters which can be used
 	 * in identifiers, after the first character (the default is
-	 * #G_CSET_a_2_z, "_0123456789", #G_CSET_A_2_Z, #G_CSET_LATINS,
-	 * #G_CSET_LATINC).
+	 * %G_CSET_a_2_z, "_0123456789", %G_CSET_A_2_Z, %G_CSET_LATINS,
+	 * %G_CSET_LATINC).
 	 */
 	char* csetIdentifierNth;
 	/**
@@ -4548,9 +4869,8 @@ struct GString
 
 struct GStringChunk;
 
-/**
- * An opaque structure representing a test case.
- */
+struct GStrvBuilder;
+
 struct GTestCase;
 
 struct GTestConfig
@@ -4690,6 +5010,18 @@ struct GTrashStack
 
 struct GTree;
 
+struct GTreeNode;
+
+struct GUri;
+
+struct GUriParamsIter
+{
+	int dummy0;
+	void* dummy1;
+	void* dummy2;
+	ubyte[256] dummy3;
+}
+
 struct GVariant;
 
 struct GVariantBuilder
@@ -4735,16 +5067,20 @@ struct GModule;
 
 /**
  * Prototype of a #GChildWatchSource callback, called when a child
- * process has exited.  To interpret @status, see the documentation
- * for g_spawn_check_exit_status().
+ * process has exited.
+ *
+ * To interpret @wait_status, see the documentation
+ * for g_spawn_check_wait_status(). In particular,
+ * on Unix platforms, note that it is usually not equal
+ * to the integer passed to `exit()` or returned from `main()`.
  *
  * Params:
  *     pid = the process id of the child process
- *     status = Status information about the child process, encoded
+ *     waitStatus = Status information about the child process, encoded
  *         in a platform-specific manner
  *     userData = user data passed to g_child_watch_add()
  */
-public alias extern(C) void function(GPid pid, int status, void* userData) GChildWatchFunc;
+public alias extern(C) void function(GPid pid, int waitStatus, void* userData) GChildWatchFunc;
 
 /**
  * Specifies the type of function passed to g_clear_handle_id().
@@ -4855,6 +5191,55 @@ public alias extern(C) void* function(void* data, void* userData) GDuplicateFunc
 public alias extern(C) int function(void* a, void* b) GEqualFunc;
 
 /**
+ * Specifies the type of function which is called when an extended
+ * error instance is freed. It is passed the error pointer about to be
+ * freed, and should free the error's private data fields.
+ *
+ * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+ * already takes care of getting the private data from @error.
+ *
+ * Params:
+ *     error = extended error to clear
+ *
+ * Since: 2.68
+ */
+public alias extern(C) void function(GError* error) GErrorClearFunc;
+
+/**
+ * Specifies the type of function which is called when an extended
+ * error instance is copied. It is passed the pointer to the
+ * destination error and source error, and should copy only the fields
+ * of the private data from @src_error to @dest_error.
+ *
+ * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+ * already takes care of getting the private data from @src_error and
+ * @dest_error.
+ *
+ * Params:
+ *     srcError = source extended error
+ *     destError = destination extended error
+ *
+ * Since: 2.68
+ */
+public alias extern(C) void function(GError* srcError, GError* destError) GErrorCopyFunc;
+
+/**
+ * Specifies the type of function which is called just after an
+ * extended error instance is created and its fields filled. It should
+ * only initialize the fields in the private data, which can be
+ * received with the generated `*_get_private()` function.
+ *
+ * Normally, it is better to use G_DEFINE_EXTENDED_ERROR(), as it
+ * already takes care of getting the private data from @error.
+ *
+ * Params:
+ *     error = extended error
+ *
+ * Since: 2.68
+ */
+public alias extern(C) void function(GError* error) GErrorInitFunc;
+
+/**
  * Declares a type of function which takes an arbitrary
  * data pointer argument and has no return value. It is
  * not currently used in GLib or GTK+.
@@ -4927,7 +5312,7 @@ public alias extern(C) int function(void* key, void* value, void* userData) GHRF
  * a more secure hash function when using a GHashTable with keys
  * that originate in untrusted data (such as HTTP requests).
  * Using g_str_hash() in that situation might make your application
- * vulerable to
+ * vulnerable to
  * [Algorithmic Complexity Attacks](https://lwn.net/Articles/474912/).
  *
  * The key to choosing a good hash is unpredictability.  Even
@@ -5255,8 +5640,8 @@ public alias extern(C) void function() GSourceDummyMarshal;
  *     userData = data passed to the function, set when the source was
  *         created with one of the above functions
  *
- * Returns: %FALSE if the source should be removed. #G_SOURCE_CONTINUE and
- *     #G_SOURCE_REMOVE are more memorable names for the return value.
+ * Returns: %FALSE if the source should be removed. %G_SOURCE_CONTINUE and
+ *     %G_SOURCE_REMOVE are more memorable names for the return value.
  */
 public alias extern(C) int function(void* userData) GSourceFunc;
 
@@ -5391,6 +5776,22 @@ public alias extern(C) const(char)* function(const(char)* str, void* data) GTran
 public alias extern(C) int function(void* key, void* value, void* data) GTraverseFunc;
 
 /**
+ * Specifies the type of function passed to g_tree_foreach_node(). It is
+ * passed each node, together with the @user_data parameter passed to
+ * g_tree_foreach_node(). If the function returns %TRUE, the traversal is
+ * stopped.
+ *
+ * Params:
+ *     node = a #GTreeNode
+ *     data = user data passed to g_tree_foreach_node()
+ *
+ * Returns: %TRUE to stop the traversal
+ *
+ * Since: 2.68
+ */
+public alias extern(C) int function(GTreeNode* node, void* data) GTraverseNodeFunc;
+
+/**
  * The type of functions to be called when a UNIX fd watch source
  * triggers.
  *
@@ -5455,7 +5856,7 @@ alias G_ASCII_DTOSTR_BUF_SIZE = ASCII_DTOSTR_BUF_SIZE;
 
 /**
  * Specifies one of the possible types of byte order.
- * See #G_BYTE_ORDER.
+ * See %G_BYTE_ORDER.
  */
 enum BIG_ENDIAN = 4321;
 alias G_BIG_ENDIAN = BIG_ENDIAN;
@@ -5545,7 +5946,7 @@ alias G_GINT16_MODIFIER = GINT16_MODIFIER;
 
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gint32. See also #G_GINT16_FORMAT.
+ * and printing values of type #gint32. See also %G_GINT16_FORMAT.
  */
 enum GINT32_FORMAT = "i";
 alias G_GINT32_FORMAT = GINT32_FORMAT;
@@ -5553,14 +5954,14 @@ alias G_GINT32_FORMAT = GINT32_FORMAT;
 /**
  * The platform dependent length modifier for conversion specifiers
  * for scanning and printing values of type #gint32 or #guint32. It
- * is a string literal. See also #G_GINT16_MODIFIER.
+ * is a string literal. See also %G_GINT16_MODIFIER.
  */
 enum GINT32_MODIFIER = "";
 alias G_GINT32_MODIFIER = GINT32_MODIFIER;
 
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gint64. See also #G_GINT16_FORMAT.
+ * and printing values of type #gint64. See also %G_GINT16_FORMAT.
  *
  * Some platforms do not support scanning and printing 64-bit integers,
  * even though the types are supported. On such platforms %G_GINT64_FORMAT
@@ -5619,7 +6020,7 @@ alias G_GNUC_PRETTY_FUNCTION = GNUC_PRETTY_FUNCTION;
 
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gsize. See also #G_GINT16_FORMAT.
+ * and printing values of type #gsize. See also %G_GINT16_FORMAT.
  */
 enum GSIZE_FORMAT = "lu";
 alias G_GSIZE_FORMAT = GSIZE_FORMAT;
@@ -5634,7 +6035,7 @@ alias G_GSIZE_MODIFIER = GSIZE_MODIFIER;
 
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #gssize. See also #G_GINT16_FORMAT.
+ * and printing values of type #gssize. See also %G_GINT16_FORMAT.
  */
 enum GSSIZE_FORMAT = "li";
 alias G_GSSIZE_FORMAT = GSSIZE_FORMAT;
@@ -5649,21 +6050,21 @@ alias G_GSSIZE_MODIFIER = GSSIZE_MODIFIER;
 
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #guint16. See also #G_GINT16_FORMAT
+ * and printing values of type #guint16. See also %G_GINT16_FORMAT
  */
 enum GUINT16_FORMAT = "hu";
 alias G_GUINT16_FORMAT = GUINT16_FORMAT;
 
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #guint32. See also #G_GINT16_FORMAT.
+ * and printing values of type #guint32. See also %G_GINT16_FORMAT.
  */
 enum GUINT32_FORMAT = "u";
 alias G_GUINT32_FORMAT = GUINT32_FORMAT;
 
 /**
  * This is the platform dependent conversion specifier for scanning
- * and printing values of type #guint64. See also #G_GINT16_FORMAT.
+ * and printing values of type #guint64. See also %G_GINT16_FORMAT.
  *
  * Some platforms do not support scanning and printing 64-bit integers,
  * even though the types are supported. On such platforms %G_GUINT64_FORMAT
@@ -5731,14 +6132,14 @@ enum KEY_FILE_DESKTOP_GROUP = "Desktop Entry";
 alias G_KEY_FILE_DESKTOP_GROUP = KEY_FILE_DESKTOP_GROUP;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string list
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string list
  * giving the available application actions.
  */
 enum KEY_FILE_DESKTOP_KEY_ACTIONS = "Actions";
 alias G_KEY_FILE_DESKTOP_KEY_ACTIONS = KEY_FILE_DESKTOP_KEY_ACTIONS;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list
  * of strings giving the categories in which the desktop entry
  * should be shown in a menu.
  */
@@ -5746,21 +6147,21 @@ enum KEY_FILE_DESKTOP_KEY_CATEGORIES = "Categories";
 alias G_KEY_FILE_DESKTOP_KEY_CATEGORIES = KEY_FILE_DESKTOP_KEY_CATEGORIES;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
  * string giving the tooltip for the desktop entry.
  */
 enum KEY_FILE_DESKTOP_KEY_COMMENT = "Comment";
 alias G_KEY_FILE_DESKTOP_KEY_COMMENT = KEY_FILE_DESKTOP_KEY_COMMENT;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean set to true
- * if the application is D-Bus activatable.
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * set to true if the application is D-Bus activatable.
  */
 enum KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE = "DBusActivatable";
 alias G_KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE = KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
  * giving the command line to execute. It is only valid for desktop
  * entries with the `Application` type.
  */
@@ -5768,21 +6169,21 @@ enum KEY_FILE_DESKTOP_KEY_EXEC = "Exec";
 alias G_KEY_FILE_DESKTOP_KEY_EXEC = KEY_FILE_DESKTOP_KEY_EXEC;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
  * string giving the generic name of the desktop entry.
  */
 enum KEY_FILE_DESKTOP_KEY_GENERIC_NAME = "GenericName";
 alias G_KEY_FILE_DESKTOP_KEY_GENERIC_NAME = KEY_FILE_DESKTOP_KEY_GENERIC_NAME;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
  * stating whether the desktop entry has been deleted by the user.
  */
 enum KEY_FILE_DESKTOP_KEY_HIDDEN = "Hidden";
 alias G_KEY_FILE_DESKTOP_KEY_HIDDEN = KEY_FILE_DESKTOP_KEY_HIDDEN;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
  * string giving the name of the icon to be displayed for the desktop
  * entry.
  */
@@ -5790,21 +6191,21 @@ enum KEY_FILE_DESKTOP_KEY_ICON = "Icon";
 alias G_KEY_FILE_DESKTOP_KEY_ICON = KEY_FILE_DESKTOP_KEY_ICON;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list
  * of strings giving the MIME types supported by this desktop entry.
  */
 enum KEY_FILE_DESKTOP_KEY_MIME_TYPE = "MimeType";
 alias G_KEY_FILE_DESKTOP_KEY_MIME_TYPE = KEY_FILE_DESKTOP_KEY_MIME_TYPE;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
  * string giving the specific name of the desktop entry.
  */
 enum KEY_FILE_DESKTOP_KEY_NAME = "Name";
 alias G_KEY_FILE_DESKTOP_KEY_NAME = KEY_FILE_DESKTOP_KEY_NAME;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
  * strings identifying the environments that should not display the
  * desktop entry.
  */
@@ -5812,14 +6213,14 @@ enum KEY_FILE_DESKTOP_KEY_NOT_SHOW_IN = "NotShowIn";
 alias G_KEY_FILE_DESKTOP_KEY_NOT_SHOW_IN = KEY_FILE_DESKTOP_KEY_NOT_SHOW_IN;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
  * stating whether the desktop entry should be shown in menus.
  */
 enum KEY_FILE_DESKTOP_KEY_NO_DISPLAY = "NoDisplay";
 alias G_KEY_FILE_DESKTOP_KEY_NO_DISPLAY = KEY_FILE_DESKTOP_KEY_NO_DISPLAY;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
  * strings identifying the environments that should display the
  * desktop entry.
  */
@@ -5827,7 +6228,7 @@ enum KEY_FILE_DESKTOP_KEY_ONLY_SHOW_IN = "OnlyShowIn";
 alias G_KEY_FILE_DESKTOP_KEY_ONLY_SHOW_IN = KEY_FILE_DESKTOP_KEY_ONLY_SHOW_IN;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
  * containing the working directory to run the program in. It is only
  * valid for desktop entries with the `Application` type.
  */
@@ -5835,7 +6236,7 @@ enum KEY_FILE_DESKTOP_KEY_PATH = "Path";
 alias G_KEY_FILE_DESKTOP_KEY_PATH = KEY_FILE_DESKTOP_KEY_PATH;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
  * stating whether the application supports the
  * [Startup Notification Protocol Specification](http://www.freedesktop.org/Standards/startup-notification-spec).
  */
@@ -5843,7 +6244,7 @@ enum KEY_FILE_DESKTOP_KEY_STARTUP_NOTIFY = "StartupNotify";
 alias G_KEY_FILE_DESKTOP_KEY_STARTUP_NOTIFY = KEY_FILE_DESKTOP_KEY_STARTUP_NOTIFY;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is string
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is string
  * identifying the WM class or name hint of a window that the application
  * will create, which can be used to emulate Startup Notification with
  * older applications.
@@ -5852,16 +6253,16 @@ enum KEY_FILE_DESKTOP_KEY_STARTUP_WM_CLASS = "StartupWMClass";
 alias G_KEY_FILE_DESKTOP_KEY_STARTUP_WM_CLASS = KEY_FILE_DESKTOP_KEY_STARTUP_WM_CLASS;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
  * stating whether the program should be run in a terminal window.
- * It is only valid for desktop entries with the
- * `Application` type.
+ *
+ * It is only valid for desktop entries with the `Application` type.
  */
 enum KEY_FILE_DESKTOP_KEY_TERMINAL = "Terminal";
 alias G_KEY_FILE_DESKTOP_KEY_TERMINAL = KEY_FILE_DESKTOP_KEY_TERMINAL;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
  * giving the file name of a binary on disk used to determine if the
  * program is actually installed. It is only valid for desktop entries
  * with the `Application` type.
@@ -5870,17 +6271,18 @@ enum KEY_FILE_DESKTOP_KEY_TRY_EXEC = "TryExec";
 alias G_KEY_FILE_DESKTOP_KEY_TRY_EXEC = KEY_FILE_DESKTOP_KEY_TRY_EXEC;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
- * giving the type of the desktop entry. Usually
- * #G_KEY_FILE_DESKTOP_TYPE_APPLICATION,
- * #G_KEY_FILE_DESKTOP_TYPE_LINK, or
- * #G_KEY_FILE_DESKTOP_TYPE_DIRECTORY.
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * giving the type of the desktop entry.
+ *
+ * Usually %G_KEY_FILE_DESKTOP_TYPE_APPLICATION,
+ * %G_KEY_FILE_DESKTOP_TYPE_LINK, or
+ * %G_KEY_FILE_DESKTOP_TYPE_DIRECTORY.
  */
 enum KEY_FILE_DESKTOP_KEY_TYPE = "Type";
 alias G_KEY_FILE_DESKTOP_KEY_TYPE = KEY_FILE_DESKTOP_KEY_TYPE;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
  * giving the URL to access. It is only valid for desktop entries
  * with the `Link` type.
  */
@@ -5888,7 +6290,7 @@ enum KEY_FILE_DESKTOP_KEY_URL = "URL";
 alias G_KEY_FILE_DESKTOP_KEY_URL = KEY_FILE_DESKTOP_KEY_URL;
 
 /**
- * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * A key under %G_KEY_FILE_DESKTOP_GROUP, whose value is a string
  * giving the version of the Desktop Entry Specification used for
  * the desktop entry file.
  */
@@ -5896,21 +6298,21 @@ enum KEY_FILE_DESKTOP_KEY_VERSION = "Version";
 alias G_KEY_FILE_DESKTOP_KEY_VERSION = KEY_FILE_DESKTOP_KEY_VERSION;
 
 /**
- * The value of the #G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+ * The value of the %G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
  * entries representing applications.
  */
 enum KEY_FILE_DESKTOP_TYPE_APPLICATION = "Application";
 alias G_KEY_FILE_DESKTOP_TYPE_APPLICATION = KEY_FILE_DESKTOP_TYPE_APPLICATION;
 
 /**
- * The value of the #G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+ * The value of the %G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
  * entries representing directories.
  */
 enum KEY_FILE_DESKTOP_TYPE_DIRECTORY = "Directory";
 alias G_KEY_FILE_DESKTOP_TYPE_DIRECTORY = KEY_FILE_DESKTOP_TYPE_DIRECTORY;
 
 /**
- * The value of the #G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+ * The value of the %G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
  * entries representing links to documents.
  */
 enum KEY_FILE_DESKTOP_TYPE_LINK = "Link";
@@ -5918,7 +6320,7 @@ alias G_KEY_FILE_DESKTOP_TYPE_LINK = KEY_FILE_DESKTOP_TYPE_LINK;
 
 /**
  * Specifies one of the possible types of byte order.
- * See #G_BYTE_ORDER.
+ * See %G_BYTE_ORDER.
  */
 enum LITTLE_ENDIAN = 1234;
 alias G_LITTLE_ENDIAN = LITTLE_ENDIAN;
@@ -6066,7 +6468,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 64;
+enum MINOR_VERSION = 72;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";
@@ -6080,7 +6482,7 @@ alias G_MODULE_SUFFIX = MODULE_SUFFIX;
  * or %G_OPTION_ARG_FILENAME_ARRAY.
  *
  *
- * Using #G_OPTION_REMAINING instead of simply scanning `argv`
+ * Using %G_OPTION_REMAINING instead of simply scanning `argv`
  * for leftover arguments has the advantage that GOption takes care of
  * necessary encoding conversions for strings or filenames.
  */
@@ -6089,7 +6491,7 @@ alias G_OPTION_REMAINING = OPTION_REMAINING;
 
 /**
  * Specifies one of the possible types of byte order
- * (currently unused). See #G_BYTE_ORDER.
+ * (currently unused). See %G_BYTE_ORDER.
  */
 enum PDP_ENDIAN = 3412;
 alias G_PDP_ENDIAN = PDP_ENDIAN;
@@ -6138,8 +6540,8 @@ alias G_PRIORITY_HIGH = PRIORITY_HIGH;
 /**
  * Use this for high priority idle functions.
  *
- * GTK+ uses #G_PRIORITY_HIGH_IDLE + 10 for resizing operations,
- * and #G_PRIORITY_HIGH_IDLE + 20 for redrawing operations. (This is
+ * GTK+ uses %G_PRIORITY_HIGH_IDLE + 10 for resizing operations,
+ * and %G_PRIORITY_HIGH_IDLE + 20 for redrawing operations. (This is
  * done to ensure that any pending resizes are processed before any
  * pending redraws, so that widgets are not redrawn twice unnecessarily.)
  */
@@ -6222,6 +6624,7 @@ alias GLIB_SYSDEF_MSG_PEEK = SYSDEF_MSG_PEEK;
  * - g_get_user_config_dir()
  * - g_get_system_data_dirs()
  * - g_get_user_data_dir()
+ * - g_get_user_state_dir()
  * - g_get_user_runtime_dir()
  *
  * The subdirectories may not be created by the test harness; as with normal
@@ -6271,13 +6674,15 @@ enum UNICHAR_MAX_DECOMPOSITION_LENGTH = 18;
 alias G_UNICHAR_MAX_DECOMPOSITION_LENGTH = UNICHAR_MAX_DECOMPOSITION_LENGTH;
 
 /**
- * Generic delimiters characters as defined in RFC 3986. Includes ":/?#[]@".
+ * Generic delimiters characters as defined in
+ * [RFC 3986](https://tools.ietf.org/html/rfc3986). Includes `:/?#[]@`.
  */
 enum URI_RESERVED_CHARS_GENERIC_DELIMITERS = ":/?#[]@";
 alias G_URI_RESERVED_CHARS_GENERIC_DELIMITERS = URI_RESERVED_CHARS_GENERIC_DELIMITERS;
 
 /**
- * Subcomponent delimiter characters as defined in RFC 3986. Includes "!$&'()*+,;=".
+ * Subcomponent delimiter characters as defined in
+ * [RFC 3986](https://tools.ietf.org/html/rfc3986). Includes `!$&'()*+,;=`.
  */
 enum URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS = "!$&'()*+,;=";
 alias G_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS = URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS;
@@ -6294,3 +6699,6 @@ alias G_VA_COPY_AS_ARRAY = VA_COPY_AS_ARRAY;
 
 enum WIN32_MSG_HANDLE = 19981206;
 alias G_WIN32_MSG_HANDLE = WIN32_MSG_HANDLE;
+
+enum macro__has_attribute___noreturn__ = 0;
+alias g_macro__has_attribute___noreturn__ = macro__has_attribute___noreturn__;

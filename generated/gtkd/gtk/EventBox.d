@@ -82,14 +82,14 @@ public class EventBox : Bin
 	 */
 	public this()
 	{
-		auto p = gtk_event_box_new();
+		auto __p = gtk_event_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEventBox*) p);
+		this(cast(GtkEventBox*) __p);
 	}
 
 	/**

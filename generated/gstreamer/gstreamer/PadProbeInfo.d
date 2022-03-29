@@ -72,14 +72,14 @@ public class PadProbeInfo
 	 */
 	public Buffer getBuffer()
 	{
-		auto p = gst_pad_probe_info_get_buffer(gstPadProbeInfo);
+		auto __p = gst_pad_probe_info_get_buffer(gstPadProbeInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) __p);
 	}
 
 	/**
@@ -87,14 +87,14 @@ public class PadProbeInfo
 	 */
 	public BufferList getBufferList()
 	{
-		auto p = gst_pad_probe_info_get_buffer_list(gstPadProbeInfo);
+		auto __p = gst_pad_probe_info_get_buffer_list(gstPadProbeInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) __p);
 	}
 
 	/**
@@ -102,14 +102,14 @@ public class PadProbeInfo
 	 */
 	public Event getEvent()
 	{
-		auto p = gst_pad_probe_info_get_event(gstPadProbeInfo);
+		auto __p = gst_pad_probe_info_get_event(gstPadProbeInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GstEvent*) __p);
 	}
 
 	/**
@@ -117,13 +117,13 @@ public class PadProbeInfo
 	 */
 	public Query getQuery()
 	{
-		auto p = gst_pad_probe_info_get_query(gstPadProbeInfo);
+		auto __p = gst_pad_probe_info_get_query(gstPadProbeInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Query)(cast(GstQuery*) p);
+		return ObjectG.getDObject!(Query)(cast(GstQuery*) __p);
 	}
 }

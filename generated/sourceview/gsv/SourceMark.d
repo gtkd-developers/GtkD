@@ -26,6 +26,7 @@ module gsv.SourceMark;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gsv.c.functions;
 public  import gsv.c.types;
@@ -77,11 +78,11 @@ public class SourceMark : TextMark
 	 * gtk_source_buffer_create_source_mark().
 	 *
 	 * Params:
-	 *     name = Name of the #GtkSourceMark, can be NULL when not using a name
+	 *     name = Name of the #GtkSourceMark or %NULL
 	 *     category = is used to classify marks according to common characteristics
 	 *         (e.g. all the marks representing a bookmark could belong to the "bookmark"
-	 *         category, or all the marks representing a compilation error could belong to
-	 *         "error" category).
+	 *         category, or all the marks representing a compilation error could belong
+	 *         to "error" category).
 	 *
 	 * Returns: a new #GtkSourceMark that can be added using gtk_text_buffer_add_mark().
 	 *
@@ -91,14 +92,14 @@ public class SourceMark : TextMark
 	 */
 	public this(string name, string category)
 	{
-		auto p = gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category));
+		auto __p = gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSourceMark*) p, true);
+		this(cast(GtkSourceMark*) __p, true);
 	}
 
 	/**
@@ -128,14 +129,14 @@ public class SourceMark : TextMark
 	 */
 	public SourceMark next(string category)
 	{
-		auto p = gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
+		auto __p = gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
+		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) __p);
 	}
 
 	/**
@@ -153,13 +154,13 @@ public class SourceMark : TextMark
 	 */
 	public SourceMark prev(string category)
 	{
-		auto p = gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
+		auto __p = gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
+		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) __p);
 	}
 }

@@ -25,6 +25,7 @@
 module peas.ExtensionBase;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import peas.PluginInfo;
 private import peas.c.functions;
@@ -87,18 +88,18 @@ public class ExtensionBase : ObjectG
 	/**
 	 * Get information relative to @extbase.
 	 *
-	 * Returns: the #PeasPluginInfo relative
+	 * Returns: the [struct@PluginInfo] relative
 	 *     to the #PeasExtensionBase.
 	 */
 	public PluginInfo getPluginInfo()
 	{
-		auto p = peas_extension_base_get_plugin_info(peasExtensionBase);
+		auto __p = peas_extension_base_get_plugin_info(peasExtensionBase);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
+		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) __p);
 	}
 }
