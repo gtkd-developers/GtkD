@@ -34,7 +34,7 @@ all: libs shared-libs test
 
 ifeq ("$(DC)","gdc")
     DCFLAGS?=-O2
-    LINKERFLAG?=-Xlinker
+    LINKERFLAG?=
     DDOCFLAGS=-fsyntax-only -c -fdoc -fdoc-file=$@
     DDOCINC=-fdoc-inc=
     output=-o $@
