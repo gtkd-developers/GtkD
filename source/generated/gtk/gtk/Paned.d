@@ -36,7 +36,7 @@ private import std.algorithm;
 
 
 /**
- * `GtkPaned` has two panes, arranged either horizontally or vertically.
+ * A widget with two panes, arranged either horizontally or vertically.
  * 
  * ![An example GtkPaned](panes.png)
  * 
@@ -55,13 +55,13 @@ private import std.algorithm;
  * each child inside a [class@Gtk.Frame] so that the gutter appears as a
  * ridge. No separator is drawn if one of the children is missing.
  * 
- * Each child has two options that can be set, @resize and @shrink. If
- * @resize is true, then when the `GtkPaned` is resized, that child will
- * expand or shrink along with the paned widget. If @shrink is true, then
+ * Each child has two options that can be set, "resize" and "shrink". If
+ * "resize" is true then, when the `GtkPaned` is resized, that child will
+ * expand or shrink along with the paned widget. If "shrink" is true, then
  * that child can be made smaller than its requisition by the user.
- * Setting @shrink to %FALSE allows the application to set a minimum size.
- * If @resize is false for both children, then this is treated as if
- * @resize is true for both children.
+ * Setting "shrink" to false allows the application to set a minimum size.
+ * If "resize" is false for both children, then this is treated as if
+ * "resize" is true for both children.
  * 
  * The application can set the position of the slider as if it were set
  * by the user, by calling [method@Gtk.Paned.set_position].
@@ -148,7 +148,7 @@ public class Paned : Widget, OrientableIF
 	 * Params:
 	 *     orientation = the paned’s orientation.
 	 *
-	 * Returns: a new `GtkPaned`.
+	 * Returns: the newly created paned widget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -167,8 +167,6 @@ public class Paned : Widget, OrientableIF
 	/**
 	 * Retrieves the end child of the given `GtkPaned`.
 	 *
-	 * See also: `GtkPaned`:end-child
-	 *
 	 * Returns: the end child widget
 	 */
 	public Widget getEndChild()
@@ -186,7 +184,7 @@ public class Paned : Widget, OrientableIF
 	/**
 	 * Obtains the position of the divider between the two panes.
 	 *
-	 * Returns: position of the divider
+	 * Returns: the position of the divider, in pixels
 	 */
 	public int getPosition()
 	{
@@ -194,9 +192,9 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Returns whether the end child can be resized.
+	 * Returns whether the [property@Gtk.Paned:end-child] can be resized.
 	 *
-	 * Returns: %TRUE if the end child is resizable
+	 * Returns: true if the end child is resizable
 	 */
 	public bool getResizeEndChild()
 	{
@@ -204,9 +202,9 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Returns whether the start child can be resized.
+	 * Returns whether the [property@Gtk.Paned:start-child] can be resized.
 	 *
-	 * Returns: %TRUE if the start child is resizable
+	 * Returns: true if the start child is resizable
 	 */
 	public bool getResizeStartChild()
 	{
@@ -214,9 +212,9 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Returns whether the end child can be shrunk.
+	 * Returns whether the [property@Gtk.Paned:end-child] can shrink.
 	 *
-	 * Returns: %TRUE if the end child is shrinkable
+	 * Returns: true if the end child is shrinkable
 	 */
 	public bool getShrinkEndChild()
 	{
@@ -224,9 +222,9 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Returns whether the start child can be shrunk.
+	 * Returns whether the [property@Gtk.Paned:start-child] can shrink.
 	 *
-	 * Returns: %TRUE if the start child is shrinkable
+	 * Returns: true if the start child is shrinkable
 	 */
 	public bool getShrinkStartChild()
 	{
@@ -235,8 +233,6 @@ public class Paned : Widget, OrientableIF
 
 	/**
 	 * Retrieves the start child of the given `GtkPaned`.
-	 *
-	 * See also: `GtkPaned`:start-child
 	 *
 	 * Returns: the start child widget
 	 */
@@ -265,6 +261,8 @@ public class Paned : Widget, OrientableIF
 	/**
 	 * Sets the end child of @paned to @child.
 	 *
+	 * If @child is `NULL`, the existing child will be removed.
+	 *
 	 * Params:
 	 *     child = the widget to add
 	 */
@@ -286,10 +284,10 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the `GtkPaned`:resize-end-child property
+	 * Sets whether the [property@Gtk.Paned:end-child] can be resized.
 	 *
 	 * Params:
-	 *     resize = %TRUE to let the end child be resized
+	 *     resize = true to let the end child be resized
 	 */
 	public void setResizeEndChild(bool resize)
 	{
@@ -297,10 +295,10 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the `GtkPaned`:resize-start-child property
+	 * Sets whether the [property@Gtk.Paned:start-child] can be resized.
 	 *
 	 * Params:
-	 *     resize = %TRUE to let the start child be resized
+	 *     resize = true to let the start child be resized
 	 */
 	public void setResizeStartChild(bool resize)
 	{
@@ -308,10 +306,10 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the `GtkPaned`:shrink-end-child property
+	 * Sets whether the [property@Gtk.Paned:end-child] can shrink.
 	 *
 	 * Params:
-	 *     resize = %TRUE to let the end child be shrunk
+	 *     resize = true to let the end child be shrunk
 	 */
 	public void setShrinkEndChild(bool resize)
 	{
@@ -319,10 +317,10 @@ public class Paned : Widget, OrientableIF
 	}
 
 	/**
-	 * Sets the `GtkPaned`:shrink-start-child property
+	 * Sets whether the [property@Gtk.Paned:start-child] can shrink.
 	 *
 	 * Params:
-	 *     resize = %TRUE to let the start child be shrunk
+	 *     resize = true to let the start child be shrunk
 	 */
 	public void setShrinkStartChild(bool resize)
 	{
@@ -331,6 +329,8 @@ public class Paned : Widget, OrientableIF
 
 	/**
 	 * Sets the start child of @paned to @child.
+	 *
+	 * If @child is `NULL`, the existing child will be removed.
 	 *
 	 * Params:
 	 *     child = the widget to add
@@ -357,7 +357,8 @@ public class Paned : Widget, OrientableIF
 	 *
 	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is Return or Space.
+	 * The default binding for this signal is <kbd>Return</kbd> or
+	 * <kbd>Space</kbd>.
 	 */
 	gulong addOnAcceptPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -373,7 +374,7 @@ public class Paned : Widget, OrientableIF
 	 *
 	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is Escape.
+	 * The default binding for this signal is <kbd>Escape</kbd>.
 	 */
 	gulong addOnCancelPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -385,7 +386,7 @@ public class Paned : Widget, OrientableIF
 	 *
 	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding is F6.
+	 * The default binding is <kbd>F6</kbd>.
 	 *
 	 * Params:
 	 *     reversed = whether cycling backward or forward
@@ -401,7 +402,7 @@ public class Paned : Widget, OrientableIF
 	 *
 	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding for this signal is F8.
+	 * The default binding for this signal is <kbd>F8</kbd>.
 	 *
 	 * Params:
 	 *     reversed = whether cycling backward or forward
@@ -430,7 +431,7 @@ public class Paned : Widget, OrientableIF
 	 *
 	 * This is a [keybinding signal](class.SignalAction.html).
 	 *
-	 * The default binding is Tab.
+	 * The default binding is <kbd>Tab</kbd>.
 	 */
 	gulong addOnToggleHandleFocus(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

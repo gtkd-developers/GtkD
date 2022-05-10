@@ -693,7 +693,7 @@ public struct Type
 	 *     plugin = #GTypePlugin structure to retrieve the #GTypeInfo from
 	 *     flags = bitwise combination of #GTypeFlags values
 	 *
-	 * Returns: the new type identifier or #G_TYPE_INVALID if registration failed
+	 * Returns: the new type identifier or %G_TYPE_INVALID if registration failed
 	 */
 	public static GType registerDynamic(GType parentType, string typeName, TypePluginIF plugin, GTypeFlags flags)
 	{

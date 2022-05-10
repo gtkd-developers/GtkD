@@ -905,6 +905,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Emitted when a signal from the remote object and interface that @proxy is for, has been received.
 	 *
+	 * Since 2.72 this signal supports detailed connections. You can connect to
+	 * the detailed signal `g-signal::x` in order to receive callbacks only when
+	 * signal `x` is received from the remote object.
+	 *
 	 * Params:
 	 *     senderName = The sender of the signal or %NULL if the connection is not a bus connection.
 	 *     signalName = The name of the signal.

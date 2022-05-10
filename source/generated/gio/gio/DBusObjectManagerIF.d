@@ -75,7 +75,7 @@ public interface DBusObjectManagerIF{
 	public DBusInterfaceIF getInterface(string objectPath, string interfaceName);
 
 	/**
-	 * Gets the #GDBusObjectProxy at @object_path, if any.
+	 * Gets the #GDBusObject at @object_path, if any.
 	 *
 	 * Params:
 	 *     objectPath = Object path to look up.

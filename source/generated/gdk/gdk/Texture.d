@@ -49,14 +49,14 @@ private import gobject.ObjectG;
  * multiple frames, and will be used for a long time.
  * 
  * There are various ways to create `GdkTexture` objects from a
- * `GdkPixbuf`, or a Cairo surface, or other pixel data.
+ * [class@GdkPixbuf.Pixbuf], or a Cairo surface, or other pixel data.
  * 
  * The ownership of the pixel data is transferred to the `GdkTexture`
  * instance; you can only make a copy of it, via [method@Gdk.Texture.download].
  * 
  * `GdkTexture` is an immutable object: That means you cannot change
  * anything about it other than increasing the reference count via
- * g_object_ref().
+ * [method@GObject.Object.ref], and consequently, it is a thread-safe object.
  */
 public class Texture : ObjectG, PaintableIF, IconIF, LoadableIconIF
 {
@@ -151,7 +151,7 @@ public class Texture : ObjectG, PaintableIF, IconIF, LoadableIconIF
 	 * Creates a new texture object representing the `GdkPixbuf`.
 	 *
 	 * This function is threadsafe, so that you can e.g. use GTask
-	 * and g_task_run_in_thread() to avoid blocking the main thread
+	 * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
 	 * while loading a big image.
 	 *
 	 * Params:
@@ -182,7 +182,7 @@ public class Texture : ObjectG, PaintableIF, IconIF, LoadableIconIF
 	 * If %NULL is returned, then @error will be set.
 	 *
 	 * This function is threadsafe, so that you can e.g. use GTask
-	 * and g_task_run_in_thread() to avoid blocking the main thread
+	 * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
 	 * while loading a big image.
 	 *
 	 * Params:
@@ -223,7 +223,7 @@ public class Texture : ObjectG, PaintableIF, IconIF, LoadableIconIF
 	 * If %NULL is returned, then @error will be set.
 	 *
 	 * This function is threadsafe, so that you can e.g. use GTask
-	 * and g_task_run_in_thread() to avoid blocking the main thread
+	 * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
 	 * while loading a big image.
 	 *
 	 * Params:
@@ -309,7 +309,7 @@ public class Texture : ObjectG, PaintableIF, IconIF, LoadableIconIF
 	 *
 	 * This is a utility function intended for debugging and testing.
 	 * If you want more control over formats, proper error handling or
-	 * want to store to a `GFile` or other location, you might want to
+	 * want to store to a [iface@Gio.File] or other location, you might want to
 	 * use [method@Gdk.Texture.save_to_png_bytes] or look into the
 	 * gdk-pixbuf library.
 	 *

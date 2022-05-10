@@ -79,7 +79,7 @@ public class MatchInfo
 	 * match done with @string against @regex and have the same syntax used by
 	 * g_regex_replace().
 	 *
-	 * The @string_to_expand must be UTF-8 encoded even if #G_REGEX_RAW was
+	 * The @string_to_expand must be UTF-8 encoded even if %G_REGEX_RAW was
 	 * passed to g_regex_new().
 	 *
 	 * The backreferences are extracted from the string passed to the match
@@ -347,19 +347,19 @@ public class MatchInfo
 	 * able to raise an error as soon as a mistake is made.
 	 *
 	 * GRegex supports the concept of partial matching by means of the
-	 * #G_REGEX_MATCH_PARTIAL_SOFT and #G_REGEX_MATCH_PARTIAL_HARD flags.
+	 * %G_REGEX_MATCH_PARTIAL_SOFT and %G_REGEX_MATCH_PARTIAL_HARD flags.
 	 * When they are used, the return code for
 	 * g_regex_match() or g_regex_match_full() is, as usual, %TRUE
 	 * for a complete match, %FALSE otherwise. But, when these functions
 	 * return %FALSE, you can check if the match was partial calling
 	 * g_match_info_is_partial_match().
 	 *
-	 * The difference between #G_REGEX_MATCH_PARTIAL_SOFT and
-	 * #G_REGEX_MATCH_PARTIAL_HARD is that when a partial match is encountered
-	 * with #G_REGEX_MATCH_PARTIAL_SOFT, matching continues to search for a
-	 * possible complete match, while with #G_REGEX_MATCH_PARTIAL_HARD matching
+	 * The difference between %G_REGEX_MATCH_PARTIAL_SOFT and
+	 * %G_REGEX_MATCH_PARTIAL_HARD is that when a partial match is encountered
+	 * with %G_REGEX_MATCH_PARTIAL_SOFT, matching continues to search for a
+	 * possible complete match, while with %G_REGEX_MATCH_PARTIAL_HARD matching
 	 * stops at the partial match.
-	 * When both #G_REGEX_MATCH_PARTIAL_SOFT and #G_REGEX_MATCH_PARTIAL_HARD
+	 * When both %G_REGEX_MATCH_PARTIAL_SOFT and %G_REGEX_MATCH_PARTIAL_HARD
 	 * are set, the latter takes precedence.
 	 *
 	 * There were formerly some restrictions on the pattern for partial matching.

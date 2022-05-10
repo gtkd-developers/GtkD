@@ -211,7 +211,7 @@ public struct UnixUtils
 	 *
 	 * Params:
 	 *     priority = the priority of the signal source. Typically this will be in
-	 *         the range between #G_PRIORITY_DEFAULT and #G_PRIORITY_HIGH.
+	 *         the range between %G_PRIORITY_DEFAULT and %G_PRIORITY_HIGH.
 	 *     signum = Signal number
 	 *     handler = Callback
 	 *     userData = Data for @handler

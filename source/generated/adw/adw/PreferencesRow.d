@@ -124,6 +124,18 @@ public class PreferencesRow : ListBoxRow
 	}
 
 	/**
+	 * Gets whether the user can copy the title from the label
+	 *
+	 * Returns: whether the user can copy the title from the label
+	 *
+	 * Since: 1.1
+	 */
+	public bool getTitleSelectable()
+	{
+		return adw_preferences_row_get_title_selectable(adwPreferencesRow) != 0;
+	}
+
+	/**
 	 * Gets whether an embedded underline in the title indicates a mnemonic.
 	 *
 	 * Returns: whether an embedded underline in the title indicates a mnemonic
@@ -146,6 +158,19 @@ public class PreferencesRow : ListBoxRow
 	public void setTitle(string title)
 	{
 		adw_preferences_row_set_title(adwPreferencesRow, Str.toStringz(title));
+	}
+
+	/**
+	 * Sets whether the user can copy the title from the label
+	 *
+	 * Params:
+	 *     titleSelectable = `TRUE` if the user can copy the title from the label
+	 *
+	 * Since: 1.1
+	 */
+	public void setTitleSelectable(bool titleSelectable)
+	{
+		adw_preferences_row_set_title_selectable(adwPreferencesRow, titleSelectable);
 	}
 
 	/**

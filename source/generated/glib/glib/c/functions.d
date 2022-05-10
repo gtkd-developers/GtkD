@@ -348,6 +348,7 @@ shared static this()
 	Linker.link(g_hash_table_lookup_extended, "g_hash_table_lookup_extended", LIBRARY_GLIB);
 	Linker.link(g_hash_table_new, "g_hash_table_new", LIBRARY_GLIB);
 	Linker.link(g_hash_table_new_full, "g_hash_table_new_full", LIBRARY_GLIB);
+	Linker.link(g_hash_table_new_similar, "g_hash_table_new_similar", LIBRARY_GLIB);
 	Linker.link(g_hash_table_ref, "g_hash_table_ref", LIBRARY_GLIB);
 	Linker.link(g_hash_table_remove, "g_hash_table_remove", LIBRARY_GLIB);
 	Linker.link(g_hash_table_remove_all, "g_hash_table_remove_all", LIBRARY_GLIB);
@@ -558,6 +559,7 @@ shared static this()
 	// glib.MainContext
 
 	Linker.link(g_main_context_new, "g_main_context_new", LIBRARY_GLIB);
+	Linker.link(g_main_context_new_with_flags, "g_main_context_new_with_flags", LIBRARY_GLIB);
 	Linker.link(g_main_context_acquire, "g_main_context_acquire", LIBRARY_GLIB);
 	Linker.link(g_main_context_add_poll, "g_main_context_add_poll", LIBRARY_GLIB);
 	Linker.link(g_main_context_check, "g_main_context_check", LIBRARY_GLIB);
@@ -2201,6 +2203,7 @@ __gshared extern(C)
 	int function(GHashTable* hashTable, void* lookupKey, void** origKey, void** value) c_g_hash_table_lookup_extended;
 	GHashTable* function(GHashFunc hashFunc, GEqualFunc keyEqualFunc) c_g_hash_table_new;
 	GHashTable* function(GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc) c_g_hash_table_new_full;
+	GHashTable* function(GHashTable* otherHashTable) c_g_hash_table_new_similar;
 	GHashTable* function(GHashTable* hashTable) c_g_hash_table_ref;
 	int function(GHashTable* hashTable, void* key) c_g_hash_table_remove;
 	void function(GHashTable* hashTable) c_g_hash_table_remove_all;
@@ -2411,6 +2414,7 @@ __gshared extern(C)
 	// glib.MainContext
 
 	GMainContext* function() c_g_main_context_new;
+	GMainContext* function(GMainContextFlags flags) c_g_main_context_new_with_flags;
 	int function(GMainContext* context) c_g_main_context_acquire;
 	void function(GMainContext* context, GPollFD* fd, int priority) c_g_main_context_add_poll;
 	int function(GMainContext* context, int maxPriority, GPollFD* fds, int nFds) c_g_main_context_check;
@@ -4046,6 +4050,7 @@ alias c_g_hash_table_lookup g_hash_table_lookup;
 alias c_g_hash_table_lookup_extended g_hash_table_lookup_extended;
 alias c_g_hash_table_new g_hash_table_new;
 alias c_g_hash_table_new_full g_hash_table_new_full;
+alias c_g_hash_table_new_similar g_hash_table_new_similar;
 alias c_g_hash_table_ref g_hash_table_ref;
 alias c_g_hash_table_remove g_hash_table_remove;
 alias c_g_hash_table_remove_all g_hash_table_remove_all;
@@ -4256,6 +4261,7 @@ alias c_g_clear_list g_clear_list;
 // glib.MainContext
 
 alias c_g_main_context_new g_main_context_new;
+alias c_g_main_context_new_with_flags g_main_context_new_with_flags;
 alias c_g_main_context_acquire g_main_context_acquire;
 alias c_g_main_context_add_poll g_main_context_add_poll;
 alias c_g_main_context_check g_main_context_check;

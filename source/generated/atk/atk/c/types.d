@@ -1152,9 +1152,13 @@ public enum AtkStateType
 	 */
 	READ_ONLY = 42,
 	/**
+	 * Indicates this object is collapsed. @Since: ATK-2.38
+	 */
+	COLLAPSED = 43,
+	/**
 	 * Not a valid state, used for finding end of enumeration
 	 */
-	LAST_DEFINED = 43,
+	LAST_DEFINED = 44,
 }
 alias AtkStateType StateType;
 
@@ -3166,7 +3170,7 @@ public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) At
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 23610;
+enum BINARY_AGE = 23810;
 alias ATK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -3198,7 +3202,7 @@ alias ATK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 36;
+enum MINOR_VERSION = 38;
 alias ATK_MINOR_VERSION = MINOR_VERSION;
 
 /**

@@ -523,8 +523,15 @@ public class IconView : Widget, CellLayoutIF, ScrollableIF
 	 * want to convert the returned list into a list of `GtkTreeRowReferences`.
 	 * To do this, you can use gtk_tree_row_reference_new().
 	 *
-	 * To free the return value, use:
+	 * To free the return value, use `g_list_free_full`:
 	 * |[<!-- language="C" -->
+	 * GtkWidget *icon_view = gtk_icon_view_new ();
+	 * // Use icon_view
+	 *
+	 * GList *list = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (icon_view));
+	 *
+	 * // use list
+	 *
 	 * g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 	 * ]|
 	 *

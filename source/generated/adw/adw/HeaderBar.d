@@ -50,7 +50,7 @@ private import gtk.Widget;
  * `AdwHeaderBar` is similar to [class@Gtk.HeaderBar], but provides additional
  * features compared to it. Refer to `GtkHeaderBar` for details.
  * 
- * [property.HeaderBar:centering-policy] allows to enforce strict centering of
+ * [property@HeaderBar:centering-policy] allows to enforce strict centering of
  * the title widget, this is useful for [class@ViewSwitcherTitle].
  * 
  * [property@HeaderBar:show-start-title-buttons] and
@@ -309,7 +309,7 @@ public class HeaderBar : Widget
 	 * Sets the decoration layout for @self.
 	 *
 	 * Params:
-	 *     layout = a decoration layout, or `NULL` to unset the layout
+	 *     layout = a decoration layout
 	 *
 	 * Since: 1.0
 	 */

@@ -60,7 +60,7 @@ public struct CharacterSet
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input. If the error
-	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *         %G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 *         stored will be the byte offset after the last valid
 	 *         input sequence.
 	 *
@@ -177,7 +177,7 @@ public struct CharacterSet
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input. If the error
-	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *         %G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 *         stored will be the byte offset after the last valid
 	 *         input sequence.
 	 *

@@ -489,9 +489,14 @@ public enum GdkEventType
 	 */
 	PAD_GROUP_MODE = 27,
 	/**
+	 * A touchpad hold gesture event, the current state
+	 * is determined by its phase field. Since: 4.6
+	 */
+	TOUCHPAD_HOLD = 28,
+	/**
 	 * marks the end of the GdkEventType enumeration.
 	 */
-	EVENT_LAST = 28,
+	EVENT_LAST = 29,
 }
 alias GdkEventType EventType;
 

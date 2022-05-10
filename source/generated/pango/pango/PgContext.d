@@ -632,9 +632,9 @@ public class PgContext : ObjectG
 	 * or Unicode paragraph separator character.
 	 *
 	 * The index of the run of delimiters is returned in
-	 * @paragraph_delimiter_index. The index of the start
-	 * of the paragrap (index after all delimiters) is stored
-	 * in @next_paragraph_start.
+	 * @paragraph_delimiter_index. The index of the start of the
+	 * next paragraph (index after all delimiters) is stored n
+	 * @next_paragraph_start.
 	 *
 	 * If no delimiters are found, both @paragraph_delimiter_index
 	 * and @next_paragraph_start are filled with the length of @text

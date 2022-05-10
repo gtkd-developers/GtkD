@@ -213,7 +213,7 @@ public struct Str
 	 * the string back using g_ascii_strtod() gives the same machine-number
 	 * (on machines with IEEE compatible 64bit doubles). It is
 	 * guaranteed that the size of the resulting string will never
-	 * be larger than @G_ASCII_DTOSTR_BUF_SIZE bytes, including the terminating
+	 * be larger than %G_ASCII_DTOSTR_BUF_SIZE bytes, including the terminating
 	 * nul character, which is always added.
 	 *
 	 * Params:
@@ -237,6 +237,9 @@ public struct Str
 	 * a printf()-style format string. Allowed conversion
 	 * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
 	 *
+	 * The @format must just be a single format specifier
+	 * starting with `%`, expecting a #gdouble argument.
+	 *
 	 * The returned buffer is guaranteed to be nul-terminated.
 	 *
 	 * If you just want to want to serialize the value into a
@@ -246,7 +249,7 @@ public struct Str
 	 *     buffer = A buffer to place the resulting string in
 	 *     bufLen = The length of the buffer.
 	 *     format = The printf()-style format to use for the
-	 *         code to use for converting.
+	 *         code to use for converting
 	 *     d = The #gdouble to convert
 	 *
 	 * Returns: The pointer to the buffer with the converted string.
@@ -310,7 +313,9 @@ public struct Str
 
 	/**
 	 * Compare @s1 and @s2, ignoring the case of ASCII characters and any
-	 * characters after the first @n in each string.
+	 * characters after the first @n in each string. If either string is
+	 * less than @n bytes long, comparison will stop at the first nul byte
+	 * encountered.
 	 *
 	 * Unlike the BSD strcasecmp() function, this only recognizes standard
 	 * ASCII letters and ignores the locale, treating all non-ASCII
@@ -902,7 +907,7 @@ public struct Str
 	 * Params:
 	 *     string_ = the string to convert
 	 *     delimiters = a string containing the current delimiters,
-	 *         or %NULL to use the standard delimiters defined in #G_STR_DELIMITERS
+	 *         or %NULL to use the standard delimiters defined in %G_STR_DELIMITERS
 	 *     newDelimiter = the new delimiter character
 	 *
 	 * Returns: the modified @string
@@ -1505,12 +1510,13 @@ public struct Str
 	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
 	 * Params:
-	 *     string_ = the return location for the newly-allocated string.
+	 *     string_ = the return location for the newly-allocated string,
+	 *         which will be %NULL if (and only if) this function fails
 	 *     format = a standard printf() format string, but notice
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
-	 * Returns: the number of bytes printed.
+	 * Returns: the number of bytes printed, or `-1` on failure
 	 *
 	 * Since: 2.4
 	 */

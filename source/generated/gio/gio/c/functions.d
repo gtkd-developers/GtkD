@@ -667,6 +667,18 @@ shared static this()
 	Linker.link(g_datagram_based_receive_messages, "g_datagram_based_receive_messages", LIBRARY_GIO);
 	Linker.link(g_datagram_based_send_messages, "g_datagram_based_send_messages", LIBRARY_GIO);
 
+	// gio.DebugController
+
+	Linker.link(g_debug_controller_get_type, "g_debug_controller_get_type", LIBRARY_GIO);
+	Linker.link(g_debug_controller_get_debug_enabled, "g_debug_controller_get_debug_enabled", LIBRARY_GIO);
+	Linker.link(g_debug_controller_set_debug_enabled, "g_debug_controller_set_debug_enabled", LIBRARY_GIO);
+
+	// gio.DebugControllerDBus
+
+	Linker.link(g_debug_controller_dbus_get_type, "g_debug_controller_dbus_get_type", LIBRARY_GIO);
+	Linker.link(g_debug_controller_dbus_new, "g_debug_controller_dbus_new", LIBRARY_GIO);
+	Linker.link(g_debug_controller_dbus_stop, "g_debug_controller_dbus_stop", LIBRARY_GIO);
+
 	// gio.DesktopAppInfo
 
 	Linker.link(g_desktop_app_info_get_type, "g_desktop_app_info_get_type", LIBRARY_GIO);
@@ -872,6 +884,8 @@ shared static this()
 	Linker.link(g_file_mount_mountable, "g_file_mount_mountable", LIBRARY_GIO);
 	Linker.link(g_file_mount_mountable_finish, "g_file_mount_mountable_finish", LIBRARY_GIO);
 	Linker.link(g_file_move, "g_file_move", LIBRARY_GIO);
+	Linker.link(g_file_move_async, "g_file_move_async", LIBRARY_GIO);
+	Linker.link(g_file_move_finish, "g_file_move_finish", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite, "g_file_open_readwrite", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite_async, "g_file_open_readwrite_async", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite_finish, "g_file_open_readwrite_finish", LIBRARY_GIO);
@@ -2155,9 +2169,11 @@ shared static this()
 
 	Linker.link(g_tls_certificate_get_type, "g_tls_certificate_get_type", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_file, "g_tls_certificate_new_from_file", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_file_with_password, "g_tls_certificate_new_from_file_with_password", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_files, "g_tls_certificate_new_from_files", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_pem, "g_tls_certificate_new_from_pem", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_new_from_pkcs11_uris, "g_tls_certificate_new_from_pkcs11_uris", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_pkcs12, "g_tls_certificate_new_from_pkcs12", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_list_new_from_file, "g_tls_certificate_list_new_from_file", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_get_dns_names, "g_tls_certificate_get_dns_names", LIBRARY_GIO);
 	Linker.link(g_tls_certificate_get_ip_addresses, "g_tls_certificate_get_ip_addresses", LIBRARY_GIO);
@@ -3151,6 +3167,18 @@ __gshared extern(C)
 	int function(GDatagramBased* datagramBased, GInputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) c_g_datagram_based_receive_messages;
 	int function(GDatagramBased* datagramBased, GOutputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) c_g_datagram_based_send_messages;
 
+	// gio.DebugController
+
+	GType function() c_g_debug_controller_get_type;
+	int function(GDebugController* self) c_g_debug_controller_get_debug_enabled;
+	void function(GDebugController* self, int debugEnabled) c_g_debug_controller_set_debug_enabled;
+
+	// gio.DebugControllerDBus
+
+	GType function() c_g_debug_controller_dbus_get_type;
+	GDebugControllerDBus* function(GDBusConnection* connection, GCancellable* cancellable, GError** err) c_g_debug_controller_dbus_new;
+	void function(GDebugControllerDBus* self) c_g_debug_controller_dbus_stop;
+
 	// gio.DesktopAppInfo
 
 	GType function() c_g_desktop_app_info_get_type;
@@ -3356,6 +3384,8 @@ __gshared extern(C)
 	void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_mount_mountable;
 	GFile* function(GFile* file, GAsyncResult* result, GError** err) c_g_file_mount_mountable_finish;
 	int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) c_g_file_move;
+	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) c_g_file_move_async;
+	int function(GFile* file, GAsyncResult* result, GError** err) c_g_file_move_finish;
 	GFileIOStream* function(GFile* file, GCancellable* cancellable, GError** err) c_g_file_open_readwrite;
 	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_open_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) c_g_file_open_readwrite_finish;
@@ -4639,9 +4669,11 @@ __gshared extern(C)
 
 	GType function() c_g_tls_certificate_get_type;
 	GTlsCertificate* function(char* file, GError** err) c_g_tls_certificate_new_from_file;
+	GTlsCertificate* function(char* file, const(char)* password, GError** err) c_g_tls_certificate_new_from_file_with_password;
 	GTlsCertificate* function(char* certFile, char* keyFile, GError** err) c_g_tls_certificate_new_from_files;
 	GTlsCertificate* function(const(char)* data, ptrdiff_t length, GError** err) c_g_tls_certificate_new_from_pem;
 	GTlsCertificate* function(const(char)* pkcs11Uri, const(char)* privateKeyPkcs11Uri, GError** err) c_g_tls_certificate_new_from_pkcs11_uris;
+	GTlsCertificate* function(ubyte* data, size_t length, const(char)* password, GError** err) c_g_tls_certificate_new_from_pkcs12;
 	GList* function(char* file, GError** err) c_g_tls_certificate_list_new_from_file;
 	GPtrArray* function(GTlsCertificate* cert) c_g_tls_certificate_get_dns_names;
 	GPtrArray* function(GTlsCertificate* cert) c_g_tls_certificate_get_ip_addresses;
@@ -4957,7 +4989,7 @@ __gshared extern(C)
 	GIcon* function(const(char)* type) c_g_content_type_get_icon;
 	char* function(const(char)* type) c_g_content_type_get_mime_type;
 	GIcon* function(const(char)* type) c_g_content_type_get_symbolic_icon;
-	char* function(const(char)* filename, char* data, size_t dataSize, int* resultUncertain) c_g_content_type_guess;
+	char* function(char* filename, char* data, size_t dataSize, int* resultUncertain) c_g_content_type_guess;
 	char** function(GFile* root) c_g_content_type_guess_for_tree;
 	int function(const(char)* type, const(char)* supertype) c_g_content_type_is_a;
 	int function(const(char)* type) c_g_content_type_is_unknown;
@@ -5633,6 +5665,18 @@ alias c_g_datagram_based_create_source g_datagram_based_create_source;
 alias c_g_datagram_based_receive_messages g_datagram_based_receive_messages;
 alias c_g_datagram_based_send_messages g_datagram_based_send_messages;
 
+// gio.DebugController
+
+alias c_g_debug_controller_get_type g_debug_controller_get_type;
+alias c_g_debug_controller_get_debug_enabled g_debug_controller_get_debug_enabled;
+alias c_g_debug_controller_set_debug_enabled g_debug_controller_set_debug_enabled;
+
+// gio.DebugControllerDBus
+
+alias c_g_debug_controller_dbus_get_type g_debug_controller_dbus_get_type;
+alias c_g_debug_controller_dbus_new g_debug_controller_dbus_new;
+alias c_g_debug_controller_dbus_stop g_debug_controller_dbus_stop;
+
 // gio.DesktopAppInfo
 
 alias c_g_desktop_app_info_get_type g_desktop_app_info_get_type;
@@ -5838,6 +5882,8 @@ alias c_g_file_mount_enclosing_volume_finish g_file_mount_enclosing_volume_finis
 alias c_g_file_mount_mountable g_file_mount_mountable;
 alias c_g_file_mount_mountable_finish g_file_mount_mountable_finish;
 alias c_g_file_move g_file_move;
+alias c_g_file_move_async g_file_move_async;
+alias c_g_file_move_finish g_file_move_finish;
 alias c_g_file_open_readwrite g_file_open_readwrite;
 alias c_g_file_open_readwrite_async g_file_open_readwrite_async;
 alias c_g_file_open_readwrite_finish g_file_open_readwrite_finish;
@@ -7121,9 +7167,11 @@ alias c_g_tls_backend_supports_tls g_tls_backend_supports_tls;
 
 alias c_g_tls_certificate_get_type g_tls_certificate_get_type;
 alias c_g_tls_certificate_new_from_file g_tls_certificate_new_from_file;
+alias c_g_tls_certificate_new_from_file_with_password g_tls_certificate_new_from_file_with_password;
 alias c_g_tls_certificate_new_from_files g_tls_certificate_new_from_files;
 alias c_g_tls_certificate_new_from_pem g_tls_certificate_new_from_pem;
 alias c_g_tls_certificate_new_from_pkcs11_uris g_tls_certificate_new_from_pkcs11_uris;
+alias c_g_tls_certificate_new_from_pkcs12 g_tls_certificate_new_from_pkcs12;
 alias c_g_tls_certificate_list_new_from_file g_tls_certificate_list_new_from_file;
 alias c_g_tls_certificate_get_dns_names g_tls_certificate_get_dns_names;
 alias c_g_tls_certificate_get_ip_addresses g_tls_certificate_get_ip_addresses;

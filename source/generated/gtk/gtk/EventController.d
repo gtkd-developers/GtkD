@@ -152,6 +152,8 @@ public class EventController : ObjectG
 
 	/**
 	 * Gets the name of @controller.
+	 *
+	 * Returns: The controller name
 	 */
 	public string getName()
 	{

@@ -380,10 +380,10 @@ public class PgFont : ObjectG
 	/**
 	 * Returns whether the font provides a glyph for this character.
 	 *
-	 * Returns %TRUE if @font can render @wc
-	 *
 	 * Params:
 	 *     wc = a Unicode character
+	 *
+	 * Returns: `TRUE` if @font can render @wc
 	 *
 	 * Since: 1.44
 	 */

@@ -39,7 +39,7 @@ private import linker.Loader;
  * Defines a part of a CSS document.
  * 
  * Because sections are nested into one another, you can use
- * gtk_css_section_get_parent() to get the containing region.
+ * [method@CssSection.get_parent] to get the containing region.
  */
 public class CssSection
 {

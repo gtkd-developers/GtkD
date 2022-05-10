@@ -63,6 +63,10 @@ private import gobject.Value;
  * use g_task_propagate_pointer() or the like to extract the
  * return value.
  * 
+ * Using #GTask requires the thread-default #GMainContext from when the
+ * #GTask was constructed to be running at least until the task has completed
+ * and its data has been freed.
+ * 
  * Here is an example for using GTask as a GAsyncResult:
  * |[<!-- language="C" -->
  * typedef struct {
@@ -1075,7 +1079,7 @@ public class Task : ObjectG, AsyncResultIF
 	/**
 	 * Sets @task's result to @result (by copying it) and completes the task.
 	 *
-	 * If @result is %NULL then a #GValue of type #G_TYPE_POINTER
+	 * If @result is %NULL then a #GValue of type %G_TYPE_POINTER
 	 * with a value of %NULL will be used for the result.
 	 *
 	 * This is a very generic low-level method intended primarily for use
@@ -1181,7 +1185,8 @@ public class Task : ObjectG, AsyncResultIF
 	 * name of the #GSource used for idle completion of the task.
 	 *
 	 * This function may only be called before the @task is first used in a thread
-	 * other than the one it was constructed in.
+	 * other than the one it was constructed in. It is called automatically by
+	 * g_task_set_source_tag() if not called already.
 	 *
 	 * Params:
 	 *     name = a human readable name for the task, or %NULL to unset it
@@ -1258,12 +1263,18 @@ public class Task : ObjectG, AsyncResultIF
 	}
 
 	/**
-	 * Sets @task's source tag. You can use this to tag a task return
+	 * Sets @task's source tag.
+	 *
+	 * You can use this to tag a task return
 	 * value with a particular pointer (usually a pointer to the function
 	 * doing the tagging) and then later check it using
 	 * g_task_get_source_tag() (or g_async_result_is_tagged()) in the
 	 * task's "finish" function, to figure out if the response came from a
 	 * particular place.
+	 *
+	 * A macro wrapper around this function will automatically set the
+	 * task’s name to the string form of @source_tag if it’s not already
+	 * set, for convenience.
 	 *
 	 * Params:
 	 *     sourceTag = an opaque pointer indicating the source of this task

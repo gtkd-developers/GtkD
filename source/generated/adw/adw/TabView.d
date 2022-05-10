@@ -65,18 +65,23 @@ private import std.algorithm;
  * 
  * `AdwTabView` adds the following shortcuts in the managed scope:
  * 
- * * Ctrl+Page Up - switch to the previous page
- * * Ctrl+Page Down - switch to the next page
- * * Ctrl+Home - switch to the first page
- * * Ctrl+End - switch to the last page
- * * Ctrl+Shift+Page Up - move the current page backward
- * * Ctrl+Shift+Page Down - move the current page forward
- * * Ctrl+Shift+Home - move the current page at the start
- * * Ctrl+Shift+End - move the current page at the end
- * * Ctrl+Tab - switch to the next page, with looping
- * * Ctrl+Shift+Tab - switch to the previous page, with looping
- * * Alt+1-9 - switch to pages 1-9
- * * Alt+0 - switch to page 10
+ * * <kbd>Ctrl</kbd>+<kbd>Page Up</kbd> - switch to the previous page
+ * * <kbd>Ctrl</kbd>+<kbd>Page Down</kbd> - switch to the next page
+ * * <kbd>Ctrl</kbd>+<kbd>Home</kbd> - switch to the first page
+ * * <kbd>Ctrl</kbd>+<kbd>End</kbd> - switch to the last page
+ * * <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Page Up</kbd> - move the current page
+ * backward
+ * * <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Page Down</kbd> - move the current
+ * page forward
+ * * <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Home</kbd> - move the current page at
+ * the start
+ * * <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>End</kbd> - move the current page at
+ * the end
+ * * <kbd>Ctrl</kbd>+<kbd>Tab</kbd> - switch to the next page, with looping
+ * * <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> - switch to the previous
+ * page, with looping
+ * * <kbd>Alt</kbd>+<kbd>1</kbd>⋯<kbd>9</kbd> - switch to pages 1-9
+ * * <kbd>Alt</kbd>+<kbd>0</kbd> - switch to page 10
  * 
  * ## CSS nodes
  * 

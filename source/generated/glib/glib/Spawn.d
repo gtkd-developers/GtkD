@@ -568,7 +568,7 @@ public class Spawn
 	 * Params:
 	 *     workingDirectory = child's current working
 	 *         directory, or %NULL to inherit parent's
-	 *     argv = child's argument vector
+	 *     argv = child's argument vector, which must be non-empty and %NULL-terminated
 	 *     envp = child's environment, or %NULL to inherit parent's
 	 *     flags = flags from #GSpawnFlags
 	 *     childSetup = function to run in the child just before exec()
@@ -608,7 +608,8 @@ public class Spawn
 	 *
 	 * Params:
 	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's, in the GLib file name encoding
-	 *     argv = child's argument vector, in the GLib file name encoding
+	 *     argv = child's argument vector, in the GLib file name encoding;
+	 *         it must be non-empty and %NULL-terminated
 	 *     envp = child's environment, or %NULL to inherit parent's, in the GLib file name encoding
 	 *     flags = flags from #GSpawnFlags
 	 *     childSetup = function to run in the child just before exec()

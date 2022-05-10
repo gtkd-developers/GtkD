@@ -85,8 +85,8 @@ public interface ActionableIF{
 	 * located) within the hierarchy of a `GtkApplicationWindow`.
 	 *
 	 * Names are of the form “win.save” or “app.quit” for actions on the
-	 * containing `GtkApplicationWindow` or its associated `GtkApplication`,
-	 * respectively. This is the same form used for actions in the `GMenu`
+	 * containing [class@ApplicationWindow] or its associated [class@Application],
+	 * respectively. This is the same form used for actions in the [class@Gio.Menu]
 	 * associated with the window.
 	 *
 	 * Params:
@@ -104,7 +104,7 @@ public interface ActionableIF{
 	 * Second, it is used to determine if the widget should be rendered as
 	 * “active” — the widget is active if the state is equal to the given target.
 	 *
-	 * Consider the example of associating a set of buttons with a `GAction`
+	 * Consider the example of associating a set of buttons with a [iface@Gio.Action]
 	 * with string state in a typical “radio button” situation. Each button
 	 * will be associated with the same action, but with a different target
 	 * value for that action. Clicking on a particular button will activate
@@ -115,7 +115,7 @@ public interface ActionableIF{
 	 * rendered inactive).
 	 *
 	 * Params:
-	 *     targetValue = a `GVariant` to set as the target value
+	 *     targetValue = a [struct@GLib.Variant] to set as the target value
 	 */
 	public void setActionTargetValue(Variant targetValue);
 
@@ -124,7 +124,7 @@ public interface ActionableIF{
 	 * actionable widget.
 	 *
 	 * @detailed_action_name is a string in the format accepted by
-	 * g_action_parse_detailed_name().
+	 * [func@Gio.Action.parse_detailed_name].
 	 *
 	 * Params:
 	 *     detailedActionName = the detailed action name

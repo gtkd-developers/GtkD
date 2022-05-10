@@ -171,8 +171,8 @@ public class IOChannel
 	 * Flushes the write buffer for the GIOChannel.
 	 *
 	 * Returns: the status of the operation: One of
-	 *     #G_IO_STATUS_NORMAL, #G_IO_STATUS_AGAIN, or
-	 *     #G_IO_STATUS_ERROR.
+	 *     %G_IO_STATUS_NORMAL, %G_IO_STATUS_AGAIN, or
+	 *     %G_IO_STATUS_ERROR.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -867,7 +867,7 @@ public class IOChannel
 
 	/**
 	 * Creates a #GSource that's dispatched when @condition is met for the
-	 * given @channel. For example, if condition is #G_IO_IN, the source will
+	 * given @channel. For example, if condition is %G_IO_IN, the source will
 	 * be dispatched when there's data available for reading.
 	 *
 	 * The callback function invoked by the #GSource should be added with

@@ -199,7 +199,7 @@ public class AppLaunchContext : ObjectG
 	}
 
 	/**
-	 * The ::launch-failed signal is emitted when a #GAppInfo launch
+	 * The #GAppLaunchContext::launch-failed signal is emitted when a #GAppInfo launch
 	 * fails. The startup notification id is provided, so that the launcher
 	 * can cancel the startup notification.
 	 *
@@ -214,11 +214,42 @@ public class AppLaunchContext : ObjectG
 	}
 
 	/**
-	 * The ::launched signal is emitted when a #GAppInfo is successfully
+	 * The #GAppLaunchContext::launch-started signal is emitted when a #GAppInfo is
+	 * about to be launched. If non-null the @platform_data is an
+	 * GVariant dictionary mapping strings to variants (ie `a{sv}`), which
+	 * contains additional, platform-specific data about this launch. On
+	 * UNIX, at least the `startup-notification-id` keys will be
+	 * present.
+	 *
+	 * The value of the `startup-notification-id` key (type `s`) is a startup
+	 * notification ID corresponding to the format from the [startup-notification
+	 * specification](https://specifications.freedesktop.org/startup-notification-spec/startup-notification-0.1.txt).
+	 * It allows tracking the progress of the launchee through startup.
+	 *
+	 * It is guaranteed that this signal is followed by either a #GAppLaunchContext::launched or
+	 * #GAppLaunchContext::launch-failed signal.
+	 *
+	 * Params:
+	 *     info = the #GAppInfo that is about to be launched
+	 *     platformData = additional platform-specific data for this launch
+	 *
+	 * Since: 2.72
+	 */
+	gulong addOnLaunchStarted(void delegate(AppInfoIF, Variant, AppLaunchContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "launch-started", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * The #GAppLaunchContext::launched signal is emitted when a #GAppInfo is successfully
 	 * launched. The @platform_data is an GVariant dictionary mapping
-	 * strings to variants (ie a{sv}), which contains additional,
+	 * strings to variants (ie `a{sv}`), which contains additional,
 	 * platform-specific data about this launch. On UNIX, at least the
-	 * "pid" and "startup-notification-id" keys will be present.
+	 * `pid` and `startup-notification-id` keys will be present.
+	 *
+	 * Since 2.72 the `pid` may be 0 if the process id wasn't known (for
+	 * example if the process was launched via D-Bus). The `pid` may not be
+	 * set at all in subsequent releases.
 	 *
 	 * Params:
 	 *     info = the #GAppInfo that was just launched

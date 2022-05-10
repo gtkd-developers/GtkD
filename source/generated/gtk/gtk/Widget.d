@@ -2343,9 +2343,9 @@ public class Widget : ObjectG, AccessibleIF, BuildableIF, ConstraintTargetIF
 	 *     minimum = location to store the minimum size
 	 *     natural = location to store the natural size
 	 *     minimumBaseline = location to store the baseline
-	 *         position for the minimum size
+	 *         position for the minimum size, or -1 to report no baseline
 	 *     naturalBaseline = location to store the baseline
-	 *         position for the natural size
+	 *         position for the natural size, or -1 to report no baseline
 	 */
 	public void measure(GtkOrientation orientation, int forSize, out int minimum, out int natural, out int minimumBaseline, out int naturalBaseline)
 	{

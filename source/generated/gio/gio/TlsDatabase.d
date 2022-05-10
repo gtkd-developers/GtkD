@@ -423,7 +423,7 @@ public class TlsDatabase : ObjectG
 	 * certificate in the chain by its #GTlsCertificate:issuer property.
 	 *
 	 * @purpose describes the purpose (or usage) for which the certificate
-	 * is being used. Typically @purpose will be set to #G_TLS_DATABASE_PURPOSE_AUTHENTICATE_SERVER
+	 * is being used. Typically @purpose will be set to %G_TLS_DATABASE_PURPOSE_AUTHENTICATE_SERVER
 	 * which means that the certificate is being used to authenticate a server
 	 * (and we are acting as the client).
 	 *
@@ -439,13 +439,21 @@ public class TlsDatabase : ObjectG
 	 * used.
 	 *
 	 * If @chain is found to be valid, then the return value will be 0. If
-	 * @chain is found to be invalid, then the return value will indicate
-	 * the problems found. If the function is unable to determine whether
-	 * @chain is valid or not (eg, because @cancellable is triggered
-	 * before it completes) then the return value will be
-	 * %G_TLS_CERTIFICATE_GENERIC_ERROR and @error will be set
-	 * accordingly. @error is not set when @chain is successfully analyzed
-	 * but found to be invalid.
+	 * @chain is found to be invalid, then the return value will indicate at
+	 * least one problem found. If the function is unable to determine
+	 * whether @chain is valid (for example, because @cancellable is
+	 * triggered before it completes) then the return value will be
+	 * %G_TLS_CERTIFICATE_GENERIC_ERROR and @error will be set accordingly.
+	 * @error is not set when @chain is successfully analyzed but found to
+	 * be invalid.
+	 *
+	 * GLib guarantees that if certificate verification fails, at least one
+	 * error will be set in the return value, but it does not guarantee
+	 * that all possible errors will be set. Accordingly, you may not safely
+	 * decide to ignore any particular type of error. For example, it would
+	 * be incorrect to mask %G_TLS_CERTIFICATE_EXPIRED if you want to allow
+	 * expired certificates, because this could potentially be the only
+	 * error flag set even if other problems exist with the certificate.
 	 *
 	 * Prior to GLib 2.48, GLib's default TLS backend modified @chain to
 	 * represent the certification path built by #GTlsDatabase during
@@ -457,14 +465,14 @@ public class TlsDatabase : ObjectG
 	 *
 	 * Because TLS session context is not used, #GTlsDatabase may not
 	 * perform as many checks on the certificates as #GTlsConnection would.
-	 * For example, certificate constraints cannot be honored, and some
-	 * revocation checks cannot be performed. The best way to verify TLS
+	 * For example, certificate constraints may not be honored, and
+	 * revocation checks may not be performed. The best way to verify TLS
 	 * certificates used by a TLS connection is to let #GTlsConnection
 	 * handle the verification.
 	 *
 	 * The TLS backend may attempt to look up and add missing certificates
-	 * to the chain. Since GLib 2.70, this may involve HTTP requests to
-	 * download missing certificates.
+	 * to the chain. This may involve HTTP requests to download missing
+	 * certificates.
 	 *
 	 * This function can block. Use g_tls_database_verify_chain_async() to
 	 * perform the verification operation asynchronously.

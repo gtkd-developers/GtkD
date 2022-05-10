@@ -86,7 +86,8 @@ public class GLTexture : Texture
 	 *         are released
 	 *     data = data that gets passed to @destroy
 	 *
-	 * Returns: A newly-created `GdkTexture`
+	 * Returns: A newly-created
+	 *     `GdkTexture`
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

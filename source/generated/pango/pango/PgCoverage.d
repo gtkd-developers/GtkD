@@ -173,6 +173,8 @@ public class PgCoverage : ObjectG
 	/**
 	 * Increase the reference count on the `PangoCoverage` by one.
 	 *
+	 * Deprecated: Use g_object_ref instead
+	 *
 	 * Returns: @coverage
 	 */
 	public override PgCoverage ref_()
@@ -221,6 +223,8 @@ public class PgCoverage : ObjectG
 	 * Decrease the reference count on the `PangoCoverage` by one.
 	 *
 	 * If the result is zero, free the coverage and all associated memory.
+	 *
+	 * Deprecated: Use g_object_unref instead
 	 */
 	public override void unref()
 	{

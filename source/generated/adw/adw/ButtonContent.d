@@ -76,7 +76,7 @@ private import gtk.Widget;
  * ╰── label
  * ```
  * 
- * `AdwSplitButton`'s CSS node is called `buttoncontent`. It contains the
+ * `AdwButtonContent`'s CSS node is called `buttoncontent`. It contains the
  * subnodes `image` and `label`.
  * 
  * When inside a `GtkButton` or `AdwSplitButton`, the button will receive the
@@ -85,7 +85,7 @@ private import gtk.Widget;
  * 
  * ## Accessibility
  * 
- * `AdwSplitButton` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
+ * `AdwButtonContent` uses the `GTK_ACCESSIBLE_ROLE_GROUP` role.
  *
  * Since: 1.0
  */

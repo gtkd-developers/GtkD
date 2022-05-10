@@ -34,7 +34,7 @@ public  import pango.c.types;
 /**
  * A `PangoFontset` represents a set of `PangoFont` to use when rendering text.
  * 
- * A `PAngoFontset` is the result of resolving a `PangoFontDescription`
+ * A `PangoFontset` is the result of resolving a `PangoFontDescription`
  * against a particular `PangoContext`. It has operations for finding the
  * component font for a particular Unicode character, and for finding a
  * composite set of metrics for the entire fontset.
@@ -93,8 +93,8 @@ public class PgFontset : ObjectG
 	}
 
 	/**
-	 * Returns the font in the fontset that contains the best glyph for a
-	 * Unicode character.
+	 * Returns the font in the fontset that contains the best
+	 * glyph for a Unicode character.
 	 *
 	 * Params:
 	 *     wc = a Unicode character

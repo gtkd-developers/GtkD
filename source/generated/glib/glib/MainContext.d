@@ -93,6 +93,31 @@ public class MainContext
 	}
 
 	/**
+	 * Creates a new #GMainContext structure.
+	 *
+	 * Params:
+	 *     flags = a bitwise-OR combination of #GMainContextFlags flags that can only be
+	 *         set at creation time.
+	 *
+	 * Returns: the new #GMainContext
+	 *
+	 * Since: 2.72
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GMainContextFlags flags)
+	{
+		auto __p = g_main_context_new_with_flags(flags);
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_with_flags");
+		}
+
+		this(cast(GMainContext*) __p);
+	}
+
+	/**
 	 * Tries to become the owner of the specified context.
 	 * If some other thread is the owner of the context,
 	 * returns %FALSE immediately. Ownership is properly

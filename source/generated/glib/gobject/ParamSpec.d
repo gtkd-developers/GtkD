@@ -98,7 +98,7 @@ public class ParamSpec
 	 * e.g. a tooltip. The @nick and @blurb should ideally be localized.
 	 *
 	 * Params:
-	 *     paramType = the #GType for the property; must be derived from #G_TYPE_PARAM
+	 *     paramType = the #GType for the property; must be derived from %G_TYPE_PARAM
 	 *     name = the canonical name of the property
 	 *     nick = the nickname of the property
 	 *     blurb = a short description of the property
@@ -356,7 +356,7 @@ public class ParamSpec
 
 	/**
 	 * Registers @name as the name of a new static type derived
-	 * from #G_TYPE_PARAM.
+	 * from %G_TYPE_PARAM.
 	 *
 	 * The type system uses the information contained in the #GParamSpecTypeInfo
 	 * structure pointed to by @info to manage the #GParamSpec type and its

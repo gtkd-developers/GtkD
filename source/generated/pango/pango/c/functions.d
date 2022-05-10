@@ -483,6 +483,7 @@ shared static this()
 	Linker.link(pango_matrix_free, "pango_matrix_free", LIBRARY_PANGO);
 	Linker.link(pango_matrix_get_font_scale_factor, "pango_matrix_get_font_scale_factor", LIBRARY_PANGO);
 	Linker.link(pango_matrix_get_font_scale_factors, "pango_matrix_get_font_scale_factors", LIBRARY_PANGO);
+	Linker.link(pango_matrix_get_slant_ratio, "pango_matrix_get_slant_ratio", LIBRARY_PANGO);
 	Linker.link(pango_matrix_rotate, "pango_matrix_rotate", LIBRARY_PANGO);
 	Linker.link(pango_matrix_scale, "pango_matrix_scale", LIBRARY_PANGO);
 	Linker.link(pango_matrix_transform_distance, "pango_matrix_transform_distance", LIBRARY_PANGO);
@@ -1065,6 +1066,7 @@ __gshared extern(C)
 	void function(PangoMatrix* matrix) c_pango_matrix_free;
 	double function(PangoMatrix* matrix) c_pango_matrix_get_font_scale_factor;
 	void function(PangoMatrix* matrix, double* xscale, double* yscale) c_pango_matrix_get_font_scale_factors;
+	double function(PangoMatrix* matrix) c_pango_matrix_get_slant_ratio;
 	void function(PangoMatrix* matrix, double degrees) c_pango_matrix_rotate;
 	void function(PangoMatrix* matrix, double scaleX, double scaleY) c_pango_matrix_scale;
 	void function(PangoMatrix* matrix, double* dx, double* dy) c_pango_matrix_transform_distance;
@@ -1645,6 +1647,7 @@ alias c_pango_matrix_copy pango_matrix_copy;
 alias c_pango_matrix_free pango_matrix_free;
 alias c_pango_matrix_get_font_scale_factor pango_matrix_get_font_scale_factor;
 alias c_pango_matrix_get_font_scale_factors pango_matrix_get_font_scale_factors;
+alias c_pango_matrix_get_slant_ratio pango_matrix_get_slant_ratio;
 alias c_pango_matrix_rotate pango_matrix_rotate;
 alias c_pango_matrix_scale pango_matrix_scale;
 alias c_pango_matrix_transform_distance pango_matrix_transform_distance;

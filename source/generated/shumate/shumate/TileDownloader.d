@@ -32,7 +32,12 @@ private import shumate.c.functions;
 public  import shumate.c.types;
 
 
-/** */
+/**
+ * A [class@Shumate.DataSource] that asynchronously downloads tiles from an online
+ * service using a given template.
+ * 
+ * It contains an internal [class@Shumate.FileCache] to cache the tiles on the system.
+ */
 public class TileDownloader : DataSource
 {
 	/** the main Gtk struct */

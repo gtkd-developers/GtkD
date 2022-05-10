@@ -1514,9 +1514,25 @@ public enum hb_buffer_flags_t
 	/**
 	 * flag indicating that a dotted circle should
 	 * not be inserted in the rendering of incorrect
-	 * character sequences (such at <0905 093E>). Since: 2.4
+	 * character sequences (such at <0905 093E>). Since: 2.4.0
 	 */
 	DO_NOT_INSERT_DOTTED_CIRCLE = 16,
+	/**
+	 * flag indicating that the hb_shape() call and its variants
+	 * should perform various verification processes on the results
+	 * of the shaping operation on the buffer.  If the verification
+	 * fails, then either a buffer message is sent, if a message
+	 * handler is installed on the buffer, or a message is written
+	 * to standard error.  In either case, the shaping result might
+	 * be modified to show the failed output. Since: 3.4.0
+	 */
+	VERIFY = 32,
+	/**
+	 * flag indicating that the @HB_GLYPH_FLAG_UNSAFE_TO_CONCAT
+	 * glyph-flag should be produced by the shaper. By default
+	 * it will not be produced since it incurs a cost. Since: 4.0.0
+	 */
+	PRODUCE_UNSAFE_TO_CONCAT = 64,
 }
 alias hb_buffer_flags_t buffer_flags_t;
 
@@ -1625,24 +1641,81 @@ public enum hb_glyph_flags_t
 	 * Indicates that if input text is broken at the
 	 * beginning of the cluster this glyph is part of,
 	 * then both sides need to be re-shaped, as the
-	 * result might be different.  On the flip side,
-	 * it means that when this flag is not present,
-	 * then it's safe to break the glyph-run at the
-	 * beginning of this cluster, and the two sides
-	 * represent the exact same result one would get
-	 * if breaking input text at the beginning of
-	 * this cluster and shaping the two sides
-	 * separately.  This can be used to optimize
-	 * paragraph layout, by avoiding re-shaping
-	 * of each line after line-breaking, or limiting
-	 * the reshaping to a small piece around the
-	 * breaking point only.
+	 * result might be different.
+	 * On the flip side, it means that when this
+	 * flag is not present, then it is safe to break
+	 * the glyph-run at the beginning of this
+	 * cluster, and the two sides will represent the
+	 * exact same result one would get if breaking
+	 * input text at the beginning of this cluster
+	 * and shaping the two sides separately.
+	 * This can be used to optimize paragraph
+	 * layout, by avoiding re-shaping of each line
+	 * after line-breaking.
 	 */
 	UNSAFE_TO_BREAK = 1,
 	/**
+	 * Indicates that if input text is changed on one
+	 * side of the beginning of the cluster this glyph
+	 * is part of, then the shaping results for the
+	 * other side might change.
+	 * Note that the absence of this flag will NOT by
+	 * itself mean that it IS safe to concat text.
+	 * Only two pieces of text both of which clear of
+	 * this flag can be concatenated safely.
+	 * This can be used to optimize paragraph
+	 * layout, by avoiding re-shaping of each line
+	 * after line-breaking, by limiting the
+	 * reshaping to a small piece around the
+	 * breaking positin only, even if the breaking
+	 * position carries the
+	 * #HB_GLYPH_FLAG_UNSAFE_TO_BREAK or when
+	 * hyphenation or other text transformation
+	 * happens at line-break position, in the following
+	 * way:
+	 * 1. Iterate back from the line-break position
+	 * until the first cluster start position that is
+	 * NOT unsafe-to-concat, 2. shape the segment from
+	 * there till the end of line, 3. check whether the
+	 * resulting glyph-run also is clear of the
+	 * unsafe-to-concat at its start-of-text position;
+	 * if it is, just splice it into place and the line
+	 * is shaped; If not, move on to a position further
+	 * back that is clear of unsafe-to-concat and retry
+	 * from there, and repeat.
+	 * At the start of next line a similar algorithm can
+	 * be implemented. That is: 1. Iterate forward from
+	 * the line-break position until the first cluster
+	 * start position that is NOT unsafe-to-concat, 2.
+	 * shape the segment from beginning of the line to
+	 * that position, 3. check whether the resulting
+	 * glyph-run also is clear of the unsafe-to-concat
+	 * at its end-of-text position; if it is, just splice
+	 * it into place and the beginning is shaped; If not,
+	 * move on to a position further forward that is clear
+	 * of unsafe-to-concat and retry up to there, and repeat.
+	 * A slight complication will arise in the
+	 * implementation of the algorithm above,
+	 * because while our buffer API has a way to
+	 * return flags for position corresponding to
+	 * start-of-text, there is currently no position
+	 * corresponding to end-of-text.  This limitation
+	 * can be alleviated by shaping more text than needed
+	 * and looking for unsafe-to-concat flag within text
+	 * clusters.
+	 * The #HB_GLYPH_FLAG_UNSAFE_TO_BREAK flag will
+	 * always imply this flag.
+	 * To use this flag, you must enable the buffer flag
+	 * @HB_BUFFER_FLAG_PRODUCE_UNSAFE_TO_CONCAT during
+	 * shaping, otherwise the buffer flag will not be
+	 * reliably produced.
+	 * Since: 4.0.0
+	 */
+	UNSAFE_TO_CONCAT = 2,
+	/**
 	 * All the currently defined flags.
 	 */
-	DEFINED = 1,
+	DEFINED = 3,
 }
 alias hb_glyph_flags_t glyph_flags_t;
 
@@ -1747,15 +1820,23 @@ public enum hb_ot_layout_baseline_tag_t
 	 */
 	IDEO_FACE_TOP_OR_RIGHT = 1768121972,
 	/**
+	 * The center of the ideographic character face. Since: 4.0.0
+	 */
+	IDEO_FACE_CENTRAL = 1231251043,
+	/**
 	 * Ideographic em-box bottom or left edge,
 	 * if the direction is horizontal or vertical, respectively.
 	 */
 	IDEO_EMBOX_BOTTOM_OR_LEFT = 1768187247,
 	/**
 	 * Ideographic em-box top or right edge baseline,
-	 * if the direction is horizontal or vertical, respectively.
 	 */
 	IDEO_EMBOX_TOP_OR_RIGHT = 1768191088,
+	/**
+	 * The center of the ideographic em-box. Since: 4.0.0
+	 * if the direction is horizontal or vertical, respectively.
+	 */
+	IDEO_EMBOX_CENTRAL = 1231315813,
 	/**
 	 * The baseline about which mathematical characters are centered.
 	 * In vertical writing mode when mathematical characters rotated 90 degrees clockwise, are centered.
@@ -2886,6 +2967,10 @@ public enum hb_script_t
 	 */
 	VITHKUQI = 1449751656,
 	/**
+	 * `Zmth`, Since: 3.4.0
+	 */
+	MATH = 1517122664,
+	/**
 	 * No script set
 	 */
 	INVALID = 0,
@@ -2914,11 +2999,13 @@ public enum hb_style_tag_t
 	 * Used to vary between upright and slanted text. Values
 	 * must be greater than -90 and less than +90. Values can be interpreted as
 	 * the angle, in counter-clockwise degrees, of oblique slant from whatever the
-	 * designer considers to be upright for that font design.
+	 * designer considers to be upright for that font design. Typical right-leaning
+	 * Italic fonts have a negative slant angle (typically around -12)
 	 */
 	SLANT_ANGLE = 1936486004,
 	/**
 	 * same as @HB_STYLE_TAG_SLANT_ANGLE expression as ratio.
+	 * Typical right-leaning Italic fonts have a positive slant ratio (typically around 0.2)
 	 */
 	SLANT_RATIO = 1399615092,
 	/**
@@ -3341,6 +3428,54 @@ struct hb_blob_t;
 struct hb_buffer_t;
 
 /**
+ * Glyph draw callbacks.
+ *
+ * #hb_draw_move_to_func_t, #hb_draw_line_to_func_t and
+ * #hb_draw_cubic_to_func_t calls are necessary to be defined but we translate
+ * #hb_draw_quadratic_to_func_t calls to #hb_draw_cubic_to_func_t if the
+ * callback isn't defined.
+ *
+ * Since: 4.0.0
+ */
+struct hb_draw_funcs_t;
+
+/**
+ * Current drawing state.
+ *
+ * Since: 4.0.0
+ */
+struct hb_draw_state_t
+{
+	/**
+	 * Whether there is an open path
+	 */
+	hb_bool_t pathOpen;
+	/**
+	 * X component of the start of current path
+	 */
+	float pathStartX;
+	/**
+	 * Y component of the start of current path
+	 */
+	float pathStartY;
+	/**
+	 * X component of current point
+	 */
+	float currentX;
+	/**
+	 * Y component of current point
+	 */
+	float currentY;
+	hb_var_num_t reserved1;
+	hb_var_num_t reserved2;
+	hb_var_num_t reserved3;
+	hb_var_num_t reserved4;
+	hb_var_num_t reserved5;
+	hb_var_num_t reserved6;
+	hb_var_num_t reserved7;
+}
+
+/**
  * Data type for holding font faces.
  */
 struct hb_face_t;
@@ -3571,6 +3706,23 @@ struct hb_ot_math_glyph_variant_t
 }
 
 /**
+ * Data type to hold math kerning (cut-in) information for a glyph.
+ *
+ * Since: 3.4.0
+ */
+struct hb_ot_math_kern_entry_t
+{
+	/**
+	 * The maximum height at which this entry should be used
+	 */
+	hb_position_t maxCorrectionHeight;
+	/**
+	 * The kern value of the entry
+	 */
+	hb_position_t kernValue;
+}
+
+/**
  * Structure representing a name ID in a particular language.
  *
  * Since: 2.1.0
@@ -3617,7 +3769,7 @@ struct hb_ot_var_axis_info_t
 	 */
 	hb_ot_var_axis_flags_t flags;
 	/**
-	 * The mininum value on the variation axis that the font covers
+	 * The minimum value on the variation axis that the font covers
 	 */
 	float minValue;
 	/**
@@ -3737,6 +3889,20 @@ struct hb_var_int_t
 	}
 }
 
+struct hb_var_num_t
+{
+	union
+	{
+		float f;
+		uint u32;
+		int i32;
+		ushort[2] u16;
+		short[2] i16;
+		ubyte[4] u8;
+		byte[4] i8;
+	}
+}
+
 struct hb_variation_t
 {
 	/**
@@ -3775,6 +3941,90 @@ public alias extern(C) hb_bool_t function(hb_buffer_t* buffer, hb_font_t* font, 
  *     userData = the data to be destroyed
  */
 public alias extern(C) void function(void* userData) hb_destroy_func_t;
+
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "close-path" draw
+ * operation.
+ *
+ * Params:
+ *     dfuncs = draw functions object
+ *     drawData = The data accompanying the draw functions
+ *     st = current draw state
+ *     userData = User data pointer passed by the caller
+ *
+ * Since: 4.0.0
+ */
+public alias extern(C) void function(hb_draw_funcs_t* dfuncs, void* drawData, hb_draw_state_t* st, void* userData) hb_draw_close_path_func_t;
+
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "cubic-to" draw
+ * operation.
+ *
+ * Params:
+ *     dfuncs = draw functions object
+ *     drawData = The data accompanying the draw functions
+ *     st = current draw state
+ *     control1X = X component of first control point
+ *     control1Y = Y component of first control point
+ *     control2X = X component of second control point
+ *     control2Y = Y component of second control point
+ *     toX = X component of target point
+ *     toY = Y component of target point
+ *     userData = User data pointer passed by the caller
+ *
+ * Since: 4.0.0
+ */
+public alias extern(C) void function(hb_draw_funcs_t* dfuncs, void* drawData, hb_draw_state_t* st, float control1X, float control1Y, float control2X, float control2Y, float toX, float toY, void* userData) hb_draw_cubic_to_func_t;
+
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "line-to" draw
+ * operation.
+ *
+ * Params:
+ *     dfuncs = draw functions object
+ *     drawData = The data accompanying the draw functions
+ *     st = current draw state
+ *     toX = X component of target point
+ *     toY = Y component of target point
+ *     userData = User data pointer passed by the caller
+ *
+ * Since: 4.0.0
+ */
+public alias extern(C) void function(hb_draw_funcs_t* dfuncs, void* drawData, hb_draw_state_t* st, float toX, float toY, void* userData) hb_draw_line_to_func_t;
+
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "move-to" draw
+ * operation.
+ *
+ * Params:
+ *     dfuncs = draw functions object
+ *     drawData = The data accompanying the draw functions
+ *     st = current draw state
+ *     toX = X component of target point
+ *     toY = Y component of target point
+ *     userData = User data pointer passed by the caller
+ *
+ * Since: 4.0.0
+ */
+public alias extern(C) void function(hb_draw_funcs_t* dfuncs, void* drawData, hb_draw_state_t* st, float toX, float toY, void* userData) hb_draw_move_to_func_t;
+
+/**
+ * A virtual method for the #hb_draw_funcs_t to perform a "quadratic-to" draw
+ * operation.
+ *
+ * Params:
+ *     dfuncs = draw functions object
+ *     drawData = The data accompanying the draw functions
+ *     st = current draw state
+ *     controlX = X component of control point
+ *     controlY = Y component of control point
+ *     toX = X component of target point
+ *     toY = Y component of target point
+ *     userData = User data pointer passed by the caller
+ *
+ * Since: 4.0.0
+ */
+public alias extern(C) void function(hb_draw_funcs_t* dfuncs, void* drawData, hb_draw_state_t* st, float controlX, float controlY, float toX, float toY, void* userData) hb_draw_quadratic_to_func_t;
 
 /**
  * This method should retrieve the extents for a font.
@@ -3942,6 +4192,21 @@ public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_co
  * Returns: %true if data found, %false otherwise
  */
 public alias extern(C) hb_bool_t function(hb_font_t* font, void* fontData, hb_codepoint_t glyph, hb_position_t* x, hb_position_t* y, void* userData) hb_font_get_glyph_origin_func_t;
+
+/**
+ * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
+ *
+ * Params:
+ *     font = #hb_font_t to work upon
+ *     fontData = @font user data pointer
+ *     glyph = The glyph ID to query
+ *     drawFuncs = The draw functions to send the shape data to
+ *     drawData = The data accompanying the draw functions
+ *     userData = User data pointer passed by the caller
+ *
+ * Since: 4.0.0
+ */
+public alias extern(C) void function(hb_font_t* font, void* fontData, hb_codepoint_t glyph, hb_draw_funcs_t* drawFuncs, void* drawData, void* userData) hb_font_get_glyph_shape_func_t;
 
 /**
  * A virtual method for the #hb_font_funcs_t of an #hb_font_t object.
@@ -4240,14 +4505,14 @@ alias HB_UNICODE_MAX = UNICODE_MAX;
 enum UNICODE_MAX_DECOMPOSITION_LEN = 19;
 alias HB_UNICODE_MAX_DECOMPOSITION_LEN = UNICODE_MAX_DECOMPOSITION_LEN;
 
-enum VERSION_MAJOR = 3;
+enum VERSION_MAJOR = 4;
 alias HB_VERSION_MAJOR = VERSION_MAJOR;
 
-enum VERSION_MICRO = 0;
+enum VERSION_MICRO = 1;
 alias HB_VERSION_MICRO = VERSION_MICRO;
 
 enum VERSION_MINOR = 2;
 alias HB_VERSION_MINOR = VERSION_MINOR;
 
-enum VERSION_STRING = "3.2.0";
+enum VERSION_STRING = "4.2.1";
 alias HB_VERSION_STRING = VERSION_STRING;

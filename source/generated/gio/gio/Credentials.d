@@ -69,6 +69,9 @@ private import gobject.ObjectG;
  * On Solaris (including OpenSolaris and its derivatives), the native
  * credential type is a `ucred_t`. This corresponds to
  * %G_CREDENTIALS_TYPE_SOLARIS_UCRED.
+ * 
+ * Since GLib 2.72, on Windows, the native credentials may contain the PID of a
+ * process. This corresponds to %G_CREDENTIALS_TYPE_WIN32_PID.
  *
  * Since: 2.26
  */
@@ -158,8 +161,7 @@ public class Credentials : ObjectG
 	 *
 	 * This operation can fail if #GCredentials is not supported on the
 	 * OS or if the native credentials type does not contain information
-	 * about the UNIX process ID (for example this is the case for
-	 * %G_CREDENTIALS_TYPE_APPLE_XUCRED).
+	 * about the UNIX process ID.
 	 *
 	 * Returns: The UNIX process ID, or `-1` if @error is set.
 	 *

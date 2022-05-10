@@ -121,6 +121,22 @@ public class LanguageManager : ObjectG
 	}
 
 	/**
+	 * Appends @path to the list of directories where the @manager looks for
+	 * language files.
+	 *
+	 * See [method@LanguageManager.set_search_path] for details.
+	 *
+	 * Params:
+	 *     path = a directory or a filename.
+	 *
+	 * Since: 5.4
+	 */
+	public void appendSearchPath(string path)
+	{
+		gtk_source_language_manager_append_search_path(gtkSourceLanguageManager, Str.toStringz(path));
+	}
+
+	/**
 	 * Gets the [class@Language] identified by the given @id in the language
 	 * manager.
 	 *
@@ -176,7 +192,9 @@ public class LanguageManager : ObjectG
 	 *
 	 * ```c
 	 * GtkSourceLanguage *lang;
-	 * lang = gtk_source_language_manager_guess_language (filename, NULL);
+	 * GtkSourceLanguageManager *manager;
+	 * lm = gtk_source_language_manager_get_default ();
+	 * lang = gtk_source_language_manager_guess_language (manager, filename, NULL);
 	 * gtk_source_buffer_set_language (buffer, lang);
 	 * ```
 	 *
@@ -184,6 +202,7 @@ public class LanguageManager : ObjectG
 	 *
 	 * ```c
 	 * GtkSourceLanguage *lang = NULL;
+	 * GtkSourceLanguageManager *manager;
 	 * gboolean result_uncertain;
 	 * gchar *content_type;
 	 *
@@ -194,6 +213,7 @@ public class LanguageManager : ObjectG
 	 * content_type = NULL;
 	 * }
 	 *
+	 * manager = gtk_source_language_manager_get_default ();
 	 * lang = gtk_source_language_manager_guess_language (manager, filename, content_type);
 	 * gtk_source_buffer_set_language (buffer, lang);
 	 *
@@ -224,6 +244,22 @@ public class LanguageManager : ObjectG
 	}
 
 	/**
+	 * Prepends @path to the list of directories where the @manager looks
+	 * for language files.
+	 *
+	 * See [method@LanguageManager.set_search_path] for details.
+	 *
+	 * Params:
+	 *     path = a directory or a filename.
+	 *
+	 * Since: 5.4
+	 */
+	public void prependSearchPath(string path)
+	{
+		gtk_source_language_manager_prepend_search_path(gtkSourceLanguageManager, Str.toStringz(path));
+	}
+
+	/**
 	 * Sets the list of directories where the @lm looks for
 	 * language files.
 	 *
@@ -233,6 +269,10 @@ public class LanguageManager : ObjectG
 	 * language files are loaded for the first time. In practice
 	 * to set a custom search path for a `GtkSourceLanguageManager`,
 	 * you have to call this function right after creating it.
+	 *
+	 * Since GtkSourceView 5.4 this function will allow you to provide
+	 * paths in the form of "resource:///" URIs to embedded `GResource`s.
+	 * They must contain the path of a directory within the `GResource`.
 	 *
 	 * Params:
 	 *     dirs = a %NULL-terminated array of

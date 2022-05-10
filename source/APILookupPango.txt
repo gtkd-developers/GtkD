@@ -145,6 +145,9 @@ code: start
 	}
 code: end
 
+struct: LayoutLine
+noProperty: is_paragraph_start
+
 struct: Layout
 array: set_text text length
 

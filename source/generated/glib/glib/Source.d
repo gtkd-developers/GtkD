@@ -798,7 +798,7 @@ public class Source
 	 * Params:
 	 *     tag = the ID of the source to remove.
 	 *
-	 * Returns: For historical reasons, this function always returns %TRUE
+	 * Returns: %TRUE if the source was found and removed.
 	 */
 	public static bool remove(uint tag)
 	{

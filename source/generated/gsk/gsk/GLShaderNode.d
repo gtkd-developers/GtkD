@@ -95,8 +95,8 @@ public class GLShaderNode : RenderNode
 	 *     shader = the `GskGLShader`
 	 *     bounds = the rectangle to render the shader into
 	 *     args = Arguments for the uniforms
-	 *     children = array of child nodes, these will
-	 *         be rendered to textures and used as input.
+	 *     children = array of child nodes,
+	 *         these will be rendered to textures and used as input.
 	 *
 	 * Returns: A new `GskRenderNode`
 	 *

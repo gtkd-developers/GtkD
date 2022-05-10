@@ -203,12 +203,6 @@ public class GutterLines : ObjectG
 		return ObjectG.getDObject!(TextView)(cast(GtkTextView*) __p);
 	}
 
-	/** */
-	public void getYrange(uint line, uint* lineY, uint* lineHeight)
-	{
-		gtk_source_gutter_lines_get_yrange(gtkSourceGutterLines, line, lineY, lineHeight);
-	}
-
 	/**
 	 * Checks to see if [method@GutterLines.add_class] was called with
 	 * the @name for @line.

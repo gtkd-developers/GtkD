@@ -33,7 +33,10 @@ private import shumate.c.functions;
 public  import shumate.c.types;
 
 
-/** */
+/**
+ * A [class@Shumate.Layer] implementation that fetches tiles from a [class@Shumate.MapSource]
+ * and draws them as a grid.
+ */
 public class MapLayer : Layer
 {
 	/** the main Gtk struct */

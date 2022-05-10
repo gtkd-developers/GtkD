@@ -321,6 +321,9 @@ public class Toast : ObjectG
 	/**
 	 * Sets the parameter for action invocations.
 	 *
+	 * If the @action_target variant has a floating reference this function
+	 * will sink it.
+	 *
 	 * Params:
 	 *     actionTarget = the action target
 	 *

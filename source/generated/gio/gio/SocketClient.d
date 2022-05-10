@@ -694,6 +694,12 @@ public class SocketClient : ObjectG
 	 * Gets the TLS validation flags used creating TLS connections via
 	 * @client.
 	 *
+	 * This function does not work as originally designed and is impossible
+	 * to use correctly. See #GSocketClient:tls-validation-flags for more
+	 * information.
+	 *
+	 * Deprecated: Do not attempt to ignore validation errors.
+	 *
 	 * Returns: the TLS validation flags
 	 *
 	 * Since: 2.28
@@ -867,6 +873,12 @@ public class SocketClient : ObjectG
 	/**
 	 * Sets the TLS validation flags used when creating TLS connections
 	 * via @client. The default value is %G_TLS_CERTIFICATE_VALIDATE_ALL.
+	 *
+	 * This function does not work as originally designed and is impossible
+	 * to use correctly. See #GSocketClient:tls-validation-flags for more
+	 * information.
+	 *
+	 * Deprecated: Do not attempt to ignore validation errors.
 	 *
 	 * Params:
 	 *     flags = the validation flags

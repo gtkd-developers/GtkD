@@ -57,8 +57,12 @@ private import gtk.Widget;
  * ## AdwPreferencesGroup as GtkBuildable
  * 
  * The `AdwPreferencesGroup` implementation of the [iface@Gtk.Buildable] interface
- * will add [class@PreferencesRow]s to the group's list. If a child is not a
- * [class@PreferencesRow] the child is added to a box below the list.
+ * supports adding [class@PreferencesRow]s to the list by omitting "type". If "type"
+ * is omitted and the widget isn't a [class@PreferencesRow] the child is added to
+ * a box below the list.
+ * 
+ * When the "type" attribute of a child is `header-suffix`, the child
+ * is set as the suffix on the end of the title and description.
  * 
  * ## CSS nodes
  * 
@@ -152,6 +156,25 @@ public class PreferencesGroup : Widget
 	}
 
 	/**
+	 * Gets the suffix for @self's header.
+	 *
+	 * Returns: the suffix for @self's header.
+	 *
+	 * Since: 1.1
+	 */
+	public Widget getHeaderSuffix()
+	{
+		auto __p = adw_preferences_group_get_header_suffix(adwPreferencesGroup);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
 	 * Gets the title of @self.
 	 *
 	 * Returns: the title of @self
@@ -187,6 +210,19 @@ public class PreferencesGroup : Widget
 	public void setDescription(string description)
 	{
 		adw_preferences_group_set_description(adwPreferencesGroup, Str.toStringz(description));
+	}
+
+	/**
+	 * Sets the suffix for @self's header.
+	 *
+	 * Params:
+	 *     suffix = the suffix to set
+	 *
+	 * Since: 1.1
+	 */
+	public void setHeaderSuffix(Widget suffix)
+	{
+		adw_preferences_group_set_header_suffix(adwPreferencesGroup, (suffix is null) ? null : suffix.getWidgetStruct());
 	}
 
 	/**

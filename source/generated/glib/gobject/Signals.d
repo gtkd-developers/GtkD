@@ -166,7 +166,7 @@ public struct Signals
 	/**
 	 * Adds an emission hook for a signal, which will get called for any emission
 	 * of that signal, independent of the instance. This is possible only
-	 * for signals which don't have #G_SIGNAL_NO_HOOKS flag set.
+	 * for signals which don't have %G_SIGNAL_NO_HOOKS flag set.
 	 *
 	 * Params:
 	 *     signalId = the signal identifier, as returned by g_signal_lookup().
@@ -288,7 +288,8 @@ public struct Signals
 	}
 
 	/**
-	 * Emits a signal.
+	 * Emits a signal. Signal emission is done synchronously.
+	 * The method will only return control after all handlers are called or signal emission was stopped.
 	 *
 	 * Note that g_signal_emit_valist() resets the return value to the default
 	 * if no handlers are connected, in contrast to g_signal_emitv().
@@ -300,7 +301,7 @@ public struct Signals
 	 *     detail = the detail
 	 *     varArgs = a list of parameters to be passed to the signal, followed by a
 	 *         location for the return value. If the return type of the signal
-	 *         is #G_TYPE_NONE, the return value location can be omitted.
+	 *         is %G_TYPE_NONE, the return value location can be omitted.
 	 */
 	public static void emitValist(TypeInstance instance_, uint signalId, GQuark detail, void* varArgs)
 	{
@@ -308,7 +309,8 @@ public struct Signals
 	}
 
 	/**
-	 * Emits a signal.
+	 * Emits a signal. Signal emission is done synchronously.
+	 * The method will only return control after all handlers are called or signal emission was stopped.
 	 *
 	 * Note that g_signal_emitv() doesn't change @return_value if no handlers are
 	 * connected, in contrast to g_signal_emit() and g_signal_emit_valist().
@@ -632,7 +634,7 @@ public struct Signals
 	 *     accuData = user data for the @accumulator.
 	 *     cMarshaller = the function to translate arrays of parameter
 	 *         values to signal emissions into C language callback invocations or %NULL.
-	 *     returnType = the type of return value, or #G_TYPE_NONE for a signal
+	 *     returnType = the type of return value, or %G_TYPE_NONE for a signal
 	 *         without a return value.
 	 *     nParams = the number of parameter types in @args.
 	 *     args = va_list of #GType, one for each parameter.
@@ -666,7 +668,7 @@ public struct Signals
 	 *     cMarshaller = the function to translate arrays of
 	 *         parameter values to signal emissions into C language callback
 	 *         invocations or %NULL
-	 *     returnType = the type of return value, or #G_TYPE_NONE for a signal
+	 *     returnType = the type of return value, or %G_TYPE_NONE for a signal
 	 *         without a return value
 	 *     paramTypes = an array of types, one for
 	 *         each parameter (may be %NULL if @n_params is zero)

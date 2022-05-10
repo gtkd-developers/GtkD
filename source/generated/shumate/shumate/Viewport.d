@@ -35,7 +35,10 @@ public  import shumate.c.types;
 
 
 /**
- * The object holding the coordinate and zoom-level state of the current view.
+ * The object holding the coordinate, zoom-level, and rotation state of the current view.
+ * 
+ * As the object implements [iface@Shumate.Location], the latitude and longitude are
+ * accessible via the interface methods.
  */
 public class Viewport : ObjectG, LocationIF
 {

@@ -538,24 +538,42 @@ struct GdkPixbufModule
 	 * a `GdkPixbufFormat` holding information about the module.
 	 */
 	GdkPixbufFormat* info;
-	/** */
-	extern(C) GdkPixbuf* function(FILE* f, GError** err) load;
-	/** */
-	extern(C) GdkPixbuf* function(char** data) loadXpmData;
-	/** */
-	extern(C) void* function(GdkPixbufModuleSizeFunc sizeFunc, GdkPixbufModulePreparedFunc preparedFunc, GdkPixbufModuleUpdatedFunc updatedFunc, void* userData, GError** err) beginLoad;
-	/** */
-	extern(C) int function(void* context, GError** err) stopLoad;
-	/** */
-	extern(C) int function(void* context, char* buf, uint size, GError** err) loadIncrement;
-	/** */
-	extern(C) GdkPixbufAnimation* function(FILE* f, GError** err) loadAnimation;
-	/** */
-	extern(C) int function(FILE* f, GdkPixbuf* pixbuf, char** paramKeys, char** paramValues, GError** err) save;
-	/** */
-	extern(C) int function(GdkPixbufSaveFunc saveFunc, void* userData, GdkPixbuf* pixbuf, char** optionKeys, char** optionValues, GError** err) saveToCallback;
-	/** */
-	extern(C) int function(const(char)* optionKey) isSaveOptionSupported;
+	/**
+	 * loads an image from a file.
+	 */
+	GdkPixbufModuleLoadFunc load;
+	/**
+	 * loads an image from data in memory.
+	 */
+	GdkPixbufModuleLoadXpmDataFunc loadXpmData;
+	/**
+	 * begins an incremental load.
+	 */
+	GdkPixbufModuleBeginLoadFunc beginLoad;
+	/**
+	 * stops an incremental load.
+	 */
+	GdkPixbufModuleStopLoadFunc stopLoad;
+	/**
+	 * continues an incremental load.
+	 */
+	GdkPixbufModuleIncrementLoadFunc loadIncrement;
+	/**
+	 * loads an animation from a file.
+	 */
+	GdkPixbufModuleLoadAnimationFunc loadAnimation;
+	/**
+	 * saves a `GdkPixbuf` to a file.
+	 */
+	GdkPixbufModuleSaveFunc save;
+	/**
+	 * saves a `GdkPixbuf` by calling the given `GdkPixbufSaveFunc`.
+	 */
+	GdkPixbufModuleSaveCallbackFunc saveToCallback;
+	/**
+	 * returns whether a save option key is supported by the module
+	 */
+	GdkPixbufModuleSaveOptionSupportedFunc isSaveOptionSupported;
 	/** */
 	extern(C) void function() Reserved1;
 	/** */
@@ -678,6 +696,31 @@ struct GdkPixdata
 public alias extern(C) void function(char* pixels, void* data) GdkPixbufDestroyNotify;
 
 /**
+ * Sets up the image loading state.
+ *
+ * The image loader is responsible for storing the given function pointers
+ * and user data, and call them when needed.
+ *
+ * The image loader should set up an internal state object, and return it
+ * from this function; the state object will then be updated from the
+ * [callback@GdkPixbuf.PixbufModuleIncrementLoadFunc] callback, and will be freed
+ * by [callback@GdkPixbuf.PixbufModuleStopLoadFunc] callback.
+ *
+ * Params:
+ *     sizeFunc = the function to be called when the size is known
+ *     preparedFunc = the function to be called when the data has been prepared
+ *     updatedFunc = the function to be called when the data has been updated
+ *     userData = the data to be passed to the functions
+ *
+ * Returns: the data to be passed to
+ *     [callback@GdkPixbuf.PixbufModuleIncrementLoadFunc]
+ *     and [callback@GdkPixbuf.PixbufModuleStopLoadFunc], or `NULL` in case of error
+ *
+ * Throws: GException on failure.
+ */
+public alias extern(C) void* function(GdkPixbufModuleSizeFunc sizeFunc, GdkPixbufModulePreparedFunc preparedFunc, GdkPixbufModuleUpdatedFunc updatedFunc, void* userData, GError** err) GdkPixbufModuleBeginLoadFunc;
+
+/**
  * Defines the type of the function used to fill a
  * #GdkPixbufFormat structure with information about a module.
  *
@@ -700,6 +743,58 @@ public alias extern(C) void function(GdkPixbufFormat* info) GdkPixbufModuleFillI
 public alias extern(C) void function(GdkPixbufModule* module_) GdkPixbufModuleFillVtableFunc;
 
 /**
+ * Incrementally loads a buffer into the image data.
+ *
+ * Params:
+ *     context = the state object created by [callback@GdkPixbuf.PixbufModuleBeginLoadFunc]
+ *     buf = the data to load
+ *     size = the length of the data to load
+ *
+ * Returns: `TRUE` if the incremental load was successful
+ *
+ * Throws: GException on failure.
+ */
+public alias extern(C) int function(void* context, char* buf, uint size, GError** err) GdkPixbufModuleIncrementLoadFunc;
+
+/**
+ * Loads a file from a standard C file stream into a new `GdkPixbufAnimation`.
+ *
+ * In case of error, this function should return `NULL` and set the `error` argument.
+ *
+ * Params:
+ *     f = the file stream from which the image should be loaded
+ *
+ * Returns: a newly created `GdkPixbufAnimation` for the contents of the file
+ *
+ * Throws: GException on failure.
+ */
+public alias extern(C) GdkPixbufAnimation* function(FILE* f, GError** err) GdkPixbufModuleLoadAnimationFunc;
+
+/**
+ * Loads a file from a standard C file stream into a new `GdkPixbuf`.
+ *
+ * In case of error, this function should return `NULL` and set the `error` argument.
+ *
+ * Params:
+ *     f = the file stream from which the image should be loaded
+ *
+ * Returns: a newly created `GdkPixbuf` for the contents of the file
+ *
+ * Throws: GException on failure.
+ */
+public alias extern(C) GdkPixbuf* function(FILE* f, GError** err) GdkPixbufModuleLoadFunc;
+
+/**
+ * Loads XPM data into a new `GdkPixbuf`.
+ *
+ * Params:
+ *     data = the XPM data
+ *
+ * Returns: a newly created `GdkPixbuf` for the XPM data
+ */
+public alias extern(C) GdkPixbuf* function(char** data) GdkPixbufModuleLoadXpmDataFunc;
+
+/**
  * Defines the type of the function that gets called once the initial
  * setup of @pixbuf is done.
  *
@@ -715,6 +810,57 @@ public alias extern(C) void function(GdkPixbufModule* module_) GdkPixbufModuleFi
  * Since: 2.2
  */
 public alias extern(C) void function(GdkPixbuf* pixbuf, GdkPixbufAnimation* anim, void* userData) GdkPixbufModulePreparedFunc;
+
+/**
+ * Saves a `GdkPixbuf` by calling the provided function.
+ *
+ * The optional `option_keys` and `option_values` arrays contain the keys and
+ * values (in the same order) for attributes to be saved alongside the image
+ * data.
+ *
+ * Params:
+ *     saveFunc = the function to call when saving
+ *     userData = the data to pass to @save_func
+ *     pixbuf = the `GdkPixbuf` to save
+ *     optionKeys = an array of option names
+ *     optionValues = an array of option values
+ *
+ * Returns: `TRUE` on success; in case of failure, `FALSE` is returned and
+ *     the `error` is set
+ *
+ * Throws: GException on failure.
+ */
+public alias extern(C) int function(GdkPixbufSaveFunc saveFunc, void* userData, GdkPixbuf* pixbuf, char** optionKeys, char** optionValues, GError** err) GdkPixbufModuleSaveCallbackFunc;
+
+/**
+ * Saves a `GdkPixbuf` into a standard C file stream.
+ *
+ * The optional `param_keys` and `param_values` arrays contain the keys and
+ * values (in the same order) for attributes to be saved alongside the image
+ * data.
+ *
+ * Params:
+ *     f = the file stream into which the image should be saved
+ *     pixbuf = the image to save
+ *     paramKeys = parameter keys to save
+ *     paramValues = parameter values to save
+ *
+ * Returns: `TRUE` on success; in case of failure, `FALSE` is returned and
+ *     the `error` is set
+ *
+ * Throws: GException on failure.
+ */
+public alias extern(C) int function(FILE* f, GdkPixbuf* pixbuf, char** paramKeys, char** paramValues, GError** err) GdkPixbufModuleSaveFunc;
+
+/**
+ * Checks whether the given `option_key` is supported when saving.
+ *
+ * Params:
+ *     optionKey = the option key to check
+ *
+ * Returns: `TRUE` if the option is supported
+ */
+public alias extern(C) int function(const(char)* optionKey) GdkPixbufModuleSaveOptionSupportedFunc;
 
 /**
  * Defines the type of the function that gets called once the size
@@ -739,6 +885,20 @@ public alias extern(C) void function(GdkPixbuf* pixbuf, GdkPixbufAnimation* anim
  * Since: 2.2
  */
 public alias extern(C) void function(int* width, int* height, void* userData) GdkPixbufModuleSizeFunc;
+
+/**
+ * Finalizes the image loading state.
+ *
+ * This function is called on success and error states.
+ *
+ * Params:
+ *     context = the state object created by [callback@GdkPixbuf.PixbufModuleBeginLoadFunc]
+ *
+ * Returns: `TRUE` if the loading operation was successful
+ *
+ * Throws: GException on failure.
+ */
+public alias extern(C) int function(void* context, GError** err) GdkPixbufModuleStopLoadFunc;
 
 /**
  * Defines the type of the function that gets called every time a region
@@ -795,7 +955,7 @@ alias GDK_PIXBUF_MAJOR = PIXBUF_MAJOR;
  * Micro version of gdk-pixbuf library, that is the "2" in
  * "0.8.2" for example.
  */
-enum PIXBUF_MICRO = 6;
+enum PIXBUF_MICRO = 8;
 alias GDK_PIXBUF_MICRO = PIXBUF_MICRO;
 
 /**
@@ -811,7 +971,7 @@ alias GDK_PIXBUF_MINOR = PIXBUF_MINOR;
  * This is the version being compiled against; contrast with
  * `gdk_pixbuf_version`.
  */
-enum PIXBUF_VERSION = "2.42.6";
+enum PIXBUF_VERSION = "2.42.8";
 alias GDK_PIXBUF_VERSION = PIXBUF_VERSION;
 
 /**

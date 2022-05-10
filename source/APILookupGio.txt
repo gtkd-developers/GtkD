@@ -417,7 +417,56 @@ version: end
 
 struct: TlsCertificate
 noCode: new_from_pkcs11_uris
+noCode: new_from_files
 code: start
+	/**
+	 * Creates a #GTlsCertificate from the PEM-encoded data in @cert_file
+	 * and @key_file. The returned certificate will be the first certificate
+	 * found in @cert_file. As of GLib 2.44, if @cert_file contains more
+	 * certificates it will try to load a certificate chain. All
+	 * certificates will be verified in the order found (top-level
+	 * certificate should be the last one in the file) and the
+	 * #GTlsCertificate:issuer property of each certificate will be set
+	 * accordingly if the verification succeeds. If any certificate in the
+	 * chain cannot be verified, the first certificate in the file will
+	 * still be returned.
+	 *
+	 * If either file cannot be read or parsed, the function will return
+	 * %NULL and set @error. Otherwise, this behaves like
+	 * g_tls_certificate_new_from_pem().
+	 *
+	 * Params:
+	 *     certFile = file containing one or more PEM-encoded
+	 *         certificates to import
+	 *     keyFile = file containing a PEM-encoded private key
+	 *         to import
+	 *
+	 * Returns: the new certificate, or %NULL on error
+	 *
+	 * Since: 2.28
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static TlsCertificate newFromFiles(string certFile, string keyFile)
+	{
+		GError* err = null;
+
+		auto __p = g_tls_certificate_new_from_files(Str.toStringz(certFile), Str.toStringz(keyFile), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_files");
+		}
+
+		return new TlsCertificate(cast(GTlsCertificate*) __p, true);
+	}
+
 	/**
 	 * Creates a #GTlsCertificate from a PKCS \#11 URI.
 	 *

@@ -276,6 +276,8 @@ public class TlsConnection : IOStream
 	 * certificate, after the handshake has completed or failed. (It is
 	 * not set during the emission of #GTlsConnection::accept-certificate.)
 	 *
+	 * See #GTlsConnection:peer-certificate-errors for more information.
+	 *
 	 * Returns: @conn's peer's certificate errors
 	 *
 	 * Since: 2.28
@@ -509,6 +511,9 @@ public class TlsConnection : IOStream
 	 * client-side connections, unless that bit is not set in
 	 * #GTlsClientConnection:validation-flags).
 	 *
+	 * There are nonintuitive security implications when using a non-default
+	 * database. See #GDtlsConnection:database for details.
+	 *
 	 * Params:
 	 *     database = a #GTlsDatabase
 	 *
@@ -627,6 +632,15 @@ public class TlsConnection : IOStream
 	 * certificate to be accepted despite @errors, return %TRUE from the
 	 * signal handler. Otherwise, if no handler accepts the certificate,
 	 * the handshake will fail with %G_TLS_ERROR_BAD_CERTIFICATE.
+	 *
+	 * GLib guarantees that if certificate verification fails, this signal
+	 * will be emitted with at least one error will be set in @errors, but
+	 * it does not guarantee that all possible errors will be set.
+	 * Accordingly, you may not safely decide to ignore any particular
+	 * type of error. For example, it would be incorrect to ignore
+	 * %G_TLS_CERTIFICATE_EXPIRED if you want to allow expired
+	 * certificates, because this could potentially be the only error flag
+	 * set even if other problems exist with the certificate.
 	 *
 	 * For a server-side connection, @peer_cert is the certificate
 	 * presented by the client, if this was requested via the server's

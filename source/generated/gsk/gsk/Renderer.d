@@ -149,8 +149,13 @@ public class Renderer : ObjectG
 	 * Since GTK 4.6, the surface may be `NULL`, which allows using
 	 * renderers without having to create a surface.
 	 *
+	 * Note that it is mandatory to call [method@Gsk.Renderer.unrealize] before
+	 * destroying the renderer.
+	 *
 	 * Params:
 	 *     surface = the `GdkSurface` renderer will be used on
+	 *
+	 * Returns: Whether the renderer was successfully realized
 	 *
 	 * Throws: GException on failure.
 	 */

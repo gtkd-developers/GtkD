@@ -170,6 +170,11 @@ public class PgFontMap : ObjectG
 	/**
 	 * List all families for a fontmap.
 	 *
+	 * Note that the returned families are not in any particular order.
+	 *
+	 * `PangoFontMap` also implemented the [iface@Gio.ListModel] interface
+	 * for enumerating families.
+	 *
 	 * Params:
 	 *     families = location to
 	 *         store a pointer to an array of `PangoFontFamily` *.

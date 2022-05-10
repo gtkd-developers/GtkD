@@ -253,6 +253,25 @@ public final class PgMatrix
 	}
 
 	/**
+	 * Gets the slant ratio of a matrix.
+	 *
+	 * For a simple shear matrix in the form:
+	 *
+	 * 1 λ
+	 * 0 1
+	 *
+	 * this is simply λ.
+	 *
+	 * Returns: the slant ratio of @matrix
+	 *
+	 * Since: 1.50
+	 */
+	public double getSlantRatio()
+	{
+		return pango_matrix_get_slant_ratio(pangoMatrix);
+	}
+
+	/**
 	 * Changes the transformation represented by @matrix to be the
 	 * transformation given by first rotating by @degrees degrees
 	 * counter-clockwise then applying the original transformation.

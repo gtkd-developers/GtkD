@@ -43,18 +43,19 @@ private import std.algorithm;
 
 
 /**
- * A [class@Gtk.Widget] to display maps. It supports two modes of scrolling:
+ * The Map widget is a [class@Gtk.Widget] that show and allows interaction with
+ * the user.
  * 
- * - Push: the normal behavior where the maps don't move after the user stopped
- * scrolling;
- * - Kinetic: the behavior where the maps decelerate after the user stopped
- * scrolling.
+ * This is the base widget and doesn't have advanced features. You can check the
+ * [class@Shumate.SimpleMap] for a ready-to-use widget.
  * 
- * The maps are downloaded from Internet from open maps sources (like
- * [OpenStreetMap](http://www.openstreetmap.org")). Maps are divided
- * in tiles for each zoom level. When a tile is requested, `ShumateMap` will
- * first check if it is in cache (in the user's cache dir under shumate). If
- * an error occurs during download, an error tile will be displayed.
+ * By default, a [class@Shumate.Viewport] is created and can be accessed with
+ * [method@Shumate.Map.get_viewport].
+ * 
+ * Unless created with [ctor@Shumate.Map.new_simple], the widget doesn't hold any
+ * layer and won't show anything. A [class@Shumate.Layer] can be added or removed
+ * using the [method@Shumate.Map.add_layer] or [method@Shumate.Map.remove_layer]
+ * methods.
  */
 public class Map : Widget
 {

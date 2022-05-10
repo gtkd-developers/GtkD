@@ -304,10 +304,16 @@ public class PgAttributeList
 	 * that applies at position @pos in @list by an amount @len,
 	 * and then calling [method@Pango.AttrList.change] with a copy
 	 * of each attribute in @other in sequence (offset in position
-	 * by @pos).
+	 * by @pos, and limited in length to @len).
 	 *
 	 * This operation proves useful for, for instance, inserting
 	 * a pre-edit string in the middle of an edit buffer.
+	 *
+	 * For backwards compatibility, the function behaves differently
+	 * when @len is 0. In this case, the attributes from @other are
+	 * not imited to @len, and are just overlayed on top of @list.
+	 *
+	 * This mode is useful for merging two lists of attributes together.
 	 *
 	 * Params:
 	 *     other = another `PangoAttrList`

@@ -747,28 +747,28 @@ struct AdwSwipeableInterface
 	/**
 	 *
 	 * Params:
-	 *     self = a `AdwSwipeable`
+	 *     self = a swipeable
 	 * Returns: the swipe distance in pixels
 	 */
 	extern(C) double function(AdwSwipeable* self) getDistance;
 	/**
 	 *
 	 * Params:
-	 *     self = a `AdwSwipeable`
+	 *     self = a swipeable
 	 * Returns: the snap points
 	 */
 	extern(C) double* function(AdwSwipeable* self, int* nSnapPoints) getSnapPoints;
 	/**
 	 *
 	 * Params:
-	 *     self = a `AdwSwipeable`
+	 *     self = a swipeable
 	 * Returns: the current progress, unitless
 	 */
 	extern(C) double function(AdwSwipeable* self) getProgress;
 	/**
 	 *
 	 * Params:
-	 *     self = a `AdwSwipeable`
+	 *     self = a swipeable
 	 * Returns: the cancel progress, unitless
 	 */
 	extern(C) double function(AdwSwipeable* self) getCancelProgress;
@@ -903,12 +903,12 @@ alias ADW_MICRO_VERSION = MICRO_VERSION;
 /**
  * Adwaita minor version component (e.g. 2 if the version is 1.2.3).
  */
-enum MINOR_VERSION = 0;
+enum MINOR_VERSION = 1;
 alias ADW_MINOR_VERSION = MINOR_VERSION;
 
 /**
  * Adwaita version, encoded as a string, useful for printing and
  * concatenation.
  */
-enum VERSION_S = "1.0.1";
+enum VERSION_S = "1.1.1";
 alias ADW_VERSION_S = VERSION_S;

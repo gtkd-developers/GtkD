@@ -103,7 +103,7 @@ public enum GtkAccessibleInvalidState
 alias GtkAccessibleInvalidState AccessibleInvalidState;
 
 /**
- * The possible accessible properties of a `GtkAccessible`.
+ * The possible accessible properties of a [iface@Accessible].
  */
 public enum GtkAccessibleProperty
 {
@@ -111,7 +111,7 @@ public enum GtkAccessibleProperty
 	 * Indicates whether inputting text
 	 * could trigger display of one or more predictions of the user's intended
 	 * value for a combobox, searchbox, or textbox and specifies how predictions
-	 * would be presented if they were made. Value type: `GtkAccessibleAutocomplete`
+	 * would be presented if they were made. Value type: [enum@AccessibleAutocomplete]
 	 */
 	AUTOCOMPLETE = 0,
 	/**
@@ -160,7 +160,7 @@ public enum GtkAccessibleProperty
 	/**
 	 * Indicates whether the element's
 	 * orientation is horizontal, vertical, or unknown/ambiguous. Value type:
-	 * `GtkOrientation`
+	 * [enum@Orientation]
 	 */
 	ORIENTATION = 9,
 	/**
@@ -187,8 +187,7 @@ public enum GtkAccessibleProperty
 	ROLE_DESCRIPTION = 13,
 	/**
 	 * Indicates if items in a table or grid are
-	 * sorted in ascending or descending order. Possible property values are in
-	 * the `GtkAccessibleSort` enumeration. Value type: `GtkAccessibleSort`
+	 * sorted in ascending or descending order. Value type: [enum@AccessibleSort]
 	 */
 	SORT = 14,
 	/**
@@ -215,7 +214,7 @@ public enum GtkAccessibleProperty
 alias GtkAccessibleProperty AccessibleProperty;
 
 /**
- * The possible accessible relations of a `GtkAccessible`.
+ * The possible accessible relations of a [iface@Accessible].
  *
  * Accessible relations can be references to other widgets,
  * integers or strings.
@@ -323,7 +322,7 @@ public enum GtkAccessibleRelation
 alias GtkAccessibleRelation AccessibleRelation;
 
 /**
- * The accessible role for a `GtkAccessible` implementation.
+ * The accessible role for a [iface@Accessible] implementation.
  *
  * Abstract roles are only used as part of the ontology; application
  * developers must not use abstract roles in their code.
@@ -412,7 +411,7 @@ public enum GtkAccessibleRole
 	GRID_CELL = 17,
 	/**
 	 * An element that groups multiple widgets. GTK uses
-	 * this role for various containers, like `GtkBox`, `GtkViewport`, and `GtkHeaderBar`.
+	 * this role for various containers, like [class@Box], [class@Viewport], and [class@HeaderBar].
 	 */
 	GROUP = 18,
 	/**
@@ -692,7 +691,7 @@ public enum GtkAccessibleSort
 alias GtkAccessibleSort AccessibleSort;
 
 /**
- * The possible accessible states of a `GtkAccessible`.
+ * The possible accessible states of a [iface@Accessible].
  */
 public enum GtkAccessibleState
 {
@@ -702,24 +701,24 @@ public enum GtkAccessibleState
 	BUSY = 0,
 	/**
 	 * A “checked” state; indicates the current
-	 * state of a `GtkCheckButton`. Value type: `GtkAccessibleTristate`
+	 * state of a [class@CheckButton]. Value type: [enum@AccessibleTristate]
 	 */
 	CHECKED = 1,
 	/**
 	 * A “disabled” state; corresponds to the
-	 * `GtkWidget:sensitive` property on `GtkWidget`. It indicates a UI element
+	 * [property@Widget:sensitive] property. It indicates a UI element
 	 * that is perceivable, but not editable or operable. Value type: boolean
 	 */
 	DISABLED = 2,
 	/**
 	 * An “expanded” state; corresponds to the
-	 * `GtkExpander:expanded` property on `GtkExpander`. Value type: boolean
+	 * [property@Expander:expanded] property. Value type: boolean
 	 * or undefined
 	 */
 	EXPANDED = 3,
 	/**
 	 * A “hidden” state; corresponds to the
-	 * `GtkWidget:visible` property on `GtkWidget`. You can use this state
+	 * [property@Widget:visible] property. You can use this state
 	 * explicitly on UI elements that should not be exposed to an assistive
 	 * technology. Value type: boolean
 	 * See also: %GTK_ACCESSIBLE_STATE_DISABLED
@@ -727,12 +726,12 @@ public enum GtkAccessibleState
 	HIDDEN = 4,
 	/**
 	 * An “invalid” state; set when a widget
-	 * is showing an error. Value type: `GtkAccessibleInvalidState`
+	 * is showing an error. Value type: [enum@AccessibleInvalidState]
 	 */
 	INVALID = 5,
 	/**
 	 * A “pressed” state; indicates the current
-	 * state of a `GtkToggleButton`. Value type: `GtkAccessibleTristate`
+	 * state of a [class@ToggleButton]. Value type: [enum@AccessibleTristate]
 	 * enumeration
 	 */
 	PRESSED = 6,
@@ -774,7 +773,7 @@ alias GtkAccessibleTristate AccessibleTristate;
  *
  * Alignment only matters if the widget receives a “too large” allocation,
  * for example if you packed the widget with the [property@Gtk.Widget:hexpand]
- * property inside a `GtkBox`, then the widget might get extra space.
+ * property inside a [class@Box], then the widget might get extra space.
  * If you have for example a 16x16 icon inside a 32x32 space, the icon
  * could be scaled and stretched, it could be centered, or it could be
  * positioned to one side of the space.
@@ -1209,7 +1208,7 @@ public enum GtkCellRendererState
 alias GtkCellRendererState CellRendererState;
 
 /**
- * The widget attributes that can be used when creating a `GtkConstraint`.
+ * The widget attributes that can be used when creating a [class@Constraint].
  */
 public enum GtkConstraintAttribute
 {
@@ -1296,7 +1295,7 @@ alias GtkConstraintRelation ConstraintRelation;
 /**
  * The strength of a constraint, expressed as a symbolic constant.
  *
- * The strength of a `GtkConstraint` can be expressed with any positive
+ * The strength of a [class@Constraint] can be expressed with any positive
  * integer; the values of this enumeration can be used for readability.
  */
 public enum GtkConstraintStrength
@@ -1722,7 +1721,7 @@ public enum GtkEventControllerScrollFlags
 alias GtkEventControllerScrollFlags EventControllerScrollFlags;
 
 /**
- * Describes the state of a `GdkEventSequence` in a `GtkGesture`.
+ * Describes the state of a [struct@Gdk.EventSequence] in a [class@Gesture].
  */
 public enum GtkEventSequenceState
 {
@@ -2018,7 +2017,7 @@ alias GtkImageType ImageType;
  * or applications.
  *
  * Note that input methods may already tailor their behaviour according
- * to the `GtkInputPurpose` of the entry.
+ * to the [enum@InputPurpose] of the entry.
  *
  * Some common sense is expected when using these flags - mixing
  * %GTK_INPUT_HINT_LOWERCASE with any of the uppercase hints makes no sense.
@@ -2158,7 +2157,7 @@ public enum GtkInputPurpose
 alias GtkInputPurpose InputPurpose;
 
 /**
- * Used for justifying the text inside a `GtkLabel` widget.
+ * Used for justifying the text inside a [class@Label] widget.
  */
 public enum GtkJustification
 {
@@ -2182,7 +2181,7 @@ public enum GtkJustification
 alias GtkJustification Justification;
 
 /**
- * Describes how `GtkLevelBar` contents should be rendered.
+ * Describes how [class@LevelBar] contents should be rendered.
  *
  * Note that this enumeration could be extended with additional modes
  * in the future.
@@ -2284,7 +2283,7 @@ public enum GtkLicense
 alias GtkLicense License;
 
 /**
- * The type of message being displayed in a `GtkMessageDialog`.
+ * The type of message being displayed in a [class@MessageDialog].
  */
 public enum GtkMessageType : uint
 {
@@ -2450,7 +2449,7 @@ alias GtkNumberUpLayout NumberUpLayout;
 /**
  * Describes the way two values can be compared.
  *
- * These values can be used with a `GCompareFunc`. However,
+ * These values can be used with a [callback@GLib.CompareFunc]. However,
  * a `GCompareFunc` is allowed to return any integer values.
  * For converting such a value to a `GtkOrdering` value, use
  * [func@Gtk.Ordering.from_cmpfunc].
@@ -2475,7 +2474,7 @@ alias GtkOrdering Ordering;
 /**
  * Represents the orientation of widgets and other objects.
  *
- * Typical examples are `GtkBox or `GtkGesturePan`.
+ * Typical examples are [class@Box] or [class@GesturePan].
  */
 public enum GtkOrientation
 {
@@ -2515,7 +2514,7 @@ alias GtkOverflow Overflow;
 /**
  * Represents the packing location of a children in its parent.
  *
- * See `GtkWindowControls` for example.
+ * See [class@WindowControls] for example.
  */
 public enum GtkPackType
 {
@@ -2595,7 +2594,7 @@ public enum GtkPageSet
 alias GtkPageSet PageSet;
 
 /**
- * Describes the panning direction of a `GtkGesturePan`
+ * Describes the panning direction of a [class@GesturePan].
  */
 public enum GtkPanDirection
 {
@@ -2619,7 +2618,7 @@ public enum GtkPanDirection
 alias GtkPanDirection PanDirection;
 
 /**
- * Flags that influence the behavior of gtk_widget_pick().
+ * Flags that influence the behavior of [method@Widget.pick].
  */
 public enum GtkPickFlags
 {
@@ -2632,7 +2631,7 @@ public enum GtkPickFlags
 	 */
 	INSENSITIVE = 1,
 	/**
-	 * Include widgets that are marked as non-targetable. See `GtkWidget:can-target`
+	 * Include widgets that are marked as non-targetable. See [property@Widget:can-target]
 	 */
 	NON_TARGETABLE = 2,
 }
@@ -2686,8 +2685,8 @@ alias GtkPopoverMenuFlags PopoverMenuFlags;
 /**
  * Describes which edge of a widget a certain feature is positioned at.
  *
- * For examples, see the tabs of a `GtkNotebook`, or the label
- * of a `GtkScale`.
+ * For examples, see the tabs of a [class@Notebook], or the label
+ * of a [class@Scale].
  */
 public enum GtkPositionType
 {
@@ -2968,7 +2967,7 @@ public enum GtkPrintStatus
 alias GtkPrintStatus PrintStatus;
 
 /**
- * Describes limits of a `GtkEventController` for handling events
+ * Describes limits of a [class@EventController] for handling events
  * targeting other widgets.
  */
 public enum GtkPropagationLimit
@@ -2980,7 +2979,7 @@ public enum GtkPropagationLimit
 	NONE = 0,
 	/**
 	 * Events are only handled if their target
-	 * is in the same `GtkNative` as the event controllers widget. Note
+	 * is in the same [iface@Native] as the event controllers widget. Note
 	 * that some event types have two targets (origin and destination).
 	 */
 	SAME_NATIVE = 1,
@@ -2988,7 +2987,7 @@ public enum GtkPropagationLimit
 alias GtkPropagationLimit PropagationLimit;
 
 /**
- * Describes the stage at which events are fed into a `GtkEventController`.
+ * Describes the stage at which events are fed into a [class@EventController].
  */
 public enum GtkPropagationPhase
 {
@@ -3356,8 +3355,8 @@ public enum GtkShortcutActionFlags
 alias GtkShortcutActionFlags ShortcutActionFlags;
 
 /**
- * Describes where `GtkShortcut`s added to a
- * `GtkShortcutController` get handled.
+ * Describes where [class@Shortcut]s added to a
+ * [class@ShortcutController] get handled.
  */
 public enum GtkShortcutScope
 {
@@ -3368,7 +3367,7 @@ public enum GtkShortcutScope
 	LOCAL = 0,
 	/**
 	 * Shortcuts are handled by
-	 * the first ancestor that is a `GtkShortcutManager`
+	 * the first ancestor that is a [iface@ShortcutManager]
 	 */
 	MANAGED = 1,
 	/**
@@ -3871,7 +3870,7 @@ alias GtkSymbolicColor SymbolicColor;
  * The values indicate which system setting has changed.
  * Widgets may need to drop caches, or react otherwise.
  *
- * Most of the values correspond to `GtkSettings` properties.
+ * Most of the values correspond to [class@Settings] properties.
  *
  * More values may be added over time.
  */
@@ -6213,7 +6212,7 @@ struct GtkRecentManagerPrivate;
 /**
  * Represents a request of a screen object in a given orientation. These
  * are primarily used in container implementations when allocating a natural
- * size for children calling. See gtk_distribute_natural_allocation().
+ * size for children calling. See [func@distribute_natural_allocation].
  */
 struct GtkRequestedSize
 {
@@ -7750,6 +7749,8 @@ public alias extern(C) char* function(GtkScale* scale, double value, void* userD
  *     widget = The widget passed to the activation
  *     args = The arguments passed to the activation
  *     userData = The user data provided when activating the action
+ *
+ * Returns: %TRUE if the action was successful.
  */
 public alias extern(C) int function(GtkWidget* widget, GVariant* args, void* userData) GtkShortcutFunc;
 
@@ -8013,11 +8014,11 @@ enum ACCESSIBLE_VALUE_UNDEFINED = -1;
 alias GTK_ACCESSIBLE_VALUE_UNDEFINED = ACCESSIBLE_VALUE_UNDEFINED;
 
 /**
- * Like gtk_get_binary_age(), but from the headers used at
+ * Like [func@get_binary_age], but from the headers used at
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 600;
+enum BINARY_AGE = 603;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 enum IM_MODULE_EXTENSION_POINT_NAME = "gtk-im-module";
@@ -8033,11 +8034,11 @@ enum INPUT_ERROR = -1;
 alias GTK_INPUT_ERROR = INPUT_ERROR;
 
 /**
- * Like gtk_get_interface_age(), but from the headers used at
+ * Like [func@get_interface_age], but from the headers used at
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 0;
+enum INTERFACE_AGE = 3;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -8073,7 +8074,7 @@ enum LEVEL_BAR_OFFSET_LOW = "low";
 alias GTK_LEVEL_BAR_OFFSET_LOW = LEVEL_BAR_OFFSET_LOW;
 
 /**
- * Like gtk_get_major_version(), but from the headers used at
+ * Like [func@get_major_version], but from the headers used at
  * application compile time, rather than from the library linked
  * against at application run time.
  */
@@ -8087,15 +8088,15 @@ enum MEDIA_FILE_EXTENSION_POINT_NAME = "gtk-media-file";
 alias GTK_MEDIA_FILE_EXTENSION_POINT_NAME = MEDIA_FILE_EXTENSION_POINT_NAME;
 
 /**
- * Like gtk_get_micro_version(), but from the headers used at
+ * Like [func@get_micro_version], but from the headers used at
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 0;
+enum MICRO_VERSION = 3;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**
- * Like gtk_get_minor_version(), but from the headers used at
+ * Like [func@get_minor_version], but from the headers used at
  * application compile time, rather than from the library linked
  * against at application run time.
  */

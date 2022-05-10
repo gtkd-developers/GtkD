@@ -82,7 +82,10 @@ private import gobject.ObjectG;
  * As a matter of principle, #GSubprocess has no API that accepts
  * shell-style space-separated strings.  It will, however, match the
  * typical shell behaviour of searching the PATH for executables that do
- * not contain a directory separator in their name.
+ * not contain a directory separator in their name. By default, the `PATH`
+ * of the current process is used.  You can specify
+ * %G_SUBPROCESS_FLAGS_SEARCH_PATH_FROM_ENVP to use the `PATH` of the
+ * launcher environment instead.
  * 
  * #GSubprocess attempts to have a very simple API for most uses (ie:
  * spawning a subprocess with arguments and support for most typical

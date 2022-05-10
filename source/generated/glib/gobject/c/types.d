@@ -386,6 +386,8 @@ alias GTypeFundamentalFlags TypeFundamentalFlags;
 
 struct GBinding;
 
+struct GBindingGroup;
+
 /**
  * A #GCClosure is a specialization of #GClosure for C function callbacks.
  */
@@ -1081,6 +1083,8 @@ struct GParameter
 	 */
 	GValue value;
 }
+
+struct GSignalGroup;
 
 /**
  * The #GSignalInvocationHint structure is used to pass on additional information
@@ -1778,7 +1782,7 @@ public alias extern(C) int function(GSignalInvocationHint* ihint, GValue* return
  * Emission hooks allow you to tie a hook to the signal type, so that it will
  * trap all emissions of that signal, from any object.
  *
- * You may not attach these to signals created with the #G_SIGNAL_NO_HOOKS flag.
+ * You may not attach these to signals created with the %G_SIGNAL_NO_HOOKS flag.
  *
  * Params:
  *     ihint = Signal invocation hint, see #GSignalInvocationHint.
@@ -1926,6 +1930,11 @@ public alias extern(C) void function(GValue* srcValue, GValue* destValue) GValue
  * Since the object is already being disposed when the #GWeakNotify is called,
  * there's not much you could do with the object, apart from e.g. using its
  * address as hash-index or the like.
+ *
+ * In particular, this means it’s invalid to call g_object_ref(),
+ * g_weak_ref_init(), g_weak_ref_set(), g_object_add_toggle_ref(),
+ * g_object_weak_ref(), g_object_add_weak_pointer() or any function which calls
+ * them on the object from this callback.
  *
  * Params:
  *     data = data that was provided when the weak reference was established

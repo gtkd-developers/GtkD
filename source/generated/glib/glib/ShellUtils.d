@@ -54,6 +54,11 @@ public struct ShellUtils
 	 *
 	 * Possible errors are those from the %G_SHELL_ERROR domain.
 	 *
+	 * In particular, if @command_line is an empty string (or a string containing
+	 * only whitespace), %G_SHELL_ERROR_EMPTY_STRING will be returned. It’s
+	 * guaranteed that @argvp will be a non-empty array if this function returns
+	 * successfully.
+	 *
 	 * Free the returned vector with g_strfreev().
 	 *
 	 * Params:

@@ -1348,9 +1348,6 @@ public enum PangoStyle
 /**
  * `PangoTabAlign` specifies where the text appears relative to the tab stop
  * position.
- *
- * Support for tab alignments other than %PANGO_TAB_LEFT was added
- * in Pango 1.50.
  */
 public enum PangoTabAlign
 {
@@ -1360,18 +1357,18 @@ public enum PangoTabAlign
 	LEFT = 0,
 	/**
 	 * the text appears to the left of the tab stop position
-	 * until the available space is filled
+	 * until the available space is filled. Since: 1.50
 	 */
 	RIGHT = 1,
 	/**
 	 * the text is centered at the tab stop position
-	 * until the available space is filled
+	 * until the available space is filled. Since: 1.50
 	 */
 	CENTER = 2,
 	/**
 	 * text before the first occurrence of the decimal point
 	 * character appears to the left of the tab stop position (until the available
-	 * space is filled), the rest to the right
+	 * space is filled), the rest to the right. Since: 1.50
 	 */
 	DECIMAL = 3,
 }
@@ -1462,9 +1459,6 @@ public enum PangoUnderline
 
 /**
  * An enumeration specifying capitalization variant of the font.
- *
- * Values other than `PANGO_VARIANT_NORMAL` and `PANGO_VARIANT_SMALL_CAPS` are
- * available since 1.50.
  */
 public enum PangoVariant
 {
@@ -1479,29 +1473,29 @@ public enum PangoVariant
 	SMALL_CAPS = 1,
 	/**
 	 * A font with all characters
-	 * replaced by smaller variants of the capital characters.
+	 * replaced by smaller variants of the capital characters. Since: 1.50
 	 */
 	ALL_SMALL_CAPS = 2,
 	/**
 	 * A font with the lower case characters
 	 * replaced by smaller variants of the capital characters.
-	 * Petite Caps can be even smaller than Small Caps.
+	 * Petite Caps can be even smaller than Small Caps. Since: 1.50
 	 */
 	PETITE_CAPS = 3,
 	/**
 	 * A font with all characters
 	 * replaced by smaller variants of the capital characters.
-	 * Petite Caps can be even smaller than Small Caps.
+	 * Petite Caps can be even smaller than Small Caps. Since: 1.50
 	 */
 	ALL_PETITE_CAPS = 4,
 	/**
 	 * A font with the upper case characters
-	 * replaced by smaller variants of the capital letters.
+	 * replaced by smaller variants of the capital letters. Since: 1.50
 	 */
 	UNICASE = 5,
 	/**
 	 * A font with capital letters that
-	 * are more suitable for all-uppercase titles.
+	 * are more suitable for all-uppercase titles. Since: 1.50
 	 */
 	TITLE_CAPS = 6,
 }
@@ -1725,7 +1719,7 @@ struct PangoAttrFontFeatures
 	 */
 	PangoAttribute attr;
 	/**
-	 * the featues, as a string in CSS syntax
+	 * the features, as a string in CSS syntax
 	 */
 	char* features;
 }
@@ -2518,8 +2512,9 @@ public alias extern(C) void* function(void* userData) PangoAttrDataCopyFunc;
 public alias extern(C) int function(PangoAttribute* attribute, void* userData) PangoAttrFilterFunc;
 
 /**
- * Callback used by pango_fontset_foreach() when enumerating
- * fonts in a fontset.
+ * Callback used when enumerating fonts in a fontset.
+ *
+ * See [method@Pango.Fontset.foreach].
  *
  * Params:
  *     fontset = a `PangoFontset`
@@ -2643,7 +2638,7 @@ alias PANGO_VERSION_MAJOR = VERSION_MAJOR;
 /**
  * The micro component of the version of Pango available at compile-time.
  */
-enum VERSION_MICRO = 3;
+enum VERSION_MICRO = 7;
 alias PANGO_VERSION_MICRO = VERSION_MICRO;
 
 /**
@@ -2655,5 +2650,5 @@ alias PANGO_VERSION_MINOR = VERSION_MINOR;
 /**
  * A string literal containing the version of Pango available at compile-time.
  */
-enum VERSION_STRING = "1.50.3";
+enum VERSION_STRING = "1.50.7";
 alias PANGO_VERSION_STRING = VERSION_STRING;

@@ -39,9 +39,9 @@ public  import gtk.c.types;
  * item.
  * 
  * Note that the selection is *persistent* -- if the selected item is removed
- * and re-added in the same ::items-changed emission, it stays selected.
- * In particular, this means that changing the sort order of an underlying sort
- * model will preserve the selection.
+ * and re-added in the same [signal@Gio.ListModel::items-changed] emission, it
+ * stays selected. In particular, this means that changing the sort order of an
+ * underlying sort model will preserve the selection.
  */
 public class SingleSelection : ObjectG, ListModelIF, SelectionModelIF
 {

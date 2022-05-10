@@ -1454,7 +1454,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * This function will cause an implicit copy of the pixbuf data if the
 	 * pixbuf was created from read-only data.
 	 *
-	 * Please see the section on [image data](#image-data) for information
+	 * Please see the section on [image data](class.Pixbuf.html#image-data) for information
 	 * about how the pixel data is stored in memory.
 	 *
 	 * Returns: A pointer to the pixbuf's

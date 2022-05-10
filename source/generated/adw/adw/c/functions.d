@@ -354,9 +354,11 @@ shared static this()
 	Linker.link(adw_preferences_group_new, "adw_preferences_group_new", LIBRARY_ADW);
 	Linker.link(adw_preferences_group_add, "adw_preferences_group_add", LIBRARY_ADW);
 	Linker.link(adw_preferences_group_get_description, "adw_preferences_group_get_description", LIBRARY_ADW);
+	Linker.link(adw_preferences_group_get_header_suffix, "adw_preferences_group_get_header_suffix", LIBRARY_ADW);
 	Linker.link(adw_preferences_group_get_title, "adw_preferences_group_get_title", LIBRARY_ADW);
 	Linker.link(adw_preferences_group_remove, "adw_preferences_group_remove", LIBRARY_ADW);
 	Linker.link(adw_preferences_group_set_description, "adw_preferences_group_set_description", LIBRARY_ADW);
+	Linker.link(adw_preferences_group_set_header_suffix, "adw_preferences_group_set_header_suffix", LIBRARY_ADW);
 	Linker.link(adw_preferences_group_set_title, "adw_preferences_group_set_title", LIBRARY_ADW);
 
 	// adw.PreferencesPage
@@ -379,8 +381,10 @@ shared static this()
 	Linker.link(adw_preferences_row_get_type, "adw_preferences_row_get_type", LIBRARY_ADW);
 	Linker.link(adw_preferences_row_new, "adw_preferences_row_new", LIBRARY_ADW);
 	Linker.link(adw_preferences_row_get_title, "adw_preferences_row_get_title", LIBRARY_ADW);
+	Linker.link(adw_preferences_row_get_title_selectable, "adw_preferences_row_get_title_selectable", LIBRARY_ADW);
 	Linker.link(adw_preferences_row_get_use_underline, "adw_preferences_row_get_use_underline", LIBRARY_ADW);
 	Linker.link(adw_preferences_row_set_title, "adw_preferences_row_set_title", LIBRARY_ADW);
+	Linker.link(adw_preferences_row_set_title_selectable, "adw_preferences_row_set_title_selectable", LIBRARY_ADW);
 	Linker.link(adw_preferences_row_set_use_underline, "adw_preferences_row_set_use_underline", LIBRARY_ADW);
 
 	// adw.PreferencesWindow
@@ -1074,9 +1078,11 @@ __gshared extern(C)
 	GtkWidget* function() c_adw_preferences_group_new;
 	void function(AdwPreferencesGroup* self, GtkWidget* child) c_adw_preferences_group_add;
 	const(char)* function(AdwPreferencesGroup* self) c_adw_preferences_group_get_description;
+	GtkWidget* function(AdwPreferencesGroup* self) c_adw_preferences_group_get_header_suffix;
 	const(char)* function(AdwPreferencesGroup* self) c_adw_preferences_group_get_title;
 	void function(AdwPreferencesGroup* self, GtkWidget* child) c_adw_preferences_group_remove;
 	void function(AdwPreferencesGroup* self, const(char)* description) c_adw_preferences_group_set_description;
+	void function(AdwPreferencesGroup* self, GtkWidget* suffix) c_adw_preferences_group_set_header_suffix;
 	void function(AdwPreferencesGroup* self, const(char)* title) c_adw_preferences_group_set_title;
 
 	// adw.PreferencesPage
@@ -1099,8 +1105,10 @@ __gshared extern(C)
 	GType function() c_adw_preferences_row_get_type;
 	GtkWidget* function() c_adw_preferences_row_new;
 	const(char)* function(AdwPreferencesRow* self) c_adw_preferences_row_get_title;
+	int function(AdwPreferencesRow* self) c_adw_preferences_row_get_title_selectable;
 	int function(AdwPreferencesRow* self) c_adw_preferences_row_get_use_underline;
 	void function(AdwPreferencesRow* self, const(char)* title) c_adw_preferences_row_set_title;
+	void function(AdwPreferencesRow* self, int titleSelectable) c_adw_preferences_row_set_title_selectable;
 	void function(AdwPreferencesRow* self, int useUnderline) c_adw_preferences_row_set_use_underline;
 
 	// adw.PreferencesWindow
@@ -1792,9 +1800,11 @@ alias c_adw_preferences_group_get_type adw_preferences_group_get_type;
 alias c_adw_preferences_group_new adw_preferences_group_new;
 alias c_adw_preferences_group_add adw_preferences_group_add;
 alias c_adw_preferences_group_get_description adw_preferences_group_get_description;
+alias c_adw_preferences_group_get_header_suffix adw_preferences_group_get_header_suffix;
 alias c_adw_preferences_group_get_title adw_preferences_group_get_title;
 alias c_adw_preferences_group_remove adw_preferences_group_remove;
 alias c_adw_preferences_group_set_description adw_preferences_group_set_description;
+alias c_adw_preferences_group_set_header_suffix adw_preferences_group_set_header_suffix;
 alias c_adw_preferences_group_set_title adw_preferences_group_set_title;
 
 // adw.PreferencesPage
@@ -1817,8 +1827,10 @@ alias c_adw_preferences_page_set_use_underline adw_preferences_page_set_use_unde
 alias c_adw_preferences_row_get_type adw_preferences_row_get_type;
 alias c_adw_preferences_row_new adw_preferences_row_new;
 alias c_adw_preferences_row_get_title adw_preferences_row_get_title;
+alias c_adw_preferences_row_get_title_selectable adw_preferences_row_get_title_selectable;
 alias c_adw_preferences_row_get_use_underline adw_preferences_row_get_use_underline;
 alias c_adw_preferences_row_set_title adw_preferences_row_set_title;
+alias c_adw_preferences_row_set_title_selectable adw_preferences_row_set_title_selectable;
 alias c_adw_preferences_row_set_use_underline adw_preferences_row_set_use_underline;
 
 // adw.PreferencesWindow

@@ -45,6 +45,10 @@ shared static this()
 
 	Linker.link(hb_gobject_buffer_get_type, "hb_gobject_buffer_get_type", LIBRARY_HARFBUZZ);
 
+	// harfbuzz.draw_funcs_t
+
+	Linker.link(hb_gobject_draw_funcs_get_type, "hb_gobject_draw_funcs_get_type", LIBRARY_HARFBUZZ);
+
 	// harfbuzz.face_t
 
 	Linker.link(hb_gobject_face_get_type, "hb_gobject_face_get_type", LIBRARY_HARFBUZZ);
@@ -122,6 +126,10 @@ __gshared extern(C)
 
 	GType function() c_hb_gobject_buffer_get_type;
 
+	// harfbuzz.draw_funcs_t
+
+	GType function() c_hb_gobject_draw_funcs_get_type;
+
 	// harfbuzz.face_t
 
 	GType function() c_hb_gobject_face_get_type;
@@ -196,6 +204,10 @@ alias c_hb_gobject_blob_get_type hb_gobject_blob_get_type;
 // harfbuzz.buffer_t
 
 alias c_hb_gobject_buffer_get_type hb_gobject_buffer_get_type;
+
+// harfbuzz.draw_funcs_t
+
+alias c_hb_gobject_draw_funcs_get_type hb_gobject_draw_funcs_get_type;
 
 // harfbuzz.face_t
 

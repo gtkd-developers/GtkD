@@ -312,6 +312,8 @@ public class Leaflet : Widget, SwipeableIF, OrientableIF
 	/**
 	 * Gets whether @self is homogeneous.
 	 *
+	 * Returns: whether @self is homogeneous
+	 *
 	 * Since: 1.0
 	 */
 	public bool getHomogeneous()

@@ -39,7 +39,7 @@ private import linker.Loader;
 
 /**
  * `GskRenderNode` is the basic block in a scene graph to be
- * rendered using `GskRenderer`.
+ * rendered using [class@Gsk.Renderer].
  * 
  * Each node has a parent, except the top-level node; each node may have
  * children nodes.
@@ -95,7 +95,7 @@ public class RenderNode
 	}
 
 	/**
-	 * Loads data previously created via gsk_render_node_serialize().
+	 * Loads data previously created via [method@Gsk.RenderNode.serialize].
 	 *
 	 * For a discussion of the supported format, see that function.
 	 *
@@ -123,7 +123,7 @@ public class RenderNode
 	 *
 	 * Typically, you'll use this function to implement fallback rendering
 	 * of `GskRenderNode`s on an intermediate Cairo context, instead of using
-	 * the drawing context associated to a `GdkSurface`'s rendering buffer.
+	 * the drawing context associated to a [class@Gdk.Surface]'s rendering buffer.
 	 *
 	 * For advanced nodes that cannot be supported using Cairo, in particular
 	 * for nodes doing 3D operations, this function may fail.
@@ -218,8 +218,8 @@ public class RenderNode
 	}
 
 	/**
-	 * This function is equivalent to calling gsk_render_node_serialize()
-	 * followed by g_file_set_contents().
+	 * This function is equivalent to calling [method@Gsk.RenderNode.serialize]
+	 * followed by [func@GLib.file_set_contents].
 	 *
 	 * See those two functions for details on the arguments.
 	 *

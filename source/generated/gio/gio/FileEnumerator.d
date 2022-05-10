@@ -185,6 +185,9 @@ public class FileEnumerator : ObjectG
 	 * directory of @enumerator.  This function is primarily intended to be used
 	 * inside loops with g_file_enumerator_next_file().
 	 *
+	 * To use this, %G_FILE_ATTRIBUTE_STANDARD_NAME must have been listed in the
+	 * attributes list used when creating the #GFileEnumerator.
+	 *
 	 * This is a convenience method that's equivalent to:
 	 * |[<!-- language="C" -->
 	 * gchar *name = g_file_info_get_name (info);

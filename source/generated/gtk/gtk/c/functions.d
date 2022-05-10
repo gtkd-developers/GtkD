@@ -5398,7 +5398,7 @@ __gshared extern(C)
 	GtkCssProvider* function() c_gtk_css_provider_new;
 	void function(GtkCssProvider* cssProvider, char* data, ptrdiff_t length) c_gtk_css_provider_load_from_data;
 	void function(GtkCssProvider* cssProvider, GFile* file) c_gtk_css_provider_load_from_file;
-	void function(GtkCssProvider* cssProvider, const(char)* path) c_gtk_css_provider_load_from_path;
+	void function(GtkCssProvider* cssProvider, char* path) c_gtk_css_provider_load_from_path;
 	void function(GtkCssProvider* cssProvider, const(char)* resourcePath) c_gtk_css_provider_load_from_resource;
 	void function(GtkCssProvider* provider, const(char)* name, const(char)* variant) c_gtk_css_provider_load_named;
 	char* function(GtkCssProvider* provider) c_gtk_css_provider_to_string;

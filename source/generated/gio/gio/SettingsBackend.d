@@ -38,7 +38,7 @@ private import gobject.ObjectG;
  * non-strictly-typed data that is stored in a hierarchy. To implement
  * an alternative storage backend for #GSettings, you need to implement
  * the #GSettingsBackend interface and then make it implement the
- * extension point #G_SETTINGS_BACKEND_EXTENSION_POINT_NAME.
+ * extension point %G_SETTINGS_BACKEND_EXTENSION_POINT_NAME.
  * 
  * The interface defines methods for reading and writing values, a
  * method for determining if writing of certain values will fail

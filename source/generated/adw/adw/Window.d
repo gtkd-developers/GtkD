@@ -64,7 +64,7 @@ private import gtk.Window : DGtkWindow = Window;
  * <object class="GtkHeaderBar"/>
  * </child>
  * <child>
- * ...
+ * <!-- ... -->
  * </child>
  * </object>
  * </property>

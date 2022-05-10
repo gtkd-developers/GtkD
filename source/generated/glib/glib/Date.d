@@ -191,16 +191,19 @@ public final class Date
 	}
 
 	/**
-	 * Like g_date_new(), but also sets the value of the date. Assuming the
-	 * day-month-year triplet you pass in represents an existing day, the
-	 * returned date will be valid.
+	 * Create a new #GDate representing the given day-month-year triplet.
+	 *
+	 * The triplet you pass in must represent a valid date. Use g_date_valid_dmy()
+	 * if needed to validate it. The returned #GDate is guaranteed to be non-%NULL
+	 * and valid.
 	 *
 	 * Params:
 	 *     day = day of the month
 	 *     month = month of the year
 	 *     year = year
 	 *
-	 * Returns: a newly-allocated #GDate initialized with @day, @month, and @year
+	 * Returns: a newly-allocated #GDate
+	 *     initialized with @day, @month, and @year
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -217,14 +220,17 @@ public final class Date
 	}
 
 	/**
-	 * Like g_date_new(), but also sets the value of the date. Assuming the
-	 * Julian day number you pass in is valid (greater than 0, less than an
-	 * unreasonably large number), the returned date will be valid.
+	 * Create a new #GDate representing the given Julian date.
+	 *
+	 * The @julian_day you pass in must be valid. Use g_date_valid_julian() if
+	 * needed to validate it. The returned #GDate is guaranteed to be non-%NULL and
+	 * valid.
 	 *
 	 * Params:
 	 *     julianDay = days since January 1, Year 1
 	 *
-	 * Returns: a newly-allocated #GDate initialized with @julian_day
+	 * Returns: a newly-allocated #GDate initialized
+	 *     with @julian_day
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -85,6 +85,7 @@ private import gtk.Widget;
  * </property>
  * </object>
  * </child>
+ * </object>
  * ```
  * 
  * ## CSS nodes

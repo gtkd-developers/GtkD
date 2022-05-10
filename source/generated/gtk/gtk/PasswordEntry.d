@@ -130,7 +130,7 @@ public class PasswordEntry : Widget, EditableIF
 	/**
 	 * Gets the menu model set with gtk_password_entry_set_extra_menu().
 	 *
-	 * Returns: (nullable): the menu model
+	 * Returns: the menu model
 	 */
 	public MenuModel getExtraMenu()
 	{

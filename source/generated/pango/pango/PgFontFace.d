@@ -98,9 +98,9 @@ public class PgFontFace : ObjectG
 	/**
 	 * Gets a name representing the style of this face.
 	 *
-	 * The name identifies the face among the different faces
-	 * in the `PangoFontFamily` for the face. It is suitable
-	 * for displaying to users.
+	 * Note that a font family may contain multiple faces
+	 * with the same name (e.g. a variable and a non-variable
+	 * face for the same style).
 	 *
 	 * Returns: the face name for the face. This string is
 	 *     owned by the face object and must not be modified or freed.

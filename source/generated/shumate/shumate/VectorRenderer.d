@@ -37,7 +37,9 @@ private import shumate.c.functions;
 public  import shumate.c.types;
 
 
-/** */
+/**
+ * A [class@Shumate.MapSource] that renders tiles from a given vector data source.
+ */
 public class VectorRenderer : MapSource, InitableIF
 {
 	/** the main Gtk struct */

@@ -342,7 +342,7 @@ public class Resolver : ObjectG
 	/**
 	 * This differs from g_resolver_lookup_by_name() in that you can modify
 	 * the lookup behavior with @flags. For example this can be used to limit
-	 * results with #G_RESOLVER_NAME_LOOKUP_FLAGS_IPV4_ONLY.
+	 * results with %G_RESOLVER_NAME_LOOKUP_FLAGS_IPV4_ONLY.
 	 *
 	 * Params:
 	 *     hostname = the hostname to look up

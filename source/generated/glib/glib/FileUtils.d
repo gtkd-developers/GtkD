@@ -151,7 +151,7 @@ public struct FileUtils
 	 * contents and @length to the length of the file contents in bytes. The string
 	 * stored in @contents will be nul-terminated, so for text files you can pass
 	 * %NULL for the @length argument. If the call was not successful, it returns
-	 * %FALSE and sets @error. The error domain is #G_FILE_ERROR. Possible error
+	 * %FALSE and sets @error. The error domain is %G_FILE_ERROR. Possible error
 	 * codes are those in the #GFileError enumeration. In the error case,
 	 * @contents is set to %NULL and @length is set to zero.
 	 *
@@ -238,8 +238,8 @@ public struct FileUtils
 	 * Params:
 	 *     filename = the symbolic link
 	 *
-	 * Returns: A newly-allocated string with the contents of
-	 *     the symbolic link, or %NULL if an error occurred.
+	 * Returns: A newly-allocated string with
+	 *     the contents of the symbolic link, or %NULL if an error occurred.
 	 *
 	 * Since: 2.4
 	 *

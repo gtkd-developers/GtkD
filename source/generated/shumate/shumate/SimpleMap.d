@@ -43,7 +43,13 @@ private import shumate.c.functions;
 public  import shumate.c.types;
 
 
-/** */
+/**
+ * A ready-to-use map [class@Gtk.Widget].If you want to use your own implementation,
+ * you can look at the [class@Shumate.Map] widget.
+ * 
+ * The simple map contains a zoom widget, a [class@Shumate.License] at the bottom,
+ * a [class@Shumate.Scale] and a [class@Shumate.Compass].
+ */
 public class SimpleMap : Widget
 {
 	/** the main Gtk struct */

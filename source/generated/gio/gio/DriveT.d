@@ -268,7 +268,7 @@ public template DriveT(TStruct)
 	/**
 	 * Gets the identifier of the given kind for @drive. The only
 	 * identifier currently available is
-	 * #G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
+	 * %G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
 	 *
 	 * Params:
 	 *     kind = the kind of identifier to return

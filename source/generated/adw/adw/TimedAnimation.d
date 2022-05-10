@@ -130,9 +130,9 @@ public class TimedAnimation : Animation
 	}
 
 	/**
-	 * Gets the duration of @self in milliseconds.
+	 * Gets the duration of @self.
 	 *
-	 * Returns: the duration of @self
+	 * Returns: the duration of @self, in milliseconds
 	 *
 	 * Since: 1.0
 	 */
@@ -215,12 +215,12 @@ public class TimedAnimation : Animation
 	}
 
 	/**
-	 * Sets the duration of @self in milliseconds.
+	 * Sets the duration of @self.
 	 *
 	 * If the animation repeats more than once, sets the duration of one iteration.
 	 *
 	 * Params:
-	 *     duration = the duration to use
+	 *     duration = the duration to use, in milliseconds
 	 *
 	 * Since: 1.0
 	 */

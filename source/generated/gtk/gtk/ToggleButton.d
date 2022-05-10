@@ -53,7 +53,7 @@ private import std.algorithm;
  * To simply switch the state of a toggle button, use
  * [method@Gtk.ToggleButton.toggled].
  * 
- * # Grouping
+ * ## Grouping
  * 
  * Toggle buttons can be grouped together, to form mutually exclusive
  * groups - only one of the buttons can be toggled at a time, and toggling
@@ -61,20 +61,25 @@ private import std.algorithm;
  * 
  * To add a `GtkToggleButton` to a group, use [method@Gtk.ToggleButton.set_group].
  * 
- * # CSS nodes
+ * ## CSS nodes
  * 
  * `GtkToggleButton` has a single CSS node with name button. To differentiate
- * it from a plain `GtkButton`, it gets the .toggle style class.
+ * it from a plain `GtkButton`, it gets the `.toggle` style class.
  * 
  * ## Creating two `GtkToggleButton` widgets.
  * 
  * ```c
- * static void output_state (GtkToggleButton *source, gpointer user_data)
+ * static void
+ * output_state (GtkToggleButton *source,
+ * gpointer         user_data)
  * {
- * printf ("Active: %d\n", gtk_toggle_button_get_active (source));
+ * g_print ("Toggle button "%s" is active: %s",
+ * gtk_button_get_label (GTK_BUTTON (source)),
+ * gtk_toggle_button_get_active (source) ? "Yes" : "No");
  * }
  * 
- * void make_toggles (void)
+ * static void
+ * make_toggles (void)
  * {
  * GtkWidget *window, *toggle1, *toggle2;
  * GtkWidget *box;
@@ -83,7 +88,7 @@ private import std.algorithm;
  * window = gtk_window_new ();
  * box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
  * 
- * text = "Hi, I’m a toggle button.";
+ * text = "Hi, I’m toggle button one";
  * toggle1 = gtk_toggle_button_new_with_label (text);
  * 
  * g_signal_connect (toggle1, "toggled",
@@ -91,7 +96,7 @@ private import std.algorithm;
  * NULL);
  * gtk_box_append (GTK_BOX (box), toggle1);
  * 
- * text = "Hi, I’m a toggle button.";
+ * text = "Hi, I’m toggle button two";
  * toggle2 = gtk_toggle_button_new_with_label (text);
  * g_signal_connect (toggle2, "toggled",
  * G_CALLBACK (output_state),

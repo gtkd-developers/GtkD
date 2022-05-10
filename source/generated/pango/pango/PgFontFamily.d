@@ -161,6 +161,12 @@ public class PgFontFamily : ObjectG
 	 * The faces in a family share a common design, but differ in slant, weight,
 	 * width and other aspects.
 	 *
+	 * Note that the returned faces are not in any particular order, and
+	 * multiple faces may have the same name or characteristics.
+	 *
+	 * `PangoFontFamily` also implemented the [iface@Gio.ListModel] interface
+	 * for enumerating faces.
+	 *
 	 * Params:
 	 *     faces = location to store an array of pointers to `PangoFontFace` objects,
 	 *         or %NULL. This array should be freed with g_free() when it is no

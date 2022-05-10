@@ -180,7 +180,7 @@ public enum GBusNameOwnerFlags
 	ALLOW_REPLACEMENT = 1,
 	/**
 	 * If another message bus connection owns the name and have
-	 * specified #G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
+	 * specified %G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
 	 */
 	REPLACE = 2,
 	/**
@@ -320,6 +320,10 @@ public enum GCredentialsType
 	 * The native credentials type is a `struct xucred`. Added in 2.66.
 	 */
 	APPLE_XUCRED = 6,
+	/**
+	 * The native credentials type is a PID `DWORD`. Added in 2.72.
+	 */
+	WIN32_PID = 7,
 }
 alias GCredentialsType CredentialsType;
 
@@ -837,6 +841,12 @@ public enum GDBusProxyFlags
 	 * and only if %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START is not also specified.
 	 */
 	DO_NOT_AUTO_START_AT_CONSTRUCTION = 16,
+	/**
+	 * Don't actually send the AddMatch D-Bus
+	 * call for this signal subscription. This gives you more control
+	 * over which match rules you add (but you must add them manually). (Since: 2.72)
+	 */
+	NO_MATCH_RULE = 32,
 }
 alias GDBusProxyFlags DBusProxyFlags;
 
@@ -1413,7 +1423,7 @@ alias GFileType FileType;
 /**
  * Indicates a hint from the file system whether files should be
  * previewed in a file manager. Returned as the value of the key
- * #G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
+ * %G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
  */
 public enum GFilesystemPreviewType
 {
@@ -1447,7 +1457,7 @@ alias GFilesystemPreviewType FilesystemPreviewType;
  * }
  * ]|
  * but should instead treat all unrecognized error codes the same as
- * #G_IO_ERROR_FAILED.
+ * %G_IO_ERROR_FAILED.
  *
  * See also #GPollableReturn for a cheaper way of returning
  * %G_IO_ERROR_WOULD_BLOCK to callers without allocating a #GError.
@@ -2124,7 +2134,7 @@ public enum GSettingsBindFlags
 	 */
 	NO_SENSITIVITY = 4,
 	/**
-	 * When set in addition to #G_SETTINGS_BIND_GET, set the #GObject property
+	 * When set in addition to %G_SETTINGS_BIND_GET, set the #GObject property
 	 * value initially from the setting, but do not listen for changes of the setting
 	 */
 	GET_NO_CHANGES = 8,
@@ -2414,6 +2424,12 @@ public enum GSubprocessFlags
 	 * over the "standard" file descriptors (stdin, stdout, stderr).
 	 */
 	INHERIT_FDS = 128,
+	/**
+	 * if path searching is
+	 * needed when spawning the subprocess, use the `PATH` in the launcher
+	 * environment. (Since: 2.72)
+	 */
+	SEARCH_PATH_FROM_ENVP = 256,
 }
 alias GSubprocessFlags SubprocessFlags;
 
@@ -2455,10 +2471,16 @@ alias GTlsAuthenticationMode TlsAuthenticationMode;
 
 /**
  * A set of flags describing TLS certification validation. This can be
- * used to set which validation steps to perform (eg, with
- * g_tls_client_connection_set_validation_flags()), or to describe why
- * a particular certificate was rejected (eg, in
- * #GTlsConnection::accept-certificate).
+ * used to describe why a particular certificate was rejected (for
+ * example, in #GTlsConnection::accept-certificate).
+ *
+ * GLib guarantees that if certificate verification fails, at least one
+ * flag will be set, but it does not guarantee that all possible flags
+ * will be set. Accordingly, you may not safely decide to ignore any
+ * particular type of error. For example, it would be incorrect to mask
+ * %G_TLS_CERTIFICATE_EXPIRED if you want to allow expired certificates,
+ * because this could potentially be the only error flag set even if
+ * other problems exist with the certificate.
  *
  * Since: 2.28
  */
@@ -2671,6 +2693,11 @@ public enum GTlsError
 	 * downgrade attack. Since: 2.60
 	 */
 	INAPPROPRIATE_FALLBACK = 7,
+	/**
+	 * The certificate failed
+	 * to load because a password was incorrect. Since: 2.72
+	 */
+	BAD_CERTIFICATE_PASSWORD = 8,
 }
 alias GTlsError TlsError;
 
@@ -3352,13 +3379,13 @@ struct GAppLaunchContextClass
 	/** */
 	extern(C) void function(GAppLaunchContext* context, GAppInfo* info, GVariant* platformData) launched;
 	/** */
+	extern(C) void function(GAppLaunchContext* context, GAppInfo* info, GVariant* platformData) launchStarted;
+	/** */
 	extern(C) void function() GReserved1;
 	/** */
 	extern(C) void function() GReserved2;
 	/** */
 	extern(C) void function() GReserved3;
-	/** */
-	extern(C) void function() GReserved4;
 }
 
 struct GAppLaunchContextPrivate;
@@ -4423,6 +4450,42 @@ struct GDatagramBasedInterface
 	extern(C) int function(GDatagramBased* datagramBased, GIOCondition condition, long timeout, GCancellable* cancellable, GError** err) conditionWait;
 }
 
+struct GDebugController;
+
+struct GDebugControllerDBus
+{
+	GObject parentInstance;
+}
+
+/**
+ * The virtual function table for #GDebugControllerDBus.
+ *
+ * Since: 2.72
+ */
+struct GDebugControllerDBusClass
+{
+	/**
+	 * The parent class.
+	 */
+	GObjectClass parentClass;
+	/** */
+	extern(C) int function(GDebugControllerDBus* controller, GDBusMethodInvocation* invocation) authorize;
+	void*[12] padding;
+}
+
+/**
+ * The virtual function table for #GDebugController.
+ *
+ * Since: 2.72
+ */
+struct GDebugControllerInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+}
+
 struct GDesktopAppInfo;
 
 struct GDesktopAppInfoClass
@@ -5115,9 +5178,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     relativePath = a given relative path string
-	 * Returns: #GFile to the resolved path.
-	 *     %NULL if @relative_path is %NULL or if @file is invalid.
-	 *     Free the returned object with g_object_unref().
+	 * Returns: a #GFile for the resolved path.
 	 */
 	extern(C) GFile* function(GFile* file, char* relativePath) resolveRelativePath;
 	/**
@@ -5583,9 +5644,17 @@ struct GFileIface
 	 */
 	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) move;
 	/** */
-	extern(C) void function() MoveAsync;
-	/** */
-	extern(C) void function() MoveFinish;
+	extern(C) void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) moveAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input source #GFile
+	 *     result = a #GAsyncResult
+	 * Returns: %TRUE on successful file move, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) moveFinish;
 	/** */
 	extern(C) void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountMountable;
 	/**
@@ -9846,6 +9915,13 @@ alias G_DBUS_METHOD_INVOCATION_HANDLED = DBUS_METHOD_INVOCATION_HANDLED;
  */
 enum DBUS_METHOD_INVOCATION_UNHANDLED = false;
 alias G_DBUS_METHOD_INVOCATION_UNHANDLED = DBUS_METHOD_INVOCATION_UNHANDLED;
+
+/**
+ * Extension point for debug control functionality.
+ * See [Extending GIO][extending-gio].
+ */
+enum DEBUG_CONTROLLER_EXTENSION_POINT_NAME = "gio-debug-controller";
+alias G_DEBUG_CONTROLLER_EXTENSION_POINT_NAME = DEBUG_CONTROLLER_EXTENSION_POINT_NAME;
 
 /**
  * Extension point for default handler to URI association. See

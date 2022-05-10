@@ -195,7 +195,7 @@ public struct ContentType
 	 * on the other argument.
 	 *
 	 * Params:
-	 *     filename = a string, or %NULL
+	 *     filename = a path, or %NULL
 	 *     data = a stream of data, or %NULL
 	 *     resultUncertain = return location for the certainty
 	 *         of the result, or %NULL

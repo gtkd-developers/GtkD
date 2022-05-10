@@ -244,8 +244,6 @@ public class Device : ObjectG
 	/**
 	 * Determines the type of the device.
 	 *
-	 * Deprecated: Use gdk_device_tool_get_tool_type() instead
-	 *
 	 * Returns: a `GdkInputSource`
 	 */
 	public GdkInputSource getSource()

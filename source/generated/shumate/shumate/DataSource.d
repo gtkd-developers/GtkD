@@ -36,7 +36,9 @@ public  import shumate.c.types;
 private import std.algorithm;
 
 
-/** */
+/**
+ * The base class used to retrieve tiles as [struct@GLib.Bytes].
+ */
 public class DataSource : ObjectG
 {
 	/** the main Gtk struct */

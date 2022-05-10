@@ -836,9 +836,10 @@ public struct Unicode
 	 *         words read, or %NULL. If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will
 	 *         be returned in case @str contains a trailing partial character. If
 	 *         an error occurs then the index of the invalid input is stored here.
+	 *         It’s guaranteed to be non-negative.
 	 *     itemsWritten = location to store number
 	 *         of bytes written, or %NULL. The value stored here does not include the
-	 *         trailing 0 byte.
+	 *         trailing 0 byte. It’s guaranteed to be non-negative.
 	 *
 	 * Returns: a pointer to a newly allocated UTF-8 string.
 	 *     This value must be freed with g_free(). If an error occurs,
@@ -896,6 +897,10 @@ public struct Unicode
 	 * faster to obtain collation keys with g_utf8_collate_key() and
 	 * compare the keys with strcmp() when sorting instead of sorting
 	 * the original strings.
+	 *
+	 * If the two strings are not comparable due to being in different collation
+	 * sequences, the result is undefined. This can happen if the strings are in
+	 * different language scripts, for example.
 	 *
 	 * Params:
 	 *     str1 = a UTF-8 encoded string
@@ -1317,10 +1322,14 @@ public struct Unicode
 	 * Copies a substring out of a UTF-8 encoded string.
 	 * The substring will contain @end_pos - @start_pos characters.
 	 *
+	 * Since GLib 2.72, `-1` can be passed to @end_pos to indicate the
+	 * end of the string.
+	 *
 	 * Params:
 	 *     str = a UTF-8 encoded string
 	 *     startPos = a character offset within @str
-	 *     endPos = another character offset within @str
+	 *     endPos = another character offset within @str,
+	 *         or `-1` to indicate the end of the string
 	 *
 	 * Returns: a newly allocated copy of the requested
 	 *     substring. Free with g_free() when no longer needed.

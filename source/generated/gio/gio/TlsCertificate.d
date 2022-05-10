@@ -76,6 +76,54 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
+	 * Creates a #GTlsCertificate from the PEM-encoded data in @cert_file
+	 * and @key_file. The returned certificate will be the first certificate
+	 * found in @cert_file. As of GLib 2.44, if @cert_file contains more
+	 * certificates it will try to load a certificate chain. All
+	 * certificates will be verified in the order found (top-level
+	 * certificate should be the last one in the file) and the
+	 * #GTlsCertificate:issuer property of each certificate will be set
+	 * accordingly if the verification succeeds. If any certificate in the
+	 * chain cannot be verified, the first certificate in the file will
+	 * still be returned.
+	 *
+	 * If either file cannot be read or parsed, the function will return
+	 * %NULL and set @error. Otherwise, this behaves like
+	 * g_tls_certificate_new_from_pem().
+	 *
+	 * Params:
+	 *     certFile = file containing one or more PEM-encoded
+	 *         certificates to import
+	 *     keyFile = file containing a PEM-encoded private key
+	 *         to import
+	 *
+	 * Returns: the new certificate, or %NULL on error
+	 *
+	 * Since: 2.28
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static TlsCertificate newFromFiles(string certFile, string keyFile)
+	{
+		GError* err = null;
+
+		auto __p = g_tls_certificate_new_from_files(Str.toStringz(certFile), Str.toStringz(keyFile), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_files");
+		}
+
+		return new TlsCertificate(cast(GTlsCertificate*) __p, true);
+	}
+
+	/**
 	 * Creates a #GTlsCertificate from a PKCS \#11 URI.
 	 *
 	 * An example @pkcs11_uri would be `pkcs11:model=Model;manufacturer=Manufacture;serial=1;token=My%20Client%20Certificate;id=%01`
@@ -140,22 +188,18 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
-	 * Creates a #GTlsCertificate from the PEM-encoded data in @file. The
-	 * returned certificate will be the first certificate found in @file. As
-	 * of GLib 2.44, if @file contains more certificates it will try to load
-	 * a certificate chain. All certificates will be verified in the order
-	 * found (top-level certificate should be the last one in the file) and
-	 * the #GTlsCertificate:issuer property of each certificate will be set
-	 * accordingly if the verification succeeds. If any certificate in the
-	 * chain cannot be verified, the first certificate in the file will
-	 * still be returned.
+	 * Creates a #GTlsCertificate from the data in @file.
+	 *
+	 * As of 2.72, if the filename ends in `.p12` or `.pfx` the data is loaded by
+	 * g_tls_certificate_new_from_pkcs12() otherwise it is loaded by
+	 * g_tls_certificate_new_from_pem(). See those functions for
+	 * exact details.
 	 *
 	 * If @file cannot be read or parsed, the function will return %NULL and
-	 * set @error. Otherwise, this behaves like
-	 * g_tls_certificate_new_from_pem().
+	 * set @error.
 	 *
 	 * Params:
-	 *     file = file containing a PEM-encoded certificate to import
+	 *     file = file containing a certificate to import
 	 *
 	 * Returns: the new certificate, or %NULL on error
 	 *
@@ -184,39 +228,31 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
-	 * Creates a #GTlsCertificate from the PEM-encoded data in @cert_file
-	 * and @key_file. The returned certificate will be the first certificate
-	 * found in @cert_file. As of GLib 2.44, if @cert_file contains more
-	 * certificates it will try to load a certificate chain. All
-	 * certificates will be verified in the order found (top-level
-	 * certificate should be the last one in the file) and the
-	 * #GTlsCertificate:issuer property of each certificate will be set
-	 * accordingly if the verification succeeds. If any certificate in the
-	 * chain cannot be verified, the first certificate in the file will
-	 * still be returned.
+	 * Creates a #GTlsCertificate from the data in @file.
 	 *
-	 * If either file cannot be read or parsed, the function will return
-	 * %NULL and set @error. Otherwise, this behaves like
-	 * g_tls_certificate_new_from_pem().
+	 * If @file cannot be read or parsed, the function will return %NULL and
+	 * set @error.
+	 *
+	 * Any unknown file types will error with %G_IO_ERROR_NOT_SUPPORTED.
+	 * Currently only `.p12` and `.pfx` files are supported.
+	 * See g_tls_certificate_new_from_pkcs12() for more details.
 	 *
 	 * Params:
-	 *     certFile = file containing one or more PEM-encoded
-	 *         certificates to import
-	 *     keyFile = file containing a PEM-encoded private key
-	 *         to import
+	 *     file = file containing a certificate to import
+	 *     password = password for PKCS #12 files
 	 *
 	 * Returns: the new certificate, or %NULL on error
 	 *
-	 * Since: 2.28
+	 * Since: 2.72
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string certFile, string keyFile)
+	public this(string file, string password)
 	{
 		GError* err = null;
 
-		auto __p = g_tls_certificate_new_from_files(Str.toStringz(certFile), Str.toStringz(keyFile), &err);
+		auto __p = g_tls_certificate_new_from_file_with_password(Str.toStringz(file), Str.toStringz(password), &err);
 
 		if (err !is null)
 		{
@@ -225,7 +261,7 @@ public class TlsCertificate : ObjectG
 
 		if(__p is null)
 		{
-			throw new ConstructionException("null returned by new_from_files");
+			throw new ConstructionException("null returned by new_from_file_with_password");
 		}
 
 		this(cast(GTlsCertificate*) __p, true);
@@ -272,6 +308,55 @@ public class TlsCertificate : ObjectG
 		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pem");
+		}
+
+		this(cast(GTlsCertificate*) __p, true);
+	}
+
+	/**
+	 * Creates a #GTlsCertificate from the data in @data. It must contain
+	 * a certificate and matching private key.
+	 *
+	 * If extra certificates are included they will be verified as a chain
+	 * and the #GTlsCertificate:issuer property will be set.
+	 * All other data will be ignored.
+	 *
+	 * You can pass as single password for all of the data which will be
+	 * used both for the PKCS #12 container as well as encrypted
+	 * private keys. If decryption fails it will error with
+	 * %G_TLS_ERROR_BAD_CERTIFICATE_PASSWORD.
+	 *
+	 * This constructor requires support in the current #GTlsBackend.
+	 * If support is missing it will error with
+	 * %G_IO_ERROR_NOT_SUPPORTED.
+	 *
+	 * Other parsing failures will error with %G_TLS_ERROR_BAD_CERTIFICATE.
+	 *
+	 * Params:
+	 *     data = DER-encoded PKCS #12 format certificate data
+	 *     password = optional password for encrypted certificate data
+	 *
+	 * Returns: the new certificate, or %NULL if @data is invalid
+	 *
+	 * Since: 2.72
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ubyte[] data, string password)
+	{
+		GError* err = null;
+
+		auto __p = g_tls_certificate_new_from_pkcs12(data.ptr, cast(size_t)data.length, Str.toStringz(password), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_pkcs12");
 		}
 
 		this(cast(GTlsCertificate*) __p, true);
@@ -480,13 +565,18 @@ public class TlsCertificate : ObjectG
 	 * @trusted_ca is %NULL, that bit will never be set in the return
 	 * value.
 	 *
-	 * (All other #GTlsCertificateFlags values will always be set or unset
-	 * as appropriate.)
+	 * GLib guarantees that if certificate verification fails, at least one
+	 * error will be set in the return value, but it does not guarantee
+	 * that all possible errors will be set. Accordingly, you may not safely
+	 * decide to ignore any particular type of error. For example, it would
+	 * be incorrect to mask %G_TLS_CERTIFICATE_EXPIRED if you want to allow
+	 * expired certificates, because this could potentially be the only
+	 * error flag set even if other problems exist with the certificate.
 	 *
 	 * Because TLS session context is not used, #GTlsCertificate may not
 	 * perform as many checks on the certificates as #GTlsConnection would.
-	 * For example, certificate constraints cannot be honored, and some
-	 * revocation checks cannot be performed. The best way to verify TLS
+	 * For example, certificate constraints may not be honored, and
+	 * revocation checks may not be performed. The best way to verify TLS
 	 * certificates used by a TLS connection is to let #GTlsConnection
 	 * handle the verification.
 	 *

@@ -62,7 +62,7 @@ private import std.algorithm;
  * 
  * `GtkApplication` will automatically load menus from the `GtkBuilder`
  * resource located at "gtk/menus.ui", relative to the application's
- * resource base path (see `g_application_set_resource_base_path()`).
+ * resource base path (see [method@Gio.Application.set_resource_base_path]).
  * The menu with the ID "menubar" is taken as the application's
  * menubar. Additional menus (most interesting submenus) can be named
  * and accessed via [method@Gtk.Application.get_menu_by_id] which allows for
@@ -77,8 +77,8 @@ private import std.algorithm;
  * resources. See [method@Gtk.IconTheme.add_resource_path] for more
  * information.
  * 
- * If there is a resource located at "gtk/help-overlay.ui" which
- * defines a [class@Gtk.ShortcutsWindow] with ID "help_overlay" then
+ * If there is a resource located at `gtk/help-overlay.ui` which
+ * defines a [class@Gtk.ShortcutsWindow] with ID `help_overlay` then
  * `GtkApplication` associates an instance of this shortcuts window with
  * each [class@Gtk.ApplicationWindow] and sets up the keyboard accelerator
  * <kbd>Control</kbd>+<kbd>?</kbd> to open it. To create a menu item that

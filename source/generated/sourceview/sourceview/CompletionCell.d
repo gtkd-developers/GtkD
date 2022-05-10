@@ -139,7 +139,12 @@ public class CompletionCell : Widget
 		gtk_source_completion_cell_set_paintable(gtkSourceCompletionCell, (paintable is null) ? null : paintable.getPaintableStruct());
 	}
 
-	/** */
+	/**
+	 * Sets the text for the column cell. Use %NULL to unset.
+	 *
+	 * Params:
+	 *     text = the text to set or %NULL
+	 */
 	public void setText(string text)
 	{
 		gtk_source_completion_cell_set_text(gtkSourceCompletionCell, Str.toStringz(text));

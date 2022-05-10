@@ -239,7 +239,7 @@ public class DropTarget : EventController
 			return null;
 		}
 
-		return ObjectG.getDObject!(ContentFormats)(cast(GdkContentFormats*) __p, true);
+		return ObjectG.getDObject!(ContentFormats)(cast(GdkContentFormats*) __p);
 	}
 
 	/**
