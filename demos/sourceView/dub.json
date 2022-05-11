@@ -4,7 +4,7 @@
 	"targetType": "executable",
 	"sourceFiles": ["SVTest.d"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../" },
-		"gtk-d:sv": {"path": "../../" },
+		"gtk-d:gtk": {"path": "../../" },
+		"gtk-d:sourceview": {"path": "../../" }
 	}
 }

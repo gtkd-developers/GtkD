@@ -1,0 +1,111 @@
+﻿#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gdk
+file: Gdk-4.0.gir
+
+struct: Monitor
+class: MonitorGdk
+
+struct: Rectangle
+alias: get_type gdkRectangleGetType
+namespace:
+
+struct: RGBA
+code: start
+	/**
+	 * Creates a new RGBA Color
+	 */
+	this()
+	{
+		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
+
+		this(gdk_rgba_copy(&rgba), true);
+	}
+
+	/** ditto */
+	this(double red, double green, double blue, double alpha = 1.0)
+	{
+		GdkRGBA rgba;
+
+		rgba.red = red;
+		rgba.green = green;
+		rgba.blue = blue;
+		rgba.alpha = alpha;
+
+		this(gdk_rgba_copy(&rgba), true);
+	}
+
+code: end
+
+struct: Surface
+import: cairo.Surface : CairoSurface = Surface
+structWrap: cairo.Surface CairoSurface
+
+struct: Texture
+noCode: new_from_resource
+noCode: new_from_filename
+code: start
+	/**
+	 * Creates a new texture by loading an image from a file or a resource.
+	 *
+	 * The file format is detected automatically. The supported formats
+	 * are PNG and JPEG, though more formats might be available.
+	 *
+	 * If %NULL is returned, then @error will be set.
+	 *
+	 * This function is threadsafe, so that you can e.g. use GTask
+	 * and g_task_run_in_thread() to avoid blocking the main thread
+	 * while loading a big image.
+	 *
+	 * Params:
+	 *     path = the filename or resourcename to load
+	 *     resource = true if load from resource
+	 *
+	 * Returns: A newly-created `GdkTexture`
+	 *
+	 * Since: 4.6
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string path, bool resource = false)
+	{
+		GError* err = null; GdkTexture *__p;
+
+		if (resource) __p = gdk_texture_new_from_resource(Str.toStringz(path));
+		else __p = gdk_texture_new_from_filename(Str.toStringz(path), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_" ~ (resource ? "resource" : "filename"));
+		}
+
+		this(cast(GdkTexture*) __p, true);
+	}
+code: end

@@ -8,32 +8,32 @@
 			"targetType": "executable",
 			"sourceFiles": ["HelloWorld.d"],
 			"dependencies": {
-				"gtk-d:gtkd": {"path": "../../" },
-			},
+				"gtk-d:gtk": {"path": "../../" }
+			}
 		},
 		{
 			"name": "other_tests",
 			"targetType": "executable",
 			"sourceFiles": ["OtherTests.d"],
 			"dependencies": {
-				"gtk-d:gtkd": {"path": "../../" },
-			},
+				"gtk-d:gtk": {"path": "../../" }
+			}
 		},
 		{
 			"name": "popup_menu",
 			"targetType": "executable",
 			"sourceFiles": ["PopupMenu.d"],
 			"dependencies": {
-				"gtk-d:gtkd": {"path": "../../" },
-			},
+				"gtk-d:gtk": {"path": "../../" }
+			}
 		},
 		{
 			"name": "spawn_tests",
 			"targetType": "executable",
 			"sourceFiles": ["SpawnTests.d"],
 			"dependencies": {
-				"gtk-d:gtkd": {"path": "../../" },
-			},
-		},
+				"gtk-d:gtk": {"path": "../../" }
+			}
+		}
 	]
 }

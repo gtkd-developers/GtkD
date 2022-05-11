@@ -14,8 +14,10 @@ import pango.PgCairo;
 import pango.PgLayout;
 import pango.PgFontDescription;
 
+import std.math : cos, sin;
+
 import std.stdio;
-import std.math;
+import std.math : cos, sin;
 
 class PangoText : DrawingArea
 {
@@ -25,10 +27,12 @@ class PangoText : DrawingArea
 
 	public this()
 	{
-		addOnDraw(&drawText);
+		setDrawFunc ((area, cairo, w, h, data) {
+            (cast(PangoText)data).drawText (new Context (cairo));
+        }, cast(void *)this, null);
 	}
 
-	public bool drawText (Scoped!Context cr, Widget widget)
+	public bool drawText (Context cr)
 	{
 		PgLayout layout;
 		PgFontDescription desc;
@@ -84,9 +88,9 @@ int main(string[] args)
 		window.setTitle("gtkD Pango text");
 		window.setDefaultSize(300, 300);
 		auto pt = new PangoText();
-		window.add(pt);
+		window.setChild(pt);
 		pt.show();
-		window.showAll();
+		window.show();
 	}
 
 	application = new Application("org.gtkd.demo.pangocairo", GApplicationFlags.FLAGS_NONE);

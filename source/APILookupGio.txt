@@ -1,0 +1,675 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gio
+file: Gio-2.0.gir
+
+struct: Application
+code: start
+	/**
+	 * The ::command-line signal is emitted on the primary instance when
+	 * a commandline is not handled locally. See g_application_run() and
+	 * the #GApplicationCommandLine documentation for more information.
+	 *
+	 * Params:
+	 *     commandLine = a #GApplicationCommandLine representing the
+	 *         passed commandline
+	 *
+	 * Return: An integer that is set as the exit status for the calling
+	 *     process. See g_application_command_line_set_exit_status().
+	 */
+	gulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "command-line", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * The ::open signal is emitted on the primary instance when there are
+	 * files to open. See g_application_open() for more information.
+	 *
+	 * Params:
+	 *     files = an array of #GFiles
+	 *     nFiles = the length of @files
+	 *     hint = a hint provided by the calling instance
+	 */
+	gulong addOnOpen(void delegate(FileIF[], string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "open", delegate void (GFile* gfiles, int nFiles, string hint, Application app){
+				FileIF[] files = new FileIF[nFiles];
+				for(int i = 0; i < nFiles; i++)
+				{
+					files[i] = ObjectG.getDObject!FileIF((cast(GFile**)gfiles)[i]);
+				}
+				dlg(files, hint, app);
+			}, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+code: end
+
+struct: BufferedInputStream
+noCode: peek_buffer
+code: start
+	/**
+	 * Returns the buffer with the currently available bytes. The returned
+	 * buffer must not be modified and will become invalid when reading from
+	 * the stream or filling the buffer.
+	 *
+	 * Params:
+	 *     count = a #gsize to get the number of bytes available in the buffer
+	 *
+	 * Return: read-only buffer
+	 */
+	public ubyte[] peekBuffer()
+	{
+		size_t count;
+
+		auto p = g_buffered_input_stream_peek_buffer(gBufferedInputStream, &count);
+
+		return (cast(ubyte*)p)[0 .. count];
+	}
+code: end
+
+struct: DataInputStream
+noCode: read_byte
+
+struct: DBusActionGroup
+import: glib.ConstructionException
+code: start
+	/**
+	 * See_Also: get().
+	 */
+	this(DBusConnection connection, string busName, string objectPath)
+	{
+		auto p =  g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_action_group_get");
+		}
+		this(cast(GDBusActionGroup*) p, true);
+	}
+code: end
+
+struct: DBusAnnotationInfo
+import: glib.Str
+noCode: lookup
+code: start
+	/**
+	 * Looks up the value of an annotation.
+	 *
+	 * The cost of this function is O(n) in number of annotations.
+	 *
+	 * Params:
+	 *     annotations = A %NULL-terminated array of annotations or %NULL.
+	 *     name = The name of the annotation to look up.
+	 *
+	 * Return: The value or %NULL if not found. Do not free, it is owned by @annotations.
+	 *
+	 * Since: 2.26
+	 */
+	public static string lookup(DBusAnnotationInfo[] annotations, string name)
+	{
+		GDBusAnnotationInfo*[] annotationsArray = new GDBusAnnotationInfo*[annotations.length+1];
+		for ( int i = 0; i < annotations.length ; i++ )
+		{
+			annotationsArray[i] = annotations[i].getDBusAnnotationInfoStruct();
+		}
+		annotationsArray[$-1] = null;
+
+		return Str.toString(g_dbus_annotation_info_lookup(annotationsArray.ptr, Str.toStringz(name)));
+	}
+code: end
+
+struct: DBusConnection
+alias: new newConnection
+noCode: new_finish
+noCode: new_for_address_finish
+code: start
+	/**
+	 * Finishes an operation started with g_dbus_connection_new().
+	 *
+	 * Params:
+	 *     res    = A GAsyncResult obtained from the GAsyncReadyCallback
+	 *               passed to g_dbus_connection_new().
+	 *     address = If true finish an address.
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.26
+	 */
+	public this (AsyncResultIF res, bool address = false)
+	{
+		GError* err = null;
+		GDBusConnection* p;
+
+		if ( address )
+		{
+			p = g_dbus_connection_new_for_address_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
+		}
+		this(p, true);
+	}
+code: end
+
+struct: DBusMenuModel
+import: glib.ConstructionException
+code: start
+	/**
+	 * See_Also: get().
+	 */
+	this(DBusConnection connection, string busName, string objectPath)
+	{
+		auto p =  g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_menu_model_get");
+		}
+
+		this(cast(GDBusMenuModel*) p, true);
+	}
+code: end
+
+struct: DBusObjectManagerClient
+alias: new newObjectManagerClient
+noCode: new_finish
+noCode: new_for_bus_finish
+code: start
+	/**
+	 * Finishes an operation started with g_dbus_object_manager_client_new().
+	 *
+	 * Params:
+	 *     res    = A GAsyncResult obtained from the GAsyncReadyCallback passed to the DBusObjectManager constructor.
+	 *     forBus = If true finish an address.
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.30
+	 */
+	public this (AsyncResultIF res, bool forBus = false)
+	{
+		GError* err = null;
+		GDBusObjectManager* p;
+
+		if ( forBus )
+		{
+			p = g_dbus_object_manager_client_new_for_bus_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
+		}
+		this(cast(GDBusObjectManagerClient*) p, true);
+	}
+code: end
+
+struct: DBusProxy
+alias: new newProxy
+noCode: new_finish
+noCode: new_for_bus_finish
+code: start
+	/**
+	 * Finishes creating a GDBusProxy.
+	 *
+	 * Params:
+	 *     res    = A GAsyncResult obtained from the GAsyncReadyCallback
+	 *              function passed to g_dbus_proxy_new().
+	 *     forBus = If true finish an address.
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.26
+	 */
+	public this (AsyncResultIF res, bool forBus = false)
+	{
+		GError* err = null;
+		GDBusProxy* p;
+
+		if ( forBus )
+		{
+			p = g_dbus_proxy_new_for_bus_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
+		}
+		this(p, true);
+	}
+code: end
+
+version !Windows: start
+	struct: DesktopAppInfo
+	noCode: new_from_filename
+	code: start
+		/**
+		* Creates a new #GDesktopAppInfo.
+		*
+		* Params:
+		*     filename = the path of a desktop file, in the GLib filename encoding
+		*
+		* Return: a new #GDesktopAppInfo or %NULL on error.
+		*
+		* Throws: ConstructionException GTK+ fails to create the object.
+		*/
+		public static DesktopAppInfo createFromFilename(string filename)
+		{
+			auto p = g_desktop_app_info_new_from_filename(Str.toStringz(filename));
+
+			if(p is null)
+			{
+				throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
+			}
+
+			return new DesktopAppInfo(p, true);
+		}
+	code: end
+version: end
+
+struct: FileAttributeInfoList
+array: infos n_infos
+
+struct: InetAddress
+noCode: new_any
+noCode: new_loopback
+code: start
+	/**
+	 * Creates a InetAddress for the "any" address (unassigned/"don't
+	 * care") for family.
+	 *
+	 * Params:
+	 *     family = the address family
+	 *     loopback = If true create an InetAddress for the loopback address.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.22
+	 */
+	public this (GSocketFamily family, bool loopback = false)
+	{
+		GInetAddress* p;
+
+		if ( loopback )
+		{
+			p = g_inet_address_new_loopback(family);
+		}
+		else
+		{
+			p = g_inet_address_new_any(family);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
+		}
+		this(p, true);
+	}
+code: end
+
+struct: NoExternal
+noCode: true
+noExternal: true
+
+struct: IOModule
+move: load NoExternal
+move: unload NoExternal
+move: query NoExternal
+
+struct: MenuItem
+noCode: new_section
+noCode: new_submenu
+
+struct: OutputStream
+out: vprintf error
+
+struct: PollableUtils
+namespace:
+
+struct: Resource
+alias: _register register
+alias: _unregister unregister
+
+struct: SimpleAsyncResult
+noCode: new_take_error
+
+struct: SimpleProxyResolver
+array: new ignore_hosts
+array: set_ignore_hosts ignore_hosts
+
+struct: Socket
+ref: receive buffer
+ref: receive_from buffer
+out: receive_message messages
+out: receive_message num_messages
+
+struct: SubprocessLauncher
+array: set_environ env
+
+struct: ThemedIcon
+noCode: new
+
+struct: TlsPassword
+out: get_value length
+array: get_value Return length
+array: set_value value length
+array: set_value_full value length
+
+version !Windows: start
+	struct: UnixMountEntry
+	class: UnixMountEntry
+
+	struct: UnixSocketAddress
+	noCode: new_abstract
+version: end
+
+struct: TlsCertificate
+noCode: new_from_pkcs11_uris
+noCode: new_from_files
+code: start
+	/**
+	 * Creates a #GTlsCertificate from the PEM-encoded data in @cert_file
+	 * and @key_file. The returned certificate will be the first certificate
+	 * found in @cert_file. As of GLib 2.44, if @cert_file contains more
+	 * certificates it will try to load a certificate chain. All
+	 * certificates will be verified in the order found (top-level
+	 * certificate should be the last one in the file) and the
+	 * #GTlsCertificate:issuer property of each certificate will be set
+	 * accordingly if the verification succeeds. If any certificate in the
+	 * chain cannot be verified, the first certificate in the file will
+	 * still be returned.
+	 *
+	 * If either file cannot be read or parsed, the function will return
+	 * %NULL and set @error. Otherwise, this behaves like
+	 * g_tls_certificate_new_from_pem().
+	 *
+	 * Params:
+	 *     certFile = file containing one or more PEM-encoded
+	 *         certificates to import
+	 *     keyFile = file containing a PEM-encoded private key
+	 *         to import
+	 *
+	 * Returns: the new certificate, or %NULL on error
+	 *
+	 * Since: 2.28
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static TlsCertificate newFromFiles(string certFile, string keyFile)
+	{
+		GError* err = null;
+
+		auto __p = g_tls_certificate_new_from_files(Str.toStringz(certFile), Str.toStringz(keyFile), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_files");
+		}
+
+		return new TlsCertificate(cast(GTlsCertificate*) __p, true);
+	}
+
+	/**
+	 * Creates a #GTlsCertificate from a PKCS \#11 URI.
+	 *
+	 * An example @pkcs11_uri would be `pkcs11:model=Model;manufacturer=Manufacture;serial=1;token=My%20Client%20Certificate;id=%01`
+	 *
+	 * Where the token’s layout is:
+	 *
+	 * ```
+	 * Object 0:
+	 * URL: pkcs11:model=Model;manufacturer=Manufacture;serial=1;token=My%20Client%20Certificate;id=%01;object=private%20key;type=private
+	 * Type: Private key (RSA-2048)
+	 * ID: 01
+	 *
+	 * Object 1:
+	 * URL: pkcs11:model=Model;manufacturer=Manufacture;serial=1;token=My%20Client%20Certificate;id=%01;object=Certificate%20for%20Authentication;type=cert
+	 * Type: X.509 Certificate (RSA-2048)
+	 * ID: 01
+	 * ```
+	 *
+	 * In this case the certificate and private key would both be detected and used as expected.
+	 * @pkcs_uri may also just reference an X.509 certificate object and then optionally
+	 * @private_key_pkcs11_uri allows using a private key exposed under a different URI.
+	 *
+	 * Note that the private key is not accessed until usage and may fail or require a PIN later.
+	 *
+	 * Params:
+	 *     pkcs11Uri = A PKCS \#11 URI
+	 *     privateKeyPkcs11Uri = A PKCS \#11 URI
+	 *
+	 * Returns: the new certificate, or %NULL on error
+	 *
+	 * Since: 2.68
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static TlsCertificate newFromPkcs11Uris(string pkcs11Uri, string privateKeyPkcs11Uri)
+	{
+		GError* err = null;
+
+		auto __p = g_tls_certificate_new_from_pkcs11_uris(Str.toStringz(pkcs11Uri), Str.toStringz(privateKeyPkcs11Uri), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new_from_pkcs11_uris");
+		}
+
+		return new TlsCertificate(cast(GTlsCertificate*) __p, true);
+	}
+code: end
+
+struct: VolumeMonitor
+import: glib.ConstructionException
+noCode: get
+code: start
+	/**
+	 * Gets the volume monitor used by gio.
+	 *
+	 * Return: a reference to the #GVolumeMonitor used by gio. Call
+	 *     g_object_unref() when done with it.
+	 */
+	public this()
+	{
+		auto p = g_volume_monitor_get();
+
+		if(p is null)
+		{
+			throw new ConstructionException("g_volume_monitor_get()");
+		}
+
+		this(cast(GVolumeMonitor*) p, true);
+	}
+code: end
+
+struct:
+
+move: bus_get DBusConnection get
+move: bus_get_finish DBusConnection get_finish
+move: bus_get_sync DBusConnection get_sync
+
+move: bus_own_name DBusNames own_name
+move: bus_own_name_on_connection DBusNames own_name_on_connection
+move: bus_own_name_on_connection_with_closures DBusNames own_name_on_connection_with_closures
+move: bus_own_name_with_closures DBusNames own_name_with_closures
+move: bus_unown_name DBusNames unown_name
+move: bus_unwatch_name DBusNames unwatch_name
+move: bus_watch_name DBusNames watch_name
+move: bus_watch_name_on_connection DBusNames watch_name_on_connection
+move: bus_watch_name_on_connection_with_closures DBusNames watch_name_on_connection_with_closures
+move: bus_watch_name_with_closures DBusNames watch_name_with_closures
+
+move: content_type_can_be_executable ContentType can_be_executable
+move: content_type_equals ContentType equals
+move: content_type_from_mime_type ContentType from_mime_type
+move: content_type_get_description ContentType get_description
+move: content_type_get_generic_icon_name ContentType get_generic_icon_name
+move: content_type_get_icon ContentType get_icon
+move: content_type_get_mime_type ContentType get_mime_type
+move: content_type_get_symbolic_icon ContentType get_symbolic_icon
+move: content_type_guess ContentType type_guess
+move: content_type_guess_for_tree ContentType guess_for_tree
+move: content_type_is_a ContentType is_a
+move: content_type_is_unknown ContentType is_unknown
+move: content_types_get_registered ContentType
+version 2.52: move: content_type_is_mime_type ContentType is_mime_type
+
+version 2.60: start
+	move: content_type_get_mime_dirs ContentType get_mime_dirs
+	move: content_type_set_mime_dirs ContentType set_mime_dirs
+version: end
+
+move: dbus_error_encode_gerror DBusError encode_gerror
+move: dbus_error_get_remote_error DBusError get_remote_error
+move: dbus_error_is_remote_error DBusError is_remote_error
+move: dbus_error_new_for_dbus_error DBusError new_for_dbus_error
+move: dbus_error_quark DBusError quark
+move: dbus_error_register_error DBusError register_error
+move: dbus_error_register_error_domain DBusError register_error_domain
+move: dbus_error_strip_remote_error DBusError strip_remote_error
+move: dbus_error_unregister_error DBusError unregister_error
+
+move: dbus_address_escape_value DBusUtilities address_escape_value
+move: dbus_address_get_for_bus_sync DBusUtilities address_get_for_bus_sync
+move: dbus_address_get_stream DBusUtilities address_get_stream
+move: dbus_address_get_stream_finish DBusUtilities address_get_stream_finish
+move: dbus_address_get_stream_sync DBusUtilities address_get_stream_sync
+move: dbus_generate_guid DBusUtilities generate_guid
+move: dbus_gvalue_to_gvariant DBusUtilities gvalue_to_gvariant
+move: dbus_gvariant_to_gvalue DBusUtilities gvariant_to_gvalue
+move: dbus_is_address DBusUtilities is_address
+move: dbus_is_guid DBusUtilities is_guid
+move: dbus_is_interface_name DBusUtilities is_interface_name
+move: dbus_is_member_name DBusUtilities is_member_name
+move: dbus_is_name DBusUtilities is_name
+move: dbus_is_supported_address DBusUtilities is_supported_address
+move: dbus_is_unique_name DBusUtilities is_unique_name
+
+struct: DBusUtilities
+out: address_get_stream_finish out_guid
+out: address_get_stream_sync out_guid
+
+move: io_error_from_errno ErrorGIO
+move: io_error_quark ErrorGIO
+
+move: io_modules_load_all_in_directory IOModule load_all_in_directory
+move: io_modules_load_all_in_directory_with_scope IOModule load_all_in_directory_with_scope
+move: io_modules_scan_all_in_directory IOModule scan_all_in_directory
+move: io_modules_scan_all_in_directory_with_scope IOModule scan_all_in_directory_with_scope
+
+move: io_scheduler_cancel_all_jobs IOSchedulerJob cancel_all_jobs
+move: io_scheduler_push_job IOSchedulerJob push_job
+
+move: pollable_source_new PollableUtils
+move: pollable_source_new_full PollableUtils
+move: pollable_stream_read PollableUtils
+move: pollable_stream_write PollableUtils
+move: pollable_stream_write_all PollableUtils
+
+move: resources_enumerate_children Resource
+move: resources_get_info Resource
+move: resources_lookup_data Resource
+move: resources_open_stream Resource
+move: resources_register Resource _register
+move: resources_unregister Resource _unregister
+
+move: keyfile_settings_backend_new SettingsBackend
+move: memory_settings_backend_new SettingsBackend
+move: null_settings_backend_new SettingsBackend
+
+move: simple_async_report_error_in_idle SimpleAsyncResult
+move: simple_async_report_gerror_in_idle SimpleAsyncResult
+move: simple_async_report_take_gerror_in_idle SimpleAsyncResult
+
+version !Windows: start
+	move: unix_is_mount_path_system_internal UnixMountEntry is_mount_path_system_internal
+	move: unix_mount_at UnixMountEntry at
+	move: unix_mount_compare UnixMountEntry compare
+	move: unix_mount_free UnixMountEntry free
+	move: unix_mount_get_device_path UnixMountEntry get_device_path
+	move: unix_mount_get_fs_type UnixMountEntry get_fs_type
+	move: unix_mount_get_mount_path UnixMountEntry get_mount_path
+	move: unix_mount_guess_can_eject UnixMountEntry guess_can_eject
+	move: unix_mount_guess_icon UnixMountEntry guess_icon
+	move: unix_mount_guess_name UnixMountEntry guess_name
+	move: unix_mount_guess_should_display UnixMountEntry guess_should_display
+	move: unix_mount_guess_symbolic_icon UnixMountEntry guess_symbolic_icon
+	move: unix_mount_is_readonly UnixMountEntry is_readonly
+	move: unix_mount_is_system_internal UnixMountEntry is_system_internal
+	move: unix_mount_points_changed_since UnixMountEntry points_changed_since
+	move: unix_mount_points_get UnixMountEntry mount_points_get
+	move: unix_mounts_changed_since UnixMountEntry mounts_changed_since
+	move: unix_mounts_get UnixMountEntry mounts_get
+
+	version 2.54: start
+		move: unix_mount_copy UnixMountEntry copy
+		move: unix_mount_for UnixMountEntry mount_for
+	version: end
+
+	version 2.58: move: unix_mount_get_options UnixMountEntry get_options
+	version 2.60: move: unix_mount_get_root_path UnixMountEntry get_root_path
+version: end

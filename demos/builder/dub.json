@@ -5,6 +5,6 @@
 	"targetName": "BuilderTest",
 	"sourceFiles": ["builderTest.d"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../" }
+		"gtk-d:gtk": {"path": "../../" }
 	}
 }

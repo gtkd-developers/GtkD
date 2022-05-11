@@ -1,0 +1,76 @@
+#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License
+# as published by the Free Software Foundation; either version 3
+# of the License, or (at your option) any later version, with
+# some exceptions, please read the COPYING file.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+#
+wrap: shumate
+file: Shumate-1.0.gir
+
+struct: License
+class: LicenseSh
+
+struct: MapSourceRegistry
+import: glib.ConstructionException
+noCode: new
+noCode: new_with_defaults
+code: start
+/**
+	 * Create a new #ShumateMapSourceRegistry.
+	 *
+	 * Returns: a newly created #ShumateMapSourceRegistry
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(bool defaults = false)
+	{
+		ShumateMapSourceRegistry* __p;
+        
+        if (!defaults) __p = shumate_map_source_registry_new();
+        else __p = shumate_map_source_registry_new_with_defaults();
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(ShumateMapSourceRegistry*) __p, true);
+	}
+code: end
+
+struct: Map
+import: glib.ConstructionException
+noCode: new
+noCode: new_simple
+code:start
+/**
+	 * Creates an instance of #ShumateMap.
+	 *
+	 * Returns: a new #ShumateMap ready to be used as a #GtkWidget.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(bool simple = false)
+	{
+		auto __p = (simple ? shumate_map_new_simple() : shumate_map_new());
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(ShumateMap*) __p);
+	}
+code:end

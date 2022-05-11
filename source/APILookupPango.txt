@@ -1,0 +1,273 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: pango
+file: Pango-1.0.gir
+file: PangoCairo-1.0.gir
+
+addAliases: start
+	alias void* FTLibrary;
+addAliases: end
+
+addStructs: start
+
+	struct PangoFcFontMap
+	{
+		PangoFontMap parentInstance;
+		void* priv;
+	}
+
+	struct PangoCairoFont;
+
+addStructs: end
+
+addConstants: start
+
+	enum PANGO_SCALE_XX_SMALL = 0.5787037037037;  /// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
+	enum PANGO_SCALE_X_SMALL  = 0.6444444444444;  /// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
+	enum PANGO_SCALE_SMALL    = 0.8333333333333;  /// The scale factor for one shrinking step (1 / 1.2).
+	enum PANGO_SCALE_MEDIUM   = 1.0;              /// The scale factor for normal size (1.0).
+	enum PANGO_SCALE_LARGE    = 1.2;              /// The scale factor for one magnification step (1.2)
+	enum PANGO_SCALE_X_LARGE  = 1.4399999999999;  /// The scale factor for two magnification steps (1.2 * 1.2).
+	enum PANGO_SCALE_XX_LARGE = 1.728;            /// The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
+
+addConstants: end
+
+struct: AttrFontDesc
+class: PgAttributeFontDesc
+extend: Attribute
+
+struct: AttrFontFeatures
+noCode: true
+
+struct: AttrIterator
+class: PgAttributeIterator
+out: get_font language
+out: get_font extra_attrs
+
+struct: AttrLanguage
+class: PgAttributeLanguage
+extend: Attribute
+
+struct: AttrList
+class: PgAttributeList
+
+struct: AttrShape
+class: PgAttributeShape
+extend: Attribute
+
+struct: AttrSize
+class: PgAttributeSize
+extend: Attribute
+import: glib.ConstructionException
+noCode: new
+noCode: new_absolute
+code: start
+	/**
+	 * Create a new font-size attribute in fractional points.
+	 *
+	 * Params:
+	 *     size = the font size, in %PANGO_SCALE<!-- -->ths of a point.
+	 *     absolute = true if the size represents an absolute size.
+	 *
+	 * Return: the newly allocated #PangoAttribute,
+	 *     which should be freed with pango_attribute_destroy().
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(int size, bool absolute)
+	{
+		PangoAttribute* p;
+
+		if ( absolute )
+			p = pango_attr_size_new_absolute(size);
+		else
+			p = pango_attr_size_new(size);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(PangoAttrSize*) p);
+	}
+code: end
+
+struct: Context
+alias: break pangoBreak
+
+version OSX: start
+	struct: CoreTextFont
+	noCode: true
+	noExternal: true
+
+	struct: CoreTextFontMap
+	noCode: true
+	noExternal: true
+version: end
+
+struct: FcFontMap
+noCode: true
+noExternal: true
+
+struct: FontDescription
+code: start
+	/**
+	 * Creates a nwe font description and set the family nd the size
+	 * Params:
+	 *  family = Family
+	 *  size = Size
+	 */
+	public this(string family, int size)
+	{
+		this();
+		setFamily(family);
+		setSize(size * PANGO_SCALE);
+	}
+code: end
+
+struct: LayoutLine
+noProperty: is_paragraph_start
+
+struct: Layout
+array: set_text text length
+
+version <1.38: start
+	struct: Map
+	out: get_engines exact_engines
+	out: get_engines fallback_engines
+version: end
+
+struct: PangoCairoFontMap
+class: PgCairoFontMap
+extend: FontMap
+merge: PangoCairoFont
+noCode: create_context
+
+struct: PgMiscellaneous
+import: core.stdc.stdio
+
+
+version Windows: start
+	struct: Win32FontMap
+	noCode: true
+	noExternal: true
+version: end
+
+struct:
+
+move: attr_background_new Attribute background_new
+move: attr_background_alpha_new Attribute background_alpha_new
+move: attr_fallback_new Attribute fallback_new
+move: attr_family_new Attribute family_new
+move: attr_foreground_new Attribute foreground_new
+move: attr_foreground_alpha_new Attribute foreground_alpha_new
+move: attr_gravity_hint_new Attribute gravity_hint_new
+move: attr_gravity_new Attribute gravity_new
+move: attr_letter_spacing_new Attribute letter_spacing_new
+move: attr_rise_new Attribute rise_new
+move: attr_scale_new Attribute scale_new
+move: attr_stretch_new Attribute stretch_new
+move: attr_strikethrough_color_new Attribute strikethrough_color_new
+move: attr_strikethrough_new Attribute strikethrough_new
+move: attr_style_new Attribute style_new
+move: attr_type_get_name Attribute type_get_name
+move: attr_type_register Attribute type_register
+move: attr_underline_color_new Attribute underline_color_new
+move: attr_underline_new Attribute underline_new
+move: attr_variant_new Attribute variant_new
+move: attr_weight_new Attribute weight_new
+move: markup_parser_finish Attribute
+move: markup_parser_new Attribute
+move: parse_markup Attribute
+
+move: gravity_get_for_matrix PgVertical
+move: gravity_get_for_script PgVertical
+move: gravity_get_for_script_and_width PgVertical
+move: gravity_to_rotation PgVertical
+
+move: script_for_unichar PgScript
+move: script_get_sample_language PgScript
+
+move: bidi_type_for_unichar Context
+move: break Context
+move: default_break Context
+move: find_base_dir Context
+move: find_paragraph_boundary Context
+move: get_log_attrs Context
+move: get_mirror_char Context
+move: itemize Context
+move: itemize_with_base_dir Context
+move: reorder_items Context
+move: shape Context
+move: shape_full Context
+move: unichar_direction Context
+
+#move: config_key_get PgMiscellaneous
+#move: config_key_get_system PgMiscellaneous
+#move: get_lib_subdirectory PgMiscellaneous
+#move: get_sysconf_subdirectory PgMiscellaneous
+move: is_zero_width PgMiscellaneous
+move: log2vis_get_embedding_levels PgMiscellaneous
+#move: lookup_aliases PgMiscellaneous
+move: parse_enum PgMiscellaneous
+move: parse_stretch PgMiscellaneous
+move: parse_style PgMiscellaneous
+move: parse_variant PgMiscellaneous
+move: parse_weight PgMiscellaneous
+move: quantize_line_geometry PgMiscellaneous
+move: scan_int PgMiscellaneous
+move: scan_string PgMiscellaneous
+move: scan_word PgMiscellaneous
+move: skip_space PgMiscellaneous
+move: split_file_list PgMiscellaneous
+move: trim_string PgMiscellaneous
+
+version !OSX: move: read_line PgMiscellaneous
+
+move: extents_to_pixels Matrix
+move: units_from_double Matrix
+move: units_to_double Matrix
+
+move: version PgVersion
+move: version_check PgVersion
+move: version_string PgVersion
+
+move: context_get_font_options PgCairo
+move: context_get_resolution PgCairo
+move: context_get_shape_renderer PgCairo
+move: context_set_font_options PgCairo
+move: context_set_resolution PgCairo
+move: context_set_shape_renderer PgCairo
+move: create_context PgCairo
+move: create_layout PgCairo
+move: error_underline_path PgCairo
+move: glyph_string_path PgCairo
+move: layout_line_path PgCairo
+move: layout_path PgCairo
+move: show_error_underline PgCairo
+move: show_glyph_item PgCairo
+move: show_glyph_string PgCairo
+move: show_layout PgCairo
+move: show_layout_line PgCairo
+move: update_context PgCairo
+move: update_layout PgCairo

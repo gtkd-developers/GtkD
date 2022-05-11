@@ -1,0 +1,10 @@
+{
+	"name": "avatar",
+	"description": "A Adw Avatar demo",
+	"targetType": "executable",
+	"targetName": "AdwAvatar",
+	"sourceFiles": ["avatar.d"],
+	"dependencies": {
+		"gtk-d:adw": {"path": "../../../" }
+	}
+}

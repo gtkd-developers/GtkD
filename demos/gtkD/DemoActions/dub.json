@@ -4,6 +4,6 @@
 	"targetType": "executable",
 	"sourceFiles": ["DemoActions.d"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../../" },
+		"gtk-d:gtk": {"path": "../../../" }
 	}
 }

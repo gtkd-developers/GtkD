@@ -5,6 +5,6 @@
 	"sourceFiles": ["CoreGL.d", "glcore.d"],
 	"libs": ["GL"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../../" }
+		"gtk-d:gtk": {"path": "../../../" }
 	}
 }

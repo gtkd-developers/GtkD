@@ -1,7 +1,8 @@
 module text_image;
 
 import std.stdio;
-import std.math;
+import graphene.c.types : PI;
+import std.math : cos, sin;
 
 import gio.Application : GioApplication = Application;
 import gtk.Application;
@@ -23,12 +24,15 @@ public:
 		image = ImageSurface.createFromPng("gtkD_logo.png");
 	
 		//Attach our expose callback, which will draw the window.
-		addOnDraw(&drawCallback);
+		setDrawFunc ((area, cairo, w, h, data) {
+            (cast(CairoText)data).drawCallback (new Context (cairo));
+        }, cast(void *)this, null);
+		//addOnDraw(&drawCallback);
 	}
 
 protected:
 	//Override default signal handler:
-	bool drawCallback(Scoped!Context cr, Widget widget)
+	bool drawCallback(Context cr)
 	{
 		// This is where we draw on the window
 		cr.translate(10, 10);
@@ -132,9 +136,9 @@ int main(string[] args)
 		win.setDefaultSize( 250, 250 );
 
 		CairoText c = new CairoText();
-		win.add(c);
+		win.setChild(c);
 		c.show();
-		win.showAll();
+		win.show();
 	}
 
 	application = new Application("org.gtkd.demo.cairo.text", GApplicationFlags.FLAGS_NONE);

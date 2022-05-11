@@ -4,6 +4,6 @@
 	"targetType": "executable",
 	"sourceFiles": ["pangocairo.d"],
 	"dependencies": {
-		"gtk-d:gtkd": {"path": "../../" },
+		"gtk-d:gtk": {"path": "../../" }
 	}
 }
