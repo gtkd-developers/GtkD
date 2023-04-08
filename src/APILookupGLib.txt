@@ -132,6 +132,7 @@ noConstant: VERSION_MIN_REQUIRED
 
 struct: Array
 class: ArrayG
+version 2.76: noCode: new_take_zero_terminated
 
 struct: Base64
 move: base64_decode_step Base64 decode_step
@@ -714,6 +715,8 @@ class: Pattern
 
 struct: PtrArray
 class: PtrArray
+version 2.76: noCode: new_from_null_terminated_array
+version 2.76: noCode: new_take_null_terminated
 code: start
 	/**
 	 * Number of pointers in the array
