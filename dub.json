@@ -20,7 +20,8 @@
         "gtk-d:vte": "*",
         "gtk-d:gtkd": "*",
         "gtk-d:gstreamer": "*",
-        "gtk-d:peas": "*"
+        "gtk-d:peas": "*",
+        "gtk-d:gdl": "*"
     },
 
     "subPackages" : [
@@ -75,6 +76,15 @@
             "sourcePaths": ["generated/peas"],
             "libs-posix": ["dl"],
             "importPaths": ["generated/peas"],
+            "dependencies": {"gtk-d:gtkd":"*"}
+        },
+        {
+            "name": "gdl",
+            "targetType": "library",
+            "targetName": "gdld-3",
+            "sourcePaths": ["generated/gdl"],
+            "libs-posix": ["dl"],
+            "importPaths": ["generated/gdl"],
             "dependencies": {"gtk-d:gtkd":"*"}
         }
     ]
