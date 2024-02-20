@@ -164,7 +164,14 @@ void build(string dir, string lib)
 		auto pid = spawnProcess([DC, "@build.rf"]);
 
 		if ( wait(pid) != 0 )
+		{
+			writefln("%s failed", DC);
 			exit(1);
+		}
+		else
+		{
+			writeln("process complete");
+		}
 	}
 	
 	version(LDC)std.file.rmdirRecurse("objects");
@@ -179,7 +186,14 @@ void buildObj(string files, string objName)
 
 	auto pid = spawnProcess(["dmd", "@build.rf"]);
 	if ( wait(pid) != 0 )
+	{
+		writeln("dmd failed");
 		exit(1);
+	}
+	else
+	{
+		writeln("process complete");
+	}
 }
 
 string dFiles(string sourceDir)
