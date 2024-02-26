@@ -119,6 +119,8 @@ int main(string[] args)
 
 void build(string dir, string lib)
 {
+	writefln("Building: %s...", lib);
+
 	version(DMD32)
 	{
 		if (lib == "gtkd")
@@ -136,6 +138,8 @@ void build(string dir, string lib)
 				objects ~= directory ~".obj ";
 			objects ~= "gtk1.obj gtk2.obj gtk3.obj gtk4.obj";
 
+			writeln("Execute dmd in shell...");
+
 			executeShell(format("dmd -lib %s %s%s.lib %s", ldflags, OUTPUT, lib, objects));
 
 			foreach(string obj; objects.split())
@@ -144,6 +148,9 @@ void build(string dir, string lib)
 		else
 		{
 			buildObj(dFiles(dir), lib);
+
+			writeln("Execute dmd in shell...");
+
 			executeShell(format("dmd -lib %s %s%s.lib %s.obj", ldflags, OUTPUT, lib, lib));
 			std.file.remove(lib ~".obj");
 		}
@@ -151,10 +158,20 @@ void build(string dir, string lib)
 	else
 	{
 		std.file.write("build.rf", format("%s -c -lib %s %s %s -Igenerated/gtkd %s%s.lib %s", PLATFORM, dcflags, ldflags, DEBUG, OUTPUT ,lib, dFiles(dir)));
+
+		writefln("Spawning process: %s @build.rf", DC);
+	
 		auto pid = spawnProcess([DC, "@build.rf"]);
 
 		if ( wait(pid) != 0 )
+		{
+			writefln("%s failed", DC);
 			exit(1);
+		}
+		else
+		{
+			writeln("process complete");
+		}
 	}
 	
 	version(LDC)std.file.rmdirRecurse("objects");
@@ -164,9 +181,19 @@ void build(string dir, string lib)
 void buildObj(string files, string objName)
 {
 	std.file.write("build.rf", format("-c %s %s -Igenerated/gtkd %s%s.obj %s", dcflags, DEBUG, OUTPUT, objName, files));
+
+	writeln("Spawning process: dmd @build.rf");
+
 	auto pid = spawnProcess(["dmd", "@build.rf"]);
 	if ( wait(pid) != 0 )
+	{
+		writeln("dmd failed");
 		exit(1);
+	}
+	else
+	{
+		writeln("process complete");
+	}
 }
 
 string dFiles(string sourceDir)

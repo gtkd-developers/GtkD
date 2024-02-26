@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: ${{ matrix.compiler }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ] # Windows and MacOS are only with latest compilers
+        compiler:
+          - dmd-latest
+          - ldc-latest
+          - dmd-2.106.1 # (released in 2024)
+          - dmd-2.105.3 # (released in 2023)
+          - dmd-2.104.2 # (released in 2023)
+          - dmd-2.103.1 # (released in 2023)
+          - dmd-2.102.2 # (released in 2023)
+          - dmd-2.101.2 # (released in 2023)
+          - dmd-2.100.2 # (released in 2022)
+          - dmd-2.099.1 # (released in 2022)
+          - dmd-2.098.1 # (released in 2021)
+          - dmd-2.097.2 # (released in 2021)
+          - ldc-1.35.0 # eq to dmd v2.105.2
+          - ldc-1.34.0 # eq to dmd v2.104.2
+          - ldc-1.33.0 # eq to dmd v2.103.1
+          - ldc-1.28.1 # eq to dmd v2.098.1
+          - ldc-1.27.1 # eq to dmd v2.097.2
+
+        include:
+          - { os: windows-latest, compiler: dmd-latest }  # Windows Server 2022
+          - { os: windows-latest, compiler: ldc-latest }  # Windows Server 2022
+          - { os: macos-latest, compiler: dmd-latest }    # macOS 12 
+          - { os: macos-latest, compiler: ldc-latest }    # macOS 12
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install D ${{ matrix.compiler }}
+        uses: dlang-community/setup-dlang@v1
+        with:
+          compiler: ${{ matrix.compiler }}
+
+      - name: Build All With make (unix)
+        if: runner.os != 'Windows'
+        run: make all
+
+      - name: Build All With rdmd (windows)
+        if: startsWith(matrix.os, 'windows')
+        run: rdmd Build.d all
