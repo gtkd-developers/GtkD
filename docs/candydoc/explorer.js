@@ -236,6 +236,8 @@ function PackageExplorer()
 					node.setRef("../../vte/" + path.join("/") + ".html");
 				} else if ((path[0] == "peas") || (path[0] == "peasc")) {
 					node.setRef("../../peas/" + path.join("/") + ".html");
+				} else if ((path[0] == "gdl") || (path[0] == "gdlc")) {
+					node.setRef("../../gdl/" + path.join("/") + ".html");
 				} else {
 					node.setRef("../../gtkd/" + path.join("/") + ".html");
 				}

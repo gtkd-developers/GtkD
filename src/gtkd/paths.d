@@ -54,6 +54,7 @@ enum LIBRARY
 	VTE,
 	PEAS,
 	RSVG,
+	GDL,
 }
 
 version (Windows)
@@ -81,6 +82,7 @@ version (Windows)
 		LIBRARY.VTE:           "libvte-2.91.dll",
 		LIBRARY.PEAS:          "libpeas-1.0.dll",
 		LIBRARY.RSVG:          "librsvg-2-2.dll",
+		LIBRARY.GDL:           "libgdl-3.dll",
 	];
 }
 else version(darwin)
@@ -108,6 +110,7 @@ else version(darwin)
 		LIBRARY.VTE:           "libvte-2.91.dylib",
 		LIBRARY.PEAS:          "libpeas-1.0.dylib",
 		LIBRARY.RSVG:          "librsvg-2.dylib",
+		LIBRARY.GDL:           "libgdl-3.dylib",
 	];
 }
 else
@@ -135,5 +138,6 @@ else
 		LIBRARY.VTE:           "libvte-2.91.so.0",
 		LIBRARY.PEAS:          "libpeas-1.0.so.0",
 		LIBRARY.RSVG:          "librsvg-2.so.2",
+		LIBRARY.GDL:           "libgdl-3.so.5",
 	];
 }
