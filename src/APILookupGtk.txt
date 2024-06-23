@@ -4244,6 +4244,23 @@ code: start
 	}
 
 	/**
+	 * Creates a View column containing the CellRenderer, and inserts it
+	 * Params:
+	 *  position = The position at which the CellRenderer should be inserted
+	 *  title = The text to be used in the title header of this column
+	 *  renderer = The CellRenderer
+	 * Returns: number of columns including the new one
+	 */
+	int insertColumn(int position, string title, CellRenderer renderer)
+	{
+		return gtk_tree_view_insert_column_with_attributes(
+			gtkTreeView,
+			position,
+			Str.toStringz(title),
+			renderer.getCellRendererStruct(), null);
+	}
+
+	/**
 	 * Inserts a column and sets it's attributes
 	 * Params:
 	 *  position =
