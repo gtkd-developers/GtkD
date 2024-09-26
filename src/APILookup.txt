@@ -96,3 +96,7 @@ version: end
 srcDir: peas
 copy: peasc
 lookup: APILookupPeas.txt
+
+srcDir: gdl
+copy: gdlc
+lookup: APILookupGdl.txt
