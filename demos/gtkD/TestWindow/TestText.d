@@ -40,7 +40,7 @@ class TestText : VBox
 
 		super(false,0);
 
-		debug(1)
+		debug(trace)
 		{
 			writeln("instantiating TestText");
 		}

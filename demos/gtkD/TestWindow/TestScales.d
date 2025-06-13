@@ -53,7 +53,7 @@ class TestScales : Table //, MenuItemListener
 	this()
 	{
 
-		debug(1)
+		debug(trace)
 		{
 			writeln("instantiating TestScales");
 		}
