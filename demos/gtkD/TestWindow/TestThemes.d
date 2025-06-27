@@ -39,7 +39,7 @@ class TestThemes : VBox
 	this(Window window)
 	{
 		this.window = window;
-		debug(1)
+		debug(trace)
 		{
 			writeln("instantiating TestThemes");
 		}

@@ -56,7 +56,7 @@ class TestIdle : VBox
 	this()
 	{
 
-		debug(1)
+		debug(trace)
 		{
 			writeln("instantiating TestTimeout");
 		}

@@ -270,10 +270,10 @@ public:
 		{
 			isPlaying = true;
 			// Now set to playing and iterate.
-			debug(1) writeln("Setting to PLAYING.");
+			debug(trace) writeln("Setting to PLAYING.");
 			//pipeline.setState( GstState.PLAYING );
 			source.setState( GstState.PLAYING );
-			debug(1) writeln("Running.");
+			debug(trace) writeln("Running.");
 		}
 		else
 		{

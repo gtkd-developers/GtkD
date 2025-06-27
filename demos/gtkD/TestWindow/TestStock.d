@@ -43,7 +43,7 @@ class TestStock : ScrolledWindow
 	this()
 	{
 		super(null, null);
-		debug(1)
+		debug(trace)
 		{
 			writeln("instantiating TestStock");
 		}
