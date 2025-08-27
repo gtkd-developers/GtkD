@@ -48,6 +48,7 @@ shared | build all the shared libraries.
 [shared-]gstreamer | build gstreamer.
 [shared-]vte | build vte.
 [shared-]peas | build peas.
+[shared-]gdl | build gdl.
 
 install and uninstall options are also available for the options mentioned above.
 

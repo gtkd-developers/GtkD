@@ -1,0 +1,10 @@
+{
+	"name": "demo_gdl",
+	"description": "A Actions demo",
+	"targetType": "executable",
+	"sourceFiles": ["DemoGdl.d", "../_shared/TestDrawingArea.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" },
+		"gtk-d:gdl": {"path": "../../../" }
+	}
+}
