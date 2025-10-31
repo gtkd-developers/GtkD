@@ -3,6 +3,9 @@ prefix?=/usr/local
 pkgconfigdir?=$(libdir)/pkgconfig
 PKG_CONFIG?=pkg-config
 
+GTKD_VERSION=3.11.0
+SO_VERSION=0
+
 OS=$(shell uname || uname -s)
 ARCH=$(shell uname -m || arch)
 
@@ -77,9 +80,6 @@ endif
 ADRDOX?=adrdox
 
 #######################################################################
-
-GTKD_VERSION=3.10.0
-SO_VERSION=0
 
 MAJOR =  $(word 1,$(subst ., ,$(GTKD_VERSION)))
 MINOR =  $(word 2,$(subst ., ,$(GTKD_VERSION)))
